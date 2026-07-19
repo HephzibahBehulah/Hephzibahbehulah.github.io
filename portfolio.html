@@ -261,5 +261,13 @@
     <script src="js/theme.js" defer></script>
     <script src="js/animations.js" defer></script>
     <script src="js/custom-cursor.js" defer></script>
+    <script src="js/projects-data.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof renderProjects !== 'undefined') {
+            renderProjects('all');
+        }
+    });
+</script>
 </body>
 </html>
