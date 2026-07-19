@@ -37,6 +37,182 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    /* ========================================
+       CRITICAL CSS - Above the Fold
+       Only styles needed for initial render
+       ======================================== */
+    
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Base */
+    html { scroll-behavior: smooth; }
+    body { 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-color, #ffffff);
+        color: var(--text-color, #1e293b);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    
+    /* Container */
+    .container { 
+        max-width: 1200px; 
+        margin: 0 auto; 
+        padding: 0 1.5rem; 
+    }
+    
+    /* Navigation (Critical for layout) */
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: var(--bg-color, #ffffff);
+        border-bottom: 1px solid var(--border-color, #e2e8f0);
+        transition: all 0.25s ease;
+    }
+    
+    .navbar { padding: 0.75rem 0; }
+    .nav-container { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+    }
+    
+    .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--text-color, #1e293b);
+        text-decoration: none;
+    }
+    
+    .logo-text { color: var(--primary, #1a365d); }
+    .logo-full { display: inline; }
+    
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        list-style: none;
+    }
+    
+    .nav-link {
+        color: var(--text-light, #64748b);
+        font-weight: 500;
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        transition: all 0.15s ease;
+        text-decoration: none;
+        position: relative;
+    }
+    
+    .nav-link:hover { color: var(--primary, #1a365d); }
+    .nav-link.active { 
+        color: var(--primary, #1a365d); 
+        font-weight: 600; 
+    }
+    
+    .nav-cta {
+        background: var(--primary, #1a365d);
+        color: #ffffff !important;
+        padding: 0.5rem 1.25rem;
+        border-radius: 9999px;
+    }
+    
+    .nav-cta:hover { background: var(--primary-dark, #0f2440) !important; }
+    
+    /* Hero Section (Critical) */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 120px 0 4rem;
+        background: linear-gradient(135deg, var(--bg-light, #f8fafc) 0%, var(--bg-color, #ffffff) 100%);
+    }
+    
+    .hero-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+    }
+    
+    .hero-title .name {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary, #1a365d) 0%, var(--accent, #e87a2d) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* Theme toggle (Critical) */
+    .theme-toggle {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 999;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--primary, #1a365d);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+        border: none;
+        transition: all 0.25s ease;
+    }
+    
+    .theme-toggle:hover { transform: scale(1.1); }
+    
+    /* Mobile toggle (Critical) */
+    .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+    
+    .hamburger-line {
+        width: 25px;
+        height: 3px;
+        background: var(--text-color, #1e293b);
+        border-radius: 9999px;
+        transition: all 0.15s ease;
+    }
+    
+    /* Responsive breakpoints (Critical for initial layout) */
+    @media (max-width: 768px) {
+        .nav-toggle { display: flex; }
+        .nav-menu { 
+            display: none; 
+            flex-direction: column;
+            width: 100%;
+            padding: 1rem 0;
+        }
+        .nav-menu.open { display: flex; }
+        .hero-container { grid-template-columns: 1fr; text-align: center; }
+        .hero-title .name { font-size: 2.25rem; }
+        .logo-full { display: none; }
+    }
+    
+    @media (max-width: 480px) {
+        .hero-title .name { font-size: 1.875rem; }
+    }
+</style>
     
     <!-- ========================================
     CSS LIBRARIES
