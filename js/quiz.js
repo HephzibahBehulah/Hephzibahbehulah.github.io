@@ -47,8 +47,9 @@ class Quiz {
         this.currentQuestion = 0;
         this.score = 0;
         this.answered = false;
-        this.questions = this.shuffleArray(quizData);
+        this.questions = this.shuffleArray([...quizData]);
         this.render();
+        console.log('✅ Quiz initialized!');
     }
     
     shuffleArray(array) {
@@ -61,15 +62,20 @@ class Quiz {
     
     render() {
         const container = document.getElementById('quizContainer');
-        if (!container) return;
+        if (!container) {
+            console.log('❌ Quiz container not found!');
+            return;
+        }
         
         if (this.currentQuestion >= this.questions.length) {
             container.innerHTML = `
-                <div class="quiz-complete">
-                    <h3>🎉 Quiz Complete!</h3>
-                    <p>You scored <strong>${this.score}</strong> out of ${this.questions.length}</p>
-                    <p>${this.getFeedback()}</p>
-                    <button class="btn btn-primary" onclick="window.quiz.reset()">🔄 Restart Quiz</button>
+                <div class="quiz-complete" style="text-align: center; padding: 1rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🎉 Quiz Complete!</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">You scored <strong>${this.score}</strong> out of ${this.questions.length}</p>
+                    <p style="margin-bottom: 1.5rem;">${this.getFeedback()}</p>
+                    <button class="btn btn-primary" onclick="window.quiz.reset()" style="padding: 0.75rem 2rem; border: none; border-radius: 8px; background: var(--primary); color: white; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.3s ease;">
+                        🔄 Restart Quiz
+                    </button>
                 </div>
             `;
             return;
@@ -78,22 +84,22 @@ class Quiz {
         const q = this.questions[this.currentQuestion];
         container.innerHTML = `
             <div class="quiz-question">
-                <div class="quiz-progress">
+                <div class="quiz-progress" style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 500; color: var(--text-light);">
                     <span>Question ${this.currentQuestion + 1}/${this.questions.length}</span>
                     <span>Score: ${this.score}</span>
                 </div>
-                <h3>${q.question}</h3>
-                <div class="quiz-options">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem;">${q.question}</h3>
+                <div class="quiz-options" style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
                     ${q.options.map((opt, i) => `
-                        <button class="quiz-option" data-index="${i}" onclick="window.quiz.selectAnswer(${i})">
+                        <button class="quiz-option" data-index="${i}" onclick="window.quiz.selectAnswer(${i})" style="padding: 0.75rem 1rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-color); cursor: pointer; transition: all 0.2s ease; font-size: 1rem; text-align: left;">
                             ${String.fromCharCode(65 + i)}. ${opt}
                         </button>
                     `).join('')}
                 </div>
-                <div class="quiz-feedback"></div>
+                <div class="quiz-feedback" style="margin-bottom: 1rem; min-height: 30px; font-weight: 500;"></div>
                 ${this.currentQuestion < this.questions.length - 1 ? 
-                    `<button class="btn btn-secondary" onclick="window.quiz.nextQuestion()" disabled id="nextBtn">Next →</button>` : 
-                    `<button class="btn btn-primary" onclick="window.quiz.nextQuestion()" disabled id="nextBtn">See Results →</button>`
+                    `<button class="btn btn-secondary" onclick="window.quiz.nextQuestion()" disabled id="nextBtn" style="padding: 0.6rem 1.5rem; border: 2px solid var(--border-color); border-radius: 8px; background: transparent; color: var(--text-light); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; opacity: 0.5;">Next →</button>` : 
+                    `<button class="btn btn-primary" onclick="window.quiz.nextQuestion()" disabled id="nextBtn" style="padding: 0.6rem 1.5rem; border: none; border-radius: 8px; background: var(--primary); color: white; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; opacity: 0.5;">See Results →</button>`
                 }
             </div>
         `;
@@ -109,22 +115,31 @@ class Quiz {
         
         options.forEach((btn, i) => {
             btn.disabled = true;
+            btn.style.cursor = 'not-allowed';
             if (i === q.correct) {
-                btn.classList.add('correct');
+                btn.style.borderColor = '#22c55e';
+                btn.style.background = 'rgba(34, 197, 94, 0.1)';
+                btn.style.color = '#22c55e';
             }
             if (i === index && index !== q.correct) {
-                btn.classList.add('incorrect');
+                btn.style.borderColor = '#ef4444';
+                btn.style.background = 'rgba(239, 68, 68, 0.1)';
+                btn.style.color = '#ef4444';
             }
         });
         
         if (index === q.correct) {
             this.score++;
-            feedback.innerHTML = '<span style="color: #22c55e;">✅ Correct!</span>';
+            feedback.innerHTML = '<span style="color: #22c55e; font-weight: 600;">✅ Correct!</span>';
         } else {
-            feedback.innerHTML = `<span style="color: #ef4444;">❌ Incorrect. The answer was: ${q.options[q.correct]}</span>`;
+            feedback.innerHTML = `<span style="color: #ef4444; font-weight: 600;">❌ Incorrect. The answer was: ${q.options[q.correct]}</span>`;
         }
         
-        document.getElementById('nextBtn').disabled = false;
+        const nextBtn = document.getElementById('nextBtn');
+        if (nextBtn) {
+            nextBtn.disabled = false;
+            nextBtn.style.opacity = '1';
+        }
     }
     
     nextQuestion() {
@@ -145,14 +160,19 @@ class Quiz {
         this.currentQuestion = 0;
         this.score = 0;
         this.answered = false;
-        this.questions = this.shuffleArray(quizData);
+        this.questions = this.shuffleArray([...quizData]);
         this.render();
+        window.scrollTo({ top: document.querySelector('.quiz-section').offsetTop - 100, behavior: 'smooth' });
     }
 }
 
 // Auto-init when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ DOM loaded, checking for quiz container...');
     if (document.getElementById('quizContainer')) {
+        console.log('✅ Quiz container found! Initializing quiz...');
         window.quiz = new Quiz();
+    } else {
+        console.log('❌ Quiz container NOT found on this page.');
     }
 });
