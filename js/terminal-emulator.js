@@ -308,10 +308,14 @@
     }
 
     function scrollTerminal() {
-        if (terminalBody) {
+    if (terminalBody) {
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+        // Ensure it stays scrolled down after content loads
+        setTimeout(() => {
             terminalBody.scrollTop = terminalBody.scrollHeight;
-        }
+        }, 50);
     }
+}
 
     function closeTerminal() {
         const modal = document.getElementById('terminalModal');
