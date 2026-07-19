@@ -1,0 +1,37 @@
+HephzibahBehulah.github.io/
+├── index.html                    # Homepage
+├── about.html                    # About Me
+├── portfolio.html                # Portfolio/Projects
+├── resources.html                # Resources & Tools
+├── contact.html                  # Contact Page
+├── pentest.html                  # 🔐 Pentest Tool Dashboard (Integration)
+│
+├── css/
+│   ├── main.css                  # Core styles
+│   ├── dark.css                  # Dark theme
+│   ├── responsive.css            # Mobile responsive
+│   └── pentest.css               # Pentest dashboard styles
+│
+├── js/
+│   ├── main.js                   # Core functionality
+│   ├── theme.js                  # Dark/light toggle
+│   ├── animations.js             # AOS/Animate.css
+│   ├── pentest.js                # Pentest app integration
+│   └── terminal-emulator.js      # Web terminal for your script
+│
+├── assets/
+│   ├── images/
+│   │   ├── hero-bg.jpg
+│   │   ├── profile.jpg
+│   │   ├── icons/
+│   │   └── projects/
+│   ├── fonts/
+│   └── downloads/
+│
+├── pentest-script/
+│   └── hephzibah-pentest.sh      # Your original Bash script
+│
+├── _config.yml                   # GitHub Pages config
+├── CNAME                         # Custom domain
+├── .gitignore
+└── README.md                     # Deployment instructions
