@@ -2081,3 +2081,120 @@ a:hover {
     font-size: var(--text-lg);
     margin-bottom: var(--spacing-2);
 }
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+/* Focus indicators for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Skip to content link */
+.skip-to-content {
+    position: absolute;
+    top: -9999px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    z-index: 9999;
+    border-radius: 0 0 8px 8px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.skip-to-content:focus {
+    top: 0;
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .hero-badge.animate__pulse {
+        animation: none !important;
+    }
+    
+    .tech-tag {
+        animation: none !important;
+    }
+    
+    .profile-ring {
+        animation: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .btn-primary,
+    .btn-secondary,
+    .btn-accent {
+        border: 2px solid currentColor;
+    }
+    
+    .social-card {
+        border: 2px solid currentColor;
+    }
+    
+    .project-card {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Target size for touch devices (WCAG 2.5.5) */
+button,
+a,
+input,
+select,
+textarea {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Ensure links have sufficient contrast */
+a:not(.btn) {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* Error states with both color and icon */
+.form-error {
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-error::before {
+    content: '⚠️';
+    font-size: 1rem;
+}
+
