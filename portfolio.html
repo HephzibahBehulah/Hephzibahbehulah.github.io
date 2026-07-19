@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Hephzibah Behulah - Cybersecurity & Web Development Projects</title>
+    
+    <meta name="description" content="Explore Hephzibah Behulah's portfolio - cybersecurity projects, web development, data analytics, and aviation systems work.">
+    <meta name="keywords" content="Cybersecurity portfolio, Web development projects, Data analytics, Aviation systems, Ethical hacking">
+    
+    <meta property="og:title" content="Portfolio | Hephzibah Behulah">
+    <meta property="og:description" content="Showcasing my work in cybersecurity, web development, and data analytics.">
+    <meta property="og:image" content="https://hephzibahbehulah.github.io/assets/images/og-portfolio.jpg">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dark.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" role="button" aria-label="Toggle dark mode" tabindex="0" id="themeToggle">
+        <i class="theme-icon fas fa-moon" aria-hidden="true"></i>
+    </div>
+
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="navbar" role="navigation">
+            <div class="container nav-container">
+                <a href="index.html" class="nav-logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">HB</span>
+                    <span class="logo-full">Hephzibah Behulah</span>
+                </a>
+                <button class="nav-toggle" aria-label="Toggle navigation menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="portfolio.html" class="nav-link active" aria-current="page">Portfolio</a></li>
+                    <li><a href="resources.html" class="nav-link">Resources</a></li>
+                    <li><a href="pentest.html" class="nav-link pentest-nav">🔐 Pentest Tools</a></li>
+                    <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================================
+    PORTFOLIO HERO
+    ======================================== -->
+    <section class="page-hero portfolio-hero" aria-labelledby="portfolio-title">
+        <div class="container">
+            <div class="page-hero-content" data-aos="fade-up">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="separator">/</span>
+                    <span>Portfolio</span>
+                </div>
+                <h1 id="portfolio-title">My <span class="highlight">Projects</span></h1>
+                <p class="page-subtitle">Showcasing my work in cybersecurity, web development, data analytics, and aviation systems</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+    PROJECT FILTERS
+    ======================================== -->
+    <section class="project-filters" data-aos="fade-up">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="cybersecurity">🔐 Cybersecurity</button>
+                <button class="filter-btn" data-filter="web">💻 Web Development</button>
+                <button class="filter-btn" data-filter="data">📊 Data Analytics</button>
+                <button class="filter-btn" data-filter="aviation">✈️ Aviation Systems</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+    PROJECTS GRID
+    ======================================== -->
+    <section class="projects-grid-section" aria-labelledby="projects-grid-title">
+        <div class="container">
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Project 1: Pentest Toolkit -->
+                <article class="project-item" data-category="cybersecurity" data-aos="fade-up">
+                    <div class="project-image">
+                        <img src="assets/images/projects/pentest-toolkit.jpg" alt="Pentest Toolkit Dashboard" loading="lazy">
+                        <div class="project-overlay">
+                            <a href="pentest.html" class="project-preview">Live Demo</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Cybersecurity</span>
+                        <h3>Pentest Toolkit Dashboard</h3>
+                        <p>Interactive web dashboard integrating 50+ WSL2 security tools with terminal emulator.</p>
+                        <div class="project-tech">
+                            <span>Bash</span>
+                            <span>JavaScript</span>
+                            <span>WSL2</span>
+                            <span>Kali</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="pentest.html" class="btn btn-sm btn-primary">Launch</a>
+                            <a href="https://github.com/HephzibahBehulah" class="btn btn-sm btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 2: Data Analytics Dashboard -->
+                <article class="project-item" data-category="data" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-image">
+                        <img src="assets/images/projects/data-analytics.jpg" alt="Data Analytics Dashboard" loading="lazy">
+                        <div class="project-overlay">
+                            <a href="#" class="project-preview">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Data Analytics</span>
+                        <h3>BigQuery Data Dashboard</h3>
+                        <p>Real-time data visualization and analytics using Python, Google BigQuery, and Colab.</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>BigQuery</span>
+                            <span>Colab</span>
+                            <span>Pandas</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-sm btn-primary">View Demo</a>
+                            <a href="https://github.com/HephzibahBehulah" class="btn btn-sm btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 3: Secure Web App -->
+                <article class="project-item" data-category="web" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-image">
+                        <img src="assets/images/projects/secure-web.jpg" alt="Secure Web Application" loading="lazy">
+                        <div class="project-overlay">
+                            <a href="#" class="project-preview">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Web Development</span>
+                        <h3>Secure E-Commerce Platform</h3>
+                        <p>Full-stack web application with payment processing, user authentication, and security features.</p>
+                        <div class="project-tech">
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-sm btn-primary">Live Demo</a>
+                            <a href="https://github.com/HephzibahBehulah" class="btn btn-sm btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 4: Aviation Systems Monitor -->
+                <article class="project-item" data-category="aviation" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-image">
+                        <img src="assets/images/projects/aviation.jpg" alt="Aviation Systems Monitor" loading="lazy">
+                        <div class="project-overlay">
+                            <a href="#" class="project-preview">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Aviation Systems</span>
+                        <h3>Airbus Systems Monitor</h3>
+                        <p>Monitoring and diagnostic tool for Airbus electronic systems and lighting installations.</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>IoT</span>
+                            <span>Electronics</span>
+                            <span>Dashboard</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-sm btn-primary">Learn More</a>
+                            <a href="#" class="btn btn-sm btn-secondary">Documentation</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 5: Cybersecurity Blog -->
+                <article class="project-item" data-category="cybersecurity" data-aos="fade-up" data-aos-delay="400">
+                    <div class="project-image">
+                        <img src="assets/images/projects/blog.jpg" alt="Cybersecurity Blog" loading="lazy">
+                        <div class="project-overlay">
+                            <a href="https://hephzibahbehulah.blogspot.com" class="project-preview">Visit Blog</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Cybersecurity</span>
+                        <h3>Cybersecurity Blog</h3>
+                        <p>Educational blog covering ethical hacking, security best practices, and technology insights.</p>
+                        <div class="project-tech">
+                            <span>Blogger</span>
+                            <span>Content</span>
+                            <span>Security</span>
+                            <span>Education</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://hephzibahbehulah.blogspot.com" class="btn btn-sm btn-primary">Read Blog</a>
+                            <a href="#" class="btn btn-sm btn-secondary">Subscribe</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project 6: Machine Learning Model -->
+                <article class="project-item" data-category="data" data-aos="fade-up" data-aos-delay="500">
+                    <div class="project-image">
+                        <img src="assets/images/projects/ml-model.jpg" alt="Machine Learning Model" loading="lazy">
+                        <div class="project-overlay">
+                            <a href="#" class="project-preview">View Project</a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Data Analytics</span>
+                        <h3>ML Security Predictor</h3>
+                        <p>Machine learning model for predicting security threats using Python and scikit-learn.</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>scikit-learn</span>
+                            <span>Pandas</span>
+                            <span>AI</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-sm btn-primary">View Notebook</a>
+                            <a href="https://github.com/HephzibahBehulah" class="btn btn-sm btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+    FOOTER (SAME AS INDEX)
+    ======================================== -->
+    <footer class="footer" role="contentinfo">
+        <!-- Same footer as index.html -->
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/theme.js" defer></script>
+    <script src="js/animations.js" defer></script>
+</body>
+</html>
