@@ -1,0 +1,241 @@
+/* ========================================
+   HEPHZIBAH BEHULAH - DARK THEME
+   ======================================== */
+
+body.dark-mode {
+    --bg-color: #0a0a0a;
+    --bg-light: #1a1a1a;
+    --text-color: #e5e7eb;
+    --text-light: #9ca3af;
+    --border-color: #2d2d2d;
+    --border-light: #1f1f1f;
+    --card-bg: #141414;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.6);
+    --primary-transparent: rgba(26, 54, 93, 0.3);
+}
+
+/* Dark Mode Specific Adjustments */
+body.dark-mode .hero {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+body.dark-mode .quick-links,
+body.dark-mode .skills-showcase,
+body.dark-mode .timeline-section,
+body.dark-mode .certifications,
+body.dark-mode .quick-resources {
+    background: var(--bg-light);
+}
+
+body.dark-mode .footer {
+    background: #0a0a0a;
+}
+
+body.dark-mode .footer-bottom {
+    border-color: var(--border-color);
+}
+
+body.dark-mode .bio-image-badge {
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+body.dark-mode .profile-ring {
+    border-color: var(--accent);
+}
+
+body.dark-mode .profile-ring.ring-2 {
+    border-color: var(--primary);
+}
+
+body.dark-mode .theme-toggle {
+    background: var(--accent);
+}
+
+body.dark-mode .theme-toggle:hover {
+    background: var(--accent-dark);
+}
+
+body.dark-mode .nav-link.active {
+    color: var(--accent);
+}
+
+body.dark-mode .nav-link.active::after {
+    background: var(--accent);
+}
+
+body.dark-mode .nav-cta {
+    background: var(--accent);
+}
+
+body.dark-mode .nav-cta:hover {
+    background: var(--accent-dark);
+}
+
+body.dark-mode .filter-btn {
+    border-color: var(--border-color);
+    color: var(--text-light);
+}
+
+body.dark-mode .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
+}
+
+body.dark-mode .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+body.dark-mode .stat-number {
+    color: var(--white);
+}
+
+body.dark-mode .project-overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .project-preview {
+    background: var(--accent);
+    color: var(--white);
+}
+
+body.dark-mode .project-preview:hover {
+    background: var(--accent-dark);
+}
+
+body.dark-mode .method-icon {
+    background: var(--primary-transparent);
+}
+
+body.dark-mode .method-icon i {
+    color: var(--accent);
+}
+
+body.dark-mode .bio-mission {
+    background: var(--primary-transparent);
+    border-color: var(--accent);
+}
+
+body.dark-mode .bio-mission h3 {
+    color: var(--accent);
+}
+
+body.dark-mode .marker-dot {
+    background: var(--accent);
+    border-color: var(--bg-color);
+}
+
+body.dark-mode .timeline-date {
+    background: var(--accent);
+}
+
+body.dark-mode .expertise-card:hover {
+    border-color: var(--accent);
+}
+
+body.dark-mode .expertise-card ul li::before {
+    color: var(--accent);
+}
+
+body.dark-mode .cert-item i {
+    color: var(--accent);
+}
+
+body.dark-mode .footer-social-links a:hover {
+    color: var(--accent);
+}
+
+body.dark-mode .security-badge {
+    color: var(--accent);
+}
+
+body.dark-mode .hero-title .name {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.dark-mode .hero-badge {
+    background: var(--primary-transparent);
+    color: var(--accent);
+}
+
+body.dark-mode .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+body.dark-mode .btn-primary:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+}
+
+body.dark-mode .btn-secondary {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+body.dark-mode .btn-secondary:hover {
+    background: var(--accent);
+    color: var(--white);
+}
+
+body.dark-mode .social-card:hover {
+    border-color: var(--accent);
+}
+
+body.dark-mode .resource-icon-wrapper {
+    background: var(--primary-transparent);
+}
+
+body.dark-mode .resource-icon-wrapper i {
+    color: var(--accent);
+}
+
+body.dark-mode .quick-resource:hover {
+    border-color: var(--accent);
+}
+
+body.dark-mode .quick-resource i {
+    color: var(--accent);
+}
+
+body.dark-mode .tool-card {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+body.dark-mode .tool-card:hover {
+    border-color: var(--accent);
+}
+
+body.dark-mode .tool-category {
+    background: var(--accent);
+}
+
+body.dark-mode .terminal-modal {
+    background: rgba(0, 0, 0, 0.95);
+}
+
+body.dark-mode .terminal-container {
+    border: 1px solid var(--border-color);
+}
+
+/* Dark Mode Toggle Icon */
+body.dark-mode .theme-icon {
+    transform: rotate(360deg);
+}
+
+body.dark-mode .theme-label {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode) {
+        /* Same as dark mode above */
+    }
+}
