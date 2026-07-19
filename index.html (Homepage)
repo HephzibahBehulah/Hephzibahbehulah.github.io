@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hephzibah Behulah | Cybersecurity Student & Web Developer</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Hephzibah Behulah - Cybersecurity Student, Web Developer & Data Enthusiast based in Hamburg, Germany. Specializing in ethical hacking, secure web development, and data analytics.">
+    <meta name="keywords" content="Hephzibah Behulah, Cybersecurity Engineer, Data Analyst, Airbus Elektroniker, Ethical AI Security, Lighting Design Enthusiast, Web Developer Germany">
+    <meta name="author" content="Hephzibah Behulah">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hephzibah Behulah | Cybersecurity & Web Development">
+    <meta property="og:description" content="Building secure, user-focused digital experiences with precision and ethical technology.">
+    <meta property="og:image" content="https://hephzibahbehulah.github.io/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://hephzibahbehulah.github.io">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#1a365d">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dark.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" role="button" aria-label="Toggle dark mode" tabindex="0">
+        <i class="theme-icon">🌙</i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-text">HB</span>
+                <span class="logo-full">Hephzibah Behulah</span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="pentest.html" class="pentest-nav">🔐 Pentest Tools</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content" data-aos="fade-up">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Currently available for freelance work
+                </div>
+                <h1 class="hero-title">
+                    <span class="greeting">Hi, I'm</span>
+                    <span class="name">Hephzibah Behulah</span>
+                    <span class="title-role">Cybersecurity Student & Web Developer</span>
+                </h1>
+                <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
+                    "From wiring Airbus systems to coding secure digital experiences, I bring precision, 
+                    curiosity, and a commitment to ethical technology to every project."
+                </p>
+                <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#contact" class="btn-primary">Let's Connect</a>
+                    <a href="portfolio.html" class="btn-secondary">View My Work</a>
+                </div>
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="600">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Pentest Tools</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Ethical Approach</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual" data-aos="fade-left" data-aos-delay="300">
+                <div class="profile-image-container">
+                    <img src="assets/images/profile.jpg" alt="Hephzibah Behulah - Cybersecurity Professional" class="profile-image">
+                    <div class="profile-ring"></div>
+                </div>
+                <div class="tech-stack floating">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Linux</span>
+                    <span class="tech-tag">WSL2</span>
+                    <span class="tech-tag">Kali</span>
+                    <span class="tech-tag">Git</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links Section -->
+    <section class="quick-links" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">Connect With Me</h2>
+            <div class="social-grid">
+                <a href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" class="social-card github" aria-label="GitHub">
+                    <i class="social-icon">📂</i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener noreferrer" class="social-card linkedin" aria-label="LinkedIn">
+                    <i class="social-icon">🔗</i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://x.com/hephzibaBehulah" target="_blank" rel="noopener noreferrer" class="social-card twitter" aria-label="Twitter">
+                    <i class="social-icon">🐦</i>
+                    <span>Twitter</span>
+                </a>
+                <a href="https://hephzibahbehulah.blogspot.com" target="_blank" rel="noopener noreferrer" class="social-card blog" aria-label="Blog">
+                    <i class="social-icon">📝</i>
+                    <span>Blog</span>
+                </a>
+                <a href="https://www.facebook.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" class="social-card facebook" aria-label="Facebook">
+                    <i class="social-icon">📘</i>
+                    <span>Facebook</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="featured-projects" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">Featured Work</h2>
+            <div class="project-grid">
+                <div class="project-card" data-aos="flip-up">
+                    <div class="project-icon">🔐</div>
+                    <h3>Pentest Toolkit</h3>
+                    <p>50+ security tools integrated into an interactive web dashboard for ethical hacking.</p>
+                    <a href="pentest.html" class="project-link">Launch Toolkit →</a>
+                </div>
+                <div class="project-card" data-aos="flip-up" data-aos-delay="100">
+                    <div class="project-icon">📊</div>
+                    <h3>Data Analytics</h3>
+                    <p>Python-based data analysis projects using Google Colab, BigQuery, and visualization tools.</p>
+                    <a href="portfolio.html#data" class="project-link">View Projects →</a>
+                </div>
+                <div class="project-card" data-aos="flip-up" data-aos-delay="200">
+                    <div class="project-icon">🛡️</div>
+                    <h3>Secure Web Dev</h3>
+                    <p>Building secure, accessible, and responsive web applications with ethical AI integration.</p>
+                    <a href="portfolio.html#web" class="project-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Hephzibah Behulah</h3>
+                    <p>Building secure digital experiences with precision and ethics.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="portfolio.html">Portfolio</a>
+                    <a href="pentest.html">Pentest Tools</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/HephzibahBehulah" aria-label="GitHub">📂</a>
+                    <a href="https://linkedin.com/in/isaacoluwoleadigun" aria-label="LinkedIn">🔗</a>
+                    <a href="https://x.com/hephzibaBehulah" aria-label="Twitter">🐦</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Hephzibah Behulah. All rights reserved.</p>
+                <p>Built with ❤️ and ethical technology</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>
