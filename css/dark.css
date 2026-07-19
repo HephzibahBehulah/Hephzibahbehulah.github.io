@@ -1,12 +1,12 @@
 /* ========================================
-   HEPHZIBAH BEHULAH - DARK THEME
+   DARK MODE - CONTRAST FIXES
    ======================================== */
 
 body.dark-mode {
     --bg-color: #0a0a0a;
     --bg-light: #1a1a1a;
     --text-color: #e5e7eb;
-    --text-light: #9ca3af;
+    --text-light: #94a3b8;  /* WAS: #9ca3af - LIGHTENED for better contrast */
     --border-color: #2d2d2d;
     --border-light: #1f1f1f;
     --card-bg: #141414;
@@ -15,227 +15,230 @@ body.dark-mode {
     --primary-transparent: rgba(26, 54, 93, 0.3);
 }
 
-/* Dark Mode Specific Adjustments */
-body.dark-mode .hero {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-}
-
-body.dark-mode .quick-links,
-body.dark-mode .skills-showcase,
-body.dark-mode .timeline-section,
-body.dark-mode .certifications,
-body.dark-mode .quick-resources {
-    background: var(--bg-light);
-}
-
-body.dark-mode .footer {
-    background: #0a0a0a;
-}
-
-body.dark-mode .footer-bottom {
-    border-color: var(--border-color);
-}
-
-body.dark-mode .bio-image-badge {
-    background: var(--card-bg);
-    color: var(--text-color);
-}
-
-body.dark-mode .profile-ring {
-    border-color: var(--accent);
-}
-
-body.dark-mode .profile-ring.ring-2 {
-    border-color: var(--primary);
-}
-
-body.dark-mode .theme-toggle {
-    background: var(--accent);
-}
-
-body.dark-mode .theme-toggle:hover {
-    background: var(--accent-dark);
-}
-
-body.dark-mode .nav-link.active {
-    color: var(--accent);
-}
-
-body.dark-mode .nav-link.active::after {
-    background: var(--accent);
-}
-
-body.dark-mode .nav-cta {
-    background: var(--accent);
-}
-
-body.dark-mode .nav-cta:hover {
-    background: var(--accent-dark);
-}
-
-body.dark-mode .filter-btn {
-    border-color: var(--border-color);
-    color: var(--text-light);
-}
-
-body.dark-mode .filter-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--white);
-}
-
-body.dark-mode .filter-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
-body.dark-mode .stat-number {
-    color: var(--white);
-}
-
-body.dark-mode .project-overlay {
-    background: rgba(0, 0, 0, 0.8);
-}
-
-body.dark-mode .project-preview {
-    background: var(--accent);
-    color: var(--white);
-}
-
-body.dark-mode .project-preview:hover {
-    background: var(--accent-dark);
-}
-
-body.dark-mode .method-icon {
-    background: var(--primary-transparent);
-}
-
-body.dark-mode .method-icon i {
-    color: var(--accent);
-}
-
-body.dark-mode .bio-mission {
-    background: var(--primary-transparent);
-    border-color: var(--accent);
-}
-
-body.dark-mode .bio-mission h3 {
-    color: var(--accent);
-}
-
-body.dark-mode .marker-dot {
-    background: var(--accent);
-    border-color: var(--bg-color);
-}
-
-body.dark-mode .timeline-date {
-    background: var(--accent);
-}
-
-body.dark-mode .expertise-card:hover {
-    border-color: var(--accent);
-}
-
-body.dark-mode .expertise-card ul li::before {
-    color: var(--accent);
-}
-
-body.dark-mode .cert-item i {
-    color: var(--accent);
-}
-
-body.dark-mode .footer-social-links a:hover {
-    color: var(--accent);
-}
-
-body.dark-mode .security-badge {
-    color: var(--accent);
-}
-
-body.dark-mode .hero-title .name {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-body.dark-mode .hero-badge {
-    background: var(--primary-transparent);
-    color: var(--accent);
-}
+/* ========================================
+   BUTTON CONTRAST FIXES (Dark Mode)
+   ======================================== */
 
 body.dark-mode .btn-primary {
-    background: var(--accent);
-    border-color: var(--accent);
+    background: #c96520;  /* DARKER orange for better contrast */
+    border-color: #c96520;
+    color: #ffffff;
 }
 
 body.dark-mode .btn-primary:hover {
-    background: var(--accent-dark);
-    border-color: var(--accent-dark);
+    background: #a64d00;  /* EVEN DARKER on hover */
+    border-color: #a64d00;
 }
 
 body.dark-mode .btn-secondary {
-    color: var(--accent);
-    border-color: var(--accent);
+    color: #f0a050;  /* LIGHTER orange text */
+    border-color: #f0a050;
 }
 
 body.dark-mode .btn-secondary:hover {
-    background: var(--accent);
-    color: var(--white);
+    background: #f0a050;
+    color: #0a0a0a;
+}
+
+body.dark-mode .btn-accent {
+    background: #c96520;
+    border-color: #c96520;
+    color: #ffffff;
+}
+
+body.dark-mode .btn-accent:hover {
+    background: #a64d00;
+    border-color: #a64d00;
+}
+
+/* ========================================
+   PROJECT & SKILL LINKS (Dark Mode)
+   ======================================== */
+
+body.dark-mode .project-link {
+    color: #f0a050;  /* LIGHTER orange for visibility */
+}
+
+body.dark-mode .project-link:hover {
+    color: #ffb870;
+}
+
+body.dark-mode .skill-category h3 {
+    color: #f0a050;  /* LIGHTER orange */
+}
+
+body.dark-mode .skill-category h3 i {
+    color: #f0a050;
+}
+
+body.dark-mode .skill-list li {
+    color: #cbd5e1;  /* LIGHTER text */
+}
+
+/* ========================================
+   FOOTER CONTRAST FIXES (Dark Mode)
+   ======================================== */
+
+body.dark-mode .footer {
+    background: #050505;
+}
+
+body.dark-mode .footer-brand p {
+    color: #94a3b8;  /* LIGHTER gray */
+}
+
+body.dark-mode .footer ul li a {
+    color: #94a3b8;  /* LIGHTER gray */
+}
+
+body.dark-mode .footer ul li a:hover {
+    color: #ffffff;
+}
+
+body.dark-mode .footer-bottom p {
+    color: #94a3b8;  /* WAS: #64748b - LIGHTENED for contrast */
+}
+
+body.dark-mode .footer-ethics {
+    color: #94a3b8;
+}
+
+body.dark-mode .footer-legal a {
+    color: #94a3b8;
+}
+
+body.dark-mode .footer-legal a:hover {
+    color: #ffffff;
+}
+
+body.dark-mode .security-badge {
+    color: #f0a050;  /* ORANGE instead of green for better contrast */
+}
+
+/* ========================================
+   SOCIAL CARDS (Dark Mode)
+   ======================================== */
+
+body.dark-mode .social-card {
+    background: #1a1a1a;
+    border-color: #2d2d2d;
+}
+
+body.dark-mode .social-card .social-name {
+    color: #e5e7eb;
+}
+
+body.dark-mode .social-card .social-handle {
+    color: #94a3b8;  /* LIGHTER */
 }
 
 body.dark-mode .social-card:hover {
-    border-color: var(--accent);
+    border-color: #f0a050;
 }
 
-body.dark-mode .resource-icon-wrapper {
-    background: var(--primary-transparent);
+/* ========================================
+   HERO TEXT (Dark Mode)
+   ======================================== */
+
+body.dark-mode .hero-description {
+    color: #cbd5e1;  /* LIGHTER text */
 }
 
-body.dark-mode .resource-icon-wrapper i {
-    color: var(--accent);
+body.dark-mode .hero-title .title-role {
+    color: #94a3b8;
 }
 
-body.dark-mode .quick-resource:hover {
-    border-color: var(--accent);
+body.dark-mode .hero-badge {
+    background: rgba(232, 122, 45, 0.2);
+    color: #f0a050;
 }
 
-body.dark-mode .quick-resource i {
-    color: var(--accent);
+body.dark-mode .stat-label {
+    color: #94a3b8;
 }
+
+/* ========================================
+   RESOURCE CARDS (Dark Mode)
+   ======================================== */
+
+body.dark-mode .resource-card p {
+    color: #cbd5e1;
+}
+
+body.dark-mode .resource-list li a {
+    color: #94a3b8;
+}
+
+body.dark-mode .resource-list li a:hover {
+    color: #f0a050;
+}
+
+body.dark-mode .resource-link {
+    color: #f0a050;
+}
+
+body.dark-mode .resource-link:hover {
+    color: #ffb870;
+}
+
+/* ========================================
+   QUIZ (Dark Mode)
+   ======================================== */
+
+body.dark-mode .quiz-container {
+    background: #1a1a1a;
+}
+
+body.dark-mode .quiz-option {
+    background: #141414;
+    border-color: #2d2d2d;
+    color: #e5e7eb;
+}
+
+body.dark-mode .quiz-option:hover:not(:disabled) {
+    border-color: #f0a050;
+    background: rgba(240, 160, 80, 0.1);
+}
+
+body.dark-mode .quiz-option.correct {
+    border-color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+}
+
+body.dark-mode .quiz-option.incorrect {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+/* ========================================
+   PENTEST TOOLS (Dark Mode)
+   ======================================== */
 
 body.dark-mode .tool-card {
-    background: var(--card-bg);
-    border-color: var(--border-color);
+    background: #1a1a1a;
+    border-color: #2d2d2d;
 }
 
 body.dark-mode .tool-card:hover {
-    border-color: var(--accent);
+    border-color: #f0a050;
 }
 
-body.dark-mode .tool-category {
-    background: var(--accent);
+body.dark-mode .tool-info p {
+    color: #cbd5e1;
 }
 
-body.dark-mode .terminal-modal {
-    background: rgba(0, 0, 0, 0.95);
+body.dark-mode .tool-command {
+    background: #2d2d2d;
+    color: #94a3b8;
 }
 
-body.dark-mode .terminal-container {
-    border: 1px solid var(--border-color);
+body.dark-mode .tool-run-btn {
+    background: #c96520;
+    color: #ffffff;
 }
 
-/* Dark Mode Toggle Icon */
-body.dark-mode .theme-icon {
-    transform: rotate(360deg);
-}
-
-body.dark-mode .theme-label {
-    display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    body:not(.light-mode) {
-        /* Same as dark mode above */
-    }
+body.dark-mode .tool-run-btn:hover {
+    background: #a64d00;
 }
