@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources | Hephzibah Behulah - Cybersecurity & Learning Tools</title>
     
-    <meta name="description" content="Free resources for learning cybersecurity, programming, and data analytics. Includes code compiler, eBooks, and learning platforms.">
-    <meta name="keywords" content="Cybersecurity resources, Free eBooks, Coding tools, GenZ Bible, Learning platforms, Python compiler">
+    <meta name="description" content="Free resources for learning cybersecurity, programming, data analytics, electrical engineering, and aviation systems.">
+    <meta name="keywords" content="Cybersecurity resources, Free eBooks, Coding tools, GenZ Bible, Learning platforms, Python compiler, Electrical engineering, Aviation systems">
     
     <meta property="og:title" content="Resources | Hephzibah Behulah">
     <meta property="og:description" content="Curated cybersecurity resources, learning tools, and free educational materials.">
@@ -28,7 +28,26 @@
     <!-- Navigation -->
     <header class="header">
         <nav class="navbar" role="navigation">
-            <!-- Same nav as index.html -->
+            <div class="container nav-container">
+                <a href="index.html" class="nav-logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">HB</span>
+                    <span class="logo-full">Hephzibah Behulah</span>
+                </a>
+                <button class="nav-toggle" aria-label="Toggle navigation menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="resources.html" class="nav-link active" aria-current="page">Resources</a></li>
+                    <li><a href="pentest.html" class="nav-link pentest-nav">🔐 Pentest Tools</a></li>
+                    <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
@@ -44,18 +63,19 @@
                     <span>Resources</span>
                 </div>
                 <h1 id="resources-title">Learning <span class="highlight">Resources</span></h1>
-                <p class="page-subtitle">Curated tools, platforms, and materials to support your cybersecurity and development journey</p>
+                <p class="page-subtitle">Curated tools, platforms, and materials for cybersecurity, development, and engineering</p>
             </div>
         </div>
     </section>
 
     <!-- ========================================
-    RESOURCES GRID
+    RESOURCES GRID (12+ Resources)
     ======================================== -->
     <section class="resources-grid-section" data-aos="fade-up">
         <div class="container">
             <div class="resources-grid">
-                <!-- Resource 1: Code Compiler -->
+
+                <!-- 1. Code Compiler -->
                 <div class="resource-card" data-aos="flip-up">
                     <div class="resource-icon-wrapper">
                         <i class="fas fa-code"></i>
@@ -74,7 +94,7 @@
                     </a>
                 </div>
 
-                <!-- Resource 2: Free eBooks -->
+                <!-- 2. Free eBooks -->
                 <div class="resource-card" data-aos="flip-up" data-aos-delay="100">
                     <div class="resource-icon-wrapper">
                         <i class="fas fa-book-open"></i>
@@ -82,45 +102,52 @@
                     <h3>Free eBooks</h3>
                     <p>Access thousands of free eBooks on technology, cybersecurity, and programming.</p>
                     <ul class="resource-list">
-                        <li><a href="https://openlibrary.org" target="_blank">Open Library</a></li>
-                        <li><a href="https://www.gutenberg.org" target="_blank">Project Gutenberg</a></li>
-                        <li><a href="https://www.pdfdrive.com" target="_blank">PDF Drive</a></li>
+                        <li><a href="https://openlibrary.org" target="_blank">📚 Open Library</a></li>
+                        <li><a href="https://www.gutenberg.org" target="_blank">📖 Project Gutenberg</a></li>
+                        <li><a href="https://www.pdfdrive.com" target="_blank">📕 PDF Drive</a></li>
+                        <li><a href="https://www.free-ebooks.net" target="_blank">📗 Free eBooks</a></li>
                     </ul>
                     <a href="https://openlibrary.org" target="_blank" class="resource-link">
                         Browse Library <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 
-                <!-- Resource 3: GenZ Bible -->
+                <!-- 3. GenZ Bible -->
                 <div class="resource-card" data-aos="flip-up" data-aos-delay="200">
                     <div class="resource-icon-wrapper">
                         <i class="fas fa-bible"></i>
                     </div>
                     <h3>GenZ Bible</h3>
-                    <p>Modern Bible reading platform with youth-friendly design and accessibility.</p>
+                    <p>Modern Bible reading platform with youth-friendly design and accessibility features.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://www.genz-bible.com" target="_blank">📖 GenZ Bible</a></li>
+                        <li><a href="https://www.biblegateway.com" target="_blank">📜 Bible Gateway</a></li>
+                        <li><a href="https://www.youversion.com" target="_blank">📱 YouVersion Bible</a></li>
+                    </ul>
                     <a href="https://www.genz-bible.com" target="_blank" class="resource-link">
                         Visit GenZ Bible <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 
-                <!-- Resource 4: Kaggle -->
+                <!-- 4. Kaggle & Datasets -->
                 <div class="resource-card" data-aos="flip-up" data-aos-delay="300">
                     <div class="resource-icon-wrapper">
                         <i class="fas fa-database"></i>
                     </div>
-                    <h3>Kaggle Datasets</h3>
+                    <h3>Kaggle &amp; Datasets</h3>
                     <p>Free datasets for data science, machine learning, and analytics projects.</p>
                     <ul class="resource-list">
-                        <li><a href="https://www.kaggle.com/datasets" target="_blank">Kaggle Datasets</a></li>
-                        <li><a href="https://database.star" target="_blank">Database Star</a></li>
-                        <li><a href="https://www.data.gov" target="_blank">Data.gov</a></li>
+                        <li><a href="https://www.kaggle.com/datasets" target="_blank">🏆 Kaggle Datasets</a></li>
+                        <li><a href="https://database.star" target="_blank">⭐ Database Star</a></li>
+                        <li><a href="https://www.data.gov" target="_blank">🏛️ Data.gov</a></li>
+                        <li><a href="https://datasetsearch.research.google.com" target="_blank">🔍 Google Dataset Search</a></li>
                     </ul>
                     <a href="https://www.kaggle.com" target="_blank" class="resource-link">
                         Explore Datasets <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 
-                <!-- Resource 5: Cybersecurity Learning Hub -->
+                <!-- 5. Cybersecurity Learning Hub -->
                 <div class="resource-card" data-aos="flip-up" data-aos-delay="400">
                     <div class="resource-icon-wrapper">
                         <i class="fas fa-shield-halved"></i>
@@ -128,17 +155,18 @@
                     <h3>Cybersecurity Learning</h3>
                     <p>Curated learning platforms for cybersecurity education and certification.</p>
                     <ul class="resource-list">
-                        <li><a href="https://portswigger.net/web-security" target="_blank">PortSwigger Academy</a></li>
-                        <li><a href="https://cheatsheetseries.owasp.org/" target="_blank">OWASP Cheat Sheets</a></li>
-                        <li><a href="https://tryhackme.com" target="_blank">TryHackMe</a></li>
-                        <li><a href="https://app.hackthebox.com" target="_blank">Hack The Box</a></li>
+                        <li><a href="https://portswigger.net/web-security" target="_blank">🎯 PortSwigger Academy</a></li>
+                        <li><a href="https://cheatsheetseries.owasp.org/" target="_blank">📋 OWASP Cheat Sheets</a></li>
+                        <li><a href="https://tryhackme.com" target="_blank">💻 TryHackMe</a></li>
+                        <li><a href="https://app.hackthebox.com" target="_blank">📦 Hack The Box</a></li>
+                        <li><a href="https://www.cybrary.it" target="_blank">📚 Cybrary</a></li>
                     </ul>
                     <a href="https://tryhackme.com" target="_blank" class="resource-link">
                         Start Learning <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 
-                <!-- Resource 6: Development Tools -->
+                <!-- 6. Development Tools -->
                 <div class="resource-card" data-aos="flip-up" data-aos-delay="500">
                     <div class="resource-icon-wrapper">
                         <i class="fas fa-tools"></i>
@@ -146,30 +174,182 @@
                     <h3>Development Tools</h3>
                     <p>Essential tools for web development, version control, and deployment.</p>
                     <ul class="resource-list">
-                        <li><a href="https://github.com" target="_blank">GitHub</a></li>
-                        <li><a href="https://code.visualstudio.com" target="_blank">VS Code</a></li>
-                        <li><a href="https://www.figma.com" target="_blank">Figma</a></li>
-                        <li><a href="https://www.netlify.com" target="_blank">Netlify</a></li>
+                        <li><a href="https://github.com" target="_blank">🐙 GitHub</a></li>
+                        <li><a href="https://code.visualstudio.com" target="_blank">💻 VS Code</a></li>
+                        <li><a href="https://www.figma.com" target="_blank">🎨 Figma</a></li>
+                        <li><a href="https://www.netlify.com" target="_blank">🚀 Netlify</a></li>
+                        <li><a href="https://vercel.com" target="_blank">▲ Vercel</a></li>
                     </ul>
                     <a href="https://github.com" target="_blank" class="resource-link">
                         View Tools <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
+
+                <!-- 7. Electrical Engineering Resources -->
+                <div class="resource-card" data-aos="flip-up" data-aos-delay="600">
+                    <div class="resource-icon-wrapper">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Electrical Engineering</h3>
+                    <p>Resources for electrical engineering, circuit design, and electronics.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://www.allaboutcircuits.com" target="_blank">⚡ All About Circuits</a></li>
+                        <li><a href="https://www.electronics-tutorials.ws" target="_blank">🔌 Electronics Tutorials</a></li>
+                        <li><a href="https://www.circuitlab.com" target="_blank">🔄 CircuitLab</a></li>
+                        <li><a href="https://www.ti.com" target="_blank">🔋 Texas Instruments</a></li>
+                        <li><a href="https://www.analog.com" target="_blank">📊 Analog Devices</a></li>
+                    </ul>
+                    <a href="https://www.allaboutcircuits.com" target="_blank" class="resource-link">
+                        Explore Electronics <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 8. Aviation Systems -->
+                <div class="resource-card" data-aos="flip-up" data-aos-delay="700">
+                    <div class="resource-icon-wrapper">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3>Aviation Systems</h3>
+                    <p>Resources for aviation technology, Airbus systems, and aerospace engineering.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://www.airbus.com" target="_blank">✈️ Airbus Official</a></li>
+                        <li><a href="https://www.faa.gov" target="_blank">🛫 FAA Resources</a></li>
+                        <li><a href="https://www.aviation.com" target="_blank">📡 Aviation Today</a></li>
+                        <li><a href="https://www.flightglobal.com" target="_blank">🌍 FlightGlobal</a></li>
+                        <li><a href="https://www.skybrary.aero" target="_blank">📚 SKYbrary</a></li>
+                    </ul>
+                    <a href="https://www.airbus.com" target="_blank" class="resource-link">
+                        Explore Aviation <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 9. Data Analytics Tools -->
+                <div class="resource-card" data-aos="flip-up" data-aos-delay="800">
+                    <div class="resource-icon-wrapper">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Data Analytics</h3>
+                    <p>Tools and platforms for data analysis, visualization, and machine learning.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://colab.research.google.com" target="_blank">📓 Google Colab</a></li>
+                        <li><a href="https://cloud.google.com/bigquery" target="_blank">📊 BigQuery</a></li>
+                        <li><a href="https://www.tableau.com" target="_blank">📈 Tableau</a></li>
+                        <li><a href="https://powerbi.microsoft.com" target="_blank">📉 Power BI</a></li>
+                        <li><a href="https://www.python.org" target="_blank">🐍 Python</a></li>
+                    </ul>
+                    <a href="https://colab.research.google.com" target="_blank" class="resource-link">
+                        Start Analyzing <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 10. Security Tools & CTF -->
+                <div class="resource-card" data-aos="flip-up" data-aos-delay="900">
+                    <div class="resource-icon-wrapper">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Security Tools &amp; CTF</h3>
+                    <p>Capture The Flag platforms and security testing tools.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://ctftime.org" target="_blank">🏁 CTF Time</a></li>
+                        <li><a href="https://overthewire.org" target="_blank">🎮 OverTheWire</a></li>
+                        <li><a href="https://picoctf.org" target="_blank">🔐 picoCTF</a></li>
+                        <li><a href="https://www.vulnhub.com" target="_blank">💿 VulnHub</a></li>
+                        <li><a href="https://github.com/OWASP" target="_blank">🛡️ OWASP GitHub</a></li>
+                    </ul>
+                    <a href="https://ctftime.org" target="_blank" class="resource-link">
+                        Join CTF <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 11. Automation & IoT -->
+                <div class="resource-card" data-aos="flip-up" data-aos-delay="1000">
+                    <div class="resource-icon-wrapper">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Automation &amp; IoT</h3>
+                    <p>Resources for automation, Internet of Things, and embedded systems.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://www.arduino.cc" target="_blank">🔧 Arduino</a></li>
+                        <li><a href="https://www.raspberrypi.org" target="_blank">🍓 Raspberry Pi</a></li>
+                        <li><a href="https://www.iotforall.com" target="_blank">📶 IoT For All</a></li>
+                        <li><a href="https://www.eclipse.org" target="_blank">🌐 Eclipse IoT</a></li>
+                        <li><a href="https://www.home-assistant.io" target="_blank">🏠 Home Assistant</a></li>
+                    </ul>
+                    <a href="https://www.arduino.cc" target="_blank" class="resource-link">
+                        Explore IoT <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 12. Cloud Computing -->
+                <div class="resource-card" data-aos="flip-up" data-aos-delay="1100">
+                    <div class="resource-icon-wrapper">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Computing</h3>
+                    <p>Resources for cloud platforms, deployment, and serverless architecture.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://aws.amazon.com" target="_blank">☁️ AWS</a></li>
+                        <li><a href="https://cloud.google.com" target="_blank">🔵 Google Cloud</a></li>
+                        <li><a href="https://azure.microsoft.com" target="_blank">🔷 Microsoft Azure</a></li>
+                        <li><a href="https://www.docker.com" target="_blank">🐳 Docker</a></li>
+                        <li><a href="https://kubernetes.io" target="_blank">⚓ Kubernetes</a></li>
+                    </ul>
+                    <a href="https://aws.amazon.com" target="_blank" class="resource-link">
+                        Explore Cloud <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 13. Networking Resources -->
+                <div class="resource-card" data-aos="flip-up" data-aos-delay="1200">
+                    <div class="resource-icon-wrapper">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Networking Resources</h3>
+                    <p>Resources for network engineering, protocols, and infrastructure.</p>
+                    <ul class="resource-list">
+                        <li><a href="https://www.cisco.com" target="_blank">🌐 Cisco Networking</a></li>
+                        <li><a href="https://www.netacad.com" target="_blank">📡 Cisco NetAcad</a></li>
+                        <li><a href="https://www.juniper.net" target="_blank">🔀 Juniper Networks</a></li>
+                        <li><a href="https://www.wireshark.org" target="_blank">🦈 Wireshark</a></li>
+                        <li><a href="https://www.nmap.org" target="_blank">🔍 Nmap</a></li>
+                    </ul>
+                    <a href="https://www.cisco.com" target="_blank" class="resource-link">
+                        Learn Networking <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
             </div>
         </div>
     </section>
-<!-- Add after resources grid -->
-<section class="quiz-section" data-aos="fade-up">
-    <div class="container">
-        <h2 class="section-title">
-            <span class="title-icon">🧠</span>
-            Cybersecurity Knowledge Quiz
-        </h2>
-        <div id="quizContainer" class="quiz-container">
-            <!-- Quiz rendered by JavaScript -->
+
+    <!-- ========================================
+    QUIZ SECTION (Resource #7 - Position)
+    ======================================== -->
+    <section class="quiz-section" data-aos="fade-up" style="padding: 4rem 0; background: var(--bg-light);">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; font-size: 2.25rem; font-weight: 700; margin-bottom: 0.5rem;">
+                <span class="title-icon" style="display: block; font-size: 2rem; margin-bottom: 0.5rem;">🧠</span>
+                Cybersecurity Knowledge Quiz
+            </h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: 1.1rem;">
+                Test your cybersecurity knowledge with these 8 questions
+            </p>
+            <div id="quizContainer" class="quiz-container" style="max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <!-- Quiz rendered by JavaScript -->
+                <div style="text-align: center; padding: 2rem; color: var(--text-light);">
+                    <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <p style="margin-top: 1rem;">Loading quiz...</p>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
     <!-- ========================================
     QUICK LINKS SECTION
     ======================================== -->
@@ -196,22 +376,85 @@
                     <i class="fas fa-book"></i>
                     <span>Study Notes</span>
                 </a>
+                <a href="https://colab.research.google.com" class="quick-resource">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Google Colab</span>
+                </a>
+                <a href="https://www.kaggle.com" class="quick-resource">
+                    <i class="fas fa-database"></i>
+                    <span>Kaggle</span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- ========================================
-    FOOTER (SAME AS INDEX)
+    FOOTER
     ======================================== -->
     <footer class="footer" role="contentinfo">
-        <!-- Same footer as index.html -->
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Hephzibah Behulah</h3>
+                    <p>Building secure digital experiences with precision and ethics.</p>
+                    <div class="footer-social-links">
+                        <a href="https://github.com/HephzibahBehulah" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/isaacoluwoleadigun" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://x.com/hephzibaBehulah" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                        <a href="mailto:isaacadigunoluwole@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="pentest.html">Pentest Tools</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-resources">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://hephzibahbehulah.blogspot.com" target="_blank">Cybersecurity Blog</a></li>
+                        <li><a href="https://github.com/HephzibahBehulah" target="_blank">GitHub Repos</a></li>
+                        <li><a href="https://www.genz-bible.com" target="_blank">GenZ Bible</a></li>
+                        <li><a href="https://openlibrary.org" target="_blank">Free eBooks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Stay Connected</h4>
+                    <p>Subscribe for cybersecurity insights and updates.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <div class="form-group">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+                        </div>
+                        <small class="form-note">No spam. Unsubscribe anytime.</small>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Hephzibah Behulah. All rights reserved.</p>
+                <p class="footer-ethics">Built with ❤️ and ethical technology</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- ========================================
+    SCRIPTS
+    ======================================== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/main.js" defer></script>
     <script src="js/theme.js" defer></script>
     <script src="js/animations.js" defer></script>
     <script src="js/custom-cursor.js" defer></script>
     <script src="js/quiz.js" defer></script>
+    
+    <!-- ⬇️⬇️⬇️ QUIZ SCRIPT - MUST BE HERE ⬇️⬇️⬇️ -->
+    <script src="js/quiz.js" defer></script>
+    <!-- ⬆️⬆️⬆️ QUIZ SCRIPT ENDS HERE ⬆️⬆️⬆️ -->
 </body>
 </html>
