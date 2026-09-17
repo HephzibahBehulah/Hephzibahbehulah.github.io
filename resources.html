@@ -1,29 +1,86 @@
-<!-- ========================================
-   RESOURCES TREE
-   ======================================== -->
-<section class="resources-tree-section">
-    <div id="resourcesTree"></div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources | Hephzibah Behulah - Interactive Learning Tree</title>
+    
+    <meta name="description" content="Interactive learning resources tree for cybersecurity, programming, data analytics, and engineering.">
+    <meta name="keywords" content="Cybersecurity resources, Learning tree, OSINT, Programming, Data analytics">
+    
+    <meta property="og:title" content="Resources | Hephzibah Behulah">
+    <meta property="og:description" content="Interactive learning resource tree.">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dark.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/osint-style.css">
+</head>
+<body class="tree-page">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" role="button" aria-label="Toggle dark mode" tabindex="0" id="themeToggle">
+        <i class="theme-icon fas fa-moon" aria-hidden="true"></i>
+    </div>
 
-<!-- ========================================
-   SCRIPTS
-   ======================================== -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="js/main.js" defer></script>
-<script src="js/theme.js" defer></script>
-<script src="js/animations.js" defer></script>
-<script src="js/tree-data.js" defer></script>
-<script src="js/osint-tree.js" defer></script>
-<script src="js/quiz.js" defer></script>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="navbar" role="navigation">
+            <div class="container nav-container">
+                <a href="index.html" class="nav-logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">HB</span>
+                    <span class="logo-full">Hephzibah Behulah</span>
+                </a>
+                <button class="nav-toggle" aria-label="Toggle navigation menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                    <li><a href="resources.html" class="nav-link active" aria-current="page">Resources</a></li>
+                    <li><a href="pentest.html" class="nav-link pentest-nav">🔐 Pentest Tools</a></li>
+                    <li><a href="contact.html" class="nav-link nav-cta">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-<script>
-    // Initialize the tree when everything is loaded
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            if (window.resourcesTreeData && window.OsintTree) {
-                window.resourcesTree = new OsintTree('resourcesTree', window.resourcesTreeData);
-                console.log('✅ Resources tree initialized!');
-            }
-        }, 100);
-    });
-</script>
+    <main id="main-content">
+        <!-- ========================================
+           RESOURCES TREE
+           ======================================== -->
+        <section class="resources-tree-section">
+            <div id="resourcesTree"></div>
+        </section>
+    </main>
+
+    <!-- ========================================
+       SCRIPTS
+       ======================================== -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/theme.js" defer></script>
+    <script src="js/animations.js" defer></script>
+    <script src="js/tree-data.js" defer></script>
+    <script src="js/osint-tree.js" defer></script>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (window.resourcesTreeData && window.OsintTree) {
+                    window.resourcesTree = new OsintTree('resourcesTree', window.resourcesTreeData);
+                    console.log('✅ Resources tree initialized!');
+                } else {
+                    console.log('❌ Tree data or OsintTree class not loaded');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
