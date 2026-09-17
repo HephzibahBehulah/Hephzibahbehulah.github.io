@@ -2198,3 +2198,37 @@ a:not(.btn) {
     font-size: 1rem;
 }
 
+/* ========================================
+   RESOURCES TREE SECTION
+   ======================================== */
+.resources-tree-section {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+#resourcesTree {
+    width: 100%;
+    height: 100vh;
+}
+
+/* Hide default container padding for tree */
+.resources-tree-section .container {
+    padding: 0;
+    max-width: none;
+}
+
+/* Adjust header position for full-screen tree */
+body.tree-page .header {
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--node-border);
+}
+
+body.tree-page .nav-link {
+    color: var(--node-text-muted);
+}
+
+body.tree-page .nav-link.active {
+    color: var(--node-active);
+}
