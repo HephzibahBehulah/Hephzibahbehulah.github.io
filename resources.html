@@ -60,7 +60,7 @@
         </section>
     </main>
 
-    <!-- ========================================
+       <!-- ========================================
        SCRIPTS
        ======================================== -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -72,6 +72,10 @@
 
     <script>
         window.addEventListener('load', function() {
+            console.log('🔍 Checking OSINT tree...');
+            console.log('  resourcesTreeData:', typeof window.resourcesTreeData);
+            console.log('  OsintTree class:', typeof window.OsintTree);
+            
             setTimeout(function() {
                 if (window.resourcesTreeData && window.OsintTree) {
                     window.resourcesTree = new OsintTree('resourcesTree', window.resourcesTreeData);
