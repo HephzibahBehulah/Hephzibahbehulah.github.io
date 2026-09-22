@@ -1,5 +1,5 @@
 // sw.js - Service Worker for offline support
-const CACHE_NAME = 'hephzibah-2026-09-22-v1';
+const CACHE_NAME = 'hephzibah-2026-09-22-v2';
 const ASSETS = [
     '/',
     '/index.html',
