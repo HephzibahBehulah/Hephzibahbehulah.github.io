@@ -12,6 +12,8 @@ const ASSETS = [
     '/css/dark.css',
     '/css/responsive.css',
     '/css/pentest.css',
+    '/css/osint-style.css',
+    '/css/cursor.css',
     '/js/main.js',
     '/js/theme.js',
     '/js/animations.js',
