@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hephzibah Behulah | Cybersecurity Student & Web Developer</title>
-    
+
     <!-- ========================================
     SEO META TAGS
     ======================================== -->
@@ -13,7 +13,7 @@
     <meta name="author" content="Hephzibah Behulah">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://hephzibahbehulah.github.io">
-    
+
     <!-- ========================================
     OPEN GRAPH / SOCIAL MEDIA
     ======================================== -->
@@ -24,203 +24,108 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@hephzibaBehulah">
-    
+
     <!-- ========================================
     THEME & COLORS
     ======================================== -->
     <meta name="theme-color" content="#1a365d">
     <meta name="color-scheme" content="light dark">
-    
+
+    <!-- ========================================
+    FAVICON (Inline SVG)
+    ======================================== -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
     <!-- ========================================
     FONTS
     ======================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-    /* ========================================
-       CRITICAL CSS - Above the Fold
-       Only styles needed for initial render
-       ======================================== */
-    
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    /* Base */
-    html { scroll-behavior: smooth; }
-    body { 
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background: var(--bg-color, #ffffff);
-        color: var(--text-color, #1e293b);
-        line-height: 1.6;
-        overflow-x: hidden;
-    }
-    
-    /* Container */
-    .container { 
-        max-width: 1200px; 
-        margin: 0 auto; 
-        padding: 0 1.5rem; 
-    }
-    
-    /* Navigation (Critical for layout) */
-    .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        background: var(--bg-color, #ffffff);
-        border-bottom: 1px solid var(--border-color, #e2e8f0);
-        transition: all 0.25s ease;
-    }
-    
-    .navbar { padding: 0.75rem 0; }
-    .nav-container { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-    }
-    
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-weight: 700;
-        font-size: 1.25rem;
-        color: var(--text-color, #1e293b);
-        text-decoration: none;
-    }
-    
-    .logo-text { color: var(--primary, #1a365d); }
-    .logo-full { display: inline; }
-    
-    .nav-menu {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        list-style: none;
-    }
-    
-    .nav-link {
-        color: var(--text-light, #64748b);
-        font-weight: 500;
-        font-size: 0.875rem;
-        padding: 0.5rem 0.75rem;
-        border-radius: 0.5rem;
-        transition: all 0.15s ease;
-        text-decoration: none;
-        position: relative;
-    }
-    
-    .nav-link:hover { color: var(--primary, #1a365d); }
-    .nav-link.active { 
-        color: var(--primary, #1a365d); 
-        font-weight: 600; 
-    }
-    
-    .nav-cta {
-        background: var(--primary, #1a365d);
-        color: #ffffff !important;
-        padding: 0.5rem 1.25rem;
-        border-radius: 9999px;
-    }
-    
-    .nav-cta:hover { background: var(--primary-dark, #0f2440) !important; }
-    
-    /* Hero Section (Critical) */
-    .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding: 120px 0 4rem;
-        background: linear-gradient(135deg, var(--bg-light, #f8fafc) 0%, var(--bg-color, #ffffff) 100%);
-    }
-    
-    .hero-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-        align-items: center;
-    }
-    
-    .hero-title .name {
-        font-size: 3rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--primary, #1a365d) 0%, var(--accent, #e87a2d) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    /* Theme toggle (Critical) */
-    .theme-toggle {
-        position: fixed;
-        bottom: 1.5rem;
-        right: 1.5rem;
-        z-index: 999;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: var(--primary, #1a365d);
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
-        border: none;
-        transition: all 0.25s ease;
-    }
-    
-    .theme-toggle:hover { transform: scale(1.1); }
-    
-    /* Mobile toggle (Critical) */
-    .nav-toggle {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem;
-    }
-    
-    .hamburger-line {
-        width: 25px;
-        height: 3px;
-        background: var(--text-color, #1e293b);
-        border-radius: 9999px;
-        transition: all 0.15s ease;
-    }
-    
-    /* Responsive breakpoints (Critical for initial layout) */
-    @media (max-width: 768px) {
-        .nav-toggle { display: flex; }
-        .nav-menu { 
-            display: none; 
-            flex-direction: column;
-            width: 100%;
-            padding: 1rem 0;
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- ========================================
+    CRITICAL CSS - Above the Fold
+    ======================================== -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color, #ffffff);
+            color: var(--text-color, #1e293b);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .nav-menu.open { display: flex; }
-        .hero-container { grid-template-columns: 1fr; text-align: center; }
-        .hero-title .name { font-size: 2.25rem; }
-        .logo-full { display: none; }
-    }
-    
-    @media (max-width: 480px) {
-        .hero-title .name { font-size: 1.875rem; }
-    }
-</style>
-    
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: var(--bg-color, #ffffff);
+            border-bottom: 1px solid var(--border-color, #e2e8f0);
+            transition: all 0.25s ease;
+        }
+        .navbar { padding: 0.75rem 0; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 1.25rem;
+            color: var(--text-color, #1e293b); text-decoration: none;
+        }
+        .logo-text { color: var(--primary, #1a365d); }
+        .logo-full { display: inline; }
+        .nav-menu { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
+        .nav-link {
+            color: var(--text-light, #64748b); font-weight: 500; font-size: 0.875rem;
+            padding: 0.5rem 0.75rem; border-radius: 0.5rem;
+            transition: all 0.15s ease; text-decoration: none;
+        }
+        .nav-link:hover { color: var(--primary, #1a365d); }
+        .nav-link.active { color: var(--primary, #1a365d); font-weight: 600; }
+        .nav-cta {
+            background: var(--primary, #1a365d); color: #ffffff !important;
+            padding: 0.5rem 1.25rem; border-radius: 9999px;
+        }
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 0 4rem;
+            background: linear-gradient(135deg, var(--bg-light, #f8fafc) 0%, var(--bg-color, #ffffff) 100%);
+        }
+        .hero-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .hero-title .name {
+            font-size: 3rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--primary, #1a365d) 0%, var(--accent, #e87a2d) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .theme-toggle {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--primary, #1a365d); color: #ffffff;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+            border: none; transition: all 0.25s ease;
+        }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .hamburger-line { width: 25px; height: 3px; background: var(--text-color, #1e293b); border-radius: 9999px; }
+        @media (max-width: 768px) {
+            .nav-toggle { display: flex; }
+            .nav-menu { display: none; flex-direction: column; width: 100%; padding: 1rem 0; }
+            .nav-menu.open { display: flex; }
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-title .name { font-size: 2.25rem; }
+            .logo-full { display: none; }
+        }
+        @media (max-width: 480px) {
+            .hero-title .name { font-size: 1.875rem; }
+        }
+    </style>
+
     <!-- ========================================
     CSS LIBRARIES
     ======================================== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- ========================================
     CUSTOM CSS
     ======================================== -->
@@ -231,12 +136,7 @@
     <link rel="stylesheet" href="css/accessibility.css">
     <link rel="stylesheet" href="css/tree-styles.css">
     <link rel="stylesheet" href="css/cursor.css">
-    
-    <!-- ========================================
-    PRELOAD CRITICAL ASSETS
-    ======================================== -->
-    <link rel="preload" as="image" href="assets/images/hero-bg.jpg">
-    <link rel="preload" as="image" href="assets/images/profile.jpg">
+    <link rel="stylesheet" href="css/osint-theme.css">
 </head>
 <body>
     <!-- ========================================
@@ -244,7 +144,6 @@
     ======================================== -->
     <div class="theme-toggle" role="button" aria-label="Toggle dark mode" tabindex="0" id="themeToggle">
         <i class="theme-icon fas fa-moon" aria-hidden="true"></i>
-        <span class="theme-label">Dark</span>
     </div>
 
     <!-- ========================================
@@ -253,21 +152,16 @@
     <header class="header" role="banner">
         <nav class="navbar" role="navigation" aria-label="Main navigation">
             <div class="container nav-container">
-                <!-- Logo -->
                 <a href="index.html" class="nav-logo" aria-label="Homepage">
                     <span class="logo-icon">⚡</span>
                     <span class="logo-text">HB</span>
                     <span class="logo-full">Hephzibah Behulah</span>
                 </a>
-                
-                <!-- Mobile Toggle -->
                 <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                 </button>
-                
-                <!-- Navigation Menu -->
                 <ul class="nav-menu" role="menubar">
                     <li role="none"><a href="index.html" class="nav-link active" role="menuitem" aria-current="page">Home</a></li>
                     <li role="none"><a href="about.html" class="nav-link" role="menuitem">About</a></li>
@@ -281,273 +175,290 @@
             </div>
         </nav>
     </header>
-<main id="main-content">
-    <!-- ========================================
-    HERO SECTION
-    ======================================== -->
-    <section class="hero" id="home" aria-labelledby="hero-title">
-<div id="particleContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;"></div>
-        <div class="container hero-container">
-            <div class="hero-content" data-aos="fade-up" data-aos-duration="800">
-                <!-- Badge -->
-                <div class="hero-badge animate__animated animate__pulse animate__infinite">
-                    <span class="badge-dot"></span>
-                    Open to Opportunities
+
+    <main id="main-content">
+        <!-- ========================================
+        HERO SECTION
+        ======================================== -->
+        <section class="hero" id="home" aria-labelledby="hero-title">
+            <div id="particleContainer" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;"></div>
+            <div class="container hero-container">
+                <div class="hero-content" data-aos="fade-up" data-aos-duration="800">
+                    <div class="hero-badge animate__animated animate__pulse animate__infinite">
+                        <span class="badge-dot"></span>
+                        Open to Opportunities
+                    </div>
+
+                    <h1 id="hero-title" class="hero-title">
+                        <span class="greeting">👋 Hi, I'm</span>
+                        <span class="name">Hephzibah Behulah</span>
+                        <span class="title-role">Cybersecurity Student &amp; Web Developer</span>
+                    </h1>
+
+                    <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
+                        <span class="quote-mark">"</span>
+                        I started with systems you can touch.<br>
+                        Now I'm building with systems you can't.
+                        <br><br>
+                        My journey moves from engineering and automation into
+                        software, cybersecurity, and data — driven by one constant:
+                        curiosity about how things work, and how they can work better.
+                        <br><br>
+                        I build with precision, think in systems, and design with
+                        security at the core — always learning for the technology of tomorrow.
+                        <span class="quote-mark">"</span>
+                    </p>
+
+                    <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
+                        <a href="contact.html" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Let's Connect
+                        </a>
+                        <a href="portfolio.html" class="btn btn-secondary">
+                            <i class="fas fa-code"></i> View My Work
+                        </a>
+                        <a href="pentest.html" class="btn btn-accent">
+                            <i class="fas fa-shield-halved"></i> Pentest Toolkit
+                        </a>
+                    </div>
+
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="600">
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="50">0</span>
+                            <span class="stat-label">Pentest Tools</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="3">0</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="100">0</span>
+                            <span class="stat-label">% Ethical Approach</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-count="15">0</span>
+                            <span class="stat-label">Projects Completed</span>
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Main Heading -->
-                <h1 id="hero-title" class="hero-title">
-                    <span class="greeting">👋 Hi, I'm</span>
-                    <span class="name">Hephzibah Behulah</span>
-                    <span class="title-role"><span class="typing-text">Cybersecurity Student</span></span>
-                </h1>
-                
-                <!-- Mission Statement -->
-                <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
-                    <span class="quote-mark">"</span>
-                    I started with systems you can touch.<br>
-                    Now I'm building with systems you can't.
-                    <br><br>
-                    My journey moves from engineering and automation into
-                    software, cybersecurity, and data — driven by one constant:
-                    curiosity about how things work, and how they can work better.
-                    <br><br>
-                    I build with precision, think in systems, and design with
-                    security at the core — always learning for the technology of tomorrow.
-                    <span class="quote-mark">"</span>
+
+                <div class="hero-visual" data-aos="fade-left" data-aos-delay="300">
+                    <div class="profile-wrapper">
+                        <div class="profile-image-container">
+                            <img src="assets/images/placeholder.jpg"
+                                 data-src="assets/images/profile.jpg"
+                                 alt="Hephzibah Behulah"
+                                 loading="lazy"
+                                 class="lazy-load">
+                            <div class="profile-ring"></div>
+                            <div class="profile-ring ring-2"></div>
+                        </div>
+                        <div class="status-badge">
+                            <span class="status-dot"></span>
+                            Available for Work
+                        </div>
+                    </div>
+
+                    <div class="tech-stack" aria-hidden="true">
+                        <span class="tech-tag" style="animation-delay: 0s;">Python</span>
+                        <span class="tech-tag" style="animation-delay: 1s;">JavaScript</span>
+                        <span class="tech-tag" style="animation-delay: 2s;">Linux</span>
+                        <span class="tech-tag" style="animation-delay: 0.5s;">WSL2</span>
+                        <span class="tech-tag" style="animation-delay: 1.5s;">Kali</span>
+                        <span class="tech-tag" style="animation-delay: 2.5s;">Git</span>
+                        <span class="tech-tag" style="animation-delay: 0.8s;">Docker</span>
+                        <span class="tech-tag" style="animation-delay: 1.8s;">BigQuery</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================
+        INTERACTIVE SKILLS TREE (OSINT Style)
+        ======================================== -->
+        <section class="home-tree-section" aria-labelledby="tree-title">
+            <div class="container">
+                <h2 id="tree-title" class="section-title">
+                    <span class="title-icon">🌳</span>
+                    Explore My Universe
+                </h2>
+                <p style="text-align:center; color:var(--text-light); margin-bottom:2rem; max-width:600px; margin-left:auto; margin-right:auto;">
+                    Click any node to expand. Navigate my skills, projects, and journey as an interactive tree.
                 </p>
-                
-                <!-- Call to Action -->
-                <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
-                    <a href="contact.html" class="btn btn-primary">
-                        <i class="fas fa-paper-plane"></i> Let's Connect
-                    </a>
-                    <a href="portfolio.html" class="btn btn-secondary">
-                        <i class="fas fa-code"></i> View My Work
-                    </a>
-                    <a href="pentest.html" class="btn btn-accent">
-                        <i class="fas fa-shield-halved"></i> Pentest Toolkit
-                    </a>
-                </div>
-                
-                <!-- Stats -->
-                <div class="hero-stats" data-aos="fade-up" data-aos-delay="600">
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="50">0</span>
-                        <span class="stat-label">Pentest Tools</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="3">0</span>
-                        <span class="stat-label">Years Experience</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="100">0</span>
-                        <span class="stat-label">% Ethical Approach</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="15">0</span>
-                        <span class="stat-label">Projects Completed</span>
-                    </div>
-                </div>
             </div>
-            
-            <!-- Hero Visual -->
-            <div class="hero-visual" data-aos="fade-left" data-aos-delay="300">
-                <div class="profile-wrapper">
-                    <div class="profile-image-container">
-                        <img src="assets/images/placeholder.jpg" 
-                             data-src="assets/images/profile.jpg" 
-                             alt="Hephzibah Behulah" 
-                             loading="lazy" 
-                             class="lazy-load">
-                        <div class="profile-ring"></div>
-                        <div class="profile-ring ring-2"></div>
-                    </div>
-                    <div class="status-badge">
-                        <span class="status-dot"></span>
-                        Available for Work
-                    </div>
-                </div>
-                
-                <!-- Tech Stack Floating Tags -->
-                <div class="tech-stack" aria-hidden="true">
-                    <span class="tech-tag" style="animation-delay: 0s;">Python</span>
-                    <span class="tech-tag" style="animation-delay: 1s;">JavaScript</span>
-                    <span class="tech-tag" style="animation-delay: 2s;">Linux</span>
-                    <span class="tech-tag" style="animation-delay: 0.5s;">WSL2</span>
-                    <span class="tech-tag" style="animation-delay: 1.5s;">Kali</span>
-                    <span class="tech-tag" style="animation-delay: 2.5s;">Git</span>
-                    <span class="tech-tag" style="animation-delay: 0.8s;">Docker</span>
-                    <span class="tech-tag" style="animation-delay: 1.8s;">BigQuery</span>
-                </div>
+            <div class="tree-viewport" id="treeViewport">
+                <div class="tree-canvas" id="mainTree"></div>
             </div>
-        </div>
-    </section>
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoomIn" title="Zoom In">+</button>
+                <button class="zoom-btn" id="zoomOut" title="Zoom Out">−</button>
+                <button class="zoom-btn" id="fitView" title="Fit View">⛶</button>
+                <button class="zoom-btn" id="expandAll" title="Expand All">▼</button>
+                <button class="zoom-btn" id="collapseAll" title="Collapse All">▲</button>
+            </div>
+        </section>
 
-    <!-- ========================================
-    QUICK LINKS / SOCIAL CONNECT
-    ======================================== -->
-    <section class="quick-links" aria-labelledby="social-title" data-aos="fade-up">
-        <div class="container">
-            <h2 id="social-title" class="section-title">
-                <span class="title-icon">🌐</span>
-                Connect With Me
-            </h2>
-           <div class="social-grid">
-    <a href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" class="social-card github" aria-label="GitHub @HephzibahBehulah">
-        <i class="fab fa-github social-icon"></i>
-        <span class="social-name">GitHub</span>
-        <span class="social-handle">@HephzibahBehulah</span>
-    </a>
-    <a href="https://linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener noreferrer" class="social-card linkedin" aria-label="LinkedIn Isaac Oluwole Adigun">
-        <i class="fab fa-linkedin social-icon"></i>
-        <span class="social-name">LinkedIn</span>
-        <span class="social-handle">Isaac Oluwole Adigun</span>
-    </a>
-    <a href="https://x.com/hephzibaBehulah" target="_blank" rel="noopener noreferrer" class="social-card twitter" aria-label="Twitter @hephzibaBehulah">
-        <i class="fab fa-x-twitter social-icon"></i>
-        <span class="social-name">Twitter</span>
-        <span class="social-handle">@hephzibaBehulah</span>
-    </a>
-    <a href="https://hephzibahbehulah.blogspot.com" target="_blank" rel="noopener noreferrer" class="social-card blog" aria-label="Cybersecurity Blog hephzibahbehulah.blogspot.com">
-        <i class="fas fa-blog social-icon"></i>
-        <span class="social-name">Blog</span>
-        <span class="social-handle">Cybersecurity Blog</span>
-    </a>
-    <a href="https://www.facebook.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" class="social-card facebook" aria-label="Facebook Hephzibah Behulah">
-        <i class="fab fa-facebook social-icon"></i>
-        <span class="social-name">Facebook</span>
-        <span class="social-handle">Hephzibah Behulah</span>
-    </a>
-    <a href="https://gitbook.io" target="_blank" rel="noopener noreferrer" class="social-card gitbook" aria-label="GitBook Study Notes">
-        <i class="fas fa-book social-icon"></i>
-        <span class="social-name">GitBook</span>
-        <span class="social-handle">Study Notes</span>
-    </a>
-</div>
-        </div>
-    </section>
-
-    <!-- ========================================
-    FEATURED PROJECTS
-    ======================================== -->
-    <section class="featured-projects" aria-labelledby="projects-title" data-aos="fade-up">
-        <div class="container">
-            <h2 id="projects-title" class="section-title">
-                <span class="title-icon">🚀</span>
-                Featured Work
-            </h2>
-            <div class="project-grid">
-                <!-- Project 1: Pentest Toolkit -->
-                <article class="project-card" data-aos="flip-up" data-aos-duration="600">
-                    <div class="project-icon-wrapper">
-                        <span class="project-icon">🔐</span>
-                    </div>
-                    <h3>Pentest Toolkit</h3>
-                    <p>50+ security tools integrated into an interactive web dashboard for ethical hacking and cybersecurity education.</p>
-                    <div class="project-tags">
-                        <span class="tag">WSL2</span>
-                        <span class="tag">Kali</span>
-                        <span class="tag">Bash</span>
-                        <span class="tag">Security</span>
-                    </div>
-                    <a href="pentest.html" class="project-link">
-                        Launch Toolkit <i class="fas fa-arrow-right"></i>
+        <!-- ========================================
+        QUICK LINKS / SOCIAL CONNECT
+        ======================================== -->
+        <section class="quick-links" aria-labelledby="social-title" data-aos="fade-up">
+            <div class="container">
+                <h2 id="social-title" class="section-title">
+                    <span class="title-icon">🌐</span>
+                    Connect With Me
+                </h2>
+                <div class="social-grid">
+                    <a href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" class="social-card github" aria-label="GitHub @HephzibahBehulah">
+                        <i class="fab fa-github social-icon"></i>
+                        <span class="social-name">GitHub</span>
+                        <span class="social-handle">@HephzibahBehulah</span>
                     </a>
-                </article>
-                
-                <!-- Project 2: Data Analytics -->
-                <article class="project-card" data-aos="flip-up" data-aos-delay="100" data-aos-duration="600">
-                    <div class="project-icon-wrapper">
-                        <span class="project-icon">📊</span>
-                    </div>
-                    <h3>Data Analytics</h3>
-                    <p>Python-based data analysis projects using Google Colab, BigQuery, and advanced visualization tools.</p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">BigQuery</span>
-                        <span class="tag">Colab</span>
-                        <span class="tag">Pandas</span>
-                    </div>
-                    <a href="portfolio.html#data" class="project-link">
-                        View Projects <i class="fas fa-arrow-right"></i>
+                    <a href="https://linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener noreferrer" class="social-card linkedin" aria-label="LinkedIn Isaac Oluwole Adigun">
+                        <i class="fab fa-linkedin social-icon"></i>
+                        <span class="social-name">LinkedIn</span>
+                        <span class="social-handle">Isaac Oluwole Adigun</span>
                     </a>
-                </article>
-                
-                <!-- Project 3: Secure Web Dev -->
-                <article class="project-card" data-aos="flip-up" data-aos-delay="200" data-aos-duration="600">
-                    <div class="project-icon-wrapper">
-                        <span class="project-icon">🛡️</span>
-                    </div>
-                    <h3>Secure Web Development</h3>
-                    <p>Building secure, accessible, and responsive web applications with ethical AI integration and privacy-first design.</p>
-                    <div class="project-tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Security</span>
-                    </div>
-                    <a href="portfolio.html#web" class="project-link">
-                        Learn More <i class="fas fa-arrow-right"></i>
+                    <a href="https://x.com/hephzibaBehulah" target="_blank" rel="noopener noreferrer" class="social-card twitter" aria-label="Twitter @hephzibaBehulah">
+                        <i class="fab fa-x-twitter social-icon"></i>
+                        <span class="social-name">Twitter</span>
+                        <span class="social-handle">@hephzibaBehulah</span>
                     </a>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================
-    SKILLS SHOWCASE
-    ======================================== -->
-    <section class="skills-showcase" aria-labelledby="skills-title" data-aos="fade-up">
-        <div class="container">
-            <h2 id="skills-title" class="section-title">
-                <span class="title-icon">⚡</span>
-                Tech Stack & Tools
-            </h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Development</h3>
-                    <ul class="skill-list">
-                        <li>HTML5 &amp; CSS3</li>
-                        <li>JavaScript (ES6+)</li>
-                        <li>Tailwind CSS</li>
-                        <li>Python</li>
-                        <li>Bash Scripting</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-shield-halved"></i> Security</h3>
-                    <ul class="skill-list">
-                        <li>Ethical Hacking</li>
-                        <li>Penetration Testing</li>
-                        <li>Network Security</li>
-                        <li>OWASP Top 10</li>
-                        <li>WSL2 / Kali Linux</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-database"></i> Data</h3>
-                    <ul class="skill-list">
-                        <li>Google BigQuery</li>
-                        <li>Google Colab</li>
-                        <li>Data Visualization</li>
-                        <li>Pandas / NumPy</li>
-                        <li>SQL</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-cloud"></i> DevOps</h3>
-                    <ul class="skill-list">
-                        <li>Git &amp; GitHub</li>
-                        <li>GitHub Pages</li>
-                        <li>Docker</li>
-                        <li>cPanel / Namecheap</li>
-                        <li>Netlify</li>
-                    </ul>
+                    <a href="https://hephzibahbehulah.blogspot.com" target="_blank" rel="noopener noreferrer" class="social-card blog" aria-label="Cybersecurity Blog hephzibahbehulah.blogspot.com">
+                        <i class="fas fa-blog social-icon"></i>
+                        <span class="social-name">Blog</span>
+                        <span class="social-handle">Cybersecurity Blog</span>
+                    </a>
+                    <a href="https://www.facebook.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" class="social-card facebook" aria-label="Facebook Hephzibah Behulah">
+                        <i class="fab fa-facebook social-icon"></i>
+                        <span class="social-name">Facebook</span>
+                        <span class="social-handle">Hephzibah Behulah</span>
+                    </a>
+                    <a href="https://gitbook.io" target="_blank" rel="noopener noreferrer" class="social-card gitbook" aria-label="GitBook Study Notes">
+                        <i class="fas fa-book social-icon"></i>
+                        <span class="social-name">GitBook</span>
+                        <span class="social-handle">Study Notes</span>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- ========================================
+        FEATURED PROJECTS
+        ======================================== -->
+        <section class="featured-projects" aria-labelledby="projects-title" data-aos="fade-up">
+            <div class="container">
+                <h2 id="projects-title" class="section-title">
+                    <span class="title-icon">🚀</span>
+                    Featured Work
+                </h2>
+                <div class="project-grid">
+                    <article class="project-card" data-aos="flip-up" data-aos-duration="600">
+                        <div class="project-icon-wrapper">
+                            <span class="project-icon">🔐</span>
+                        </div>
+                        <h3>Pentest Toolkit</h3>
+                        <p>50+ security tools integrated into an interactive web dashboard for ethical hacking and cybersecurity education.</p>
+                        <div class="project-tags">
+                            <span class="tag">WSL2</span>
+                            <span class="tag">Kali</span>
+                            <span class="tag">Bash</span>
+                            <span class="tag">Security</span>
+                        </div>
+                        <a href="pentest.html" class="project-link">
+                            Launch Toolkit <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </article>
+
+                    <article class="project-card" data-aos="flip-up" data-aos-delay="100" data-aos-duration="600">
+                        <div class="project-icon-wrapper">
+                            <span class="project-icon">📊</span>
+                        </div>
+                        <h3>Data Analytics</h3>
+                        <p>Python-based data analysis projects using Google Colab, BigQuery, and advanced visualization tools.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">BigQuery</span>
+                            <span class="tag">Colab</span>
+                            <span class="tag">Pandas</span>
+                        </div>
+                        <a href="portfolio.html#data" class="project-link">
+                            View Projects <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </article>
+
+                    <article class="project-card" data-aos="flip-up" data-aos-delay="200" data-aos-duration="600">
+                        <div class="project-icon-wrapper">
+                            <span class="project-icon">🛡️</span>
+                        </div>
+                        <h3>Secure Web Development</h3>
+                        <p>Building secure, accessible, and responsive web applications with ethical AI integration and privacy-first design.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Security</span>
+                        </div>
+                        <a href="portfolio.html#web" class="project-link">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================
+        SKILLS SHOWCASE
+        ======================================== -->
+        <section class="skills-showcase" aria-labelledby="skills-title" data-aos="fade-up">
+            <div class="container">
+                <h2 id="skills-title" class="section-title">
+                    <span class="title-icon">⚡</span>
+                    Tech Stack &amp; Tools
+                </h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3><i class="fas fa-code"></i> Development</h3>
+                        <ul class="skill-list">
+                            <li>HTML5 &amp; CSS3</li>
+                            <li>JavaScript (ES6+)</li>
+                            <li>Tailwind CSS</li>
+                            <li>Python</li>
+                            <li>Bash Scripting</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-shield-halved"></i> Security</h3>
+                        <ul class="skill-list">
+                            <li>Ethical Hacking</li>
+                            <li>Penetration Testing</li>
+                            <li>Network Security</li>
+                            <li>OWASP Top 10</li>
+                            <li>WSL2 / Kali Linux</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-database"></i> Data</h3>
+                        <ul class="skill-list">
+                            <li>Google BigQuery</li>
+                            <li>Google Colab</li>
+                            <li>Data Visualization</li>
+                            <li>Pandas / NumPy</li>
+                            <li>SQL</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-cloud"></i> DevOps</h3>
+                        <ul class="skill-list">
+                            <li>Git &amp; GitHub</li>
+                            <li>GitHub Pages</li>
+                            <li>Docker</li>
+                            <li>cPanel / Namecheap</li>
+                            <li>Netlify</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- ========================================
     FOOTER
@@ -555,7 +466,6 @@
     <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
-                <!-- Brand -->
                 <div class="footer-brand">
                     <h3>Hephzibah Behulah</h3>
                     <p>Building secure digital experiences with precision and ethics.</p>
@@ -566,8 +476,7 @@
                         <a href="mailto:isaacadigunoluwole@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
-                
-                <!-- Quick Links -->
+
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
@@ -579,8 +488,7 @@
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
-                
-                <!-- Resources -->
+
                 <div class="footer-resources">
                     <h4>Resources</h4>
                     <ul>
@@ -590,8 +498,7 @@
                         <li><a href="https://openlibrary.org" target="_blank">Free eBooks</a></li>
                     </ul>
                 </div>
-                
-                <!-- Newsletter -->
+
                 <div class="footer-newsletter">
                     <h4>Stay Connected</h4>
                     <p>Subscribe for cybersecurity insights and updates.</p>
@@ -604,8 +511,7 @@
                     </form>
                 </div>
             </div>
-            
-            <!-- Footer Bottom -->
+
             <div class="footer-bottom">
                 <p>&copy; 2026 Hephzibah Behulah. All rights reserved.</p>
                 <p class="footer-ethics">Built with ❤️ and ethical technology</p>
@@ -629,9 +535,13 @@
     <script src="js/animations.js" defer></script>
     <script src="js/sw-register.js" defer></script>
     <script src="js/particles.js" defer></script>
-    <script src="js/typing-effect.js" defer></script>
     <script src="js/custom-cursor.js" defer></script>
     <script src="js/performance.js" defer></script>
     <script src="js/lazy-load.js" defer></script>
+
+    <!-- OSINT Tree -->
+    <script src="js/tree-data-home.js" defer></script>
+    <script src="js/osint-tree.js" defer></script>
+    <script src="js/tree-loader.js" defer></script>
 </body>
 </html>
