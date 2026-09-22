@@ -2232,3 +2232,116 @@ body.tree-page .nav-link {
 body.tree-page .nav-link.active {
     color: var(--node-active);
 }
+
+/* ========================================
+   FUTURISTIC TYPING EFFECT
+   ======================================== */
+
+.hero-title .title-role.futuristic-typing {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    min-height: 1.5em;
+    transition: text-shadow 0.3s ease;
+}
+
+/* Gradient text */
+.hero-title .title-role .typing-text {
+    background: linear-gradient(
+        90deg,
+        var(--text-color) 0%,
+        var(--glow-color, var(--accent)) 50%,
+        var(--text-color) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 4s linear infinite;
+}
+
+@keyframes gradientShift {
+    to { background-position: 200% center; }
+}
+
+/* Blinking cursor */
+.typing-cursor {
+    display: inline-block;
+    color: var(--glow-color, var(--accent));
+    font-weight: 400;
+    animation: cursorBlink 1s step-end infinite;
+    text-shadow: 0 0 10px var(--glow-color, var(--accent));
+    margin-left: 2px;
+    user-select: none;
+}
+
+@keyframes cursorBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* Glow effect on text */
+.hero-title .title-role.futuristic-typing::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        var(--glow-color, var(--accent)) 0%,
+        transparent 70%
+    );
+    opacity: 0.08;
+    filter: blur(20px);
+    z-index: -1;
+    pointer-events: none;
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.05; }
+    50% { opacity: 0.15; }
+}
+
+/* Glitch animation */
+.hero-title .title-role.glitching {
+    animation: glitchShake 0.2s linear infinite;
+}
+
+.hero-title .title-role.glitching .typing-text {
+    text-shadow: 
+        2px 0 #ef4444,
+        -2px 0 #06b6d4,
+        0 2px #f59e0b;
+}
+
+@keyframes glitchShake {
+    0%   { transform: translate(0); }
+    20%  { transform: translate(-2px, 1px); }
+    40%  { transform: translate(-1px, -1px); }
+    60%  { transform: translate(2px, 1px); }
+    80%  { transform: translate(1px, -1px); }
+    100% { transform: translate(0); }
+}
+
+/* Reduced motion: no animations */
+@media (prefers-reduced-motion: reduce) {
+    .hero-title .title-role .typing-text {
+        animation: none;
+        background: none;
+        -webkit-text-fill-color: var(--text-color);
+        color: var(--text-color);
+    }
+    
+    .typing-cursor {
+        animation: none;
+    }
+    
+    .hero-title .title-role.futuristic-typing::after {
+        display: none;
+    }
+}
