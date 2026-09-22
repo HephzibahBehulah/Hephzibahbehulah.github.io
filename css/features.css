@@ -254,6 +254,7 @@
     100% { transform: translate(0); }
 }
 
+/* Reduced motion for typing effect */
 @media (prefers-reduced-motion: reduce) {
     .hero-title .title-role .typing-text {
         animation: none;
@@ -268,5 +269,52 @@
     
     .hero-title .title-role.futuristic-typing::after {
         display: none;
+    }
+}
+
+/* ========================================
+   HERO DESCRIPTION ENHANCEMENT
+   ======================================== */
+
+.hero-description {
+    font-size: var(--text-base);
+    line-height: 1.9;
+    color: var(--text-light);
+    max-width: 550px;
+    position: relative;
+    padding: var(--spacing-4) var(--spacing-6);
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(
+        90deg,
+        var(--primary-transparent) 0%,
+        transparent 100%
+    );
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+/* First phrase emphasis */
+.hero-description::first-line {
+    font-weight: 600;
+    color: var(--text-color);
+    letter-spacing: 0.3px;
+}
+
+/* Quote marks styling */
+.quote-mark {
+    font-size: var(--text-3xl);
+    color: var(--accent);
+    opacity: 0.6;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    line-height: 0;
+    vertical-align: middle;
+}
+
+/* Mobile optimization for hero description */
+@media (max-width: 768px) {
+    .hero-description {
+        padding: var(--spacing-3) var(--spacing-4);
+        font-size: var(--text-sm);
+        max-width: 100%;
     }
 }
