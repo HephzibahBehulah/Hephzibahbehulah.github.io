@@ -1,5 +1,5 @@
 // sw.js - Service Worker (Smart Fetch Strategy)
-const CACHE_NAME = 'hephzibah-2026-09-22-v2';
+const CACHE_NAME = 'hephzibah-2026-09-22-v3';
 
 const ASSETS = [
     '/',
