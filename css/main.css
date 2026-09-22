@@ -1676,6 +1676,20 @@ a:hover {
 .resource-embed {
     margin-bottom: var(--spacing-4);
 }
+/* Mission Statement Emphasis */
+.hero-description {
+    line-height: 1.8;
+}
+
+.hero-description br + br {
+    display: block;
+    margin-top: 0.5rem;
+    content: '';
+}
+
+.hero-description::first-line {
+    font-weight: 600;
+}
 
 /* ========================================
    QUICK RESOURCES
@@ -1924,3 +1938,4 @@ a:hover {
     background: var(--primary);
     color: var(--white);
 }
+
