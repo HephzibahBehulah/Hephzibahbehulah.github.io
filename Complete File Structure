@@ -1,10 +1,10 @@
 HephzibahBehulah.github.io/
 ├── index.html                    # Homepage
-├── about.html                    # About Me
-├── portfolio.html                # Portfolio/Projects
-├── resources.html                # Resources & Tools
-├── contact.html                  # Contact Page
-├── pentest.html                  # 🔐 Pentest Tool Dashboard (Integration)
+├── about.html                    # Identity page
+├── portfolio.html                # Legacy redirect → #projects
+├── resources.html                # Legacy redirect → #resourceMatrix
+├── contact.html                  # Contact endpoint
+├── pentest.html                  # Authorised security learning lab
 │
 ├── css/
 │   ├── main.css                  # Core styles
