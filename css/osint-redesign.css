@@ -4,3 +4,18 @@
 
 /* Interactive intelligence map */
 .map-canvas{position:relative!important;height:760px!important;min-height:760px!important;overflow:hidden!important;cursor:grab!important;background:radial-gradient(circle at 50% 15%,rgba(86,207,225,.08),transparent 34%),linear-gradient(180deg,rgba(7,10,14,.96),rgba(4,7,10,.99));border:1px solid rgba(86,207,225,.15);border-radius:8px}.map-canvas.dragging{cursor:grabbing}.intel-map-stage{position:absolute;width:1500px;height:900px;left:0;top:0;transform-origin:0 0}.intel-map-lines{position:absolute;inset:0;width:1500px;height:900px;pointer-events:none}.map-connection{fill:none;stroke:rgba(86,207,225,.25);stroke-width:2;stroke-dasharray:5 7}.intel-map-layer{position:absolute;inset:0}.map-node,.map-leaf{position:absolute;width:170px;min-height:62px;padding:11px 12px;text-align:left;border:1px solid rgba(86,207,225,.3);border-radius:7px;background:rgba(10,15,20,.97);color:var(--text);font:700 12px/1.2 var(--mono);letter-spacing:.4px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);transform:translateX(-50%);transition:.18s}.map-node:hover,.map-leaf:hover{transform:translateX(-50%) translateY(-4px);border-color:var(--cyan);box-shadow:0 0 22px rgba(86,207,225,.18)}.map-node small,.map-leaf small{display:block;margin-top:6px;color:var(--muted);font:400 10px/1.35 var(--sans);letter-spacing:0}.map-root{width:190px;text-align:center;border-color:var(--accent);box-shadow:0 0 28px rgba(255,138,61,.12)}.map-node.eng,.map-leaf.eng{border-color:rgba(242,201,76,.45)}.map-node.web,.map-leaf.web{border-color:rgba(122,162,247,.45)}.map-node.data,.map-leaf.data{border-color:rgba(99,210,151,.45)}.map-node.cyber,.map-leaf.cyber{border-color:rgba(255,107,107,.45)}.map-node.osint,.map-leaf.osint{border-color:rgba(167,139,250,.45)}.map-node.ai,.map-leaf.ai{border-color:rgba(255,110,200,.45)}.map-node.learn,.map-leaf.learn{border-color:rgba(86,207,225,.45)}.map-leaf{width:210px;min-height:68px}.map-canvas~.node-info{display:flex;gap:12px;align-items:center;margin-top:12px}.map-canvas~.node-info b{color:var(--cyan)}@media(max-width:900px){.map-canvas{height:650px!important;min-height:650px!important}.intel-map-stage{transform:scale(.72);transform-origin:0 0}}
+
+/* Interactive mega-tool workspace */
+.resource-tool-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.78);backdrop-filter:blur(8px)}
+.resource-tool-modal.open{display:flex}
+.resource-tool-card{position:relative;width:min(720px,96vw);max-height:90vh;overflow:auto;border:1px solid rgba(127,255,212,.35);background:#071019;padding:24px;box-shadow:0 20px 80px rgba(0,0,0,.55)}
+.resource-tool-card h2{margin:0 35px 8px 0}
+.tool-modal-domain{font:11px "JetBrains Mono",monospace;opacity:.65;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.tool-formula{display:grid;gap:6px;border:1px solid rgba(127,255,212,.16);padding:14px;margin:12px 0 16px}
+.tool-formula code{font:14px "JetBrains Mono",monospace;white-space:pre-wrap;color:inherit}
+.tool-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.tool-inputs label{display:grid;gap:6px;font-size:12px;opacity:.9}
+.tool-inputs input{width:100%;box-sizing:border-box;padding:11px;background:rgba(0,0,0,.3);border:1px solid rgba(127,255,212,.2);color:inherit;font:13px "JetBrains Mono",monospace}
+#resourceToolBody .hb-result{margin-top:14px;white-space:pre-wrap;word-break:break-word;min-height:42px}
+.tool-source-note{margin-top:12px;font-size:11px;opacity:.55}
+.mega-tool-card .mega-open{margin-top:auto}
