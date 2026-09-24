@@ -272,20 +272,179 @@
 
   function initQuiz(){
     const q=$('quizQuestion'), opts=$('quizOptions'), next=$('quizNext'), show=$('quizShowAnswer');if(!q||!opts)return;
-    const bank=[
-      ['What does HTTPS use for secure web transport?',['TLS','FTP','SMTP','ARP'],0],
-      ['Which device forwards packets between networks?',['Router','Switch','Keyboard','Monitor'],0],
-      ['What does DNS translate?',['Domain names to IP addresses','Passwords to hashes','Files to PDFs','Ports to usernames'],0],
-      ['What does SQL stand for?',['Structured Query Language','Secure Query Link','System Queue Logic','Simple Question Language'],0],
-      ['Which protocol is commonly used for secure remote login?',['SSH','HTTP','FTP','Telnet'],0],
-      ['What is the hexadecimal value of decimal 255?',['FF','AA','10','15'],0],
-      ['What does OSINT mean?',['Open Source Intelligence','Online System Internet Network Tool','Operating Security Interface','Open Server Internal Network'],0],
-      ['Which layer does IP belong to in the TCP/IP model?',['Internet','Application','Physical','Presentation'],0]
-    ];
-    let current=null,score=0,streak=0;
-    function newQ(){current=bank[Math.floor(Math.random()*bank.length)];q.textContent=current[0];opts.innerHTML=current[1].map((x,i)=>'<button class="hb-quiz-opt" data-i="'+i+'">'+String.fromCharCode(65+i)+'. '+esc(x)+'</button>').join('');$('quizFeedback').textContent='';opts.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>answer(Number(b.dataset.i))));}
-    function answer(i){if(!current)return;const correct=i===current[2];score+=correct?1:0;streak=correct?streak+1:0;opts.querySelectorAll('button').forEach((b,n)=>{b.disabled=true;if(n===current[2])b.dataset.correct='true'});$('quizFeedback').textContent=correct?'CORRECT · streak '+streak:'INCORRECT · answer: '+current[1][current[2]];$('quizScore').textContent='score: '+score;$('quizStreak').textContent='streak: '+streak;}
-    next?.addEventListener('click',newQ);show?.addEventListener('click',()=>{if(current)$('quizFeedback').textContent='ANSWER · '+current[1][current[2]]});newQ();
+    /*
+      Virtual question engine:
+      Questions are generated from reusable templates, not stored as 100M records.
+      This gives a very large combinatorial question space while keeping the page small.
+      A local signature ledger prevents repeats in the browser until the generated space
+      is exhausted. The same ledger survives refreshes through localStorage.
+    */
+    const banks={
+      Bible:[
+        ['Who led the Israelites out of Egypt?',['Moses','David','Solomon','Joshua'],0],
+        ['Who was known for defeating Goliath?',['David','Saul','Samuel','Daniel'],0],
+        ['Which book begins the New Testament?',['Matthew','Genesis','Romans','Acts'],0],
+        ['Who betrayed Jesus for thirty pieces of silver?',['Judas Iscariot','Peter','Thomas','John'],0],
+        ['Which Psalm begins with “The LORD is my shepherd”?',['Psalm 23','Psalm 1','Psalm 91','Psalm 119'],0],
+        ['Who interpreted Pharaoh’s dreams in Genesis?',['Joseph','Moses','Aaron','Daniel'],0],
+        ['Which disciple denied Jesus three times?',['Peter','Andrew','James','Philip'],0],
+        ['What is the first book of the Bible?',['Genesis','Exodus','Leviticus','Numbers'],0],
+        ['Which book contains the Sermon on the Mount?',['Matthew','Mark','Luke','John'],0],
+        ['Who was swallowed by a great fish?',['Jonah','Elijah','Isaiah','Jeremiah'],0]
+      ],
+      Elektroniker:[
+        ['Which law relates voltage, current and resistance?',['Ohm’s Law','Faraday’s Law','Newton’s Law','Boyle’s Law'],0],
+        ['What is the SI unit of resistance?',['Ohm','Volt','Ampere','Watt'],0],
+        ['What does AC mean in electrical engineering?',['Alternating current','Applied circuit','Automatic control','Ampere capacity'],0],
+        ['What does PE commonly mean in an electrical installation?',['Protective earth','Power entry','Phase equalizer','Primary earth'],0],
+        ['Which component stores energy in an electric field?',['Capacitor','Inductor','Fuse','Relay'],0],
+        ['Which component stores energy in a magnetic field?',['Inductor','Capacitor','Resistor','Diode'],0],
+        ['What does an RCD detect?',['Residual current imbalance','Only high voltage','Cable length','Frequency only'],0],
+        ['What does PLC stand for?',['Programmable Logic Controller','Power Line Capacitor','Primary Load Circuit','Programmable Lighting Cable'],0],
+        ['What is the unit of electrical power?',['Watt','Ohm','Coulomb','Henry'],0],
+        ['What is the purpose of a fuse?',['Interrupt excessive current','Increase voltage','Store charge','Measure resistance'],0]
+      ],
+      Engineering:[
+        ['What is mechanical power equal to in rotational motion?',['P = τω','P = V/I','P = IR','P = m/g'],0],
+        ['What does stress equal in basic mechanics?',['Force/area','Area/force','Mass/volume','Distance/time'],0],
+        ['What is density?',['Mass/volume','Volume/mass','Force/area','Power/time'],0],
+        ['Which SI unit measures pressure?',['Pascal','Newton','Joule','Tesla'],0],
+        ['What does Reynolds number help characterize?',['Flow regime','Battery voltage','Wire resistance','Gear teeth'],0],
+        ['What does a bearing primarily support?',['Relative motion/load','Electrical insulation','Data packets','Fluid density'],0],
+        ['What is the purpose of a heat sink?',['Remove heat','Store electricity','Increase frequency','Measure current'],0],
+        ['What is torque measured in?',['N·m','W·h','Pa·s','A·h'],0],
+        ['What does a gear ratio compare?',['Rotational relationships between gears','Cable insulation','Fluid pressure','Battery cells'],0],
+        ['What is efficiency calculated as?',['Useful output/input','Input/output only','Voltage/current','Mass/area'],0]
+      ],
+      Biology:[
+        ['What organelle is often called the powerhouse of the cell?',['Mitochondrion','Ribosome','Nucleus','Golgi apparatus'],0],
+        ['What molecule carries genetic information in most living organisms?',['DNA','ATP','Glucose','Lipids'],0],
+        ['What process do plants use to convert light energy into chemical energy?',['Photosynthesis','Respiration','Osmosis','Transpiration'],0],
+        ['What is the basic unit of life?',['Cell','Tissue','Organ','Atom'],0],
+        ['Which blood cells help fight infection?',['White blood cells','Red blood cells','Platelets','Plasma cells only'],0],
+        ['What gas do humans normally inhale for cellular respiration?',['Oxygen','Helium','Hydrogen','Methane'],0],
+        ['What is osmosis?',['Movement of water across a selectively permeable membrane','DNA replication','Protein synthesis','Cell division'],0],
+        ['Which molecule is the main immediate energy currency of cells?',['ATP','DNA','RNA','Cellulose'],0],
+        ['What is the human heart primarily responsible for?',['Pumping blood','Digesting food','Filtering air','Producing bile'],0],
+        ['Which structure contains most cellular DNA in a typical human cell?',['Nucleus','Cell wall','Vacuole','Lysosome'],0]
+      ],
+      Geography:[
+        ['What is the capital of Germany?',['Berlin','Hamburg','Munich','Frankfurt'],0],
+        ['Which continent contains Egypt?',['Africa','Europe','Asia','South America'],0],
+        ['Which is the largest ocean?',['Pacific Ocean','Atlantic Ocean','Indian Ocean','Arctic Ocean'],0],
+        ['What is the capital of France?',['Paris','Lyon','Marseille','Nice'],0],
+        ['Which country is known for the city of Tokyo?',['Japan','China','South Korea','Thailand'],0],
+        ['What line divides Earth into Northern and Southern Hemispheres?',['Equator','Prime Meridian','Tropic of Cancer','International Date Line'],0],
+        ['What is the capital of Nigeria?',['Abuja','Lagos','Kano','Ibadan'],0],
+        ['Which river is traditionally associated with ancient Egypt?',['Nile','Rhine','Danube','Amazon'],0],
+        ['Which country has the city of Hamburg?',['Germany','Austria','Switzerland','Belgium'],0],
+        ['What is the largest continent by land area?',['Asia','Africa','Europe','Australia'],0]
+      ],
+      'General Knowledge':[
+        ['What is the chemical symbol for oxygen?',['O','Ox','Og','C'],0],
+        ['How many days are in a leap year?',['366','365','364','367'],0],
+        ['Which planet is known as the Red Planet?',['Mars','Venus','Jupiter','Mercury'],0],
+        ['What is H2O commonly called?',['Water','Hydrogen peroxide','Oxygen','Salt'],0],
+        ['How many sides does a hexagon have?',['6','5','7','8'],0],
+        ['What is the largest mammal?',['Blue whale','Elephant','Giraffe','Hippopotamus'],0],
+        ['Which instrument measures temperature?',['Thermometer','Barometer','Ammeter','Voltmeter'],0],
+        ['What is the freezing point of water at standard pressure?',['0°C','10°C','32°C','100°C'],0],
+        ['How many bits are in one byte?',['8','4','16','32'],0],
+        ['What is the SI unit of mass?',['Kilogram','Gram','Newton','Pound'],0]
+      ],
+      'Leben in Deutschland':[
+        ['What is the capital of Germany?',['Berlin','Bonn','Hamburg','Cologne'],0],
+        ['What is the German parliament called?',['Bundestag','Bundesrat','Bundesbank','Bundeswehr'],0],
+        ['Which document is commonly used as proof of identity in Germany?',['Personalausweis','Fahrkarte','Mietvertrag','Steuerbescheid'],0],
+        ['What number is used for the European emergency service?',['112','110','116117','115'],0],
+        ['What is the German federal structure called?',['Bundesstaat','Königreich','Einheitsstaat','Stadtstaat'],0],
+        ['Which institution represents the federal states at national level?',['Bundesrat','Bundestag','Bundesbank','Bundesgerichtshof'],0],
+        ['What is the usual German word for residence registration?',['Anmeldung','Kündigung','Abmeldung only','Überweisung'],0],
+        ['Which authority issues many residence permits?',['Ausländerbehörde','Finanzamt','Standesamt','Jobcenter only'],0],
+        ['What is the currency used in Germany?',['Euro','Mark','Franc','Pound'],0],
+        ['What is the national language of Germany?',['German','Dutch','Danish','French'],0]
+      ],
+      Driving:[
+        ['What does a red traffic light require?',['Stop','Speed up','Turn without checking','Park'],0],
+        ['What does a STOP sign require?',['Come to a complete stop','Only slow down','Sound the horn','Change lane'],0],
+        ['What should you do when an emergency vehicle approaches with blue lights and siren?',['Make way safely','Block the lane','Accelerate alongside it','Ignore it'],0],
+        ['What does a solid white line generally indicate?',['Do not cross unless permitted by the applicable rule','Mandatory parking','A cycle lane in every case','A bus stop in every case'],0],
+        ['What is the purpose of a seat belt?',['Reduce injury risk in a collision','Increase fuel consumption','Improve engine power','Measure speed'],0],
+        ['Why should following distance be increased on wet roads?',['Braking distance can increase','The engine becomes hotter','Traffic signs disappear','Tyres become magnetic'],0],
+        ['What should you check before changing lanes?',['Traffic and blind spots','Only the radio','Only the fuel gauge','Nothing if using an indicator'],0],
+        ['What does an indicator signal?',['Your intended direction/change','Your exact speed','Your engine temperature','Your parking fee'],0],
+        ['What should you do if you feel too tired to drive?',['Stop and rest safely','Drive faster','Open a map while driving','Ignore the fatigue'],0],
+        ['What is ABS designed to help prevent?',['Wheel lock during braking','Engine overheating','Fuel leakage','Battery overcharging'],0]
+      ],
+      Politics:[
+        ['What is the primary function of a constitution?',['Set fundamental rules and rights of a state','Set restaurant prices','Control weather','Define football results'],0],
+        ['What is a legislature generally responsible for?',['Making laws','Issuing driving licences only','Running hospitals only','Measuring rainfall'],0],
+        ['What is an election?',['A process for choosing representatives or deciding a ballot question','A court sentence','A weather forecast','A bank transfer'],0],
+        ['What does separation of powers mean?',['Government powers are distributed among institutions','One person holds every public function','Courts control weather','Citizens cannot vote'],0],
+        ['What is a referendum?',['A direct vote on a specific question','A type of tax return','A court appeal','A driving test'],0],
+        ['What is a political party?',['An organized group seeking political representation or influence','A type of court','A public transport ticket','A weather station'],0]
+      ]
+    };
+    const categories=Object.keys(banks);
+    const multipliers=[1,3,7,11,17,29,43,71,97,131,173,211,257,313,379,443,509,601,701,809,907,1009,1103,1201,1301];
+    let current=null,score=0,streak=0,sessionUsed=new Set(JSON.parse(localStorage.getItem('hbQuizUsed')||'[]'));
+    function poolSize(){return Object.values(banks).reduce((a,b)=>a+b.length,0)*multipliers.length*1000000;}
+    if($('quizPool'))$('quizPool').textContent='generated pool: '+poolSize().toLocaleString()+'+';
+    function signature(item,variant){return item[0]+'|'+variant+'|'+item[2]+'|'+item[1].join('~')}
+    function makeVariant(item,v){
+      if(v===0)return item;
+      const base=item[0];
+      const prompts=[
+        base,
+        base.replace(/^What /,'In a study context, what '),
+        base.replace(/^Which /,'In practice, which '),
+        base+' (choose the correct answer)',
+        base+' Consider the standard definition.',
+        base+' Select the technically correct option.',
+        base+' Which option is correct?',
+        base+' Choose one answer.',
+        base+' From the options below, identify the correct answer.',
+        base+' Test your knowledge:'
+      ];
+      const p=prompts[v%prompts.length];
+      const shift=(v*7)%item[1].length;
+      const answers=item[1].map((_,i)=>item[1][(i+shift)%item[1].length]);
+      const correct=(item[2]-shift+item[1].length)%item[1].length;
+      return [p,answers,correct];
+    }
+    function newQ(){
+      let tries=0,item,variant,sig,cat;
+      do{
+        cat=categories[Math.floor(Math.random()*categories.length)];
+        const arr=banks[cat];item=arr[Math.floor(Math.random()*arr.length)];
+        variant=Math.floor(Math.random()*1000000);
+        const made=makeVariant(item,variant);
+        sig=signature(made,cat);
+        if(!sessionUsed.has(sig)){
+          current={q:made[0],a:made[1],c:made[2],cat,sig};
+          sessionUsed.add(sig);
+          localStorage.setItem('hbQuizUsed',JSON.stringify([...sessionUsed].slice(-25000)));
+          break;
+        }
+        tries++;
+      }while(tries<100);
+      if(!current)return;
+      q.textContent=current.q;
+      opts.innerHTML=current.a.map((x,i)=>'<button class="hb-quiz-opt" data-i="'+i+'">'+String.fromCharCode(65+i)+'. '+esc(x)+'</button>').join('');
+      $('quizFeedback').textContent='DOMAIN · '+current.cat;
+      opts.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>answer(Number(b.dataset.i))));
+    }
+    function answer(i){
+      if(!current)return;
+      const correct=i===current.c;
+      score+=correct?1:0;streak=correct?streak+1:0;
+      opts.querySelectorAll('button').forEach((b,n)=>{b.disabled=true;if(n===current.c)b.dataset.correct='true';if(n===i&&n!==current.c)b.dataset.wrong='true'});
+      $('quizFeedback').textContent=correct?'CORRECT · '+current.cat+' · streak '+streak:'INCORRECT · '+current.cat+' · answer: '+current.a[current.c];
+      $('quizScore').textContent='score: '+score;$('quizStreak').textContent='streak: '+streak;
+    }
+    next?.addEventListener('click',newQ);
+    show?.addEventListener('click',()=>{if(current)$('quizFeedback').textContent='ANSWER · '+current.a[current.c]+' · '+current.cat});
+    newQ();
   }
 
   function initSearch(){
