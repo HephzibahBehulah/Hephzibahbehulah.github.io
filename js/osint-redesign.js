@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{const q=document.getElementById("osSearch"),nodes=[...document.querySelectorAll(".os-node")];q?.addEventListener("input",e=>{const s=e.target.value.toLowerCase();nodes.forEach(n=>n.style.opacity=!s||n.textContent.toLowerCase().includes(s)?"1":".22")});});
