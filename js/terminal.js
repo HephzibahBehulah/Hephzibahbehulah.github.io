@@ -104,15 +104,137 @@ function stat(type, raw) {
 }
 
 function showHelp(topic) {
-  if (topic && descriptions[topic]) { print(topic.toUpperCase()+' · '+descriptions[topic]); printLines(Object.entries(COMMANDS).filter(([,v])=>v===topic).map(([k])=>k).join('  ')); return; }
-  print('HB TERMINAL · command interface');
-  print('Type HELP <family> for focused commands.');
-  Object.entries(descriptions).forEach(([k,v])=>print(k.padEnd(11)+' '+v));
+  const groups = {
+    system: [
+      'help [family]                 command guide; HELP ENGINEERING / NETWORK / SECURITY / DATA / OSINT / LEARNING',
+      'list | ls                     list available command families and commands',
+      'man <command>                 short manual entry for one command',
+      'which <command>               show whether a command is built in',
+      'status | is                   show terminal/runtime status',
+      'version                       show terminal version',
+      'about | whoami                show platform identity',
+      'tree                          describe the site learning tree',
+      'history                       show this session command history',
+      'clear | cls                   clear terminal output',
+      'exit | quit | q               close the terminal shell',
+      'open terminal                 restore a closed terminal',
+      'pwd                           show virtual working directory',
+      'cd <dir> | chdir <dir>        move in the virtual directory tree',
+      'echo <text>                   print text',
+      'date                          show browser date/time',
+      'nav <area>                    jump to tree/resources/ebooks/toolbench/mega-tools/engineering/knowledge/projects',
+      'focus                         return focus to the terminal input',
+      'ia <topic>                    open an intelligence prompt for a site topic',
+      '',
+      'Aliases: ?=HELP  LS=LIST  CLS=CLEAR  QUIT/Q=EXIT  NAP=NMAP'
+    ],
+    engineering: [
+      'ohm <I> <R>                   V = I × R',
+      'power <V> <I>                  P = V × I',
+      'energy <P> <time>              E = P × time',
+      'resistor <Vs> <Vf> <I>         R = (Vs − Vf) / I',
+      'led <Vs> <Vf> <I>              LED resistor calculation',
+      'frequency <Hz>                 T = 1 / f',
+      'rms <peak>                     sine RMS = peak / √2',
+      'efficiency <out> <in>          η = output / input × 100%',
+      'voltage <I> <R>                V = I × R',
+      'current <V> <R>                I = V / R',
+      'impedance <R> <X>              Z = √(R² + X²)',
+      'divider <Vin> <R1> <R2>        Vout = Vin × R2 / (R1 + R2)',
+      'series-resistance <R1> <R2>    Rt = R1 + R2',
+      'parallel-resistance <R1> <R2>  Rt = R1 || R2',
+      'power-factor <W> <VA>          PF = W / VA',
+      'three-phase <V> <I> <PF>       P = √3 × V × I × PF',
+      'motor-torque <W> <rpm>         τ = P / ω',
+      'voltage-drop <I> <R>           Vdrop = I × R',
+      'color <hex>                    validate a colour token'
+    ],
+    data: [
+      'mean <numbers...>              arithmetic mean',
+      'median <numbers...>            middle value',
+      'mode <numbers...>              most frequent value',
+      'range <numbers...>             max − min',
+      'variance <numbers...>          population variance',
+      'std <numbers...>               population standard deviation',
+      'zscore <x> | <mean> | <std>    z-score',
+      'precision <TP> <FP>            TP / (TP + FP)',
+      'recall <TP> <FN>               TP / (TP + FN)',
+      'f1 <precision> <recall>        harmonic mean of precision and recall'
+    ],
+    security: [
+      'base64 <text>                  Base64 encode',
+      'encode <text>                  alias for Base64 encode',
+      'decode <base64>                Base64 decode',
+      'hash <text>                    SHA-256 hash using Web Crypto',
+      'sha256 <text>                  alias for hash',
+      'jwt <token>                    decode JWT payload only; signature is not verified',
+      'csrf | xss | sqli | mfa        short security learning notes',
+      'password                       password/security learning note'
+    ],
+    network: [
+      'ip <address>                   explain/inspect an IP address',
+      'cidr <ip/prefix>               calculate subnet information',
+      'subnet <ip/prefix>             CIDR/subnet helper',
+      'ports <list>                   inspect a port list',
+      'protocol <name>                explain a network protocol',
+      'tcp | udp | icmp | arp         protocol learning notes',
+      'http | https | dns             protocol learning notes',
+      'dnslookup <name>               browser-safe DNS lookup helper',
+      'nslookup <name>                alias for DNS lookup',
+      'route | mac | ping             networking learning helpers',
+      'traceroute                     explain browser limitation',
+      'nmap | nap                     Nmap learning/explanation mode only'
+    ],
+    osint: [
+      'urlinfo <url>                  inspect URL structure locally',
+      'url <url>                      alias for URL info',
+      'headers <url>                  attempt a browser-safe HTTP HEAD request',
+      'robots <url>                   build robots.txt URL',
+      'sitemap <url>                  build sitemap.xml URL',
+      'crt <domain>                   open certificate-transparency search',
+      'whois <domain>                 open WHOIS-oriented research helper'
+    ],
+    learning: [
+      'quiz start [domain]            start terminal quiz',
+      'quiz next                      show the next question',
+      'answer A|B|C|D                submit a quiz answer',
+      'quiz score                     show quiz score/streak',
+      'quiz reset                     reset quiz state',
+      'game start [domain]            start mixed learning game',
+      'game score                     show game score/level/streak',
+      'game reset                     reset game',
+      'game help                      show game controls',
+      'rules                          explain quiz/game rules',
+      'check | selftest               run built-in command sanity checks',
+      'explain <topic>                short lesson summary',
+      'glossary <topic>               quick definition',
+      'learn <topic>                  learning guidance',
+      'tools                          open the site tool ecosystem',
+      'tool <name>                    open a matching indexed tool when available',
+      'project <name>                 open a project/repository reference',
+      'repo <name>                    repository navigation helper'
+    ]
+  };
+  const aliases = { engineering:'engineering', eng:'engineering', network:'network', networking:'network', security:'security', cyber:'security', data:'data', osint:'osint', learning:'learning', learn:'learning', system:'system', systems:'system' };
+  const key = aliases[String(topic||'').toLowerCase()] || String(topic||'').toLowerCase();
+  if (groups[key]) {
+    print('HELP / '+key.toUpperCase());
+    printLines(groups[key]);
+    return;
+  }
+  print('HB TERMINAL 1.1 · QUICK MEMORY SHEET');
+  print('Think: ELECTRICITY → SIGNAL → DATA → NETWORK → SECURITY');
+  print('Type HELP <family> when you forget a group. Type MAN <command> for a single command.');
   print('');
-  print('Core: help  list  man  clear  exit  pwd  cd  chdir  history  status  selftest');
-  print('Aliases: ? → help   ls → list   cls → clear   quit/q → exit   nap → nmap');
-  print('Learning: quiz start · quiz next · answer A · score · game start · rules');
-  print('Safety: browser-local by default. Nmap is explanatory only; no arbitrary remote shell.');
+  Object.entries(groups).forEach(([name,lines]) => {
+    print('['+name.toUpperCase()+']');
+    lines.filter(Boolean).slice(0,4).forEach(line=>print(line));
+    print('…  HELP '+name+' for the full list');
+  });
+  print('');
+  print('FAST START: HELP  |  SELFTEST  |  QUIZ START  |  GAME START  |  LIST  |  STATUS');
+  print('NUMBER FORMAT: 24 5 and <24> <5> are both accepted for numeric commands.');
+  print('SAFETY: browser-local learning console. No arbitrary shell, native Nmap, or unrestricted remote scanning.');
 }
 
 function run(cmd) {
