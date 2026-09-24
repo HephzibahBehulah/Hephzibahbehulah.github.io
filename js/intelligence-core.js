@@ -177,6 +177,24 @@
     search?.addEventListener('input',draw);cat?.addEventListener('change',draw);draw();
   }
 
+  function renderMicroTools() {
+    const box=$('microTools'); if(!box)return;
+    const mini=[
+      ['Ohm’s Law','Enter current (A) and resistance (Ω).', (a,b)=>a!==null&&b!==null?(a*b).toFixed(4)+' V':'Enter two values.'],
+      ['Power','Enter voltage (V) and current (A).', (a,b)=>a!==null&&b!==null?(a*b).toFixed(4)+' W':'Enter two values.'],
+      ['Energy','Enter power (W) and time (hours).', (a,b)=>a!==null&&b!==null?(a*b).toFixed(4)+' Wh':'Enter two values.'],
+      ['Series Resistance','Enter two resistors (Ω).', (a,b)=>a!==null&&b!==null?(a+b).toFixed(4)+' Ω':'Enter two values.'],
+      ['Parallel Resistance','Enter two resistors (Ω).', (a,b)=>a>0&&b>0?(1/(1/a+1/b)).toFixed(4)+' Ω':'Enter positive values.'],
+      ['Celsius → Fahrenheit','Enter temperature in °C.', (a)=>a!==null?(a*9/5+32).toFixed(2)+' °F':'Enter a value.']
+    ];
+    box.innerHTML=mini.map((t,i)=>'<div class="hb-tool" data-mini="'+i+'"><h3>'+esc(t[0])+'</h3><small>'+esc(t[1])+'</small><div class="hb-fields"><input data-a type="number" placeholder="Value 1"><input data-b type="number" placeholder="Value 2"></div><div class="hb-result">Enter values to calculate.</div></div>').join('');
+    box.querySelectorAll('.hb-tool').forEach(el=>el.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{
+      const a=parseFloat(el.querySelector('[data-a]')?.value),b=parseFloat(el.querySelector('[data-b]')?.value);
+      const result=mini[Number(el.dataset.mini)][2](Number.isFinite(a)?a:null,Number.isFinite(b)?b:null);
+      el.querySelector('.hb-result').textContent=result;
+    })));
+  }
+
   function renderEngineering() {
     const box=$('engineeringGrid'); if(!box)return;
     box.innerHTML=tools.map((t,i)=>{
@@ -302,6 +320,7 @@
       renderResources();
       renderDocs();
       renderEngineering();
+      renderMicroTools();
       renderEbooks();
       renderMega();
       initQuiz();
