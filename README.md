@@ -1,6 +1,6 @@
 # HB Intelligence Portfolio
 
-A browser-first technical learning platform by Hephzibah Behulah.
+A browser-first technical learning and engineering intelligence platform by Hephzibah Behulah.
 
 ## Platform architecture
 
@@ -9,14 +9,19 @@ A browser-first technical learning platform by Hephzibah Behulah.
 - Security — Recon Hub and Pentest Lab
 - Tools — Toolbench, Mega Tools and Engineering Library
 - Work — Projects and engineering-focused work
-- Identity — About
-- Contact — professional communication channels
+- Contact — compact social/contact panel at the bottom of the main site
 
-## Legacy URL policy
+## Brand system
 
-The former portfolio.html and resources.html routes are retained as lightweight redirects so older bookmarks and indexed links do not become dead ends.
+The platform uses one shared HB identity: **HEPHZIBAH BEHULAH** with the motto **LEARN · BUILD · TEST · SECURE** and the supporting line **Engineering → Intelligence → Security**.
 
-about.html, contact.html and pentest.html remain dedicated pages and now follow the same information architecture and visual language as the main platform.
+The logo is stored in `assets/hb-logo.svg`. Shared brand styling lives in `css/hb-brand.css`.
+
+The footer provides direct public channels for GitHub, LinkedIn, X, Facebook, GitBook and the technical blog.
+
+## Page policy
+
+The standalone `about.html` and `contact.html` pages were intentionally removed because their content duplicated the main intelligence portfolio. `portfolio.html` and `resources.html` remain compatibility routes for older links, while the main site is the canonical experience.
 
 ## Safety boundary
 
