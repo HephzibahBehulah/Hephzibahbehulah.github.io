@@ -2,7 +2,7 @@ HephzibahBehulah.github.io/
 ├── index.html                         # Canonical Intelligence Portfolio
 ├── portfolio.html                     # Compatibility route → #projects
 ├── resources.html                     # Compatibility route → #resourceMatrix
-├── pentest.html                       # Authorised browser security learning lab
+├── index.html#terminal                 # Unified browser command terminal
 ├── engineering-library.html           # Engineering calculator/library
 ├── recon-hub.html                     # Reconnaissance resource hub
 │
