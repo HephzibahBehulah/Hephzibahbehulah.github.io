@@ -22,3 +22,38 @@
 
 /* Desktop sidebar: keep the complete navigation reachable on short screens. */
 @media(min-width:901px){.os-sidebar::-webkit-scrollbar{width:6px}.os-sidebar::-webkit-scrollbar-thumb{background:#3b4650;border-radius:8px}.os-sidebar::-webkit-scrollbar-track{background:transparent}}
+
+/* TOOLBENCH // futuristic workstation */
+#toolbench{position:relative;isolation:isolate;overflow:hidden;border-color:rgba(86,207,225,.18);background:radial-gradient(circle at 88% 12%,rgba(86,207,225,.07),transparent 30%),radial-gradient(circle at 12% 85%,rgba(167,139,250,.055),transparent 28%),var(--panel)}
+#toolbench::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(86,207,225,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(86,207,225,.035) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,black,transparent 92%);opacity:.6}
+#toolbench::after{content:"";position:absolute;left:0;right:0;top:42px;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(86,207,225,.45),transparent);animation:hbToolScan 5s ease-in-out infinite;opacity:.55}
+#toolbench>.os-panel-head{position:relative;z-index:2;min-height:48px;padding:0 18px;background:rgba(7,12,17,.78);border-bottom-color:rgba(86,207,225,.13)}
+#toolbench>.os-panel-body{position:relative;z-index:1;padding:18px}
+#toolbench .toolbench-intro{display:block}
+#toolbench .toolbench-intro>div:first-child{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"title label" "title copy";column-gap:18px;align-items:center;margin:0 0 14px;padding:2px 2px 12px;border-bottom:1px solid rgba(86,207,225,.1)}
+#toolbench .toolbench-intro>div:first-child h2{grid-area:title;margin:0;font-size:clamp(24px,2.4vw,34px);line-height:1;letter-spacing:-1.4px}
+#toolbench .toolbench-intro>div:first-child .hb-ref-label{grid-area:label;margin:0;align-self:end}
+#toolbench .toolbench-intro>div:first-child p{grid-area:copy;margin:3px 0 0;color:var(--muted);font-size:11px}
+#toolbench .hb-equation-deck{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 16px}
+#toolbench .hb-equation{position:relative;min-height:104px;padding:13px 14px;overflow:hidden;border:1px solid rgba(86,207,225,.12);border-radius:6px;background:linear-gradient(145deg,rgba(86,207,225,.055),rgba(10,15,21,.8) 55%,rgba(167,139,250,.035));transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;animation:hbToolRise .55s both}
+#toolbench .hb-equation:nth-child(2){animation-delay:.04s}#toolbench .hb-equation:nth-child(3){animation-delay:.08s}#toolbench .hb-equation:nth-child(4){animation-delay:.12s}#toolbench .hb-equation:nth-child(5){animation-delay:.16s}#toolbench .hb-equation:nth-child(6){animation-delay:.20s}#toolbench .hb-equation:nth-child(7){animation-delay:.24s}#toolbench .hb-equation:nth-child(8){animation-delay:.28s}
+#toolbench .hb-equation::after{content:"";position:absolute;width:44px;height:44px;right:-22px;bottom:-22px;border:1px solid rgba(86,207,225,.13);border-radius:50%;transition:transform .3s ease}
+#toolbench .hb-equation:hover{transform:translateY(-3px);border-color:rgba(86,207,225,.38);box-shadow:0 10px 28px rgba(0,0,0,.24),0 0 22px rgba(86,207,225,.055)}
+#toolbench .hb-equation:hover::after{transform:scale(1.55)}
+#toolbench .hb-equation b{font:600 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#toolbench .hb-equation code{margin-top:5px;font:700 clamp(14px,1.45vw,18px)/1.25 var(--mono);color:var(--text)}
+#toolbench .hb-equation span{margin-top:auto;font:9px/1.4 var(--sans);color:var(--muted);opacity:.78}
+#toolbench .micro-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#toolbench .micro-tool-row{position:relative;min-height:86px;display:grid;grid-template-columns:32px 1fr auto;gap:8px 10px;align-content:center;padding:12px 13px;border:1px solid rgba(86,207,225,.11);border-radius:6px;background:linear-gradient(145deg,rgba(255,255,255,.018),rgba(10,15,20,.7));overflow:hidden;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;animation:hbToolRise .55s .16s both}
+#toolbench .micro-tool-row:nth-child(2){animation-delay:.20s}#toolbench .micro-tool-row:nth-child(3){animation-delay:.24s}#toolbench .micro-tool-row:nth-child(4){animation-delay:.28s}#toolbench .micro-tool-row:nth-child(5){animation-delay:.32s}#toolbench .micro-tool-row:nth-child(6){animation-delay:.36s}
+#toolbench .micro-tool-row:hover{transform:translateY(-3px);border-color:rgba(255,138,61,.42);box-shadow:0 12px 30px rgba(0,0,0,.2)}
+#toolbench .micro-tool-row>span{width:32px;height:32px;display:grid;place-items:center;border:1px solid rgba(255,138,61,.25);border-radius:5px;background:rgba(255,138,61,.06);font:700 9px var(--mono)}
+#toolbench .micro-tool-row b{align-self:center;font-size:11px;letter-spacing:.03em}
+#toolbench .micro-tool-row em{align-self:center;padding:4px 6px;border:1px solid rgba(86,207,225,.12);border-radius:3px;color:var(--cyan);background:rgba(86,207,225,.035)}
+#toolbench .micro-tool-row small{grid-column:2/-1;margin-top:-2px;font-size:9px;line-height:1.4}
+#toolbench .micro-tool-row::before{content:"";position:absolute;left:0;top:0;width:2px;height:100%;background:linear-gradient(var(--accent),transparent);opacity:.7}
+@keyframes hbToolRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes hbToolScan{0%,100%{transform:translateX(-35%);opacity:.1}50%{transform:translateX(35%);opacity:.7}}
+@media(max-width:1100px){#toolbench .hb-equation-deck{grid-template-columns:repeat(2,minmax(0,1fr))}#toolbench .micro-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){#toolbench>.os-panel-body{padding:14px}#toolbench .toolbench-intro>div:first-child{grid-template-columns:1fr;grid-template-areas:"title" "label" "copy";gap:6px}#toolbench .hb-equation-deck,#toolbench .micro-tools{grid-template-columns:1fr}#toolbench .hb-equation{min-height:90px}}
+@media(prefers-reduced-motion:reduce){#toolbench .hb-equation,#toolbench .micro-tool-row,#toolbench::after{animation:none}#toolbench .hb-equation,#toolbench .micro-tool-row{transition:none}}
