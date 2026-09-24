@@ -36,7 +36,8 @@ const COMMANDS = {
   tcp:'network', udp:'network', icmp:'network', arp:'network', http:'network',
   https:'network', nmap:'network', nap:'network', ping:'network', traceroute:'network',
   nslookup:'network', route:'network', mac:'network',
-  quiz:'learning', explain:'learning', glossary:'learning', learn:'learning',
+  quiz:'learning', game:'learning', answer:'learning', score:'learning', rules:'learning',
+  explain:'learning', glossary:'learning', learn:'learning', check:'system', selftest:'system',
   tools:'learning', tool:'learning', project:'learning', repo:'learning'
 };
 
@@ -108,8 +109,9 @@ function showHelp(topic) {
   print('Type HELP <family> for focused commands.');
   Object.entries(descriptions).forEach(([k,v])=>print(k.padEnd(11)+' '+v));
   print('');
-  print('Core: help  list  man  clear  exit  pwd  cd  chdir  history  status');
+  print('Core: help  list  man  clear  exit  pwd  cd  chdir  history  status  selftest');
   print('Aliases: ? → help   ls → list   cls → clear   quit/q → exit   nap → nmap');
+  print('Learning: quiz start · quiz next · answer A · score · game start · rules');
   print('Safety: browser-local by default. Nmap is explanatory only; no arbitrary remote shell.');
 }
 
@@ -122,6 +124,7 @@ function run(cmd) {
   if(c==='help'||c==='?'){showHelp(a[0]);return;}
   if(c==='list'||c==='ls'){print(Object.entries(descriptions).map(([k,v])=>k.toUpperCase()+': '+Object.entries(COMMANDS).filter(([,x])=>x===k).map(([n])=>n).join(', ')).join('\n'));return;}
   if(c==='clear'||c==='cls'){output.textContent='';return;}
+  if(c==='check'||c==='selftest'){selfTest();return;}
   if(c==='exit'||c==='quit'||c==='q'){root.classList.add('hb-terminal-closed');print('Terminal session closed. Type OPEN TERMINAL to restore.','ok');return;}
   if(c==='open'&&a[0]&&a[0].toLowerCase().includes('terminal')){root.classList.remove('hb-terminal-closed');print('Terminal restored.','ok');return;}
   if(c==='pwd'){print(cwd);return;}
@@ -129,7 +132,7 @@ function run(cmd) {
   if(c==='history'){history.forEach((x,i)=>print(String(i+1).padStart(3)+'  '+x));return;}
   if(c==='echo'){print(rest);return;}
   if(c==='date'){print(new Date().toString());return;}
-  if(c==='version'){print('HB TERMINAL 1.0 · browser command engine');return;}
+  if(c==='version'){print('HB TERMINAL 1.1 · browser command engine + learning game');return;}
   if(c==='about'||c==='whoami'){print('HEPHZIBAH BEHULAH · Intelligence · Engineering · Security');print('Electronics → automation → software → data → security');return;}
   if(c==='status'||c==='is'){print('SYSTEM ONLINE\nterminal: ready\nexecution: browser-local\nexternal shell: disabled\nsecurity mode: authorised learning');return;}
   if(c==='ia'){print('INTELLIGENCE ASSISTANT');print('Try: ia engineering | ia network | ia security | ia osint | ia data | ia learning');return;}
@@ -167,7 +170,19 @@ function run(cmd) {
 
   if(['mean','median','mode','range','variance','std'].includes(c)){print(stat(c,rest));return;}
   if(c==='zscore'){const parts=rest.split('|').map(num);print(parts.length===3&&parts.every(x=>x!==null)?'z='+fmt((parts[0]-parts[1])/parts[2]):'Usage: zscore <x> | <mean> | <std>');return;}
-  if(['precision','recall','f1'].includes(c)){const n=a.map(num);if(n.length<2){print('Usage: '+c+' <value1> <value2>');return;}const p=n[0],r=n[1];print(c==='precision'?'precision='+fmt(p/(p+r)*100)+' %':c==='recall'?'recall='+fmt(p/(p+r)*100)+' %':'F1='+fmt(2*p*r/(p+r)*100)+' %');return;}
+  if(['precision','recall','f1'].includes(c)){
+    const n=a.map(num);
+    if(c==='precision'){
+      if(n.length<2||n[0]===null||n[1]===null||n[0]+n[1]===0){print('Usage: precision <TP> <FP>');return;}
+      print('precision='+fmt(n[0]/(n[0]+n[1])*100)+' %  (TP / (TP + FP))');return;
+    }
+    if(c==='recall'){
+      if(n.length<2||n[0]===null||n[1]===null||n[0]+n[1]===0){print('Usage: recall <TP> <FN>');return;}
+      print('recall='+fmt(n[0]/(n[0]+n[1])*100)+' %  (TP / (TP + FN))');return;
+    }
+    if(n.length<2||n[0]===null||n[1]===null||n[0]+n[1]===0){print('Usage: f1 <precision> <recall>');return;}
+    print('F1='+fmt(2*n[0]*n[1]/(n[0]+n[1]))+'  (2PR / (P + R))');return;
+  }
 
   if(c==='base64'||c==='encode'){try{print(btoa(unescape(encodeURIComponent(rest))));}catch{print('Unable to encode input.');}return;}
   if(c==='decode'){try{print(decodeURIComponent(escape(atob(rest))));}catch{print('Invalid Base64.');}return;}
@@ -188,11 +203,197 @@ function run(cmd) {
   }
   if(c==='nmap'||c==='nap'){print('NMAP · explanatory mode');print('nmap -sV target   → service/version detection concept');print('nmap -p 80,443 target   → selected ports concept');print('nmap -Pn target   → skip host discovery concept');print('This browser terminal does not execute system Nmap or scan arbitrary targets. Use only an authorised local lab.','warn');return;}
 
-  if(['quiz','explain','glossary','learn'].includes(c)){print('Learning mode: '+(rest||'choose a topic such as networking, Linux, OSINT, Python or cybersecurity.'));return;}
+  if(c==='rules'){
+    print('GAME RULES');
+    print('1. Use QUIZ START to enter quiz mode.');
+    print('2. Use QUIZ NEXT for a new question.');
+    print('3. Use ANSWER A|B|C|D to submit an answer.');
+    print('4. SCORE shows points, streak and level.');
+    print('5. GAME START launches a mixed technical challenge.');
+    print('6. GAME RESET clears the current game session.');
+    print('Questions are generated locally; no account or server is required.');
+    return;
+  }
+
+  if(c==='score'){
+    print('SCORE · '+game.score+' points · '+game.correct+' correct · '+game.answered+' answered · streak '+game.streak+' · level '+game.level);
+    return;
+  }
+
+  if(c==='game'){
+    const sub=(a[0]||'').toLowerCase();
+    if(sub==='help'||!sub){print('GAME · GAME START | GAME RESET | QUIZ START | QUIZ NEXT | ANSWER A');return;}
+    if(sub==='start'){startGame();return;}
+    if(sub==='reset'){resetGame();return;}
+    if(sub==='score'){print('GAME SCORE');print('points: '+game.score+' · correct: '+game.correct+' · answered: '+game.answered+' · streak: '+game.streak+' · level: '+game.level);return;}
+    print('Usage: game start | game reset | game score');
+    return;
+  }
+
+  if(c==='quiz'){
+    const sub=(a[0]||'').toLowerCase();
+    if(sub==='start'||!sub){startQuiz(a[1]);return;}
+    if(sub==='next'){nextQuiz();return;}
+    if(sub==='score'){print('QUIZ SCORE · '+game.score+' points · streak '+game.streak);return;}
+    if(sub==='reset'){resetGame();return;}
+    print('Usage: quiz start [domain] | quiz next | quiz score | quiz reset');
+    return;
+  }
+
+  if(c==='answer'){
+    answerQuiz(a.slice(1).join(' '));
+    return;
+  }
+
+  if(['explain','glossary','learn'].includes(c)){
+    const topic=rest||'networking';
+    const lessons={
+      engineering:'Engineering: voltage, current, resistance, power, energy, signals and practical electrical calculations.',
+      networking:'Networking: IP addressing, CIDR, TCP/UDP, DNS, HTTP/HTTPS, routing and packet communication.',
+      cybersecurity:'Cybersecurity: protect systems through least privilege, secure design, authentication, monitoring and authorised testing.',
+      osint:'OSINT: collect and verify information from lawful public sources while documenting provenance and respecting privacy.',
+      data:'Data: inspect, clean, analyse and validate information; common ML metrics include precision, recall and F1.',
+      python:'Python: a general-purpose language widely used for automation, data analysis and security tooling.',
+      linux:'Linux: a family of operating systems with command-line tools, permissions, processes and networking utilities.',
+      'ai security':'AI security: study prompt injection, data leakage, unsafe tool use, model misuse and defensive controls.'
+    };
+    print((lessons[topic.toLowerCase()]||'Learning topic: '+topic+'. Try engineering, networking, cybersecurity, OSINT, data, Python, Linux or AI security.'));
+    return;
+  }
   if(c==='tools'||c==='tool'){document.querySelector('#megaTools')?.scrollIntoView({behavior:'smooth'});print('Opening MEGA TOOLS.','ok');return;}
   if(c==='project'||c==='repo'){document.querySelector('#projects')?.scrollIntoView({behavior:'smooth'});print('Opening PROJECTS.','ok');return;}
   print('Unknown command: '+c+'. Type HELP or MAN '+c+'.','warn');
 }
+
+  const game={
+    mode:'idle', domain:'all', current:null, score:0, correct:0, answered:0, streak:0, level:1
+  };
+
+  const GAME_BANKS={
+    engineering:[
+      ['What is Ohm’s Law?',['V = I × R','P = V × I','E = P × t','f = 1 / T'],0],
+      ['What is electrical power when voltage is 24 V and current is 5 A?',['120 W','29 W','19 W','480 W'],0],
+      ['A 12 V supply feeds a 2 V LED at 20 mA. What series resistance is approximately required?',['500 Ω','50 Ω','2.4 Ω','2400 Ω'],0],
+      ['What is the RMS value of a 230 V peak sine wave?',['162.6 V','230 V','325.3 V','115 V'],0],
+      ['What does f = 1/T describe?',['Frequency and period','Power and energy','Voltage and current','Resistance and current'],0]
+    ],
+    networking:[
+      ['How many usable IPv4 hosts are normally in a /24 subnet?',['254','256','128','512'],0],
+      ['Which protocol commonly uses TCP port 443?',['HTTPS','DNS','SSH','SMTP'],0],
+      ['Which protocol translates domain names into records such as A and MX?',['DNS','ARP','ICMP','DHCP'],0],
+      ['Which transport protocol is connection-oriented and ordered?',['TCP','UDP','ICMP','ARP'],0],
+      ['What does CIDR /24 mean?',['24 network prefix bits','24 host bits','24 total addresses','24 TCP ports'],0]
+    ],
+    security:[
+      ['Which control helps prevent SQL injection?',['Parameterized queries','Longer URLs','Disabling DNS','Increasing screen brightness'],0],
+      ['What does MFA add to authentication?',['Another factor','Another IP address','Another database','Another browser tab'],0],
+      ['What is XSS?',['Injection of untrusted content that can execute in a browser','A routing protocol','A disk format','A power calculation'],0],
+      ['What does the principle of least privilege mean?',['Give only the access needed','Give every user administrator rights','Disable authentication','Share one password'],0],
+      ['What does a JWT decoder in this terminal do?',['Reads the payload without verifying the signature','Cracks the signing key','Authenticates the user','Connects to the issuer'],0]
+    ],
+    data:[
+      ['Precision is TP divided by what?',['TP + FP','TP + FN','TN + FP','TP + TN'],0],
+      ['Recall is TP divided by what?',['TP + FN','TP + FP','TN + FN','TP + TN'],0],
+      ['What does the F1 score combine?',['Precision and recall','Mean and median','Voltage and current','IP and MAC'],0],
+      ['What does a z-score describe?',['Distance from the mean in standard-deviation units','Number of database rows','Network latency','Electrical resistance'],0]
+    ],
+    osint:[
+      ['What is the safest default approach for public-source research?',['Passive, lawful and evidence-driven','Credential guessing','Random scanning','Bypassing access controls'],0],
+      ['What does crt.sh primarily expose?',['Certificate transparency observations','Password hashes','Private emails','Operating-system processes'],0],
+      ['What is an important OSINT verification habit?',['Cross-check important claims with independent evidence','Trust the first result','Ignore timestamps','Collect private data'],0]
+    ],
+    learning:[
+      ['What does the HB Terminal run on?',['The browser','A hidden SSH server','A remote Linux shell','A database server'],0],
+      ['Can this GitHub Pages terminal run arbitrary system Nmap?',['No','Yes, automatically','Only without a browser','Only on every public website'],0],
+      ['What does the Technical Workbench connect conceptually?',['Electricity → Signal → Data → Network → Security','Music → Video → Games → Ads → Sales','HTML → CSS → Ads → Mail → Finance','Only cybersecurity'],0],
+      ['What is the purpose of the Intelligence Tree?',['Explore the site’s technical domains','Run a remote shell','Store passwords','Scan the internet'],0]
+    ]
+  };
+
+  const allDomains=Object.keys(GAME_BANKS);
+  const rand=n=>Math.floor(Math.random()*n);
+  const shuffle=a=>{const x=[...a];for(let i=x.length-1;i>0;i--){const j=rand(i+1);[x[i],x[j]]=[x[j],x[i]];}return x;};
+
+  function levelFromScore(){game.level=1+Math.floor(game.score/5);}
+
+  function makeGameQuestion(domain){
+    const d=domain&&GAME_BANKS[domain]?domain:allDomains[rand(allDomains.length)];
+    const item=GAME_BANKS[d][rand(GAME_BANKS[d].length)];
+    const answers=shuffle(item[1]);
+    const correct=answers.indexOf(item[1][item[2]]);
+    return {q:item[0],a:answers,c:correct,d};
+  }
+
+  function startGame(){
+    game.mode='game';game.domain='all';game.current=null;
+    print('HB TECHNICAL GAME · MIXED MODE','ok');
+    print('Domains: engineering · networking · security · data · osint · learning');
+    print('Type NEXT or QUIZ NEXT. Submit with ANSWER A, B, C or D.');
+    nextQuiz();
+  }
+
+  function startQuiz(domain){
+    const d=(domain||'all').toLowerCase().replace(/[-_]/g,' ');
+    const mapped=d==='all'||!d?'all':(allDomains.includes(d)?d:null);
+    if(d!=='all'&&d&&!mapped){print('Unknown quiz domain. Use: '+allDomains.join(' | '));return;}
+    game.mode='quiz';game.domain=mapped||'all';
+    print('HB QUIZ · '+(game.domain==='all'?'ALL DOMAINS':game.domain.toUpperCase()),'ok');
+    nextQuiz();
+  }
+
+  function nextQuiz(){
+    if(game.mode==='idle')game.mode='quiz';
+    const domain=game.domain==='all'?null:game.domain;
+    game.current=makeGameQuestion(domain);
+    print('');
+    print('QUESTION · '+game.current.d.toUpperCase());
+    print(game.current.q);
+    game.current.a.forEach((x,i)=>print(String.fromCharCode(65+i)+'. '+x));
+    print('ANSWER A|B|C|D · SCORE · '+game.score+' · STREAK '+game.streak);
+  }
+
+  function answerQuiz(value){
+    if(!game.current){print('No active question. Use QUIZ START or GAME START.','warn');return;}
+    const raw=String(value||'').trim().toUpperCase();
+    let idx=-1;
+    if(/^[ABCD]$/.test(raw))idx='ABCD'.indexOf(raw);
+    else if(/^\d$/.test(raw))idx=Number(raw)-1;
+    if(idx<0||idx>3){print('Usage: answer A|B|C|D','warn');return;}
+    game.answered++;
+    const ok=idx===game.current.c;
+    if(ok){game.correct++;game.streak++;game.score+=1+Math.floor(game.streak/5);levelFromScore();print('CORRECT · +'+(1+Math.floor(game.streak/5))+' points · streak '+game.streak,'ok');}
+    else {game.streak=0;print('INCORRECT · correct answer: '+String.fromCharCode(65+game.current.c)+'. '+game.current.a[game.current.c],'warn');}
+    game.current=null;
+    print('SCORE · '+game.score+' · correct '+game.correct+'/'+game.answered+' · level '+game.level);
+    print('Type QUIZ NEXT for another question.');
+  }
+
+  function resetGame(){
+    game.mode='idle';game.domain='all';game.current=null;game.score=0;game.correct=0;game.answered=0;game.streak=0;game.level=1;
+    print('Game session reset.','ok');
+  }
+
+  function selfTest(){
+    const tests=[
+      ['parser number',num('<24>')===24],
+      ['power',Math.abs(24*5-120)<1e-9],
+      ['ohm',Math.abs(2*10-20)<1e-9],
+      ['efficiency',Math.abs(80/100*100-80)<1e-9],
+      ['CIDR /24',cidrInfo('192.168.1.0/24')?.hosts===254],
+      ['CIDR /30',cidrInfo('10.0.0.0/30')?.hosts===2],
+      ['engineering commands',Object.values(COMMANDS).includes('engineering')],
+      ['network commands',Object.values(COMMANDS).includes('network')],
+      ['security commands',Object.values(COMMANDS).includes('security')],
+      ['data commands',Object.values(COMMANDS).includes('data')],
+      ['OSINT commands',Object.values(COMMANDS).includes('osint')],
+      ['learning/game commands',COMMANDS.quiz==='learning'&&COMMANDS.game==='learning'],
+      ['aliases',COMMANDS['?']==='system'&&COMMANDS.nap==='network']
+    ];
+    const passed=tests.filter(x=>x[1]).length;
+    print('HB TERMINAL SELF-TEST · '+passed+'/'+tests.length+' checks passed','ok');
+    tests.forEach(x=>print((x[1]?'PASS ':'FAIL ')+x[0],x[1]?'ok':'warn'));
+    print('Coverage: parser · engineering · networking · security · data · OSINT · learning/game');
+  }
 
 input.addEventListener('keydown',e=>{
   if(e.key==='Enter'){const v=input.value;input.value='';run(v);}
@@ -205,7 +406,7 @@ root.querySelector('#hbTerminalClear')?.addEventListener('click',()=>{output.tex
 root.querySelector('#hbTerminalOpen')?.addEventListener('click',()=>{root.classList.remove('hb-terminal-closed');input.focus();});
 setPrompt();
 print('HB TERMINAL · browser command engine','ok');
-print('Type HELP to begin. Try: list · status · ia · cidr 192.168.1.0/24 · hash hello');
+print('Type HELP to begin. Try: list · selftest · cidr 192.168.1.0/24 · hash hello · quiz start · game start');
 print('Security mode: authorised learning only.','warn');
 input.focus();
 })();
