@@ -216,7 +216,7 @@
   }
 
   function cidr(ip,p){
-    if(!/^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(ip)||!Number.isInteger(p)||p<0||p>32)return'Enter a valid IPv4 address and prefix 0–32.';
+    if(!/^\d+\.\d+\.\d+\.\d+$/.test(ip)||!Number.isInteger(p)||p<0||p>32)return'Enter a valid IPv4 address and prefix 0–32.';
     const oct=ip.split('.').map(Number);if(oct.some(x=>x>255))return'Invalid IPv4 address.';
     const n=oct.reduce((x,v)=>(x*256+v)>>>0,0), mask=p===0?0:(0xffffffff<<(32-p))>>>0, net=(n&mask)>>>0, broad=(net|(~mask))>>>0, hosts=p>=31?Math.pow(2,32-p):Math.max(0,Math.pow(2,32-p)-2);
     const fmt=x=>[(x>>>24)&255,(x>>>16)&255,(x>>>8)&255,x&255].join('.');
