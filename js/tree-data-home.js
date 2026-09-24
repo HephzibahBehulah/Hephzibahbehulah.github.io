@@ -111,7 +111,7 @@ const homeTreeData = {
                     name: 'Data Analytics',
                     icon: '📊',
                     description: 'Python-based data analysis projects using Google Colab, BigQuery, and advanced visualization tools.',
-                    url: 'portfolio.html',
+                    url: 'index.html#projects',
                     category: 'data'
                 },
                 {
@@ -119,7 +119,7 @@ const homeTreeData = {
                     name: 'Secure Web Development',
                     icon: '🛡️',
                     description: 'Building secure, accessible, and responsive web applications with ethical AI integration and privacy-first design.',
-                    url: 'portfolio.html',
+                    url: 'index.html#projects',
                     category: 'web'
                 }
             ]
@@ -148,8 +148,8 @@ const homeTreeData = {
             category: 'learning',
             children: [
                 { id: 'nav-about', name: 'About Me', icon: '👤', description: 'My journey and experience', url: 'about.html', category: 'learning' },
-                { id: 'nav-portfolio', name: 'Portfolio', icon: '📁', description: 'Projects and work samples', url: 'portfolio.html', category: 'learning' },
-                { id: 'nav-resources', name: 'Resources', icon: '📚', description: 'Learning resources tree', url: 'resources.html', category: 'learning' },
+                { id: 'nav-portfolio', name: 'Portfolio', icon: '📁', description: 'Projects and work samples', url: 'index.html#projects', category: 'learning' },
+                { id: 'nav-resources', name: 'Resources', icon: '📚', description: 'Learning resources tree', url: 'index.html#resourceMatrix', category: 'learning' },
                 { id: 'nav-pentest', name: 'Pentest Tools', icon: '🔐', description: '50+ security tools', url: 'pentest.html', category: 'cybersecurity' },
                 { id: 'nav-contact', name: 'Contact', icon: '📧', description: 'Get in touch', url: 'contact.html', category: 'contact' }
             ]
