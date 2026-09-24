@@ -258,27 +258,16 @@
 
   async function renderMega(){
     const grid=$('megaToolGrid');if(!grid)return;
-    let list=[];
-    const draw=()=>{
-      const q=($('megaToolSearch')?.value||'').toLowerCase().trim(),f=$('megaToolCategory')?.value||'all';
-      const rows=list.filter(x=>(f==='all'||x.category===f)&&(!q||x.name.toLowerCase().includes(q)||x.category.toLowerCase().includes(q)));
-      grid.innerHTML=rows.map(x=>card(String(x.id).padStart(4,'0'),x.name,x.category,'https://github.com/HephzibahBehulah/Hacking-Security-Ebooks')).join('');
-      if($('megaToolCount'))$('megaToolCount').textContent=rows.length.toLocaleString()+' tools indexed';
-    };
-    const setList=(items)=>{
-      list=items||[];
-      const cats=[...new Set(list.map(x=>x.category))].sort();
-      if($('megaToolCategory'))$('megaToolCategory').innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
-      draw();
-    };
     try{
-      const local=await fetch('data/source-library.json?v=20260924-1',{cache:'no-store'});
-      if(local.ok){const m=await local.json();if(Array.isArray(m.tools)&&m.tools.length)setList(m.tools);}
-    }catch(e){}
-    if(!list.length)setList(megaFallback.map((x,i)=>({id:i+1,name:x[0],category:x[1]})));
-    $('megaToolSearch')?.addEventListener('input',draw);
-    $('megaToolCategory')?.addEventListener('change',draw);
-    $('megaToolRefresh')?.addEventListener('click',async()=>{if($('megaToolCount'))$('megaToolCount').textContent='refreshing…';try{const res=await fetch('https://raw.githubusercontent.com/lockfale/OSINT-Framework/master/public/arf.json',{cache:'no-store'});if(!res.ok)throw Error();const data=await res.json(),found=[];(function walk(n,cat){if(!n||typeof n!=='object')return;const category=n.name||cat||'OSINT';if(Array.isArray(n.children))n.children.forEach(x=>walk(x,category));if(Array.isArray(n.links))n.links.forEach(x=>{if(x?.url)found.push({id:found.length+1,name:x.name||x.title||'Unnamed tool',category,url:x.url})});})(data,'OSINT');if(found.length)setList(found.slice(0,10000));else draw();}catch(e){draw();}});
+      const res=await fetch('data/source-library.json?v=20260924-4',{cache:'no-store'});
+      const m=res.ok?await res.json():null;
+      const list=(m?.tools?.length?m.tools:megaFallback.map((x,i)=>({id:i+1,name:x[0],category:x[1]})));
+      if(window.HBUpgradeMegaTools) window.HBUpgradeMegaTools(list);
+      else grid.innerHTML='<div class="hb-error">Interactive toolbox runtime is loading. Refresh the page.</div>';
+    }catch(e){
+      const list=megaFallback.map((x,i)=>({id:i+1,name:x[0],category:x[1]}));
+      if(window.HBUpgradeMegaTools) window.HBUpgradeMegaTools(list);
+    }
   }
 
   function initQuiz(){
