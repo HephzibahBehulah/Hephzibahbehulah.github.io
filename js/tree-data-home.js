@@ -150,7 +150,7 @@ const homeTreeData = {
                 { id: 'nav-about', name: 'About Me', icon: '👤', description: 'My journey and experience', url: 'about.html', category: 'learning' },
                 { id: 'nav-portfolio', name: 'Portfolio', icon: '📁', description: 'Projects and work samples', url: 'index.html#projects', category: 'learning' },
                 { id: 'nav-resources', name: 'Resources', icon: '📚', description: 'Learning resources tree', url: 'index.html#resourceMatrix', category: 'learning' },
-                { id: 'nav-pentest', name: 'Pentest Tools', icon: '🔐', description: '50+ security tools', url: 'pentest.html', category: 'cybersecurity' },
+                { id: 'nav-pentest', name: 'Terminal', icon: '🔐', description: 'Browser command terminal', url: 'index.html#terminal', category: 'cybersecurity' },
                 { id: 'nav-contact', name: 'Contact', icon: '📧', description: 'Get in touch', url: 'contact.html', category: 'contact' }
             ]
         }
