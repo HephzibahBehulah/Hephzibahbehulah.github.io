@@ -59,6 +59,20 @@ document.addEventListener("DOMContentLoaded",()=>{
   },{rootMargin:"-25% 0px -60% 0px",threshold:0});
   sections.forEach(s=>navObserver.observe(s));
   navLinks.forEach(a=>a.addEventListener("click",()=>{navLinks.forEach(x=>x.classList.remove("active"));a.classList.add("active")}));
+  /* Ensure the full-width terminal anchor always resolves to the live terminal section. */
+  const terminalLink=document.querySelector('.os-nav a[href="#terminal"]');
+  if(terminalLink){
+    terminalLink.addEventListener("click",function(e){
+      e.preventDefault();
+      const terminal=document.getElementById("terminal");
+      if(!terminal)return;
+      navLinks.forEach(x=>x.classList.remove("active"));
+      terminalLink.classList.add("active");
+      terminal.scrollIntoView({behavior:"smooth",block:"start"});
+      history.replaceState(null,"","#terminal");
+      window.setTimeout(()=>document.getElementById("hbTerminalInput")?.focus(),420);
+    });
+  }
   const tiltTargets=[...document.querySelectorAll(".os-hero>.os-panel,.hb-workbench-panel")];
   tiltTargets.forEach(card=>{
     card.addEventListener("pointermove",e=>{
