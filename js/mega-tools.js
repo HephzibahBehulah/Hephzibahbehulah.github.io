@@ -228,7 +228,7 @@ const EXTRA_DEFINITIONS={
 "Markdown Link":["[label](URL)",["Label","URL"],()=> "["+($( "megaInput0")?.value||"label")+"]("+($( "megaInput1")?.value||"https://example.com")+")"],
 "Color Hex Parser":["#RRGGBB → RGB channels",["Hex color"],()=>{const x=($( "megaInput0")?.value||"").trim().replace("#","");return/^[0-9a-f]{6}$/i.test(x)?"RGB = "+parseInt(x.slice(0,2),16)+", "+parseInt(x.slice(2,4),16)+", "+parseInt(x.slice(4,6),16):"Enter #RRGGBB."}],
 "RGB to Hex":["hex = RRGGBB",["R 0–255","G 0–255","B 0–255"],v=>v.every(x=>Number.isInteger(x)&&x>=0&&x<=255)?"#"+v.map(x=>x.toString(16).padStart(2,"0")).join("").toUpperCase():"Enter RGB 0–255."],
-"Hex to RGB":["#RRGGBB → RGB",["Hex color"],()=>{const x=($( "megaInput0")?.value||"").replace("#","");return/^[0-9a-f]{6}$/i.test(x)?"RGB = "+parseInt(x.slice(0,2),16)+", "+parseInt(x.slice(2,4),16)+", "+parseInt(x.slice(4,6),16):"Enter #RRGGBB."],
+"Hex to RGB":["#RRGGBB → RGB",["Hex color"],()=>{const x=($( "megaInput0")?.value||"").replace("#","");return/^[0-9a-f]{6}$/i.test(x)?"RGB = "+parseInt(x.slice(0,2),16)+", "+parseInt(x.slice(2,4),16)+", "+parseInt(x.slice(4,6),16):"Enter #RRGGBB."}],
 "Null Rate":["null rate = null values/total rows × 100",["Null values","Total rows"],v=>v[0]>=0&&v[1]>0?"Null rate = "+(v[0]/v[1]*100).toFixed(4)+" %":"Enter null and total."],
 "Duplicate Rate":["duplicate rate = duplicate rows/total rows × 100",["Duplicate rows","Total rows"],v=>v[0]>=0&&v[1]>0?"Duplicate rate = "+(v[0]/v[1]*100).toFixed(4)+" %":"Enter duplicate and total."],
 "Unique Rate":["unique rate = unique values/total rows × 100",["Unique values","Total rows"],v=>v[0]>=0&&v[1]>0?"Unique rate = "+(v[0]/v[1]*100).toFixed(4)+" %":"Enter unique and total."],
