@@ -7,7 +7,7 @@ const projects = [
         description: 'Interactive web dashboard integrating 50+ WSL2 security tools with real-time terminal emulator for ethical hacking.',
         tech: ['Bash', 'JavaScript', 'WSL2', 'Kali'],
         github: 'https://github.com/HephzibahBehulah/pentest-toolkit',
-        demo: 'pentest.html',
+        demo: 'index.html#terminal',
         image: 'assets/images/projects/pentest.jpg',
         featured: true,
         date: '2024-12-01',
