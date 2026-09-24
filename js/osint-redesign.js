@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function(){
     ["Bible Quiz","Start the Bible study section","#genzBible"],
     ["Projects","Open projects and workbench","#projects"],
     ["Recon Hub","Open the reconnaissance hub","recon-hub.html"],
-    ["Pentest Lab","Open the authorised security lab","pentest.html"],
+    ["Terminal","Open the browser command terminal","#terminal"],
     ["Engineering Library","Open the engineering library","engineering-library.html"]
   ];
 
