@@ -84,7 +84,53 @@
 <div><b>DISCOVER</b><span>Start with a domain, not a random search.</span></div><div><b>INSPECT</b><span>Open the resource card and follow the original source.</span></div><div><b>VERIFY</b><span>Prefer primary documentation, standards and provenance.</span></div><div><b>LEARN</b><span>Resources support study; they do not represent claims of expertise.</span></div>
 </div></div></section>
 <footer class="os-footer">HEPHZIBAH BEHULAH · PUBLIC PORTFOLIO · ORIGINAL OSINT-INSPIRED INTERFACE · RESOURCE INDEX + TECHNICAL LIBRARY · 2026</footer>
-</div></main></div>
+</div>
+<section class="os-panel mega-section" id="megaTools">
+  <div class="os-panel-head"><span>HB mega tool index / 10,000+ external tools</span><span id="megaToolCount">loading...</span></div>
+  <div class="resource-controls">
+    <label><span>⌕</span><input id="megaToolSearch" placeholder="search 10,000+ indexed tools..." aria-label="Search mega tool index"></label>
+    <select id="megaToolCategory" aria-label="Filter mega tools"><option value="all">ALL CATEGORIES</option></select>
+    <button id="megaToolRefresh" class="os-mini" type="button">refresh index</button>
+  </div>
+  <div class="resource-note"><b>LIVE INDEX</b> The site can load the OSINT Framework dataset directly from its public open-source repository. The catalogue is a discovery layer and links to the original providers. Use only for lawful, authorised research.</div>
+  <div id="megaToolGrid" class="intel-grid"><div class="intel-empty">LOADING TOOL INDEX...</div></div>
+</section>
+
+<section class="os-panel mega-section" id="engineeringLab">
+  <div class="os-panel-head"><span>engineering / elektroniker lab</span><span>local calculations</span></div>
+  <div class="engineering-grid" id="engineeringGrid"></div>
+</section>
+
+<section class="os-panel mega-section" id="knowledgeLibrary">
+  <div class="os-panel-head"><span>technical knowledge library / 1,000+ document targets</span><span id="docIndexCount">catalogue</span></div>
+  <div class="resource-controls">
+    <label><span>⌕</span><input id="docSearch" placeholder="search engineering, electronics, cyber, OT, networking..." aria-label="Search document library"></label>
+    <select id="docCategory"><option value="all">ALL DOMAINS</option></select>
+  </div>
+  <div class="resource-note"><b>DOCUMENT INDEX</b> This layer links to authoritative and openly accessible documentation instead of copying third-party books. Your own Hacking-Security-Ebooks repository remains dynamically indexed above.</div>
+  <div id="docGrid" class="intel-grid"><div class="intel-empty">LOADING DOCUMENT CATALOGUE...</div></div>
+</section>
+
+<section class="os-panel mega-section" id="genzBible">
+  <div class="os-panel-head"><span>Gen Z Bible / scripture desk</span><span>external source</span></div>
+  <div class="bible-grid">
+    <div class="bible-console">
+      <div class="intel-code">SCRIPTURE / STUDY MODE</div>
+      <h2>Read. Compare. Learn.</h2>
+      <p>Explore the Gen Z Bible as an external reading source, with chapter links and a local quiz engine. The quiz engine generates questions from structured Bible metadata and does not copy the site's paraphrase text.</p>
+      <div class="os-actions"><a class="os-btn primary" href="https://www.genz-bible.com/" target="_blank" rel="noopener">open Gen Z Bible ↗</a><a class="os-btn" href="https://www.genz-bible.com/about" target="_blank" rel="noopener">about the paraphrase ↗</a></div>
+    </div>
+    <div class="quiz-console">
+      <div class="quiz-meta"><span id="quizStreak">streak: 0</span><span id="quizScore">score: 0</span><span id="quizPool">generated pool: 1,000,000+</span></div>
+      <div id="quizQuestion" class="quiz-question">Press NEXT QUESTION to begin.</div>
+      <div id="quizOptions" class="quiz-options"></div>
+      <div class="quiz-actions"><button id="quizNext" class="os-btn primary" type="button">NEXT QUESTION</button><button id="quizShowAnswer" class="os-btn" type="button">SHOW ANSWER</button></div>
+      <div id="quizFeedback" class="quiz-feedback"></div>
+    </div>
+  </div>
+</section>
+
+</main></div>
 <dialog id="notesDialog" class="os-dialog"><button id="notesClose" class="dialog-close">×</button><h2>Framework notes</h2><p>This is an original interface inspired by the information-architecture idea of an OSINT resource tree. The resource matrix combines official documentation, standards, learning platforms and public research tools.</p><p>The ebook vault reads filenames and metadata from the public Hacking-Security-Ebooks repository rather than reproducing the PDF content inside this portfolio. External resources can have their own licences and terms.</p><p>Use cybersecurity and OSINT resources only on systems and data you are authorised to examine.</p></dialog>
 <div id="resourceToolModal" class="resource-tool-modal" aria-hidden="true"><div class="resource-tool-card"><button id="resourceToolClose" class="dialog-close">×</button><h2 id="resourceToolTitle">Tool</h2><div id="resourceToolBody"></div></div></div>
 <script src="js/osint-redesign.js"></script><script src="js/intelligence-hub.js"></script>
