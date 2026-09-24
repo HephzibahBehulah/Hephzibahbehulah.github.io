@@ -1,8 +1,8 @@
-/* HB INTELLIGENCE HUB v4 · stable static-first runtime */
+/* HB INTELLIGENCE HUB v5 · resilient GitHub Pages runtime */
 (() => {
 'use strict';
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const EBOOK_API='https://api.github.com/repos/HephzibahBehulah/Hacking-Security-Ebooks/contents/';
+const EBOOK_TREE_API='https://api.github.com/repos/HephzibahBehulah/Hacking-Security-Ebooks/git/trees/main?recursive=1';
 const OSINT_JSON='https://raw.githubusercontent.com/lockfale/OSINT-Framework/master/public/arf.json';
 let osint=[],osintCat='all',activeSource='all',activeEbookCategory='all',pdfs=[];
 const groups={
@@ -20,10 +20,41 @@ function renderSources(q=''){const b=$('#sourceGrid');if(!b)return;const x=q.toL
 function setupSources(){const s=$('#sourceFilter');if(!s)return;s.innerHTML='<option value="all">ALL RESOURCE DOMAINS</option>'+Object.keys(groups).map(x=>'<option value="'+esc(x)+'">'+esc(x.toUpperCase())+'</option>').join('');s.onchange=()=>{activeSource=s.value;renderSources($('#sourceSearch')?.value||'')};$('#sourceSearch')?.addEventListener('input',e=>renderSources(e.target.value));renderSources()}
 function pdfClass(n){n=n.toLowerCase();if(/forensic|malware|virus|incident/.test(n))return'DFIR / Malware';if(/web|sql injection|xss|php security/.test(n))return'Web Security';if(/network|wireless|wireshark|firewall|snort|nessus|ssh/.test(n))return'Networks';if(/linux|unix|kali|bash/.test(n))return'Linux / Systems';if(/pentest|ethical hacking|hacking|metasploit|shellcoder/.test(n))return'Offensive Security';if(/crypt/.test(n))return'Cryptography';if(/scada|industrial|plc|automation|control/.test(n))return'Industrial / OT';if(/python|coding|programming|javascript|java/.test(n))return'Programming';return'Technical Library'}
 function renderPDFs(q=''){const b=$('#ebookGrid');if(!b)return;const x=q.toLowerCase();const list=pdfs.filter(p=>(!x||(p.name+' '+p.category).toLowerCase().includes(x))&&(activeEbookCategory==='all'||activeEbookCategory===p.category));b.innerHTML=list.map((p,i)=>'<article class="ebook-card"><div><span class="intel-code">'+String(i+1).padStart(3,'0')+'</span><span class="ebook-cat">'+esc(p.category)+'</span></div><h3>'+esc(p.name.replace(/\.pdf$/i,''))+'</h3><p>PDF · '+(p.size?(p.size/1048576).toFixed(1)+' MB':'')+'</p><a href="'+esc(p.download_url||p.html_url)+'" target="_blank" rel="noopener">OPEN PDF ↗</a></article>').join('')||'<div class="intel-empty">NO EBOOK MATCHES</div>';if($('#ebookCount'))$('#ebookCount').textContent=list.length+' indexed PDFs';if($('#pdfTotal'))$('#pdfTotal').textContent=pdfs.length}
-async function loadPDFs(){try{const r=await fetch(EBOOK_API);const d=await r.json();pdfs=d.filter(x=>x.type==='file'&&/\.pdf$/i.test(x.name)).map(x=>({...x,category:pdfClass(x.name)}));renderPDFs($('#ebookSearch')?.value||'')}catch(e){if($('#ebookGrid'))$('#ebookGrid').innerHTML='<div class="intel-empty">PDF INDEX UNAVAILABLE · <a href="https://github.com/HephzibahBehulah/Hacking-Security-Ebooks" target="_blank">OPEN REPOSITORY ↗</a></div>'}}
+async function loadPDFs(){
+  try{
+    const r=await fetch(EBOOK_TREE_API,{cache:'no-store',headers:{Accept:'application/vnd.github+json'}});
+    if(!r.ok)throw Error('GitHub tree '+r.status);
+    const d=await r.json();
+    const tree=Array.isArray(d.tree)?d.tree:[];
+    pdfs=tree.filter(x=>x.type==='blob'&&/\.pdf$/i.test(x.path||'')).map(x=>{
+      const name=x.path.split('/').pop();
+      return {
+        name,
+        size:x.size||0,
+        category:pdfClass(name),
+        download_url:'https://raw.githubusercontent.com/HephzibahBehulah/Hacking-Security-Ebooks/main/'+x.path.split('/').map(encodeURIComponent).join('/')
+      };
+    });
+    renderPDFs($('#ebookSearch')?.value||'');
+  }catch(e){
+    pdfs=[];
+    if($('#ebookGrid'))$('#ebookGrid').innerHTML='<div class="intel-empty">PDF INDEX TEMPORARILY UNAVAILABLE · <a href="https://github.com/HephzibahBehulah/Hacking-Security-Ebooks" target="_blank" rel="noopener">OPEN REPOSITORY ↗</a></div>';
+    if($('#ebookCount'))$('#ebookCount').textContent='repository available';
+    if($('#pdfTotal'))$('#pdfTotal').textContent='—';
+  }
+}
 function normalizeOSINT(n,cat='OSINT Framework',out=[]){if(Array.isArray(n)){n.forEach(v=>normalizeOSINT(v,cat,out));return out}if(!n||typeof n!=='object')return out;const name=n.name||n.title||n.label||n.text,url=n.url||n.href||n.link;let next=cat;if(name&&(n.children||n.nodes||n.items||n.tools)&&!url)next=name;if(name&&url&&/^https?:/i.test(url))out.push({name,category:cat,url,description:n.description||'Indexed from the OSINT Framework public dataset.'});for(const k of ['children','nodes','items','tools','links'])if(n[k])normalizeOSINT(n[k],next,out);return out}
 function renderOSINT(q=''){const b=$('#megaToolGrid');if(!b)return;const x=q.toLowerCase();const list=osint.filter(t=>(osintCat==='all'||t.category===osintCat)&&(!x||(t.name+' '+t.category+' '+t.description).toLowerCase().includes(x)));b.innerHTML=list.slice(0,1000).map(t=>'<a class="intel-card" target="_blank" rel="noopener noreferrer" href="'+esc(t.url)+'"><span class="intel-code">'+esc(t.category)+'</span><h3>'+esc(t.name)+' ↗</h3><p>'+esc(t.description)+'</p><span class="intel-open">OPEN ORIGINAL</span></a>').join('')||'<div class="intel-empty">NO TOOL MATCHES</div>';if($('#megaToolCount'))$('#megaToolCount').textContent=osint.length.toLocaleString()+' indexed tools'}
-async function loadOSINT(){try{const r=await fetch(OSINT_JSON,{cache:'no-store'});if(!r.ok)throw Error(r.status);const d=await r.json();osint=normalizeOSINT(d);const s=$('#megaToolCategory');if(s){const cats=[...new Set(osint.map(x=>x.category))].sort();s.innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c.toUpperCase())+'</option>').join('');s.onchange=()=>{osintCat=s.value;renderOSINT($('#megaToolSearch').value)}}$('#megaToolSearch')?.addEventListener('input',e=>renderOSINT(e.target.value));$('#megaToolRefresh')?.addEventListener('click',loadOSINT);renderOSINT()}catch(e){if($('#megaToolGrid'))$('#megaToolGrid').innerHTML='<div class="intel-empty">OSINT DATA UNAVAILABLE · <a href="https://osintframework.com/" target="_blank">OPEN OSINT FRAMEWORK ↗</a></div>'}}
+async function loadOSINT(){try{const r=await fetch(OSINT_JSON,{cache:'no-store'});if(!r.ok)throw Error(r.status);const d=await r.json();osint=normalizeOSINT(d);const s=$('#megaToolCategory');if(s){const cats=[...new Set(osint.map(x=>x.category))].sort();s.innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c.toUpperCase())+'</option>').join('');s.onchange=()=>{osintCat=s.value;renderOSINT($('#megaToolSearch').value)}}$('#megaToolSearch')?.addEventListener('input',e=>renderOSINT(e.target.value));$('#megaToolRefresh')?.addEventListener('click',loadOSINT);renderOSINT()}catch(e){
+  osint=groups['OSINT / Research'].map(i=>({name:i[0],description:i[1],url:i[2],category:'OSINT / Research'}));
+  const s=$('#megaToolCategory');
+  if(s){
+    s.innerHTML='<option value="all">ALL CATEGORIES</option><option value="OSINT / Research">OSINT / RESEARCH</option>';
+    s.onchange=()=>{osintCat=s.value;renderOSINT($('#megaToolSearch')?.value||'')};
+  }
+  $('#megaToolSearch')?.addEventListener('input',e=>renderOSINT(e.target.value));
+  renderOSINT();
+}}
 const docs=[['Cybersecurity','CISA resources','https://www.cisa.gov/resources-tools/resources'],['Cybersecurity','NIST CSF','https://www.nist.gov/cyberframework'],['Cybersecurity','OWASP WSTG','https://owasp.org/www-project-web-security-testing-guide/'],['Cybersecurity','OWASP Cheat Sheets','https://cheatsheetseries.owasp.org/'],['Cybersecurity','MITRE ATT&CK','https://attack.mitre.org/'],['Networking','RFC Editor','https://www.rfc-editor.org/'],['Networking','Wireshark docs','https://www.wireshark.org/docs/'],['Networking','Nmap guide','https://nmap.org/book/man.html'],['Linux','Linux kernel docs','https://docs.kernel.org/'],['Linux','Bash manual','https://www.gnu.org/software/bash/manual/'],['Data','Python docs','https://docs.python.org/3/'],['Data','pandas docs','https://pandas.pydata.org/docs/'],['Data','NumPy docs','https://numpy.org/doc/'],['Data','scikit-learn guide','https://scikit-learn.org/stable/user_guide.html'],['Engineering','Engineering Toolbox','https://www.engineeringtoolbox.com/'],['Electronics','All About Circuits','https://www.allaboutcircuits.com/textbook/'],['Electronics','Arduino docs','https://docs.arduino.cc/'],['Electronics','VDE','https://www.vde.com/en'],['OT','NIST SP 800-82','https://csrc.nist.gov/pubs/sp/800/82/r3/final'],['OT','CISA ICS','https://www.cisa.gov/topics/industrial-control-systems'],['Learning','MIT OpenCourseWare','https://ocw.mit.edu/'],['Learning','TryHackMe','https://tryhackme.com/'],['Learning','picoCTF','https://picoctf.org/']];
 function renderDocs(q=''){const b=$('#docGrid');if(!b)return;const x=q.toLowerCase();const list=docs.filter(d=>(window.docCat||'all')==='all'||d[0]===(window.docCat));const f=list.filter(d=>!x||(d.join(' ').toLowerCase().includes(x)));b.innerHTML=f.map(d=>'<a class="intel-card" href="'+d[2]+'" target="_blank" rel="noopener"><span class="intel-code">'+esc(d[0])+'</span><h3>'+esc(d[1])+' ↗</h3><p>Authoritative or educational technical source.</p><span class="intel-open">OPEN SOURCE</span></a>').join('');if($('#docIndexCount'))$('#docIndexCount').textContent=f.length+' source collections'}
 function setupDocs(){const s=$('#docCategory');if(s){s.innerHTML='<option value="all">ALL DOMAINS</option>'+[...new Set(docs.map(d=>d[0]))].map(c=>'<option>'+c+'</option>').join('');s.onchange=()=>{window.docCat=s.value;renderDocs($('#docSearch').value)}}$('#docSearch')?.addEventListener('input',e=>renderDocs(e.target.value));renderDocs()}
