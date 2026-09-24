@@ -243,51 +243,42 @@
 
   async function renderEbooks(){
     const grid=$('ebookGrid'); if(!grid)return;
-    grid.innerHTML=megaFallback.slice(0,8).map(x=>card(x[0],'Use the archive repository to browse available security and technical books.',x[1],'https://github.com/HephzibahBehulah/Hacking-Security-Ebooks')).join('');
-    if($('ebookCount'))$('ebookCount').textContent='archive available';
+    const show=(files)=>{
+      grid.innerHTML=files.map((x,i)=>card(String(i+1).padStart(3,'0'),x.name.replace(/\\.pdf$/i,''), 'PDF · '+((x.size||0)/1048576).toFixed(1)+' MB', x.url)).join('');
+      if($('ebookCount'))$('ebookCount').textContent=files.length+' PDFs indexed';
+      if($('pdfTotal'))$('pdfTotal').textContent=files.length;
+    };
     try{
-      const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),7000);
-      const res=await fetch('https://api.github.com/repos/HephzibahBehulah/Hacking-Security-Ebooks/git/trees/main?recursive=1',{signal:controller.signal,headers:{Accept:'application/vnd.github+json'}});
-      clearTimeout(timer);if(!res.ok)throw new Error('GitHub API '+res.status);
-      const data=await res.json();const files=(data.tree||[]).filter(x=>x.type==='blob'&&/\\.pdf$/i.test(x.path));
-      if(files.length){
-        const rows=files.map(x=>['EBOOK',x.path.split('/').pop().replace(/\\.pdf$/i,''),x.url||'', 'https://github.com/HephzibahBehulah/Hacking-Security-Ebooks/blob/main/'+x.path]);
-        grid.innerHTML=rows.map(r=>card(r[1],'PDF available in the public Hacking-Security-Ebooks repository.','PDF',r[3])).join('');
-        if($('ebookCount'))$('ebookCount').textContent=files.length+' PDFs indexed';
-        if($('pdfTotal'))$('pdfTotal').textContent=files.length;
-      }
-    }catch(e){if($('ebookCount'))$('ebookCount').textContent='archive link mode';}
+      const local=await fetch('data/source-library.json?v=20260924-1',{cache:'no-store'});
+      if(local.ok){const m=await local.json();if(Array.isArray(m.pdfs)&&m.pdfs.length){show(m.pdfs);return;}}
+    }catch(e){}
+    grid.innerHTML='<div class="intel-empty">PDF INDEX OFFLINE · <a href="https://github.com/HephzibahBehulah/Hacking-Security-Ebooks" target="_blank" rel="noopener">OPEN SOURCE ARCHIVE ↗</a></div>';
+    if($('ebookCount'))$('ebookCount').textContent='archive link mode';
   }
 
   async function renderMega(){
     const grid=$('megaToolGrid');if(!grid)return;
-    let list=megaFallback.slice();
+    let list=[];
     const draw=()=>{
-      const q=($('megaToolSearch')?.value||'').toLowerCase(),f=$('megaToolCategory')?.value||'all';
-      const rows=list.filter(x=>(f==='all'||x[1]===f)&&(!q||x.join(' ').toLowerCase().includes(q)));
-      grid.innerHTML=rows.map(x=>card(x[0],'External tool discovery entry. Open the provider for full documentation.',x[1],x[2])).join('');
-      if($('megaToolCount'))$('megaToolCount').textContent=rows.length+' tools available';
+      const q=($('megaToolSearch')?.value||'').toLowerCase().trim(),f=$('megaToolCategory')?.value||'all';
+      const rows=list.filter(x=>(f==='all'||x.category===f)&&(!q||x.name.toLowerCase().includes(q)||x.category.toLowerCase().includes(q)));
+      grid.innerHTML=rows.map(x=>card(String(x.id).padStart(4,'0'),x.name,x.category,'https://github.com/HephzibahBehulah/Hacking-Security-Ebooks')).join('');
+      if($('megaToolCount'))$('megaToolCount').textContent=rows.length.toLocaleString()+' tools indexed';
     };
-    const cats=[...new Set(list.map(x=>x[1]))];
-    if($('megaToolCategory'))$('megaToolCategory').innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(c=>'<option>'+esc(c)+'</option>').join('');
-    $('megaToolSearch')?.addEventListener('input',draw);$('megaToolCategory')?.addEventListener('change',draw);$('megaToolRefresh')?.addEventListener('click',()=>loadMega(draw));
-    draw(); await loadMega(draw);
-    async function loadMega(redraw){
-      try{
-        const c=new AbortController(),t=setTimeout(()=>c.abort(),7000);
-        const res=await fetch('https://raw.githubusercontent.com/lockfale/OSINT-Framework/master/public/arf.json',{signal:c.signal});clearTimeout(t);
-        if(!res.ok)throw Error('HTTP '+res.status);const data=await res.json(),found=[];
-        (function walk(node,cat){
-          if(!node||typeof node!=='object')return;
-          const category=node.name||cat||'OSINT';
-          if(Array.isArray(node.children))node.children.forEach(ch=>walk(ch,category));
-          if(Array.isArray(node.links))node.links.forEach(l=>{if(l&&l.url)found.push([l.name||l.title||'Unnamed tool',category,l.url])});
-          if(node.url)found.push([node.name||'OSINT tool',category,node.url]);
-        })(data,'OSINT');
-        const unique=[];const seen=new Set();for(const x of found){if(!seen.has(x[2])){seen.add(x[2]);unique.push(x)}} 
-        if(unique.length>100){list=unique.slice(0,1000);const cats2=[...new Set(list.map(x=>x[1]))];if($('megaToolCategory'))$('megaToolCategory').innerHTML='<option value="all">ALL CATEGORIES</option>'+cats2.map(c=>'<option>'+esc(c)+'</option>').join('');redraw();}
-      }catch(e){/* curated local index remains visible */ }
-    }
+    const setList=(items)=>{
+      list=items||[];
+      const cats=[...new Set(list.map(x=>x.category))].sort();
+      if($('megaToolCategory'))$('megaToolCategory').innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
+      draw();
+    };
+    try{
+      const local=await fetch('data/source-library.json?v=20260924-1',{cache:'no-store'});
+      if(local.ok){const m=await local.json();if(Array.isArray(m.tools)&&m.tools.length)setList(m.tools);}
+    }catch(e){}
+    if(!list.length)setList(megaFallback.map((x,i)=>({id:i+1,name:x[0],category:x[1]})));
+    $('megaToolSearch')?.addEventListener('input',draw);
+    $('megaToolCategory')?.addEventListener('change',draw);
+    $('megaToolRefresh')?.addEventListener('click',async()=>{if($('megaToolCount'))$('megaToolCount').textContent='refreshing…';try{const res=await fetch('https://raw.githubusercontent.com/lockfale/OSINT-Framework/master/public/arf.json',{cache:'no-store'});if(!res.ok)throw Error();const data=await res.json(),found=[];(function walk(n,cat){if(!n||typeof n!=='object')return;const category=n.name||cat||'OSINT';if(Array.isArray(n.children))n.children.forEach(x=>walk(x,category));if(Array.isArray(n.links))n.links.forEach(x=>{if(x?.url)found.push({id:found.length+1,name:x.name||x.title||'Unnamed tool',category,url:x.url})});})(data,'OSINT');if(found.length)setList(found.slice(0,10000));else draw();}catch(e){draw();}});
   }
 
   function initQuiz(){
