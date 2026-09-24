@@ -21,7 +21,7 @@
 <div class="os-status">SYSTEM STATUS<br><b>● ONLINE</b><br>profile_mode: public<br>resource_index: active<br>focus: systems + security</div>
 </aside>
 <main class="os-main">
-<header class="os-top"><div class="os-breadcrumb">portfolio / <b>intelligence map</b></div><div class="os-top-actions"><input id="globalResourceSearch" class="os-search" placeholder="search resources..." aria-label="Search resources"><button id="themeToggle" class="os-mini" type="button">☼ mode</button><button id="notesToggle" class="os-mini" type="button">? notes</button></div></header>
+<header class="os-top"><div class="os-breadcrumb">portfolio / <b>intelligence map</b></div><div class="os-top-actions"><input id="globalResourceSearch" class="os-search" placeholder="search resources..." aria-label="Search resources"><button id="themeToggle" class="os-mini" type="button">☼ mode</button></div></header>
 <div class="os-content" id="overview">
 <section class="os-hero">
 <div class="os-panel"><div class="os-panel-head"><span>identity / profile</span><span class="live">● available</span></div><div class="os-panel-body">
@@ -37,10 +37,8 @@
 <div><span class="prompt">hb@intel:~$</span> ethics</div><div class="key">legal · authorised · privacy-aware</div>
 </div></div>
 </section>
-<div class="os-metrics"><div class="os-metric"><b>10+</b><span>resource domains</span></div><div class="os-metric"><b id="pdfTotal">70</b><span>indexed PDFs</span></div><div class="os-metric"><b id="sourceMetric">70+</b><span>indexed resources</span></div><div class="os-metric"><b>1,088</b><span>source toolbox modules</span></div></div>
-
 <section class="os-panel" id="tree"><div class="os-panel-head"><span>intelligence tree / interactive</span><span>click a node to inspect</span></div>
-<div class="os-tree-toolbar"><span>Core domains connect the portfolio to the resource matrix and technical library.</span><button id="resetTree" class="os-mini" type="button">reset map</button></div>
+<div class="os-tree-toolbar"><span>Explore</span><button id="resetTree" class="os-mini" type="button">reset map</button></div>
 <div class="os-tree-wrap"><div class="os-tree" id="intelTree">
 <svg class="tree-lines" viewBox="0 0 1320 930" preserveAspectRatio="none" aria-hidden="true"><path d="M660 88V150M660 150H100M660 150H270M660 150H440M660 150H610M660 150H780M660 150H950M660 150H1120M100 150V235M270 150V235M440 150V235M610 150V235M780 150V235M950 150V235M1120 150V235M100 350V430M270 350V430M440 350V430M610 350V430M780 350V430M950 350V430M1120 350V430"/></svg>
 <button class="os-node root" style="left:570px;top:35px" data-info="Core profile, learning philosophy and technical direction.">HB / CORE<small>systems thinker</small></button>
@@ -60,17 +58,15 @@
 <button class="os-leaf learn" style="left:1045px;top:430px" data-info="Technical books and external documentation.">RESOURCE MATRIX</button><button class="os-leaf learn" style="left:1045px;top:490px" data-info="Hands-on labs, exercises and experiments.">LABS / PRACTICE</button>
 </div></div><div id="nodeInfo" class="node-info"><b>CORE</b><span>Select a node to inspect its branch.</span></div></section>
 
-<section class="resource-hub" id="resourceMatrix"><div class="os-panel"><div class="os-panel-head"><span>01 / resource matrix</span><span id="sourceCount">loading</span></div>
+<section class="resource-hub" id="resourceMatrix"><div class="os-panel"><div class="os-panel-head"><span>RESOURCE MATRIX</span><span id="sourceCount" style="display:none">loading</span></div>
 <div class="resource-controls"><label><span>⌕</span><input id="sourceSearch" placeholder="Search OSINT, web, Linux, DFIR, OT, data..."></label><select id="sourceFilter"></select><button id="resourceReset" class="os-mini">reset</button></div>
-<div class="resource-note"><b>RESOURCE POLICY</b> Links point to public resources and official documentation. Use security resources only for lawful, authorised learning and testing.</div>
 <div id="sourceGrid" class="intel-grid"></div></div></section>
 
-<section class="resource-hub" id="ebookVault"><div class="os-panel"><div class="os-panel-head"><span>02 / ebook vault</span><span id="ebookCount">indexing</span></div>
+<section class="resource-hub" id="ebookVault"><div class="os-panel"><div class="os-panel-head"><span>EBOOK VAULT</span><span id="ebookCount" style="display:none">indexing</span></div>
 <div class="resource-controls"><label><span>⌕</span><input id="ebookSearch" placeholder="Search the technical ebook archive..."></label><a class="os-mini" href="https://github.com/HephzibahBehulah/Hacking-Security-Ebooks" target="_blank" rel="noopener">source repository ↗</a></div>
-<div class="resource-note"><b>ARCHIVE</b> The vault indexes all 70 PDFs from the public Hacking-Security-Ebooks repository. The portfolio links to the original files rather than duplicating 533.8 MB of binary content. Availability and rights remain subject to the original repository and copyright holders.</div>
 <div id="ebookGrid" class="ebook-grid"></div></div></section>
 
-<section class="resource-hub" id="toolbench"><div class="os-panel"><div class="os-panel-head"><span>03 / local toolbench</span><span>browser only</span></div><div class="os-panel-body"><div class="toolbench-intro"><div><div class="os-kicker">NO BACKEND · NO API KEY</div><h2>Micro-tools for study</h2><p>Small calculations run locally in the browser. Nothing is sent to a server by these tools.</p></div><div id="microTools" class="micro-tools"></div></div></div></div></section>
+<section class="resource-hub" id="toolbench"><div class="os-panel"><div class="os-panel-head"><span>TOOLBENCH</span><span style="display:none">browser only</span></div><div class="os-panel-body"><div class="toolbench-intro"><div><h2>Micro-tools for study</h2><div class="hb-ref-label">ENGINEERING REFERENCE</div><p>Electrical and mathematical reference tools for quick study.</p></div><div id="microTools" class="micro-tools"></div></div></div></div></section>
 
 <section class="os-grid" id="projects"><div class="os-panel"><div class="os-panel-head"><span>selected investigations</span><span>public repositories</span></div><div class="os-panel-body os-list">
 <a class="os-item" href="https://github.com/HephzibahBehulah/Water-Pump-Status-Prediction-ML" target="_blank">water pump status prediction <span>ML / Python ↗</span></a>
@@ -80,20 +76,16 @@
 <a class="os-item" href="https://github.com/HephzibahBehulah/Tryhackme-GUI" target="_blank">TryHackMe GUI <span>lab / Python ↗</span></a>
 <a class="os-item" href="https://github.com/HephzibahBehulah/powerbi-desktop-samples" target="_blank">Power BI samples <span>analytics ↗</span></a>
 </div></div>
-<div class="os-panel"><div class="os-panel-head"><span>framework legend</span><span>operating model</span></div><div class="os-panel-body legend">
-<div><b>DISCOVER</b><span>Start with a domain, not a random search.</span></div><div><b>INSPECT</b><span>Open the resource card and follow the original source.</span></div><div><b>VERIFY</b><span>Prefer primary documentation, standards and provenance.</span></div><div><b>LEARN</b><span>Resources support study; they do not represent claims of expertise.</span></div>
-</div></div></section>
-<footer class="os-footer">HEPHZIBAH BEHULAH · PUBLIC PORTFOLIO · ORIGINAL OSINT-INSPIRED INTERFACE · RESOURCE INDEX + TECHNICAL LIBRARY · 2026</footer>
+</section>
 </div>
 <section class="os-panel mega-section" id="megaTools">
-  <div class="os-panel-head"><span>HB mega tool index / source-connected discovery</span><span id="megaToolCount">loading...</span></div>
+  <div class="os-panel-head"><span>MEGA TOOLS</span><span id="megaToolCount" style="display:none">loading...</span></div>
   <div class="resource-controls">
     <label><span>⌕</span><input id="megaToolSearch" placeholder="search indexed tools..." aria-label="Search mega tool index"></label>
     <select id="megaToolCategory" aria-label="Filter mega tools"><option value="all">ALL CATEGORIES</option></select>
     <button id="megaToolRefresh" class="os-mini" type="button">refresh index</button>
   </div>
-  <div class="resource-note"><b>LIVE INDEX</b> The portfolio connects to public tool catalogues and to the Hacking-Security-Ebooks repository. The source repository currently contains a 1,088-entry searchable toolbox and 70 PDF files. This page indexes those resources without duplicating large binary files. Use security resources only for lawful, authorised research.</div>
-  <div id="megaToolGrid" class="intel-grid"><div class="intel-empty">LOADING TOOL INDEX...</div></div>
+    <div id="megaToolGrid" class="intel-grid"><div class="intel-empty">LOADING TOOL INDEX...</div></div>
 </section>
 
 <section class="os-panel mega-section" id="engineeringLab">
@@ -102,17 +94,16 @@
 </section>
 
 <section class="os-panel mega-section" id="knowledgeLibrary">
-  <div class="os-panel-head"><span>technical knowledge library / source-connected collections</span><span id="docIndexCount">catalogue</span></div>
+  <div class="os-panel-head"><span>KNOWLEDGE LIBRARY</span><span id="docIndexCount" style="display:none">catalogue</span></div>
   <div class="resource-controls">
     <label><span>⌕</span><input id="docSearch" placeholder="search engineering, electronics, cyber, OT, networking..." aria-label="Search document library"></label>
     <select id="docCategory"><option value="all">ALL DOMAINS</option></select>
   </div>
-  <div class="resource-note"><b>DOCUMENT INDEX</b> This layer links to authoritative and openly accessible documentation instead of copying third-party books. Your own Hacking-Security-Ebooks repository remains dynamically indexed above.</div>
-  <div id="docGrid" class="intel-grid"><div class="intel-empty">LOADING DOCUMENT CATALOGUE...</div></div>
+    <div id="docGrid" class="intel-grid"><div class="intel-empty">LOADING DOCUMENT CATALOGUE...</div></div>
 </section>
 
 <section class="os-panel mega-section" id="genzBible">
-  <div class="os-panel-head"><span>Gen Z Bible / scripture desk</span><span>external source</span></div>
+  <div class="os-panel-head"><span>BIBLE QUIZ</span><span style="display:none">external source</span></div>
   <div class="bible-grid">
     <div class="bible-console">
       <div class="intel-code">SCRIPTURE / STUDY MODE</div>
@@ -121,7 +112,7 @@
       <div class="os-actions"><a class="os-btn primary" href="https://www.genz-bible.com/" target="_blank" rel="noopener">open Gen Z Bible ↗</a><a class="os-btn" href="https://www.genz-bible.com/about" target="_blank" rel="noopener">about the paraphrase ↗</a></div>
     </div>
     <div class="quiz-console">
-      <div class="quiz-meta"><span id="quizStreak">streak: 0</span><span id="quizScore">score: 0</span><span id="quizPool">generated pool: 1,189,000+</span></div>
+      <div class="quiz-meta"><span id="quizStreak">streak: 0</span><span id="quizScore">score: 0</span></div>
       <div id="quizQuestion" class="quiz-question">Press NEXT QUESTION to begin.</div>
       <div id="quizOptions" class="quiz-options"></div>
       <div class="quiz-actions"><button id="quizNext" class="os-btn primary" type="button">NEXT QUESTION</button><button id="quizShowAnswer" class="os-btn" type="button">SHOW ANSWER</button></div>
@@ -131,7 +122,11 @@
 </section>
 
 </main></div>
-<dialog id="notesDialog" class="os-dialog"><button id="notesClose" class="dialog-close">×</button><h2>Framework notes</h2><p>This is an original interface inspired by the information-architecture idea of an OSINT resource tree. The resource matrix combines official documentation, standards, learning platforms and public research tools.</p><p>The ebook vault reads filenames and metadata from the public Hacking-Security-Ebooks repository rather than reproducing the PDF content inside this portfolio. External resources can have their own licences and terms.</p><p>Use cybersecurity and OSINT resources only on systems and data you are authorised to examine.</p></dialog>
 <div id="resourceToolModal" class="resource-tool-modal" aria-hidden="true"><div class="resource-tool-card"><button id="resourceToolClose" class="dialog-close">×</button><h2 id="resourceToolTitle">Tool</h2><div id="resourceToolBody"></div></div></div>
-<script src="js/osint-redesign.js?v=20260924-7"></script><script src="js/intelligence-map.js?v=20260924-1"></script><script src="js/mega-tools.js?v=20260924-2"></script><script src="js/intelligence-core.js?v=20260924-3"></script>
+<footer class="os-footer" aria-label="Hephzibah Behulah social links">
+<div class="hb-footer-top"><div class="hb-footer-identity"><img src="assets/hb-logo.svg" alt="HB logo"><div><strong>HEPHZIBAH BEHULAH</strong><span>Engineering → Intelligence → Security</span></div></div>
+<div class="hb-socials"><a class="hb-social gh" href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener" aria-label="GitHub">GH</a><a class="hb-social in" href="https://linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><a class="hb-social x" href="https://x.com/hephzibahBehulah" target="_blank" rel="noopener" aria-label="X">𝕏</a><a class="hb-social fb" href="https://www.facebook.com/HephzibahBehulah" target="_blank" rel="noopener" aria-label="Facebook">f</a><a class="hb-social gb" href="https://gitbook.io" target="_blank" rel="noopener" aria-label="GitBook">GB</a><a class="hb-social blog" href="https://hephzibahbehulah.blogspot.com" target="_blank" rel="noopener" aria-label="Blog">BLOG</a></div></div>
+<div class="hb-footer-bottom"><span>© 2026 Hephzibah Behulah</span><span>Electronics · Automation · Software · Data · Security</span></div>
+</footer>
+<script src="js/osint-redesign.js?v=20260925-8"></script><script src="js/intelligence-map.js?v=20260924-1"></script><script src="js/mega-tools.js?v=20260924-2"></script><script src="js/intelligence-core.js?v=20260924-3"></script>
 </body></html>
