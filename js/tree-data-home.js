@@ -103,7 +103,7 @@ const homeTreeData = {
                     icon: '🔐',
                     badge: 'R',
                     description: '50+ security tools integrated into an interactive web dashboard for ethical hacking and cybersecurity education.',
-                    url: 'pentest.html',
+                    url: 'index.html#terminal',
                     category: 'cybersecurity'
                 },
                 {
