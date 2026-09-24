@@ -1,4 +1,4 @@
-/* HB INTELLIGENCE HUB v3 */
+/* HB INTELLIGENCE HUB v4 · stable static-first runtime */
 (() => {
 'use strict';
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
