@@ -1,37 +1,33 @@
 HephzibahBehulah.github.io/
-├── index.html                    # Homepage
-├── about.html                    # Identity page
-├── portfolio.html                # Legacy redirect → #projects
-├── resources.html                # Legacy redirect → #resourceMatrix
-├── contact.html                  # Contact endpoint
-├── pentest.html                  # Authorised security learning lab
-│
-├── css/
-│   ├── main.css                  # Core styles
-│   ├── dark.css                  # Dark theme
-│   ├── responsive.css            # Mobile responsive
-│   └── pentest.css               # Pentest dashboard styles
-│
-├── js/
-│   ├── main.js                   # Core functionality
-│   ├── theme.js                  # Dark/light toggle
-│   ├── animations.js             # AOS/Animate.css
-│   ├── pentest.js                # Pentest app integration
-│   └── terminal-emulator.js      # Web terminal for your script
+├── index.html                         # Canonical Intelligence Portfolio
+├── portfolio.html                     # Compatibility route → #projects
+├── resources.html                     # Compatibility route → #resourceMatrix
+├── pentest.html                       # Authorised browser security learning lab
+├── engineering-library.html           # Engineering calculator/library
+├── recon-hub.html                     # Reconnaissance resource hub
 │
 ├── assets/
-│   ├── images/
-│   │   ├── hero-bg.jpg
-│   │   ├── profile.jpg
-│   │   ├── icons/
-│   │   └── projects/
-│   ├── fonts/
-│   └── downloads/
+│   └── hb-logo.svg                    # Shared HB brand mark
+│
+├── css/
+│   ├── osint-redesign.css             # Main Intelligence Portfolio theme
+│   └── hb-brand.css                   # Shared logo, heading and social identity
+│
+├── js/
+│   ├── osint-redesign.js              # Theme, tree UI and shared branding/footer
+│   ├── intelligence-map.js             # Interactive intelligence map
+│   ├── intelligence-core.js            # Resource, ebook and knowledge runtime
+│   ├── mega-tools.js                   # Mega tool catalogue
+│   ├── tree-data-home.js               # Portfolio tree data
+│   ├── engineering-library.js          # Engineering calculator runtime
+│   └── recon-hub.js                    # Recon hub runtime
 │
 ├── pentest-script/
-│   └── hephzibah-pentest.sh      # Your original Bash script
+│   └── hephzibah-pentest.sh            # Authorised local lab script
 │
-├── _config.yml                   # GitHub Pages config
-├── CNAME                         # Custom domain
+├── _config.yml                         # GitHub Pages configuration
 ├── .gitignore
-└── README.md                     # Deployment instructions
+├── README.md
+└── Complete File Structure
+
+Note: about.html and contact.html were intentionally removed. The main index now contains the canonical identity, project and social/contact experience.
