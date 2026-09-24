@@ -68,7 +68,8 @@ const tokenize = s => {
   return (m || []).map(x => x.replace(/^["']|["']$/g,''));
 };
 const num = x => {
-  const n = Number(x);
+  const token = String(x ?? '').trim().replace(/^<|>$/g,'');
+  const n = Number(token);
   return Number.isFinite(n) ? n : null;
 };
 const fmt = (n, unit='') => Number.isFinite(n) ? (Math.abs(n) >= 1e-6 && Math.abs(n) < 1e6 ? n.toFixed(6).replace(/\.0+$/,'') : n.toExponential(4)) + unit : 'invalid';
