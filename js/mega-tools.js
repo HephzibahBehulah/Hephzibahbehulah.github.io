@@ -245,14 +245,172 @@ const EXTRA_DEFINITIONS={
 "Combinations":["C(n,r) = n!/[r!(n−r)!]",["n","r"],v=>Number.isInteger(v[0])&&Number.isInteger(v[1])&&v[0]>=v[1]&&v[1]>=0?"C(n,r) = "+comb(v[0],v[1]).toLocaleString():"Enter n ≥ r ≥ 0."],
 "Permutations":["P(n,r) = n!/(n−r)!",["n","r"],v=>Number.isInteger(v[0])&&Number.isInteger(v[1])&&v[0]>=v[1]&&v[1]>=0?"P(n,r) = "+perm(v[0],v[1]).toLocaleString():"Enter n ≥ r ≥ 0."]
 };
+const TOOL_METHODS = {
+ "DHCP Pool": ["No universal equation","1. Define the subnet. 2. Reserve gateway, servers and fixed devices. 3. Choose the dynamic address range inside the subnet. 4. Configure lease time, gateway and DNS. 5. Test that a client receives an address in the intended range."],
+ "DHCP Scope": ["Pool range = first usable address … last usable address","Choose a subnet, calculate its usable range, exclude reserved addresses, then define the remaining dynamic range."],
+ "Subnet Mask": ["IPv4 mask = first prefix bits set to 1","Enter a CIDR prefix such as /24. The tool converts the prefix into dotted-decimal notation and identifies network/host bits."],
+ "Network Address": ["Network = IP AND subnet mask","Enter an IPv4 address and CIDR prefix. Apply a bitwise AND between the address and mask."],
+ "Broadcast Address": ["Broadcast = Network OR inverted mask","Enter IPv4 + prefix. Find the network address first, then set all host bits to 1."],
+ "Host Count": ["Usable hosts = 2^hostBits − 2","Calculate host bits as 32 − prefix. Subtract network and broadcast addresses for ordinary IPv4 subnets."],
+ "Star Delta Voltage": ["Vphase(star) = Vline/√3; Vline(delta) = Vphase","Enter line voltage. Use the star relationship for phase voltage or the delta relationship for phase voltage."],
+ "Star Delta Current": ["Iline(star) = Iphase; Iline(delta) = √3 × Iphase","Determine the connection first, then apply the corresponding line/phase current relationship."],
+ "Transformer VA": ["S = V × I","Multiply the rated winding voltage by its rated current to obtain apparent power in VA."],
+ "Cable Loss": ["Ploss = I²R","Enter current and conductor resistance. For a complete cable circuit, include the resistance of the full current path."],
+ "Fuse Current": ["I = P/V","For a simple resistive load, divide load power by supply voltage; select protection using the applicable installation standard and manufacturer data."],
+ "Thermal Power": ["Pthermal = I²R or P = V²/R","Use the form that matches the available electrical values. The result is heat dissipation in watts."],
+ "Temperature Coefficient": ["R(T) = R0[1 + α(T − T0)]","Enter reference resistance, temperature coefficient and temperature change. This linear model is an approximation over the stated operating range."],
+ "Heat Sink Estimate": ["ΔT = P × Rθ; Tj = Ta + P × RθJA","Enter dissipated power and the relevant thermal resistance. Check the component and heatsink datasheets before selecting hardware."],
+ "Cable Sizing": ["Iload = P/(V×PF) for single-phase; Iload = P/(√3×V×PF) for balanced three-phase","Determine load current, installation method, conductor material, ambient temperature, grouping, voltage-drop limit and protective device before selecting conductor size."],
+ "Conductor Ampacity": ["Allowable current = base ampacity × applicable correction factors","Start from the conductor's rated ampacity and apply the correction/derating factors required by the applicable standard."],
+ "Voltage Tolerance": ["Tolerance % = |actual − nominal|/nominal × 100","Enter nominal and measured voltage, then compare the percentage deviation with the permitted equipment or installation tolerance."],
+ "Loop Impedance": ["Zs = Ze + (R1 + R2)","Use measured/declared external loop impedance plus the circuit protective and phase conductor impedances. Verify against the applicable disconnection requirement."],
+ "Earth Fault Loop": ["If ≈ U0/Zs","Divide nominal line-to-earth voltage by earth fault loop impedance for a prospective fault-current estimate."],
+ "Power Factor Correction": ["Qc = P(tanφ1 − tanφ2)","Enter real power and the present and target power factors. Use the angle relation to estimate required capacitive reactive power."],
+ "Capacitor kVAR": ["Qc = 2πfCV²","For a capacitor bank, use the correct single/three-phase connection voltage and total capacitance."],
+ "Generator Sizing": ["S(kVA) ≈ P(kW)/PF","Estimate required apparent power from real load and power factor, then account for starting/inrush loads and required design margin."],
+ "UPS Sizing": ["S(kVA) ≥ required load VA/1000","Add the connected load, consider power factor, battery runtime, surge/inrush and manufacturer derating."],
+ "Battery Bank": ["Series voltage = Nseries×V; parallel capacity = Nparallel×Ah","Choose series count for required voltage and parallel count for required capacity/current. Respect battery chemistry, BMS and manufacturer limits."],
+ "PLC Scan Time": ["Tscan = Tinput + Tlogic + Toutput + Tcommunication + overhead","Measure or estimate each execution component. Actual values depend on PLC model, program size and communication load."],
+ "4-20mA Scaling": ["PV = PVmin + (I−4)/16 × (PVmax−PVmin)","Enter current and engineering range. 4 mA represents the lower range and 20 mA the upper range."],
+ "0-10V Scaling": ["PV = PVmin + V/10 × (PVmax−PVmin)","Map the measured 0–10 V signal linearly onto the engineering range."],
+ "Linear Interpolation": ["y = y1 + (x−x1)(y2−y1)/(x2−x1)","Enter two known points and the new x value. The result assumes a linear relationship between the points."],
+ "Mechanical Power": ["P = τω; ω = 2πn/60","Convert RPM to angular velocity, then multiply torque by angular velocity."],
+ "Motor Speed": ["n = 60P/(2πτ)","Enter mechanical power and torque. This ideal relationship ignores losses unless power is explicitly output power."],
+ "Gear Ratio": ["GR = Nin/Nout = Nout_speed/Nin_speed","Define which shaft is input and output before calculating the ratio."],
+ "Generator Frequency": ["f = PN/120","Enter pole count P and rotational speed N in RPM."],
+ "Conduit Fill": ["Fill % = conductor area total / usable conduit area × 100","Count conductors, use their actual cross-sectional areas and compare the total against the permitted fill percentage."],
+ "Cable Tray Fill": ["Fill % = cable cross-sectional area total / usable tray area × 100","Add cable occupied area and compare it with the permitted tray fill and spacing requirements."],
+ "Phase Balance": ["Imbalance % = deviation from average / average × 100","Measure all phase currents or voltages, calculate the average, then compare each phase's deviation."],
+ "Motor Starting Current": ["Istart ≈ multiplier × FLA","Use the motor manufacturer's locked-rotor/starting-current data rather than assuming a universal multiplier."],
+ "PLC I/O Count": ["Required I/O = field devices + spare capacity","Count every required digital/analog input and output separately, then add the planned spare percentage."],
+ "Memory Address Space": ["Address space = 2^addressBits","Enter address width in bits. The result is the number of unique addressable locations."],
+ "EEPROM Size": ["Memory bytes = number of addresses × bytes/address","Use the device's address width and data width from its datasheet."],
+ "ADC Resolution": ["LSB ≈ Vref/(2^N−1)","Enter reference voltage and ADC bit depth. Smaller LSB means finer nominal voltage resolution."],
+ "DAC Resolution": ["LSB ≈ Vref/(2^N−1)","Enter reference/full-scale voltage and bit depth."],
+ "Quantization Error": ["|error| ≤ 0.5 LSB (ideal rounding ADC)","For an ideal uniformly quantized converter, the maximum rounding error is half an LSB."],
+ "555 Frequency": ["Astable: f ≈ 1.44/[(RA+2RB)C]","Enter RA, RB and C for the standard 555 astable configuration. Real devices vary with component tolerances."],
+ "555 Duty Cycle": ["D ≈ (RA+RB)/(RA+2RB) × 100%","Use the standard 555 astable formula and note that the basic circuit does not independently set a duty cycle below 50%."],
+ "Bit Mask": ["result = value AND mask","Enter the value and mask in a common base. AND preserves only bits enabled by the mask."],
+ "Bit Shift": ["Left shift: x<<n = x×2^n; right shift: x>>n ≈ floor(x/2^n)","Choose direction and shift count. Signed right shifts depend on the programming language."],
+ "Parity Bit": ["Even parity: total number of 1 bits including parity is even","Count the set bits and choose the parity bit according to the selected even/odd rule."],
+ "Memory Utilization": ["Used/total × 100%","Divide used memory by total memory and multiply by 100."],
+ "CPU Utilization": ["CPU usage % = busy time / total measured time × 100","Use an operating-system measurement interval rather than a single instantaneous reading."],
+ "Uptime Percentage": ["Uptime % = uptime/(uptime + downtime) × 100","Enter the same measurement period for both uptime and downtime."],
+ "MAE": ["MAE = Σ|yi−ŷi|/n","Enter actual and predicted values with matching lengths."],
+ "MSE": ["MSE = Σ(yi−ŷi)²/n","Square each prediction error, average the squared errors."],
+ "RMSE": ["RMSE = √MSE","Calculate MSE first, then take its square root."],
+ "MAPE": ["MAPE = 100/n × Σ|((yi−ŷi)/yi)|","Do not use ordinary MAPE where actual values are zero; use an appropriate alternative."],
+ "Correlation": ["r = cov(X,Y)/(σXσY)","Use paired observations and check that both variables have non-zero standard deviation."],
+ "R Squared": ["R² = 1 − SSE/SST","Compare residual sum of squares with total sum of squares."],
+ "Bayes Rule": ["P(A|B) = P(B|A)P(A)/P(B)","Enter the prior, likelihood and evidence probability."],
+ "Conditional Probability": ["P(A|B) = P(A∩B)/P(B)","The condition B must have non-zero probability."],
+ "Expected Value": ["E[X] = ΣxP(x)","Multiply each possible value by its probability and sum."],
+ "Geometric Mean": ["GM = (x1×x2×…×xn)^(1/n)","Use positive values for the ordinary real-valued geometric mean."],
+ "Harmonic Mean": ["HM = n/Σ(1/xi)","Use non-zero values; this is useful for rates such as speeds under suitable conditions."],
+ "Cpk": ["Cpk = min[(USL−μ)/(3σ),(μ−LSL)/(3σ)]","Enter upper/lower specification limits, process mean and standard deviation."],
+ "Cp": ["Cp = (USL−LSL)/(6σ)","This measures potential capability assuming the process is centered."],
+ "Six Sigma DPMO": ["DPMO = defects/(units×opportunities per unit) × 1,000,000","Define the number of defect opportunities consistently before calculating."],
+ "Min Max Scaling": ["x' = (x−xmin)/(xmax−xmin)","Maps a value into 0–1 when the standard min-max transformation is used."],
+ "Standardization": ["z = (x−μ)/σ","Subtract the mean and divide by standard deviation."],
+ "IQR": ["IQR = Q3 − Q1","Sort the data, determine first and third quartiles using the selected quartile convention, then subtract."],
+ "Outlier Fence": ["Lower = Q1−1.5IQR; Upper = Q3+1.5IQR","Values outside these fences are flagged by the common Tukey rule."],
+ "Precision": ["Precision = TP/(TP+FP)","Of predicted positives, calculate the fraction that are actually positive."],
+ "Recall": ["Recall = TP/(TP+FN)","Of actual positives, calculate the fraction correctly identified."],
+ "F1 Score": ["F1 = 2PR/(P+R)","Use precision and recall on the same evaluation set."],
+ "Accuracy": ["Accuracy = (TP+TN)/(TP+TN+FP+FN)","Use all four confusion-matrix counts."],
+ "Conversion Rate": ["Conversion rate = conversions/eligible population × 100%","Define the denominator before calculating."],
+ "Churn Rate": ["Churn rate = customers lost during period/customers at start of period × 100%","Keep the measurement window and population definition consistent."],
+ "Retention Rate": ["Retention = retained customers / starting customers × 100%","State whether new customers are excluded from the denominator."],
+ "Average Order Value": ["AOV = revenue/orders","Use the same period and order population for numerator and denominator."],
+ "Revenue per User": ["RPU = revenue/users","Use a clearly defined active or paying user population."],
+ "Break Even": ["Break-even units = fixed costs/(price−variable cost per unit)","Contribution margin per unit must be positive."],
+ "ROAS": ["ROAS = attributed revenue/ad spend","Define attribution window and revenue consistently."],
+ "Cost per Acquisition": ["CPA = acquisition cost/number of acquisitions","Use the same campaign and attribution window."],
+ "Markdown Table": ["Method: header row + separator row + aligned data rows","Enter columns and rows; the tool formats them into Markdown table syntax."],
+ "Markdown Link": ["[label](URL)","Enter link text and a valid URL."],
+ "Regex Tester": ["Method: pattern matching with a regular expression","Enter pattern, flags and test text. The tool compiles the pattern and reports matches or syntax errors."],
+ "Regex Escape": ["Method: escape regex metacharacters","Enter literal text; special regex characters are prefixed so they are treated literally."],
+ "JSON Formatter": ["Method: JSON.parse → JSON.stringify(value, null, 2)","Paste valid JSON. The tool parses it and re-serializes it with indentation."],
+ "JSON Minifier": ["Method: JSON.parse → JSON.stringify(value)","Paste valid JSON to validate and remove unnecessary whitespace."],
+ "XML Formatter": ["Method: parse XML → serialize with indentation","Paste well-formed XML. Formatting does not repair invalid XML."],
+ "Text Diff": ["Method: compare lines/tokens and report insertions, deletions and changes","Enter the two texts and inspect the changed regions."],
+ "Character Frequency": ["frequency(c) = count of character c","Enter text; count occurrences for each character."],
+ "Word Count": ["count = number of whitespace-delimited tokens","Paste text and count words using the tool's tokenization rule."],
+ "Line Count": ["count = number of line breaks + 1 for non-empty text","Paste text; empty input returns zero."],
+ "UTF-8 Byte Count": ["bytes = UTF-8 encoded length","Enter text; multi-byte Unicode characters can occupy more than one byte."],
+ "URL Encoder": ["Method: encodeURIComponent(text)","Enter text to make it safe for use as a URL component."],
+ "URL Decoder": ["Method: decodeURIComponent(text)","Paste an encoded URL component and decode percent escapes."],
+ "Base64 Encoder": ["Method: binary/text → Base64 representation","Enter text; the tool encodes its byte representation."],
+ "Base64 Decoder": ["Method: Base64 representation → bytes/text","Paste valid Base64 and decode it."],
+ "Unix Timestamp": ["Unix time = seconds since 1970-01-01T00:00:00Z","Enter a date/time and convert using UTC."],
+ "Cron Expression": ["Method: minute hour day-of-month month day-of-week","Enter a five-field cron expression and check each field against its schedule position."],
+ "Systemd Timer": ["Method: OnCalendar / OnBootSec / OnUnitActiveSec scheduling rules","Enter the desired systemd timer directive and validate its intended schedule."],
+ "chmod Calculator": ["Permission value = user + group + other; r=4,w=2,x=1","Add permission bits for each owner class, e.g. 7 = rwx."],
+ "umask Calculator": ["effective permissions = requested permissions masked by umask","Enter requested mode and umask; subtract/clear the masked permission bits."],
+ "chown Helper": ["Method: owner:group file","Enter the target owner, group and path; apply the command only where you have authorization."],
+ "SQL Row Count": ["SELECT COUNT(*) FROM table;","Choose the table and count rows, optionally adding a WHERE clause for a subset."],
+ "SQL Distinct Count": ["SELECT COUNT(DISTINCT column) FROM table;","Choose the column whose unique non-duplicate values you want to count."],
+ "SQL Null Count": ["COUNT(*) − COUNT(column)","Count all rows and subtract rows where the selected column is non-NULL."],
+ "SQL Duplicate Check": ["GROUP BY key HAVING COUNT(*) > 1","Choose the columns that define a duplicate and group by them."],
+ "SQL Date Difference": ["Method: database-specific date difference function","Specify database engine because DATE_DIFF/DATEDIFF syntax differs between PostgreSQL, MySQL, SQL Server and others."],
+ "Pandas GroupBy Helper": ["df.groupby(keys)[column].agg(function)","Choose grouping columns and an aggregation such as sum, mean or count."],
+ "Pandas Merge Notes": ["df.merge(right, on=keys, how='left')","Define join keys and choose the correct join type before merging."],
+ "Pandas Missing Values": ["missing rate = missing cells/total cells × 100%","Inspect isna().sum() and decide whether to remove, impute or preserve missingness."],
+ "One Hot Encoding": ["k categories → k binary indicator columns (or k−1 with drop-first)","Fit the encoder on training data and apply the same learned categories to validation/test data."],
+ "Feature Count": ["features = number of predictor columns","Exclude the target and non-feature identifiers according to the modeling design."],
+ "Rows per Feature": ["ratio = rows/features","Use the training-row count and predictor-feature count."],
+ "Missing Value Rate": ["missing rate = missing values/total cells × 100%","Count missing cells across the chosen data scope."],
+ "Duplicate Rate": ["duplicate rate = duplicate rows/total rows × 100%","Define whether the first occurrence is treated as the retained record."],
+ "Unique Rate": ["unique rate = unique values/rows × 100%","Use this to describe cardinality relative to row count."],
+ "Entropy": ["H(X) = −Σ p(x)log2 p(x)","Calculate category probabilities from observed frequencies."],
+ "Information Gain": ["IG = H(parent) − Σ(weighted child entropy)","Compare parent impurity with the weighted impurity after the split."],
+ "Gini Impurity": ["Gini = 1 − Σpᵢ²","Calculate class proportions at a node."],
+ "Cross Validation": ["Method: split data into k folds; train on k−1 and validate on the remaining fold","Rotate the validation fold and average the evaluation metric."],
+ "K Fold Split": ["Method: partition observations into k approximately equal folds","Choose k, keep folds disjoint, and use each fold once as validation."],
+ "Train Test Split": ["Method: partition dataset into training and holdout sets","Split before model fitting and keep the test set isolated until final evaluation."],
+ "SMOTE Planning": ["Synthetic sample = xi + λ(xNN−xi), 0≤λ≤1","Apply SMOTE only to the training portion after splitting; never synthesize validation/test observations."],
+ "Moving Average": ["MA = sum of last k observations/k","Choose the window length k and average the observations in each window."],
+ "Exponential Smoothing": ["St = αXt + (1−α)St−1","Choose α between 0 and 1 and define the initial smoothed value."],
+ "Sample Size": ["n ≈ z²p(1−p)/E² for a large-population proportion estimate","Choose confidence level z, expected proportion p and margin of error E; finite-population correction may be required."],
+ "Margin of Error": ["MOE = critical value × standard error","Choose the confidence level and the correct standard error for the statistic."],
+ "Confidence Interval": ["estimate ± critical value × standard error","Use the distribution and degrees of freedom appropriate to the estimator."],
+ "Percentage Difference": ["|A−B|/[(A+B)/2] × 100%","Use when neither value is designated as the reference/baseline."],
+ "Measurement Uncertainty": ["Combined standard uncertainty = √(u1²+u2²+…) for independent components","Combine independent standard uncertainties by root-sum-square; correlated components require covariance terms."],
+ "Significant Figures": ["Method: retain the requested number of meaningful digits using the appropriate rounding rule","Enter a value and desired significant-figure count."],
+ "Rounding Helper": ["Method: round to the selected decimal place or significant figures","Choose the rounding precision and verify units before reporting."],
+ "Pythagorean Theorem": ["c = √(a²+b²)","Enter the two perpendicular sides of a right triangle."],
+ "Trigonometry Sine": ["sin θ = opposite/hypotenuse","Enter the known sides or angle according to the selected mode."],
+ "Trigonometry Cosine": ["cos θ = adjacent/hypotenuse","Enter the known sides or angle according to the selected mode."],
+ "Trigonometry Tangent": ["tan θ = opposite/adjacent","Use the two perpendicular side lengths or solve for the angle."],
+ "Vector Magnitude": ["|v| = √(vx²+vy²+vz²)","Enter vector components."],
+ "Vector Dot Product": ["a·b = Σai bi","Multiply corresponding components and sum."],
+ "Vector Cross Product": ["a×b = determinant of component matrix","Enter two 3D vectors; the result is perpendicular to both."],
+ "Polar Cartesian": ["x = r cosθ; y = r sinθ","Enter radius and angle."],
+ "Cartesian Polar": ["r = √(x²+y²); θ = atan2(y,x)","Enter x and y coordinates."],
+ "Quadratic Equation": ["x = (−b ± √(b²−4ac))/(2a)","Enter coefficients a, b and c with a ≠ 0."],
+ "Exponential Growth": ["A(t) = A0e^(kt)","Enter initial value and growth constant; for discrete compounding use the appropriate discrete model."],
+ "Natural Log": ["ln(x) = loge(x)","Enter a positive x value."],
+ "Logarithm": ["log_b(x) = ln(x)/ln(b)","Enter positive x and a positive base other than 1."]
+};
+
+function toolHelp(name){
+ const direct=TOOL_METHODS[name]; if(direct)return direct;
+ const k=normalizeToolName(name).toLowerCase();
+ if(/converter/.test(k))return["Unit conversion formula depends on source and destination units","Select the source and destination units, enter the value, then apply the published conversion factor."];
+ if(/selection|sizing|rating/.test(k))return["Method: compare calculated demand with equipment rating and applicable limits","Enter the design load and relevant environmental/installation factors. Verify the final selection against the applicable standard and manufacturer data."];
+ if(/lookup|code|class|rating/.test(k))return["Method: decode or look up the value using the relevant standard/table","Enter the code or classification and compare the result with the authoritative specification."];
+ if(/check|validation|test|inspection/.test(k))return["Method: compare measured/design values with defined acceptance criteria","Enter the measured values and the applicable limit. A check is not a substitute for the governing standard or manufacturer instructions."];
+ if(/notes|guide|reference|helper|planner|builder/.test(k))return["Method: structured technical procedure","Enter the requested parameters and follow the displayed steps. This type of tool explains or structures a procedure rather than pretending there is one universal equation."];
+ return["Method: domain-specific technical procedure","Enter the values requested by the tool. Read the method before calculating, and verify safety-critical results against the applicable standard, datasheet or manufacturer instructions."];
+}
+
 function definitionFor(t){
  const exact=DEFINITIONS[t.name]||DEFINITIONS[t.name.replace(/’/g,"'")];if(exact)return exact;
  const key=normalizeToolName(t.name);if(EXTRA_DEFINITIONS[key])return EXTRA_DEFINITIONS[key];
  const k=key.toLowerCase();
  if(/mean|median|mode|variance|standard deviation|coefficient of variation/.test(k)){const m=k==="mean"?"mean":k==="median"?"median":k==="mode"?"mode":k==="variance"?"variance":k.includes("standard")?"std":"cv";return[statFormula(m),["Values (comma separated)"],()=>stat(m)]}
- if(/converter| to /.test(k))return["Method: named source unit/representation → named destination unit/representation",["Value"],v=>v[0]!=null?"Input = "+v[0]:"Enter a value."];
- if(/notes|checklist|map|guide|reference|lookup|helper|planner|builder|formatter|tester|table/.test(k))return["Method: rule-based technical reference or validation; no single universal equation",["Input"],()=> "Reference method: "+key+". This tool uses domain rules rather than generic arithmetic."];
- return["Method: domain-specific technical procedure; no universal equation",["Input"],()=> "No single universal equation applies to "+key+". Use the stated technical method for this tool."];
+ const h=toolHelp(t.name);
+ return[h[0],["Input"],()=>h[1]];
 }
 
 window.HBMegaToolOpen=function(id){const t=window.__HBMegaTools?.find(x=>String(x.id)===String(id));if(!t)return;const modal=$("resourceToolModal"),body=$("resourceToolBody");if(!modal||!body)return;const d=definitionFor(t);$("resourceToolTitle").textContent=t.name;body.innerHTML='<div class="tool-modal-domain">'+esc(t.category)+'</div><div class="tool-formula"><b>FORMULA / METHOD</b><code>'+esc(d[0])+'</code></div><div class="tool-inputs">'+d[1].map((x,i)=>'<label>'+esc(x)+'<input id="megaInput'+i+'" type="'+(/text|json|url|regex|cron|user|group|expression|columns|color|hex|ipv4|character|comma|html|markdown|yaml|xml/i.test(x)?'text':'number')+'" step="any" placeholder="'+esc(x)+'"></label>').join("")+'</div><div class="hb-mini-actions"><button id="megaCalculate" class="os-btn primary" type="button">CALCULATE</button><button id="megaClear" class="os-btn" type="button">CLEAR</button></div><div id="megaResult" class="hb-result">Enter variables. Results appear here.</div><div class="tool-source-note">Runs locally in your browser. No input is sent to GitHub or the source repository.</div>';modal.classList.add("open");modal.setAttribute("aria-hidden","false");const run=()=>{const v=d[1].map((_,i)=>{const e=$("megaInput"+i);if(!e)return null;if(e.type==="text")return e.value.trim()||null;const n=parseFloat(e.value);return Number.isFinite(n)?n:null});try{$("megaResult").textContent=d[2](v)}catch(e){$("megaResult").textContent="Check the input values."}};$("megaCalculate").onclick=run;$("megaClear").onclick=()=>{d[1].forEach((_,i)=>{const e=$("megaInput"+i);if(e)e.value=""});$("megaResult").textContent="Enter variables. Results appear here."};body.querySelectorAll("input").forEach(e=>e.addEventListener("input",run))};
@@ -261,7 +419,7 @@ window.HBMegaToolClose=function(){const m=$("resourceToolModal");if(m){m.classLi
 window.HBUpgradeMegaTools=function(list){
  window.__HBMegaTools=list||[];
  const grid=$("megaToolGrid");if(!grid)return;
- const draw=()=>{const q=($("megaToolSearch")?.value||"").toLowerCase().trim(),f=$("megaToolCategory")?.value||"all";const rows=window.__HBMegaTools.filter(x=>(f==="all"||x.category===f)&&(!q||x.name.toLowerCase().includes(q)||x.category.toLowerCase().includes(q)));grid.innerHTML=rows.map(x=>'<article class="hb-card mega-tool-card"><div class="hb-card-top"><span>'+esc(String(x.id).padStart(4,"0"))+" · "+esc(x.category)+'</span><span>● LIVE</span></div><h3>'+esc(x.name)+'</h3><p>Use this tool in the browser. View the formula or method, enter variables, and get the result.</p><button class="os-btn mega-open" type="button" data-id="'+x.id+'">OPEN TOOL →</button></article>').join("");grid.querySelectorAll(".mega-open").forEach(b=>b.onclick=()=>window.HBMegaToolOpen(b.dataset.id));if($("megaToolCount"))$("megaToolCount").textContent=rows.length.toLocaleString()+" tools indexed"};const cats=[...new Set(window.__HBMegaTools.map(x=>x.category))].sort();if($("megaToolCategory"))$("megaToolCategory").innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(x=>'<option>'+esc(x)+'</option>').join("");$("megaToolSearch")?.addEventListener("input",draw);$("megaToolCategory")?.addEventListener("change",draw);draw();
+ const draw=()=>{const q=($("megaToolSearch")?.value||"").toLowerCase().trim(),f=$("megaToolCategory")?.value||"all";const rows=window.__HBMegaTools.filter(x=>(f==="all"||x.category===f)&&(!q||x.name.toLowerCase().includes(q)||x.category.toLowerCase().includes(q)));grid.innerHTML=rows.map(x=>'<article class="hb-card mega-tool-card"><div class="hb-card-top"><span>'+esc(String(x.id).padStart(4,"0"))+" · "+esc(x.category)+'</span><span>● LIVE</span></div><h3>'+esc(x.name)+'</h3><p>Interactive browser tool. Open it to see the professional formula when one exists, or the exact purpose and operating method when the task is procedure-based.</p><button class="os-btn mega-open" type="button" data-id="'+x.id+'">OPEN TOOL →</button></article>').join("");grid.querySelectorAll(".mega-open").forEach(b=>b.onclick=()=>window.HBMegaToolOpen(b.dataset.id));if($("megaToolCount"))$("megaToolCount").textContent=rows.length.toLocaleString()+" tools indexed"};const cats=[...new Set(window.__HBMegaTools.map(x=>x.category))].sort();if($("megaToolCategory"))$("megaToolCategory").innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(x=>'<option>'+esc(x)+'</option>').join("");$("megaToolSearch")?.addEventListener("input",draw);$("megaToolCategory")?.addEventListener("change",draw);draw();
 };
 
 document.addEventListener("DOMContentLoaded",()=>{$("resourceToolClose")?.addEventListener("click",window.HBMegaToolClose);$("resourceToolModal")?.addEventListener("click",e=>{if(e.target.id==="resourceToolModal")window.HBMegaToolClose()})});
