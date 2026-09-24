@@ -246,6 +246,9 @@ const EXTRA_DEFINITIONS={
 "Permutations":["P(n,r) = n!/(n−r)!",["n","r"],v=>Number.isInteger(v[0])&&Number.isInteger(v[1])&&v[0]>=v[1]&&v[1]>=0?"P(n,r) = "+perm(v[0],v[1]).toLocaleString():"Enter n ≥ r ≥ 0."]
 };
 const TOOL_METHODS = {
+ "Pull-Down Resistor": ["Rpd(max) ≈ VIL(max) / Ileak(max); Iclosed ≈ VCC / Rpd","Enter VCC, the input's maximum LOW-level voltage VIL(max), and worst-case input leakage current Ileak(max). Calculate the maximum pull-down resistance from Rpd ≤ VIL/Ileak, then choose a standard resistor below that limit. Also check closed-switch current, noise margin, datasheet limits and required switching speed."],
+ "Pull-Up Resistor": ["Rpu(max) ≈ (VCC − VIH(min)) / Ileak(max); Iclosed ≈ VCC / Rpu","Use the input datasheet's minimum HIGH-level voltage VIH(min) and worst-case leakage current to estimate the maximum pull-up resistance. Then choose a standard value that balances logic margin, noise immunity, rise time and closed-state current."],
+
  "DHCP Pool": ["No universal equation","1. Define the subnet. 2. Reserve gateway, servers and fixed devices. 3. Choose the dynamic address range inside the subnet. 4. Configure lease time, gateway and DNS. 5. Test that a client receives an address in the intended range."],
  "DHCP Scope": ["Pool range = first usable address … last usable address","Choose a subnet, calculate its usable range, exclude reserved addresses, then define the remaining dynamic range."],
  "Subnet Mask": ["IPv4 mask = first prefix bits set to 1","Enter a CIDR prefix such as /24. The tool converts the prefix into dotted-decimal notation and identifies network/host bits."],
