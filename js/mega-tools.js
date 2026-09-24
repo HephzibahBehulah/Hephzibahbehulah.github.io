@@ -399,12 +399,52 @@ const TOOL_METHODS = {
 function toolHelp(name){
  const direct=TOOL_METHODS[name]; if(direct)return direct;
  const k=normalizeToolName(name).toLowerCase();
- if(/converter/.test(k))return["Unit conversion formula depends on source and destination units","Select the source and destination units, enter the value, then apply the published conversion factor."];
- if(/selection|sizing|rating/.test(k))return["Method: compare calculated demand with equipment rating and applicable limits","Enter the design load and relevant environmental/installation factors. Verify the final selection against the applicable standard and manufacturer data."];
- if(/lookup|code|class|rating/.test(k))return["Method: decode or look up the value using the relevant standard/table","Enter the code or classification and compare the result with the authoritative specification."];
- if(/check|validation|test|inspection/.test(k))return["Method: compare measured/design values with defined acceptance criteria","Enter the measured values and the applicable limit. A check is not a substitute for the governing standard or manufacturer instructions."];
- if(/notes|guide|reference|helper|planner|builder/.test(k))return["Method: structured technical procedure","Enter the requested parameters and follow the displayed steps. This type of tool explains or structures a procedure rather than pretending there is one universal equation."];
- return["Method: domain-specific technical procedure","Enter the values requested by the tool. Read the method before calculating, and verify safety-critical results against the applicable standard, datasheet or manufacturer instructions."];
+
+ // Formula-first rules for common engineering/electronics tool families.
+ const rules=[
+  [/voltage divider/,["Vout = Vin × R2/(R1+R2)",["Vin (V)","R1 (Ω)","R2 (Ω)"],v=>v[0]!=null&&v[1]+v[2]>0?"Vout = "+(v[0]*v[2]/(v[1]+v[2])).toFixed(6)+" V":"Enter Vin, R1 and R2."]],
+  [/current divider/,["I1 = It × R2/(R1+R2)",["It (A)","R1 (Ω)","R2 (Ω)"],v=>v[0]!=null&&v[1]>0&&v[2]>0?"I1 = "+(v[0]*v[2]/(v[1]+v[2])).toFixed(6)+" A":"Enter It, R1 and R2."]],
+  [/cable resistance|conductor resistance|copper resistance|aluminium resistance/,["R = ρL/A",["Resistivity ρ (Ω·m)","Length L (m)","Area A (mm²)"],v=>v[0]!=null&&v[1]>0&&v[2]>0?"R ≈ "+(v[0]*v[1]/(v[2]*1e-6)).toFixed(6)+" Ω":"Enter resistivity, length and conductor area."]],
+  [/power factor correction/,["Qc = P(tanφ1 − tanφ2)",["Real power P (W)","Initial PF","Target PF"],v=>v[0]>0&&v[1]>0&&v[1]<=1&&v[2]>0&&v[2]<=1?"Qc ≈ "+(v[0]*(Math.tan(Math.acos(v[1]))-Math.tan(Math.acos(v[2])))).toFixed(3)+" var":"Enter P and valid initial/target PF."]],
+  [/capacitor.*kvar|kvar.*capacitor/,["Qc = P(tanφ1 − tanφ2)",["Real power P (kW)","Initial PF","Target PF"],v=>v[0]>0&&v[1]>0&&v[2]>0?"Qc ≈ "+(v[0]*1000*(Math.tan(Math.acos(v[1]))-Math.tan(Math.acos(v[2])))).toFixed(3)+" var":"Enter kW and PF values."]],
+  [/three.?phase.*power|three phase load/,["P = √3 × VL × IL × PF",["Line voltage VL (V)","Line current IL (A)","Power factor"],v=>v.every(x=>x!=null)?"P ≈ "+(Math.sqrt(3)*v[0]*v[1]*v[2]).toFixed(3)+" W":"Enter VL, IL and PF."]],
+  [/three.?phase.*current/,["I = P/(√3 × V × PF)",["Power P (W)","Line voltage V (V)","Power factor"],v=>v[0]!=null&&v[1]>0&&v[2]>0?"I ≈ "+(v[0]/(Math.sqrt(3)*v[1]*v[2])).toFixed(3)+" A":"Enter P, V and PF."]],
+  [/motor torque|servo torque/,["τ = P/ω; ω = 2πn/60",["Power P (W)","Speed n (RPM)"],v=>v[0]>0&&v[1]>0?"τ ≈ "+(v[0]/(2*Math.PI*v[1]/60)).toFixed(4)+" N·m":"Enter power and RPM."]],
+  [/motor speed|servo speed|encoder rpm/,["n = 60P/(2πτ)",["Power P (W)","Torque τ (N·m)"],v=>v[0]>0&&v[1]>0?"n ≈ "+(60*v[0]/(2*Math.PI*v[1])).toFixed(3)+" RPM":"Enter power and torque."]],
+  [/generator frequency/,["f = PN/120",["Poles P","Speed N (RPM)"],v=>v[0]>0&&v[1]>=0?"f = "+(v[0]*v[1]/120).toFixed(4)+" Hz":"Enter poles and RPM."]],
+  [/rpm.*hz|frequency.*rpm/,["f = RPM/60",["RPM"],v=>v[0]!=null?(v[0]/60).toFixed(6)+" Hz":"Enter RPM."]],
+  [/hz.*rpm/,["RPM = 60f",["Frequency (Hz)"],v=>v[0]!=null?(v[0]*60).toFixed(4)+" RPM":"Enter frequency."]],
+  [/battery.*energy/,["E = V × Ah",["Voltage V (V)","Capacity (Ah)"],v=>v[0]>0&&v[1]>=0?"E ≈ "+(v[0]*v[1]).toFixed(4)+" Wh":"Enter voltage and capacity."]],
+  [/battery.*capacity/,["Ah = I × t",["Current I (A)","Time t (h)"],v=>v[0]>=0&&v[1]>=0?"Capacity ≈ "+(v[0]*v[1]).toFixed(4)+" Ah":"Enter current and time."]],
+  [/battery.*runtime|ups runtime|solar runtime/,["t ≈ usable energy/load power",["Usable energy (Wh)","Load (W)"],v=>v[0]>=0&&v[1]>0?"Runtime ≈ "+(v[0]/v[1]).toFixed(4)+" h":"Enter usable energy and load."]],
+  [/led power|diode power/,["P = Vf × I",["Forward voltage Vf (V)","Current I (A)"],v=>v[0]>=0&&v[1]>=0?"P ≈ "+(v[0]*v[1]).toFixed(6)+" W":"Enter Vf and current."]],
+  [/zener resistor/,["R = (Vs−Vz)/Iz",["Supply Vs (V)","Zener Vz (V)","Zener current Iz (A)"],v=>v[0]!=null&&v[1]!=null&&v[2]>0?"R ≈ "+((v[0]-v[1])/v[2]).toFixed(3)+" Ω":"Enter Vs, Vz and Iz."]],
+  [/relay coil current/,["I = V/R",["Coil voltage (V)","Coil resistance (Ω)"],v=>v[0]!=null&&v[1]>0?"I = "+(v[0]/v[1]).toFixed(6)+" A":"Enter voltage and resistance."]],
+  [/relay power/,["P = V²/R",["Voltage (V)","Coil resistance (Ω)"],v=>v[0]!=null&&v[1]>0?"P = "+(v[0]*v[0]/v[1]).toFixed(6)+" W":"Enter voltage and resistance."]],
+  [/solar panel power/,["P = G × A × η",["Irradiance G (W/m²)","Area A (m²)","Efficiency η (0–1)"],v=>v.every(x=>x!=null)?"P ≈ "+(v[0]*v[1]*v[2]).toFixed(3)+" W":"Enter irradiance, area and efficiency."]],
+  [/conduit fill|cable tray fill/,["Fill ratio = occupied area / available area × 100%",["Occupied area","Available area"],v=>v[0]>=0&&v[1]>0?(v[0]/v[1]*100).toFixed(3)+" %":"Enter occupied and available area."]],
+  [/voltage tolerance|supply variation/,["% deviation = |measured−nominal|/nominal × 100%",["Measured voltage","Nominal voltage"],v=>v[0]!=null&&v[1]>0?(Math.abs(v[0]-v[1])/v[1]*100).toFixed(3)+" %":"Enter measured and nominal voltage."]],
+  [/temperature coefficient/,["ΔR = R0 × α × ΔT",["R0 (Ω)","α (1/°C)","ΔT (°C)"],v=>v.every(x=>x!=null)?"R ≈ "+(v[0]*(1+v[1]*v[2])).toFixed(6)+" Ω":"Enter R0, α and ΔT."]],
+  [/heat sink estimate/,["RθJA ≈ (Tj(max)−Ta)/P",["Max junction Tj (°C)","Ambient Ta (°C)","Power P (W)"],v=>v[0]!=null&&v[1]!=null&&v[2]>0?"RθJA ≈ "+((v[0]-v[1])/v[2]).toFixed(4)+" °C/W":"Enter junction temperature, ambient temperature and power."]],
+  [/4.?20ma scaling|0.?20ma scaling|0.?10v scaling|analog input scaling|analog output scaling|sensor range scaling/,["Output = Low + (Input−InLow)/(InHigh−InLow) × (OutHigh−OutLow)",["Input","Input low","Input high","Output low","Output high"],v=>v.every(x=>x!=null)&&v[2]!==v[1]?"Output = "+(v[3]+(v[0]-v[1])/(v[2]-v[1])*(v[4]-v[3])).toFixed(6):"Enter all scaling limits."]],
+  [/linear interpolation/,["y = y1 + (x−x1)(y2−y1)/(x2−x1)",["x","x1","x2","y1","y2"],v=>v.every(x=>x!=null)&&v[2]!==v[1]?"y = "+(v[3]+(v[0]-v[1])*(v[4]-v[3])/(v[2]-v[1])).toFixed(6):"Enter x, x1, x2, y1 and y2."]],
+  [/adc resolution/,["LSB = Vref/(2^N−1)",["Reference voltage Vref (V)","Resolution N (bits)"],v=>v[0]>0&&v[1]>0?"LSB ≈ "+(v[0]/(2**v[1]-1)).toFixed(8)+" V":"Enter Vref and bit resolution."]],
+  [/dac resolution/,["LSB = Vref/(2^N−1)",["Reference voltage Vref (V)","Resolution N (bits)"],v=>v[0]>0&&v[1]>0?"LSB ≈ "+(v[0]/(2**v[1]-1)).toFixed(8)+" V":"Enter Vref and bit resolution."]],
+  [/nyquist frequency/,["fN = fs/2",["Sampling frequency fs (Hz)"],v=>v[0]>0?"Nyquist frequency = "+(v[0]/2).toFixed(6)+" Hz":"Enter sampling frequency."]],
+  [/sampling frequency/,["fs ≥ 2fmax (Nyquist criterion)",["Maximum signal frequency (Hz)"],v=>v[0]>0?"Minimum ideal fs ≥ "+(2*v[0]).toFixed(6)+" Hz":"Enter maximum signal frequency."]],
+  [/pid proportional/,["P = Kp × error",["Kp","Error"],v=>v.every(x=>x!=null)?"P output = "+(v[0]*v[1]).toFixed(6):"Enter Kp and error."]],
+  [/pid integral/,["I contribution = Ki × ∫error dt",["Ki","Error integral"],v=>v.every(x=>x!=null)?"I contribution = "+(v[0]*v[1]).toFixed(6):"Enter Ki and accumulated error."]],
+  [/pid derivative/,["D contribution = Kd × d(error)/dt",["Kd","Error rate"],v=>v.every(x=>x!=null)?"D contribution = "+(v[0]*v[1]).toFixed(6):"Enter Kd and error rate."]],
+  [/torque conversion/,["Torque conversion factor depends on source/destination unit",["Torque value"],v=>v[0]!=null?"Enter the source unit and apply the published conversion factor.":"Enter a torque value."]]
+ ];
+ for(const [rx,d] of rules) if(rx.test(k)) return d;
+
+ if(/converter/.test(k))return["Method: source unit/representation → destination unit/representation",["Value"],v=>v[0]!=null?"Apply the documented source-to-destination conversion factor for the selected units.":"Enter a value, then select the source and destination units."];
+ if(/selection|sizing|rating|budget|count|space|capacity/.test(k))return["Method: calculate demand, apply required factors, then compare with the equipment/specification limit",["Design value"],v=>v[0]!=null?"Use the calculated demand with the applicable derating, margin and manufacturer/standard limit; result is a design check, not an automatic approval.":"Enter the relevant design demand."];
+ if(/lookup|code|class|colour|color/.test(k))return["Method: decode the identifier using the applicable standard, manufacturer table or code system",["Code / value"],()=> "Enter the code or value and compare it with the authoritative reference table."];
+ if(/check|validation|test|inspection|interval|maintenance/.test(k))return["Method: compare the measured condition against the defined acceptance criterion and record the result",["Measured value"],v=>v[0]!=null?"Compare the measured value with the applicable limit, test procedure or maintenance interval.":"Enter the measured value or inspection parameter."];
+ if(/notes|guide|reference|helper|planner|builder|logic|table|summary/.test(k))return["Method: structured technical procedure",["Input"],()=> "Enter the requested parameters and follow the displayed procedure. Use the applicable standard, datasheet or manufacturer documentation for the final decision."];
+ return["Purpose and use: "+name,["Input"],()=> "This tool is intended to support "+name.toLowerCase()+". Enter the relevant engineering values, identify the governing standard or datasheet, then apply the stated calculation or procedure. Safety-critical results must be verified against the applicable requirements."];
 }
 
 function definitionFor(t){
