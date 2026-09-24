@@ -386,9 +386,10 @@
       ]
     };
     const categories=Object.keys(banks);
+    const categorySelect=document.createElement('select'); categorySelect.id='hbQuizCategory'; categorySelect.className='os-mini'; categorySelect.innerHTML='<option value="all">ALL DOMAINS</option>'+categories.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join(''); $('quizNext')?.parentElement?.insertBefore(categorySelect,$('quizNext'));
     const multipliers=[1,3,7,11,17,29,43,71,97,131,173,211,257,313,379,443,509,601,701,809,907,1009,1103,1201,1301];
     let current=null,score=0,streak=0,sessionUsed=new Set(JSON.parse(localStorage.getItem('hbQuizUsed')||'[]'));
-    function poolSize(){return Object.values(banks).reduce((a,b)=>a+b.length,0)*multipliers.length*1000000;}
+    function poolSize(){return Object.values(banks).reduce((a,b)=>a+b.length,0)*2000000;}
     if($('quizPool'))$('quizPool').textContent='generated pool: '+poolSize().toLocaleString()+'+';
     function signature(item,variant){return item[0]+'|'+variant+'|'+item[2]+'|'+item[1].join('~')}
     function makeVariant(item,v){
@@ -415,9 +416,11 @@
     function newQ(){
       let tries=0,item,variant,sig,cat;
       do{
-        cat=categories[Math.floor(Math.random()*categories.length)];
+        const chosen=$('hbQuizCategory')?.value||'all';
+        const available=chosen==='all'?categories:[chosen];
+        cat=available[Math.floor(Math.random()*available.length)];
         const arr=banks[cat];item=arr[Math.floor(Math.random()*arr.length)];
-        variant=Math.floor(Math.random()*1000000);
+        variant=Math.floor(Math.random()*2000000);
         const made=makeVariant(item,variant);
         sig=signature(made,cat);
         if(!sessionUsed.has(sig)){
