@@ -101,3 +101,52 @@
 @media(max-width:1150px){.hb-project-workspace{grid-template-columns:1fr}.hb-project-workspace .os-list{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.hb-project-workspace .os-list,.hb-machine-grid,.hb-led-strip,.hb-signal-controls{grid-template-columns:1fr}.hb-machine-tabs{grid-template-columns:repeat(2,1fr)}.hb-readout{grid-template-columns:1fr 1fr}.hb-led-calc{grid-template-columns:1fr 1fr}.hb-challenge-options{grid-template-columns:1fr}#technicalWorkbench{padding:12px}}
 @media(prefers-reduced-motion:reduce){.hb-machine{animation:none}}
+
+/* HB MOTION SYSTEM // UI/UX ONLY */
+:root{--hb-glow:rgba(86,207,225,.18);--hb-violet-glow:rgba(167,139,250,.16)}
+body{overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0;background:radial-gradient(520px circle at var(--mx,50%) var(--my,30%),rgba(86,207,225,.055),transparent 62%);transition:opacity .4s ease}
+body.hb-pointer-ready::before{opacity:1}
+.os-brand{position:relative;isolation:isolate}
+.os-brand::after{content:"";position:absolute;left:5px;right:5px;bottom:9px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent);transform:scaleX(.25);transform-origin:center;opacity:.35;transition:transform .35s ease,opacity .35s ease}
+.os-brand:hover::after{transform:scaleX(1);opacity:.9}
+.os-brand .hb-brand-mark{width:52px!important;height:52px!important;flex-basis:52px!important;filter:drop-shadow(0 0 9px rgba(86,207,225,.25));transition:transform .45s cubic-bezier(.2,.8,.2,1),filter .45s ease}
+.os-brand:hover .hb-brand-mark{transform:rotate(-5deg) scale(1.08);filter:drop-shadow(0 0 16px rgba(86,207,225,.5))}
+.os-brand .hb-brand-name{font-size:12px}
+.os-brand .hb-brand-name strong{font-size:14px}
+.os-sidebar{perspective:900px}
+.os-nav a{position:relative;overflow:hidden;transform:translateZ(0);transition:color .22s ease,background .22s ease,border-color .22s ease,transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease}
+.os-nav a::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--cyan),var(--purple));transform:scaleY(0);transition:transform .22s ease}
+.os-nav a::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.08) 48%,transparent 76%);transform:translateX(-130%);transition:transform .55s ease}
+.os-nav a:hover,.os-nav a.active{transform:translateX(4px);box-shadow:0 8px 24px rgba(0,0,0,.16),0 0 18px rgba(86,207,225,.05)}
+.os-nav a:hover::before,.os-nav a.active::before{transform:scaleY(1)}
+.os-nav a:hover::after{transform:translateX(130%)}
+.os-top{transition:background .3s ease,border-color .3s ease;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.os-panel{transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s ease,box-shadow .35s ease}
+.os-panel.hb-reveal{animation:hbPanelIn .65s cubic-bezier(.2,.8,.2,1) both}
+.os-panel:hover{border-color:rgba(86,207,225,.22);box-shadow:0 18px 55px rgba(0,0,0,.14),0 0 24px rgba(86,207,225,.035)}
+.os-hero .os-panel:first-child{background-image:radial-gradient(circle at 100% 0%,rgba(86,207,225,.07),transparent 32%)}
+.os-hero .os-panel:last-child{background-image:radial-gradient(circle at 0% 100%,rgba(167,139,250,.06),transparent 34%)}
+.os-title{animation:hbTitleIn .8s cubic-bezier(.2,.8,.2,1) both}
+.hb-hero-motto{animation:hbFadeUp .7s .12s both}
+.os-actions .os-btn{transition:transform .22s ease,box-shadow .22s ease,filter .22s ease}
+.os-actions .os-btn:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.os-item,.intel-card,.ebook-card,.engineering-card,.bible-console,.quiz-console,.hb-equation,.micro-tool-row,.mega-tool-card{transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s ease,box-shadow .25s ease}
+.os-item:hover,.intel-card:hover,.ebook-card:hover,.engineering-card:hover,.bible-console:hover,.quiz-console:hover,.hb-equation:hover,.micro-tool-row:hover,.mega-tool-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.16)}
+.map-node,.map-leaf{transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease,border-color .28s ease}
+.map-node:hover,.map-leaf:hover{box-shadow:0 0 28px rgba(86,207,225,.2),0 12px 28px rgba(0,0,0,.28)}
+.hb-equation:hover{background:linear-gradient(135deg,rgba(127,255,212,.08),rgba(110,80,255,.07))}
+.hb-footer-brand{transition:border-color .3s ease,box-shadow .3s ease}
+.hb-footer-brand:hover{border-color:rgba(103,232,249,.3);box-shadow:0 20px 70px rgba(0,0,0,.24),0 0 28px rgba(86,207,225,.05)}
+.hb-social{transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .22s ease,background .22s ease,box-shadow .22s ease}
+.hb-social:hover{transform:translateY(-4px) rotate(-2deg)!important;box-shadow:0 8px 22px rgba(34,211,238,.12)}
+.hb-cursor-dot{position:fixed;left:0;top:0;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px rgba(86,207,225,.7);pointer-events:none;z-index:10000;opacity:0;transform:translate(-50%,-50%);transition:opacity .2s ease}
+.hb-cursor-ring{position:fixed;left:0;top:0;width:30px;height:30px;border:1px solid rgba(167,139,250,.48);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transform:translate(-50%,-50%);transition:opacity .2s ease,width .2s ease,height .2s ease,border-color .2s ease}
+.hb-cursor-active .hb-cursor-ring{width:48px;height:48px;border-color:rgba(86,207,225,.75)}
+.hb-route-cover{position:fixed;inset:0;background:radial-gradient(circle at 50% 50%,rgba(86,207,225,.08),rgba(7,10,14,.96) 55%);z-index:10001;pointer-events:none;opacity:0;transition:opacity .28s ease}
+.hb-route-cover.active{opacity:1}
+@keyframes hbPanelIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes hbTitleIn{from{opacity:0;transform:translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes hbFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:900px){.os-brand .hb-brand-mark{width:46px!important;height:46px!important;flex-basis:46px!important}.os-nav a:hover,.os-nav a.active{transform:none}.os-panel:hover{transform:none;box-shadow:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.os-panel,.os-nav a,.os-item,.intel-card,.ebook-card,.engineering-card,.bible-console,.quiz-console,.hb-equation,.micro-tool-row,.mega-tool-card,.hb-social,.hb-brand-mark{transition:none!important}.os-panel.hb-reveal,.os-title,.hb-hero-motto{animation:none!important}.hb-cursor-dot,.hb-cursor-ring,.hb-route-cover{display:none!important}body::before{display:none!important}}
