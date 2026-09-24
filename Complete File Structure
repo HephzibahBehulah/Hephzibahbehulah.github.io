@@ -2,7 +2,6 @@ HephzibahBehulah.github.io/
 ├── index.html                         # Canonical Intelligence Portfolio
 ├── portfolio.html                     # Compatibility route → #projects
 ├── resources.html                     # Compatibility route → #resourceMatrix
-├── index.html#terminal                 # Unified browser command terminal
 ├── engineering-library.html           # Engineering calculator/library
 ├── recon-hub.html                     # Reconnaissance resource hub
 │
@@ -14,7 +13,8 @@ HephzibahBehulah.github.io/
 │   └── hb-brand.css                   # Shared logo, heading and social identity
 │
 ├── js/
-│   ├── osint-redesign.js              # Theme, tree UI and shared branding/footer
+│   ├── osint-redesign.js              # Theme, tree UI and shared branding
+│   ├── terminal.js                    # Unified browser command terminal/footer
 │   ├── intelligence-map.js             # Interactive intelligence map
 │   ├── intelligence-core.js            # Resource, ebook and knowledge runtime
 │   ├── mega-tools.js                   # Mega tool catalogue
