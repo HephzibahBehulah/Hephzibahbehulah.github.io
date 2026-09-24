@@ -1,132 +1,58 @@
-/* HB INTELLIGENCE HUB v2 — original UI, external indexes, local calculators */
+/* HB INTELLIGENCE HUB v3 */
 (() => {
-  'use strict';
-  const $ = s => document.querySelector(s);
-  const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-  const OSINT_JSON='https://raw.githubusercontent.com/lockfale/OSINT-Framework/master/public/arf.json';
-  const EBOOK_API='https://api.github.com/repos/HephzibahBehulah/Hacking-Security-Ebooks/contents/';
-  let osint=[], docs=[], pdfs=[], osintCat='all', docCat='all';
-
-  const docSources = [
-    ['Cybersecurity','CISA Cybersecurity Resources','https://www.cisa.gov/resources-tools/resources','official security guidance'],
-    ['Cybersecurity','NIST Cybersecurity Framework','https://www.nist.gov/cyberframework','risk and security framework'],
-    ['Cybersecurity','OWASP Web Security Testing Guide','https://owasp.org/www-project-web-security-testing-guide/','web testing methodology'],
-    ['Cybersecurity','OWASP Cheat Sheet Series','https://cheatsheetseries.owasp.org/','secure development references'],
-    ['Cybersecurity','MITRE ATT&CK','https://attack.mitre.org/','threat behaviour knowledge base'],
-    ['Cybersecurity','MITRE D3FEND','https://d3fend.mitre.org/','defensive technique knowledge base'],
-    ['Networking','RFC Editor','https://www.rfc-editor.org/','Internet protocol specifications'],
-    ['Networking','Wireshark Documentation','https://www.wireshark.org/docs/','packet analysis reference'],
-    ['Networking','Nmap Reference Guide','https://nmap.org/book/man.html','network discovery reference'],
-    ['Networking','Cloudflare Learning Center','https://www.cloudflare.com/learning/','DNS HTTP networking security'],
-    ['Linux','Linux Kernel Documentation','https://docs.kernel.org/','kernel and systems documentation'],
-    ['Linux','GNU Bash Reference','https://www.gnu.org/software/bash/manual/','shell reference'],
-    ['Linux','OpenSSH Manual Pages','https://man.openbsd.org/ssh','SSH reference'],
-    ['Data / Python','Python Documentation','https://docs.python.org/3/','language reference'],
-    ['Data / Python','pandas Documentation','https://pandas.pydata.org/docs/','data analysis reference'],
-    ['Data / Python','NumPy Documentation','https://numpy.org/doc/','numerical computing'],
-    ['Data / Python','scikit-learn User Guide','https://scikit-learn.org/stable/user_guide.html','machine learning'],
-    ['Engineering','Engineering Toolbox','https://www.engineeringtoolbox.com/','engineering reference'],
-    ['Engineering','NIST Engineering Statistics','https://www.nist.gov/itl/sed/statistical-engineering','engineering statistics'],
-    ['Electronics','All About Circuits Textbook','https://www.allaboutcircuits.com/textbook/','electronics learning'],
-    ['Electronics','Arduino Documentation','https://docs.arduino.cc/','embedded electronics'],
-    ['Electronics','VDE','https://www.vde.com/en','German electrical engineering'],
-    ['Industrial / OT','CISA ICS','https://www.cisa.gov/topics/industrial-control-systems','ICS security'],
-    ['Industrial / OT','NIST SP 800-82','https://csrc.nist.gov/pubs/sp/800/82/r3/final','OT security'],
-    ['Industrial / OT','MITRE ATT&CK for ICS','https://attack.mitre.org/matrices/ics/','ICS threat knowledge'],
-    ['Industrial / OT','Siemens Industry Support','https://support.industry.siemens.com/','industrial documentation'],
-    ['Learning','MIT OpenCourseWare','https://ocw.mit.edu/','open courses'],
-    ['Learning','TryHackMe','https://tryhackme.com/','security labs'],
-    ['Learning','picoCTF','https://picoctf.org/','security practice'],
-    ['Learning','OverTheWire','https://overthewire.org/wargames/','security wargames']
-  ];
-
-  const bookChapters={Genesis:50,Exodus:40,Leviticus:27,Numbers:36,Deuteronomy:34,Joshua:24,Judges:21,Ruth:4,'1 Samuel':31,'2 Samuel':24,'1 Kings':22,'2 Kings':25,'1 Chronicles':29,'2 Chronicles':36,Ezra:10,Nehemiah:13,Esther:10,Job:42,Psalms:150,Proverbs:31,Ecclesiastes:12,'Song of Solomon':8,Isaiah:66,Jeremiah:52,Lamentations:5,Ezekiel:48,Daniel:12,Hosea:14,Joel:3,Amos:9,Obadiah:1,Jonah:4,Micah:7,Nahum:3,Habakkuk:3,Zephaniah:3,Haggai:2,Zechariah:14,Malachi:4,Matthew:28,Mark:16,Luke:24,John:21,Acts:28,Romans:16,'1 Corinthians':16,'2 Corinthians':13,Galatians:6,Ephesians:6,Philippians:4,Colossians:4,'1 Thessalonians':5,'2 Thessalonians':3,'1 Timothy':6,'2 Timothy':4,Titus:3,Philemon:1,Hebrews:13,James:5,'1 Peter':5,'2 Peter':3,'1 John':5,'2 John':1,'3 John':1,Jude:1,Revelation:22};
-  const books=Object.entries(bookChapters).map(([name,chapters],i)=>({name,chapters,testament:i<39?'Old Testament':'New Testament',index:i+1}));
-  const totalChapters=books.reduce((a,b)=>a+b.chapters,0);
-
-  function normalizeOSINT(node,cat='OSINT Framework',out=[]){
-    if(!node) return out;
-    if(Array.isArray(node)){node.forEach(x=>normalizeOSINT(x,cat,out));return out;}
-    if(typeof node==='string') return out;
-    const name=node.name||node.title||node.label||node.text;
-    const url=node.url||node.href||node.link;
-    const nextCat=name && (!url || node.children || node.nodes || node.items) ? name : cat;
-    if(name && url && /^https?:/i.test(url)) out.push({name,category:cat,url,description:node.description||'External OSINT resource indexed from the OSINT Framework dataset.'});
-    for(const key of ['children','nodes','items','tools','links']) if(node[key]) normalizeOSINT(node[key],nextCat,out);
-    return out;
-  }
-
-  function renderOSINT(q=''){
-    const grid=$('#megaToolGrid');if(!grid)return;
-    const query=q.toLowerCase().trim();
-    const list=osint.filter(x=>(osintCat==='all'||x.category===osintCat)&&(!query||(x.name+' '+x.category+' '+x.description).toLowerCase().includes(query)));
-    grid.innerHTML=list.slice(0,800).map(x=>'<a class="intel-card" target="_blank" rel="noopener noreferrer" href="'+esc(x.url)+'"><span class="intel-code">'+esc(x.category)+'</span><h3>'+esc(x.name)+' ↗</h3><p>'+esc(x.description)+'</p><span class="intel-open">OPEN ORIGINAL</span></a>').join('')||'<div class="intel-empty">NO TOOL MATCHES</div>';
-    $('#megaToolCount').textContent=osint.length.toLocaleString()+' indexed tools';
-  }
-  function setupOSINT(){
-    const select=$('#megaToolCategory');if(!select)return;
-    const cats=[...new Set(osint.map(x=>x.category).filter(Boolean))].sort();
-    select.innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c.toUpperCase())+'</option>').join('');
-    select.onchange=()=>{osintCat=select.value;renderOSINT($('#megaToolSearch').value)};
-    $('#megaToolSearch').oninput=e=>renderOSINT(e.target.value);
-    $('#megaToolRefresh').onclick=loadOSINT;
-  }
-  async function loadOSINT(){
-    const grid=$('#megaToolGrid');if(!grid)return;
-    grid.innerHTML='<div class="intel-empty">FETCHING OSINT FRAMEWORK DATA...</div>';
-    try{const r=await fetch(OSINT_JSON,{cache:'no-store'});if(!r.ok)throw new Error(r.status);const data=await r.json();osint=normalizeOSINT(data);if(!osint.length)throw new Error('No records parsed');setupOSINT();renderOSINT($('#megaToolSearch').value)}catch(e){grid.innerHTML='<div class="intel-empty">OSINT DATA COULD NOT BE LOADED. <a href="https://osintframework.com/" target="_blank" rel="noopener">OPEN OSINT FRAMEWORK ↗</a></div>';$('#megaToolCount').textContent='external index unavailable';}
-  }
-
-  function renderDocs(q=''){
-    const grid=$('#docGrid');if(!grid)return;const query=q.toLowerCase().trim();
-    const list=docs.filter(x=>(docCat==='all'||x[0]===docCat)&&(!query||(x[0]+' '+x[1]+' '+x[3]).toLowerCase().includes(query)));
-    grid.innerHTML=list.map(x=>'<a class="intel-card" href="'+x[2]+'" target="_blank" rel="noopener noreferrer"><span class="intel-code">'+esc(x[0])+'</span><h3>'+esc(x[1])+' ↗</h3><p>'+esc(x[3])+'</p><span class="intel-open">SOURCE / DOCUMENTATION</span></a>').join('');
-    $('#docIndexCount').textContent=list.length+' source collections';
-  }
-  function setupDocs(){docs=docSources;const s=$('#docCategory');s.innerHTML='<option value="all">ALL DOMAINS</option>'+[...new Set(docs.map(x=>x[0]))].map(x=>'<option>'+esc(x)+'</option>').join('');s.onchange=()=>{docCat=s.value;renderDocs($('#docSearch').value)};$('#docSearch').oninput=e=>renderDocs(e.target.value);renderDocs();}
-
-  const calcDefs=[
-    ['Ohm’s Law','Electrical',['Voltage (V)','Current (A)','Resistance (Ω)'],(v)=>{let [V,I,R]=v.map(Number);if(!V&&I&&R)V=I*R;else if(!I&&V&&R)I=V/R;else if(!R&&V&&I)R=V/I;return 'V='+fmt(V)+' V · I='+fmt(I)+' A · R='+fmt(R)+' Ω'}],
-    ['Voltage Divider','Electrical',['Vin (V)','R1 (Ω)','R2 (Ω)'],([vin,r1,r2])=>'Vout = '+fmt(vin*r2/(r1+r2))+' V'],
-    ['Power / Energy','Electrical',['Voltage (V)','Current (A)','Time (h)'],([v,i,t])=>'P = '+fmt(v*i)+' W · E = '+fmt(v*i*t)+' Wh'],
-    ['Series Resistance','Electronics',['R1 (Ω)','R2 (Ω)','R3 (Ω)'],([a,b,c])=>'Rtotal = '+fmt(a+b+c)+' Ω'],
-    ['Parallel Resistance','Electronics',['R1 (Ω)','R2 (Ω)','R3 (Ω)'],([a,b,c])=>'Rtotal = '+fmt(1/(1/a+1/b+1/c))+' Ω'],
-    ['Percentage','Data',['Value','Total'],([a,b])=>fmt(a/b*100)+' %'],
-    ['Percentage Change','Data',['Old','New'],([a,b])=>fmt((b-a)/a*100)+' %'],
-    ['Difference / Ratio','Data',['A','B'],([a,b])=>'Difference = '+fmt(a-b)+' · Ratio = '+fmt(a/b)],
-    ['Binary / Hex / Decimal','Computing',['Decimal integer'],([a])=>'BIN '+(a>>>0).toString(2)+' · HEX '+(a>>>0).toString(16).toUpperCase()+' · DEC '+(a>>>0)],
-    ['IPv4 CIDR','Networking',['IPv4 address','CIDR prefix'],([ip,prefix])=>cidr(ip,Number(prefix))],
-    ['Resistor Bands','Electronics',['Band 1','Band 2','Multiplier'],([a,b,m])=>resistor(a,b,m)],
-    ['Engineering Rate','Engineering',['Quantity','Time'],([q,t])=>'Rate = '+fmt(q/t)+' units/time'],
-    ['Frequency / Period','Electronics',['Frequency (Hz)'],([f])=>'Period = '+fmt(1/f)+' s'],
-    ['Wavelength','Engineering',['Frequency (Hz)'],([f])=>'λ = '+fmt(299792458/f)+' m'],
-    ['Temperature °C ↔ °F','Engineering',['Value','Direction'],([v,d])=>d==='F→C'?fmt((v-32)*5/9)+' °C':fmt(v*9/5+32)+' °F'],
-    ['Torque','Engineering',['Force (N)','Radius (m)'],([f,r])=>'Torque = '+fmt(f*r)+' N·m'],
-    ['Mechanical Power','Engineering',['Torque (N·m)','RPM'],([t,rpm])=>'Power = '+fmt(t*rpm*2*Math.PI/60)+' W'],
-    ['Pressure','Engineering',['Force (N)','Area (m²)'],([f,a])=>'Pressure = '+fmt(f/a)+' Pa'],
-    ['Flow Rate','Engineering',['Volume (L)','Time (min)'],([v,t])=>'Flow = '+fmt(v/t)+' L/min'],
-    ['Voltage Drop','Electrical',['Current (A)','Resistance (Ω)'],([i,r])=>'Drop = '+fmt(i*r)+' V'],
-    ['Cable Power Loss','Electrical',['Current (A)','Resistance (Ω)'],([i,r])=>'Loss = '+fmt(i*i*r)+' W']
-  ];
-  function fmt(n){return Number.isFinite(n)?Number(n).toLocaleString(undefined,{maximumFractionDigits:6}):'—'}
-  function cidr(ip,p){const a=String(ip).split('.').map(Number);if(a.length!==4||a.some(x=>x<0||x>255)||p<0||p>32)return'Invalid IPv4/CIDR';const n=a.reduce((x,y)=>(x*256+y)>>>0,0),mask=p===0?0:(0xffffffff<<(32-p))>>>0,net=(n&mask)>>>0,broadcast=(net|(~mask>>>0))>>>0;const f=x=>[(x>>>24)&255,(x>>>16)&255,(x>>>8)&255,x&255].join('.');const hosts=p>=31?2**(32-p):Math.max(0,2**(32-p)-2);return'Network '+f(net)+' · Broadcast '+f(broadcast)+' · Mask '+f(mask)+' · Hosts '+hosts.toLocaleString()}
-  const bandMap={black:0,brown:1,red:2,orange:3,yellow:4,green:5,blue:6,violet:7,grey:8,white:9};function resistor(a,b,m){const A=bandMap[String(a).toLowerCase()],B=bandMap[String(b).toLowerCase()],M=bandMap[String(m).toLowerCase()];if(A==null||B==null||M==null)return'Use colour names: black brown red orange yellow green blue violet grey white';return'R = '+fmt((A*10+B)*Math.pow(10,M))+' Ω'}
-
-  function renderCalcs(){const g=$('#engineeringGrid');if(!g)return;g.innerHTML=calcDefs.map((c,i)=>'<article class="engineering-card"><div class="intel-code">'+esc(c[1])+'</div><h3>'+esc(c[0])+'</h3><p>Runs locally in your browser. No value is uploaded.</p><div class="field">'+c[2].map((x,j)=>'<input id="calc-'+i+'-'+j+'" '+(x.includes('Direction')?'value="C→F"':'')+' placeholder="'+esc(x)+'">').join('')+'</div><button class="os-btn primary" data-calc="'+i+'">CALCULATE</button><div class="calc-output" id="out-'+i+'">—</div></article>').join('');g.querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.calc,c=calcDefs[i],vals=c[2].map((_,j)=>$('#calc-'+i+'-'+j).value.trim());try{$('#out-'+i).textContent=c[3](vals.map(v=>v===''?NaN:(/^[-+]?\d*\.?\d+$/.test(v)?Number(v):v)))}catch(e){$('#out-'+i).textContent='Check the inputs.'}})}
-
-  // A generated quiz space: 1,000,000+ possible question instances without storing a million records.
-  let score=0,streak=0,current=null,answered=false;
-  const templates=[
-    b=>({q:'How many chapters are in '+b.name+'?',a:String(b.chapters),pool:[String(b.chapters),String(Math.max(1,b.chapters-1)),String(b.chapters+1),String(Math.max(1,b.chapters+5))]}),
-    b=>({q:b.name+' belongs to which testament?',a:b.testament,pool:[b.testament,b.testament==='Old Testament'?'New Testament':'Old Testament','Apocrypha','Both']}),
-    b=>({q:'What is the canonical book number of '+b.name+'?',a:String(b.index),pool:[String(b.index),String(Math.max(1,b.index-1)),String(b.index+1),String((b.index+10)%66+1)]}),
-    b=>({q:'Which book has '+b.chapters+' chapter(s)?',a:b.name,pool:[b.name,books[Math.floor(Math.random()*books.length)].name,books[Math.floor(Math.random()*books.length)].name,books[Math.floor(Math.random()*books.length)].name]})
-  ];
-  function nextQuiz(){answered=false;const b=books[Math.floor(Math.random()*books.length)];const t=templates[Math.floor(Math.random()*templates.length)];current=t(b);const pool=[...new Set(current.pool)];while(pool.length<4){pool.push(books[Math.floor(Math.random()*books.length)].name)}pool.sort(()=>Math.random()-.5);$('#quizQuestion').textContent=current.q;$('#quizOptions').innerHTML=pool.map(x=>'<button class="quiz-option" data-answer="'+esc(x)+'">'+esc(x)+'</button>').join('');$('#quizFeedback').textContent='';$('#quizOptions').querySelectorAll('button').forEach(x=>x.onclick=()=>answerQuiz(x.dataset.answer,x))}
-  function answerQuiz(ans,el){if(answered)return;answered=true;if(ans===current.a){score++;streak++;el.classList.add('correct');$('#quizFeedback').textContent='CORRECT · '+current.a}else{streak=0;el.classList.add('wrong');$('#quizFeedback').textContent='ANSWER · '+current.a}$('#quizScore').textContent='score: '+score;$('#quizStreak').textContent='streak: '+streak}
-  function setupQuiz(){$('#quizNext')?.addEventListener('click',nextQuiz);$('#quizShowAnswer')?.addEventListener('click',()=>{$('#quizFeedback').textContent='ANSWER · '+(current?.a||'Start the quiz first.')})}
-
-  async function loadPDFs(){try{const r=await fetch(EBOOK_API,{headers:{Accept:'application/vnd.github+json'}});const d=await r.json();pdfs=d.filter(x=>x.type==='file'&&/\.pdf$/i.test(x.name));const total=$('#pdfTotal');if(total)total.textContent=pdfs.length;const count=$('#ebookCount');if(count)count.textContent=pdfs.length+' indexed PDFs';}catch(e){}}
-
-  document.addEventListener('DOMContentLoaded',()=>{setupDocs();renderCalcs();setupQuiz();loadOSINT();loadPDFs();});
+'use strict';
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const EBOOK_API='https://api.github.com/repos/HephzibahBehulah/Hacking-Security-Ebooks/contents/';
+const OSINT_JSON='https://raw.githubusercontent.com/lockfale/OSINT-Framework/master/public/arf.json';
+let osint=[],osintCat='all',activeSource='all',pdfs=[];
+const groups={
+'OSINT / Research':[['OSINT Framework','Open-source intelligence discovery map','https://osintframework.com/'],['Google Search','Public web search','https://www.google.com/'],['Google Advanced Search','Advanced public search interface','https://www.google.com/advanced_search'],['Internet Archive','Historical web archive','https://web.archive.org/'],['crt.sh','Certificate transparency search','https://crt.sh/'],['urlscan.io','Public web scan observations','https://urlscan.io/'],['VirusTotal','Threat intelligence research','https://www.virustotal.com/'],['Have I Been Pwned','Breach notification lookup','https://haveibeenpwned.com/']],
+'Web Security':[['OWASP WSTG','Web security testing methodology','https://owasp.org/www-project-web-security-testing-guide/'],['OWASP Top 10','Application security risk reference','https://owasp.org/www-project-top-ten/'],['OWASP Cheat Sheets','Secure development guidance','https://cheatsheetseries.owasp.org/'],['PortSwigger Academy','Interactive web security labs','https://portswigger.net/web-security'],['MDN Web Docs','Web platform reference','https://developer.mozilla.org/']],
+'Networking / Infrastructure':[['Cloudflare Learning','DNS HTTP networking and security','https://www.cloudflare.com/learning/'],['Cisco Networking Academy','Networking education','https://www.netacad.com/'],['Wireshark','Protocol analysis','https://www.wireshark.org/'],['Nmap','Network discovery reference','https://nmap.org/'],['RFC Editor','Internet standards','https://www.rfc-editor.org/']],
+'Linux / Systems':[['Linux Kernel Docs','Kernel documentation','https://docs.kernel.org/'],['Ubuntu Documentation','Linux administration','https://documentation.ubuntu.com/'],['ArchWiki','Linux reference','https://wiki.archlinux.org/'],['GNU Bash','Shell reference','https://www.gnu.org/software/bash/manual/'],['OpenSSH','SSH documentation','https://www.openssh.com/']],
+'DFIR / Defensive':[['NIST Forensics','Digital forensics guidance','https://www.nist.gov/itl/forensics'],['Autopsy','Digital forensics platform','https://www.autopsy.com/'],['SANS DFIR','Forensics and incident response','https://www.sans.org/digital-forensics/'],['MITRE ATT&CK','Adversary tactics and techniques','https://attack.mitre.org/'],['MITRE D3FEND','Defensive technique knowledge','https://d3fend.mitre.org/'],['CISA','Cybersecurity guidance','https://www.cisa.gov/'],['NIST CSF','Cybersecurity risk framework','https://www.nist.gov/cyberframework']],
+'Data / Programming':[['Python','Python documentation','https://docs.python.org/3/'],['pandas','Data analysis documentation','https://pandas.pydata.org/docs/'],['NumPy','Numerical computing','https://numpy.org/doc/'],['scikit-learn','Machine learning guide','https://scikit-learn.org/stable/'],['SQLBolt','Interactive SQL practice','https://sqlbolt.com/'],['Git','Version control documentation','https://git-scm.com/doc'],['GitHub Docs','GitHub platform documentation','https://docs.github.com/']],
+'Industrial / OT':[['CISA ICS','Industrial control system security','https://www.cisa.gov/topics/industrial-control-systems'],['NIST SP 800-82','OT security guidance','https://csrc.nist.gov/pubs/sp/800/82/r3/final'],['MITRE ATT&CK for ICS','ICS threat knowledge','https://attack.mitre.org/matrices/ics/'],['Siemens Support','Industrial technical documentation','https://support.industry.siemens.com/']],
+'Elektroniker / Engineering':[['VDE','German electrical engineering','https://www.vde.com/en'],['All About Circuits','Electronics textbook','https://www.allaboutcircuits.com/textbook/'],['Arduino Docs','Embedded electronics','https://docs.arduino.cc/'],['Engineering Toolbox','Engineering reference','https://www.engineeringtoolbox.com/']],
+'Learning / Labs':[['TryHackMe','Guided cybersecurity labs','https://tryhackme.com/'],['Hack The Box Academy','Hands-on security training','https://academy.hackthebox.com/'],['picoCTF','CTF learning','https://picoctf.org/'],['OverTheWire','Security wargames','https://overthewire.org/wargames/'],['MIT OpenCourseWare','Open course materials','https://ocw.mit.edu/']]
+};
+function renderSources(q=''){const b=$('#sourceGrid');if(!b)return;const x=q.toLowerCase();let out=[];Object.entries(groups).forEach(([cat,items])=>{if(activeSource!=='all'&&activeSource!==cat)return;items.forEach(i=>{if(!x||(cat+' '+i[0]+' '+i[1]).toLowerCase().includes(x))out.push('<a class="intel-card" target="_blank" rel="noopener" href="'+i[2]+'"><span class="intel-code">'+esc(cat)+'</span><h3>'+esc(i[0])+' ↗</h3><p>'+esc(i[1])+'</p><span class="intel-open">OPEN RESOURCE</span></a>')})});b.innerHTML=out.join('')||'<div class="intel-empty">NO MATCHES</div>';if($('#sourceCount'))$('#sourceCount').textContent=out.length+' resources'}
+function setupSources(){const s=$('#sourceFilter');if(!s)return;s.innerHTML='<option value="all">ALL RESOURCE DOMAINS</option>'+Object.keys(groups).map(x=>'<option value="'+esc(x)+'">'+esc(x.toUpperCase())+'</option>').join('');s.onchange=()=>{activeSource=s.value;renderSources($('#sourceSearch')?.value||'')};$('#sourceSearch')?.addEventListener('input',e=>renderSources(e.target.value));renderSources()}
+function pdfClass(n){n=n.toLowerCase();if(/forensic|malware|virus|incident/.test(n))return'DFIR / Malware';if(/web|sql injection|xss|php security/.test(n))return'Web Security';if(/network|wireless|wireshark|firewall|snort|nessus|ssh/.test(n))return'Networks';if(/linux|unix|kali|bash/.test(n))return'Linux / Systems';if(/pentest|ethical hacking|hacking|metasploit|shellcoder/.test(n))return'Offensive Security';if(/crypt/.test(n))return'Cryptography';if(/scada|industrial|plc|automation|control/.test(n))return'Industrial / OT';if(/python|coding|programming|javascript|java/.test(n))return'Programming';return'Technical Library'}
+function renderPDFs(q=''){const b=$('#ebookGrid');if(!b)return;const x=q.toLowerCase();const list=pdfs.filter(p=>(!x||(p.name+' '+p.category).toLowerCase().includes(x))&&(activeSource==='all'||activeSource===p.category));b.innerHTML=list.map((p,i)=>'<article class="ebook-card"><div><span class="intel-code">'+String(i+1).padStart(3,'0')+'</span><span class="ebook-cat">'+esc(p.category)+'</span></div><h3>'+esc(p.name.replace(/\.pdf$/i,''))+'</h3><p>PDF · '+(p.size?(p.size/1048576).toFixed(1)+' MB':'')+'</p><a href="'+esc(p.download_url||p.html_url)+'" target="_blank" rel="noopener">OPEN PDF ↗</a></article>').join('')||'<div class="intel-empty">NO EBOOK MATCHES</div>';if($('#ebookCount'))$('#ebookCount').textContent=list.length+' indexed PDFs';if($('#pdfTotal'))$('#pdfTotal').textContent=pdfs.length}
+async function loadPDFs(){try{const r=await fetch(EBOOK_API);const d=await r.json();pdfs=d.filter(x=>x.type==='file'&&/\.pdf$/i.test(x.name)).map(x=>({...x,category:pdfClass(x.name)}));renderPDFs($('#ebookSearch')?.value||'')}catch(e){if($('#ebookGrid'))$('#ebookGrid').innerHTML='<div class="intel-empty">PDF INDEX UNAVAILABLE · <a href="https://github.com/HephzibahBehulah/Hacking-Security-Ebooks" target="_blank">OPEN REPOSITORY ↗</a></div>'}}
+function normalizeOSINT(n,cat='OSINT Framework',out=[]){if(Array.isArray(n)){n.forEach(v=>normalizeOSINT(v,cat,out));return out}if(!n||typeof n!=='object')return out;const name=n.name||n.title||n.label||n.text,url=n.url||n.href||n.link;let next=cat;if(name&&(n.children||n.nodes||n.items||n.tools)&&!url)next=name;if(name&&url&&/^https?:/i.test(url))out.push({name,category:cat,url,description:n.description||'Indexed from the OSINT Framework public dataset.'});for(const k of ['children','nodes','items','tools','links'])if(n[k])normalizeOSINT(n[k],next,out);return out}
+function renderOSINT(q=''){const b=$('#megaToolGrid');if(!b)return;const x=q.toLowerCase();const list=osint.filter(t=>(osintCat==='all'||t.category===osintCat)&&(!x||(t.name+' '+t.category+' '+t.description).toLowerCase().includes(x)));b.innerHTML=list.slice(0,1000).map(t=>'<a class="intel-card" target="_blank" rel="noopener noreferrer" href="'+esc(t.url)+'"><span class="intel-code">'+esc(t.category)+'</span><h3>'+esc(t.name)+' ↗</h3><p>'+esc(t.description)+'</p><span class="intel-open">OPEN ORIGINAL</span></a>').join('')||'<div class="intel-empty">NO TOOL MATCHES</div>';if($('#megaToolCount'))$('#megaToolCount').textContent=osint.length.toLocaleString()+' indexed tools'}
+async function loadOSINT(){try{const r=await fetch(OSINT_JSON,{cache:'no-store'});if(!r.ok)throw Error(r.status);const d=await r.json();osint=normalizeOSINT(d);const s=$('#megaToolCategory');if(s){const cats=[...new Set(osint.map(x=>x.category))].sort();s.innerHTML='<option value="all">ALL CATEGORIES</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c.toUpperCase())+'</option>').join('');s.onchange=()=>{osintCat=s.value;renderOSINT($('#megaToolSearch').value)}}$('#megaToolSearch')?.addEventListener('input',e=>renderOSINT(e.target.value));$('#megaToolRefresh')?.addEventListener('click',loadOSINT);renderOSINT()}catch(e){if($('#megaToolGrid'))$('#megaToolGrid').innerHTML='<div class="intel-empty">OSINT DATA UNAVAILABLE · <a href="https://osintframework.com/" target="_blank">OPEN OSINT FRAMEWORK ↗</a></div>'}}
+const docs=[['Cybersecurity','CISA resources','https://www.cisa.gov/resources-tools/resources'],['Cybersecurity','NIST CSF','https://www.nist.gov/cyberframework'],['Cybersecurity','OWASP WSTG','https://owasp.org/www-project-web-security-testing-guide/'],['Cybersecurity','OWASP Cheat Sheets','https://cheatsheetseries.owasp.org/'],['Cybersecurity','MITRE ATT&CK','https://attack.mitre.org/'],['Networking','RFC Editor','https://www.rfc-editor.org/'],['Networking','Wireshark docs','https://www.wireshark.org/docs/'],['Networking','Nmap guide','https://nmap.org/book/man.html'],['Linux','Linux kernel docs','https://docs.kernel.org/'],['Linux','Bash manual','https://www.gnu.org/software/bash/manual/'],['Data','Python docs','https://docs.python.org/3/'],['Data','pandas docs','https://pandas.pydata.org/docs/'],['Data','NumPy docs','https://numpy.org/doc/'],['Data','scikit-learn guide','https://scikit-learn.org/stable/user_guide.html'],['Engineering','Engineering Toolbox','https://www.engineeringtoolbox.com/'],['Electronics','All About Circuits','https://www.allaboutcircuits.com/textbook/'],['Electronics','Arduino docs','https://docs.arduino.cc/'],['Electronics','VDE','https://www.vde.com/en'],['OT','NIST SP 800-82','https://csrc.nist.gov/pubs/sp/800/82/r3/final'],['OT','CISA ICS','https://www.cisa.gov/topics/industrial-control-systems'],['Learning','MIT OpenCourseWare','https://ocw.mit.edu/'],['Learning','TryHackMe','https://tryhackme.com/'],['Learning','picoCTF','https://picoctf.org/']];
+function renderDocs(q=''){const b=$('#docGrid');if(!b)return;const x=q.toLowerCase();const list=docs.filter(d=>(window.docCat||'all')==='all'||d[0]===(window.docCat));const f=list.filter(d=>!x||(d.join(' ').toLowerCase().includes(x)));b.innerHTML=f.map(d=>'<a class="intel-card" href="'+d[2]+'" target="_blank" rel="noopener"><span class="intel-code">'+esc(d[0])+'</span><h3>'+esc(d[1])+' ↗</h3><p>Authoritative or educational technical source.</p><span class="intel-open">OPEN SOURCE</span></a>').join('');if($('#docIndexCount'))$('#docIndexCount').textContent=f.length+' source collections'}
+function setupDocs(){const s=$('#docCategory');if(s){s.innerHTML='<option value="all">ALL DOMAINS</option>'+[...new Set(docs.map(d=>d[0]))].map(c=>'<option>'+c+'</option>').join('');s.onchange=()=>{window.docCat=s.value;renderDocs($('#docSearch').value)}}$('#docSearch')?.addEventListener('input',e=>renderDocs(e.target.value));renderDocs()}
+const calcs=[
+['Ohm’s Law',['V','I','R'],v=>{let[V,I,R]=v;if(!V&&I&&R)V=I*R;else if(!I&&V&&R)I=V/R;else if(!R&&V&&I)R=V/I;return 'V='+f(V)+' V · I='+f(I)+' A · R='+f(R)+' Ω'}],
+['Voltage Divider',['Vin (V)','R1 (Ω)','R2 (Ω)'],v=>'Vout = '+f(v[0]*v[2]/(v[1]+v[2]))+' V'],
+['Power / Energy',['Voltage (V)','Current (A)','Time (h)'],v=>'P='+f(v[0]*v[1])+' W · E='+f(v[0]*v[1]*v[2])+' Wh'],
+['Series Resistance',['R1','R2','R3'],v=>'Rtotal='+f(v[0]+v[1]+v[2])+' Ω'],
+['Parallel Resistance',['R1','R2','R3'],v=>'Rtotal='+f(1/(1/v[0]+1/v[1]+1/v[2]))+' Ω'],
+['Percentage',['Value','Total'],v=>f(v[0]/v[1]*100)+' %'],
+['Percentage Change',['Old','New'],v=>f((v[1]-v[0])/v[0]*100)+' %'],
+['Difference / Ratio',['A','B'],v=>'Diff='+f(v[0]-v[1])+' · Ratio='+f(v[0]/v[1])],
+['Binary / Hex',['Decimal integer'],v=>'BIN '+(v[0]>>>0).toString(2)+' · HEX '+(v[0]>>>0).toString(16).toUpperCase()],
+['IPv4 / CIDR',['IPv4 address','Prefix 0-32'],v=>cidr(v[0],v[1])],
+['Resistor Bands',['Band 1 colour','Band 2 colour','Multiplier colour'],v=>res(v[0],v[1],v[2])],
+['Engineering Rate',['Quantity','Time'],v=>'Rate='+f(v[0]/v[1])+' units/time'],
+['Frequency / Period',['Frequency Hz'],v=>'T='+f(1/v[0])+' s'],
+['Wavelength',['Frequency Hz'],v=>'λ='+f(299792458/v[0])+' m'],
+['Torque',['Force N','Radius m'],v=>'τ='+f(v[0]*v[1])+' N·m'],
+['Mechanical Power',['Torque N·m','RPM'],v=>'P='+f(v[0]*v[1]*2*Math.PI/60)+' W'],
+['Pressure',['Force N','Area m²'],v=>'P='+f(v[0]/v[1])+' Pa'],
+['Flow Rate',['Volume L','Time min'],v=>'Q='+f(v[0]/v[1])+' L/min'],
+['Voltage Drop',['Current A','Resistance Ω'],v=>'Drop='+f(v[0]*v[1])+' V'],
+['Cable Power Loss',['Current A','Resistance Ω'],v=>'Loss='+f(v[0]*v[0]*v[1])+' W']];
+function f(n){return Number.isFinite(n)?Number(n).toLocaleString(undefined,{maximumFractionDigits:6}):'—'}function cidr(ip,p){const a=String(ip).split('.').map(Number),P=Number(p);if(a.length!==4||a.some(x=>x<0||x>255)||P<0||P>32)return'Invalid IPv4/CIDR';const n=a.reduce((x,y)=>(x*256+y)>>>0,0),m=P===0?0:(0xffffffff<<(32-P))>>>0,net=(n&m)>>>0,bc=(net|(~m>>>0))>>>0,g=x=>[(x>>>24)&255,(x>>>16)&255,(x>>>8)&255,x&255].join('.');return'Network '+g(net)+' · Broadcast '+g(bc)+' · Mask '+g(m)+' · Hosts '+(P>=31?2**(32-P):2**(32-P)-2)}
+const bm={black:0,brown:1,red:2,orange:3,yellow:4,green:5,blue:6,violet:7,grey:8,gray:8,white:9};function res(a,b,m){a=bm[String(a).toLowerCase()];b=bm[String(b).toLowerCase()];m=bm[String(m).toLowerCase()];return a==null||b==null||m==null?'Use black/brown/red/orange/yellow/green/blue/violet/grey/white':'Resistance='+(a*10+b)*10**m+' Ω'}
+function renderCalcs(){const g=$('#engineeringGrid');if(!g)return;g.innerHTML=calcs.map((c,i)=>'<article class="engineering-card"><div class="intel-code">LOCAL TOOL</div><h3>'+esc(c[0])+'</h3><p>No values leave the browser.</p><div class="field">'+c[1].map((x,j)=>'<input id="c'+i+'-'+j+'" placeholder="'+esc(x)+'">').join('')+'</div><button class="os-btn primary" data-i="'+i+'">CALCULATE</button><div class="calc-output" id="o'+i+'">—</div></article>').join('');g.querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,v=[...g.querySelectorAll('#c'+i+'-0,#c'+i+'-1,#c'+i+'-2')].map(x=>x?x.value.trim():'').map(x=>/^[-+]?\d*\.?\d+$/.test(x)?Number(x):x);try{$('#o'+i).textContent=calcs[i][2](v)}catch(e){$('#o'+i).textContent='Check inputs.'}})}
+const chapters={Genesis:50,Exodus:40,Leviticus:27,Numbers:36,Deuteronomy:34,Joshua:24,Judges:21,Ruth:4,'1 Samuel':31,'2 Samuel':24,'1 Kings':22,'2 Kings':25,'1 Chronicles':29,'2 Chronicles':36,Ezra:10,Nehemiah:13,Esther:10,Job:42,Psalms:150,Proverbs:31,Ecclesiastes:12,'Song of Solomon':8,Isaiah:66,Jeremiah:52,Lamentations:5,Ezekiel:48,Daniel:12,Hosea:14,Joel:3,Amos:9,Obadiah:1,Jonah:4,Micah:7,Nahum:3,Habakkuk:3,Zephaniah:3,Haggai:2,Zechariah:14,Malachi:4,Matthew:28,Mark:16,Luke:24,John:21,Acts:28,Romans:16,'1 Corinthians':16,'2 Corinthians':13,Galatians:6,Ephesians:6,Philippians:4,Colossians:4,'1 Thessalonians':5,'2 Thessalonians':3,'1 Timothy':6,'2 Timothy':4,Titus:3,Philemon:1,Hebrews:13,James:5,'1 Peter':5,'2 Peter':3,'1 John':5,'2 John':1,'3 John':1,Jude:1,Revelation:22};const books=Object.entries(chapters).map(([name,ch],i)=>({name,ch,testament:i<39?'Old Testament':'New Testament',num:i+1}));
+let qcur=null,score=0,streak=0,answered=false;function nextQuiz(){answered=false;const b=books[Math.floor(Math.random()*books.length)],type=Math.floor(Math.random()*6);let q,a,p;if(type===0){q='How many chapters are in '+b.name+'?';a=String(b.ch);p=[a,String(Math.max(1,b.ch-1)),String(b.ch+1),String(b.ch+2)]}else if(type===1){q=b.name+' belongs to which testament?';a=b.testament;p=[a,a==='Old Testament'?'New Testament':'Old Testament','Both','Neither']}else if(type===2){q='What is the canonical book number of '+b.name+'?';a=String(b.num);p=[a,String(Math.max(1,b.num-1)),String(b.num+1),String((b.num+7)%66+1)]}else if(type===3){const x=books.filter(x=>x.ch===b.ch)[Math.floor(Math.random()*books.filter(x=>x.ch===b.ch).length)]||b;q='Which book has '+b.ch+' chapters?';a=x.name;p=[a,...books.sort(()=>Math.random()-.5).slice(0,3).map(x=>x.name)]}else if(type===4){q='Is '+b.name+' in the 66-book Protestant canon?';a='Yes';p=['Yes','No','Only Apocrypha','Only Deuterocanon']}else{q='Which testament contains '+b.name+'?';a=b.testament;p=[a,a==='Old Testament'?'New Testament':'Old Testament','Both','Not applicable']}p=[...new Set(p)].slice(0,4);while(p.length<4)p.push(books[Math.floor(Math.random()*books.length)].name);p.sort(()=>Math.random()-.5);qcur={q,a};$('#quizQuestion').textContent=q;$('#quizOptions').innerHTML=p.map(x=>'<button class="quiz-option">'+esc(x)+'</button>').join('');$('#quizFeedback').textContent='';$('#quizOptions').querySelectorAll('button').forEach(x=>x.onclick=()=>answer(x.textContent,x))}
+function answer(a,el){if(answered)return;answered=true;if(a===qcur.a){score++;streak++;el.classList.add('correct');$('#quizFeedback').textContent='CORRECT · '+qcur.a}else{streak=0;el.classList.add('wrong');$('#quizFeedback').textContent='ANSWER · '+qcur.a}$('#quizScore').textContent='score: '+score;$('#quizStreak').textContent='streak: '+streak}
+document.addEventListener('DOMContentLoaded',()=>{setupSources();loadPDFs();loadOSINT();setupDocs();renderCalcs();$('#ebookSearch')?.addEventListener('input',e=>renderPDFs(e.target.value));$('#globalResourceSearch')?.addEventListener('input',e=>{const q=e.target.value;$('#sourceSearch').value=q;renderSources(q)});$('#quizNext')?.addEventListener('click',nextQuiz);$('#quizShowAnswer')?.addEventListener('click',()=>$('#quizFeedback').textContent='ANSWER · '+(qcur?qcur.a:'Start the quiz first.')})});
 })();
