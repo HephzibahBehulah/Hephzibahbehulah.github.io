@@ -78,3 +78,30 @@ document.addEventListener("DOMContentLoaded",()=>{
   const cover=document.createElement("div");cover.className="hb-route-cover";body.appendChild(cover);
   internal.forEach(a=>a.addEventListener("click",()=>{const target=document.querySelector(a.getAttribute("href"));if(!target)return;cover.classList.add("active");setTimeout(()=>cover.classList.remove("active"),180)}));
 });
+/* HB REFINEMENT ENGINE // presentation layer only */
+document.addEventListener("DOMContentLoaded",()=>{
+  const body=document.body,root=document.documentElement;
+  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const setDomain=(domain)=>{if(!domain)return;body.dataset.hbDomain=domain;flash.classList.remove("active");void flash.offsetWidth;flash.classList.add("active");setTimeout(()=>flash.classList.remove("active"),220)};
+  const domainFor=(el)=>{const id=(el?.id||"").toLowerCase(),text=(el?.textContent||"").toLowerCase();if(id.includes("engineering"))return"engineering";if(id.includes("data")||text.includes("data"))return"data";if(id.includes("cyber")||id.includes("pentest")||text.includes("security"))return"security";if(id.includes("osint")||text.includes("osint"))return"osint";if(id.includes("ai"))return"ai";if(id.includes("learn")||id.includes("ebook")||id.includes("knowledge"))return"learning";if(id.includes("network"))return"network";return null};
+  const flash=document.createElement("div");flash.className="hb-domain-flash";body.appendChild(flash);
+  const beacon=document.createElement("div");beacon.className="hb-ambient-beacon";beacon.title="system heartbeat";body.appendChild(beacon);
+  document.querySelectorAll(".os-nav a[href^='#']").forEach(a=>a.addEventListener("click",()=>{setDomain(domainFor(document.querySelector(a.getAttribute("href"))));}));
+  document.querySelectorAll("#tree .map-node,#tree .map-leaf,#tree .os-node,#tree .os-leaf").forEach(n=>n.addEventListener("pointerenter",()=>{const cls=[...n.classList];if(cls.includes("eng"))setDomain("engineering");else if(cls.includes("data"))setDomain("data");else if(cls.includes("cyber"))setDomain("security");else if(cls.includes("osint"))setDomain("osint");else if(cls.includes("ai"))setDomain("ai");else if(cls.includes("learn"))setDomain("learning");else if(cls.includes("web"))setDomain("network")}));
+  if(!reduced){let px=0,py=0;window.addEventListener("pointermove",e=>{px+=(e.clientX-px)*.035;py+=(e.clientY-py)*.035;root.style.setProperty("--hb-parallax-x",px+"px");root.style.setProperty("--hb-parallax-y",py+"px")},{passive:true});}
+  /* command palette: navigation only, no content or logic changes */
+  const commands=[
+    ["Overview","Jump to the main view","#overview"],["Intelligence Tree","Explore the knowledge map","#tree"],["Resource Matrix","Open technical sources","#resourceMatrix"],["Ebook Vault","Open the ebook archive","#ebookVault"],["Toolbench","Open study tools","#toolbench"],["Mega Tools","Browse the tool catalogue","#megaTools"],["Engineering","Open engineering lab","#engineeringLab"],["Knowledge","Open the knowledge library","#knowledgeLibrary"],["Bible Quiz","Start the Bible study section","#genzBible"],["Projects","Open projects and workbench","#projects"],["Recon Hub","Open the reconnaissance hub","recon-hub.html"],["Pentest Lab","Open the authorised security lab","pentest.html"],["Engineering Library","Open the engineering library","engineering-library.html"]
+  ];
+  const overlay=document.createElement("div");overlay.className="hb-command-overlay";overlay.innerHTML='<div class="hb-command" role="dialog" aria-modal="true" aria-label="Command palette"><div class="hb-command-top"><span>⌘K</span><input class="hb-command-input" autocomplete="off" placeholder="Jump to a section or hub..." aria-label="Command search"></div><div class="hb-command-list"></div><div class="hb-command-foot">↑ ↓ navigate · Enter open · Esc close</div></div>';body.appendChild(overlay);
+  const input=overlay.querySelector(".hb-command-input"),list=overlay.querySelector(".hb-command-list");let selected=0,filtered=commands;
+  const render=()=>{list.innerHTML=filtered.map((c,i)=>'<button class="hb-command-item '+(i===selected?'selected':'')+'" data-target="'+c[2]+'"><span>'+c[0]+'</span><small>'+c[1]+'</small></button>').join("")};
+  const openPalette=()=>{render();overlay.classList.add("open");input.value="";input.focus()};const closePalette=()=>overlay.classList.remove("open");
+  const go=(target)=>{if(target.startsWith("#")){const el=document.querySelector(target);if(el){setDomain(domainFor(el));el.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start");}}}else{if(!reduced){document.querySelector(".hb-route-cover")?.classList.add("active");setTimeout(()=>location.href=target,170)}else location.href=target;}closePalette()};
+  input.addEventListener("input",()=>{const q=input.value.toLowerCase().trim();filtered=commands.filter(c=>(c[0]+" "+c[1]).toLowerCase().includes(q));selected=0;render()});
+  list.addEventListener("click",e=>{const b=e.target.closest("[data-target]");if(b)go(b.dataset.target)});
+  input.addEventListener("keydown",e=>{if(e.key==="ArrowDown"){e.preventDefault();selected=Math.min(selected+1,Math.max(0,filtered.length-1));render()}else if(e.key==="ArrowUp"){e.preventDefault();selected=Math.max(0,selected-1);render()}else if(e.key==="Enter"){e.preventDefault();if(filtered[selected])go(filtered[selected][2])}else if(e.key==="Escape"){closePalette()}});
+  overlay.addEventListener("click",e=>{if(e.target===overlay)closePalette()});
+  document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();overlay.classList.contains("open")?closePalette():openPalette()}if(e.key==="Escape"&&overlay.classList.contains("open"))closePalette()});
+  render();
+});
