@@ -1,6 +1,6 @@
 const CORS={"access-control-allow-origin":"https://hephzibahbehulah.com","access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"content-type,x-hb-admin-key,x-hb-session","access-control-max-age":"86400"};
 const INSTANCE="hephzibah-knowledge";
-const MODEL=(env)=>env.ADIGUN_MODEL||"@cf/moonshotai/kimi-k2.6";
+const MODEL=(env)=>env.ADIGUN_MODEL||"@cf/zai-org/glm-4.7-flash";
 const runAI=async(env,payload)=>{try{return await env.AI.run(MODEL(env),payload)}catch(err){if(MODEL(env)!=="@cf/meta/llama-3.1-8b-instruct")return await env.AI.run("@cf/meta/llama-3.1-8b-instruct",payload);throw err}};
 const SITE_PAGES=["index.html","about.html","contact.html","engineering-library.html","recon-hub.html","portfolio.html","resources.html","ai-lab.html"];
 const SITE_DATA=["data/source-library.json","js/projects-data.js","js/tree-data.js","js/tree-data-home.js","js/quiz.js","js/intelligence-core.js","js/technical-workbench.js","js/mega-tools.js","js/engineering-calculators-local.js","js/engineering-library.js","js/recon-hub.js","js/main.js","js/pentest.js","js/intelligence-hub.js","js/osint-redesign.js","js/terminal.js","js/terminal-expansion.js"];
