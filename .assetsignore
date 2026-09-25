@@ -19,3 +19,6 @@ data/ai-platform.json
 
 # Cloudflare/site configuration that should not be public
 _headers
+
+# Root Worker source is deployed as code, not as a static asset
+worker.js
