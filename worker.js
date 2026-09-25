@@ -22,7 +22,7 @@ const AGENT_TOOLS=[{name:"github_search",description:"Search code, commits, issu
 {name:"memory",description:"Read or append ADIGUN operational memory in D1 when configured. Writing requires authenticated ADIGUN mode.",parameters:{type:"object",properties:{action:{type:"string",enum:["list","remember"]},key:{type:"string"},value:{type:"string"}},required:["action"]}},
 {name:"automation_status",description:"Inspect the availability of ADIGUN's configured automation capabilities.",parameters:{type:"object",properties:{}},required:[]},
 {name:"browser_action",description:"Request safe browser navigation or an existing HB Terminal command. Never request arbitrary shell execution.",parameters:{type:"object",properties:{action:{type:"string",enum:["navigate","terminal"]},target:{type:"string"}},required:["action","target"]}}
-];];
+];
 
 function agentKey(request,env){const k=request.headers.get("x-adigun-key")||"";return Boolean(env.ADIGUN_AGENT_KEY)&&k===env.ADIGUN_AGENT_KEY}
 function requireAgentAuth(request,env){return agentKey(request,env)?null:json({ok:false,error:"Authenticated ADIGUN mode is required for this action. Configure the ADIGUN_AGENT_KEY secret and send x-adigun-key."},401)}
