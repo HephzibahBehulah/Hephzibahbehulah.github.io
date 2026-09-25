@@ -1,32 +1,6 @@
-const json = (body, status = 200) => new Response(JSON.stringify(body), {
-  status,
-  headers: { "content-type": "application/json; charset=utf-8" }
-});
-
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-
-    if (url.pathname === "/api/health" && request.method === "GET") {
-      return json({
-        ok: true,
-        service: "hephzibah-behulah-ai",
-        version: "0.1.0",
-        capabilities: ["agent", "rag", "document-analysis", "dataset-analysis", "automation", "ml"],
-        configured: Boolean(env.AI_PROVIDER)
-      });
-    }
-
-    if (url.pathname.startsWith("/api/")) {
-      return json({
-        ok: false,
-        error: "API route not configured yet",
-        next: "Configure the provider, storage and authentication adapters before enabling production routes."
-      }, 501);
-    }
-
-    return new Response("Hephzibah Behulah AI Platform API", {
-      headers: { "content-type": "text/plain; charset=utf-8" }
-    });
-  }
-};
+const CORS={"access-control-allow-origin":"https://hephzibahbehulah.com","access-control-allow-methods":"GET,POST,OPTIONS","access-control-allow-headers":"content-type"};
+const json=(body,status=200,extra={})=>new Response(JSON.stringify(body),{status,headers:{"content-type":"application/json; charset=utf-8",...CORS,...extra}});
+const projects=[{name:"Water Pump Status Prediction",domain:"ML / Python",repo:"https://github.com/HephzibahBehulah/Water-Pump-Status-Prediction-ML"},{name:"Loan Approval Analysis",domain:"Data / ML",repo:"https://github.com/HephzibahBehulah/ReDI2025_ML_Isaac_Loan_Approval_Project"},{name:"Cybersecurity Study Notes",domain:"Security",repo:"https://github.com/HephzibahBehulah/cybersecurity-study-notes"},{name:"Prompt Injection Learning Journal",domain:"AI Security",repo:"https://github.com/HephzibahBehulah/Prompt-Injection-Learning-Journal"},{name:"TryHackMe GUI",domain:"Security Lab",repo:"https://github.com/HephzibahBehulah/Tryhackme-GUI"},{name:"Power BI Samples",domain:"Analytics",repo:"https://github.com/HephzibahBehulah/powerbi-desktop-samples"}];
+const system="You are Hephzibah AI, the controlled intelligence layer for Hephzibah Behulah. Be concise, technically useful and honest about uncertainty. You may discuss the public portfolio and its projects. Never expose secrets, invent private facts, or execute arbitrary commands. Explain cybersecurity only for lawful defensive learning.";
+async function chat(request,env){let b;try{b=await request.json()}catch{return json({ok:false,error:"Invalid JSON"},400)}const message=String(b?.message||"").trim();if(!message||message.length>4000)return json({ok:false,error:"Message must be 1–4000 characters."},400);if(!env.AI)return json({ok:false,error:"AI provider is not configured."},503);try{const result=await env.AI.run("@cf/meta/llama-3.1-8b-instruct",{messages:[{role:"system",content:system},{role:"user",content:message}]});return json({ok:true,answer:result?.response||result?.choices?.[0]?.message?.content||"No answer returned."})}catch(e){return json({ok:false,error:"AI inference failed."},502)}}
+export default{async fetch(request,env){const u=new URL(request.url);if(request.method==="OPTIONS")return new Response(null,{status:204,headers:CORS});if(u.pathname==="/api/health"&&request.method==="GET")return json({ok:true,service:"hephzibah-behulah-ai",version:"0.2.0",mode:env.AI?"workers-ai":"local-fallback",capabilities:["agent","rag-ready","document-analysis","dataset-analysis","project-intelligence","automation","ml-boundary"]});if(u.pathname==="/api/projects"&&request.method==="GET")return json({ok:true,projects});if(u.pathname==="/api/chat"&&request.method==="POST")return chat(request,env);if(u.pathname.startsWith("/api/"))return json({ok:false,error:"Route not found"},404);return new Response("Hephzibah Behulah AI Platform API",{headers:{"content-type":"text/plain; charset=utf-8"}})}};
