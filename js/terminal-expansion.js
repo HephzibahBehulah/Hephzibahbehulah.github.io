@@ -73,7 +73,7 @@ function cryptoCommand(c,rest){
  if(c==='hex'){try{return [...new TextEncoder().encode(rest)].map(x=>x.toString(16).padStart(2,'0')).join(' ');}catch{return 'Encoding failed.';}}
  if(c==='binary'){return [...new TextEncoder().encode(rest)].map(x=>x.toString(2).padStart(8,'0')).join(' ');}
  if(c==='ascii'){const a=String(rest).split(/[ ,]+/).map(Number);return a.every(Number.isFinite)?String.fromCharCode(...a):'Usage: ASCII 72 101 108 108 111';}
- if(c==='rot13')return rest.replace(/[a-z]/gi,ch=>String.fromCharCode(ch.charCodeAt(0)+(ch.toLowerCase()<'n'?(ch===ch.toUpperCase()?78:110):-13)));
+ if(c==='rot13')return rest.replace(/[a-z]/gi,ch=>String.fromCharCode(ch.charCodeAt(0)+(ch.toLowerCase()<'n'?13:-13)));
  if(c==='urlencode')return encodeURIComponent(rest);if(c==='urldecode'){try{return decodeURIComponent(rest);}catch{return 'Invalid URL encoding.';}}
  if(c==='caesar'){const sh=n(rest.split(' ')[0])??3;const txt=rest.split(' ').slice(1).join(' ');return txt.replace(/[a-z]/gi,ch=>String.fromCharCode((ch.charCodeAt(0)-((ch<='Z')?65:97)+sh+26)%26+((ch<='Z')?65:97)));}
  if(c==='xor'){const p=rest.split('|');if(p.length<2)return 'Usage: XOR <text> | <key>';const key=p[1];return [...p[0]].map((ch,i)=>ch.charCodeAt(0)^key.charCodeAt(i%key.length)).map(x=>x.toString(16).padStart(2,'0')).join(' ');}
