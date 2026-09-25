@@ -88,6 +88,13 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 /* HB GLOBAL SEARCH // site-wide content discovery */
+  if(!document.getElementById("hbGlobalSearchCSS")){
+    var globalSearchCSS=document.createElement("link");
+    globalSearchCSS.id="hbGlobalSearchCSS";
+    globalSearchCSS.rel="stylesheet";
+    globalSearchCSS.href="css/hb-global-search.css?v=20260925-1";
+    document.head.appendChild(globalSearchCSS);
+  }
 document.addEventListener("DOMContentLoaded",function(){
   var search=document.getElementById("globalResourceSearch");
   if(!search)return;
