@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HB Engineering Lab | Calculator Library</title>
-<meta name="description" content="HB Engineering Lab: electrical, HVAC, plumbing, construction and technical calculators.">
+<title>HB Engineering Lab | Local Calculator Library</title>
+<meta name="description" content="HB Engineering Lab: independent browser-local electrical, HVAC, plumbing, construction, mechanical and engineering calculators.">
 <link rel="stylesheet" href="css/osint-redesign.css?v=20260924-6">
-<link rel="stylesheet" href="css/engineering-library.css?v=20260924-1">
+<link rel="stylesheet" href="css/engineering-library.css?v=20260924-2">
 </head>
 <body class="osint-redesign">
 <div class="os-shell">
@@ -19,16 +19,13 @@
     <a href="#local">◉ local tools</a>
     <a href="#reference">◎ method reference</a>
   </nav>
-  <div class="os-side-label">External</div>
-  <nav class="os-nav">
-    <a href="https://calcengineer.com/calculators/" target="_blank" rel="noopener">CalcEngineer ↗</a>
-  </nav>
-  <div class="os-status">LAB STATUS<br><b>● ONLINE</b><br>mode: engineering<br>execution: browser-local</div>
+  <div class="os-side-label">Architecture</div>
+  <div class="os-status">LAB STATUS<br><b>● ONLINE</b><br>mode: engineering<br>execution: browser-local<br>external dependency: none</div>
 </aside>
 
 <main class="os-main">
 <header class="os-top">
-  <div class="os-breadcrumb">engineering / <b>calculator library</b></div>
+  <div class="os-breadcrumb">engineering / <b>local calculator library</b></div>
   <div class="os-top-actions">
     <a class="os-mini" href="index.html">← portfolio</a>
     <button id="hbLabTheme" class="os-mini" type="button">☼ mode</button>
@@ -38,24 +35,12 @@
 <div class="os-content" id="library">
 <section class="eng-hero">
   <div>
-    <div class="os-kicker">HB ENGINEERING CALCULATOR LIBRARY</div>
-    <h1>Engineering tools, <em>properly organised.</em></h1>
-    <p>Electrical, HVAC, plumbing, construction and technical calculations in one workspace.</p>
+    <div class="os-kicker">HB ENGINEERING CALCULATOR LIBRARY · LOCAL-FIRST</div>
+    <h1>Engineering tools, <em>without the dependency.</em></h1>
+    <p>The engineering workspace now runs its calculator engine directly inside this website. Calculations execute in the browser, with formulas and units visible before the result.</p>
     <div class="eng-actions">
       <a class="os-btn primary" href="#local">open local calculators →</a>
-      <a class="os-btn" href="#source">open full source library</a>
-    </div>
-  </div>
-</section>
-
-<section class="os-panel" id="source">
-  <div class="os-panel-head"><span>CALCENGINEER DIRECTORY</span><span>REFERENCE</span></div>
-  <div class="source-frame-wrap">
-    <iframe id="calcSourceFrame" title="CalcEngineer public calculator directory" src="https://calcengineer.com/calculators/" loading="lazy"></iframe>
-    <div id="frameFallback" class="frame-fallback">
-      <h3>Source directory could not be embedded</h3>
-      <p>Some websites block iframe embedding. The full directory remains available in a new tab.</p>
-      <a class="os-btn primary" href="https://calcengineer.com/calculators/" target="_blank" rel="noopener">Open CalcEngineer calculator directory ↗</a>
+      <a class="os-btn" href="#reference">read calculation method</a>
     </div>
   </div>
 </section>
@@ -70,16 +55,17 @@
 </section>
 
 <section class="os-panel" id="reference">
-  <div class="os-panel-head"><span>ENGINEERING METHOD</span><span></span></div>
+  <div class="os-panel-head"><span>ENGINEERING METHOD</span><span>LOCAL ENGINE</span></div>
   <div class="method-grid">
-    <article><b>FORMULA</b><h3>Show the governing equation</h3><p>Every local calculator identifies the mathematical relationship before the result is shown.</p></article>
-    <article><b>UNITS</b><h3>Keep units visible</h3><p>Inputs name their units and results state the output unit so the calculation can be checked.</p></article>
-    <article><b>VALIDATION</b><h3>Reject impossible inputs</h3><p>Zero denominators, negative physical quantities and incomplete inputs are handled explicitly.</p></article>
-    <article><b>ENGINEERING NOTE</b><h3>Do not hide assumptions</h3><p>Code-dependent or safety-critical sizing must be checked against the applicable standard, manufacturer data and project conditions.</p></article>
+    <article><b>FORMULA</b><h3>Show the governing equation</h3><p>Each tool exposes the relationship used for the calculation rather than hiding the arithmetic.</p></article>
+    <article><b>UNITS</b><h3>Keep units visible</h3><p>Inputs identify their units and results identify the output unit so calculations can be checked.</p></article>
+    <article><b>VALIDATION</b><h3>Reject impossible inputs</h3><p>Missing values, zero denominators and invalid numeric states are handled before a result is presented.</p></article>
+    <article><b>INDEPENDENCE</b><h3>No remote calculator required</h3><p>The tools execute locally. The engineering page does not depend on an external calculator website being online.</p></article>
+    <article><b>ENGINEERING NOTE</b><h3>Estimate, then verify</h3><p>Code-dependent or safety-critical sizing must be checked against the applicable standard, manufacturer data and project conditions.</p></article>
   </div>
 </section>
 
-<footer class="os-footer">HB ENGINEERING LAB · ELECTRICAL · HVAC · PLUMBING · CONSTRUCTION · 2026</footer>
+<footer class="os-footer">HB ENGINEERING LAB · ELECTRICAL · HVAC · PLUMBING · CONSTRUCTION · MECHANICAL · 2026</footer>
 </div>
 </main>
 </div>
@@ -89,6 +75,8 @@
     <div id="engBody"></div>
   </div>
 </div>
-<script src="js/engineering-library.js?v=20260924-1"></script>
-<script src="js/hb-hub-motion.js?v=20260925-1"></script><script src="js/adigun-agent.js?v=20260925-2"></script></body>
+<script src="js/engineering-calculators-local.js?v=20260925-1"></script>
+<script src="js/hb-hub-motion.js?v=20260925-1"></script>
+<script src="js/adigun-agent.js?v=20260925-2"></script>
+</body>
 </html>
