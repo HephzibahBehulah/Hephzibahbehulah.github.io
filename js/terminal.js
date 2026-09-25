@@ -237,6 +237,38 @@ function showHelp(topic) {
   print('SAFETY: browser-local learning console. No arbitrary shell, native Nmap, or unrestricted remote scanning.');
 }
 
+const MANUALS = {
+  help:['Purpose: show the terminal command guide.','Usage: HELP [family]','Example: HELP ENGINEERING','Tip: HELP alone shows the quick memory sheet.'],
+  list:['Purpose: list command families and built-in commands.','Usage: LIST','Example: LIST'],
+  man:['Purpose: open a manual entry for a command.','Usage: MAN <command>','Example: MAN POWER','Tip: MAN expects a command name, not a numeric value.'],
+  power:['Purpose: calculate electrical power.','Formula: P = V × I','Usage: POWER <voltage V> <current A>','Example: POWER 24 5','Result: 120 W'],
+  ohm:['Purpose: calculate voltage from current and resistance.','Formula: V = I × R','Usage: OHM <current A> <resistance Ω>','Example: OHM 2 10','Result: 20 V'],
+  energy:['Purpose: calculate energy from power and time.','Formula: E = P × t','Usage: ENERGY <power W> <time h>','Example: ENERGY 100 2','Result: 200 Wh'],
+  resistor:['Purpose: calculate an LED series resistor.','Formula: R = (Vs − Vf) / I','Usage: RESISTOR <supply V> <LED Vf V> <current A>','Example: RESISTOR 12 2 0.02','Result: 500 Ω'],
+  voltage:['Purpose: calculate voltage.','Formula: V = I × R','Usage: VOLTAGE <current A> <resistance Ω>','Example: VOLTAGE 2 10','Result: 20 V'],
+  current:['Purpose: calculate current.','Formula: I = V / R','Usage: CURRENT <voltage V> <resistance Ω>','Example: CURRENT 24 12','Result: 2 A'],
+  frequency:['Purpose: convert frequency to period.','Formula: T = 1 / f','Usage: FREQUENCY <Hz>','Example: FREQUENCY 50','Result: 0.02 s'],
+  rms:['Purpose: calculate sine-wave RMS from peak value.','Formula: RMS = peak / √2','Usage: RMS <peak>','Example: RMS 230','Result: about 162.63'],
+  efficiency:['Purpose: calculate efficiency.','Formula: η = output / input × 100%','Usage: EFFICIENCY <output> <input>','Example: EFFICIENCY 80 100','Result: 80%'],
+  cidr:['Purpose: calculate IPv4 subnet information.','Usage: CIDR <ip/prefix>','Example: CIDR 192.168.1.0/24','Result: network, broadcast, mask, usable hosts and range.'],
+  precision:['Purpose: calculate classification precision.','Formula: precision = TP / (TP + FP)','Usage: PRECISION <TP> <FP>','Example: PRECISION 90 10','Result: 90%'],
+  recall:['Purpose: calculate classification recall.','Formula: recall = TP / (TP + FN)','Usage: RECALL <TP> <FN>','Example: RECALL 90 10','Result: 90%'],
+  f1:['Purpose: combine precision and recall.','Formula: F1 = 2PR / (P + R)','Usage: F1 <precision> <recall>','Example: F1 0.9 0.8','Result: 0.847...'],
+  hash:['Purpose: calculate a SHA-256 hash in the browser.','Usage: HASH <text>','Example: HASH hello','Note: uses the browser Web Crypto API.'],
+  base64:['Purpose: Base64-encode text.','Usage: BASE64 <text>','Example: BASE64 hello'],
+  decode:['Purpose: Base64-decode text.','Usage: DECODE <base64>','Example: DECODE aGVsbG8='],
+  jwt:['Purpose: read a JWT payload locally.','Usage: JWT <token>','Note: this decoder does not verify the signature or authenticate the user.'],
+  urlinfo:['Purpose: inspect URL structure locally.','Usage: URLINFO <url>','Example: URLINFO https://example.com/path?q=1'],
+  headers:['Purpose: attempt an HTTP HEAD request from the browser.','Usage: HEADERS <https-url>','Note: browser CORS/security policy can block access. No bypass is attempted.'],
+  nmap:['Purpose: explain common Nmap concepts.','Usage: NMAP','Examples: NMAP -sV target  |  NMAP -p 80,443 target','Limitation: this browser terminal does not execute native Nmap or scan arbitrary targets.'],
+  quiz:['Purpose: run the interactive learning quiz.','Usage: QUIZ START [domain]','Next: QUIZ NEXT','Answer: ANSWER A|B|C|D','Score: QUIZ SCORE'],
+  game:['Purpose: start the mixed technical learning game.','Usage: GAME START','Controls: GAME SCORE | GAME RESET | ANSWER A|B|C|D'],
+  answer:['Purpose: submit the answer to the active quiz/game question.','Usage: ANSWER A|B|C|D','Example: ANSWER B','Note: the terminal reports CORRECT or INCORRECT immediately.'],
+  selftest:['Purpose: run built-in terminal sanity checks.','Usage: SELFTEST','Example: SELFTEST'],
+  nav:['Purpose: jump to a website area.','Usage: NAV <area>','Example: NAV TOOLBENCH'],
+  cd:['Purpose: move through the simulated terminal directory tree.','Usage: CD <dir>','Example: CD engineering','Note: this is virtual state, not your computer filesystem.']
+};
+
 function run(cmd) {
   const raw=String(cmd||'').trim();
   if(!raw) return;
@@ -260,7 +292,23 @@ function run(cmd) {
   if(c==='ia'){print('INTELLIGENCE ASSISTANT');print('Try: ia engineering | ia network | ia security | ia osint | ia data | ia learning');return;}
   if(c==='nav'){const map={tree:'#tree',resources:'#resourceMatrix',ebooks:'#ebookVault',toolbench:'#toolbench','mega-tools':'#megaTools',engineering:'#engineeringLab',knowledge:'#knowledgeLibrary',projects:'#projects'};const dest=map[(a[0]||'').toLowerCase()];if(dest){document.querySelector(dest)?.scrollIntoView({behavior:'smooth'});print('Navigating to '+a[0]+'…','ok');}else print('Usage: nav tree|resources|ebooks|toolbench|mega-tools|engineering|knowledge|projects');return;}
   if(c==='focus'){const dest=document.querySelector('#terminalMachine');dest?.scrollIntoView({behavior:'smooth'});input.focus();return;}
-  if(c==='man'){const x=(a[0]||'').toLowerCase();if(COMMANDS[x]){print(x+' · '+COMMANDS[x]);print('Usage: '+x+(x==='cidr'?' <ip/prefix>':x==='urlinfo'||x==='headers'||x==='hash'||x==='base64'||x==='decode'?' <value>':''));}else print('No manual entry for '+x+'. Try HELP.');return;}
+  if(c==='man'){
+    let x=(a[0]||'').toLowerCase().replace(/^<|>$/g,'');
+    if(!x){print('Usage: MAN <command>');print('Example: MAN POWER');print('Tip: MAN POWER, not MAN <number>.','warn');return;}
+    if(MANUALS[x]){
+      print('MANUAL · '+x.toUpperCase());
+      printLines(MANUALS[x]);
+    } else if(COMMANDS[x]){
+      print('MANUAL · '+x.toUpperCase());
+      print('Category: '+COMMANDS[x]);
+      print('Usage: '+x+' ...');
+      print('Detailed entry is not available yet. Try HELP '+COMMANDS[x]+'.');
+    } else {
+      print('No manual entry for '+x+'.');
+      print('MAN expects a command name, for example: MAN POWER.','warn');
+    }
+    return;
+  }
   if(c==='which'){print(COMMANDS[a[0]]?'builtin: '+a[0]:'command not found: '+a[0]);return;}
 
   if(['ohm','power','energy','resistor','led','color','frequency','rms','efficiency','voltage','current','impedance','divider','voltage-divider','series-resistance','parallel-resistance','power-factor','three-phase','motor-torque','voltage-drop'].includes(c)){
