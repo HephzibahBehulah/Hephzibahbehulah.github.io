@@ -1,45 +1,32 @@
 # Hephzibah Behulah AI Platform Backend
 
-The server-side intelligence layer for hephzibahbehulah.com. It is intentionally separated from the public static Worker so the portfolio remains fast and stable.
+This directory is the independently deployable AI service boundary. The current production site also exposes the same safe API contract from its Worker so the AI Lab can operate immediately. Later, this service can move behind a Cloudflare Service Binding without changing the frontend API contract.
 
-## Current API
+## API contract
 
-- GET `/api/health` — service and capability status
-- GET `/api/projects` — curated project intelligence index
-- POST `/api/chat` — controlled AI gateway
-- Future: document ingestion, RAG retrieval, dataset jobs, automation and ML execution
+- GET `/api/health`
+- GET `/api/projects`
+- POST `/api/chat`
+- GET `/api/knowledge/search?q=...`
+- POST `/api/knowledge/ingest` with the `x-hb-admin-key` secret header
+- GET `/api/github/repo?repo=HephzibahBehulah/name`
 
-## Architecture
+## Cloudflare architecture
 
-- **Edge gateway:** Cloudflare Worker
-- **AI inference:** Cloudflare Workers AI binding
-- **Knowledge:** RAG / AI Search integration boundary
-- **Storage:** D1 / R2 bindings can be added without exposing credentials to application code
-- **Heavy ML:** external Python job boundary
-- **Security:** allow-listed tools, validation, rate limiting and audit logging
+Workers AI provides inference through the `AI` binding. AI Search provides managed retrieval and built-in document storage through the `AI_SEARCH` namespace binding. Public chat is rate-limited. Private document ingestion requires the `AI_ADMIN_KEY` secret.
 
-Cloudflare documents Workers AI bindings as the mechanism for calling models from a Worker, and also provides AI Search, Vectorize, R2 and D1 bindings for full-stack AI applications. The current code uses the AI binding but deliberately keeps RAG storage separate until the knowledge ingestion contract is finalized.
+Cloudflare's current AI Search Workers Binding supports runtime instance creation, search/chat, and Items uploads. Workers AI uses the `AI` binding. The frontend keeps local document and dataset analysis as the privacy-first path.
 
-## Production setup
+## Required secret
 
-1. Create/deploy this Worker separately from the static portfolio.
-2. Ensure the Worker has a Workers AI binding named `AI`.
-3. Attach a dedicated API hostname such as `api.hephzibahbehulah.com` when ready.
-4. Point the AI Lab frontend API gateway at that hostname.
-5. Add authentication and rate limiting before enabling private memory, document storage or privileged tools.
-6. Add RAG storage/search only after the document schema and retention rules are defined.
+Set `AI_ADMIN_KEY` as a Cloudflare Worker secret before enabling private document ingestion. Never commit its value.
 
-Never commit API keys, tokens, database passwords or private documents.
+Optional `GITHUB_TOKEN` can be stored server-side for higher GitHub API limits. Public unauthenticated GitHub REST access is intentionally limited and should not be treated as an unlimited indexing channel.
 
-## Security boundary
+## Heavy ML boundary
 
-The AI agent must not receive arbitrary shell, network, browser, filesystem or deployment capabilities. Every future tool should have:
+The edge Worker validates requests, retrieves knowledge, invokes models and coordinates jobs. Large pandas/scikit-learn/LightGBM/CatBoost/XGBoost workloads belong in the separate `ml-service/` boundary.
 
-- explicit allow-list entry
-- input validation
-- authentication/authorization
-- bounded execution
-- audit event
-- failure handling
+## Security
 
-The heavy Python ML engine remains outside the Worker so model training and large dataset processing do not turn the edge API into a compute bottleneck.
+No arbitrary shell, filesystem, browser, deployment or remote-command tools are exposed. Future tools must be authenticated, allow-listed, bounded and audited.
