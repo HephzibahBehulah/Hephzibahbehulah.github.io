@@ -13,5 +13,9 @@ Complete File Structure
 Update Social Links
 pentest-script/
 
+# AI backend source must never be published as a static asset
+backend/
+data/ai-platform.json
+
 # Cloudflare/site configuration that should not be public
 _headers
