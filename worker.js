@@ -88,7 +88,7 @@ async function githubSearch(request,env,args){
 async function githubBranch(request,env,args){
  const auth=requireAgentAuth(request,env);if(auth)return auth;if(!env.GITHUB_TOKEN)return json({ok:false,error:"GITHUB_TOKEN is not configured."},503);
  if(!safeRepo(args.repo))return json({ok:false,error:"Only HephzibahBehulah repositories are allowed."},400);
- const branch=String(args.branch||"");if(!/^adigun\\/[A-Za-z0-9._-]+$/.test(branch))return json({ok:false,error:"Branch must use adigun/<name> format."},400);
+ const branch=String(args.branch||"");if(!/^adigun\/[A-Za-z0-9._-]+$/.test(branch))return json({ok:false,error:"Branch must use adigun/<name> format."},400);
  const from=String(args.from||"main");const headers={"accept":"application/vnd.github+json","authorization":"Bearer "+env.GITHUB_TOKEN,"content-type":"application/json","user-agent":"ADIGUN-Automation"};
  try{const rr=await fetch("https://api.github.com/repos/"+args.repo+"/git/ref/heads/"+encodeURIComponent(from),{headers});if(!rr.ok)return new Response(await rr.text(),{status:rr.status,headers:{"content-type":"application/json",...CORS}});const src=await rr.json();const r=await fetch("https://api.github.com/repos/"+args.repo+"/git/refs",{method:"POST",headers,body:JSON.stringify({ref:"refs/heads/"+branch,sha:src.object.sha})});return new Response(await r.text(),{status:r.status,headers:{"content-type":"application/json",...CORS}})}catch{return json({ok:false,error:"GitHub branch service unavailable."},502)}
 }
