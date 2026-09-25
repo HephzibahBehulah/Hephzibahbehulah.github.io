@@ -363,7 +363,7 @@ function run(cmd) {
   }
 
   if(c==='answer'){
-    answerQuiz(a.slice(1).join(' '));
+    answerQuiz(a.join(' '));
     return;
   }
 
