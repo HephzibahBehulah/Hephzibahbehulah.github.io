@@ -201,7 +201,7 @@ function capture(e){
  if(e.key!=='Enter')return;
  const raw=input.value.trim();if(!raw)return;
  const a=raw.split(/\\s+/),c=name(a[0]),arg=name(a[1]||'');
- const should = c==='help'||c==='?'||c==='commands'||c==='categories'||c==='search'||c==='find'||c==='related'||c==='man'||
+ if(c==='adigun'){e.preventDefault();e.stopImmediatePropagation();const q=raw.slice(raw.indexOf(a[0])+a[0].length).trim();input.value='';print('hb@intel:~$ '+raw,'command');adigunAsk(q||'What can you do?');input.focus();return;}\n const should = c==='help'||c==='?'||c==='commands'||c==='categories'||c==='search'||c==='find'||c==='related'||c==='man'||
    ['explain','formula','scenario','learn','check','about'].includes(c)&&!!arg||
    c==='convert'||['sum','min','max','count','percent','percentile','iqr','mad','correlation','normalize','minmax','standardize'].includes(c)||
    ['capacitance','xc','xl','resistivity','reactance','db','duty','nyquist','adc','motor-torque','motor-speed','motor-power','slip','poles','apparent','reactive-power','three-phase'].includes(c)||
