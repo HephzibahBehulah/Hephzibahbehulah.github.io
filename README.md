@@ -1010,3 +1010,40 @@ Engineering · Intelligence · Security
 GitHub: **HephzibahBehulah**
 
 © 2026 Hephzibah Behulah
+## HB Terminal 2.0 Expansion
+
+The original terminal command engine remains intact. A separate expansion layer adds a data-driven technical command registry without replacing the existing commands.
+
+### Expanded capability families
+
+- Engineering and electronics: capacitors, reactance, impedance, power systems, motors, signals, filters, ADC/DAC, PWM, PLC, PID and unit conversion.
+- Networking: IPv4/IPv6 concepts, subnetting, masks, host counts, TCP, UDP, DNS, DHCP, ARP, ICMP, MTU, MSS and protocol reference.
+- Web and API: HTTP methods/status, headers, cookies, CORS, CSP, JSON, DOM, JavaScript, REST and Fetch concepts.
+- Security and cryptography: XSS, SQL injection, CSRF, SSRF, XXE, IDOR, authentication, authorization, JWT, hashing, salts, HMAC, AES, RSA, ECC and password-security concepts.
+- OSINT and forensics: domains, URLs, DNS records, certificate transparency, robots, sitemaps, archives, ASN/IP context, IOCs, evidence, timelines, metadata and log analysis.
+- Data and ML: descriptive statistics, percentiles, IQR, MAD, correlation, normalization, standardization, classification metrics, regression metrics, ROC/AUC and data-quality concepts.
+- Python, Linux and Git learning: language structures, common shell concepts, permissions, processes, Git workflows and GitHub concepts.
+- AI security: LLMs, prompts, tokens, context, RAG, embeddings, guardrails, prompt injection, data poisoning and model-security concepts.
+- Learning system: explanations, formulas, related-topic discovery, scenarios, checks, profiles, XP, badges, daily missions, graphs and browser-local simulations.
+
+### Generated command routes
+
+The expansion contains 309 structured topics and 2,472 generated topic routes. Each topic can be explored through actions such as EXPLAIN, FORMULA, LEARN, SCENARIO, CHECK, ABOUT, RELATED and QUIZ.
+
+Examples:
+
+- `HELP ENGINEERING`
+- `SEARCH capacitor`
+- `MAN tcp`
+- `FORMULA ohms-law`
+- `EXPLAIN prompt-injection`
+- `RELATED jwt`
+- `CONVERT 1 kW W`
+- `CORRELATION 1 2 3 | 2 4 6`
+- `MASK 24`
+- `GRAPH SINE`
+- `SIMULATE RC 1000 0.000001`
+- `CASE NEW network investigation`
+- `PROFILE`
+
+The expansion is loaded after `terminal.js`, so the existing terminal engine, quiz/game behavior, navigation, calculations and aliases remain the base layer.
