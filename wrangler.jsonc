@@ -4,5 +4,11 @@
   "compatibility_date": "2026-09-25",
   "assets": {
     "directory": "."
-  }
+  },
+  "routes": [
+    {
+      "pattern": "hephzibahbehulah.com",
+      "custom_domain": true
+    }
+  ]
 }
