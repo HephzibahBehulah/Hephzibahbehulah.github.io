@@ -41,7 +41,8 @@ const COMMANDS = {
   tools:'learning', tool:'learning', project:'learning', repo:'learning'
 };
 
-async function adigunAsk(q){try{const r=await window.Adigun.ask(q);if(r?.answer)printLines("ADIGUN · "+r.answer,"value");else print("ADIGUN returned no answer.","warn")}catch{print("ADIGUN request failed.","warn")}}\nconst descriptions = {
+async function adigunAsk(q){try{const r=await window.Adigun.ask(q);if(r?.answer)printLines("ADIGUN · "+r.answer,"value");else print("ADIGUN returned no answer.","warn")}catch{print("ADIGUN request failed.","warn")}}
+const descriptions = {
   system:'shell navigation, history and website control',
   engineering:'electrical and technical calculations',
   data:'statistics and ML evaluation concepts',
