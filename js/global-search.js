@@ -126,6 +126,18 @@
     input.removeAttribute('disabled');
     input.autocomplete = 'off';
     original.replaceWith(input);
+
+    // Provide an explicit search button as well as live typing and Enter-key search.
+    let trigger = document.querySelector('.hb-global-search-trigger');
+    if (!trigger) {
+      trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.className = 'hb-global-search-trigger';
+      trigger.textContent = 'SEARCH';
+      trigger.setAttribute('aria-label', 'Search the entire website');
+      trigger.style.cssText = 'height:38px;padding:0 14px;border:1px solid rgba(0,255,170,.35);background:#07120f;color:#9fffe0;font:600 12px/1 system-ui,sans-serif;letter-spacing:.08em;cursor:pointer;';
+      input.insertAdjacentElement('afterend', trigger);
+    }
     document.querySelectorAll('.hb-global-search-overlay').forEach(node => node.remove());
 
     const css = document.createElement('link');
@@ -208,6 +220,13 @@
 
     input.addEventListener('focus', () => search(input.value));
     input.addEventListener('input', () => search(input.value));
+    trigger.addEventListener('click', async () => {
+      const query = clean(input.value);
+      if (!query) { input.focus(); await search(''); return; }
+      await search(query);
+      if (lastResults[0]) openResult(lastResults[0].item);
+      else await askAdigun(query);
+    });
     input.addEventListener('keydown', async event => {
       if (event.key === 'Escape') { event.preventDefault(); overlay.classList.remove('open'); input.blur(); return; }
       if (event.key === 'Enter') {
