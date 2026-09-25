@@ -5,7 +5,7 @@
  No runtime dependency on external calculator sites.
 */
 const T=[
-['Ohm\'s Law','Electrical','V = I × R',['V|Voltage (V)','I|Current (A)','R|Resistance (Ω)'],v=>pick(v,['V','I','R'],[['I','R',v=>v.I*v.R],['V','R',v=>v.V/v.R],['V','I',v=>v.V/v.I]],'Use any two values.')],
+['Ohm\'s Law','Electrical','V = I × R',['V|Voltage (V)','I|Current (A)','R|Resistance (Ω)'],v=>pick(v,[['I','R',x=>x.I*x.R,'V'],['V','R',x=>x.V/x.R,'I'],['V','I',x=>x.V/x.I,'R']],'Use any two values.')],
 ['Electrical Power','Electrical','P = V × I',['V|Voltage (V)','I|Current (A)'],v=>need(v,['V','I'])?fmt('P',v.V*v.I,'W'):'Enter voltage and current.'],
 ['Three-Phase Power','Electrical','P = √3 × V × I × PF',['V|Line voltage (V)','I|Line current (A)','PF|Power factor'],v=>need(v,['V','I','PF'])?fmt('P',Math.sqrt(3)*v.V*v.I*v.PF,'W'):'Enter all values.'],
 ['Single-Phase Power','Electrical','P = V × I × PF',['V|Voltage (V)','I|Current (A)','PF|Power factor'],v=>need(v,['V','I','PF'])?fmt('P',v.V*v.I*v.PF,'W'):'Enter all values.'],
@@ -60,7 +60,6 @@ const T=[
 ['Concrete Volume','Construction','V = L × W × D',['L|Length (m)','W|Width (m)','D|Depth (m)'],v=>need(v,['L','W','D'])?fmt('Concrete',v.L*v.W*v.D,'m³'):'Enter all dimensions.'],
 ['Concrete with Waste','Construction','Vorder = V × (1 + waste)',['V|Calculated volume (m³)','waste|Waste fraction (e.g. 0.10)'],v=>need(v,['V','waste'])?fmt('Order volume',v.V*(1+v.waste),'m³'):'Enter volume and waste fraction.'],
 ['Square Footage','Construction','A = L × W',['L|Length','W|Width'],v=>need(v,['L','W'])?fmt('Area',v.L*v.W,'m²'):'Enter length and width.'],
-['Rectangle Material Area','Construction','A = L × W',['L|Length','W|Width'],v=>need(v,['L','W'])?fmt('Area',v.L*v.W,'m²'):'Enter length and width.'],
 ['Triangle Area','Construction','A = ½bh',['b|Base','h|Height'],v=>need(v,['b','h'])?fmt('Area',.5*v.b*v.h,'m²'):'Enter base and height.'],
 ['Circle Area','Construction','A = πr²',['r|Radius (m)'],v=>need(v,['r'])?fmt('Area',Math.PI*v.r*v.r,'m²'):'Enter radius.'],
 ['Cylinder Surface Area','Construction','A = 2πr(r+h)',['r|Radius (m)','h|Height (m)'],v=>need(v,['r','h'])?fmt('Surface area',2*Math.PI*v.r*(v.r+v.h),'m²'):'Enter radius and height.'],
@@ -100,15 +99,14 @@ const T=[
 ['Air Density','HVAC','ρ = P/(RT)',['P|Absolute pressure (Pa)','T|Temperature (K)'],v=>need(v,['P','T'])&&v.T>0?fmt('Density',v.P/(287.05*v.T),'kg/m³'):'Enter absolute pressure and Kelvin temperature.']
 ];
 function need(v,ks){return ks.every(k=>v[k]!=null&&Number.isFinite(v[k]))}
-function fmt(label,n,u){if(!Number.isFinite(n))return 'Calculation outside valid numeric range.';const a=Math.abs(n);const s=(a!==0&&(a<1e-4||a>=1e6))?n.toExponential(6):n.toFixed(5).replace(/\.?(0+)$/,'');return label+' = '+s+(u?' '+u:'')}
+function fmt(label,n,u){if(!Number.isFinite(n))return 'Calculation outside valid numeric range.';const a=Math.abs(n);const s=(a!==0&&(a<1e-4||a>=1e6))?n.toExponential(6):n.toFixed(5).replace(/\.?([0]+)$/,'');return label+' = '+s+(u?' '+u:'')}
 function sum(v,ks){const a=ks.map(k=>v[k]).filter(x=>x!=null&&Number.isFinite(x));return a.length>=2?a.reduce((x,y)=>x+y,0):null}
-function pick(v,primary,opts,msg){for(const [a,b,fn] of opts){if(v[a]!=null&&v[b]!=null&&((a!=='R'&&b!=='R')||true))return fmt(primary[0],fn(),'');}return msg}
+function pick(v,opts,msg){for(const [a,b,fn,label] of opts){if(v[a]!=null&&v[b]!=null&&((a==='V'&&b==='I'&&v.I===0)||(a==='V'&&b==='R'&&v.R===0))===false)return fmt(label,fn(v),label==='I'?'A':label==='V'?'V':'Ω')}return msg}
 const $=id=>document.getElementById(id),num=x=>x===''?null:Number(x);
-const cats=[...new Set(T.map(t=>t[1]))]; const sel=$('engCategory'); if(sel){cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c.toUpperCase();sel.appendChild(o)})}
+const cats=[...new Set(T.map(t=>t[1]))];const sel=$('engCategory');if(sel)cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c.toUpperCase();sel.appendChild(o)});
 function render(){const q=($('engSearch')?.value||'').toLowerCase(),cat=$('engCategory')?.value||'all';const list=T.filter(t=>(cat==='all'||t[1]===cat)&&(!q||(t[0]+' '+t[1]+' '+t[2]).toLowerCase().includes(q)));if($('localCount'))$('localCount').textContent=list.length+' local tools';if($('engGrid'))$('engGrid').innerHTML=list.map((t,i)=>'<article class="eng-tool"><span class="type">LOCAL · '+esc(t[1])+'</span><h3>'+esc(t[0])+'</h3><p>'+esc(t[2])+'</p><button class="os-btn" data-tool="'+i+'">OPEN TOOL →</button></article>').join('')||'<div class="intel-empty">No local tools match.</div>';document.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>openTool(list[+b.dataset.tool]))}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function openTool(t){$('engModal').classList.add('open');$('engModal').setAttribute('aria-hidden','false');$('engBody').innerHTML='<div class="os-kicker">LOCAL TOOL / '+esc(t[1])+'</div><h2>'+esc(t[0])+'</h2><div class="eng-formula">'+esc(t[2])+'</div><div class="eng-form">'+t[3].map(x=>{const p=x.split('|');return '<div class="eng-field"><label>'+esc(p[1])+'</label><input type="number" step="any" data-key="'+esc(p[0])+'"></div>'}).join('')+'</div><div class="hb-mini-actions" style="margin-top:14px"><button id="doCalc" class="os-btn primary">CALCULATE</button><button id="doClear" class="os-btn">CLEAR</button></div><div id="engResult" class="eng-result">Results are calculated locally in your browser.</div><p class="tool-source-note">Independent HB implementation using the displayed engineering relationship. For code-critical work, verify the applicable standard, manufacturer data and project conditions.</p>';$('doCalc').onclick=()=>{const v={};document.querySelectorAll('#engBody input').forEach(i=>v[i.dataset.key]=num(i.value));try{$('engResult').textContent=t[4](v)}catch(e){$('engResult').textContent='Check the inputs and try again.'}};$('doClear').onclick=()=>{document.querySelectorAll('#engBody input').forEach(i=>i.value='');$('engResult').textContent='Results are calculated locally in your browser.'}}
 function close(){$('engModal').classList.remove('open');$('engModal').setAttribute('aria-hidden','true')}
-$('engSearch')?.addEventListener('input',render);$('engCategory')?.addEventListener('change',render);$('engClose')?.addEventListener('click',close);$('engModal')?.addEventListener('click',e=>{if(e.target===$('engModal'))close()});render();
-$('hbLabTheme')?.addEventListener('click',()=>document.body.classList.toggle('light-mode'));
+$('engSearch')?.addEventListener('input',render);$('engCategory')?.addEventListener('change',render);$('engClose')?.addEventListener('click',close);$('engModal')?.addEventListener('click',e=>{if(e.target===$('engModal'))close()});render();$('hbLabTheme')?.addEventListener('click',()=>document.body.classList.toggle('light-mode'));
 })();
