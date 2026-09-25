@@ -237,3 +237,21 @@ body[data-hb-domain="learning"]{--hb-domain-accent:#ff8a3d;--hb-domain-glow:rgba
   .hb-terminal-input-row span{font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.hb-terminal-dot{animation:none}.hb-terminal-tools button{transition:none}}
+
+/* ── Cinematic top-bar terminal launcher ── */
+.os-top-actions{gap:10px}
+.hb-top-terminal{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 13px;border:1px solid rgba(110,231,255,.28);border-radius:11px;color:inherit;text-decoration:none;background:linear-gradient(135deg,rgba(110,231,255,.10),rgba(168,85,247,.08)),rgba(5,10,18,.72);box-shadow:inset 0 0 18px rgba(110,231,255,.035),0 0 0 rgba(110,231,255,0);overflow:hidden;isolation:isolate;transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s ease,box-shadow .28s ease,background .28s ease}
+.hb-top-terminal::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.12) 45%,transparent 68%);transform:translateX(-130%);animation:hbTerminalSweep 3.8s ease-in-out infinite}
+.hb-top-terminal::after{content:"";position:absolute;width:72px;height:72px;right:-42px;top:-42px;border:1px solid rgba(110,231,255,.20);border-radius:50%;box-shadow:0 0 24px rgba(110,231,255,.10);animation:hbTerminalOrbit 4.6s linear infinite}
+.hb-top-terminal-signal{display:grid;place-items:center;width:23px;height:23px;border:1px solid rgba(110,231,255,.36);border-radius:7px;color:#8be9ff;font-family:"JetBrains Mono",monospace;font-size:12px;box-shadow:0 0 12px rgba(110,231,255,.12);animation:hbTerminalSignal 1.8s ease-in-out infinite}
+.hb-top-terminal-label{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:800;letter-spacing:.13em}
+.hb-top-terminal-pulse{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor;animation:hbTerminalPulse 1.2s ease-in-out infinite}
+.hb-top-terminal:hover{transform:translateY(-2px) scale(1.025);border-color:rgba(110,231,255,.62);background:linear-gradient(135deg,rgba(110,231,255,.16),rgba(168,85,247,.12)),rgba(5,10,18,.84);box-shadow:0 8px 28px rgba(0,0,0,.22),0 0 24px rgba(110,231,255,.12)}
+.hb-top-terminal:active{transform:translateY(0) scale(.985)}
+.hb-top-terminal:focus-visible{outline:2px solid rgba(110,231,255,.72);outline-offset:3px}
+@keyframes hbTerminalSweep{0%,18%{transform:translateX(-130%)}48%,100%{transform:translateX(130%)}}
+@keyframes hbTerminalOrbit{to{transform:rotate(360deg)}}
+@keyframes hbTerminalSignal{0%,100%{transform:scale(1);box-shadow:0 0 12px rgba(110,231,255,.12)}50%{transform:scale(1.10);box-shadow:0 0 20px rgba(110,231,255,.26)}}
+@keyframes hbTerminalPulse{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+@media (max-width:700px){.hb-top-terminal{min-height:36px;padding:0 10px}.hb-top-terminal-label{font-size:10px}.hb-top-terminal-signal{width:21px;height:21px}}
+@media (prefers-reduced-motion:reduce){.hb-top-terminal,.hb-top-terminal::before,.hb-top-terminal::after,.hb-top-terminal-signal,.hb-top-terminal-pulse{animation:none!important;transition:none!important}}
