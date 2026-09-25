@@ -19,7 +19,7 @@ const COMMANDS = {
   exit:'system', quit:'system', q:'system', pwd:'system', cd:'system', chdir:'system',
   history:'system', echo:'system', date:'system', version:'system', about:'system',
   tree:'system', status:'system', whoami:'system', man:'system', which:'system',
-  ia:'system', adigun:'ai', is:'system', nav:'system', open:'system', focus:'system',
+  ia:'system', adigun:'ai', ai:'ai', agent:'ai', ask:'ai', is:'system', nav:'system', open:'system', focus:'system',
   ohm:'engineering', power:'engineering', energy:'engineering', resistor:'engineering',
   led:'engineering', color:'engineering', frequency:'engineering', rms:'engineering',
   efficiency:'engineering', voltage:'engineering', current:'engineering', impedance:'engineering',
@@ -287,7 +287,7 @@ function run(cmd) {
   if(c==='history'){history.forEach((x,i)=>print(String(i+1).padStart(3)+'  '+x));return;}
   if(c==='echo'){print(rest);return;}
   if(c==='date'){print(new Date().toString());return;}
-  if(c==='version'){print('HB TERMINAL 1.1 · browser command engine + learning game');return;}
+  if(c==='version'){print('HB TERMINAL 1.2 · ADIGUN COMMAND + AUTOMATION LAYER');return;}
   if(c==='about'||c==='whoami'){print('HEPHZIBAH BEHULAH · Intelligence · Engineering · Security');print('Electronics → automation → software → data → security');return;}
   if(c==='status'||c==='is'){print('SYSTEM ONLINE\nterminal: ready\nexecution: browser-local\nexternal shell: disabled\nsecurity mode: authorised learning');return;}
   if(c==='ia'){print('INTELLIGENCE ASSISTANT');print('Try: ia engineering | ia network | ia security | ia osint | ia data | ia learning');return;}
