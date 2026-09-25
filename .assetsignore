@@ -1,0 +1,17 @@
+# Repository and deployment metadata
+.git/
+.wrangler/
+wrangler.jsonc
+.gitignore
+
+# Project documentation and source-only helper files
+README.md
+_config.yml
+Add Your Photo:
+Change Colors:
+Complete File Structure
+Update Social Links
+pentest-script/
+
+# Cloudflare/site configuration that should not be public
+_headers
