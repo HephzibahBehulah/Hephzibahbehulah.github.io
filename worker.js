@@ -35,26 +35,47 @@ async function reportGenerate(request,env,title,findings,format){const data={tit
 async function memoryAction(request,env,args){if(!env.DB)return json({ok:false,error:"D1 DB binding is not configured."},503);if(args.action==="remember"){const auth=requireAgentAuth(request,env);if(auth)return auth;const key=String(args.key||"").slice(0,120),value=String(args.value||"").slice(0,4000);if(!key||!value)return json({ok:false,error:"key and value are required."},400);await env.DB.prepare("INSERT INTO adigun_memory (memory_key,memory_value,updated_at) VALUES (?,?,?) ON CONFLICT(memory_key) DO UPDATE SET memory_value=excluded.memory_value,updated_at=excluded.updated_at").bind(key,value,Date.now()).run();return json({ok:true,saved:key})}const r=await env.DB.prepare("SELECT memory_key,memory_value,updated_at FROM adigun_memory ORDER BY updated_at DESC LIMIT 50").all();return json({ok:true,memory:r.results||[]})}
 async function automationStatus(env){return {ok:true,capabilities:{github_read:true,github_write:Boolean(env.GITHUB_TOKEN),document_analysis:true,dataset_analysis:true,ml_service:Boolean(env.ML_SERVICE_URL),reports:true,r2_storage:Boolean(env.R2),d1_memory:Boolean(env.DB),scheduled:true},notes:["Privileged operations require ADIGUN_AGENT_KEY.","GitHub writes require GITHUB_TOKEN.","ML training requires ML_SERVICE_URL.","Persistent reports require an R2 binding.","Persistent memory requires a D1 binding."]}}
 async function webSearch(query,maxResults=5){
- const q=String(query||"").trim().slice(0,300);if(!q)return {ok:false,error:"query is required"};
+ const q=String(query||"").trim().slice(0,300);
+ if(!q)return {ok:false,error:"query is required"};
+ const limit=Math.min(6,Math.max(1,Number(maxResults)||5));
  const results=[];
+ const cleanHtml=(value)=>String(value).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/&#x27;/g,"'").replace(/&#39;/g,"'").replace(/\\s+/g," ").trim();
  try{
-  const u="https://en.wikipedia.org/w/api.php?action=opensearch&search="+encodeURIComponent(q)+"&limit="+Math.min(6,Math.max(1,maxResults))+"&namespace=0&format=json";
+  const u="https://en.wikipedia.org/w/api.php?action=opensearch&search="+encodeURIComponent(q)+"&limit="+limit+"&namespace=0&format=json";
   const r=await fetch(u,{headers:{"user-agent":"ADIGUN/5.0"}});
-  if(r.ok){const a=await r.json();for(let i=0;i<(a[1]||[]).length;i++)results.push({title:a[1][i],snippet:a[2]?.[i]||"",url:a[3]?.[i]||""});}
+  if(r.ok){
+   const a=await r.json();
+   for(let i=0;i<(a[1]||[]).length&&results.length<limit;i++)results.push({title:a[1][i],snippet:a[2]?.[i]||"",url:a[3]?.[i]||""});
+  }
  }catch{}
  try{
   const u="https://html.duckduckgo.com/html/?q="+encodeURIComponent(q);
   const r=await fetch(u,{headers:{"user-agent":"Mozilla/5.0 ADIGUN"}});
   if(r.ok){
    const html=await r.text();
-   const re=/<a[^>]+class="result__a"[^>]+href="([^"]+)"[^>]*>([\\s\\S]*?)<\\/a>[\\s\\S]*?<a[^>]+class="result__snippet"[^>]*>([\\s\\S]*?)<\\/a>/gi;
-   let m;while((m=re.exec(html))&&results.length<Math.min(6,Math.max(1,maxResults))){
-    const clean=s=>String(s).replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/&#x27;/g,"'").replace(/\\s+/g," ").trim();
-    results.push({title:clean(m[2]),snippet:clean(m[3]),url:m[1]});
+   let cursor=0;
+   while(results.length<limit){
+    const marker=html.indexOf('class="result__a"',cursor);
+    if(marker<0)break;
+    const hrefStart=html.lastIndexOf('href="',marker);
+    const tagEnd=html.indexOf(">",marker);
+    const close=html.indexOf("</a>",tagEnd);
+    if(hrefStart<0||tagEnd<0||close<0)break;
+    const href=html.slice(hrefStart+6,html.indexOf('"',hrefStart+6));
+    const title=cleanHtml(html.slice(tagEnd+1,close));
+    const snippetMarker=html.indexOf('class="result__snippet"',close);
+    let snippet="";
+    if(snippetMarker>=0){
+     const snippetEnd=html.indexOf(">",snippetMarker);
+     const snippetClose=html.indexOf("</a>",snippetEnd);
+     if(snippetEnd>=0&&snippetClose>=0)snippet=cleanHtml(html.slice(snippetEnd+1,snippetClose));
+    }
+    if(title)results.push({title,snippet,url:href});
+    cursor=Math.max(close+4,marker+1);
    }
   }
  }catch{}
- return {ok:true,query:q,results:results.slice(0,Math.min(6,Math.max(1,maxResults))),source:"public web search"};
+ return {ok:true,query:q,results:results.slice(0,limit),source:"public web search"};
 }
 
 async function githubSearch(request,env,args){
