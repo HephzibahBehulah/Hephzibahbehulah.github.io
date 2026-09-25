@@ -1,6 +1,9 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
   "name": "hephzibah-behulah-ai",
   "main": "src/worker.js",
-  "compatibility_date": "2026-09-25"
+  "compatibility_date": "2026-09-25",
+  "ai": {
+    "binding": "AI"
+  }
 }
