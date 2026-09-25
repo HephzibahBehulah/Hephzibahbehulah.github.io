@@ -7,12 +7,17 @@ on:
 
 jobs:
   static-validation:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - name: Validate browser JavaScript
+      - uses: actions/checkout@v5
+
+      - name: Validate site search and AI browser JavaScript
         run: |
+          node --version
+          node --check js/global-search.js
           node --check js/ai-lab.js
-          node --check worker.js
+
       - name: Validate Python ML service
-        run: python -m py_compile ml-service/app.py
+        run: |
+          python --version
+          python -m py_compile ml-service/app.py
