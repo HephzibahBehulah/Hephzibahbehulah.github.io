@@ -145,7 +145,37 @@ function simulate(type,args){
 }
 function runExpansion(raw){
  const a=String(raw).trim().split(/\\s+/);const c=name(a.shift()||'');const rest=a.join(' ');
- if(c==='help'||c==='?'){print('HB TERMINAL 2.0 · EXPANDED MEMORY SYSTEM','ok');print('Core: ELECTRICITY → SIGNAL → DATA → NETWORK → SECURITY → OSINT → LEARNING');print('Generated topic routes: '+ROUTES.2472+'+');print('');print('DISCOVERY: COMMANDS [keyword] · CATEGORIES · SEARCH <topic> · FIND <topic> · RELATED <topic> · MAN <topic>');print('LEARNING: EXPLAIN <topic> · FORMULA <topic> · LEARN <topic> · SCENARIO <topic> · CHECK <topic> · QUIZ START');print('ENGINEERING: CAPACITANCE · XC · XL · DB · DUTY · NYQUIST · ADC · MOTOR-TORQUE · THREE-PHASE');print('UNITS: CONVERT <value> <from> <to>');print('DATA: SUM · MIN · MAX · COUNT · PERCENTILE · IQR · MAD · CORRELATION · NORMALIZE · STANDARDIZE');print('NETWORK: HOSTS · MASK · WILDCARD · IPTYPE · MTU · MSS · TCP-HANDSHAKE · PROTO <name>');print('SECURITY/CRYPTO: HEX · BINARY · ASCII · ROT13 · CAESAR · XOR · URLENCODE · URLDECODE');print('WEB/API: JSON-VALIDATE · JSON-FORMAT · JSON-MINIFY · API · CORS · CSP · COOKIES');print('OSINT/CASE: CASE NEW · CASE ADD · CASE LIST · CASE SHOW · CASE CLEAR');print('LEARNING PROFILE: PROFILE · PROFILE RESET · XP · LEVEL · BADGES');print('VISUAL/SIM: GRAPH SINE · GRAPH SQUARE · GRAPH TRIANGLE · SIMULATE RC · SIMULATE PWM');print('Examples: CONVERT 1 kW W · SEARCH capacitor · EXPLAIN tcp · FORMULA ohms-law');print('Safety: learning and passive/browser-local utilities only; no arbitrary shell or unrestricted scanning.');return true;}
+ if(c==='help'||c==='?'){
+  const fam=name(a[0]||'');
+  const famAlias={eng:'engineering',networking:'network',cyber:'security',stats:'data',python:'python',linux:'linux',git:'git',ai:'ai',osint:'osint',learn:'learning'}[fam]||fam;
+  print('HB TERMINAL 2.0 · EXPANDED MEMORY SYSTEM','ok');
+  print('Core: ELECTRICITY → SIGNAL → DATA → NETWORK → SECURITY → OSINT → LEARNING');
+  print('Generated topic routes: '+ROUTES.__COUNT__+'+');
+  if(famAlias){
+    const hits=Object.values(TOPICS).filter(t=>t.cat===famAlias);
+    if(hits.length){
+      print('HELP / '+famAlias.toUpperCase());
+      hits.slice(0,80).forEach(t=>print(t.id+' · '+t.desc));
+      print('Actions: EXPLAIN · FORMULA · LEARN · SCENARIO · CHECK · RELATED · QUIZ');
+      return true;
+    }
+  }
+  print('');
+  print('DISCOVERY: COMMANDS [keyword] · CATEGORIES · SEARCH <topic> · FIND <topic> · RELATED <topic> · MAN <topic>');
+  print('LEARNING: EXPLAIN <topic> · FORMULA <topic> · LEARN <topic> · SCENARIO <topic> · CHECK <topic> · QUIZ START');
+  print('ENGINEERING: CAPACITANCE · XC · XL · DB · DUTY · NYQUIST · ADC · MOTOR-TORQUE · THREE-PHASE');
+  print('UNITS: CONVERT <value> <from> <to>');
+  print('DATA: SUM · MIN · MAX · COUNT · PERCENTILE · IQR · MAD · CORRELATION · NORMALIZE · STANDARDIZE');
+  print('NETWORK: HOSTS · MASK · WILDCARD · IPTYPE · MTU · MSS · TCP-HANDSHAKE · PROTO <name>');
+  print('SECURITY/CRYPTO: HEX · BINARY · ASCII · ROT13 · CAESAR · XOR · URLENCODE · URLDECODE');
+  print('WEB/API: JSON-VALIDATE · JSON-FORMAT · JSON-MINIFY · API · CORS · CSP · COOKIES');
+  print('OSINT/CASE: CASE NEW · CASE ADD · CASE LIST · CASE SHOW · CASE CLEAR');
+  print('LEARNING PROFILE: PROFILE · PROFILE RESET · XP · LEVEL · BADGES');
+  print('VISUAL/SIM: GRAPH SINE · GRAPH SQUARE · GRAPH TRIANGLE · SIMULATE RC · SIMULATE PWM');
+  print('Examples: CONVERT 1 kW W · SEARCH capacitor · EXPLAIN tcp · FORMULA ohms-law');
+  print('Safety: learning and passive/browser-local utilities only; no arbitrary shell or unrestricted scanning.');
+  return true;
+ }
  if(c==='commands'){commands(rest);return true;} if(c==='categories'){categories();return true;} if(c==='search'||c==='find'){search(rest);return true;}
  if(c==='related'){topicOutput('related',topic(a[0]));return true;}
  if(c==='man'){const t=topic(a[0]);if(t){print('MANUAL · '+t.id.toUpperCase());print('Purpose: '+t.desc);print('Model: '+t.formula);print('Usage: EXPLAIN '+t.id+' | FORMULA '+t.id+' | SCENARIO '+t.id+' | QUIZ '+t.id);print('Related: '+t.related.join(', '));}else print('No manual entry. Try MAN POWER or SEARCH <topic>.','warn');return true;}
