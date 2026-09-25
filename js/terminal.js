@@ -19,7 +19,7 @@ const COMMANDS = {
   exit:'system', quit:'system', q:'system', pwd:'system', cd:'system', chdir:'system',
   history:'system', echo:'system', date:'system', version:'system', about:'system',
   tree:'system', status:'system', whoami:'system', man:'system', which:'system',
-  ia:'system', is:'system', nav:'system', open:'system', focus:'system',
+  ia:'system', adigun:'ai', is:'system', nav:'system', open:'system', focus:'system',
   ohm:'engineering', power:'engineering', energy:'engineering', resistor:'engineering',
   led:'engineering', color:'engineering', frequency:'engineering', rms:'engineering',
   efficiency:'engineering', voltage:'engineering', current:'engineering', impedance:'engineering',
@@ -41,6 +41,7 @@ const COMMANDS = {
   tools:'learning', tool:'learning', project:'learning', repo:'learning'
 };
 
+async function adigunAsk(q){try{const r=await window.Adigun.ask(q);if(r?.answer)printLines("ADIGUN · "+r.answer,"value");else print("ADIGUN returned no answer.","warn")}catch{print("ADIGUN request failed.","warn")}}
 const descriptions = {
   system:'shell navigation, history and website control',
   engineering:'electrical and technical calculations',
