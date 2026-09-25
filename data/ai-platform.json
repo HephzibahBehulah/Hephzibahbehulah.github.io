@@ -1,0 +1,8 @@
+{
+  "identity": "Hephzibah Behulah",
+  "mission": "Engineering → Intelligence → Security",
+  "layers": ["AI Agent","RAG Knowledge","Memory","Tools","Automation","Data Lab","ML Engine","Reporting"],
+  "tool_policy": ["allow-listed","authenticated","audited","no arbitrary remote execution"],
+  "ml_boundary": "heavy Python workloads run outside the static frontend",
+  "status": "foundation"
+}

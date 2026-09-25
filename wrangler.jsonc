@@ -1,14 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hephzibahbehulah-github-io",
+  "main": "worker.js",
   "compatibility_date": "2026-09-25",
-  "assets": {
-    "directory": "."
-  },
-  "routes": [
-    {
-      "pattern": "hephzibahbehulah.com",
-      "custom_domain": true
-    }
-  ]
+  "assets": {"directory": ".", "binding": "ASSETS"},
+  "ai": {"binding": "AI"},
+  "ai_search_namespaces": [{"binding":"AI_SEARCH","namespace":"default","remote":true}],
+  "ratelimits": [{"name":"API_LIMITER","namespace_id":"9001","simple":{"limit":30,"period":60}}],
+  "routes": [{"pattern":"hephzibahbehulah.com","custom_domain":true}]
 }
