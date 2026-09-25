@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded",()=>{const body=document.body,q=document.getElementById("osSearch"),nodes=[...document.querySelectorAll(".os-node,.os-leaf")],info=document.getElementById("nodeInfo"),reset=document.getElementById("resetTree"),theme=document.getElementById("themeToggle"),dialog=document.getElementById("notesDialog"),notes=document.getElementById("notesToggle");
-const brandCss=document.createElement("link");brandCss.rel="stylesheet";brandCss.href="css/hb-brand.css?v=20260925-2";document.head.appendChild(brandCss);
-document.title="Hephzibah Behulah | Intelligence • Engineering • Security";
+const brandCss=document.createElement("link");brandCss.rel="stylesheet";brandCss.href="css/hb-brand.css?v=20260925-3";document.head.appendChild(brandCss);
+document.title="Hephzibah Behulah | Intelligence . Engineering . Security";
 const brand=document.querySelector(".os-brand");if(brand)brand.innerHTML='<img class="hb-brand-mark" src="assets/hb-logo.svg" alt="HB"><span class="hb-brand-name"><strong>HEPHZIBAH BEHULAH</strong><small>INTELLIGENCE · ENGINEERING · SECURITY</small></span>';
 document.querySelectorAll('.os-nav a[href="about.html"],.os-nav a[href="contact.html"]').forEach(a=>a.remove());
 const external=[...document.querySelectorAll('.os-nav a')].find(a=>a.textContent.toLowerCase().includes('linkedin'));if(external)external.parentElement.insertAdjacentHTML('beforeend','<a href="https://x.com/hephzibahBehulah" target="_blank" rel="noopener">𝕏 x</a><a href="https://www.facebook.com/HephzibahBehulah" target="_blank" rel="noopener">f facebook</a><a href="https://gitbook.io" target="_blank" rel="noopener">▤ gitbook</a>');
