@@ -63,7 +63,7 @@
             this.answered = false;
             this.questions = this.shuffleArray([...quizData]);
             this.render();
-            console.log('✅ Quiz initialized!');
+            console.log('Quiz initialized');
         }
         
         shuffleArray(array) {
@@ -108,7 +108,7 @@
                         `).join('')}
                     </div>
                     <div class="quiz-feedback" style="margin-bottom: 1rem; min-height: 30px; font-weight: 500;"></div>
-                    <button onclick="window.quiz.nextQuestion()" disabled id="nextBtn" style="padding: 0.6rem 1.5rem; border: 2px solid var(--border-color); border-radius: 8px; background: transparent; color: var(--text-light); cursor: pointer; font-weight: 600; opacity: 0.5;">
+                    <button onclick="window.quiz.askAdigun()" id="askAdigunBtn" style="margin-right:0.5rem; padding:0.6rem 1.5rem; border:2px solid var(--primary); border-radius:8px; background:transparent; color:var(--primary); cursor:pointer; font-weight:600;">Ask ADIGUN</button><button onclick="window.quiz.nextQuestion()" disabled id="nextBtn" style="padding: 0.6rem 1.5rem; border: 2px solid var(--border-color); border-radius: 8px; background: transparent; color: var(--text-light); cursor: pointer; font-weight: 600; opacity: 0.5;">
                         ${this.currentQuestion < this.questions.length - 1 ? 'Next →' : 'See Results →'}
                     </button>
                 </div>
@@ -151,6 +151,14 @@
                 nextBtn.style.borderColor = 'var(--primary)';
                 nextBtn.style.color = 'var(--primary)';
             }
+        }
+        
+        async askAdigun() {
+            const q = this.questions[this.currentQuestion];
+            if (!q || !window.Adigun?.ask) return;
+            const answer = await window.Adigun.ask("Explain this quiz question and why the correct answer is: " + q.question + " | Options: " + q.options.join(" | ") + " | Correct answer: " + q.options[q.correct]);
+            const feedback = document.querySelector(".quiz-feedback");
+            if (feedback && answer?.answer) feedback.textContent = "ADIGUN: " + answer.answer;
         }
         
         nextQuestion() {

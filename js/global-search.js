@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded",function(){
     const terminal=document.getElementById("terminal");
     if(terminal)terminal.scrollIntoView({behavior:"smooth",block:"center"});
   }
+  async function askAdigun(query){try{meta.textContent="ADIGUN / THINKING";results.innerHTML='<div class="hb-global-empty">ADIGUN is searching site intelligence and the public knowledge layer…</div>';overlay.classList.add("open");const d=await window.Adigun?.ask?.(query);results.innerHTML='<div class="hb-global-result" style="cursor:default"><span class="hb-global-result-title">ADIGUN</span><strong>'+clean(d?.answer||"No answer returned.")+'</strong></div>';}catch{results.innerHTML='<div class="hb-global-empty">ADIGUN could not answer this query.</div>';}}
   function render(raw){
     const query=clean(raw).toLowerCase();
     if(!query){
@@ -115,7 +116,7 @@ document.addEventListener("DOMContentLoaded",function(){
   input.addEventListener("focus",function(){render(input.value);});
   input.addEventListener("keydown",function(event){
     if(event.key==="Escape"){event.preventDefault();overlay.classList.remove("open");input.blur();}
-    if(event.key==="Enter"&&lastResults[0]){event.preventDefault();openResult(lastResults[0].item);}
+    if(event.key==="Enter"){event.preventDefault();if(lastResults[0])openResult(lastResults[0].item);else askAdigun(query);}
   });
   results.addEventListener("click",function(event){
     const button=event.target.closest("[data-index]");
