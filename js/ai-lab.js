@@ -24,6 +24,18 @@ document.addEventListener("DOMContentLoaded",()=>{
     messages.appendChild(e);messages.scrollTop=messages.scrollHeight;
   }
 
+  function showThinking(){
+    const e=document.createElement("div");
+    e.className="ai-message assistant ai-thinking";
+    e.setAttribute("role","status");
+    e.setAttribute("aria-live","polite");
+    e.innerHTML='<span>ADIGUN IS GENERATING</span><i></i><i></i><i></i>';
+    messages.appendChild(e);
+    messages.scrollTop=messages.scrollHeight;
+    if(state)state.textContent="● GENERATING";
+    return e;
+  }
+
   function bytesLabel(n){return n<1024*1024?(n/1024).toFixed(1)+" KB":(n/1024/1024).toFixed(1)+" MB"}
   function dataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result));r.onerror=()=>reject(r.error||new Error("read failed"));r.readAsDataURL(file)})}
 
@@ -69,12 +81,14 @@ document.addEventListener("DOMContentLoaded",()=>{
     content.push(...attachments.map(a=>a.part));
     add(q||("Attached "+attachments.length+" file"+(attachments.length===1?"":"s")),"user");
     history.push({role:"user",content});
-    input.value="";state.textContent="● THINKING";send.disabled=true;
+    input.value="";state.textContent="● GENERATING";send.disabled=true;
+    const thinking=showThinking();
     const outgoingAttachments=attachments; attachments=[]; renderAttachments();
     try{
       const siteContext=window.Adigun?.search?await window.Adigun.search(q||"attached file"): "";
       const r=await fetch("/api/chat",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},body:JSON.stringify({messages:history.slice(-10),siteContext})});
       const d=await r.json().catch(()=>({}));
+      thinking.remove();
       if(r.ok&&d.answer){
         add(d.answer,"assistant");history.push({role:"assistant",content:d.answer});
         state.textContent=d.attachments?"● MULTIMODAL ONLINE":(d.ragUsed?"● RAG ONLINE":"● AI ONLINE");
@@ -82,6 +96,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       }
       throw new Error(d.error||"AI gateway unavailable");
     }catch(e){
+      thinking.remove();
       console.error("ADIGUN API error:",e);
       add("ADIGUN AI gateway error: "+String(e.message||"unknown error"),"assistant");
       state.textContent="● API ERROR";
