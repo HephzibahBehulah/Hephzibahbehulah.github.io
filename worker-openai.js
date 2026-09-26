@@ -275,6 +275,14 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
+    // Keep the private admin application's static files off the public apex hostname.
+    if (
+      url.hostname === "hephzibahbehulah.com" &&
+      ["/admin.html", "/js/adigun-admin.js", "/css/adigun-admin.css"].includes(url.pathname)
+    ) {
+      return new Response("Not found", { status: 404 });
+    }
+
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS });
     }
