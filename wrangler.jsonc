@@ -11,7 +11,7 @@
     {"pattern":"hephzibahbehulah.com","custom_domain":true},
     {"pattern":"admin.hephzibahbehulah.com","custom_domain":true}
   ],
-  "rules": {"required": ["OPENAI_API_KEY", "ADIGUN_ADMIN_EMAIL"]},
+  "secrets": {"required": ["OPENAI_API_KEY", "ADIGUN_ADMIN_EMAIL"]},
   "triggers": {"crons": ["0 */6 * * *"]}
   /* Optional production bindings once resources are created:
      "d1_databases": [{"binding":"DB","database_name":"adigun-memory","database_id":"<D1_DATABASE_ID>"}],
