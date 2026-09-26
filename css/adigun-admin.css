@@ -48,3 +48,30 @@
 .admin-chat-message.assistant pre{position:relative;overflow:auto;margin:10px 0;padding:12px;background:rgba(0,0,0,.32);border:1px solid var(--line);white-space:pre;max-width:100%}.admin-chat-message.assistant pre code{display:block;padding-right:72px;font:10px/1.65 var(--mono)}.admin-chat-message.assistant .adigun-code-copy{position:absolute;right:8px;top:8px}.admin-chat-message.assistant .katex-display{overflow:auto;padding:4px 0}
 .admin-thinking{display:flex!important;align-items:center;gap:7px;min-width:220px;color:var(--muted)}.admin-thinking span{font-size:9px;letter-spacing:.08em}.admin-thinking i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:adminPulse 1.2s infinite ease-in-out}.admin-thinking i:nth-of-type(2){animation-delay:.15s}.admin-thinking i:nth-of-type(3){animation-delay:.3s}
 @keyframes adminPulse{0%,70%,100%{opacity:.25;transform:scale(.8)}35%{opacity:1;transform:scale(1.15)}}
+
+
+.adigun-admin-page .adigun-terminal{
+  min-height:420px;
+  max-height:560px;
+  overflow:auto;
+  margin:12px 0;
+  padding:16px;
+  border:1px solid rgba(127,231,196,.22);
+  background:#05070a;
+  color:#d7e2ea;
+  font:13px/1.6 "JetBrains Mono",monospace;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.adigun-admin-page .admin-terminal-command{
+  flex:1;
+  min-width:260px;
+  padding:11px 12px;
+  border:1px solid rgba(127,231,196,.22);
+  background:#05070a;
+  color:#d7e2ea;
+  font:13px "JetBrains Mono",monospace;
+}
+.adigun-admin-page .admin-terminal-command:focus{
+  outline:1px solid rgba(127,231,196,.55);
+}
