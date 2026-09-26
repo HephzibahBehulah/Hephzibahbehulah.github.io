@@ -16,6 +16,8 @@ jobs:
           node --version
           node --check js/global-search.js
           node --check js/ai-lab.js
+          node --check js/adigun-agent.js
+          node --check worker-v2.js
 
       - name: Validate Python ML service
         run: |
