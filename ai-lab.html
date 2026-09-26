@@ -14,7 +14,7 @@
 <div class="os-brand"><img class="hb-brand-mark" src="assets/hb-logo.svg" alt="HB"><span class="hb-brand-name"><strong>HEPHZIBAH BEHULAH</strong><small>AI · DATA · SECURITY</small></span></div>
 <div class="os-side-label">AI PLATFORM</div>
 <nav class="os-nav">
-<a class="active" href="#ai-overview">⌁ AI LAB</a><a href="#agent">◉ AGENT</a><a href="#knowledge">▤ KNOWLEDGE</a><a href="#document">▣ DOCUMENTS</a><a href="#data">⌁ DATA LAB</a><a href="#projects">◫ PROJECTS</a><a href="#automation">↻ AUTOMATION</a><a href="index.html">← main intelligence desk</a>
+<a class="active" href="#ai-overview">⌁ AI LAB</a><a href="#agent">◉ AGENT</a><a href="#knowledge">▤ KNOWLEDGE</a><a href="#attachments">⌘ ATTACHMENTS</a><a href="#data">⌁ DATA INTELLIGENCE</a><a href="#projects">◫ PROJECTS</a><a href="#automation">↻ AUTOMATION</a><a href="index.html">← main intelligence desk</a>
 </nav>
 <div class="os-status">AI CORE<br><b id="platformStatus">● LOCAL READY</b><br>agent_mode: controlled<br>tools: allow-listed<br>privacy: local-first</div>
 </aside>
@@ -24,28 +24,45 @@
 <section class="ai-hero">
 <div class="ai-hero-copy"><div class="ai-kicker">HEPHZIBAH BEHULAH / INTELLIGENCE ENGINE</div><h1>Your portfolio.<br><span>With a brain.</span></h1>
 <p>A local-first intelligence workspace for asking questions, analysing files, profiling datasets, understanding projects and answering questions from local site intelligence, the public web and configured AI models, while orchestrating controlled AI workflows. The main portfolio stays untouched.</p>
-<div class="ai-actions"><a class="os-btn primary" href="#agent">open agent →</a><a class="os-btn" href="#data">analyse data</a><a class="os-btn" href="#document">inspect a file</a></div>
-<div class="ai-metrics"><span><b>06</b> intelligence modules</span><span><b>LOCAL</b> file analysis</span><span><b>SAFE</b> tool policy</span></div></div>
+<div class="ai-actions"><a class="os-btn primary" href="#agent">open agent →</a><a class="os-btn" href="#attachments">attach files</a></div>
+<div class="ai-metrics"><span><b>05</b> intelligence layers</span><span><b>LOCAL</b> file analysis</span><span><b>SAFE</b> tool policy</span></div></div>
 <div class="ai-orbit" aria-hidden="true"><div class="ai-orbit-core">HB<br><small>AI</small></div><i></i><i></i><i></i></div>
 </section>
 
 <section class="os-panel ai-section" id="agent"><div class="os-panel-head"><span>01 / AI AGENT</span><span id="aiState">● READY</span></div>
 <div class="ai-agent-grid"><div class="ai-console"><div class="ai-console-head"><span>ADIGUN / INTELLIGENCE</span><span>LOCAL + WEB</span></div>
 <div id="aiMessages" class="ai-messages"><div class="ai-message system">ADIGUN // site intelligence online.</div><div class="ai-message assistant">Ask ADIGUN anything about this website, its projects, tools, knowledge, terminal or technical subjects.</div></div>
-<div class="ai-input-row"><input id="aiInput" placeholder="Ask: what projects use Python?  ·  explain RAG  ·  analyse my CSV..." autocomplete="off"><button id="aiSend" class="os-btn primary" type="button">SEND</button></div></div>
+<div class="ai-composer"><div id="aiAttachmentChips" class="ai-attachment-chips"></div><div class="ai-input-row"><button id="aiAttach" class="os-btn" type="button" title="Attach files">📎</button><input id="aiInput" placeholder="Ask anything. Attach a PDF, image, dataset, code or document..." autocomplete="off"><button id="aiSend" class="os-btn primary" type="button">SEND</button></div></div></div>
 <div class="ai-capabilities"><div class="ai-card"><b>RAG</b><span>Retrieve relevant project and knowledge records before answering.</span></div><div class="ai-card"><b>TOOLS</b><span>Use explicit, allow-listed analysis and navigation tools only.</span></div><div class="ai-card"><b>MEMORY</b><span>Keep useful session context without silently collecting unnecessary data.</span></div><div class="ai-card"><b>REPORTS</b><span>Turn analysis into structured findings and technical summaries.</span></div></div></div></section>
 
 <section class="os-panel ai-section" id="knowledge"><div class="os-panel-head"><span>02 / KNOWLEDGE GRAPH</span><span>RAG READY</span></div>
 <div class="ai-flow"><div>QUESTION</div><b>→</b><div>RETRIEVE</div><b>→</b><div>RERANK</div><b>→</b><div>REASON</div><b>→</b><div>ANSWER</div></div>
 <div class="ai-knowledge-grid"><div><strong>PERSONAL KNOWLEDGE</strong><span>Projects · skills · notes · learning history</span></div><div><strong>TECHNICAL LIBRARY</strong><span>Engineering · cybersecurity · networking · AI</span></div><div><strong>PROJECT INTELLIGENCE</strong><span>Repositories · READMEs · experiments · results</span></div></div></section>
 
-<section class="os-panel ai-section" id="document"><div class="os-panel-head"><span>03 / DOCUMENT INTELLIGENCE</span><span>PRIVATE BY DEFAULT</span></div>
-<div class="ai-tool-layout"><div class="ai-dropzone" id="docDrop"><input id="docFile" type="file" accept=".txt,.md,.csv,.json,.log,.xml"><div class="drop-icon">▣</div><b>DROP A TEXTUAL FILE</b><span>TXT · MD · CSV · JSON · LOG · XML</span><button class="os-btn" type="button" id="docPick">SELECT FILE</button></div>
-<div class="ai-result"><div class="ai-result-head"><span id="docName">NO FILE LOADED</span><span id="docStats">—</span></div><pre id="docResult">Your file stays in the browser in local mode. The analyser will extract structure, size, lines, keys and a readable preview.</pre></div></div></section>
+<section class="os-panel ai-section" id="attachments">
+<div class="os-panel-head"><span>03 / UNIVERSAL ATTACHMENTS</span><span>CHATGPT-STYLE MULTIMODAL INPUT</span></div>
+<div class="ai-attachment-workspace">
+  <div class="ai-attachment-picker">
+    <input id="attachmentInput" type="file" multiple accept=".pdf,.doc,.docx,.txt,.md,.csv,.json,.log,.xml,.xlsx,.xls,.yaml,.yml,.js,.ts,.py,.html,.css,.sql,.sh,.png,.jpg,.jpeg,.webp,.gif">
+    <div class="drop-icon">⌘</div>
+    <b>ATTACH ANY SUPPORTED FILE</b>
+    <span>PDF · DOCX · TXT · MD · CSV · JSON · XLSX · CODE · IMAGE</span>
+    <button class="os-btn" type="button" id="attachmentPick">SELECT FILES</button>
+    <small>Files are sent only when you submit your question. Maximum 8 MB per file.</small>
+  </div>
+  <div class="ai-attachment-list" id="attachmentList"><div class="ai-empty">No files attached.</div></div>
+</div>
+</section>
 
-<section class="os-panel ai-section" id="data"><div class="os-panel-head"><span>04 / DATA LAB</span><span>CLIENT-SIDE PROFILER</span></div>
-<div class="ai-tool-layout"><div class="ai-dropzone compact"><input id="csvFile" type="file" accept=".csv,.json"><div class="drop-icon">⌁</div><b>PROFILE A DATASET</b><span>CSV or JSON · no upload required</span><button class="os-btn primary" type="button" id="csvPick">SELECT DATASET</button></div>
-<div class="ai-result"><div class="ai-result-head"><span id="dataName">WAITING FOR DATA</span><span id="dataShape">—</span></div><div id="dataResult" class="data-result"><div class="ai-empty">Upload a dataset to see schema, missingness, duplicates, numeric statistics and ML hints.</div></div></div></div></section>
+<section class="os-panel ai-section" id="data">
+<div class="os-panel-head"><span>04 / DATA INTELLIGENCE</span><span>IN CHAT</span></div>
+<div class="ai-data-grid" style="padding:16px">
+  <div><b>CSV / XLSX</b><span>Attach a dataset and ask ADIGUN to profile schema, missingness, duplicates, statistics, anomalies or modelling considerations.</span></div>
+  <div><b>JSON / XML / LOG</b><span>Attach structured or operational data and ask for parsing, validation, anomaly detection, extraction or explanation.</span></div>
+  <div><b>PDF / DOCX</b><span>Attach a document and ask for summaries, extraction, comparison, review or question answering.</span></div>
+  <div><b>IMAGES</b><span>Attach screenshots, diagrams or photographs and ask ADIGUN to inspect what is visible.</span></div>
+</div>
+</section>
 
 <section class="os-panel ai-section" id="projects"><div class="os-panel-head"><span>05 / PROJECT INTELLIGENCE</span><span>KNOWN REPOSITORIES</span></div>
 <div id="projectGrid" class="project-grid"></div></section>
@@ -54,5 +71,5 @@
 <div class="automation-grid"><div><b>GITHUB</b><span>Push → inspect change → generate project intelligence → update index</span></div><div><b>KNOWLEDGE</b><span>Document → extract → chunk → embed → index → search</span></div><div><b>DATA</b><span>Dataset → validate → profile → analyse → report</span></div><div><b>SECURITY</b><span>Event → classify → explain → record → notify</span></div></div>
 <div class="automation-console public-automation-note"><div class="ai-console-head"><span>PUBLIC AUTOMATION BOUNDARY</span><span>PRIVATE CONTROL</span></div><div class="public-boundary-copy">Privileged workflows are intentionally removed from the public interface. Authenticated administration is available only through the private ADIGUN Control application.</div></div></section>
 </div></main></div>
-<script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/contrib/auto-render.min.js"></script><script src="js/adigun-renderer.js?v=20260926-1"></script><script src="js/adigun-agent.js?v=20260926-1"></script><script src="js/ai-lab.js?v=20260925-4"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/contrib/auto-render.min.js"></script><script src="js/adigun-renderer.js?v=20260926-1"></script><script src="js/adigun-agent.js?v=20260926-1"></script><script src="js/ai-lab.js?v=20260926-5"></script>
 </body></html>
