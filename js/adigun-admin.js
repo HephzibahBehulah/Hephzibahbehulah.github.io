@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       const d=await r.json().catch(()=>({}));
       if(!r.ok||!d.answer)throw new Error(d.error||"AI gateway unavailable");
       add(d.answer,"assistant");history.push({role:"assistant",content:d.answer});
-    }catch(e){add("ADIGUN AI gateway is currently unavailable. "+String(e.message||""),"assistant")}
+    }catch(e){add("ADIGUN AI gateway error: "+String(e.message||"unknown error"),"assistant")}
     finally{old.length=0;send.disabled=false}
   }
   send?.addEventListener("click",ask);input?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ask()}});
