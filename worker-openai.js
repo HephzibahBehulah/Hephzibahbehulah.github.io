@@ -306,12 +306,15 @@ async function openAIChat(request, env) {
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
     const upstream = String(data?.error?.message || "OpenAI request failed.");
-    console.error("ADIGUN OpenAI error", { status: response.status, type: data?.error?.type || null, code: data?.error?.code || null, requestId: response.headers.get("x-request-id") || null });
+    const requestId = response.headers.get("x-request-id") || null;
+    console.error("ADIGUN OpenAI error", { status: response.status, type: data?.error?.type || null, code: data?.error?.code || null, requestId });
+    const fallback = await cloudflareFallback(request, env, messages, context);
+    if (fallback) return fallback;
     return json(request, {
       ok: false,
       error: upstream,
       provider: "openai",
-      requestId: response.headers.get("x-request-id") || null
+      requestId
     }, response.status >= 400 && response.status < 500 ? response.status : 502);
   }
 
