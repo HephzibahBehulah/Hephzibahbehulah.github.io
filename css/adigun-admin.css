@@ -12,3 +12,20 @@
 .event-stream{min-height:130px;border-top:1px solid var(--line);padding:14px;font:9px/1.8 var(--mono);color:var(--muted)}.event-line{border-left:2px solid rgba(110,231,255,.25);padding-left:10px;margin:4px 0}.event-line b{color:var(--admin-cyan)}.event-line.error{color:#ff8d8d}.event-line.pending{color:var(--admin-cyan)}.event-empty{opacity:.6}
 #accessStatus.ok{color:var(--admin-green)}#accessStatus.denied{color:#ff8d8d}
 @media(max-width:900px){.admin-hero{grid-template-columns:1fr}.admin-grid,.security-grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.admin-grid,.security-grid{grid-template-columns:1fr}.admin-panel-body{flex-direction:column;align-items:stretch}}
+
+.admin-chat{border:1px solid var(--line);margin:16px;background:rgba(0,0,0,.14)}
+.admin-chat-messages{height:440px;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.admin-chat-message{max-width:88%;padding:11px 13px;border:1px solid var(--line);font:11px/1.65 var(--mono)}
+.admin-chat-message.system{align-self:center;opacity:.6;font-size:9px}
+.admin-chat-message.user{align-self:flex-end;border-color:rgba(110,231,255,.25)}
+.admin-chat-message.assistant{align-self:flex-start}
+.admin-chat-message h1,.admin-chat-message h2,.admin-chat-message h3{font-family:var(--mono);margin:10px 0 6px}.admin-chat-message p{margin:7px 0}.admin-chat-message pre{overflow:auto;padding:10px;background:rgba(0,0,0,.3)}.admin-chat-message code{font-family:var(--mono)}
+.admin-chat-input{display:flex;gap:8px;padding:11px;border-top:1px solid var(--line)}
+.admin-chat-input input[type="text"],.admin-chat-input>input:not([type="file"]){flex:1;min-width:0;background:transparent;border:1px solid var(--line);color:var(--text);padding:11px;font:11px var(--mono)}
+.admin-chat-input input[type="file"]{display:none}
+.admin-attachments{display:flex;gap:6px;flex-wrap:wrap;padding:7px 11px 0}
+.admin-chip{display:inline-flex;gap:5px;align-items:center;border:1px solid rgba(110,231,255,.22);padding:5px 8px;color:var(--muted);font:9px var(--mono)}
+.admin-chip button{border:0;background:none;color:#ff8d8d;cursor:pointer}
+.admin-ops{display:flex;gap:8px;flex-wrap:wrap;padding:16px}
+.admin-inspect-output{margin:0 16px 16px;padding:16px;border:1px solid var(--line);min-height:240px;max-height:620px;overflow:auto;white-space:pre-wrap;font:9px/1.7 var(--mono);color:var(--muted);background:rgba(0,0,0,.18)}
+@media(max-width:700px){.admin-chat-input{flex-wrap:wrap}.admin-chat-input>input:not([type="file"]){order:2;flex-basis:100%}.admin-chat-input button:last-child{order:3}.admin-chat-messages{height:360px}}
