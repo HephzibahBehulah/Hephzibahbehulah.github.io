@@ -64,3 +64,5 @@
 .attachment-item small{color:var(--muted)}
 .attachment-item button{border:0;background:none;color:#ff8d8d;cursor:pointer;font:16px var(--mono)}
 @media(max-width:900px){.ai-attachment-workspace{grid-template-columns:1fr}}
+
+.ai-attachment-picker.drag{border-color:var(--ai-cyan);box-shadow:inset 0 0 35px rgba(110,231,255,.08)}
