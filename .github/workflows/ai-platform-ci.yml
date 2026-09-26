@@ -11,13 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Validate site search and AI browser JavaScript
+      - name: Validate site search, AI browser JavaScript and Worker
         run: |
           node --version
           node --check js/global-search.js
           node --check js/ai-lab.js
           node --check js/adigun-agent.js
           node --check worker-v2.js
+          node --check worker-openai.js
+          node --check js/adigun-admin.js
+          node --check js/adigun-renderer.js
 
       - name: Validate Python ML service
         run: |
