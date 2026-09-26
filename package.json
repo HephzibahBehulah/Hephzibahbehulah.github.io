@@ -1,0 +1,11 @@
+{
+  "name": "hephzibahbehulah-adigun",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@cloudflare/sandbox": "0.12.10"
+  },
+  "devDependencies": {
+    "wrangler": "^4.141.0"
+  }
+}
