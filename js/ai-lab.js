@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded",()=>{
   attachmentPick?.addEventListener("click",e=>{e.stopPropagation();attachmentInput?.click()});
   attachmentButton?.addEventListener("click",()=>attachmentInput?.click());
   attachmentInput?.addEventListener("change",e=>{if(e.target.files.length)addFiles(e.target.files);e.target.value=""});
+  const picker=$("#attachments .ai-attachment-picker");
+  ["dragenter","dragover"].forEach(ev=>picker?.addEventListener(ev,e=>{e.preventDefault();picker.classList.add("drag")}));
+  ["dragleave","drop"].forEach(ev=>picker?.addEventListener(ev,e=>{e.preventDefault();picker.classList.remove("drag")}));
+  picker?.addEventListener("drop",e=>{if(e.dataTransfer?.files?.length)addFiles(e.dataTransfer.files)});
   const drop=$("#aiMessages");
   ["dragover","drop"].forEach(ev=>drop?.addEventListener(ev,e=>{if(ev==="dragover")e.preventDefault()}));
   drop?.addEventListener("drop",e=>{e.preventDefault();if(e.dataTransfer?.files?.length)addFiles(e.dataTransfer.files)});
