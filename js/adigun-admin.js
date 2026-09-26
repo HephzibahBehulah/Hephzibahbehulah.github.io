@@ -13,6 +13,16 @@ document.addEventListener("DOMContentLoaded",()=>{
     if(kind==="assistant"&&window.AdigunRenderer)window.AdigunRenderer.mount(e,text);else e.textContent=text;
     messages.appendChild(e);messages.scrollTop=messages.scrollHeight;
   }
+  function showThinking(){
+    const e=document.createElement("div");
+    e.className="admin-chat-message assistant admin-thinking";
+    e.setAttribute("role","status");
+    e.setAttribute("aria-live","polite");
+    e.innerHTML='<span>ADIGUN CONTROL IS GENERATING</span><i></i><i></i><i></i>';
+    messages.appendChild(e);
+    messages.scrollTop=messages.scrollHeight;
+    return e;
+  }
   function dataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result));r.onerror=()=>reject(r.error||new Error("read failed"));r.readAsDataURL(file)})}
   async function prepare(file){
     if(file.size>8*1024*1024)throw new Error(file.name+" is larger than 8 MB.");
@@ -47,6 +57,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const content=[];if(q)content.push({type:"input_text",text:q});content.push(...files.map(f=>f.part));
     add(q||("Attached "+files.length+" file"+(files.length===1?"":"s")),"user");
     history.push({role:"user",content});input.value="";send.disabled=true;
+    const thinking=showThinking();
     const old=files;files=[];renderFiles();
     try{
       const r=await fetch("/api/admin/agent",{
@@ -60,11 +71,12 @@ document.addEventListener("DOMContentLoaded",()=>{
         })
       });
       const d=await r.json().catch(()=>({}));
+      thinking.remove();
       if(!r.ok||!d.answer)throw new Error(d.error||"Private agent unavailable");
       add(d.answer,"assistant");
       showAgentPlan(d.plan);
       history.push({role:"assistant",content:d.answer});
-    }catch(e){add("ADIGUN private agent error: "+String(e.message||"unknown error"),"assistant")}
+    }catch(e){thinking.remove();add("ADIGUN private agent error: "+String(e.message||e),"assistant")}
     finally{old.length=0;send.disabled=false}
   }
   send?.addEventListener("click",ask);input?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ask()}});
