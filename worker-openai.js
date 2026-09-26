@@ -394,6 +394,127 @@ async function openAIChat(request, env) {
   });
 }
 
+
+async function runAgentInspection(request, env, target, ctx) {
+  const u = new URL(request.url);
+  u.pathname = "/api/admin/inspect";
+  u.search = "?target=" + encodeURIComponent(target);
+  const r = await privateInspect(new Request(u.toString(), { method:"GET", headers:request.headers }), env, u, ctx);
+  try { return await r.json(); } catch { return { ok:false, error:"Inspection returned invalid data." }; }
+}
+
+function agentTargets(task) {
+  const q = String(task || "").toLowerCase();
+  const targets = new Set();
+  if (/github|repo|repository|commit|pull request|workflow|action/.test(q)) targets.add("github");
+  if (/cloudflare|worker|edge|dns|access|deployment|deploy/.test(q)) targets.add("cloudflare");
+  if (/security|header|csp|hsts|x-frame|permissions|attack|vulnerab/.test(q)) targets.add("security");
+  if (/website|site|page|domain|homepage|frontend|broken|down|error/.test(q)) targets.add("site");
+  if (!targets.size || /full|everything|investigate|diagnose|audit|check the system|what is wrong/.test(q)) {
+    ["site","security","github","cloudflare"].forEach(x=>targets.add(x));
+  }
+  return [...targets];
+}
+
+function agentActionPlan(task, checks) {
+  const q = String(task || "").toLowerCase();
+  const wantsMutation = /change|modify|edit|update|fix|deploy|delete|remove|commit|push|merge|purge|restart|rotate|configure/.test(q);
+  const actions = [];
+  if (wantsMutation) actions.push({
+    id:"mutation-request",
+    status:"approval-required",
+    title:"Requested change",
+    description:"ADIGUN identified a potentially state-changing operation. It will not execute it automatically.",
+    execution:"blocked-until-explicit-approval-and-authorized-connector",
+    requestedBy:"authenticated administrator"
+  });
+  actions.push({
+    id:"verification",
+    status:"safe-read-only",
+    title:"Post-action verification",
+    description:"Re-run the relevant inspection after any approved change and report the observed result."
+  });
+  return {
+    mode:wantsMutation?"plan-then-approve":"investigate-and-report",
+    approvalRequired:wantsMutation,
+    actions,
+    policy:[
+      "Read-only investigation may run automatically.",
+      "State-changing operations never execute from chat text alone.",
+      "Every consequential operation must identify its exact target and effect before approval.",
+      "Secrets and unrestricted shell access are never exposed to the model."
+    ],
+    checksObserved:checks.length
+  };
+}
+
+async function privateAgent(request, env, url, ctx) {
+  const identity = await getAdminIdentity(ctx, env);
+  if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+  let body;
+  try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
+  const task = String(body?.task || body?.message || "").trim();
+  if (!task) return json(request,{ok:false,error:"Describe what you want ADIGUN to investigate."},400);
+
+  const targets = agentTargets(task);
+  const investigations = [];
+  for (const target of targets) {
+    investigations.push({target,data:await runAgentInspection(request, env, target, ctx)});
+  }
+
+  const flatChecks = investigations.flatMap(x => Array.isArray(x.data?.checks) ? x.data.checks : []);
+  const plan = agentActionPlan(task, flatChecks);
+  const evidence = JSON.stringify({
+    authenticatedOperator: identity.email,
+    task,
+    investigation:investigations,
+    plan
+  }, null, 2).slice(0,42000);
+
+  const agentPrompt = "PRIVATE OPERATOR TASK:\n" + task +
+    "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the read-only inspections shown below. Analyze the evidence and give the administrator a concise technical report.\n\n" +
+    "Rules:\n" +
+    "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS.\n" +
+    "- Never claim a change was made.\n" +
+    "- If a change would be required, describe the intended change and say that explicit approval is required.\n" +
+    "- Do not invent Cloudflare, GitHub, security or deployment data that is absent from the evidence.\n" +
+    "- Use Markdown and proper LaTeX when mathematics is needed.\n" +
+    "- Do not expose secrets.\n\nSERVER EVIDENCE:\n" + evidence;
+
+  let answer = "Investigation completed. Review the evidence and proposed actions below.";
+  try {
+    const suppliedMessages = Array.isArray(body?.messages) ? body.messages.slice(-8) : [];
+    const synthesisMessages = suppliedMessages.length
+      ? suppliedMessages.concat([{role:"user",content:[{type:"input_text",text:agentPrompt}]}])
+      : [{role:"user",content:agentPrompt}];
+    const aiRequest = new Request(request.url, {
+      method:"POST",
+      headers:new Headers({"content-type":"application/json","x-hb-session":request.headers.get("x-hb-session")||"private-agent"}),
+      body:JSON.stringify({
+        messages:synthesisMessages,
+        siteContext:"PRIVATE ADIGUN AGENT MODE: authenticated operator investigation. Server evidence is authoritative."
+      })
+    });
+    const aiResponse = await openAIChat(aiRequest, env);
+    const aiData = await aiResponse.json().catch(()=>({}));
+    if (aiData?.answer) answer = aiData.answer;
+  } catch (error) {
+    console.error("ADIGUN private agent synthesis error",String(error?.message||error));
+  }
+
+  return json(request,{
+    ok:true,
+    mode:"agentic",
+    actor:identity.email,
+    task,
+    targets,
+    investigations,
+    plan,
+    answer,
+    next:"Approval-required actions are proposed only. No state-changing operation was executed."
+  });
+}
+
 async function privateInspect(request, env, url, ctx) {
   const identity=await getAdminIdentity(ctx,env);
   if(!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
@@ -433,7 +554,7 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
-    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
+    if (url.pathname === "/api/admin/agent" && request.method === "POST") return privateAgent(request, env, url, ctx);\n    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
     const adminResponse = await adminRoutes(request, env, url, ctx);
     if (adminResponse) return adminResponse;
 
