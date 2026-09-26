@@ -554,7 +554,8 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
-    if (url.pathname === "/api/admin/agent" && request.method === "POST") return privateAgent(request, env, url, ctx);\n    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
+    if (url.pathname === "/api/admin/agent" && request.method === "POST") return privateAgent(request, env, url, ctx);
+    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
     const adminResponse = await adminRoutes(request, env, url, ctx);
     if (adminResponse) return adminResponse;
 
