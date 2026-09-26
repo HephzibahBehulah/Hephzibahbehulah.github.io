@@ -446,8 +446,14 @@ export default {
         ok: true,
         service: "hephzibah-behulah-ai",
         version: "7.0.0",
-        mode: "openai-responses",
+        mode: "multi-provider",
         model: MODEL(env),
+        providers: {
+          openai: Boolean(env.OPENAI_API_KEY),
+          openrouter: Boolean(env.OPENROUTER_API_KEY),
+          cloudflareWorkersAI: Boolean(env.AI)
+        },
+        fallbackModel: env.AI ? (env.ADIGUN_FALLBACK_MODEL || "@cf/zai-org/glm-4.7-flash") : null,
         rag: env.AI_SEARCH ? "ai-search-ready" : "legacy-knowledge-search",
         web: "openai-web-search",
         capabilities: [
