@@ -1,6 +1,13 @@
 // ADIGUN deployment verification marker — 2026-09-26
 // Free Cloudflare Workers AI fallback is enabled when the primary provider is unavailable.
+import { getSandbox, Sandbox as CloudflareSandbox, ContainerProxy } from "@cloudflare/sandbox";
 import legacy from "./worker-v2.js";
+
+export { ContainerProxy };
+export class Sandbox extends CloudflareSandbox {
+  enableInternet = false;
+  allowedHosts = ["hephzibahbehulah.com", "admin.hephzibahbehulah.com", "api.github.com"];
+}
 
 const corsHeaders = request => {
   const origin = request.headers.get("origin") || "";
@@ -53,14 +60,14 @@ function capabilityManifest(env, authenticated=false) {
   return {
     generatedAt:new Date().toISOString(),
     subject:authenticated ? "private-adigun" : "public-adigun",
-    executionPolicy: authenticated ? "authenticated-read-only-plus-approval-gated" : "public-read-only",
+    executionPolicy: authenticated ? "authenticated-sandbox-execution-plus-approval-gated-production-actions" : "public-read-only",
     tools: {
       "http.inspect": {available:true,execution:true,mutation:false},
       "dns.lookup": {available:true,execution:true,mutation:false},
       "github.read": {available:true,execution:true,mutation:false},
       "security.inspect": {available:true,execution:true,mutation:false},
-      "python.execute": {available:false,execution:false,mutation:false},
-      "shell.execute": {available:false,execution:false,mutation:false},
+      "python.execute": {available:true,execution:true,mutation:false,isolated:true},
+      "shell.execute": {available:true,execution:true,mutation:false,isolated:true},
       "tls.inspect": {available:false,execution:false,mutation:false},
       "git.test": {available:false,execution:false,mutation:false},
       "security.scan": {available:false,execution:false,mutation:false},
@@ -76,7 +83,8 @@ function capabilityManifest(env, authenticated=false) {
     authorization: {
       authenticated,
       productionMutation:false,
-      arbitraryShell:false,
+      sandboxShell:true,
+      productionShell:false,
       secretAccess:false,
       unrelatedTargetScanning:false
     }
@@ -92,6 +100,60 @@ async function getAdminIdentity(ctx, env) {
     return { email, name: identity?.name || null, groups: identity?.groups || [] };
   } catch {
     return null;
+  }
+}
+
+const SANDBOX_COMMANDS = Object.freeze({
+  "pwd": "pwd",
+  "ls": "ls -la /workspace",
+  "whoami": "whoami",
+  "uname": "uname -a",
+  "python-version": "python3 --version",
+  "node-version": "node --version",
+  "git-version": "git --version",
+  "date": "date -u",
+  "disk": "df -h /workspace",
+  "memory": "free -h",
+  "os": "cat /etc/os-release",
+  "runtime": "printf 'Python: '; python3 --version; printf 'Node: '; node --version; printf 'Git: '; git --version; printf 'PWD: '; pwd",
+  "repo-status": "git -C /workspace status --short --branch"
+});
+
+function adminSandboxId(identity) {
+  const email = String(identity?.email || "").trim().toLowerCase();
+  const encoded = btoa(email).replace(/[^a-z0-9]/gi, "").slice(0,48).toLowerCase();
+  return "adigun-admin-" + (encoded || "operator");
+}
+
+async function getAdminSandbox(env, identity) {
+  if (!env.Sandbox) throw new Error("Sandbox execution plane is not configured.");
+  return getSandbox(env.Sandbox, adminSandboxId(identity), {
+    sleepAfter:"30m",
+    labels:{workload:"adigun-private-execution",actor:identity.email}
+  });
+}
+
+async function executeSandboxCommand(request, env, ctx, command) {
+  const identity=await getAdminIdentity(ctx,env);
+  if(!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+  const shellCommand=SANDBOX_COMMANDS[command];
+  if(!shellCommand) return json(request,{ok:false,error:"Command is not allow-listed.",available:Object.keys(SANDBOX_COMMANDS)},400);
+  const started=Date.now();
+  try{
+    const sandbox=await getAdminSandbox(env,identity);
+    const result=await sandbox.exec(shellCommand,{timeout:30000});
+    const evidence=evidenceRecord({
+      tool:"sandbox.exec",
+      target:adminSandboxId(identity),
+      actor:identity.email,
+      status:result.success?"observed":"failed",
+      startedAt:new Date(started).toISOString(),
+      result:{command,exitCode:result.exitCode,success:result.success,stdout:String(result.stdout||"").slice(0,200000),stderr:String(result.stderr||"").slice(0,200000)}
+    });
+    return json(request,{ok:true,command,shellCommand,durationMs:Date.now()-started,result,evidence,executedAt:evidence.observedAt});
+  }catch(error){
+    const evidence=evidenceRecord({tool:"sandbox.exec",target:adminSandboxId(identity),actor:identity.email,status:"error",startedAt:new Date(started).toISOString(),result:{command,error:String(error?.message||error)}});
+    return json(request,{ok:false,command,error:String(error?.message||error),evidence},502);
   }
 }
 
@@ -668,10 +730,10 @@ async function privateAgent(request, env, url, ctx) {
     "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the read-only inspections and, when requested, allow-listed diagnostics shown below. Analyze the evidence and give the administrator a concise technical report.\n\n" +
     "PRIVATE CAPABILITY RULES:\n" +
     "- This interface is authenticated by Cloudflare Access.\n" +
-    "- The server can execute only explicitly allow-listed diagnostics; it does not provide an unrestricted shell.\n" +
+    "- The server can execute read-only diagnostics and a fixed allow-list of commands inside an isolated Cloudflare Sandbox Linux container. This is not the production Worker host.\n" +
     "- Allow-listed diagnostics: HTTP health, response headers, robots.txt, sitemap.xml, DNS resolution and repository status.\n" +
     "- GitHub repository history and workflow-run metadata may be inspected server-side.\n" +
-    "- Production mutation, arbitrary shell commands, secret access and unrelated-target scanning are not available through this interface.\n" +
+    "- Production mutation, arbitrary production-host shell access, secret access and unrelated-target scanning are not available through this interface.\n" +
     "- Never turn a planned capability into a claimed capability. Use only server evidence.\n" +
     "- Use the server checkedAt timestamp as the report date; never invent a date.\n\n" +
     "Rules:\n" +
@@ -832,6 +894,7 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
+    if (url.pathname === "/api/admin/sandbox" && request.method === "POST") { let body; try { body=await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); } return executeSandboxCommand(request,env,ctx,String(body?.command||"")); }
     if (url.pathname === "/api/admin/agent" && request.method === "POST") return privateAgent(request, env, url, ctx);
     if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
     const adminResponse = await adminRoutes(request, env, url, ctx);
