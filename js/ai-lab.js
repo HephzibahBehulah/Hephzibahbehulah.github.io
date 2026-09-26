@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       throw new Error(d.error||"AI gateway unavailable");
     }catch(e){
       console.error("ADIGUN API error:",e);
-      add("ADIGUN AI gateway is currently unavailable. Please try again shortly.","assistant");
+      add("ADIGUN AI gateway error: "+String(e.message||"unknown error"),"assistant");
       state.textContent="● API ERROR";
     }finally{send.disabled=false;outgoingAttachments.length=0}
   }
