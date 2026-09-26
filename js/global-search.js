@@ -214,7 +214,8 @@
         showEmpty('ADIGUN is checking the site intelligence layer…');
         overlay.classList.add('open');
         const response = await window.Adigun?.ask?.(query);
-        results.innerHTML = `<div class="hb-global-result" style="cursor:default"><span class="hb-global-result-title">ADIGUN</span><strong>${escapeHTML(response?.answer || 'No answer returned.')}</strong></div>`;
+        results.innerHTML = '<div class="hb-global-result hb-adigun-answer" style="cursor:default"><span class="hb-global-result-title">ADIGUN</span><div class="adigun-rendered-answer"></div></div>';
+        if (window.AdigunRenderer) window.AdigunRenderer.mount(results.querySelector('.adigun-rendered-answer'), response?.answer || 'No answer returned.'); else results.querySelector('.adigun-rendered-answer').textContent = response?.answer || 'No answer returned.';
       } catch { showEmpty('ADIGUN could not answer this query right now.'); }
     }
 
