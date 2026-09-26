@@ -76,7 +76,7 @@ async function executeAdminCommand(request, env, command) {
       const d=await r.json().catch(()=>({}));
       result={httpStatus:r.status,repository:d.full_name,defaultBranch:d.default_branch,updatedAt:d.updated_at,pushedAt:d.pushed_at,openIssues:d.open_issues_count};
     }
-    return json(request,{ok:true,command,label:spec.label,mutation:false,startedAt:new Date(Date.now()-(Date.now()-started)).toISOString(),durationMs:Date.now()-started,result});
+    return json(request,{ok:true,command,label:spec.label,mutation:false,startedAt:new Date(started).toISOString(),durationMs:Date.now()-started,result});
   } catch(error) {
     return json(request,{ok:false,command,error:String(error?.message||error),durationMs:Date.now()-started},502);
   }
@@ -496,6 +496,28 @@ function agentActionPlan(task, checks) {
   };
 }
 
+function requestedCommands(task){
+  const q=String(task||"").toLowerCase();
+  const map=[
+    ["site-health",/site[- ]health|http health|check.*http/],
+    ["site-headers",/site[- ]headers|security headers|check.*headers/],
+    ["site-robots",/robots\.txt|robots policy/],
+    ["site-sitemap",/sitemap\.xml|sitemap/],
+    ["dns-lookup",/dns lookup|resolve dns|dns resolution/],
+    ["repository-status",/repository status|repo status|git status|current revision/]
+  ];
+  return map.filter(([,re])=>re.test(q)).map(([name])=>name);
+}
+async function runAgentCommands(request,env,commands){
+  const out=[];
+  for(const command of [...new Set(commands)].slice(0,4)){
+    const u=new URL(request.url);u.pathname="/api/admin/command";u.search="";
+    const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command})}),env,command);
+    out.push({command,data:await r.json().catch(()=>({ok:false,error:"Invalid command result."}))});
+  }
+  return out;
+}
+
 async function privateAgent(request, env, url, ctx) {
   const identity = await getAdminIdentity(ctx, env);
   if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
@@ -505,6 +527,8 @@ async function privateAgent(request, env, url, ctx) {
   if (!task) return json(request,{ok:false,error:"Describe what you want ADIGUN to investigate."},400);
 
   const targets = agentTargets(task);
+  const requested = requestedCommands(task);
+  const commandResults = requested.length ? await runAgentCommands(request, env, requested) : [];
   const investigations = [];
   for (const target of targets) {
     investigations.push({target,data:await runAgentInspection(request, env, target, ctx)});
@@ -516,6 +540,7 @@ async function privateAgent(request, env, url, ctx) {
     authenticatedOperator: identity.email,
     task,
     investigation:investigations,
+    commandResults,
     plan
   }, null, 2).slice(0,42000);
 
@@ -557,6 +582,7 @@ async function privateAgent(request, env, url, ctx) {
     task,
     targets,
     investigations,
+    commandResults,
     plan,
     answer,
     next:"Approval-required actions are proposed only. No state-changing operation was executed."
@@ -605,6 +631,18 @@ async function privateInspect(request, env, url, ctx) {
       const r=await fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
       const d=await r.json().catch(()=>({}));
       result.checks.push({name:"github",status:r.ok?"healthy":"unavailable",repository:d.full_name||"HephzibahBehulah/HephzibahBehulah.github.io",defaultBranch:d.default_branch||null,updatedAt:d.updated_at||null,pushedAt:d.pushed_at||null,openIssues:d.open_issues_count??null});
+      if(r.ok){
+        const [commits, runs] = await Promise.all([
+          fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io/commits?per_page=8",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}}),
+          fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io/actions/runs?per_page=8",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}})
+        ]);
+        const commitData=await commits.json().catch(()=>({}));
+        const runData=await runs.json().catch(()=>({}));
+        result.checks.push({name:"github-recent-history",status:commits.ok?"observed":"unavailable",
+          commits:(commitData||[]).slice(0,8).map(x=>({sha:String(x.sha||"").slice(0,12),message:String(x.commit?.message||"").split("\n")[0].slice(0,180),date:x.commit?.author?.date||null,url:x.html_url||null})),
+          workflowRuns:(runData.workflow_runs||[]).slice(0,8).map(x=>({name:x.name,status:x.status,conclusion:x.conclusion,headSha:String(x.head_sha||"").slice(0,12),createdAt:x.created_at,updatedAt:x.updated_at,url:x.html_url||null}))
+        });
+      }
     }catch(e){result.checks.push({name:"github",status:"error",error:String(e?.message||e)})}
   }
   if(target==="cloudflare"||target==="all"){
