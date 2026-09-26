@@ -1,4 +1,5 @@
 # Repository and deployment metadata
+node_modules/
 .git/
 .wrangler/
 wrangler.jsonc
