@@ -29,3 +29,9 @@
 .admin-ops{display:flex;gap:8px;flex-wrap:wrap;padding:16px}
 .admin-inspect-output{margin:0 16px 16px;padding:16px;border:1px solid var(--line);min-height:240px;max-height:620px;overflow:auto;white-space:pre-wrap;font:9px/1.7 var(--mono);color:var(--muted);background:rgba(0,0,0,.18)}
 @media(max-width:700px){.admin-chat-input{flex-wrap:wrap}.admin-chat-input>input:not([type="file"]){order:2;flex-basis:100%}.admin-chat-input button:last-child{order:3}.admin-chat-messages{height:360px}}
+
+.admin-terminal{display:grid;gap:14px}
+.admin-terminal-banner{font:500 12px/1.5 "JetBrains Mono",monospace;letter-spacing:.08em;opacity:.75}
+.admin-terminal-actions{display:flex;flex-wrap:wrap;gap:8px}
+.admin-terminal-actions .os-btn{font-family:"JetBrains Mono",monospace}
+.admin-inspect-output{max-height:460px;overflow:auto;white-space:pre-wrap;word-break:break-word}
