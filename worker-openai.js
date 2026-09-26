@@ -227,6 +227,27 @@ function collectSources(data) {
   return [...new Set(urls)].slice(0, 20);
 }
 
+async function cloudflareFallback(request, env, messages, context) {
+  if (!env.AI) return null;
+  const model = env.ADIGUN_FALLBACK_MODEL || "@cf/zai-org/glm-4.7-flash";
+  const normalized = [{ role:"system", content:SYSTEM + (context ? "\n" + context : "") }];
+  for (const m of messages) {
+    const content = Array.isArray(m.content)
+      ? m.content.filter(p => p && p.type === "input_text").map(p => String(p.text || "")).join("\n")
+      : String(m.content || "");
+    if (content.trim()) normalized.push({ role:m.role, content });
+  }
+  try {
+    const result = await env.AI.run(model, { messages: normalized });
+    const answer = result?.response || result?.choices?.[0]?.message?.content || "";
+    if (!answer) return null;
+    return json(request, { ok:true, answer, model, provider:"cloudflare-workers-ai", fallback:true, ragUsed:Boolean(context), siteUsed:Boolean(context), webUsed:false, sources:{web:[]}, attachments:attachmentCount(messages), actions:[] });
+  } catch (error) {
+    console.error("ADIGUN Cloudflare AI fallback error", { model, error:String(error?.message || error) });
+    return null;
+  }
+}
+
 async function openAIChat(request, env) {
   let body;
   try {
