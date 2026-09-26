@@ -41,6 +41,47 @@ async function getAdminIdentity(ctx, env) {
     return null;
   }
 }
+
+const ADMIN_EXECUTABLES = Object.freeze({
+  "site-health": { label:"HTTP health", description:"Fetch the production homepage and report HTTP status, timing and final URL.", mutation:false },
+  "site-headers": { label:"Security headers", description:"Inspect production response headers without changing anything.", mutation:false },
+  "site-robots": { label:"robots.txt", description:"Read the public robots policy.", mutation:false },
+  "site-sitemap": { label:"sitemap.xml", description:"Read the public sitemap if available.", mutation:false },
+  "dns-lookup": { label:"DNS resolution", description:"Resolve the authorized production hostname through Cloudflare's DNS-over-HTTPS endpoint.", mutation:false },
+  "repository-status": { label:"Repository status", description:"Read the public repository metadata and current revision.", mutation:false }
+});
+
+async function executeAdminCommand(request, env, command) {
+  const spec = ADMIN_EXECUTABLES[command];
+  if (!spec) return json(request,{ok:false,error:"Command is not allow-listed.",available:Object.keys(ADMIN_EXECUTABLES)},400);
+  const started=Date.now();
+  try {
+    let result;
+    if(command==="site-health"){
+      const r=await fetch("https://hephzibahbehulah.com/",{redirect:"follow"});
+      result={httpStatus:r.status,ok:r.ok,finalUrl:r.url};
+    } else if(command==="site-headers"){
+      const r=await fetch("https://hephzibahbehulah.com/",{method:"HEAD",redirect:"follow"});
+      result={httpStatus:r.status,headers:Object.fromEntries(r.headers)};
+    } else if(command==="site-robots"||command==="site-sitemap"){
+      const path=command==="site-robots"?"/robots.txt":"/sitemap.xml";
+      const r=await fetch("https://hephzibahbehulah.com"+path,{redirect:"follow"});
+      result={httpStatus:r.status,ok:r.ok,content:(await r.text()).slice(0,20000)};
+    } else if(command==="dns-lookup"){
+      const r=await fetch("https://cloudflare-dns.com/dns-query?name=hephzibahbehulah.com&type=A",{headers:{"accept":"application/dns-json"}});
+      const d=await r.json();
+      result={status:d.Status,answers:(d.Answer||[]).slice(0,20).map(a=>({name:a.name,type:a.type,data:a.data,ttl:a.TTL}))};
+    } else if(command==="repository-status"){
+      const r=await fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
+      const d=await r.json().catch(()=>({}));
+      result={httpStatus:r.status,repository:d.full_name,defaultBranch:d.default_branch,updatedAt:d.updated_at,pushedAt:d.pushed_at,openIssues:d.open_issues_count};
+    }
+    return json(request,{ok:true,command,label:spec.label,mutation:false,startedAt:new Date(Date.now()-(Date.now()-started)).toISOString(),durationMs:Date.now()-started,result});
+  } catch(error) {
+    return json(request,{ok:false,command,error:String(error?.message||error),durationMs:Date.now()-started},502);
+  }
+}
+
 async function adminRoutes(request, env, url, ctx) {
   if (url.pathname === "/api/admin/status" && request.method === "GET") {
     const identity = await getAdminIdentity(ctx, env);
@@ -48,6 +89,13 @@ async function adminRoutes(request, env, url, ctx) {
     if (!env.ADIGUN_ADMIN_EMAIL) return json(request, { ok:false, authenticated:false, error:"Admin identity is not configured on the server." }, 503);
     if (!identity) return json(request, { ok:false, authenticated:false, error:"Authenticated identity is not authorized for ADIGUN Control." }, 403);
     return json(request, { ok:true, authenticated:true, identity });
+  }
+  if (url.pathname === "/api/admin/command" && request.method === "POST") {
+    const identity = await getAdminIdentity(ctx, env);
+    if (!identity) return json(request, { ok:false, error:"Authorized ADIGUN administrator required." }, 403);
+    let body;
+    try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
+    return executeAdminCommand(request, env, String(body?.command || "").trim());
   }
   if (url.pathname === "/api/automation/demo" && request.method === "POST") {
     const identity = await getAdminIdentity(ctx, env);
@@ -519,26 +567,57 @@ async function privateInspect(request, env, url, ctx) {
   const identity=await getAdminIdentity(ctx,env);
   if(!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
   const target=url.searchParams.get("target")||"all";
-  const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[]};
+  const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:{
+    readOnlyExecution:true,
+    shell:false,
+    productionMutation:false,
+    approvalGate:true,
+    authenticated:true
+  }};
 
   if(target==="all"||target==="site"||target==="security"){
     try{
       const r=await fetch("https://hephzibahbehulah.com/",{redirect:"follow"});
       const h=Object.fromEntries(r.headers);
-      result.checks.push({name:"website",status:r.ok?"healthy":"degraded",httpStatus:r.status,finalUrl:r.url,cloudflare:Boolean(h["cf-ray"]||h.server==="cloudflare"),securityHeaders:{strictTransportSecurity:h["strict-transport-security"]||null,contentSecurityPolicy:h["content-security-policy"]||null,xContentTypeOptions:h["x-content-type-options"]||null,referrerPolicy:h["referrer-policy"]||null,permissionsPolicy:h["permissions-policy"]||null}});
+      result.checks.push({name:"website",status:r.ok?"healthy":"degraded",httpStatus:r.status,finalUrl:r.url,cloudflare:Boolean(h["cf-ray"]||String(h.server||"").toLowerCase()==="cloudflare"),securityHeaders:{
+        strictTransportSecurity:h["strict-transport-security"]||null,
+        contentSecurityPolicy:h["content-security-policy"]||null,
+        xContentTypeOptions:h["x-content-type-options"]||null,
+        referrerPolicy:h["referrer-policy"]||null,
+        permissionsPolicy:h["permissions-policy"]||null,
+        crossOriginOpenerPolicy:h["cross-origin-opener-policy"]||null,
+        crossOriginResourcePolicy:h["cross-origin-resource-policy"]||null
+      }});
     }catch(e){result.checks.push({name:"website",status:"error",error:String(e?.message||e)})}
+    if(target==="security"||target==="all"){
+      for(const command of ["site-headers","site-robots","site-sitemap"]){
+        try{
+          const u=new URL(request.url); u.pathname="/api/admin/command"; u.search="";
+          const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command})}),env,command);
+          const d=await r.json();
+          result.checks.push({name:"command:"+command,status:d.ok?"observed":"error",result:d.result||null,error:d.error||null});
+        }catch(e){result.checks.push({name:"command:"+command,status:"error",error:String(e?.message||e)})}
+      }
+    }
   }
-  if(target==="all"||target==="github"){
+  if(target==="github"||target==="all"){
     try{
       const r=await fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
       const d=await r.json().catch(()=>({}));
       result.checks.push({name:"github",status:r.ok?"healthy":"unavailable",repository:d.full_name||"HephzibahBehulah/HephzibahBehulah.github.io",defaultBranch:d.default_branch||null,updatedAt:d.updated_at||null,pushedAt:d.pushed_at||null,openIssues:d.open_issues_count??null});
     }catch(e){result.checks.push({name:"github",status:"error",error:String(e?.message||e)})}
   }
-  if(target==="all"||target==="cloudflare") result.checks.push({name:"cloudflare-edge",status:"observed",note:"The site is being served through Cloudflare when cf-ray/server headers are present. Account-level Cloudflare control is kept behind a separate server-side credential and is not exposed to the browser."});
+  if(target==="cloudflare"||target==="all"){
+    try{
+      const u=new URL(request.url);u.pathname="/api/admin/command";u.search="";
+      const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command:"dns-lookup"})}),env,"dns-lookup");
+      const d=await r.json();
+      result.checks.push({name:"dns",status:d.ok?"healthy":"error",result:d.result||null,error:d.error||null});
+    }catch(e){result.checks.push({name:"dns",status:"error",error:String(e?.message||e)})}
+    result.checks.push({name:"cloudflare-edge",status:"observed",note:"Edge presence is inferred from live response headers. Account-level Cloudflare mutations are not exposed by this Worker."});
+  }
   return json(request,result);
 }
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
