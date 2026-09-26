@@ -20,7 +20,7 @@ const corsHeaders = request => {
   return headers;
 };
 
-const json = (body, status = 200, extra = {}) =>
+const json = (request, body, status = 200, extra = {}) =>
   new Response(JSON.stringify(body), {
     status,
     headers: { "content-type": "application/json; charset=utf-8", ...corsHeaders(request), ...extra }
@@ -42,15 +42,15 @@ async function getAdminIdentity(ctx, env) {
 async function adminRoutes(request, env, url, ctx) {
   if (url.pathname === "/api/admin/status" && request.method === "GET") {
     const identity = await getAdminIdentity(ctx, env);
-    if (!ctx?.access) return json({ ok:false, authenticated:false, error:"Cloudflare Access authentication is required." }, 401);
-    if (!env.ADIGUN_ADMIN_EMAIL) return json({ ok:false, authenticated:false, error:"Admin identity is not configured on the server." }, 503);
-    if (!identity) return json({ ok:false, authenticated:false, error:"Authenticated identity is not authorized for ADIGUN Control." }, 403);
-    return json({ ok:true, authenticated:true, identity });
+    if (!ctx?.access) return json(request, { ok:false, authenticated:false, error:"Cloudflare Access authentication is required." }, 401);
+    if (!env.ADIGUN_ADMIN_EMAIL) return json(request, { ok:false, authenticated:false, error:"Admin identity is not configured on the server." }, 503);
+    if (!identity) return json(request, { ok:false, authenticated:false, error:"Authenticated identity is not authorized for ADIGUN Control." }, 403);
+    return json(request, { ok:true, authenticated:true, identity });
   }
   if (url.pathname === "/api/automation/demo" && request.method === "POST") {
     const identity = await getAdminIdentity(ctx, env);
-    if (!identity) return json({ ok:false, error:"Authorized ADIGUN administrator required." }, 403);
-    return json({
+    if (!identity) return json(request, { ok:false, error:"Authorized ADIGUN administrator required." }, 403);
+    return json(request, {
       ok:true,
       workflow:"adigun-controlled-demo",
       actor:identity.email,
@@ -209,17 +209,17 @@ async function openAIChat(request, env) {
   try {
     body = await request.json();
   } catch {
-    return json({ ok: false, error: "Invalid JSON." }, 400);
+    return json(request, { ok: false, error: "Invalid JSON." }, 400);
   }
 
   const messages = normalizeMessages(body);
-  if (!messages.length) return json({ ok: false, error: "A message is required." }, 400);
+  if (!messages.length) return json(request, { ok: false, error: "A message is required." }, 400);
 
   if (env.API_LIMITER) {
     const session = request.headers.get("x-hb-session") || "anonymous";
     const limit = await env.API_LIMITER.limit({ key: "openai-chat:" + session });
     if (!limit.success) {
-      return json({ ok: false, error: "Rate limit exceeded. Try again shortly." }, 429, {
+      return json(request, { ok: false, error: "Rate limit exceeded. Try again shortly." }, 429, {
         "retry-after": "60"
       });
     }
@@ -255,23 +255,23 @@ async function openAIChat(request, env) {
       body: JSON.stringify(payload)
     });
   } catch {
-    return json({ ok: false, error: "OpenAI service is unreachable." }, 502);
+    return json(request, { ok: false, error: "OpenAI service is unreachable." }, 502);
   }
 
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
-    return json({
+    return json(request, {
       ok: false,
       error: data?.error?.message || "OpenAI request failed."
     }, response.status >= 400 && response.status < 500 ? response.status : 502);
   }
 
   const answer = extractOutputText(data);
-  if (!answer) return json({ ok: false, error: "OpenAI returned no text." }, 502);
+  if (!answer) return json(request, { ok: false, error: "OpenAI returned no text." }, 502);
 
   const sources = collectSources(data);
 
-  return json({
+  return json(request, {
     ok: true,
     answer,
     model: data.model || MODEL(env),
@@ -307,7 +307,7 @@ export default {
         return legacy.fetch(request, env, ctx);
       }
 
-      return json({
+      return json(request, {
         ok: true,
         service: "hephzibah-behulah-ai",
         version: "7.0.0",
