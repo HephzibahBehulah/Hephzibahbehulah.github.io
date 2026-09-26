@@ -14,7 +14,7 @@
 <div class="os-brand"><img class="hb-brand-mark" src="assets/hb-logo.svg" alt="HB"><span class="hb-brand-name"><strong>ADIGUN CONTROL</strong><small>PRIVATE OPERATIONS</small></span></div>
 <div class="os-side-label">PRIVATE CONTROL</div>
 <nav class="os-nav">
-<a class="active" href="#overview">◉ OVERVIEW</a><a href="#knowledge">▤ KNOWLEDGE</a><a href="#automation">↻ AUTOMATION</a><a href="#security">⌁ SECURITY</a><a href="https://hephzibahbehulah.com" target="_blank" rel="noopener">← PUBLIC SITE</a>
+<a class="active" href="#overview">◉ OVERVIEW</a><a href="#operator">⌁ OPERATOR</a><a href="#intelligence">▤ INTELLIGENCE</a><a href="#security">⌁ SECURITY</a><a href="https://hephzibahbehulah.com" target="_blank" rel="noopener">← PUBLIC SITE</a>
 </nav>
 <div class="os-status">ACCESS<br><b id="accessStatus">● CHECKING</b><br>identity: <span id="identityEmail">—</span><br>scope: private control</div>
 </aside>
@@ -33,15 +33,29 @@
 <article class="admin-card"><span>PRIVILEGE</span><strong>ALLOW-LISTED</strong><small>Sensitive actions require explicit server approval</small></article>
 </section>
 
-<section class="os-panel admin-section" id="knowledge"><div class="os-panel-head"><span>01 / KNOWLEDGE CONTROL</span><span>PRIVATE</span></div>
-<div class="admin-panel-body"><div><b>WEBSITE INTELLIGENCE</b><p>ADIGUN can retrieve approved website context and persistent knowledge before answering public questions.</p></div><button class="os-btn" type="button" disabled>REINDEX — NEXT CONTROL</button></div></section>
+<section class="os-panel admin-section" id="operator">
+<div class="os-panel-head"><span>01 / PRIVATE OPERATOR</span><span>AUTHENTICATED AI</span></div>
+<div class="admin-chat">
+  <div class="admin-chat-messages" id="adminMessages"><div class="admin-chat-message system">PRIVATE ADIGUN // authenticated operator online.</div><div class="admin-chat-message assistant">Ask me to inspect the website, analyze an attachment, investigate a problem, or explain anything.</div></div>
+  <div class="admin-attachments" id="adminAttachmentChips"></div>
+  <div class="admin-chat-input"><input id="adminAttachmentInput" type="file" multiple accept=".pdf,.doc,.docx,.txt,.md,.csv,.json,.log,.xml,.xlsx,.xls,.yaml,.yml,.js,.ts,.py,.html,.css,.sql,.sh,.png,.jpg,.jpeg,.webp,.gif"><button class="os-btn" id="adminAttach" type="button">📎 ATTACH</button><input id="adminInput" placeholder="Ask Private ADIGUN..." autocomplete="off"><button id="adminSend" class="os-btn primary" type="button">SEND</button></div>
+</div>
+</section>
 
-<section class="os-panel admin-section" id="automation"><div class="os-panel-head"><span>02 / CONTROLLED AUTOMATION</span><span id="automationBadge">AUTHENTICATED</span></div>
-<div class="admin-panel-body"><div><b>CONTROLLED WORKFLOW</b><p>The current workflow is a server-side demonstration of the permission boundary. It does not modify GitHub, files, email or production data.</p></div><button id="runAutomation" class="os-btn primary" type="button">RUN CONTROLLED WORKFLOW</button></div>
-<div id="eventStream" class="event-stream"><div class="event-empty">No workflow executed.</div></div></section>
+<section class="os-panel admin-section" id="intelligence">
+<div class="os-panel-head"><span>02 / LIVE INTELLIGENCE</span><span id="inspectState">READY</span></div>
+<div class="admin-ops">
+<button class="os-btn" data-inspect="all" type="button">FULL SYSTEM CHECK</button>
+<button class="os-btn" data-inspect="site" type="button">CHECK WEBSITE</button>
+<button class="os-btn" data-inspect="security" type="button">SECURITY HEADERS</button>
+<button class="os-btn" data-inspect="github" type="button">CHECK GITHUB</button>
+<button class="os-btn" data-inspect="cloudflare" type="button">CHECK CLOUDFLARE EDGE</button>
+</div>
+<pre class="admin-inspect-output" id="inspectOutput">No inspection has been run.</pre>
+</section>
 
 <section class="os-panel admin-section" id="security"><div class="os-panel-head"><span>03 / SECURITY</span><span>DEFENSE IN DEPTH</span></div>
-<div class="security-grid"><div><b>01 / IDENTITY</b><span>Cloudflare Access authenticates the administrator before the application is reached.</span></div><div><b>02 / MFA</b><span>Enable MFA in the Access policy for this sensitive application.</span></div><div><b>03 / SERVER SECRETS</b><span>OpenAI and other credentials are stored as Cloudflare secrets, never in browser code.</span></div><div><b>04 / AUTHORIZATION</b><span>Worker endpoints verify the authenticated Access identity before privileged operations.</span></div></div></section>
+<div class="security-grid"><div><b>01 / IDENTITY</b><span>Cloudflare Access authenticates the administrator before the application is reached.</span></div><div><b>02 / MFA</b><span>Cloudflare Access protects this application. MFA is enforced at the identity layer.</span></div><div><b>03 / SERVER SECRETS</b><span>OpenAI and other credentials are stored as Cloudflare secrets, never in browser code.</span></div><div><b>04 / AUTHORIZATION</b><span>Worker endpoints verify the authenticated Access identity before privileged operations.</span></div></div></section>
 </div></main></div>
-<script src="js/adigun-admin.js?v=20260926-1"></script>
+<script src="js/adigun-admin.js?v=20260926-2"></script>
 </body></html>
