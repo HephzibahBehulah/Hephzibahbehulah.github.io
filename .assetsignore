@@ -22,6 +22,8 @@ _headers
 
 # Root Worker source is deployed as code, not as a static asset
 worker.js
+worker-openai.js
+worker-v2.js
 
 # External Python ML service source
 ml-service/
