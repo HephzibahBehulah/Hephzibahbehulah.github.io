@@ -4,6 +4,36 @@ document.addEventListener("DOMContentLoaded",()=>{
   const systemState=$("#systemState"),identityState=$("#identityState"),identityDetail=$("#identityDetail");
   const messages=$("#adminMessages"),input=$("#adminInput"),send=$("#adminSend"),fileInput=$("#adminAttachmentInput"),attach=$("#adminAttach"),chips=$("#adminAttachmentChips");
   const inspectOutput=$("#inspectOutput"),inspectState=$("#inspectState");
+  const terminalState=$("#terminalState"),terminalMeta=$("#terminalMeta"),terminalHost=$("#adigunTerminal"),terminalCommand=$("#terminalCommand"),terminalRun=$("#terminalRun"),terminalClear=$("#terminalClear");
+  async function runSandboxCommand(command){
+    const q=String(command||"").trim();
+    if(!q)return;
+    terminalRun.disabled=true;
+    terminalState.textContent="● EXECUTING";
+    terminalMeta.textContent="Sending an allow-listed command to the authenticated Linux execution node…";
+    terminalHost.textContent+="\n\n$ "+q+"\n";
+    try{
+      const r=await fetch("/api/admin/sandbox",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",body:JSON.stringify({command:q})});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok)throw new Error(d.error||"Sandbox execution failed");
+      const stdout=String(d.result?.stdout||"");
+      const stderr=String(d.result?.stderr||"");
+      terminalHost.textContent+=stdout+(stderr?"\n[stderr]\n"+stderr:"");
+      terminalHost.textContent+="\n[exit "+String(d.result?.exitCode??"—")+"]\n";
+      terminalHost.scrollTop=terminalHost.scrollHeight;
+      commandOutput.textContent=JSON.stringify(d,null,2);
+      terminalState.textContent="● COMPLETE";
+      terminalMeta.textContent="Live Linux execution completed. Evidence ID: "+String(d.evidence?.evidenceId||"—");
+    }catch(e){
+      terminalHost.textContent+="\nERROR: "+String(e.message||e)+"\n";
+      terminalState.textContent="● ERROR";
+      terminalMeta.textContent=String(e.message||e);
+    }finally{terminalRun.disabled=false;terminalCommand.focus()}
+  }
+  terminalRun?.addEventListener("click",()=>runSandboxCommand(terminalCommand.value));
+  terminalCommand?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSandboxCommand(terminalCommand.value)}});
+  terminalClear?.addEventListener("click",()=>{terminalHost.textContent="ADIGUN EXECUTION NODE\nstatus: waiting\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: Cloudflare Access\n";commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Every execution is server-side, allow-listed, authenticated and returned with an evidence ID.";});
+
   const history=[]; let files=[];
   const session=(()=>{let v=localStorage.getItem("hb-admin-session");if(!v){v=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36);localStorage.setItem("hb-admin-session",v)}return v})();
 
