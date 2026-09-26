@@ -35,3 +35,16 @@
 .admin-terminal-actions{display:flex;flex-wrap:wrap;gap:8px}
 .admin-terminal-actions .os-btn{font-family:"JetBrains Mono",monospace}
 .admin-inspect-output{max-height:460px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+
+/* Private ADIGUN response presentation and generation indicator. */
+.admin-chat-message.assistant{line-height:1.75}
+.admin-chat-message.assistant .adigun-copy-toolbar{display:flex;justify-content:flex-end;margin:-2px -2px 8px;opacity:.72}
+.admin-chat-message.assistant .adigun-copy-button,.admin-chat-message.assistant .adigun-code-copy{border:1px solid var(--line);background:rgba(110,231,255,.04);color:var(--admin-cyan);padding:4px 7px;font:8px var(--mono);cursor:pointer}
+.admin-chat-message.assistant .adigun-copy-button:hover,.admin-chat-message.assistant .adigun-code-copy:hover{border-color:rgba(110,231,255,.5)}
+.admin-chat-message.assistant h1,.admin-chat-message.assistant h2,.admin-chat-message.assistant h3,.admin-chat-message.assistant h4{margin:14px 0 7px;line-height:1.25}
+.admin-chat-message.assistant p{margin:8px 0}.admin-chat-message.assistant ul,.admin-chat-message.assistant ol{margin:8px 0 8px 20px;padding:0}.admin-chat-message.assistant li{margin:3px 0}
+.admin-chat-message.assistant blockquote{border-left:2px solid rgba(110,231,255,.3);margin:10px 0;padding:4px 12px;color:var(--muted)}
+.admin-chat-message.assistant table{width:100%;border-collapse:collapse;margin:10px 0;font-size:10px}.admin-chat-message.assistant th,.admin-chat-message.assistant td{border:1px solid var(--line);padding:7px;vertical-align:top;text-align:left}.admin-chat-message.assistant th{color:var(--admin-cyan)}
+.admin-chat-message.assistant pre{position:relative;overflow:auto;margin:10px 0;padding:12px;background:rgba(0,0,0,.32);border:1px solid var(--line);white-space:pre;max-width:100%}.admin-chat-message.assistant pre code{display:block;padding-right:72px;font:10px/1.65 var(--mono)}.admin-chat-message.assistant .adigun-code-copy{position:absolute;right:8px;top:8px}.admin-chat-message.assistant .katex-display{overflow:auto;padding:4px 0}
+.admin-thinking{display:flex!important;align-items:center;gap:7px;min-width:220px;color:var(--muted)}.admin-thinking span{font-size:9px;letter-spacing:.08em}.admin-thinking i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:adminPulse 1.2s infinite ease-in-out}.admin-thinking i:nth-of-type(2){animation-delay:.15s}.admin-thinking i:nth-of-type(3){animation-delay:.3s}
+@keyframes adminPulse{0%,70%,100%{opacity:.25;transform:scale(.8)}35%{opacity:1;transform:scale(1.15)}}
