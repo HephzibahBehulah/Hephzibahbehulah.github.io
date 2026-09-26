@@ -32,17 +32,39 @@ document.addEventListener("DOMContentLoaded",()=>{
     }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";send.disabled=true}
   }
 
+  function showAgentPlan(plan){
+    if(!plan)return;
+    const lines=[
+      "AGENT PLAN // "+String(plan.mode||"unknown").toUpperCase(),
+      "approval: "+(plan.approvalRequired?"REQUIRED":"not required"),
+      ...(plan.actions||[]).map(a=>"- "+String(a.title||a.id)+": "+String(a.status||"unknown")+" — "+String(a.description||""))
+    ];
+    add(lines.join("\n"),"system");
+  }
+
   async function ask(){
     const q=input.value.trim();if(!q&&!files.length)return;
     const content=[];if(q)content.push({type:"input_text",text:q});content.push(...files.map(f=>f.part));
-    add(q||("Attached "+files.length+" file"+(files.length===1?"":"s")),"user");history.push({role:"user",content});input.value="";send.disabled=true;
+    add(q||("Attached "+files.length+" file"+(files.length===1?"":"s")),"user");
+    history.push({role:"user",content});input.value="";send.disabled=true;
     const old=files;files=[];renderFiles();
     try{
-      const r=await fetch("/api/chat",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",body:JSON.stringify({messages:history.slice(-10),siteContext:"PRIVATE ADMINISTRATOR CONTEXT: authenticated administrator is asking from ADIGUN Control."})});
+      const r=await fetch("/api/admin/agent",{
+        method:"POST",
+        headers:{"content-type":"application/json","x-hb-session":session},
+        credentials:"same-origin",
+        body:JSON.stringify({
+          task:q||"Analyze the attached material and investigate anything relevant to the request.",
+          messages:history.slice(-8),
+          siteContext:"PRIVATE ADMINISTRATOR CONTEXT: authenticated administrator is asking from ADIGUN Control."
+        })
+      });
       const d=await r.json().catch(()=>({}));
-      if(!r.ok||!d.answer)throw new Error(d.error||"AI gateway unavailable");
-      add(d.answer,"assistant");history.push({role:"assistant",content:d.answer});
-    }catch(e){add("ADIGUN AI gateway error: "+String(e.message||"unknown error"),"assistant")}
+      if(!r.ok||!d.answer)throw new Error(d.error||"Private agent unavailable");
+      add(d.answer,"assistant");
+      showAgentPlan(d.plan);
+      history.push({role:"assistant",content:d.answer});
+    }catch(e){add("ADIGUN private agent error: "+String(e.message||"unknown error"),"assistant")}
     finally{old.length=0;send.disabled=false}
   }
   send?.addEventListener("click",ask);input?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ask()}});
