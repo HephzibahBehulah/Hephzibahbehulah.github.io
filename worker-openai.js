@@ -20,7 +20,7 @@ function b64url(bytes) {
   let s = "";
   const arr = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
   for (const b of arr) s += String.fromCharCode(b);
-  return btoa(s).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"");
+  return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
 }
 function fromB64url(s) {
   const pad = "=".repeat((4 - (s.length % 4)) % 4);
@@ -61,7 +61,16 @@ async function authRoutes(request,env,url) {
     const supplied=String(body?.key||"");
     if(!supplied || supplied.length>512) return json({ok:false,error:"Invalid session key."},401);
     const suppliedBytes=new TextEncoder().encode(supplied), expectedBytes=new TextEncoder().encode(env.ADIGUN_AGENT_KEY);
-    if(suppliedBytes.length!==expectedBytes.length || !(await crypto.subtle.timingSafeEqual(suppliedBytes,expectedBytes))) return json({ok:false,error:"Invalid session key."},401);
+    if(env.API_LIMITER){
+      const ip=request.headers.get("CF-Connecting-IP")||"unknown";
+      const attempt=await env.API_LIMITER.limit({key:"adigun-unlock:"+ip});
+      if(!attempt.success) return json({ok:false,error:"Too many unlock attempts. Try again later."},429,{"retry-after":"60"});
+    }
+    if(suppliedBytes.length!==expectedBytes.length) return json({ok:false,error:"Invalid session key."},401);
+    const [a,b]=await Promise.all([crypto.subtle.digest("SHA-256",suppliedBytes),crypto.subtle.digest("SHA-256",expectedBytes)]);
+    const aa=new Uint8Array(a),bb=new Uint8Array(b); let diff=0;
+    for(let i=0;i<aa.length;i++) diff|=aa[i]^bb[i];
+    if(diff!==0) return json({ok:false,error:"Invalid session key."},401);
     const token=await signSession(env,Date.now());
     return json({ok:true,authenticated:true},200,{ "set-cookie": "adigun_session="+encodeURIComponent(token)+"; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Strict" });
   }
