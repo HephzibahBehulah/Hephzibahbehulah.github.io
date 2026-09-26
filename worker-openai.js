@@ -14,6 +14,63 @@ const json = (body, status = 200, extra = {}) =>
   });
 
 const MODEL = env => env.OPENAI_MODEL || "gpt-5.6-luna";
+const SESSION_TTL_MS = 30 * 60 * 1000;
+
+function b64url(bytes) {
+  let s = "";
+  const arr = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+  for (const b of arr) s += String.fromCharCode(b);
+  return btoa(s).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"");
+}
+function fromB64url(s) {
+  const pad = "=".repeat((4 - (s.length % 4)) % 4);
+  const bin = atob(s.replace(/-/g,"+").replace(/_/g,"/") + pad);
+  return Uint8Array.from(bin,c=>c.charCodeAt(0));
+}
+async function signSession(env, issuedAt) {
+  const key = await crypto.subtle.importKey("raw",new TextEncoder().encode(env.ADIGUN_AGENT_KEY),{name:"HMAC",hash:"SHA-256"},false,["sign"]);
+  const data = String(issuedAt);
+  const sig = await crypto.subtle.sign("HMAC",key,new TextEncoder().encode(data));
+  return data+"."+b64url(sig);
+}
+async function verifySession(env, token) {
+  if(!env.ADIGUN_AGENT_KEY || !token) return false;
+  const parts=token.split(".");
+  if(parts.length!==2) return false;
+  const issuedAt=Number(parts[0]);
+  if(!Number.isFinite(issuedAt) || Date.now()-issuedAt<0 || Date.now()-issuedAt>SESSION_TTL_MS) return false;
+  const key=await crypto.subtle.importKey("raw",new TextEncoder().encode(env.ADIGUN_AGENT_KEY),{name:"HMAC",hash:"SHA-256"},false,["verify"]);
+  return crypto.subtle.verify("HMAC",key,fromB64url(parts[1]),new TextEncoder().encode(parts[0]));
+}
+function getCookie(request,name) {
+  const raw=request.headers.get("cookie")||"";
+  const part=raw.split(";").map(x=>x.trim()).find(x=>x.startsWith(name+"="));
+  return part ? decodeURIComponent(part.slice(name.length+1)) : "";
+}
+async function requireAuth(request,env) {
+  return verifySession(env,getCookie(request,"adigun_session"));
+}
+async function authRoutes(request,env,url) {
+  if(url.pathname==="/api/auth/status" && request.method==="GET") {
+    const authenticated=await requireAuth(request,env);
+    return json({ok:true,authenticated,message:authenticated?"Authenticated session active.":"Read-only mode is active."});
+  }
+  if(url.pathname==="/api/auth/unlock" && request.method==="POST") {
+    if(!env.ADIGUN_AGENT_KEY) return json({ok:false,error:"Authenticated mode is not configured on the server."},503);
+    let body={}; try{body=await request.json()}catch{}
+    const supplied=String(body?.key||"");
+    if(!supplied || supplied.length>512) return json({ok:false,error:"Invalid session key."},401);
+    const suppliedBytes=new TextEncoder().encode(supplied), expectedBytes=new TextEncoder().encode(env.ADIGUN_AGENT_KEY);
+    if(suppliedBytes.length!==expectedBytes.length || !(await crypto.subtle.timingSafeEqual(suppliedBytes,expectedBytes))) return json({ok:false,error:"Invalid session key."},401);
+    const token=await signSession(env,Date.now());
+    return json({ok:true,authenticated:true},200,{ "set-cookie": "adigun_session="+encodeURIComponent(token)+"; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Strict" });
+  }
+  if(url.pathname==="/api/auth/logout" && request.method==="POST") {
+    return new Response(JSON.stringify({ok:true,authenticated:false}),{status:200,headers:{"content-type":"application/json; charset=utf-8","set-cookie":"adigun_session=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Strict;"}});
+  }
+  return null;
+}
+
 
 const SYSTEM = `You are ADIGUN, the ChatGPT-powered intelligence engine of Hephzibah Behulah's website.
 
@@ -239,6 +296,25 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS });
     }
+    const authResponse = await authRoutes(request, env, url);
+    if (authResponse) return authResponse;
+
+    if (url.pathname === "/api/automation/demo" && request.method === "POST") {
+      if (!(await requireAuth(request, env))) return json({ ok: false, error: "Authenticated session required." }, 401);
+      return json({
+        ok: true,
+        workflow: "adigun-controlled-demo",
+        events: [
+          "TRIGGER  / authenticated workflow requested",
+          "DECISION / verify allow-listed workflow",
+          "ACTION   / simulate project intelligence refresh",
+          "REPORT   / generate technical summary event",
+          "LOG      / write workflow result to audit stream"
+        ],
+        completedAt: new Date().toISOString()
+      });
+    }
+
 
     if (url.pathname === "/api/health" && request.method === "GET") {
       if (!env.OPENAI_API_KEY) {
