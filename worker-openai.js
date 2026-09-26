@@ -355,9 +355,9 @@ async function openAIChat(request, env) {
       body: JSON.stringify(payload)
     });
   } catch {
-    const fallback = await cloudflareFallback(request, env, messages, context);
+    const fallback = await openRouterFallback(request, env, messages, context) || await cloudflareFallback(request, env, messages, context);
     if (fallback) return fallback;
-    return json(request, { ok: false, error: "AI gateway is unreachable." }, 502);
+    return json(request, { ok: false, error: "All configured AI providers are unavailable." }, 502);
   }
 
   const data = await response.json().catch(() => ({}));
@@ -365,7 +365,7 @@ async function openAIChat(request, env) {
     const upstream = String(data?.error?.message || "OpenAI request failed.");
     const requestId = response.headers.get("x-request-id") || null;
     console.error("ADIGUN OpenAI error", { status: response.status, type: data?.error?.type || null, code: data?.error?.code || null, requestId });
-    const fallback = await cloudflareFallback(request, env, messages, context);
+    const fallback = await openRouterFallback(request, env, messages, context) || await cloudflareFallback(request, env, messages, context);
     if (fallback) return fallback;
     return json(request, {
       ok: false,
