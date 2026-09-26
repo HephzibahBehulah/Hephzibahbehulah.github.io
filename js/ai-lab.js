@@ -21,5 +21,48 @@ function parseCSV(t){const rows=[];let row=[],cell="",q=false;for(let i=0;i<t.le
 function profileData(file){const reader=new FileReader();reader.onload=()=>{const raw=String(reader.result),rows=/\.json$/i.test(file.name)?jsonRows(raw):parseCSV(raw);if(!rows.length)return;const headers=rows[0].map((h,i)=>h||"column_"+(i+1)),body=rows.slice(1).map(r=>headers.map((_,i)=>r[i]??""));const cols=headers.map((h,i)=>{const vals=body.map(r=>r[i]);const non=vals.filter(v=>v!=="");const nums=non.filter(v=>Number.isFinite(Number(v)));const numeric=non.length>0&&nums.length/non.length>.8;const miss=body.length-non.length;const uniq=new Set(non).size;let mean=null; if(numeric&&nums.length)mean=nums.reduce((a,v)=>a+Number(v),0)/nums.length;return {h,i,non,numeric,miss,uniq,mean}});$("#dataName").textContent=file.name.toUpperCase();$("#dataShape").textContent=body.length+" ROWS × "+headers.length+" COLS";const dup=body.length-new Set(body.map(r=>JSON.stringify(r))).size;const num=cols.filter(c=>c.numeric).length;const html='<div class="data-kpis"><div class="data-kpi"><b>'+body.length+'</b><span>rows</span></div><div class="data-kpi"><b>'+headers.length+'</b><span>columns</span></div><div class="data-kpi"><b>'+cols.reduce((a,c)=>a+c.miss,0)+'</b><span>missing cells</span></div><div class="data-kpi"><b>'+dup+'</b><span>duplicate rows</span></div></div><table class="data-table"><thead><tr><th>FIELD</th><th>TYPE</th><th>MISS</th><th>UNIQUE</th><th>MEAN</th></tr></thead><tbody>'+cols.map(c=>'<tr><td>'+esc(c.h)+'</td><td>'+ (c.numeric?"numeric":"categorical/text")+'</td><td>'+c.miss+'</td><td>'+c.uniq+'</td><td>'+ (c.mean==null?"—":c.mean.toFixed(3))+'</td></tr>').join("")+'</tbody></table><p class="ai-empty" style="margin-top:12px">ML HINT: '+(num>=1?"numeric features detected; consider distribution checks, correlations and a task-specific model. ":"")+"Validate the target column, leakage, class balance and train/test split before modelling.</p>";$("#dataResult").innerHTML=html};reader.readAsText(file)}
 function jsonRows(raw){try{const j=JSON.parse(raw);const a=Array.isArray(j)?j:[j];if(!a.length)return[];const keys=[...new Set(a.flatMap(x=>Object.keys(x||{})))];return[keys,...a.map(x=>keys.map(k=>x?.[k]??""))]}catch{return[]}}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
-const stream=$("#eventStream"),events=["TRIGGER  / repository change detected","DECISION / classify project + affected capabilities","ACTION   / refresh project intelligence index","REPORT   / generate concise technical summary","LOG      / event recorded in audit stream"];$("#runAutomation")?.addEventListener("click",()=>{stream.innerHTML="";events.forEach((e,i)=>setTimeout(()=>{const d=document.createElement("div");d.className="event-line";d.innerHTML="<b>"+String(i+1).padStart(2,"0")+"</b>  "+e;stream.appendChild(d)},i*420))});
+const authKey=$("#adigunKey"),authUnlock=$("#adigunKeySave"),authLogout=$("#adigunLogout"),authStatus=$("#adigunKeyStatus"),authBadge=$("#authModeBadge"),authDescription=$("#authDescription"),authMode=$("#automationModeBadge"),stream=$("#eventStream"),runAutomation=$("#runAutomation");
+function setAuthUI(authenticated,message){
+  authBadge.textContent=authenticated?"AUTHENTICATED":"READ-ONLY";
+  authBadge.className="auth-badge "+(authenticated?"authenticated":"readonly");
+  authDescription.textContent=authenticated?"Authenticated session active. Only server-approved tools and workflows can be invoked.":"ADIGUN can answer questions, search approved knowledge and use configured public tools. No privileged action is available.";
+  authUnlock.hidden=authenticated; authLogout.hidden=!authenticated; authKey.hidden=authenticated;
+  authStatus.textContent=message|| (authenticated?"Authenticated mode is active.":"Read-only mode is active.");
+  authStatus.className="ai-message system auth-status "+(authenticated?"success":"");
+  authMode.textContent=authenticated?"AUTHENTICATED CONTROL":"AUTH REQUIRED";
+}
+async function authStatusCheck(){
+  try{const r=await fetch("/api/auth/status",{credentials:"same-origin"}),d=await r.json();setAuthUI(Boolean(d.authenticated),d.message)}
+  catch{setAuthUI(false,"Authentication service unavailable; read-only mode remains active.")}
+}
+authUnlock?.addEventListener("click",async()=>{
+  const key=authKey.value.trim(); if(!key){authStatus.textContent="Enter the session key.";return}
+  authUnlock.disabled=true; authStatus.textContent="Verifying session…";
+  try{const r=await fetch("/api/auth/unlock",{method:"POST",headers:{"content-type":"application/json"},credentials:"same-origin",body:JSON.stringify({key})});const d=await r.json().catch(()=>({}));
+    if(r.ok&&d.authenticated){authKey.value="";setAuthUI(true,"Authenticated session established. The server will enforce permissions on every privileged request.");}
+    else setAuthUI(false,d.error||"Session could not be unlocked.");
+  }catch{setAuthUI(false,"Authentication service unavailable.");}
+  finally{authUnlock.disabled=false}
+});
+authLogout?.addEventListener("click",async()=>{
+  try{await fetch("/api/auth/logout",{method:"POST",credentials:"same-origin"})}catch{}
+  setAuthUI(false,"Session locked. Read-only mode is active.");
+});
+runAutomation?.addEventListener("click",async()=>{
+  runAutomation.disabled=true; stream.innerHTML='<div class="event-line pending"><b>00</b>  REQUEST / validating authenticated session…</div>';
+  try{
+    const r=await fetch("/api/automation/demo",{method:"POST",headers:{"content-type":"application/json"},credentials:"same-origin",body:JSON.stringify({workflow:"adigun-controlled-demo"})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok&&Array.isArray(d.events)){
+      stream.innerHTML="";
+      d.events.forEach((e,i)=>{const el=document.createElement("div");el.className="event-line";el.innerHTML="<b>"+String(i+1).padStart(2,"0")+"</b>  "+esc(e);stream.appendChild(el)});
+      authMode.textContent="WORKFLOW COMPLETE";
+    }else{
+      stream.innerHTML='<div class="event-line error"><b>ERR</b>  '+esc(d.error||"Authentication required.")+'</div>';
+      if(r.status===401)setAuthUI(false,"Your session is locked or expired.");
+    }
+  }catch{stream.innerHTML='<div class="event-line error"><b>ERR</b>  Workflow service unavailable.</div>'}
+  finally{runAutomation.disabled=false}
+});
+authStatusCheck();
 });
