@@ -66,3 +66,27 @@
 @media(max-width:900px){.ai-attachment-workspace{grid-template-columns:1fr}}
 
 .ai-attachment-picker.drag{border-color:var(--ai-cyan);box-shadow:inset 0 0 35px rgba(110,231,255,.08)}
+
+/* AI response presentation: copyable Markdown/code and generation indicator. */
+.ai-message.assistant{line-height:1.75}
+.ai-message.assistant .adigun-copy-toolbar{display:flex;justify-content:flex-end;margin:-2px -2px 8px;opacity:.72}
+.ai-message.assistant .adigun-copy-button,.ai-message.assistant .adigun-code-copy{border:1px solid var(--line);background:rgba(110,231,255,.04);color:var(--ai-cyan);padding:4px 7px;font:8px var(--mono);cursor:pointer}
+.ai-message.assistant .adigun-copy-button:hover,.ai-message.assistant .adigun-code-copy:hover{border-color:rgba(110,231,255,.5)}
+.ai-message.assistant h1,.ai-message.assistant h2,.ai-message.assistant h3,.ai-message.assistant h4{margin:14px 0 7px;line-height:1.25}
+.ai-message.assistant p{margin:8px 0}
+.ai-message.assistant ul,.ai-message.assistant ol{margin:8px 0 8px 20px;padding:0}
+.ai-message.assistant li{margin:3px 0}
+.ai-message.assistant blockquote{border-left:2px solid rgba(110,231,255,.3);margin:10px 0;padding:4px 12px;color:var(--muted)}
+.ai-message.assistant table{width:100%;border-collapse:collapse;margin:10px 0;font-size:10px}
+.ai-message.assistant th,.ai-message.assistant td{border:1px solid var(--line);padding:7px;vertical-align:top;text-align:left}
+.ai-message.assistant th{color:var(--ai-cyan)}
+.ai-message.assistant pre{position:relative;overflow:auto;margin:10px 0;padding:12px;background:rgba(0,0,0,.32);border:1px solid var(--line);white-space:pre;max-width:100%}
+.ai-message.assistant pre code{display:block;padding-right:72px;font:10px/1.65 var(--mono)}
+.ai-message.assistant .adigun-code-copy{position:absolute;right:8px;top:8px}
+.ai-message.assistant .katex-display{overflow:auto;padding:4px 0}
+.ai-thinking{display:flex!important;align-items:center;gap:7px;min-width:190px;color:var(--muted)}
+.ai-thinking span{font-size:9px;letter-spacing:.08em}
+.ai-thinking i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:adigunPulse 1.2s infinite ease-in-out}
+.ai-thinking i:nth-of-type(2){animation-delay:.15s}.ai-thinking i:nth-of-type(3){animation-delay:.3s}
+@keyframes adigunPulse{0%,70%,100%{opacity:.25;transform:scale(.8)}35%{opacity:1;transform:scale(1.15)}}
+@media(max-width:560px){.ai-message.assistant{max-width:96%}.ai-message.assistant table{display:block;overflow:auto}}
