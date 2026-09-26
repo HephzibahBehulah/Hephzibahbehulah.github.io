@@ -1,16 +1,29 @@
-// ADIGUN deployment verification marker — 2026-09-26\nimport legacy from "./worker-v2.js";
+// ADIGUN deployment verification marker — 2026-09-26
+import legacy from "./worker-v2.js";
 
-const CORS = {
-  "access-control-allow-origin": "https://hephzibahbehulah.com",
-  "access-control-allow-methods": "GET,POST,OPTIONS",
-  "access-control-allow-headers": "content-type,x-hb-session,x-adigun-key,x-hb-admin-key",
-  "access-control-max-age": "86400"
+const corsHeaders = request => {
+  const origin = request.headers.get("origin") || "";
+  const allowed = new Set([
+    "https://hephzibahbehulah.com",
+    "https://admin.hephzibahbehulah.com"
+  ]);
+  const headers = {
+    "access-control-allow-methods": "GET,POST,OPTIONS",
+    "access-control-allow-headers": "content-type,x-hb-session,x-adigun-key,x-hb-admin-key",
+    "access-control-max-age": "86400",
+    "vary": "Origin"
+  };
+  if (allowed.has(origin)) {
+    headers["access-control-allow-origin"] = origin;
+    headers["access-control-allow-credentials"] = "true";
+  }
+  return headers;
 };
 
 const json = (body, status = 200, extra = {}) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8", ...CORS, ...extra }
+    headers: { "content-type": "application/json; charset=utf-8", ...corsHeaders(request), ...extra }
   });
 
 const MODEL = env => env.OPENAI_MODEL || "gpt-5.6-luna";
@@ -284,7 +297,7 @@ export default {
     }
 
     if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: CORS });
+      return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
     const adminResponse = await adminRoutes(request, env, url, ctx);
     if (adminResponse) return adminResponse;
