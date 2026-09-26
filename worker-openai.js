@@ -698,6 +698,12 @@ async function runAgentCommands(request,env,commands){
   return out;
 }
 
+function requestedSandboxCommands(task){
+  const q=String(task||"").toLowerCase();
+  return Object.keys(SANDBOX_COMMANDS).filter(command =>
+    q.includes("run "+command) || q.includes("execute "+command) || q.includes("check "+command)
+  ).slice(0,3);
+}
 async function privateAgent(request, env, url, ctx) {
   const identity = await getAdminIdentity(ctx, env);
   if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
@@ -709,6 +715,12 @@ async function privateAgent(request, env, url, ctx) {
   const targets = agentTargets(task);
   const requested = requestedCommands(task);
   const commandResults = requested.length ? await runAgentCommands(request, env, requested) : [];
+  const sandboxCommands = requestedSandboxCommands(task);
+  const sandboxResults = [];
+  for (const command of sandboxCommands) {
+    const response = await executeSandboxCommand(request, env, ctx, command);
+    sandboxResults.push({command,data:await response.json().catch(()=>({ok:false,error:"Invalid sandbox result."}))});
+  }
   const investigations = [];
   for (const target of targets) {
     investigations.push({target,data:await runAgentInspection(request, env, target, ctx)});
@@ -723,6 +735,7 @@ async function privateAgent(request, env, url, ctx) {
     capabilityManifest:capabilityManifest(env,true),
     investigation:investigations,
     commandResults,
+    sandboxResults,
     plan
   }, null, 2).slice(0,42000);
 
@@ -792,6 +805,7 @@ async function privateAgent(request, env, url, ctx) {
     targets,
     investigations,
     commandResults,
+    sandboxResults,
     plan,
     answer,
     next:"Approval-required actions are proposed only. No state-changing operation was executed.",
