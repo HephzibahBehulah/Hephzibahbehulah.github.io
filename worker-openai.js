@@ -729,6 +729,21 @@ async function privateInspect(request, env, url, ctx) {
     }catch(e){result.checks.push({name:"dns",status:"error",error:String(e?.message||e)})}
     result.checks.push({name:"cloudflare-edge",status:"observed",note:"Edge presence is inferred from live response headers. Account-level Cloudflare mutations are not exposed by this Worker."});
   }
+  result.checks = result.checks.map(check => {
+    if (check.evidenceId) return check;
+    return {
+      ...check,
+      evidenceId:createEvidenceId("CHECK"),
+      observedAt:new Date().toISOString(),
+      provenance:{
+        source:"server-executed-private-inspection",
+        tool:String(check.name||"private.inspect"),
+        target,
+        actor:identity.email
+      }
+    };
+  });
+  result.evidenceIds = result.checks.map(check=>check.evidenceId);
   return json(request,result);
 }
 export default {
