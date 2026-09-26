@@ -1,4 +1,5 @@
 // ADIGUN deployment verification marker — 2026-09-26
+// Free Cloudflare Workers AI fallback is enabled when the primary provider is unavailable.
 import legacy from "./worker-v2.js";
 
 const corsHeaders = request => {
