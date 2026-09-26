@@ -54,7 +54,7 @@
   "containers": [
     {
       "class_name": "Sandbox",
-      "image": "cloudflare/sandbox:0.12.10-python",
+      "image": "docker.io/cloudflare/sandbox:0.12.10-python",
       "instance_type": "lite",
       "max_instances": 1
     }
