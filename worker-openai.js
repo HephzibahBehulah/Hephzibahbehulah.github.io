@@ -300,7 +300,9 @@ async function openAIChat(request, env) {
       body: JSON.stringify(payload)
     });
   } catch {
-    return json(request, { ok: false, error: "OpenAI service is unreachable." }, 502);
+    const fallback = await cloudflareFallback(request, env, messages, context);
+    if (fallback) return fallback;
+    return json(request, { ok: false, error: "AI gateway is unreachable." }, 502);
   }
 
   const data = await response.json().catch(() => ({}));
