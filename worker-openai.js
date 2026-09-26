@@ -1,4 +1,4 @@
-import legacy from "./worker-v2.js";
+// ADIGUN deployment verification marker — 2026-09-26\nimport legacy from "./worker-v2.js";
 
 const CORS = {
   "access-control-allow-origin": "https://hephzibahbehulah.com",
