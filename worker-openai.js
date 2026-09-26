@@ -27,6 +27,7 @@ const json = (request, body, status = 200, extra = {}) =>
   });
 
 const MODEL = env => env.OPENAI_MODEL || "gpt-5.6-luna";
+const MAX_CHAT_BODY = 24 * 1024 * 1024;
 async function getAdminIdentity(ctx, env) {
   if (!ctx?.access) return null;
   try {
@@ -67,16 +68,16 @@ async function adminRoutes(request, env, url, ctx) {
   return null;
 }
 
-const SYSTEM = `You are ADIGUN, the ChatGPT-powered intelligence engine of Hephzibah Behulah's website.
+const SYSTEM = `You are ADIGUN, a powerful general-purpose AI assistant for Hephzibah Behulah.
 
-You are a capable general-purpose AI assistant, but you also have a special responsibility: understand and use the Hephzibah Behulah website as a knowledge source.
+You are not a local FAQ bot. Answer ordinary questions from model knowledge. Use verified website knowledge for site-specific questions. Use live web search for current, changing or externally verifiable facts. Analyze attached files and images directly when supplied.
 
-KNOWLEDGE PRIORITY
-1. VERIFIED WEBSITE CONTEXT and PERSISTENT KNOWLEDGE for questions about the owner, website, projects, tools, engineering library, cybersecurity notes, data work and site architecture.
-2. PUBLIC WEB when current, changing, unfamiliar or externally verifiable information is needed. You have web search available.
-3. GENERAL MODEL KNOWLEDGE for stable concepts and reasoning.
-
-Do not invent facts about the website. If the supplied local evidence does not contain something, say so and then answer from general knowledge when appropriate.
+KNOWLEDGE ROUTING
+1. Site-specific questions: prioritize verified local evidence.
+2. Stable general questions: answer directly from model knowledge; never require a local match.
+3. Current questions: use web search and distinguish live evidence from general knowledge.
+4. Attachments: inspect the supplied material and answer the user's request. Never claim to have inspected a file that was not received.
+5. Missing local evidence is not a reason to refuse a general question.
 
 RESPONSE STYLE
 - Answer like a high-quality ChatGPT response: direct, intelligent, clear and useful.
@@ -157,24 +158,45 @@ async function retrieveContext(request, env, q) {
   return pieces.join("\n\n=====\n\n").slice(0, 24000);
 }
 
-function normalizeMessages(body) {
-  const raw = Array.isArray(body?.messages)
-    ? body.messages
-    : [{ role: "user", content: String(body?.message || "") }];
-
-  const out = [];
-  let total = 0;
-
-  for (const m of raw.slice(-12)) {
-    const role = ["user", "assistant"].includes(m?.role) ? m.role : "user";
-    const content = String(m?.content || "").trim().slice(0, 8000);
-    if (!content) continue;
-    total += content.length;
-    if (total > 30000) break;
-    out.push({ role, content });
+function normalizeContent(content) {
+  if (typeof content === "string") return content.trim().slice(0, 12000);
+  if (!Array.isArray(content)) return "";
+  const parts = [];
+  for (const part of content.slice(0, 12)) {
+    if (!part || typeof part !== "object") continue;
+    if (part.type === "input_text") {
+      const text = String(part.text || "").slice(0, 12000);
+      if (text) parts.push({ type:"input_text", text });
+    } else if (part.type === "input_image") {
+      const image_url = String(part.image_url || "");
+      if (/^(https?:\/\/|data:image\/(png|jpeg|jpg|webp|gif);base64,)/i.test(image_url)) {
+        parts.push({type:"input_image",image_url,detail:["low","high","auto"].includes(part.detail)?part.detail:"auto"});
+      }
+    } else if (part.type === "input_file") {
+      const filename = String(part.filename || "attachment").slice(0,180);
+      const file_data = String(part.file_data || "");
+      const file_id = String(part.file_id || "");
+      if (file_id && /^file-[A-Za-z0-9_-]+$/.test(file_id)) parts.push({type:"input_file",file_id});
+      else if (file_data.startsWith("data:") && file_data.length <= 11 * 1024 * 1024) parts.push({type:"input_file",filename,file_data});
+    }
   }
-
+  return parts;
+}
+function normalizeMessages(body) {
+  const raw = Array.isArray(body?.messages) ? body.messages : [{ role:"user", content:String(body?.message || "") }];
+  const out=[]; let total=0;
+  for (const m of raw.slice(-12)) {
+    const role=["user","assistant"].includes(m?.role)?m.role:"user";
+    const content=normalizeContent(m?.content);
+    if (!content || (typeof content==="string" && !content.trim())) continue;
+    total += typeof content==="string" ? content.length : JSON.stringify(content).length;
+    if (total>50000) break;
+    out.push({role,content});
+  }
   return out;
+}
+function attachmentCount(messages) {
+  return messages.reduce((n,m)=>n+(Array.isArray(m.content)?m.content.filter(p=>p?.type==="input_file"||p?.type==="input_image").length:0),0);
 }
 
 function extractOutputText(data) {
@@ -225,7 +247,7 @@ async function openAIChat(request, env) {
     }
   }
 
-  const q = messages[messages.length - 1].content;
+  const lastContent = messages[messages.length - 1].content;\n  const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
   const context = await retrieveContext(request, env, q);
   const clientContext = String(body?.siteContext || "").slice(0, 10000);
 
@@ -284,6 +306,30 @@ async function openAIChat(request, env) {
   });
 }
 
+async function privateInspect(request, env, url, ctx) {
+  const identity=await getAdminIdentity(ctx,env);
+  if(!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+  const target=url.searchParams.get("target")||"all";
+  const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[]};
+
+  if(target==="all"||target==="site"||target==="security"){
+    try{
+      const r=await fetch("https://hephzibahbehulah.com/",{redirect:"follow"});
+      const h=Object.fromEntries(r.headers);
+      result.checks.push({name:"website",status:r.ok?"healthy":"degraded",httpStatus:r.status,finalUrl:r.url,cloudflare:Boolean(h["cf-ray"]||h.server==="cloudflare"),securityHeaders:{strictTransportSecurity:h["strict-transport-security"]||null,contentSecurityPolicy:h["content-security-policy"]||null,xContentTypeOptions:h["x-content-type-options"]||null,referrerPolicy:h["referrer-policy"]||null,permissionsPolicy:h["permissions-policy"]||null}});
+    }catch(e){result.checks.push({name:"website",status:"error",error:String(e?.message||e)})}
+  }
+  if(target==="all"||target==="github"){
+    try{
+      const r=await fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
+      const d=await r.json().catch(()=>({}));
+      result.checks.push({name:"github",status:r.ok?"healthy":"unavailable",repository:d.full_name||"HephzibahBehulah/HephzibahBehulah.github.io",defaultBranch:d.default_branch||null,updatedAt:d.updated_at||null,pushedAt:d.pushed_at||null,openIssues:d.open_issues_count??null});
+    }catch(e){result.checks.push({name:"github",status:"error",error:String(e?.message||e)})}
+  }
+  if(target==="all"||target==="cloudflare") result.checks.push({name:"cloudflare-edge",status:"observed",note:"The site is being served through Cloudflare when cf-ray/server headers are present. Account-level Cloudflare control is kept behind a separate server-side credential and is not exposed to the browser."});
+  return json(request,result);
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -299,7 +345,7 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
-    const adminResponse = await adminRoutes(request, env, url, ctx);
+    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);\n    const adminResponse = await adminRoutes(request, env, url, ctx);
     if (adminResponse) return adminResponse;
 
     if (url.pathname === "/api/health" && request.method === "GET") {
