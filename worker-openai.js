@@ -29,6 +29,59 @@ const json = (request, body, status = 200, extra = {}) =>
 
 const MODEL = env => env.OPENAI_MODEL || "gpt-5.6-luna";
 const MAX_CHAT_BODY = 24 * 1024 * 1024;
+
+function createEvidenceId(prefix="EVD") {
+  const stamp = new Date().toISOString().replace(/[-:.TZ]/g,"").slice(0,14);
+  const suffix = (globalThis.crypto?.randomUUID?.() || Math.random().toString(36).slice(2,10)).replace(/-/g,"").slice(0,8).toUpperCase();
+  return prefix+"-"+stamp+"-"+suffix;
+}
+
+function evidenceRecord({tool,target,result,status="observed",actor=null,startedAt=null}) {
+  return {
+    evidenceId:createEvidenceId(tool.toUpperCase().replace(/[^A-Z0-9]+/g,"-").slice(0,12)||"EVD"),
+    tool,
+    target,
+    status,
+    actor,
+    startedAt,
+    observedAt:new Date().toISOString(),
+    result
+  };
+}
+
+function capabilityManifest(env, authenticated=false) {
+  return {
+    generatedAt:new Date().toISOString(),
+    subject:authenticated ? "private-adigun" : "public-adigun",
+    executionPolicy: authenticated ? "authenticated-read-only-plus-approval-gated" : "public-read-only",
+    tools: {
+      "http.inspect": {available:true,execution:true,mutation:false},
+      "dns.lookup": {available:true,execution:true,mutation:false},
+      "github.read": {available:true,execution:true,mutation:false},
+      "security.inspect": {available:true,execution:true,mutation:false},
+      "python.execute": {available:false,execution:false,mutation:false},
+      "shell.execute": {available:false,execution:false,mutation:false},
+      "tls.inspect": {available:false,execution:false,mutation:false},
+      "git.test": {available:false,execution:false,mutation:false},
+      "security.scan": {available:false,execution:false,mutation:false},
+      "cloudflare.inspect": {available:false,execution:false,mutation:false},
+      "github.write": {available:false,execution:false,mutation:true,approvalRequired:true},
+      "production.deploy": {available:false,execution:false,mutation:true,approvalRequired:true}
+    },
+    providers: {
+      openai: Boolean(env.OPENAI_API_KEY),
+      openrouter: Boolean(env.OPENROUTER_API_KEY),
+      cloudflareWorkersAI: Boolean(env.AI)
+    },
+    authorization: {
+      authenticated,
+      productionMutation:false,
+      arbitraryShell:false,
+      secretAccess:false,
+      unrelatedTargetScanning:false
+    }
+  };
+}
 async function getAdminIdentity(ctx, env) {
   if (!ctx?.access) return null;
   try {
@@ -76,13 +129,24 @@ async function executeAdminCommand(request, env, command) {
       const d=await r.json().catch(()=>({}));
       result={httpStatus:r.status,repository:d.full_name,defaultBranch:d.default_branch,updatedAt:d.updated_at,pushedAt:d.pushed_at,openIssues:d.open_issues_count};
     }
-    return json(request,{ok:true,command,label:spec.label,mutation:false,startedAt:new Date(started).toISOString(),durationMs:Date.now()-started,result});
+    return json(request,{ok:true,command,label:spec.label,mutation:false,startedAt:new Date(started).toISOString(),durationMs:Date.now()-started,result,evidence:evidenceRecord({
+      tool:command,
+      target:command==="dns-lookup" ? "hephzibahbehulah.com" : "hephzibahbehulah.com",
+      result,
+      actor:null,
+      startedAt:new Date(started).toISOString()
+    })});
   } catch(error) {
     return json(request,{ok:false,command,error:String(error?.message||error),durationMs:Date.now()-started},502);
   }
 }
 
 async function adminRoutes(request, env, url, ctx) {
+  if (url.pathname === "/api/admin/capabilities" && request.method === "GET") {
+    const identity = await getAdminIdentity(ctx, env);
+    if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+    return json(request,{ok:true,manifest:capabilityManifest(env,true),identity});
+  }
   if (url.pathname === "/api/admin/status" && request.method === "GET") {
     const identity = await getAdminIdentity(ctx, env);
     if (!ctx?.access) return json(request, { ok:false, authenticated:false, error:"Cloudflare Access authentication is required." }, 401);
@@ -541,6 +605,8 @@ async function privateAgent(request, env, url, ctx) {
   const evidence = JSON.stringify({
     authenticatedOperator: identity.email,
     task,
+    generatedAt:new Date().toISOString(),
+    capabilityManifest:capabilityManifest(env,true),
     investigation:investigations,
     commandResults,
     plan
@@ -595,7 +661,12 @@ async function privateAgent(request, env, url, ctx) {
     commandResults,
     plan,
     answer,
-    next:"Approval-required actions are proposed only. No state-changing operation was executed."
+    next:"Approval-required actions are proposed only. No state-changing operation was executed.",
+    capabilityManifest:capabilityManifest(env,true),
+    evidenceIds:[
+      ...investigations.flatMap(x=>(x.data?.checks||[]).map(check=>check.evidenceId).filter(Boolean)),
+      ...commandResults.flatMap(x=>[x?.data?.evidence?.evidenceId].filter(Boolean))
+    ]
   });
 }
 
@@ -603,13 +674,7 @@ async function privateInspect(request, env, url, ctx) {
   const identity=await getAdminIdentity(ctx,env);
   if(!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
   const target=url.searchParams.get("target")||"all";
-  const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:{
-    readOnlyExecution:true,
-    shell:false,
-    productionMutation:false,
-    approvalGate:true,
-    authenticated:true
-  }};
+  const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:capabilityManifest(env,true)};
 
   if(target==="all"||target==="site"||target==="security"){
     try{
@@ -685,6 +750,10 @@ export default {
     if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
     const adminResponse = await adminRoutes(request, env, url, ctx);
     if (adminResponse) return adminResponse;
+
+    if (url.pathname === "/api/capabilities" && request.method === "GET") {
+      return json(request,{ok:true,manifest:capabilityManifest(env,false)});
+    }
 
     if (url.pathname === "/api/health" && request.method === "GET") {
       if (!env.OPENAI_API_KEY) {
