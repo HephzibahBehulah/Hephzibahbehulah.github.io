@@ -328,6 +328,52 @@ function extractOutputText(data) {
   return parts.join("\n\n").trim();
 }
 
+function isSiteHealthQuery(q) {
+  return /(?:check|is|status|health|healthy|up|down|reachable|available).*(?:hephzibahbehulah\\.com|website|site)|(?:hephzibahbehulah\\.com|website|site).*(?:health|healthy|status|up|down|reachable)/i.test(String(q||""));
+}
+
+async function publicSiteHealthEvidence() {
+  const started = new Date().toISOString();
+  const startedMs = Date.now();
+  try {
+    const response = await fetch("https://hephzibahbehulah.com/", { redirect:"follow" });
+    const headers = Object.fromEntries(response.headers);
+    const result = {
+      httpStatus: response.status,
+      ok: response.ok,
+      finalUrl: response.url,
+      server: headers.server || null,
+      cloudflareRay: headers["cf-ray"] || null,
+      durationMs: Date.now()-startedMs
+    };
+    return evidenceRecord({tool:"http.inspect",target:"https://hephzibahbehulah.com/",result,status:"observed",startedAt:started});
+  } catch (error) {
+    return evidenceRecord({tool:"http.inspect",target:"https://hephzibahbehulah.com/",result:{error:String(error?.message||error),durationMs:Date.now()-startedMs},status:"error",startedAt:started});
+  }
+}
+
+function evidenceContext(evidence) {
+  if (!evidence) return "";
+  return "\n\nLIVE SERVER EVIDENCE (machine-generated; do not contradict or invent):\n" + JSON.stringify(evidence, null, 2);
+}
+
+function evidenceOnlyHealthAnswer(evidence) {
+  const r=evidence?.result||{};
+  if(evidence?.status==="observed") {
+    return "## Live website health check\n\n" +
+      "- Target: https://hephzibahbehulah.com/\n" +
+      "- HTTP status: " + String(r.httpStatus) + "\n" +
+      "- Reachability: " + (r.ok ? "The server responded successfully." : "The server returned a non-success HTTP status.") + "\n" +
+      "- Final URL: " + String(r.finalUrl||"unavailable") + "\n" +
+      "- Observed at: " + String(evidence.observedAt) + "\n" +
+      "- Evidence ID: " + String(evidence.evidenceId) + "\n\n" +
+      "This is a live HTTP observation. It does not by itself prove application correctness, database health, or every dependent service is healthy.";
+  }
+  return "## Live website health check\n\nThe live HTTP check could not be completed. No HTTP status is being claimed.\n\n" +
+    "- Observed at: " + String(evidence?.observedAt||new Date().toISOString()) + "\n" +
+    "- Evidence ID: " + String(evidence?.evidenceId||"unavailable");
+}
+
 function collectSources(data) {
   const urls = [];
   for (const item of data?.output || []) {
@@ -442,10 +488,13 @@ async function openAIChat(request, env) {
   const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
   const context = await retrieveContext(request, env, q);
   const clientContext = String(body?.siteContext || "").slice(0, 10000);
+  const liveEvidence = isSiteHealthQuery(q) ? await publicSiteHealthEvidence() : null;
+  const evidence = evidenceContext(liveEvidence);
 
   const instructions =
     SYSTEM +
     (context ? "\n" + context : "") +
+    evidence +
     (clientContext ? "\n\nCLIENT-SUPPLIED SITE CONTEXT:\n" + clientContext : "");
 
   const payload = {
@@ -469,8 +518,9 @@ async function openAIChat(request, env) {
       body: JSON.stringify(payload)
     });
   } catch {
-    const fallback = await openRouterFallback(request, env, messages, context) || await cloudflareFallback(request, env, messages, context);
+    const fallback = await openRouterFallback(request, env, messages, context + evidence) || await cloudflareFallback(request, env, messages, context + evidence);
     if (fallback) return fallback;
+    if (liveEvidence) return json(request, {ok:true,answer:evidenceOnlyHealthAnswer(liveEvidence),provider:"evidence-only",fallback:true,ragUsed:Boolean(context),siteUsed:true,webUsed:false,sources:{web:[]},attachments:attachmentCount(messages),actions:[],evidence:[liveEvidence]});
     return json(request, { ok: false, error: "All configured AI providers are unavailable." }, 502);
   }
 
@@ -479,8 +529,9 @@ async function openAIChat(request, env) {
     const upstream = String(data?.error?.message || "OpenAI request failed.");
     const requestId = response.headers.get("x-request-id") || null;
     console.error("ADIGUN OpenAI error", { status: response.status, type: data?.error?.type || null, code: data?.error?.code || null, requestId });
-    const fallback = await openRouterFallback(request, env, messages, context) || await cloudflareFallback(request, env, messages, context);
+    const fallback = await openRouterFallback(request, env, messages, context + evidence) || await cloudflareFallback(request, env, messages, context + evidence);
     if (fallback) return fallback;
+    if (liveEvidence) return json(request, {ok:true,answer:evidenceOnlyHealthAnswer(liveEvidence),provider:"evidence-only",fallback:true,ragUsed:Boolean(context),siteUsed:true,webUsed:false,sources:{web:[]},attachments:attachmentCount(messages),actions:[],evidence:[liveEvidence],providerError:{provider:"openai",error:upstream,requestId}});
     return json(request, {
       ok: false,
       error: upstream,
@@ -504,7 +555,8 @@ async function openAIChat(request, env) {
     webUsed: sources.length > 0,
     sources: { web: sources },
     attachments: attachmentCount(messages),
-    actions: []
+    actions: [],
+    evidence: liveEvidence ? [liveEvidence] : []
   });
 }
 
@@ -647,8 +699,27 @@ async function privateAgent(request, env, url, ctx) {
     const aiResponse = await openAIChat(aiRequest, env);
     const aiData = await aiResponse.json().catch(()=>({}));
     if (aiData?.answer) answer = aiData.answer;
+    else if (flatChecks.length) {
+      const healthCheck = flatChecks.find(check => check.name === "website");
+      if (healthCheck) answer = "## Live investigation completed\n\n" +
+        "- HTTP status: " + String(healthCheck.httpStatus ?? "unavailable") + "\n" +
+        "- Status: " + String(healthCheck.status || "unknown") + "\n" +
+        "- Final URL: " + String(healthCheck.finalUrl || "unavailable") + "\n" +
+        "- Observed at: " + String(healthCheck.observedAt || "server timestamp unavailable") + "\n" +
+        "- Evidence ID: " + String(healthCheck.evidenceId || "unavailable") + "\n\n" +
+        "The AI synthesis provider was unavailable, so this report contains only verified server evidence.";
+      else answer = "Investigation completed. The AI synthesis provider was unavailable, but server-side evidence is preserved below.";
+    }
   } catch (error) {
     console.error("ADIGUN private agent synthesis error",String(error?.message||error));
+    const healthCheck = flatChecks.find(check => check.name === "website");
+    if (healthCheck) answer = "## Live investigation completed\n\n" +
+      "- HTTP status: " + String(healthCheck.httpStatus ?? "unavailable") + "\n" +
+      "- Status: " + String(healthCheck.status || "unknown") + "\n" +
+      "- Final URL: " + String(healthCheck.finalUrl || "unavailable") + "\n" +
+      "- Observed at: " + String(healthCheck.observedAt || "server timestamp unavailable") + "\n" +
+      "- Evidence ID: " + String(healthCheck.evidenceId || "unavailable") + "\n\n" +
+      "AI synthesis was unavailable. Only server evidence is reported.";
   }
 
   return json(request,{
