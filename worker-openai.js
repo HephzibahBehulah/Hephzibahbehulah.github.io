@@ -247,7 +247,8 @@ async function openAIChat(request, env) {
     }
   }
 
-  const lastContent = messages[messages.length - 1].content;\n  const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
+  const lastContent = messages[messages.length - 1].content;
+  const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
   const context = await retrieveContext(request, env, q);
   const clientContext = String(body?.siteContext || "").slice(0, 10000);
 
@@ -302,6 +303,7 @@ async function openAIChat(request, env) {
     siteUsed: Boolean(context || clientContext),
     webUsed: sources.length > 0,
     sources: { web: sources },
+    attachments: attachmentCount(messages),
     actions: []
   });
 }
@@ -345,7 +347,8 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
-    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);\n    const adminResponse = await adminRoutes(request, env, url, ctx);
+    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
+    const adminResponse = await adminRoutes(request, env, url, ctx);
     if (adminResponse) return adminResponse;
 
     if (url.pathname === "/api/health" && request.method === "GET") {
