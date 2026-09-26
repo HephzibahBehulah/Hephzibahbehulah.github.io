@@ -227,6 +227,61 @@ function collectSources(data) {
   return [...new Set(urls)].slice(0, 20);
 }
 
+async function openRouterFallback(request, env, messages, context) {
+  if (!env.OPENROUTER_API_KEY) return null;
+  const model = env.OPENROUTER_MODEL || "openrouter/free";
+  const input = [];
+  for (const m of messages) {
+    if (Array.isArray(m.content)) {
+      const text = m.content.filter(p => p?.type === "input_text").map(p => String(p.text || "")).join("\n");
+      if (text.trim()) input.push({ role:m.role, content:text });
+    } else if (String(m.content || "").trim()) {
+      input.push({ role:m.role, content:String(m.content) });
+    }
+  }
+  if (!input.length) return null;
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/responses", {
+      method:"POST",
+      headers:{
+        "authorization":"Bearer " + env.OPENROUTER_API_KEY,
+        "content-type":"application/json",
+        "http-referer":"https://hephzibahbehulah.com",
+        "x-title":"ADIGUN Intelligence"
+      },
+      body:JSON.stringify({
+        model,
+        instructions:SYSTEM + (context ? "\n" + context : ""),
+        input,
+        store:false
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      console.error("ADIGUN OpenRouter fallback error", { status:response.status, message:data?.error?.message || null });
+      return null;
+    }
+    const answer = extractOutputText(data) || data?.choices?.[0]?.message?.content || "";
+    if (!answer) return null;
+    return json(request, {
+      ok:true,
+      answer,
+      model:data.model || model,
+      provider:"openrouter",
+      fallback:true,
+      ragUsed:Boolean(context),
+      siteUsed:Boolean(context),
+      webUsed:false,
+      sources:{web:[]},
+      attachments:attachmentCount(messages),
+      actions:[]
+    });
+  } catch (error) {
+    console.error("ADIGUN OpenRouter network error", String(error?.message || error));
+    return null;
+  }
+}
+
 async function cloudflareFallback(request, env, messages, context) {
   if (!env.AI) return null;
   const model = env.ADIGUN_FALLBACK_MODEL || "@cf/zai-org/glm-4.7-flash";
