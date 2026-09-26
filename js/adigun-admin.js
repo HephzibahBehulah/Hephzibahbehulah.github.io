@@ -83,6 +83,20 @@ document.addEventListener("DOMContentLoaded",()=>{
     finally{document.querySelectorAll("[data-inspect]").forEach(b=>b.disabled=false)}
   }
   document.querySelectorAll("[data-inspect]").forEach(b=>b.addEventListener("click",()=>inspect(b.dataset.inspect)));
+
+  const commandOutput=$("#commandOutput");
+  async function runCommand(command){
+    commandOutput.textContent="Executing "+command+"…";
+    document.querySelectorAll("[data-command]").forEach(b=>b.disabled=true);
+    try{
+      const r=await fetch("/api/admin/command",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",body:JSON.stringify({command})});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok)throw new Error(d.error||"Command failed");
+      commandOutput.textContent=JSON.stringify(d,null,2);
+    }catch(e){commandOutput.textContent="Execution error: "+String(e.message||e)}
+    finally{document.querySelectorAll("[data-command]").forEach(b=>b.disabled=false)}
+  }
+  document.querySelectorAll("[data-command]").forEach(b=>b.addEventListener("click",()=>runCommand(b.dataset.command)));
   $("#refreshStatus")?.addEventListener("click",status);
   status();
 });
