@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADIGUN Control | Private</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/osint-redesign.css?v=20260925-11"><link rel="stylesheet" href="css/adigun-admin.css?v=20260926-1">
+</head>
+<body class="osint-redesign adigun-admin-page">
+<div class="os-shell">
+<aside class="os-sidebar">
+<div class="os-brand"><img class="hb-brand-mark" src="assets/hb-logo.svg" alt="HB"><span class="hb-brand-name"><strong>ADIGUN CONTROL</strong><small>PRIVATE OPERATIONS</small></span></div>
+<div class="os-side-label">PRIVATE CONTROL</div>
+<nav class="os-nav">
+<a class="active" href="#overview">◉ OVERVIEW</a><a href="#knowledge">▤ KNOWLEDGE</a><a href="#automation">↻ AUTOMATION</a><a href="#security">⌁ SECURITY</a><a href="https://hephzibahbehulah.com" target="_blank" rel="noopener">← PUBLIC SITE</a>
+</nav>
+<div class="os-status">ACCESS<br><b id="accessStatus">● CHECKING</b><br>identity: <span id="identityEmail">—</span><br>scope: private control</div>
+</aside>
+<main class="os-main">
+<header class="os-top"><div class="os-breadcrumb">private / <b>ADIGUN control</b></div><div class="os-top-actions"><button class="os-btn" id="refreshStatus" type="button">REFRESH</button></div></header>
+<div class="os-content" id="overview">
+<section class="admin-hero">
+<div><div class="admin-kicker">HEPHZIBAH BEHULAH / PRIVATE OPERATIONS</div><h1>ADIGUN<br><span>CONTROL</span></h1><p>This interface is for authenticated administration only. Public visitors use the main ADIGUN intelligence desk and do not receive these controls.</p></div>
+<div class="admin-lock"><div class="lock-mark">●</div><strong id="heroAuth">AUTHENTICATING</strong><span id="heroIdentity">Checking Cloudflare Access identity…</span></div>
+</section>
+
+<section class="admin-grid">
+<article class="admin-card"><span>SYSTEM</span><strong id="systemState">CHECKING</strong><small>Cloudflare Access + Worker gateway</small></article>
+<article class="admin-card"><span>IDENTITY</span><strong id="identityState">CHECKING</strong><small id="identityDetail">Authenticated identity is being verified.</small></article>
+<article class="admin-card"><span>AI GATEWAY</span><strong id="aiState">READY</strong><small>OpenAI credentials remain server-side</small></article>
+<article class="admin-card"><span>PRIVILEGE</span><strong>ALLOW-LISTED</strong><small>Sensitive actions require explicit server approval</small></article>
+</section>
+
+<section class="os-panel admin-section" id="knowledge"><div class="os-panel-head"><span>01 / KNOWLEDGE CONTROL</span><span>PRIVATE</span></div>
+<div class="admin-panel-body"><div><b>WEBSITE INTELLIGENCE</b><p>ADIGUN can retrieve approved website context and persistent knowledge before answering public questions.</p></div><button class="os-btn" type="button" disabled>REINDEX — NEXT CONTROL</button></div></section>
+
+<section class="os-panel admin-section" id="automation"><div class="os-panel-head"><span>02 / CONTROLLED AUTOMATION</span><span id="automationBadge">AUTHENTICATED</span></div>
+<div class="admin-panel-body"><div><b>CONTROLLED WORKFLOW</b><p>The current workflow is a server-side demonstration of the permission boundary. It does not modify GitHub, files, email or production data.</p></div><button id="runAutomation" class="os-btn primary" type="button">RUN CONTROLLED WORKFLOW</button></div>
+<div id="eventStream" class="event-stream"><div class="event-empty">No workflow executed.</div></div></section>
+
+<section class="os-panel admin-section" id="security"><div class="os-panel-head"><span>03 / SECURITY</span><span>DEFENSE IN DEPTH</span></div>
+<div class="security-grid"><div><b>01 / IDENTITY</b><span>Cloudflare Access authenticates the administrator before the application is reached.</span></div><div><b>02 / MFA</b><span>Enable MFA in the Access policy for this sensitive application.</span></div><div><b>03 / SERVER SECRETS</b><span>OpenAI and other credentials are stored as Cloudflare secrets, never in browser code.</span></div><div><b>04 / AUTHORIZATION</b><span>Worker endpoints verify the authenticated Access identity before privileged operations.</span></div></div></section>
+</div></main></div>
+<script src="js/adigun-admin.js?v=20260926-1"></script>
+</body></html>
