@@ -26,3 +26,15 @@ jobs:
         run: |
           python --version
           python -m py_compile ml-service/app.py
+
+      - name: Validate ADIGUN production surfaces
+        run: |
+          test -f worker-openai.js
+          test -f js/adigun-agent.js
+          test -f js/ai-lab.js
+          test -f js/adigun-admin.js
+          test -f js/adigun-renderer.js
+          grep -q 'id="attachmentInput"' ai-lab.html
+          grep -q 'id="adminMessages"' admin.html
+          ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
+          ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js worker-openai.js
