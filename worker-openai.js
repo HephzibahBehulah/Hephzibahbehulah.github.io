@@ -545,7 +545,15 @@ async function privateAgent(request, env, url, ctx) {
   }, null, 2).slice(0,42000);
 
   const agentPrompt = "PRIVATE OPERATOR TASK:\n" + task +
-    "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the read-only inspections shown below. Analyze the evidence and give the administrator a concise technical report.\n\n" +
+    "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the read-only inspections and, when requested, allow-listed diagnostics shown below. Analyze the evidence and give the administrator a concise technical report.\n\n" +
+    "PRIVATE CAPABILITY RULES:\n" +
+    "- This interface is authenticated by Cloudflare Access.\n" +
+    "- The server can execute only explicitly allow-listed diagnostics; it does not provide an unrestricted shell.\n" +
+    "- Allow-listed diagnostics: HTTP health, response headers, robots.txt, sitemap.xml, DNS resolution and repository status.\n" +
+    "- GitHub repository history and workflow-run metadata may be inspected server-side.\n" +
+    "- Production mutation, arbitrary shell commands, secret access and unrelated-target scanning are not available through this interface.\n" +
+    "- Never turn a planned capability into a claimed capability. Use only server evidence.\n" +
+    "- Use the server checkedAt timestamp as the report date; never invent a date.\n\n" +
     "Rules:\n" +
     "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS.\n" +
     "- Never claim a change was made.\n" +
