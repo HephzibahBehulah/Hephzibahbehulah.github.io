@@ -57,18 +57,25 @@
 <section class="os-panel admin-section" id="security"><div class="os-panel-head"><span>03 / SECURITY</span><span>DEFENSE IN DEPTH</span></div>
 <div class="security-grid"><div><b>01 / IDENTITY</b><span>Cloudflare Access authenticates the administrator before the application is reached.</span></div><div><b>02 / MFA</b><span>Cloudflare Access protects this application. MFA is enforced at the identity layer.</span></div><div><b>03 / SERVER SECRETS</b><span>OpenAI and other credentials are stored as Cloudflare secrets, never in browser code.</span></div><div><b>04 / AUTHORIZATION</b><span>Worker endpoints verify the authenticated Access identity before privileged operations.</span></div></div></section>
 <section class="os-panel admin-section" id="terminal">
-<div class="os-panel-head"><span>04 / SECURE EXECUTION CONSOLE</span><span>ALLOW-LISTED / READ-ONLY</span></div>
+<div class="os-panel-head"><span>04 / AUTHENTICATED LINUX EXECUTION</span><span id="terminalState">READY</span></div>
 <div class="admin-terminal">
-  <div class="admin-terminal-banner">ADIGUN EXECUTION PLANE // production-safe diagnostics only</div>
+  <div class="admin-terminal-banner">ADIGUN TOOL BROKER // Cloudflare Sandbox // isolated Linux execution node</div>
   <div class="admin-terminal-actions">
-    <button class="os-btn" data-command="site-health" type="button">HTTP HEALTH</button>
-    <button class="os-btn" data-command="site-headers" type="button">HEADERS</button>
-    <button class="os-btn" data-command="site-robots" type="button">ROBOTS</button>
-    <button class="os-btn" data-command="site-sitemap" type="button">SITEMAP</button>
-    <button class="os-btn" data-command="dns-lookup" type="button">DNS</button>
-    <button class="os-btn" data-command="repository-status" type="button">REPOSITORY</button>
+    <input id="terminalCommand" class="admin-terminal-command" list="terminalCommands" placeholder="Enter an allow-listed command, e.g. runtime" autocomplete="off">
+    <datalist id="terminalCommands">
+      <option value="pwd"></option><option value="ls"></option><option value="whoami"></option><option value="uname"></option><option value="python-version"></option><option value="node-version"></option><option value="git-version"></option><option value="date"></option><option value="disk"></option><option value="memory"></option><option value="os"></option><option value="runtime"></option><option value="repo-status"></option>
+    </datalist>
+    <button class="os-btn primary" id="terminalRun" type="button">EXECUTE</button>
+    <button class="os-btn" id="terminalClear" type="button">CLEAR</button>
   </div>
-  <pre class="admin-inspect-output" id="commandOutput">No command has been executed.</pre>
+  <pre id="adigunTerminal" class="adigun-terminal" aria-label="Authenticated ADIGUN Linux execution output">ADIGUN EXECUTION NODE
+status: waiting
+runtime: isolated Cloudflare Sandbox
+network: deny-by-default
+authentication: Cloudflare Access
+</pre>
+  <div class="admin-terminal-meta" id="terminalMeta">Every execution is server-side, allow-listed, authenticated and returned with an evidence ID.</div>
+  <pre class="admin-inspect-output" id="commandOutput">No execution evidence yet.</pre>
 </div>
 </section>
 </div></main></div>
