@@ -180,8 +180,8 @@
 
     function queryWordsHighlight(html) { return html; }
 
-    function render(raw) {');
-        return safe ? out.replace(new RegExp(safe, 'ig'), '<mark>    function render(raw) {</mark>') : out;
+    function render(raw) {
+</mark>') : out;
       }, html);
     }
     function render(raw) {
