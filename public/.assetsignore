@@ -1,0 +1,18 @@
+# Public static asset exclusions
+node_modules/
+.wrangler/
+.git/
+wrangler.jsonc
+.gitignore
+.assetsignore
+README.md
+_config.yml
+_headers
+worker.js
+worker-openai.js
+worker-v2.js
+package.json
+package-lock.json
+backend/
+ml-service/
+pentest-script/
