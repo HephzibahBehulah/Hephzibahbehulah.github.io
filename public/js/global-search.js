@@ -187,9 +187,9 @@
         return;
       }
       lastResults = index.map(item => ({ item, score:score(item, query) })).filter(row => Number.isFinite(row.score)).sort((a,b) => b.score - a.score).slice(0,100);
-      meta.textContent = `${lastResults.length} result${lastResults.length === 1 ? '' : 's'} · searching all indexed HB content`;
+      meta.textContent = `${lastResults.length} result${lastResults.length === 1 ? '' : 's'} for “${query}” · all indexed HB content`;
       results.innerHTML = lastResults.length ? lastResults.map((row, i) => {
-        const snippet = row.item.text.length > 220 ? `${row.item.text.slice(0,220)}…` : row.item.text;
+        const queryWords = normalize(query).split(/\s+/).filter(Boolean); const escapedSnippet = escapeHTML(row.item.text.length > 220 ? `${row.item.text.slice(0,220)}…` : row.item.text); const snippet = queryWords.reduce((html, word) => { const safe = escapeHTML(word); return safe ? html.replace(new RegExp(`(${safe.replace(/[.*+?^${}()|[\\]\\]/g,'\\const snippet = row.item.text.length > 220 ? `${row.item.text.slice(0,220)}…` : row.item.text;')})`, 'ig'), '<mark>$1</mark>') : html; }, escapedSnippet);
         return `<button class="hb-global-result" type="button" data-index="${i}"><span class="hb-global-result-title">${escapeHTML(row.item.section)} · ${escapeHTML(row.item.page)}</span><strong>${escapeHTML(snippet)}</strong></button>`;
       }).join('') : `<div class="hb-global-empty">No exact site match. Press Enter to ask ADIGUN about “${escapeHTML(query)}”.</div>`;
       overlay.classList.add('open');
@@ -225,7 +225,7 @@
       const query = clean(input.value);
       if (!query) { input.focus(); await search(''); return; }
       await search(query);
-      if (lastResults[0]) openResult(lastResults[0].item);
+      if (lastResults[0]) { openResult(lastResults[0].item); }
       else await askAdigun(query);
     });
     input.addEventListener('keydown', async event => {
