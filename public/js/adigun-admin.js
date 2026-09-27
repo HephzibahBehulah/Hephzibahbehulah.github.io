@@ -34,8 +34,22 @@ document.addEventListener("DOMContentLoaded",()=>{
   terminalCommand?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSandboxCommand(terminalCommand.value)}});
   terminalClear?.addEventListener("click",()=>{terminalHost.textContent="ADIGUN EXECUTION NODE\nstatus: waiting\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: Cloudflare Access\n";commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Every execution is server-side, allow-listed, authenticated and returned with an evidence ID.";});
 
+  let authenticated=false;
   const history=[]; let files=[];
   const session=(()=>{let v=localStorage.getItem("hb-admin-session");if(!v){v=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36);localStorage.setItem("hb-admin-session",v)}return v})();
+  function setPrivateControls(enabled){
+    authenticated=Boolean(enabled);
+    if(send)send.disabled=!authenticated;
+    document.querySelectorAll("[data-inspect]").forEach(b=>b.disabled=!authenticated);
+    if(terminalRun)terminalRun.disabled=!authenticated;
+    if(terminalCommand)terminalCommand.disabled=!authenticated;
+    if(attach)attach.disabled=!authenticated;
+    if(input)input.disabled=!authenticated;
+    if(!authenticated){
+      inspectState.textContent="LOCKED";
+      terminalState.textContent="LOCKED";
+    }
+  }
 
   function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
   function add(text,kind){
@@ -68,8 +82,18 @@ document.addEventListener("DOMContentLoaded",()=>{
     try{
       const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
       if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";send.disabled=true;return}
-      accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Authenticated administrator";heroAuth.textContent="AUTHENTICATED";heroIdentity.textContent=d.identity?.email||"Verified administrator";send.disabled=false;
-    }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";send.disabled=true}
+      accessStatus.textContent="● AUTHENTICATED";
+      accessStatus.className="ok";
+      identityEmail.textContent=d.identity?.email||"verified";
+      systemState.textContent="ONLINE";
+      identityState.textContent="AUTHORIZED";
+      identityDetail.textContent=d.identity?.email||"Authenticated administrator";
+      heroAuth.textContent="AUTHENTICATED";
+      heroIdentity.textContent=d.identity?.email||"Verified administrator";
+      inspectState.textContent="READY";
+      terminalState.textContent="READY";
+      setPrivateControls(true);
+    }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";setPrivateControls(false)}
   }
 
   function showAgentPlan(plan){
@@ -83,6 +107,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
 
   async function ask(){
+    if(!authenticated)return;
     const q=input.value.trim();if(!q&&!files.length)return;
     const content=[];if(q)content.push({type:"input_text",text:q});content.push(...files.map(f=>f.part));
     add(q||("Attached "+files.length+" file"+(files.length===1?"":"s")),"user");
@@ -107,11 +132,12 @@ document.addEventListener("DOMContentLoaded",()=>{
       showAgentPlan(d.plan);
       history.push({role:"assistant",content:d.answer});
     }catch(e){thinking.remove();add("ADIGUN private agent error: "+String(e.message||e),"assistant")}
-    finally{old.length=0;send.disabled=false}
+    finally{old.length=0;send.disabled=!authenticated}
   }
   send?.addEventListener("click",ask);input?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ask()}});
 
   async function inspect(target){
+    if(!authenticated)return;
     inspectState.textContent="● SCANNING";
     inspectOutput.textContent="Running "+target+" inspection…";
     document.querySelectorAll("[data-inspect]").forEach(b=>b.disabled=true);
@@ -128,6 +154,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   const commandOutput=$("#commandOutput");
   async function runCommand(command){
+    if(!authenticated)return;
     commandOutput.textContent="Executing "+command+"…";
     document.querySelectorAll("[data-command]").forEach(b=>b.disabled=true);
     try{
