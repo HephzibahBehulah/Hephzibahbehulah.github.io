@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded",()=>{
   const $=s=>document.querySelector(s);
-  const accessStatus=$("#accessStatus"),identityEmail=$("#identityEmail"),heroAuth=$("#heroAuth"),heroIdentity=$("#heroIdentity");
+  const accessStatus=$("#accessStatus"),identityEmail=$("#identityEmail"),heroAuth=$("#heroAuth"),heroIdentity=$("#heroIdentity"),accessLogin=$("#accessLogin");
   const systemState=$("#systemState"),identityState=$("#identityState"),identityDetail=$("#identityDetail");
   const messages=$("#adminMessages"),input=$("#adminInput"),send=$("#adminSend"),fileInput=$("#adminAttachmentInput"),attach=$("#adminAttach"),chips=$("#adminAttachmentChips");
   const inspectOutput=$("#inspectOutput"),inspectState=$("#inspectState");
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
   terminalRun?.addEventListener("click",()=>runSandboxCommand(terminalCommand.value));
   terminalCommand?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSandboxCommand(terminalCommand.value)}});
-  terminalClear?.addEventListener("click",()=>{terminalHost.textContent="ADIGUN EXECUTION NODE\nstatus: waiting\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: Cloudflare Access\n";commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Every execution is server-side, allow-listed, authenticated and returned with an evidence ID.";});
+  terminalClear?.addEventListener("click",()=>{if(!authenticated)return;terminalHost.textContent="ADIGUN EXECUTION NODE\nstatus: waiting\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: Cloudflare Access\n";commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Every execution is server-side, allow-listed, authenticated and returned with an evidence ID.";});
 
   let authenticated=false;
   const history=[]; let files=[];
@@ -44,10 +44,14 @@ document.addEventListener("DOMContentLoaded",()=>{
     if(terminalRun)terminalRun.disabled=!authenticated;
     if(terminalCommand)terminalCommand.disabled=!authenticated;
     if(attach)attach.disabled=!authenticated;
+    if(fileInput)fileInput.disabled=!authenticated;
     if(input)input.disabled=!authenticated;
     if(!authenticated){
       inspectState.textContent="LOCKED";
       terminalState.textContent="LOCKED";
+      if(accessLogin)accessLogin.hidden=false;
+    }else if(accessLogin){
+      accessLogin.hidden=true;
     }
   }
 
@@ -81,7 +85,8 @@ document.addEventListener("DOMContentLoaded",()=>{
   async function status(){
     try{
       const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
-      if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";send.disabled=true;return}
+      if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";setPrivateControls(false);return}
+      if(accessLogin)accessLogin.hidden=true;
       accessStatus.textContent="● AUTHENTICATED";
       accessStatus.className="ok";
       identityEmail.textContent=d.identity?.email||"verified";
@@ -93,7 +98,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       inspectState.textContent="READY";
       terminalState.textContent="READY";
       setPrivateControls(true);
-    }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";setPrivateControls(false)}
+    }catch{accessStatus.textContent="● UNAVAILABLE";accessStatus.className="denied";systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";identityDetail.textContent="Unable to verify Cloudflare Access identity.";heroAuth.textContent="ACCESS CHECK FAILED";heroIdentity.textContent="Refresh and sign in through Cloudflare Access.";setPrivateControls(false)}
   }
 
   function showAgentPlan(plan){
@@ -166,6 +171,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     finally{document.querySelectorAll("[data-command]").forEach(b=>b.disabled=false)}
   }
   document.querySelectorAll("[data-command]").forEach(b=>b.addEventListener("click",()=>runCommand(b.dataset.command)));
+  accessLogin?.addEventListener("click",()=>{window.location.assign("/cdn-cgi/access/login")});
   $("#refreshStatus")?.addEventListener("click",status);
+  setPrivateControls(false);
   status();
 });
