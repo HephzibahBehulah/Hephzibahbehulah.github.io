@@ -35,3 +35,4 @@
   .hb-global-search-overlay,.hb-global-search-panel,.hb-global-search-close,.hb-global-result{transition:none}
   .hb-search-hit{animation:none}
 }
+.hb-global-result mark{background:rgba(127,255,212,.18);color:inherit;padding:0 2px;border-radius:2px}.hb-global-search-meta{min-height:18px}
