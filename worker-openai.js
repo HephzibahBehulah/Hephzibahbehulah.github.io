@@ -897,7 +897,16 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    // Keep the private admin application's static files off the public apex hostname.
+    // The private hostname serves the ADIGUN Control shell directly.
+    // Keep the admin application isolated from the public apex hostname.
+    if (url.hostname === "admin.hephzibahbehulah.com") {
+      if (url.pathname === "/" || url.pathname === "/index.html") {
+        const adminUrl = new URL(request.url);
+        adminUrl.pathname = "/admin.html";
+        return env.ASSETS.fetch(new Request(adminUrl.toString(), request));
+      }
+    }
+
     if (
       url.hostname === "hephzibahbehulah.com" &&
       ["/admin.html", "/js/adigun-admin.js", "/css/adigun-admin.css"].includes(url.pathname)
