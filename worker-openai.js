@@ -900,7 +900,7 @@ export default {
     // The private hostname serves the ADIGUN Control shell directly.
     // Keep the admin application isolated from the public apex hostname.
     if (url.hostname === "admin.hephzibahbehulah.com") {
-      if (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control") {
+      if (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control") {
         const adminUrl = new URL(request.url);
         adminUrl.pathname = "/admin.html";
         return env.ASSETS.fetch(new Request(adminUrl.toString(), request));
