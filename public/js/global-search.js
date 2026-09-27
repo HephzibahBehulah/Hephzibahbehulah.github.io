@@ -178,8 +178,6 @@
       document.getElementById('terminal')?.scrollIntoView({ behavior:'smooth', block:'center' });
     }
 
-    function queryWordsHighlight(html) { return html; }
-
     function render(raw) {
       const query = clean(raw);
       if (!query) {
@@ -192,7 +190,7 @@
       meta.textContent = `${lastResults.length} result${lastResults.length === 1 ? '' : 's'} for “${query}” · all indexed HB content`;
       results.innerHTML = lastResults.length ? lastResults.map((row, i) => {
         const snippetSource = row.item.text.length > 220 ? row.item.text.slice(0,220) + '…' : row.item.text;
-        const highlighted = queryWordsHighlight(escapeHTML(snippetSource));
+        const highlighted = escapeHTML(snippetSource);
         return '<button class="hb-global-result" type="button" data-index="' + i + '"><span class="hb-global-result-title">' + escapeHTML(row.item.section) + ' · ' + escapeHTML(row.item.page) + '</span><strong>' + highlighted + '</strong></button>'
       }).join('') : `<div class="hb-global-empty">No exact site match. Press Enter to ask ADIGUN about “${escapeHTML(query)}”.</div>`;
       overlay.classList.add('open');
