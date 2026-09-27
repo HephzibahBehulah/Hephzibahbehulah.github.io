@@ -5,7 +5,7 @@
 <title>HB Recon Hub | OSINT & Attack Surface Mapping</title>
 <meta name="description" content="A structured OSINT and reconnaissance hub for lawful security research, attack-surface discovery and evidence-driven investigation.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@4;5;6;7;8&family=JetBrains+Mono:wght@4;5;7&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/osint-redesign.css?v=20260924-6">
 <link rel="stylesheet" href="css/recon-hub.css?v=20260924-1">
 </head>
@@ -37,7 +37,7 @@
 <p class="os-lead">A structured map for discovering domains, subdomains, certificates, DNS records, people and organisation signals, exposed services, historical URLs and application technology. Start passive, correlate multiple sources, record evidence, then move to authorised active validation.</p>
 <div class="os-actions"><a class="os-btn primary" href="#toolkit">open toolkit →</a><a class="os-btn" href="#workflow">follow workflow</a><a class="os-btn" href="#queries">query lab</a></div>
 </div></div>
-<div class="os-panel"><div class="os-panel-head"><span>analyst model</span><span>00</span></div><div class="os-panel-body recon-console">
+<div class="os-panel"><div class="os-panel-head"><span>analyst model</span><span></span></div><div class="os-panel-body recon-console">
 <div><span class="prompt">hb@recon:~$</span> objective</div><div class="value">reduce unknowns</div>
 <div><span class="prompt">hb@recon:~$</span> sequence</div><div>scope → passive → correlate → resolve → inspect → validate</div>
 <div><span class="prompt">hb@recon:~$</span> rule</div><div class="key">one source ≠ truth</div>
@@ -48,7 +48,7 @@
 
 <div class="recon-stats"><div><b>12</b><span>recon domains</span></div><div><b id="toolCount">40+</b><span>mapped tools</span></div><div><b>6</b><span>workflow phases</span></div><div><b>1</b><span>operating rule: verify</span></div></div>
 
-<section class="os-panel" id="workflow"><div class="os-panel-head"><span>01 / reconnaissance workflow</span><span>passive → active</span></div>
+<section class="os-panel" id="workflow"><div class="os-panel-head"><span>reconnaissance workflow</span><span>passive → active</span></div>
 <div class="workflow">
 <div class="flow-card"><i>01</i><b>Scope</b><span>Write the authorised domain, IP range, application or organisation boundary. Record exclusions.</span></div>
 <div class="flow-card"><i>02</i><b>Discover</b><span>Collect public names, certificates, DNS, indexed URLs, historical assets and organisation signals.</span></div>
@@ -60,12 +60,12 @@
 <div class="recon-warning"><b>SAFETY BOUNDARY</b> Passive OSINT can still expose personal or sensitive information. Minimise collection, respect terms and privacy, and do not pivot into intrusive testing unless the target and action are explicitly authorised.</div>
 </section>
 
-<section class="os-panel" id="toolkit"><div class="os-panel-head"><span>02 / reconnaissance toolkit</span><span id="toolResultCount">all tools</span></div>
+<section class="os-panel" id="toolkit"><div class="os-panel-head"><span>reconnaissance toolkit</span><span id="toolResultCount">all tools</span></div>
 <div class="resource-controls recon-controls"><label><span>⌕</span><input id="toolSearch" placeholder="Search tools, signals, use cases..."></label><select id="toolCategory"><option value="all">ALL DOMAINS</option></select><button id="toolReset" class="os-mini" type="button">reset</button></div>
 <div id="toolGrid" class="recon-grid"></div>
 </section>
 
-<section class="os-panel" id="queries"><div class="os-panel-head"><span>03 / query lab</span><span>templates, not targets</span></div>
+<section class="os-panel" id="queries"><div class="os-panel-head"><span>query lab</span><span>templates, not targets</span></div>
 <div class="query-grid">
 <div class="query-card"><b>SEARCH ENGINE</b><code>site:example.com filetype:pdf</code><span>Locate indexed documents on an authorised domain.</span></div>
 <div class="query-card"><b>SUBDOMAIN</b><code>site:*.example.com</code><span>Use search indexing as one discovery signal, then corroborate with DNS/CT data.</span></div>
@@ -77,7 +77,7 @@
 <div class="query-tip">Replace <code>example.com</code> only with a domain you own or have explicit permission to assess. Search syntax and availability vary by provider.</div>
 </section>
 
-<section class="os-panel" id="evidence"><div class="os-panel-head"><span>04 / evidence ledger</span><span>analyst discipline</span></div>
+<section class="os-panel" id="evidence"><div class="os-panel-head"><span>evidence ledger</span><span>analyst discipline</span></div>
 <div class="evidence-grid">
 <div><b>IDENTITY</b><span>What exact asset or entity does this result describe?</span></div>
 <div><b>SOURCE</b><span>Where did the observation come from? Prefer primary or authoritative sources.</span></div>
@@ -95,7 +95,7 @@ confidence: high
 note: discovery signal, not proof of a live application</code></div>
 </section>
 
-<section class="os-panel" id="learning"><div class="os-panel-head"><span>05 / learning map</span><span>authoritative references</span></div>
+<section class="os-panel" id="learning"><div class="os-panel-head"><span>learning map</span><span>authoritative references</span></div>
 <div class="learning-grid">
 <a href="https://owasp.org/www-project-web-security-testing-guide/" target="_blank" rel="noopener"><b>OWASP WSTG</b><span>Information gathering, attack-surface identification and application entry-point methodology.</span></a>
 <a href="https://projectdiscovery.io/open-source" target="_blank" rel="noopener"><b>ProjectDiscovery</b><span>Subfinder, dnsx, httpx and related open-source attack-surface mapping tools.</span></a>
