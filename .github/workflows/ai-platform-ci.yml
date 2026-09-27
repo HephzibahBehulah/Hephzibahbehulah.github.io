@@ -14,13 +14,13 @@ jobs:
       - name: Validate site search, AI browser JavaScript and Worker
         run: |
           node --version
-          node --check js/global-search.js
-          node --check js/ai-lab.js
-          node --check js/adigun-agent.js
+          node --check public/js/global-search.js
+          node --check public/js/ai-lab.js
+          node --check public/js/adigun-agent.js
           node --check worker-v2.js
           node --check worker-openai.js
-          node --check js/adigun-admin.js
-          node --check js/adigun-renderer.js
+          node --check public/js/adigun-admin.js
+          node --check public/js/adigun-renderer.js
 
       - name: Validate Python ML service
         run: |
@@ -49,11 +49,11 @@ jobs:
       - name: Validate ADIGUN production surfaces
         run: |
           test -f worker-openai.js
-          test -f js/adigun-agent.js
-          test -f js/ai-lab.js
-          test -f js/adigun-admin.js
-          test -f js/adigun-renderer.js
-          grep -q 'id="attachmentInput"' ai-lab.html
-          grep -q 'id="adminMessages"' admin.html
-          ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
-          ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js worker-openai.js
+          test -f public/js/adigun-agent.js
+          test -f public/js/ai-lab.js
+          test -f public/js/adigun-admin.js
+          test -f public/js/adigun-renderer.js
+          grep -q 'id="attachmentInput"' public/ai-lab.html
+          grep -q 'id="adminMessages"' public/admin.html
+          ! grep -q 'I do not have a local answer for that yet' public/js/ai-lab.js
+          ! grep -q 'ADIGUN_AGENT_KEY' public/js/adigun-agent.js worker-openai.js
