@@ -37,7 +37,7 @@ jobs:
           grep -q '/api/admin/sandbox' worker-openai.js
           grep -q 'SANDBOX_COMMANDS' worker-openai.js
           grep -q 'sandbox.exec' worker-openai.js
-          grep -q 'CloudflareSandbox' worker-openai.js
+          grep -q 'getSandbox(env.Sandbox' worker-openai.js
 
       - name: Validate secure execution lab
         run: |
