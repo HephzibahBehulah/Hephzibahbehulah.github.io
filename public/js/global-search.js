@@ -178,10 +178,9 @@
       document.getElementById('terminal')?.scrollIntoView({ behavior:'smooth', block:'center' });
     }
 
-    function queryWordsHighlight(html, query) {
-      const words = normalize(query).split(/\s+/).filter(Boolean);
-      return words.reduce((out, word) => {
-        const safe = escapeHTML(word).replace(/[.*+?^${}()|[\\]\\]/g, '\\    function render(raw) {');
+    function queryWordsHighlight(html) { return html; }
+
+    function render(raw) {');
         return safe ? out.replace(new RegExp(safe, 'ig'), '<mark>    function render(raw) {</mark>') : out;
       }, html);
     }
@@ -197,7 +196,7 @@
       meta.textContent = `${lastResults.length} result${lastResults.length === 1 ? '' : 's'} for “${query}” · all indexed HB content`;
       results.innerHTML = lastResults.length ? lastResults.map((row, i) => {
         const snippetSource = row.item.text.length > 220 ? row.item.text.slice(0,220) + '…' : row.item.text;
-        const highlighted = queryWordsHighlight(escapeHTML(snippetSource), query);
+        const highlighted = queryWordsHighlight(escapeHTML(snippetSource));
         return '<button class="hb-global-result" type="button" data-index="' + i + '"><span class="hb-global-result-title">' + escapeHTML(row.item.section) + ' · ' + escapeHTML(row.item.page) + '</span><strong>' + highlighted + '</strong></button>'
       }).join('') : `<div class="hb-global-empty">No exact site match. Press Enter to ask ADIGUN about “${escapeHTML(query)}”.</div>`;
       overlay.classList.add('open');
