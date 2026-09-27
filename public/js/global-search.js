@@ -181,7 +181,6 @@
     function queryWordsHighlight(html) { return html; }
 
     function render(raw) {
- {
       const query = clean(raw);
       if (!query) {
         meta.textContent = 'Search the entire Hephzibah Behulah website: pages, tools, engineering, cybersecurity, OSINT, AI, projects, lessons and Terminal.';
