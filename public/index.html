@@ -29,7 +29,7 @@
 <p class="os-lead">An electronics background evolving into software, data analytics and cybersecurity. The portfolio now doubles as a searchable technical intelligence desk: follow a branch, inspect a resource, open the original source, then build.</p>
 <div class="os-actions"><a class="os-btn primary" href="#resourceMatrix">open resource matrix →</a><a class="os-btn" href="#ebookVault">ebook vault</a><a class="os-btn" href="#toolbench">toolbench</a></div>
 </div></div>
-<div class="os-panel"><div class="os-panel-head"><span>analyst console</span><span>01</span></div><div class="os-panel-body os-terminal">
+<div class="os-panel"><div class="os-panel-head"><span>profile console</span><span></span></div><div class="os-panel-body os-terminal">
 <div><span class="prompt">hb@intel:~$</span> whoami</div><div class="value">Hephzibah Behulah</div>
 <div><span class="prompt">hb@intel:~$</span> background</div><div><span class="key">electronics</span> → <span class="key">automation</span> → <span class="key">software</span></div>
 <div><span class="prompt">hb@intel:~$</span> current_focus</div><div class="value">cybersecurity · data · Python · OSINT</div>
@@ -37,7 +37,7 @@
 <div><span class="prompt">hb@intel:~$</span> ethics</div><div class="key">legal · authorised · privacy-aware</div>
 </div></div>
 </section>
-<section class="os-panel" id="tree"><div class="os-panel-head"><span>intelligence tree / interactive</span><span>click a node to inspect</span></div>
+<section class="os-panel" id="tree"><div class="os-panel-head"><span>intelligence tree</span><span></span></div>
 <div class="os-tree-toolbar"><span>Explore</span><button id="resetTree" class="os-mini" type="button">reset map</button></div>
 <div class="os-tree-wrap"><div class="os-tree" id="intelTree">
 <svg class="tree-lines" viewBox="0 0 1320 930" preserveAspectRatio="none" aria-hidden="true"><path d="M660 88V150M660 150H100M660 150H270M660 150H440M660 150H610M660 150H780M660 150H950M660 150H1120M100 150V235M270 150V235M440 150V235M610 150V235M780 150V235M950 150V235M1120 150V235M100 350V430M270 350V430M440 350V430M610 350V430M780 350V430M950 350V430M1120 350V430"/></svg>
@@ -56,7 +56,7 @@
 <button class="os-leaf osint" style="left:705px;top:430px" data-info="Public information discovery using lawful open sources.">PUBLIC SOURCES</button><button class="os-leaf osint" style="left:705px;top:490px" data-info="Cross-checking information and documenting provenance.">VERIFICATION</button>
 <button class="os-leaf ai" style="left:875px;top:430px" data-info="Prompt injection learning journal and AI security study.">PROMPT INJECTION</button><button class="os-leaf ai" style="left:875px;top:490px" data-info="Privacy-aware AI experimentation and responsible use.">RESPONSIBLE AI</button>
 <button class="os-leaf learn" style="left:1045px;top:430px" data-info="Technical books and external documentation.">RESOURCE MATRIX</button><button class="os-leaf learn" style="left:1045px;top:490px" data-info="Hands-on labs, exercises and experiments.">LABS / PRACTICE</button>
-</div></div><div id="nodeInfo" class="node-info"><b>CORE</b><span>Select a node to inspect its branch.</span></div></section>
+</div></div><div id="nodeInfo" class="node-info"><b>INTELLIGENCE TREE</b><span>Select a branch to view its details.</span></div></section>
 
 <section class="resource-hub" id="resourceMatrix"><div class="os-panel"><div class="os-panel-head"><span>RESOURCE MATRIX</span><span id="sourceCount" style="display:none">loading</span></div>
 <div class="resource-controls"><label><span>⌕</span><input id="sourceSearch" placeholder="Search OSINT, web, Linux, DFIR, OT, data..."></label><select id="sourceFilter"></select><button id="resourceReset" class="os-mini">reset</button></div>
@@ -124,10 +124,10 @@
 <section class="os-panel mega-section hb-terminal-section" id="terminal">
   <div class="os-panel-head"><span>TERMINAL / technical command interface</span><span id="hbTerminalStatus">● READY</span></div>
   <div class="hb-terminal-shell" id="hbTerminal">
-    <div class="hb-terminal-bar"><div><span class="hb-terminal-dot"></span><b>HB TERMINAL</b><small>browser-native · authorised learning mode</small></div><div class="hb-terminal-path" id="hbTerminalPath">/home/hb</div></div>
+    <div class="hb-terminal-bar"><div><span class="hb-terminal-dot"></span><b>HB TERMINAL</b><small>interactive technical environment</small></div><div class="hb-terminal-path" id="hbTerminalPath">/home/hb</div></div>
     <div class="hb-terminal-workspace"><div class="hb-terminal-output" id="hbTerminalOutput" role="log" aria-live="polite"></div><div class="hb-terminal-input-row"><span id="hbTerminalPrompt">hb@intel:~$</span><input id="hbTerminalInput" autocomplete="off" spellcheck="false" aria-label="HB Terminal command" placeholder="type a command..."></div></div>
     <div class="hb-terminal-tools"><button type="button" data-terminal-command="help">HELP</button><button type="button" data-terminal-command="list">LIST</button><button type="button" data-terminal-command="status">STATUS</button><button type="button" data-terminal-command="ia">IA</button><button type="button" data-terminal-command="cidr 192.168.1.0/24">CIDR</button><button type="button" data-terminal-command="nmap">NMAP</button><button type="button" data-terminal-command="clear">CLEAR</button><button type="button" id="hbTerminalOpen">OPEN</button></div>
-    <div class="hb-terminal-note"><span>COMMAND ENGINE</span> calculations · parsing · networking · security learning · OSINT helpers · site navigation <b>·</b> arbitrary system/remote execution disabled</div>
+    <div class="hb-terminal-note"><span>HB TERMINAL</span> calculations · parsing · networking · security learning · OSINT helpers · site navigation</div>
   </div>
 </section>
 
