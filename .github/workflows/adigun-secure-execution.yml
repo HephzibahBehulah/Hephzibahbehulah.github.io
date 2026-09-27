@@ -1,0 +1,82 @@
+name: ADIGUN Secure Execution Lab
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "Allow-listed diagnostic command"
+        required: true
+        type: choice
+        options:
+          - site-health
+          - site-headers
+          - site-robots
+          - site-sitemap
+          - dns-lookup
+          - repository-status
+      target:
+        description: "Authorized target (default: this repository / public site)"
+        required: false
+        default: "hephzibahbehulah.com"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Run allow-listed diagnostic
+        env:
+          COMMAND: ${{ inputs.command }}
+          TARGET: ${{ inputs.target }}
+        run: |
+          set -euo pipefail
+          case "$COMMAND" in
+            site-health)
+              curl --fail --silent --show-error --location --max-time 20 -o /dev/null -w 'HTTP=%{http_code} TIME=%{time_total}s URL=%{url_effective}\n' "https://hephzibahbehulah.com/"
+              ;;
+            site-headers)
+              curl --fail --silent --show-error --location --max-time 20 -I "https://hephzibahbehulah.com/" | sed -n '1,80p'
+              ;;
+            site-robots)
+              curl --fail --silent --show-error --location --max-time 20 "https://hephzibahbehulah.com/robots.txt" | sed -n '1,160p'
+              ;;
+            site-sitemap)
+              curl --fail --silent --show-error --location --max-time 20 "https://hephzibahbehulah.com/sitemap.xml" | sed -n '1,200p'
+              ;;
+            dns-lookup)
+              getent ahosts hephzibahbehulah.com || true
+              ;;
+            repository-status)
+              git status --short --branch
+              git log -5 --oneline --decorate
+              ;;
+            *)
+              echo "Blocked: command is not allow-listed."
+              exit 2
+              ;;
+          esac
+
+      - name: Write execution receipt
+        run: |
+          {
+            echo "command=${{ inputs.command }}"
+            echo "target=${{ inputs.target }}"
+            echo "repository=${GITHUB_REPOSITORY}"
+            echo "sha=${GITHUB_SHA}"
+            echo "run=${GITHUB_RUN_ID}"
+            date -u +"timestamp=%Y-%m-%dT%H:%M:%SZ"
+          } > execution-receipt.txt
+
+      - name: Upload receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: adigun-execution-receipt-${{ github.run_id }}
+          path: execution-receipt.txt
+          retention-days: 7

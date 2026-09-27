@@ -1,0 +1,30 @@
+# Repository and deployment metadata
+node_modules/
+.git/
+.wrangler/
+wrangler.jsonc
+.gitignore
+
+# Project documentation and source-only helper files
+README.md
+_config.yml
+Add Your Photo:
+Change Colors:
+Complete File Structure
+Update Social Links
+pentest-script/
+
+# AI backend source must never be published as a static asset
+backend/
+data/ai-platform.json
+
+# Cloudflare/site configuration that should not be public
+_headers
+
+# Root Worker source is deployed as code, not as a static asset
+worker.js
+worker-openai.js
+worker-v2.js
+
+# External Python ML service source
+ml-service/

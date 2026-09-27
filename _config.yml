@@ -1,0 +1,80 @@
+# ========================================
+# GITHUB PAGES CONFIGURATION
+# Hephzibah Behulah - Personal Website
+# ========================================
+
+# Site settings
+title: Hephzibah Behulah
+description: "Cybersecurity Student & Web Developer | Building secure digital experiences with precision and ethics"
+url: "https://hephzibahbehulah.github.io"
+baseurl: ""
+
+# Theme
+theme: null
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+
+# Exclude files from build
+exclude:
+  - .git/
+  - .github/
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - README.md
+  - .gitignore
+
+# Include files in build
+include:
+  - _headers
+  - _redirects
+  - CNAME
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      author: Hephzibah Behulah
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /:collection/:title/
+
+# SEO
+twitter:
+  username: hephzibaBehulah
+  card: summary_large_image
+
+social:
+  name: Hephzibah Behulah
+  links:
+    - https://github.com/HephzibahBehulah
+    - https://linkedin.com/in/isaacoluwoleadigun
+    - https://x.com/hephzibaBehulah
+    - https://hephzibahbehulah.blogspot.com
+
+# Google Analytics (Optional - GDPR compliant)
+# analytics:
+#   provider: google-gtag
+#   tracking_id: "G-XXXXXXXXXX"
+
+# Lighthouse CI Settings
+lighthouse:
+  ci:
+    upload:
+      target: filesystem
+      outputDir: ./lighthouse-reports
+    assertions:
+      categories: ["performance", "accessibility", "best-practices", "seo"]
+      minScore: 90

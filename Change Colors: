@@ -1,0 +1,6 @@
+/* In css/main.css */
+:root {
+    --primary: #1a365d;     /* Your blue */
+    --primary-light: #2b4d7a;
+    --accent: #e87a2d;      /* Orange accent */
+}

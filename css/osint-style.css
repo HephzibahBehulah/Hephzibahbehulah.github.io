@@ -1,0 +1,530 @@
+/* ========================================
+   OSINT FRAMEWORK STYLE UI
+   Interactive node tree design
+   ======================================== */
+
+/* ========================================
+   VARIABLES
+   ======================================== */
+:root {
+    --node-bg: #1a1a1a;
+    --node-bg-hover: #252525;
+    --node-border: #333;
+    --node-text: #e5e7eb;
+    --node-text-muted: #94a3b8;
+    --node-active: #e87a2d;
+    --node-connection: #444;
+    
+    /* Category Colors */
+    --cat-username: #4ade80;
+    --cat-email: #60a5fa;
+    --cat-domain: #f472b6;
+    --cat-ip: #fbbf24;
+    --cat-social: #a78bfa;
+    --cat-images: #22d3ee;
+    --cat-documents: #f97316;
+    --cat-cybersecurity: #ef4444;
+    --cat-web: #10b981;
+    --cat-data: #8b5cf6;
+    --cat-aviation: #06b6d4;
+    --cat-electrical: #f59e0b;
+    --cat-learning: #ec4899;
+    --cat-tools: #64748b;
+}
+
+body.light-mode {
+    --node-bg: #ffffff;
+    --node-bg-hover: #f8fafc;
+    --node-border: #e2e8f0;
+    --node-text: #1e293b;
+    --node-text-muted: #64748b;
+    --node-connection: #cbd5e1;
+}
+
+/* ========================================
+   TREE CONTAINER
+   ======================================== */
+.osint-tree-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--node-bg);
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+.tree-canvas {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    cursor: grab;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+.tree-canvas:active {
+    cursor: grabbing;
+}
+
+.tree-canvas.grabbing {
+    cursor: grabbing;
+}
+
+.tree-inner {
+    position: relative;
+    min-width: 2000px;
+    min-height: 2000px;
+    padding: 60px;
+    transition: transform 0.1s ease;
+}
+
+/* ========================================
+   NODES
+   ======================================== */
+.tree-node {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--node-bg);
+    border: 2px solid var(--node-border);
+    border-radius: 8px;
+    color: var(--node-text);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+.tree-node:hover {
+    background: var(--node-bg-hover);
+    border-color: var(--node-active);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232, 122, 45, 0.3);
+    z-index: 100;
+}
+
+.tree-node.active {
+    border-color: var(--node-active);
+    box-shadow: 0 0 20px rgba(232, 122, 45, 0.5);
+}
+
+.tree-node.expanded {
+    background: var(--node-bg-hover);
+}
+
+/* Node Category Colors */
+.tree-node[data-category="cybersecurity"] { border-left: 4px solid var(--cat-cybersecurity); }
+.tree-node[data-category="web"] { border-left: 4px solid var(--cat-web); }
+.tree-node[data-category="data"] { border-left: 4px solid var(--cat-data); }
+.tree-node[data-category="aviation"] { border-left: 4px solid var(--cat-aviation); }
+.tree-node[data-category="electrical"] { border-left: 4px solid var(--cat-electrical); }
+.tree-node[data-category="learning"] { border-left: 4px solid var(--cat-learning); }
+.tree-node[data-category="tools"] { border-left: 4px solid var(--cat-tools); }
+.tree-node[data-category="social"] { border-left: 4px solid var(--cat-social); }
+.tree-node[data-category="email"] { border-left: 4px solid var(--cat-email); }
+.tree-node[data-category="domain"] { border-left: 4px solid var(--cat-domain); }
+.tree-node[data-category="ip"] { border-left: 4px solid var(--cat-ip); }
+.tree-node[data-category="username"] { border-left: 4px solid var(--cat-username); }
+
+/* Node Icon */
+.node-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Node Badge (T, D, R, M) */
+.node-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    background: rgba(232, 122, 45, 0.2);
+    color: var(--node-active);
+    margin-left: 4px;
+}
+
+.node-badge.t { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+.node-badge.d { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.node-badge.r { background: rgba(96, 165, 250, 0.2); color: #60a5fa; }
+.node-badge.m { background: rgba(167, 139, 250, 0.2); color: #a78bfa; }
+
+/* Expand Indicator */
+.node-expand {
+    font-size: 10px;
+    color: var(--node-text-muted);
+    transition: transform 0.2s ease;
+    margin-left: 4px;
+}
+
+.tree-node.expanded .node-expand {
+    transform: rotate(90deg);
+}
+
+/* ========================================
+   CONNECTIONS (LINES)
+   ======================================== */
+.tree-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.tree-connection {
+    stroke: var(--node-connection);
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.tree-connection.highlighted {
+    stroke: var(--node-active);
+    stroke-width: 2;
+    opacity: 1;
+    filter: drop-shadow(0 0 4px var(--node-active));
+}
+
+/* ========================================
+   MODAL POPUP (Node Detail)
+   ======================================== */
+.node-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: 500px;
+    background: var(--node-bg);
+    border: 2px solid var(--node-active);
+    border-radius: 12px;
+    padding: 24px;
+    z-index: 10000;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.node-modal.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.node-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--node-border);
+}
+
+.node-modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--node-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.node-modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--node-text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.node-modal-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.node-modal-description {
+    color: var(--node-text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.node-modal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.node-modal-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--node-bg-hover);
+    border: 1px solid var(--node-border);
+    border-radius: 6px;
+    color: var(--node-text);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.node-modal-link:hover {
+    border-color: var(--node-active);
+    background: rgba(232, 122, 45, 0.1);
+    transform: translateX(4px);
+}
+
+.node-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.node-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========================================
+   LEGEND
+   ======================================== */
+.tree-legend {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid var(--node-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    font-size: 11px;
+}
+
+body.light-mode .tree-legend {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.legend-title {
+    font-weight: 700;
+    color: var(--node-text);
+    margin-bottom: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--node-text-muted);
+}
+
+.legend-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    font-size: 9px;
+    font-weight: 700;
+    border-radius: 3px;
+}
+
+/* ========================================
+   TREE CONTROLS
+   ======================================== */
+.tree-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+}
+
+.tree-control-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid var(--node-border);
+    color: var(--node-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+body.light-mode .tree-control-btn {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.tree-control-btn:hover {
+    background: var(--node-active);
+    border-color: var(--node-active);
+    color: white;
+    transform: scale(1.05);
+}
+
+/* ========================================
+   SEARCH BAR (Tree)
+   ======================================== */
+.tree-search {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    z-index: 100;
+}
+
+.tree-search-input {
+    width: 100%;
+    padding: 10px 40px 10px 16px;
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid var(--node-border);
+    border-radius: 8px;
+    color: var(--node-text);
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+body.light-mode .tree-search-input {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.tree-search-input:focus {
+    border-color: var(--node-active);
+    box-shadow: 0 0 20px rgba(232, 122, 45, 0.3);
+}
+
+.tree-search-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--node-text-muted);
+    pointer-events: none;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .tree-node {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .tree-legend {
+        bottom: 10px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 10px;
+    }
+    
+    .tree-controls {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .tree-control-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .tree-search {
+        top: 10px;
+        width: 70%;
+    }
+    
+    .tree-search-input {
+        padding: 8px 36px 8px 12px;
+        font-size: 13px;
+    }
+    
+    .node-modal {
+        width: 95%;
+        padding: 18px;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes nodeAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.tree-node.appearing {
+    animation: nodeAppear 0.3s ease forwards;
+}
+
+@keyframes connectionDraw {
+    from {
+        stroke-dashoffset: 1000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.tree-connection.drawing {
+    stroke-dasharray: 1000;
+    animation: connectionDraw 1s ease forwards;
+}

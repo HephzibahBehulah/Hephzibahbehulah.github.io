@@ -1,0 +1,44 @@
+/* css/cursor.css - Custom cursor effects */
+.custom-cursor {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+}
+
+.cursor-follower {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s, opacity 0.3s;
+}
+
+.cursor-hover {
+    width: 20px !important;
+    height: 20px !important;
+    background: var(--accent) !important;
+}
+
+.cursor-follower.cursor-hover {
+    width: 50px !important;
+    height: 50px !important;
+    border-color: var(--accent) !important;
+    opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+    .custom-cursor,
+    .cursor-follower {
+        display: none !important;
+    }
+}
