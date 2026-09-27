@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   async function status(){
     try{
       const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
-      if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";send.disabled=true;return}
+      if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";setPrivateControls(false);return}
       accessStatus.textContent="● AUTHENTICATED";
       accessStatus.className="ok";
       identityEmail.textContent=d.identity?.email||"verified";
