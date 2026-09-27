@@ -178,6 +178,13 @@
       document.getElementById('terminal')?.scrollIntoView({ behavior:'smooth', block:'center' });
     }
 
+    function queryWordsHighlight(html, query) {
+      const words = normalize(query).split(/\s+/).filter(Boolean);
+      return words.reduce((out, word) => {
+        const safe = escapeHTML(word).replace(/[.*+?^${}()|[\\]\\]/g, '\\    function render(raw) {');
+        return safe ? out.replace(new RegExp(safe, 'ig'), '<mark>    function render(raw) {</mark>') : out;
+      }, html);
+    }
     function render(raw) {
       const query = clean(raw);
       if (!query) {
@@ -189,8 +196,9 @@
       lastResults = index.map(item => ({ item, score:score(item, query) })).filter(row => Number.isFinite(row.score)).sort((a,b) => b.score - a.score).slice(0,100);
       meta.textContent = `${lastResults.length} result${lastResults.length === 1 ? '' : 's'} for “${query}” · all indexed HB content`;
       results.innerHTML = lastResults.length ? lastResults.map((row, i) => {
-        const queryWords = normalize(query).split(/\s+/).filter(Boolean); const escapedSnippet = escapeHTML(row.item.text.length > 220 ? `${row.item.text.slice(0,220)}…` : row.item.text); const snippet = queryWords.reduce((html, word) => { const safe = escapeHTML(word); return safe ? html.replace(new RegExp(`(${safe.replace(/[.*+?^${}()|[\\]\\]/g,'\\const snippet = row.item.text.length > 220 ? `${row.item.text.slice(0,220)}…` : row.item.text;')})`, 'ig'), '<mark>$1</mark>') : html; }, escapedSnippet);
-        return `<button class="hb-global-result" type="button" data-index="${i}"><span class="hb-global-result-title">${escapeHTML(row.item.section)} · ${escapeHTML(row.item.page)}</span><strong>${escapeHTML(snippet)}</strong></button>`;
+        const snippetSource = row.item.text.length > 220 ? row.item.text.slice(0,220) + '…' : row.item.text;
+        const highlighted = queryWordsHighlight(escapeHTML(snippetSource), query);
+        return '<button class="hb-global-result" type="button" data-index="' + i + '"><span class="hb-global-result-title">' + escapeHTML(row.item.section) + ' · ' + escapeHTML(row.item.page) + '</span><strong>' + highlighted + '</strong></button>'
       }).join('') : `<div class="hb-global-empty">No exact site match. Press Enter to ask ADIGUN about “${escapeHTML(query)}”.</div>`;
       overlay.classList.add('open');
     }
