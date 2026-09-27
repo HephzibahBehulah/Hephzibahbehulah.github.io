@@ -36,14 +36,14 @@
 <section class="os-panel admin-section" id="operator">
 <div class="os-panel-head"><span>PRIVATE OPERATOR</span><span>INVESTIGATE → PLAN → APPROVE</span></div>
 <div class="admin-chat">
-  <div class="admin-chat-messages" id="adminMessages"><div class="admin-chat-message system">PRIVATE ADIGUN // authenticated operator online.</div><div class="admin-chat-message assistant">Ask ADIGUN to investigate a problem. It can gather evidence automatically, explain what it found, and produce an approval-gated action plan.</div></div>
+  <div class="admin-chat-messages" id="adminMessages"><div class="admin-chat-message system">PRIVATE ADIGUN // authentication required before private operations.</div><div class="admin-chat-message assistant">Authenticate through Cloudflare Access to use private investigation, evidence collection, and approval-gated planning.</div></div>
   <div class="admin-attachments" id="adminAttachmentChips"></div>
   <div class="admin-chat-input"><input id="adminAttachmentInput" type="file" multiple accept=".pdf,.doc,.docx,.txt,.md,.csv,.json,.log,.xml,.xlsx,.xls,.yaml,.yml,.js,.ts,.py,.html,.css,.sql,.sh,.png,.jpg,.jpeg,.webp,.gif"><button class="os-btn" id="adminAttach" type="button">📎 ATTACH</button><input id="adminInput" placeholder="Ask Private ADIGUN..." autocomplete="off"><button id="adminSend" class="os-btn primary" type="button">SEND</button></div>
 </div>
 </section>
 
 <section class="os-panel admin-section" id="intelligence">
-<div class="os-panel-head"><span>LIVE INTELLIGENCE</span><span id="inspectState">READY</span></div>
+<div class="os-panel-head"><span>LIVE INTELLIGENCE</span><span id="inspectState">LOCKED</span></div>
 <div class="admin-ops">
 <button class="os-btn" data-inspect="all" type="button">FULL SYSTEM CHECK</button>
 <button class="os-btn" data-inspect="site" type="button">CHECK WEBSITE</button>
@@ -57,7 +57,7 @@
 <section class="os-panel admin-section" id="security"><div class="os-panel-head"><span>SECURITY</span><span>DEFENSE IN DEPTH</span></div>
 <div class="security-grid"><div><b>IDENTITY</b><span>Cloudflare Access authenticates the administrator before the application is reached.</span></div><div><b>MFA</b><span>Cloudflare Access protects this application. MFA is enforced at the identity layer.</span></div><div><b>SERVER SECRETS</b><span>OpenAI and other credentials are stored as Cloudflare secrets, never in browser code.</span></div><div><b>AUTHORIZATION</b><span>Worker endpoints verify the authenticated Access identity before privileged operations.</span></div></div></section>
 <section class="os-panel admin-section" id="terminal">
-<div class="os-panel-head"><span>AUTHENTICATED LINUX EXECUTION</span><span id="terminalState">READY</span></div>
+<div class="os-panel-head"><span>AUTHENTICATED LINUX EXECUTION</span><span id="terminalState">LOCKED</span></div>
 <div class="admin-terminal">
   <div class="admin-terminal-banner">ADIGUN TOOL BROKER // Cloudflare Sandbox // isolated Linux execution node</div>
   <div class="admin-terminal-actions">
