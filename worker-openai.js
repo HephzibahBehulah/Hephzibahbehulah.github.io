@@ -223,27 +223,51 @@ async function getAdminSandbox(env, identity) {
 
 function reconHelp(topic="overview") {
   const t=String(topic||"overview").trim().toLowerCase();
-  if(t==="linux"||t==="sandbox") return {ok:true,type:"help",category:"sandbox",count:Object.keys(SANDBOX_COMMANDS).length,commands:Object.keys(SANDBOX_COMMANDS).map(command=>({command,description:"Allow-listed isolated Linux diagnostic command."})),usage:["help","help linux","help all"]};
-  if(t==="help") return reconHelp("overview");
-  if(t==="all"||t==="commands") {
+  const categoryLabels={overview:"SYSTEM & OVERVIEW",web:"WEB INTELLIGENCE",dns:"DNS & NETWORK NAMING",security:"SECURITY",discovery:"DISCOVERY",github:"GITHUB INTELLIGENCE",cloudflare:"CLOUDFLARE / EDGE"};
+
+  if(t==="linux"||t==="sandbox"){
+    const commands=Object.keys(SANDBOX_COMMANDS).map(command=>({command,description:"Allow-listed isolated Linux diagnostic command."}));
+    return {ok:true,type:"help",category:"sandbox",label:"ISOLATED LINUX",count:commands.length,commands,usage:["help","help linux","help all"]};
+  }
+
+  if(t==="help"||t==="commands"||t==="all"){
+    const categories=Object.fromEntries(Object.entries(HELP_CATEGORIES).map(([key,names])=>[key,{label:categoryLabels[key]||key.toUpperCase(),count:names.length,commands:names.map(name=>({command:name,description:RECON_BASES[name].description,aliases:RECON_VARIANTS.map(v=>name+"-"+v)}))}]));
     return {
       ok:true,type:"help",target:RECON_TARGET,count:RECON_COUNT,
-      categories:HELP_CATEGORIES,
-      variants:RECON_VARIANTS,
-      usage:["help","help linux","help dns","help security","help github","help web","commands","recon","site-summary"],
-      note:"All reconnaissance commands are read-only and fixed to the authorized Hephzibah Behulah site and its public GitHub repository."
+      commandRegistry:{
+        system:["help","commands","clear","history","status","version","config","exit"],
+        reconnaissance:["recon","full-recon","site-summary",...HELP_CATEGORIES.overview],
+        web:HELP_CATEGORIES.web,
+        osint:HELP_CATEGORIES.discovery,
+        network:HELP_CATEGORIES.dns,
+        security:HELP_CATEGORIES.security,
+        github:HELP_CATEGORIES.github,
+        cloudflare:HELP_CATEGORIES.cloudflare,
+        utilities:["encode","decode","hash","base64","timestamp","json","regex"]
+      },
+      categories,variants:RECON_VARIANTS,
+      usage:["help","help <category>","help <command>","help all","help linux","commands","recon"],
+      note:"Read-only reconnaissance is target-locked to the authorized Hephzibah Behulah site and its public GitHub repository. Linux commands are restricted to the isolated allow-list."
     };
   }
-  const category=HELP_CATEGORIES[t] ? t : "overview";
-  return {
-    ok:true,type:"help",target:RECON_TARGET,category,count:HELP_CATEGORIES[category].length,
-    commands:HELP_CATEGORIES[category].map(name=>({
-      command:name,
-      aliases:RECON_VARIANTS.map(v=>name+"-"+v),
-      description:RECON_BASES[name].description
-    })),
-    usage:["help","help all","help dns","help security","help github","help web","commands","recon"]
-  };
+
+  const sandboxCommand=Object.keys(SANDBOX_COMMANDS).find(command=>command===t);
+  if(sandboxCommand) return {ok:true,type:"help",category:"sandbox",command:sandboxCommand,description:"Allow-listed isolated Linux diagnostic command.",usage:[sandboxCommand]};
+
+  for(const [category,names] of Object.entries(HELP_CATEGORIES)){
+    if(names.includes(t)){
+      const base=RECON_BASES[t];
+      return {ok:true,type:"help",category,categoryLabel:categoryLabels[category]||category.toUpperCase(),command:t,description:base.description,aliases:RECON_VARIANTS.map(v=>t+"-"+v),target:RECON_TARGET,readOnly:true,usage:[t,...RECON_VARIANTS.slice(0,6).map(v=>t+"-"+v)]};
+    }
+  }
+
+  const variantBase=RECON_COMMANDS[t];
+  if(variantBase&&RECON_BASES[variantBase]){
+    const base=RECON_BASES[variantBase];
+    return {ok:true,type:"help",category:base.category,categoryLabel:categoryLabels[base.category]||base.category.toUpperCase(),command:t,baseCommand:variantBase,description:base.description,readOnly:true,usage:[t,variantBase]};
+  }
+
+  return {ok:false,type:"help",error:"Unknown help topic: "+t,suggestions:["help","help all",...Object.keys(HELP_CATEGORIES),...Object.keys(RECON_BASES).slice(0,20)]};
 }
 
 function makeDohUrl(name,type) {
