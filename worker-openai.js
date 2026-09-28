@@ -129,7 +129,7 @@ async function getAdminSandbox(env, identity) {
 }
 
 async function executeSandboxCommand(request, env, ctx, command) {
-  const identity=await getAdminIdentity();
+  const identity = getAdminIdentity();
   const shellCommand=SANDBOX_COMMANDS[command];
   if(!shellCommand) return json(request,{ok:false,error:"Command is not allow-listed.",available:Object.keys(SANDBOX_COMMANDS)},400);
   const started=Date.now();
@@ -199,7 +199,7 @@ async function executeAdminCommand(request, env, command) {
 
 async function adminRoutes(request, env, url, ctx) {
   if (url.pathname === "/api/admin/capabilities" && request.method === "GET") {
-    const identity = await getAdminIdentity();
+    const identity = getAdminIdentity();
     return json(request,{ok:true,manifest:capabilityManifest(env,true),identity});
   }
   if (url.pathname === "/api/admin/status" && request.method === "GET") {
@@ -207,13 +207,13 @@ async function adminRoutes(request, env, url, ctx) {
     return json(request, { ok:true, authenticated:true, identity, authentication:"disabled" });
   }
   if (url.pathname === "/api/admin/command" && request.method === "POST") {
-    const identity = await getAdminIdentity();
+    const identity = getAdminIdentity();
     let body;
     try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
     return executeAdminCommand(request, env, String(body?.command || "").trim());
   }
   if (url.pathname === "/api/automation/demo" && request.method === "POST") {
-    const identity = await getAdminIdentity();
+    const identity = getAdminIdentity();
     return json(request, {
       ok:true,
       workflow:"adigun-controlled-demo",
@@ -693,7 +693,7 @@ function requestedSandboxCommands(task){
   ).slice(0,3);
 }
 async function privateAgent(request, env, url, ctx) {
-  const identity = await getAdminIdentity();
+  const identity = getAdminIdentity();
   if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
   let body;
   try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
@@ -806,7 +806,7 @@ async function privateAgent(request, env, url, ctx) {
 }
 
 async function privateInspect(request, env, url, ctx) {
-  const identity=await getAdminIdentity();
+  const identity = getAdminIdentity();
   const target=url.searchParams.get("target")||"all";
   const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:capabilityManifest(env,true)};
 
