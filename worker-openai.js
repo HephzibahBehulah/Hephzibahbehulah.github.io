@@ -31,7 +31,13 @@ const corsHeaders = request => {
 const json = (request, body, status = 200, extra = {}) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8", ...corsHeaders(request), ...extra }
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      "x-content-type-options": "nosniff",
+      ...corsHeaders(request),
+      ...extra
+    }
   });
 
 const MODEL = env => env.OPENAI_MODEL || "gpt-5.6-luna";
@@ -97,6 +103,28 @@ function getAdminIdentity() {
     name: "ADIGUN Control",
     groups: []
   };
+}
+
+function getAccessIdentity(request, env) {
+  const configured = String(env?.ADIGUN_ADMIN_EMAIL || "").trim().toLowerCase();
+  const supplied = String(request?.headers?.get("cf-access-authenticated-user-email") || "").trim().toLowerCase();
+  if (!configured || !supplied || supplied !== configured) return null;
+  return { email: supplied, name: "ADIGUN Control", groups: [] };
+}
+
+function requireAdmin(request, env) {
+  const url = new URL(request.url);
+  if (url.hostname !== "admin.hephzibahbehulah.com") {
+    return { ok:false, response:json(request,{ok:false,error:"Private control endpoint."},404) };
+  }
+  const identity = getAccessIdentity(request, env);
+  if (!identity) {
+    return { ok:false, response:json(request,{ok:false,authenticated:false,error:"Cloudflare Access authentication is required."},401,{
+      "cache-control":"no-store",
+      "www-authenticate":"Cloudflare-Access"
+    }) };
+  }
+  return { ok:true, identity };
 }
 
 
@@ -490,25 +518,25 @@ async function executeSandboxCommand(request, env, ctx, command) {
 }
 
 async function adminRoutes(request, env, url, ctx) {
+  const auth = requireAdmin(request, env);
+  if (!auth.ok) return auth.response;
+  const identity = auth.identity;
+
   if (url.pathname === "/api/admin/capabilities" && request.method === "GET") {
-    const identity = getAdminIdentity();
     return json(request,{ok:true,manifest:capabilityManifest(env,true),identity,recon:{commandCount:RECON_COUNT,target:RECON_TARGET,readOnly:true,categories:Object.fromEntries(Object.entries(HELP_CATEGORIES).map(([k,v])=>[k,v.length]))}});
   }
   if (url.pathname === "/api/admin/commands" && request.method === "GET") {
     return json(request,{ok:true,target:RECON_TARGET,count:RECON_COUNT,commands:Object.keys(RECON_COMMANDS),categories:HELP_CATEGORIES,variants:RECON_VARIANTS,sandbox:Object.keys(SANDBOX_COMMANDS)});
   }
   if (url.pathname === "/api/admin/status" && request.method === "GET") {
-    const identity = getAdminIdentity();
-    return json(request, { ok:true, authenticated:true, identity, authentication:"disabled" });
+    return json(request, { ok:true, authenticated:true, identity, authentication:"cloudflare-access" });
   }
   if (url.pathname === "/api/admin/command" && request.method === "POST") {
-    const identity = getAdminIdentity();
     let body;
     try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
     return executeAdminCommand(request, env, String(body?.command || "").trim());
   }
   if (url.pathname === "/api/automation/demo" && request.method === "POST") {
-    const identity = getAdminIdentity();
     return json(request, {
       ok:true,
       workflow:"adigun-controlled-demo",
@@ -1285,17 +1313,89 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    // The private hostname serves the ADIGUN Control shell directly.
-    // Keep the admin application isolated from the public apex hostname.
-    if (url.hostname === "admin.hephzibahbehulah.com") {
-      if (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control") {
-        const adminUrl = new URL(request.url);
-        adminUrl.pathname = "/admin.html";
-        return env.ASSETS.fetch(new Request(adminUrl.toString(), request));
-      }
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders(request) });
+    }
+
+    // Defense in depth: the private control surface is reachable only on its
+    // dedicated hostname and requires a Cloudflare Access identity matching
+    // the server-side ADIGUN_ADMIN_EMAIL allow-list.
+    const isAdminHost = url.hostname === "admin.hephzibahbehulah.com";
+    const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
+
+    if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
+      const auth = requireAdmin(request, env);
+      if (!auth.ok) return auth.response;
+      const adminUrl = new URL(request.url);
+      adminUrl.pathname = "/admin.html";
+      return env.ASSETS.fetch(new Request(adminUrl.toString(), request));
+    }
+
+    if (isAdminApi) {
+      const auth = requireAdmin(request, env);
+      if (!auth.ok) return auth.response;
     }
 
     if (
       url.hostname === "hephzibahbehulah.com" &&
       ["/admin.html", "/js/adigun-admin.js", "/css/adigun-admin.css"].includes(url.pathname)
     ) {
+      return new Response("Not found", { status: 404 });
+    }
+
+    if (url.pathname === "/api/admin/sandbox" && request.method === "POST") {
+      let body;
+      try { body=await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
+      return executeSandboxCommand(request,env,ctx,String(body?.command||""));
+    }
+    if (url.pathname === "/api/admin/agent" && request.method === "POST") return privateAgent(request, env, url, ctx);
+    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
+
+    const adminResponse = await adminRoutes(request, env, url, ctx);
+    if (adminResponse) return adminResponse;
+
+    if (url.pathname === "/api/capabilities" && request.method === "GET") {
+      return json(request,{ok:true,manifest:capabilityManifest(env,false)});
+    }
+
+    if (url.pathname === "/api/health" && request.method === "GET") {
+      if (!env.OPENAI_API_KEY) {
+        return legacy.fetch(request, env, ctx);
+      }
+
+      return json(request, {
+        ok: true,
+        service: "hephzibah-behulah-ai",
+        version: "7.0.0",
+        mode: "multi-provider",
+        model: MODEL(env),
+        providers: {
+          openai: Boolean(env.OPENAI_API_KEY),
+          openrouter: Boolean(env.OPENROUTER_API_KEY),
+          cloudflareWorkersAI: Boolean(env.AI)
+        },
+        fallbackModel: env.AI ? (env.ADIGUN_FALLBACK_MODEL || "@cf/zai-org/glm-4.7-flash") : null,
+        rag: env.AI_SEARCH ? "ai-search-ready" : "legacy-knowledge-search",
+        web: "openai-web-search",
+        capabilities: [
+          "chatgpt-powered-reasoning",
+          "local-site-intelligence",
+          "persistent-rag",
+          "public-web-search",
+          "markdown",
+          "latex-math",
+          "project-intelligence",
+          "document-analysis",
+          "dataset-analysis",
+          "controlled-automation"
+        ]
+      });
+    }
+
+    if (url.pathname === "/api/chat" && request.method === "POST" && env.OPENAI_API_KEY) {
+      return openAIChat(request, env);
+    }
+
+    return legacy.fetch(request, env, ctx);
+  }
+};
