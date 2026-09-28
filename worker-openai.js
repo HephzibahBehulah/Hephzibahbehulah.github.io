@@ -959,11 +959,11 @@ function requestedCommands(task){
   const q=String(task||"").toLowerCase();
   const map=[
     ["site-health",/site[- ]health|http health|check.*http/],
-    ["site-headers",/site[- ]headers|security headers|check.*headers/],
-    ["site-robots",/robots\.txt|robots policy/],
-    ["site-sitemap",/sitemap\.xml|sitemap/],
-    ["dns-lookup",/dns lookup|resolve dns|dns resolution/],
-    ["repository-status",/repository status|repo status|git status|current revision/]
+    ["http-headers",/site[- ]headers|http headers|security headers|check.*headers/],
+    ["robots",/robots\.txt|robots policy/],
+    ["sitemap",/sitemap\.xml|sitemap/],
+    ["dns-a",/dns lookup|resolve dns|dns resolution/],
+    ["github-repo",/repository status|repo status|git status|current revision/]
   ];
   return map.filter(([,re])=>re.test(q)).map(([name])=>name);
 }
@@ -1119,7 +1119,7 @@ async function privateInspect(request, env, url, ctx) {
       }});
     }catch(e){result.checks.push({name:"website",status:"error",error:String(e?.message||e)})}
     if(target==="security"||target==="all"){
-      for(const command of ["site-headers","site-robots","site-sitemap"]){
+      for(const command of ["http-headers","robots","sitemap"]){
         try{
           const u=new URL(request.url); u.pathname="/api/admin/command"; u.search="";
           const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command})}),env,command);
@@ -1151,7 +1151,7 @@ async function privateInspect(request, env, url, ctx) {
   if(target==="cloudflare"||target==="all"){
     try{
       const u=new URL(request.url);u.pathname="/api/admin/command";u.search="";
-      const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command:"dns-lookup"})}),env,"dns-lookup");
+      const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command:"dns-a"})}),env,"dns-lookup");
       const d=await r.json();
       result.checks.push({name:"dns",status:d.ok?"healthy":"error",result:d.result||null,error:d.error||null});
     }catch(e){result.checks.push({name:"dns",status:"error",error:String(e?.message||e)})}
