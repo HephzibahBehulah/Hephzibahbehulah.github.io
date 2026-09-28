@@ -459,22 +459,6 @@ async function adminRoutes(request, env, url, ctx) {
     return json(request, { ok:true, authenticated:true, identity, authentication:"disabled" });
   }
   if (url.pathname === "/api/admin/command" && request.method === "POST") {
-    let body;
-    try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
-    return executeAdminCommand(request, env, String(body?.command || "").trim());
-  }
-  if (url.pathname === "/api/automation/demo" && request.method === "POST") {
-    const identity = getAdminIdentity();
-async function adminRoutes(request, env, url, ctx) {
-  if (url.pathname === "/api/admin/capabilities" && request.method === "GET") {
-    const identity = getAdminIdentity();
-    return json(request,{ok:true,manifest:capabilityManifest(env,true),identity});
-  }
-  if (url.pathname === "/api/admin/status" && request.method === "GET") {
-    const identity = getAdminIdentity();
-    return json(request, { ok:true, authenticated:true, identity, authentication:"disabled" });
-  }
-  if (url.pathname === "/api/admin/command" && request.method === "POST") {
     const identity = getAdminIdentity();
     let body;
     try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
