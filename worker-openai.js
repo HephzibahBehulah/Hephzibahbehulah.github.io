@@ -66,7 +66,7 @@ function capabilityManifest(env, authenticated=false) {
   return {
     generatedAt:new Date().toISOString(),
     subject:authenticated ? "private-adigun" : "public-adigun",
-    executionPolicy: authenticated ? "local-operator-read-only-recon-plus-allow-listed-sandbox-execution" : "public-read-only",
+    executionPolicy: authenticated ? "cloudflare-access-read-only-recon-plus-allow-listed-sandbox-execution" : "public-read-only",
     tools: {
       "http.inspect": {available:true,execution:true,mutation:false},
       "dns.lookup": {available:true,execution:true,mutation:false},
@@ -97,23 +97,111 @@ function capabilityManifest(env, authenticated=false) {
     }
   };
 }
-function getAdminIdentity() {
+const ACCESS_JWKS_CACHE = new Map();
+const ACCESS_CLOCK_SKEW_SECONDS = 60;
+
+function base64urlToBytes(value) {
+  const normalized = String(value || "").replace(/-/g, "+").replace(/_/g, "/");
+  const padded = normalized + "=".repeat((4 - normalized.length % 4) % 4);
+  const binary = atob(padded);
+  const bytes = new Uint8Array(binary.length);
+  for (let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+  return bytes;
+}
+
+function decodeJwtPart(value) {
+  return JSON.parse(new TextDecoder().decode(base64urlToBytes(value)));
+}
+
+function normalizeTeamDomain(value) {
+  const raw = String(value || "").trim().replace(/\\/+$/,"");
+  if (!raw) return "";
+  try {
+    const u = new URL(raw);
+    if (u.protocol !== "https:" || u.pathname !== "/" || u.search || u.hash) return "";
+    return u.origin;
+  } catch {
+    return "";
+  }
+}
+
+function getAccessConfig(env) {
+  const teamDomain = normalizeTeamDomain(env?.ADIGUN_ACCESS_TEAM_DOMAIN || env?.TEAM_DOMAIN || "");
+  const audience = String(env?.ADIGUN_ACCESS_AUD || env?.POLICY_AUD || "").trim();
+  const configuredEmail = String(env?.ADIGUN_ADMIN_EMAIL || "").trim().toLowerCase();
+  return { teamDomain, audience, configuredEmail };
+}
+
+async function getAccessJwk(teamDomain, kid) {
+  const cacheKey = teamDomain + "|" + kid;
+  const cached = ACCESS_JWKS_CACHE.get(cacheKey);
+  if (cached) return cached;
+  const promise = (async () => {
+    const response = await fetch(teamDomain + "/cdn-cgi/access/certs", {
+      headers: { "accept": "application/json" },
+      cf: { cacheTtl: 300, cacheEverything: true }
+    });
+    if (!response.ok) throw new Error("Cloudflare Access signing-key endpoint unavailable.");
+    const body = await response.json();
+    const key = Array.isArray(body?.keys) ? body.keys.find(item => item?.kid === kid) : null;
+    if (!key || key.kty !== "RSA" || key.alg !== "RS256" || !key.n || !key.e) throw new Error("Cloudflare Access signing key not found.");
+    return crypto.subtle.importKey(
+      "jwk",
+      { kty:"RSA", n:key.n, e:key.e, alg:"RS256", ext:true },
+      { name:"RSASSA-PKCS1-v1_5", hash:"SHA-256" },
+      false,
+      ["verify"]
+    );
+  })();
+  ACCESS_JWKS_CACHE.set(cacheKey,promise);
+  try { return await promise; } catch (error) { ACCESS_JWKS_CACHE.delete(cacheKey); throw error; }
+}
+
+async function verifyCloudflareAccessJwt(request, env) {
+  const token = String(request?.headers?.get("cf-access-jwt-assertion") || "").trim();
+  if (!token) return { ok:false, error:"Cloudflare Access JWT assertion is missing." };
+
+  const { teamDomain, audience, configuredEmail } = getAccessConfig(env);
+  if (!teamDomain || !audience || !configuredEmail) {
+    return { ok:false, status:503, error:"ADIGUN Access JWT validation is not configured." };
+  }
+
+  const parts = token.split(".");
+  if (parts.length !== 3 || parts.some(part => !part)) return { ok:false, error:"Invalid Cloudflare Access JWT format." };
+
+  try {
+    const header = decodeJwtPart(parts[0]);
+    const payload = decodeJwtPart(parts[1]);
+    if (header.alg !== "RS256" || !header.kid) throw new Error("Unsupported Cloudflare Access JWT signing method.");
+    if (payload.iss !== teamDomain) throw new Error("Cloudflare Access JWT issuer mismatch.");
+    const audiences = Array.isArray(payload.aud) ? payload.aud : [payload.aud];
+    if (!audiences.includes(audience)) throw new Error("Cloudflare Access JWT audience mismatch.");
+    const now = Math.floor(Date.now()/1000);
+    if (!Number.isFinite(Number(payload.exp)) || Number(payload.exp) < now - ACCESS_CLOCK_SKEW_SECONDS) throw new Error("Cloudflare Access JWT is expired.");
+    if (payload.nbf != null && Number(payload.nbf) > now + ACCESS_CLOCK_SKEW_SECONDS) throw new Error("Cloudflare Access JWT is not active yet.");
+    const email = String(payload.email || "").trim().toLowerCase();
+    if (!email || email !== configuredEmail) throw new Error("Cloudflare Access identity is not authorized for ADIGUN Control.");
+    const key = await getAccessJwk(teamDomain, header.kid);
+    const data = new TextEncoder().encode(parts[0] + "." + parts[1]);
+    const signature = base64urlToBytes(parts[2]);
+    const valid = await crypto.subtle.verify({name:"RSASSA-PKCS1-v1_5"}, key, signature, data);
+    if (!valid) throw new Error("Cloudflare Access JWT signature verification failed.");
+    return { ok:true, identity:{email,name:String(payload.name||"ADIGUN Control"),groups:Array.isArray(payload.groups)?payload.groups:[]}, claims:{iss:payload.iss,aud:audiences,sub:payload.sub||null} };
+  } catch (error) {
+    return { ok:false, error:String(error?.message || "Invalid Cloudflare Access JWT.") };
+  }
+}
+
+function getAdminIdentity(identity) {
   return {
-    email: "local-operator",
-    name: "ADIGUN Control",
-    groups: []
+    email: String(identity?.email || "").trim().toLowerCase(),
+    name: String(identity?.name || "ADIGUN Control"),
+    groups: Array.isArray(identity?.groups) ? identity.groups : []
   };
 }
 
-function getRequestActor(request) {
-  return String(request?.headers?.get("cf-access-authenticated-user-email") || "").trim().toLowerCase() || "local-operator";
-}
-
-function getAccessIdentity(request, env) {
-  const configured = String(env?.ADIGUN_ADMIN_EMAIL || "").trim().toLowerCase();
-  const supplied = String(request?.headers?.get("cf-access-authenticated-user-email") || "").trim().toLowerCase();
-  if (!configured || !supplied || supplied !== configured) return null;
-  return { email: supplied, name: "ADIGUN Control", groups: [] };
+function getRequestActor(request, identity=null) {
+  return String(identity?.email || "").trim().toLowerCase() || "authenticated-access-user";
 }
 
 function requireAdmin(request, env) {
@@ -121,16 +209,22 @@ function requireAdmin(request, env) {
   if (url.hostname !== "admin.hephzibahbehulah.com") {
     return { ok:false, response:json(request,{ok:false,error:"Private control endpoint."},404) };
   }
-  const identity = getAccessIdentity(request, env);
-  if (!identity) {
-    return { ok:false, response:json(request,{ok:false,authenticated:false,error:"Cloudflare Access authentication is required."},401,{
+  return { ok:true, pending:true };
+}
+
+async function authenticateAdmin(request, env) {
+  const auth = requireAdmin(request, env);
+  if (!auth.ok) return auth;
+  const verified = await verifyCloudflareAccessJwt(request, env);
+  if (!verified.ok) {
+    const status = verified.status || 401;
+    return { ok:false, response:json(request,{ok:false,authenticated:false,error:verified.error},status,{
       "cache-control":"no-store",
       "www-authenticate":"Cloudflare-Access"
     }) };
   }
-  return { ok:true, identity };
+  return { ok:true, identity:verified.identity, claims:verified.claims };
 }
-
 
 const SANDBOX_COMMANDS = Object.freeze({
   "pwd": "pwd",
