@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       terminalHost.textContent+=stdout+(stderr?"\n[stderr]\n"+stderr:"");
       terminalHost.textContent+="\n[exit "+String(d.result?.exitCode??"—")+"]\n";
       terminalHost.scrollTop=terminalHost.scrollHeight;
-      commandOutput.textContent=JSON.stringify(d,null,2);
+      const helpView=formatHelp(d.result);\n      commandOutput.textContent=helpView||JSON.stringify(d,null,2);
       terminalState.textContent="● COMPLETE";
       terminalMeta.textContent="Live Linux execution completed. Evidence ID: "+String(d.evidence?.evidenceId||"—");
     }catch(e){
@@ -32,24 +32,43 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
   terminalRun?.addEventListener("click",()=>runSandboxCommand(terminalCommand.value));
 
+  function formatHelp(data){
+    if(!data||data.type!=="help") return null;
+    const lines=["ADIGUN CONTROL TERMINAL","══════════════════════════════════════════════════════════════",""];
+    if(data.error){lines.push("HELP ERROR","  "+String(data.error),"","Try: help | help all | help <category> | help <command>");return lines.join("\n");}
+    if(data.commandRegistry){
+      lines.push("COMMAND REGISTRY","│");
+      const tree=data.commandRegistry;
+      const order=["system","reconnaissance","web","osint","network","security","github","cloudflare","utilities"];
+      order.forEach((key,idx)=>{const items=Array.isArray(tree[key])?tree[key]:[];lines.push((idx===order.length-1?"└── ":"├── ")+key);items.forEach((name,j)=>lines.push((j===items.length-1?"    └── ":"    ├── ")+name));});
+      lines.push("","RECONNAISSANCE CATALOG","  "+String(data.count||0)+" generated reconnaissance commands","  Variants: "+String(Array.isArray(data.variants)?data.variants.length:0)+" per base command","","USAGE");
+      (data.usage||[]).forEach(x=>lines.push("  "+x));
+      lines.push("","Type help <category> or help <command> for details.");
+      return lines.join("\n");
+    }
+    if(data.command){
+      lines.push(String(data.categoryLabel||data.category||"COMMAND").toUpperCase(),"","  "+String(data.command));
+      if(data.baseCommand)lines.push("  base: "+String(data.baseCommand));
+      lines.push("  "+String(data.description||"No description available."),"");
+      if(data.aliases?.length){lines.push("ALIASES");data.aliases.forEach(x=>lines.push("  "+x));lines.push("");}
+      if(data.target)lines.push("TARGET","  "+data.target);
+      if(data.readOnly!==undefined)lines.push("  read-only: "+(data.readOnly?"yes":"no"));
+      lines.push("","USAGE");(data.usage||[]).forEach(x=>lines.push("  "+x));return lines.join("\n");
+    }
+    if(data.category==="sandbox"){lines.push("ISOLATED LINUX","");(data.commands||[]).forEach(x=>lines.push("  "+x.command+"  "+x.description));lines.push("","Use help <command> for a specific command.");return lines.join("\n");}
+    if(data.categories){lines.push("CATEGORY: "+String(data.category||"overview").toUpperCase());Object.entries(data.categories).forEach(([k,c])=>{lines.push("",String(c.label||k).toUpperCase()+" ("+String(c.count||0)+")");(c.commands||[]).forEach(x=>lines.push("  "+x.command+"  "+x.description));});return lines.join("\n");}
+    return JSON.stringify(data,null,2);
+  }
+
   async function loadReconCommandCatalog(){
-    const list=document.querySelector("#terminalCommands");
-    if(!list)return;
+    const list=document.querySelector("#terminalCommands");if(!list)return;
     try{
-      const r=await fetch("/api/admin/commands",{credentials:"same-origin",cache:"no-store"});
-      const d=await r.json().catch(()=>({}));
+      const r=await fetch("/api/admin/commands",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
       if(!r.ok||!Array.isArray(d.commands))return;
-      const commands=["help","commands","recon","full-recon",...(Array.isArray(d.sandbox)?d.sandbox:[]),...d.commands];
-      list.innerHTML="";
-      const seen=new Set();
-      for(const command of commands){
-        if(seen.has(command))continue;
-        seen.add(command);
-        const option=document.createElement("option");
-        option.value=command;
-        list.appendChild(option);
-      }
-      terminalMeta.textContent=String(d.count||d.commands.length)+" reconnaissance command names loaded. Type help for categories.";
+      const commands=["help","commands","help all","help linux","recon","full-recon",...(Array.isArray(d.sandbox)?d.sandbox:[]),...d.commands];
+      list.innerHTML="";const seen=new Set();
+      for(const command of commands){if(seen.has(command))continue;seen.add(command);const option=document.createElement("option");option.value=command;list.appendChild(option);}
+      terminalMeta.textContent=String(d.count||d.commands.length)+" reconnaissance command names loaded. Type help for the command registry.";
     }catch{}
   }
   loadReconCommandCatalog();
