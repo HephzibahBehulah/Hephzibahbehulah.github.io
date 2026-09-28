@@ -5,33 +5,43 @@ document.addEventListener("DOMContentLoaded",()=>{
   const messages=$("#adminMessages"),input=$("#adminInput"),send=$("#adminSend"),fileInput=$("#adminAttachmentInput"),attach=$("#adminAttach"),chips=$("#adminAttachmentChips");
   const inspectOutput=$("#inspectOutput"),inspectState=$("#inspectState");
   const terminalState=$("#terminalState"),terminalMeta=$("#terminalMeta"),terminalHost=$("#adigunTerminal"),terminalCommand=$("#terminalCommand"),terminalRun=$("#terminalRun"),terminalClear=$("#terminalClear");
+  function appendTerminalLine(text,kind="output"){
+    const line=document.createElement("div");
+    line.className="admin-terminal-line "+kind;
+    line.textContent=String(text??"");
+    terminalHost.appendChild(line);
+    terminalHost.scrollTop=terminalHost.scrollHeight;
+    return line;
+  }
   async function runSandboxCommand(command){
     const q=String(command||"").trim();
     if(!q)return;
     terminalRun.disabled=true;
+    appendTerminalLine("adigun@control:~$ "+q,"prompt");
     terminalState.textContent="● EXECUTING";
-    terminalMeta.textContent="Sending the command to ADIGUN Control. Recon commands are read-only and fixed to the authorized site; sandbox commands remain allow-listed.";
-    terminalHost.textContent+="\n\n$ "+q+"\n";
+    terminalMeta.textContent="Executing command…";
     try{
       const r=await fetch("/api/admin/sandbox",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",body:JSON.stringify({command:q})});
       const d=await r.json().catch(()=>({}));
-      if(!r.ok||!d.ok)throw new Error(d.error||"Sandbox execution failed");
-      const stdout=String(d.result?.stdout||"");
-      const stderr=String(d.result?.stderr||"");
-      terminalHost.textContent+=stdout+(stderr?"\n[stderr]\n"+stderr:"");
-      terminalHost.textContent+="\n[exit "+String(d.result?.exitCode??"—")+"]\n";
-      terminalHost.scrollTop=terminalHost.scrollHeight;
-      const helpView=formatHelp(d.result);\n      commandOutput.textContent=helpView||JSON.stringify(d,null,2);
+      if(!r.ok||!d.ok)throw new Error(d.error||"Command execution failed");
+      const result=d.result||{};
+      if(result.stdout)appendTerminalLine(result.stdout,"output");
+      if(result.stderr)appendTerminalLine("[stderr]\n"+result.stderr,"error");
+      appendTerminalLine("[exit "+String(result.exitCode??0)+"]","system");
+      const helpView=formatHelp(result);
+      commandOutput.textContent=helpView||JSON.stringify(d,null,2);
       terminalState.textContent="● COMPLETE";
-      terminalMeta.textContent="Live Linux execution completed. Evidence ID: "+String(d.evidence?.evidenceId||"—");
+      terminalMeta.textContent="Evidence ID: "+String(d.evidence?.evidenceId||"—");
     }catch(e){
-      terminalHost.textContent+="\nERROR: "+String(e.message||e)+"\n";
+      appendTerminalLine("ERROR: "+String(e.message||e),"error");
       terminalState.textContent="● ERROR";
       terminalMeta.textContent=String(e.message||e);
-    }finally{terminalRun.disabled=false;terminalCommand.focus()}
+    }finally{
+      terminalRun.disabled=false;
+      terminalCommand.value="";
+      terminalCommand.focus();
+    }
   }
-  terminalRun?.addEventListener("click",()=>runSandboxCommand(terminalCommand.value));
-
   function formatHelp(data){
     if(!data||data.type!=="help") return null;
     const lines=["ADIGUN CONTROL TERMINAL","══════════════════════════════════════════════════════════════",""];
@@ -73,7 +83,8 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
   loadReconCommandCatalog();
   terminalCommand?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSandboxCommand(terminalCommand.value)}});
-  terminalClear?.addEventListener("click",()=>{terminalHost.textContent="ADIGUN EXECUTION NODE\nstatus: waiting\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: local operator mode\n";commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.";});
+  document.querySelectorAll("[data-terminal-command]").forEach(b=>b.addEventListener("click",()=>{terminalCommand.value=b.dataset.terminalCommand||"";runSandboxCommand(terminalCommand.value)}));
+  terminalClear?.addEventListener("click",()=>{terminalHost.innerHTML='<div class="admin-terminal-line system">ADIGUN EXECUTION NODE\nstatus: ready\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: local operator mode\n\nType HELP to begin.</div>';commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.";terminalCommand.focus();});
 
   const history=[]; let files=[];
   const session=(()=>{let v=localStorage.getItem("hb-admin-session");if(!v){v=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36);localStorage.setItem("hb-admin-session",v)}return v})();
