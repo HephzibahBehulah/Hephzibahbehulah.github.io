@@ -732,6 +732,99 @@ function collectSources(data) {
   return [...new Set(urls)].slice(0, 20);
 }
 
+function isJobSearchIntent(q) {
+  return /\b(job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for)\b/i.test(String(q||""));
+}
+
+function normalizeSourceUrl(value) {
+  try {
+    const u=new URL(String(value||""));
+    if(u.protocol!=="https:") return null;
+    if(["google.com","www.google.com","bing.com","www.bing.com","search.yahoo.com","duckduckgo.com"].includes(u.hostname.toLowerCase())) return null;
+    return u.href;
+  } catch { return null; }
+}
+
+function extractWebCitations(data) {
+  const out=[];
+  for(const item of data?.output||[]) {
+    if(item?.type!=="message") continue;
+    for(const c of item?.content||[]) {
+      for(const a of c?.annotations||[]) {
+        if(a?.type!=="url_citation" || !a.url) continue;
+        const url=normalizeSourceUrl(a.url);
+        if(!url) continue;
+        out.push({
+          url,
+          title:String(a.title||"").slice(0,240),
+          startIndex:Number.isFinite(a.start_index)?a.start_index:null,
+          endIndex:Number.isFinite(a.end_index)?a.end_index:null
+        });
+      }
+    }
+  }
+  const seen=new Set();
+  return out.filter(x=>!seen.has(x.url)&&(seen.add(x.url),true)).slice(0,12);
+}
+
+async function verifyVacancySources(citations) {
+  const checked=[];
+  for(const citation of citations.slice(0,8)) {
+    const base={sourceUrl:citation.url,title:citation.title||null,verificationStatus:"unverified"};
+    try {
+      const response=await fetch(citation.url,{redirect:"follow",headers:{"user-agent":"ADIGUN-Evidence-Verifier/1.0","accept":"text/html,application/xhtml+xml"}});
+      const contentType=String(response.headers.get("content-type")||"").toLowerCase();
+      const finalUrl=normalizeSourceUrl(response.url);
+      if(!response.ok || !finalUrl || !contentType.includes("text/html")) {
+        checked.push({...base,httpStatus:response.status,verificationStatus:"unverified",reason:"Original source page could not be fetched as HTML."});
+        continue;
+      }
+      const html=(await response.text()).slice(0,500000);
+      const text=html.replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().toLowerCase();
+      const hasJobMarker=/\b(job|jobs|career|careers|vacancy|position|role|apply|application)\b/.test(text);
+      const hasActiveMarker=/\b(apply now|apply|submit application|application deadline|applications? (are|is) open|how to apply|easy apply|bewerben|jetzt bewerben|stellenangebot)\b/.test(text);
+      const hasClosedMarker=/\b(closed|filled|no longer accepting|position (has )?been filled|application(s)? closed|bewerbung(en)? geschlossen|stelle besetzt)\b/.test(text);
+      let verificationStatus="unverified";
+      let reason="The original page was reachable but active application evidence was not established.";
+      if(hasJobMarker && hasActiveMarker && !hasClosedMarker) {
+        verificationStatus="verified";
+        reason="Original source page is reachable and contains job plus active-application indicators.";
+      } else if(hasJobMarker && hasClosedMarker) {
+        verificationStatus="stale";
+        reason="Original source page contains closure/filled indicators.";
+      }
+      checked.push({...base,finalUrl,httpStatus:response.status,verificationStatus,reason});
+    } catch(error) {
+      checked.push({...base,verificationStatus:"unverified",reason:"Source fetch failed: "+String(error?.message||error).slice(0,180)});
+    }
+  }
+  return checked;
+}
+
+function applyJobEvidenceGuard(answer,citations,verification) {
+  const verified=verification.filter(x=>x.verificationStatus==="verified");
+  const stale=verification.filter(x=>x.verificationStatus==="stale");
+  const currentSources=citations.length;
+  const audit={
+    requested:true,
+    sourceCount:currentSources,
+    verifiedSourceCount:verified.length,
+    staleSourceCount:stale.length,
+    verifiedVacancyCount:verified.length,
+    verificationRule:"Original HTTPS source reachable + job marker + active-application marker + no closure marker.",
+    sources:verification
+  };
+  let safeAnswer=String(answer||"");
+  safeAnswer=safeAnswer.replace(/\b(?:verified|confirmed|live|active)\s+(?:vacanc(?:y|ies)|job(?:s)?)/gi, match => {
+    return verified.length ? match : "[UNVERIFIED] "+match;
+  });
+  if(!verified.length) {
+    const note="## Vacancy evidence status\n\n[UNVERIFIED] No vacancy is counted as a current verified vacancy. ADIGUN could not establish an active application from the fetched original source pages. Search results and market estimates are not counted as verified vacancies.";
+    safeAnswer=note+"\n\n"+safeAnswer;
+  }
+  return {answer:safeAnswer,audit};
+}
+
 async function openRouterFallback(request, env, messages, context) {
   if (!env.OPENROUTER_API_KEY) return null;
   const model = env.OPENROUTER_MODEL || "openrouter/free";
@@ -889,16 +982,24 @@ async function openAIChat(request, env) {
   if (!answer) return json(request, { ok: false, error: "OpenAI returned no text." }, 502);
 
   const sources = collectSources(data);
+  const webCitations = extractWebCitations(data);
+  const jobVerification = isJobSearchIntent(q)
+    ? await verifyVacancySources(webCitations)
+    : [];
+  const guarded = isJobSearchIntent(q)
+    ? applyJobEvidenceGuard(answer, webCitations, jobVerification)
+    : {answer,audit:null};
 
   return json(request, {
     ok: true,
-    answer,
+    answer: guarded.answer,
     model: data.model || MODEL(env),
     provider: "openai",
     ragUsed: Boolean(context),
     siteUsed: Boolean(context || clientContext),
     webUsed: sources.length > 0,
     sources: { web: sources },
+    vacancyEvidence: guarded.audit,
     attachments: attachmentCount(messages),
     actions: [],
     evidence: liveEvidence ? [liveEvidence] : []
@@ -1198,60 +1299,3 @@ export default {
       url.hostname === "hephzibahbehulah.com" &&
       ["/admin.html", "/js/adigun-admin.js", "/css/adigun-admin.css"].includes(url.pathname)
     ) {
-      return new Response("Not found", { status: 404 });
-    }
-
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: corsHeaders(request) });
-    }
-    if (url.pathname === "/api/admin/sandbox" && request.method === "POST") { let body; try { body=await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); } return executeSandboxCommand(request,env,ctx,String(body?.command||"")); }
-    if (url.pathname === "/api/admin/agent" && request.method === "POST") return privateAgent(request, env, url, ctx);
-    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
-    const adminResponse = await adminRoutes(request, env, url, ctx);
-    if (adminResponse) return adminResponse;
-
-    if (url.pathname === "/api/capabilities" && request.method === "GET") {
-      return json(request,{ok:true,manifest:capabilityManifest(env,false)});
-    }
-
-    if (url.pathname === "/api/health" && request.method === "GET") {
-      if (!env.OPENAI_API_KEY) {
-        return legacy.fetch(request, env, ctx);
-      }
-
-      return json(request, {
-        ok: true,
-        service: "hephzibah-behulah-ai",
-        version: "7.0.0",
-        mode: "multi-provider",
-        model: MODEL(env),
-        providers: {
-          openai: Boolean(env.OPENAI_API_KEY),
-          openrouter: Boolean(env.OPENROUTER_API_KEY),
-          cloudflareWorkersAI: Boolean(env.AI)
-        },
-        fallbackModel: env.AI ? (env.ADIGUN_FALLBACK_MODEL || "@cf/zai-org/glm-4.7-flash") : null,
-        rag: env.AI_SEARCH ? "ai-search-ready" : "legacy-knowledge-search",
-        web: "openai-web-search",
-        capabilities: [
-          "chatgpt-powered-reasoning",
-          "local-site-intelligence",
-          "persistent-rag",
-          "public-web-search",
-          "markdown",
-          "latex-math",
-          "project-intelligence",
-          "document-analysis",
-          "dataset-analysis",
-          "controlled-automation"
-        ]
-      });
-    }
-
-    if (url.pathname === "/api/chat" && request.method === "POST" && env.OPENAI_API_KEY) {
-      return openAIChat(request, env);
-    }
-
-    return legacy.fetch(request, env, ctx);
-  }
-};
