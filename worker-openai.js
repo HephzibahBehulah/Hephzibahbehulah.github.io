@@ -223,13 +223,14 @@ async function getAdminSandbox(env, identity) {
 
 function reconHelp(topic="overview") {
   const t=String(topic||"overview").trim().toLowerCase();
+  if(t==="linux"||t==="sandbox") return {ok:true,type:"help",category:"sandbox",count:Object.keys(SANDBOX_COMMANDS).length,commands:Object.keys(SANDBOX_COMMANDS).map(command=>({command,description:"Allow-listed isolated Linux diagnostic command."})),usage:["help","help linux","help all"]};
   if(t==="help") return reconHelp("overview");
   if(t==="all"||t==="commands") {
     return {
       ok:true,type:"help",target:RECON_TARGET,count:RECON_COUNT,
       categories:HELP_CATEGORIES,
       variants:RECON_VARIANTS,
-      usage:["help","help dns","help security","help github","help web","commands","recon","site-summary"],
+      usage:["help","help linux","help dns","help security","help github","help web","commands","recon","site-summary"],
       note:"All reconnaissance commands are read-only and fixed to the authorized Hephzibah Behulah site and its public GitHub repository."
     };
   }
@@ -404,7 +405,7 @@ async function executeReconCommand(request, command) {
   if(lower.startsWith("help ")) return json(request,reconHelp(lower.slice(5)));
   if(lower==="recon"||lower==="full-recon"||lower==="recon-all"){
     const started=Date.now();
-    const names=["site-health","security-headers","dns-a","dns-aaaa","dns-mx","dns-ns","dns-txt","dns-ns","dns-caa","dns-dnssec","robots","sitemap","security-txt","http-meta","http-links","http-scripts","http-styles","http-headings","edge","github-repo","github-commits","github-runs"];
+    const names=["site-health","security-headers","dns-a","dns-aaaa","dns-mx","dns-ns","dns-txt","dns-caa","dns-dnssec","robots","sitemap","security-txt","http-meta","http-links","http-scripts","http-styles","http-headings","edge","github-repo","github-commits","github-runs"];
     const rows=await Promise.all(names.map(async name=>{try{return {command:name,...await executeReconBase(name)};}catch(error){return {command:name,error:String(error?.message||error)};}}));
     const evidence=evidenceRecord({tool:"recon.full",target:RECON_TARGET,actor:getAdminIdentity().email,status:"observed",startedAt:new Date(started).toISOString(),result:{checks:rows}});
     return json(request,{ok:true,command:raw,label:"Full passive reconnaissance",durationMs:Date.now()-started,result:{checks:rows},evidence});
