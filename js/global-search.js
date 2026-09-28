@@ -1,14 +1,13 @@
-/* HB GLOBAL SEARCH v2
-   Central site-wide search for the main portfolio.
-   Searches the current DOM, known first-party pages, tools, resources,
-   terminal commands and accessible metadata without touching Recon Hub.
+/* HB GLOBAL SEARCH
+   Simple site-wide dropdown search.
+   Searches the public first-party pages and opens the matching result.
 */
 (() => {
   'use strict';
 
   const INPUT_ID = 'globalResourceSearch';
-  const PAGE_INDEX = [
-    { path: './', title: 'Home / Intelligence Map' },
+  const PAGES = [
+    { path: './', title: 'Home' },
     { path: 'about.html', title: 'About' },
     { path: 'contact.html', title: 'Contact' },
     { path: 'engineering-library.html', title: 'Engineering Library' },
@@ -16,240 +15,264 @@
     { path: 'ai-lab.html', title: 'AI Lab' }
   ];
 
-  const terminalCommands = [
-    'HELP','LIST','CLEAR','EXIT','PWD','CD','CHDIR','HISTORY','ECHO','DATE','VERSION','ABOUT','TREE','STATUS','WHOAMI','MAN','WHICH','IA','IS','NAV','OPEN','FOCUS',
-    'OHM','POWER','ENERGY','RESISTOR','LED','COLOR','FREQUENCY','RMS','EFFICIENCY','VOLTAGE','CURRENT','IMPEDANCE','DIVIDER','VOLTAGE-DIVIDER','SERIES-RESISTANCE','PARALLEL-RESISTANCE','POWER-FACTOR','THREE-PHASE','MOTOR-TORQUE','VOLTAGE-DROP',
-    'MEAN','MEDIAN','MODE','RANGE','VARIANCE','STD','ZSCORE','PRECISION','RECALL','F1','MIN','MAX','SUM','COUNT','PERCENT','PERCENTILE','QUARTILE','IQR','MAD','COVARIANCE','CORRELATION','SKEW','KURTOSIS','NORMALIZE','STANDARDIZE','MINMAX','OUTLIER','DISTRIBUTION','ACCURACY','CONFUSION','ROC','AUC','MAE','MSE','RMSE','R2','MAPE',
-    'BASE64','ENCODE','DECODE','HASH','SHA256','JWT','CSRF','XSS','SQLI','MFA','PASSWORD','SSRF','XXE','IDOR','CORS','CSP','SESSION','COOKIE','AUTH','AUTHZ','PHISHING','MITM','AES','RSA','ECC','HMAC','PBKDF2','ARGON2',
-    'URLINFO','URL','HEADERS','ROBOTS','SITEMAP','CRT','WHOIS','DOMAIN','SUBDOMAIN','CERTIFICATE','DNS-RECORD','MX','TXT','NS','CAA','WAYBACK','ASN','IPINFO','EVIDENCE','IOC','IOC-TYPE','IOC-EXTRACT','DOMAIN-EXTRACT','IP-EXTRACT','HASH-EXTRACT','URL-EXTRACT',
-    'IP','CIDR','SUBNET','PORTS','PROTOCOL','TCP','UDP','ICMP','ARP','HTTP','HTTPS','DNS','DNSLOOKUP','NSLOOKUP','ROUTE','MAC','PING','TRACEROUTE','NMAP','HOSTS','NETWORK','BROADCAST','WILDCARD','PREFIX','MASK','IPV6','PACKET','FRAME','MTU','MSS','TCP-HANDSHAKE','TLS',
-    'QUIZ','ANSWER','SCORE','RULES','CHECK','SELFTEST','GAME','EXPLAIN','GLOSSARY','LEARN','TOOLS','TOOL','PROJECT','REPO','CONVERT','FORMULA','FORMULAS','SOLVE','GRAPH','PLOT','WAVEFORM','SIMULATE','SIM','SEARCH','FIND','LOOKUP','RELATED','PROFILE','PROGRESS','LEVEL','STREAK','XP','BADGES','SKILLS','WEAKNESS','MASTERED',
-    'CAPACITOR','INDUCTOR','REACTANCE','ADMITTANCE','RESISTIVITY','CONDUCTIVITY','APPARENT-POWER','REACTIVE-POWER','REAL-POWER','KVA','KVAR','KWH','CABLE-SIZE','FUSE','BREAKER','SHORT-CIRCUIT','FAULT-CURRENT','DIODE','ZENER','TRANSISTOR','MOSFET','BJT','RECTIFIER','FILTER','RC','RL','RLC','LOWPASS','HIGHPASS','BANDPASS','NOTCH','GAIN','DECIBEL','ADC','DAC','PWM','DUTY','SAMPLING','NYQUIST','RPM','PLC','LADDER','RELAY','CONTACTOR','SENSOR','ACTUATOR','PID','SETPOINT',
-    'FILE','MAGIC','TIMESTAMP','METADATA','ENCODING','LOG','LOG-PARSE','HTML','CSS','JS','DOM','JSON','API','REST','FETCH','PROMISE','ASYNC','EVENT','LOCALSTORAGE','SESSIONSTORAGE','JSON-FORMAT','JSON-MINIFY','JSON-VALIDATE','HTML-ESCAPE','HTML-UNESCAPE',
-    'GIT','GITHUB','CLONE','COMMIT','BRANCH','MERGE','PULL','PUSH','FETCH','REMOTE','DIFF','RESET','REBASE','PYTHON','PY','VARIABLE','ARRAY','LIST','DICT','TUPLE','SET','LOOP','FUNCTION','CLASS','IMPORT','EXCEPTION','PANDAS','NUMPY','SKLEARN',
-    'AI','LLM','PROMPT','TOKEN','CONTEXT','RAG','EMBEDDING','VECTOR','GUARDRAIL','JAILBREAK','PROMPT-INJECTION','DATA-POISONING','MODEL-EXTRACTION'
-  ];
-
   const clean = value => String(value ?? '').replace(/\s+/g, ' ').trim();
-  const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
-  const normalize = value => clean(value).toLowerCase();
+  const normal = value => clean(value).toLowerCase();
+  const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  }[c]));
 
-  function pageLabel(doc, fallback) {
-    return clean(doc.querySelector('title')?.textContent || fallback || 'Website');
-  }
-
-  function sectionLabel(el, fallback) {
-    const section = el?.closest?.('section[id],article,[role="region"]');
-    const heading = section?.querySelector('h1,h2,h3,.os-panel-head span');
-    return clean(heading?.textContent || section?.id || fallback || 'Website');
-  }
-
-  function extractDocument(doc, pageTitle, pagePath) {
+  function extract(doc, page) {
     const records = [];
     const seen = new Set();
-    const add = (text, section, target, url) => {
-      const value = clean(text);
-      if (!value) return;
-      const key = `${url}|${target || ''}|${value.slice(0, 280)}`;
-      if (seen.has(key)) return;
-      seen.add(key);
-      records.push({ text:value, section:clean(section || pageTitle), target:target || '', url:url || pagePath, page:pageTitle });
-    };
 
-    doc.querySelectorAll('main h1,main h2,main h3,main h4,main p,main li,main article,main .os-item,main .os-node,main .os-leaf,main .hb-card,main .hb-tool,main button,main a').forEach(el => {
+    doc.querySelectorAll('main h1, main h2, main h3, main h4, main p, main li, main article, main a, main button, main .hb-card, main .hb-tool, main .os-node, main .os-leaf').forEach(el => {
       if (el.closest('script,style,noscript')) return;
       const text = clean(el.innerText || el.textContent);
-      if (!text) return;
+      if (!text || text.length < 2) return;
+
+      const section = clean(
+        el.closest('section[id],article,[role="region"]')?.querySelector('h1,h2,h3,h4,.os-panel-head span')?.textContent
+        || page.title
+      );
       const href = el.getAttribute('href');
-      add(text, sectionLabel(el, pageTitle), el.id || '', href && !href.startsWith('#') ? href : pagePath);
+      const target = el.id || '';
+      const url = href && !href.startsWith('#') ? href : page.path;
+      const key = section + '|' + url + '|' + text.slice(0, 220);
+
+      if (!seen.has(key)) {
+        seen.add(key);
+        records.push({ text, section, url, target, page: page.title });
+      }
     });
 
-    const bodyText = clean(doc.body?.innerText || '');
-    if (bodyText) add(bodyText.slice(0, 12000), pageTitle, '', pagePath);
     return records;
   }
 
-  function currentRecords() {
-    return extractDocument(document, pageLabel(document, 'Home / Intelligence Map'), location.pathname || './');
-  }
-
-  async function fetchPage(entry) {
+  async function loadPage(page) {
     try {
-      const response = await fetch(entry.path, { cache:'force-cache', credentials:'same-origin' });
+      const response = await fetch(page.path, { cache: 'no-store', credentials: 'same-origin' });
       if (!response.ok) return [];
       const html = await response.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      return extractDocument(doc, entry.title, entry.path);
+      return extract(new DOMParser().parseFromString(html, 'text/html'), page);
     } catch {
       return [];
     }
   }
 
-  function terminalRecords() {
-    return terminalCommands.map(command => ({ text:`${command} · HB Terminal command`, section:'HB TERMINAL', target:'terminal', url:'#terminal', page:'Home / Intelligence Map' }));
-  }
-
-  function buildSearchIndex(pageRecords) {
-    const all = [...currentRecords(), ...terminalRecords(), ...pageRecords.flat()];
-    const seen = new Set();
-    return all.filter(item => {
-      const key = `${item.url}|${item.target}|${item.text.slice(0,280)}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-  }
-
   function score(item, query) {
-    const words = normalize(query).split(/\s+/).filter(Boolean);
-    const hay = normalize(item.text);
-    const section = normalize(item.section);
-    let total = 0;
+    const words = normal(query).split(/\s+/).filter(Boolean);
+    const text = normal(item.text);
+    const section = normal(item.section);
+    const page = normal(item.page);
+    let points = 0;
+
     for (const word of words) {
-      const pos = hay.indexOf(word);
-      if (pos < 0) return -Infinity;
-      total += pos === 0 ? 80 : 20;
-      if (hay.startsWith(word)) total += 30;
-      if (section.includes(word)) total += 25;
+      const position = text.indexOf(word);
+      if (position === -1 && !section.includes(word) && !page.includes(word)) return -Infinity;
+      if (position === 0) points += 80;
+      else if (position > -1) points += 30;
+      if (section.includes(word)) points += 20;
+      if (page.includes(word)) points += 15;
     }
-    if (normalize(item.page).includes(normalize(query))) total += 12;
-    return total;
+
+    return points;
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const original = document.getElementById(INPUT_ID);
-    if (!original) return;
+    const input = document.getElementById(INPUT_ID);
+    if (!input) return;
 
-    // Replace the old input so legacy handlers cannot turn the field into a placeholder.
-    const input = original.cloneNode(true);
-    input.removeAttribute('readonly');
     input.removeAttribute('disabled');
-    input.autocomplete = 'off';
-    original.replaceWith(input);
+    input.removeAttribute('readonly');
+    input.setAttribute('autocomplete', 'off');
+    input.setAttribute('role', 'combobox');
+    input.setAttribute('aria-expanded', 'false');
+    input.setAttribute('aria-controls', 'hbSearchDropdown');
 
-    // Provide an explicit search button as well as live typing and Enter-key search.
-    let trigger = document.querySelector('.hb-global-search-trigger');
-    if (!trigger) {
-      trigger = document.createElement('button');
-      trigger.type = 'button';
-      trigger.className = 'hb-global-search-trigger';
-      trigger.textContent = 'SEARCH';
-      trigger.setAttribute('aria-label', 'Search the entire website');
-      trigger.style.cssText = 'height:38px;padding:0 14px;border:1px solid rgba(0,255,170,.35);background:#07120f;color:#9fffe0;font:600 12px/1 system-ui,sans-serif;letter-spacing:.08em;cursor:pointer;';
-      input.insertAdjacentElement('afterend', trigger);
-    }
-    document.querySelectorAll('.hb-global-search-overlay').forEach(node => node.remove());
+    const wrapper = document.createElement('div');
+    wrapper.className = 'hb-search-wrap';
+    input.parentNode.insertBefore(wrapper, input);
+    wrapper.appendChild(input);
 
-    const css = document.createElement('link');
-    css.rel = 'stylesheet';
-    css.href = 'css/hb-global-search.css?v=20260925-2';
-    document.head.appendChild(css);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'hb-search-button';
+    button.setAttribute('aria-label', 'Search website');
+    button.innerHTML = '⌕';
+    wrapper.appendChild(button);
 
-    const overlay = document.createElement('div');
-    overlay.className = 'hb-global-search-overlay';
-    overlay.innerHTML = `<div class="hb-global-search-panel" role="dialog" aria-modal="true" aria-label="Search everything"><div class="hb-global-search-head"><span>GLOBAL SEARCH / ALL HB INTELLIGENCE</span><button class="hb-global-search-close" type="button" aria-label="Close search">×</button></div><div class="hb-global-search-meta"></div><div class="hb-global-search-results"></div></div>`;
-    document.body.appendChild(overlay);
+    const dropdown = document.createElement('div');
+    dropdown.id = 'hbSearchDropdown';
+    dropdown.className = 'hb-search-dropdown';
+    dropdown.setAttribute('role', 'listbox');
+    dropdown.innerHTML = '<div class="hb-search-status">Type to search the website.</div>';
+    wrapper.appendChild(dropdown);
 
-    const meta = overlay.querySelector('.hb-global-search-meta');
-    const results = overlay.querySelector('.hb-global-search-results');
-    const close = overlay.querySelector('.hb-global-search-close');
-    let index = terminalRecords();
-    let lastResults = [];
+    let index = [];
     let loaded = false;
-    let loadingPromise = null;
+    let loading = null;
+    let results = [];
+    let active = -1;
 
-    function showEmpty(message) { results.innerHTML = `<div class="hb-global-empty">${escapeHTML(message)}</div>`; }
+    function openDropdown() {
+      dropdown.classList.add('open');
+      input.setAttribute('aria-expanded', 'true');
+    }
 
-    async function loadSiteIndex() {
+    function closeDropdown() {
+      dropdown.classList.remove('open');
+      input.setAttribute('aria-expanded', 'false');
+      active = -1;
+    }
+
+    function showStatus(message) {
+      dropdown.innerHTML = '<div class="hb-search-status">' + escapeHTML(message) + '</div>';
+      active = -1;
+    }
+
+    function render(query) {
+      query = clean(query);
+      openDropdown();
+
+      if (!query) {
+        showStatus('Type a word, topic, tool, project or page name.');
+        return;
+      }
+
+      results = index
+        .map(item => ({ item, score: score(item, query) }))
+        .filter(row => Number.isFinite(row.score))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 8);
+
+      if (!results.length) {
+        showStatus('No matching content found.');
+        return;
+      }
+
+      dropdown.innerHTML = results.map((row, i) => {
+        const snippet = row.item.text.length > 170 ? row.item.text.slice(0, 170) + '…' : row.item.text;
+        return '<button type="button" class="hb-search-result" data-index="' + i + '" role="option">'
+          + '<span>' + escapeHTML(row.item.page) + ' · ' + escapeHTML(row.item.section) + '</span>'
+          + '<strong>' + escapeHTML(snippet) + '</strong>'
+          + '</button>';
+      }).join('');
+
+      active = -1;
+    }
+
+    async function buildIndex() {
       if (loaded) return index;
-      if (loadingPromise) return loadingPromise;
-      loadingPromise = Promise.all(PAGE_INDEX.map(fetchPage)).then(pages => { index = buildSearchIndex(pages); loaded = true; return index; }).catch(() => index);
-      return loadingPromise;
+      if (loading) return loading;
+
+      loading = Promise.all(PAGES.map(loadPage))
+        .then(pages => {
+          index = pages.flat();
+          loaded = true;
+          return index;
+        })
+        .catch(() => index);
+
+      return loading;
+    }
+
+    async function search() {
+      const query = clean(input.value);
+      openDropdown();
+
+      if (!query) {
+        showStatus('Type a word, topic, tool, project or page name.');
+        return;
+      }
+
+      showStatus('Searching the website…');
+      await buildIndex();
+      render(query);
     }
 
     function openResult(item) {
-      overlay.classList.remove('open');
-      if (item.url && /^https?:\/\//i.test(item.url)) { window.open(item.url, '_blank', 'noopener'); return; }
-      if (item.url && item.url !== '#' && item.url !== location.pathname && item.url !== './') { window.location.href = item.url; return; }
-      if (item.target) {
-        const el = document.getElementById(item.target);
-        if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); el.classList.add('hb-search-hit'); setTimeout(() => el.classList.remove('hb-search-hit'), 1200); return; }
-      }
-      document.getElementById('terminal')?.scrollIntoView({ behavior:'smooth', block:'center' });
-    }
+      closeDropdown();
 
-    function render(raw) {
-      const query = clean(raw);
-      if (!query) {
-        meta.textContent = 'Search the entire Hephzibah Behulah website: pages, tools, engineering, cybersecurity, OSINT, AI, projects, lessons and Terminal.';
-        showEmpty('Start typing. Even a single letter searches the full indexed site.');
-        overlay.classList.add('open');
+      if (item.url && item.url !== '#' && item.url !== './' && item.url !== location.pathname) {
+        window.location.href = item.url;
         return;
       }
-      lastResults = index.map(item => ({ item, score:score(item, query) })).filter(row => Number.isFinite(row.score)).sort((a,b) => b.score - a.score).slice(0,100);
-      meta.textContent = `${lastResults.length} result${lastResults.length === 1 ? '' : 's'} · searching all indexed HB content`;
-      results.innerHTML = lastResults.length ? lastResults.map((row, i) => {
-        const snippet = row.item.text.length > 220 ? `${row.item.text.slice(0,220)}…` : row.item.text;
-        return `<button class="hb-global-result" type="button" data-index="${i}"><span class="hb-global-result-title">${escapeHTML(row.item.section)} · ${escapeHTML(row.item.page)}</span><strong>${escapeHTML(snippet)}</strong></button>`;
-      }).join('') : `<div class="hb-global-empty">No exact site match. Press Enter to ask ADIGUN about “${escapeHTML(query)}”.</div>`;
-      overlay.classList.add('open');
-    }
 
-    async function search(raw) {
-      const query = clean(raw);
-      render(query);
-      if (!query) return;
-      if (!loaded) {
-        meta.textContent = 'INDEXING ALL HB PAGES…';
-        showEmpty('Loading the site-wide search index…');
-        overlay.classList.add('open');
-        await loadSiteIndex();
-        render(query);
+      if (item.target) {
+        const target = document.getElementById(item.target);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          target.classList.add('hb-search-hit');
+          setTimeout(() => target.classList.remove('hb-search-hit'), 1000);
+          return;
+        }
       }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    async function askAdigun(query) {
-      try {
-        meta.textContent = 'ADIGUN / THINKING';
-        showEmpty('ADIGUN is checking the site intelligence layer…');
-        overlay.classList.add('open');
-        const response = await window.Adigun?.ask?.(query);
-        results.innerHTML = '<div class="hb-global-result hb-adigun-answer" style="cursor:default"><span class="hb-global-result-title">ADIGUN</span><div class="adigun-rendered-answer"></div></div>';
-        if (window.AdigunRenderer) window.AdigunRenderer.mount(results.querySelector('.adigun-rendered-answer'), response?.answer || 'No answer returned.'); else results.querySelector('.adigun-rendered-answer').textContent = response?.answer || 'No answer returned.';
-      } catch { showEmpty('ADIGUN could not answer this query right now.'); }
-    }
-
-    input.addEventListener('focus', () => search(input.value));
-    input.addEventListener('input', () => search(input.value));
-    trigger.addEventListener('click', async () => {
-      const query = clean(input.value);
-      if (!query) { input.focus(); await search(''); return; }
-      await search(query);
-      if (lastResults[0]) openResult(lastResults[0].item);
-      else await askAdigun(query);
+    input.addEventListener('focus', () => {
+      if (input.value.trim()) search();
+      else openDropdown();
     });
-    input.addEventListener('keydown', async event => {
-      if (event.key === 'Escape') { event.preventDefault(); overlay.classList.remove('open'); input.blur(); return; }
+
+    input.addEventListener('input', search);
+
+    button.addEventListener('click', () => {
+      if (dropdown.classList.contains('open') && input.value.trim()) {
+        if (results[0]) openResult(results[0].item);
+        else search();
+      } else {
+        input.focus();
+        search();
+      }
+    });
+
+    input.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeDropdown();
+        input.blur();
+        return;
+      }
+
+      if (event.key === 'ArrowDown' && results.length) {
+        event.preventDefault();
+        active = Math.min(active + 1, results.length - 1);
+        dropdown.querySelectorAll('.hb-search-result').forEach((el, i) => el.classList.toggle('active', i === active));
+        return;
+      }
+
+      if (event.key === 'ArrowUp' && results.length) {
+        event.preventDefault();
+        active = Math.max(active - 1, 0);
+        dropdown.querySelectorAll('.hb-search-result').forEach((el, i) => el.classList.toggle('active', i === active));
+        return;
+      }
+
       if (event.key === 'Enter') {
         event.preventDefault();
-        const query = clean(input.value);
-        if (lastResults[0]) openResult(lastResults[0].item);
-        else if (query) await askAdigun(query);
+        if (active >= 0 && results[active]) openResult(results[active].item);
+        else if (results[0]) openResult(results[0].item);
+        else search();
       }
     });
 
-    results.addEventListener('click', event => {
-      const button = event.target.closest('[data-index]');
-      if (!button) return;
-      const hit = lastResults[Number(button.dataset.index)];
-      if (hit) openResult(hit.item);
+    dropdown.addEventListener('click', event => {
+      const result = event.target.closest('.hb-search-result');
+      if (!result) return;
+      const row = results[Number(result.dataset.index)];
+      if (row) openResult(row.item);
     });
 
-    close.addEventListener('click', () => { overlay.classList.remove('open'); input.blur(); });
-    overlay.addEventListener('click', event => { if (event.target === overlay) { overlay.classList.remove('open'); input.blur(); } });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && overlay.classList.contains('open')) { overlay.classList.remove('open'); input.blur(); } });
+    document.addEventListener('click', event => {
+      if (!wrapper.contains(event.target)) closeDropdown();
+    });
 
-    if ('requestIdleCallback' in window) window.requestIdleCallback(() => loadSiteIndex(), { timeout:2500 });
-    else setTimeout(() => loadSiteIndex(), 1200);
+    // Build the index quietly after the page is ready.
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => buildIndex(), { timeout: 2500 });
+    } else {
+      setTimeout(() => buildIndex(), 1000);
+    }
   });
 })();
