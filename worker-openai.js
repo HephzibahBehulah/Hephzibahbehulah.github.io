@@ -446,6 +446,19 @@ async function executeReconCommand(request, command) {
   }
 }
 
+async function executeAdminCommand(request, env, command) {
+  const raw=String(command||"").trim();
+  if(!raw) return json(request,{ok:false,error:"Enter a command. Type help to see the command registry."},400);
+  const lower=raw.toLowerCase();
+  if(lower==="help"||lower==="commands"||lower.startsWith("help ")) return executeReconCommand(request,lower);
+  const recon=await executeReconCommand(request,lower);
+  if(recon) return recon;
+  const identity=getAdminIdentity();
+  const shellCommand=SANDBOX_COMMANDS[lower];
+  if(!shellCommand) return json(request,{ok:false,error:"Unknown command. Type HELP to see the command registry.",available:["help","commands",...Object.keys(SANDBOX_COMMANDS),...Object.keys(RECON_COMMANDS)]},400);
+  return executeSandboxCommand(request,env,null,lower);
+}
+
 async function executeSandboxCommand(request, env, ctx, command) {
   const recon=await executeReconCommand(request,command);
   if(recon) return recon;
@@ -899,11 +912,12 @@ async function runAgentInspection(request, env, target, ctx) {
 function agentTargets(task) {
   const q = String(task || "").toLowerCase();
   const targets = new Set();
+  if (/job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for/.test(q)) return [];
   if (/github|repo|repository|commit|pull request|workflow|action/.test(q)) targets.add("github");
   if (/cloudflare|worker|edge|dns|access|deployment|deploy/.test(q)) targets.add("cloudflare");
   if (/security|header|csp|hsts|x-frame|permissions|attack|vulnerab/.test(q)) targets.add("security");
   if (/website|site|page|domain|homepage|frontend|broken|down|error/.test(q)) targets.add("site");
-  if (!targets.size || /full|everything|investigate|diagnose|audit|check the system|what is wrong/.test(q)) {
+  if (!targets.size && /full|everything|investigate|diagnose|audit|check the system|what is wrong/.test(q)) {
     ["site","security","github","cloudflare"].forEach(x=>targets.add(x));
   }
   return [...targets];
@@ -954,13 +968,12 @@ function requestedCommands(task){
   return map.filter(([,re])=>re.test(q)).map(([name])=>name);
 }
 async function runAgentCommands(request,env,commands){
-  const out=[];
-  for(const command of [...new Set(commands)].slice(0,4)){
+  const unique=[...new Set(commands)].slice(0,4);
+  return Promise.all(unique.map(async command=>{
     const u=new URL(request.url);u.pathname="/api/admin/command";u.search="";
     const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command})}),env,command);
-    out.push({command,data:await r.json().catch(()=>({ok:false,error:"Invalid command result."}))});
-  }
-  return out;
+    return {command,data:await r.json().catch(()=>({ok:false,error:"Invalid command result."}))};
+  }));
 }
 
 function requestedSandboxCommands(task){
@@ -981,15 +994,15 @@ async function privateAgent(request, env, url, ctx) {
   const requested = requestedCommands(task);
   const commandResults = requested.length ? await runAgentCommands(request, env, requested) : [];
   const sandboxCommands = requestedSandboxCommands(task);
-  const sandboxResults = [];
-  for (const command of sandboxCommands) {
-    const response = await executeSandboxCommand(request, env, ctx, command);
-    sandboxResults.push({command,data:await response.json().catch(()=>({ok:false,error:"Invalid sandbox result."}))});
-  }
-  const investigations = [];
-  for (const target of targets) {
-    investigations.push({target,data:await runAgentInspection(request, env, target, ctx)});
-  }
+  const sandboxResults = sandboxCommands.length
+    ? await Promise.all(sandboxCommands.map(async command => {
+        const response = await executeSandboxCommand(request, env, ctx, command);
+        return {command,data:await response.json().catch(()=>({ok:false,error:"Invalid sandbox result."}))};
+      }))
+    : [];
+  const investigations = targets.length
+    ? await Promise.all(targets.map(async target => ({target,data:await runAgentInspection(request, env, target, ctx)})))
+    : [];
 
   const flatChecks = investigations.flatMap(x => Array.isArray(x.data?.checks) ? x.data.checks : []);
   const plan = agentActionPlan(task, flatChecks);
@@ -1004,8 +1017,10 @@ async function privateAgent(request, env, url, ctx) {
     plan
   }, null, 2).slice(0,42000);
 
+  const liveSearchIntent = /job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for/.test(task.toLowerCase());
   const agentPrompt = "PRIVATE OPERATOR TASK:\n" + task +
-    "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the read-only inspections and, when requested, allow-listed diagnostics shown below. Analyze the evidence and give the administrator a concise technical report.\n\n" +
+    "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the relevant read-only inspections and diagnostics shown below. Analyze the evidence and give the administrator a concise, evidence-led report.\n\n" +
+    (liveSearchIntent ? "CURRENT-JOB-SEARCH MODE: This is an employment search. Use the OpenAI web search tool to find current, real vacancies matching the request. Do not substitute generic career advice for actual vacancies. For each useful vacancy, provide employer, role, location, current status if available, why it matches the stated profile, and a direct source URL. If no suitable live vacancy can be verified, say so and explain what was searched.\n\n" : "") +
     "PRIVATE CAPABILITY RULES:\n" +
     "- Cloudflare Access authentication is temporarily disabled for this development window.\n" +
     "- The server can execute read-only diagnostics and a fixed allow-list of commands inside an isolated Cloudflare Sandbox Linux container. This is not the production Worker host.\n" +
@@ -1015,10 +1030,12 @@ async function privateAgent(request, env, url, ctx) {
     "- Never turn a planned capability into a claimed capability. Use only server evidence.\n" +
     "- Use the server checkedAt timestamp as the report date; never invent a date.\n\n" +
     "Rules:\n" +
-    "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS.\n" +
+    "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS. Mark important claims as [OBSERVED], [CALCULATED], [INFERRED], [UNKNOWN], or [RECOMMENDATION].\n" +
+    "- For current external information, use live web search and cite the actual sources. Never fabricate vacancies, prices, availability, employers, URLs, or dates.\n" +
     "- Never claim a change was made.\n" +
     "- If a change would be required, describe the intended change and say that explicit approval is required.\n" +
     "- Do not invent Cloudflare, GitHub, security or deployment data that is absent from the evidence.\n" +
+    "- If the task is not about the website, do not force website findings into the answer.\n" +
     "- Use Markdown and proper LaTeX when mathematics is needed.\n" +
     "- Do not expose secrets.\n\nSERVER EVIDENCE:\n" + evidence;
 
