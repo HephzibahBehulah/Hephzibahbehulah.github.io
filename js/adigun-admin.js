@@ -24,12 +24,11 @@ document.addEventListener("DOMContentLoaded",()=>{
       const r=await fetch("/api/admin/sandbox",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",body:JSON.stringify({command:q})});
       const d=await r.json().catch(()=>({}));
       if(!r.ok||!d.ok)throw new Error(d.error||"Command execution failed");
-      const result=d.result||{};
+      const result=d.result||d;
       if(result.stdout)appendTerminalLine(result.stdout,"output");
       if(result.stderr)appendTerminalLine("[stderr]\n"+result.stderr,"error");
       appendTerminalLine("[exit "+String(result.exitCode??0)+"]","system");
       const helpView=formatHelp(result);
-      commandOutput.textContent=helpView||JSON.stringify(d,null,2);
       terminalState.textContent="● COMPLETE";
       terminalMeta.textContent="Evidence ID: "+String(d.evidence?.evidenceId||"—");
     }catch(e){
@@ -84,7 +83,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   loadReconCommandCatalog();
   terminalCommand?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSandboxCommand(terminalCommand.value)}});
   document.querySelectorAll("[data-terminal-command]").forEach(b=>b.addEventListener("click",()=>{terminalCommand.value=b.dataset.terminalCommand||"";runSandboxCommand(terminalCommand.value)}));
-  terminalClear?.addEventListener("click",()=>{terminalHost.innerHTML='<div class="admin-terminal-line system">ADIGUN EXECUTION NODE\nstatus: ready\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: local operator mode\n\nType HELP to begin.</div>';commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.";terminalCommand.focus();});
+  terminalClear?.addEventListener("click",()=>{terminalHost.innerHTML='<div class="admin-terminal-line system">ADIGUN EXECUTION NODE\nstatus: ready\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: local operator mode\n\nType HELP to begin.</div>';terminalState.textContent="READY";terminalMeta.textContent="Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.";terminalCommand.focus();});
 
   const history=[]; let files=[];
   const session=(()=>{let v=localStorage.getItem("hb-admin-session");if(!v){v=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36);localStorage.setItem("hb-admin-session",v)}return v})();
