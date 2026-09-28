@@ -75,3 +75,35 @@
 .adigun-admin-page .admin-terminal-command:focus{
   outline:1px solid rgba(127,231,196,.55);
 }
+
+/* ADIGUN Control terminal redesign */
+#terminal .os-panel-head{position:sticky;top:0;z-index:4;background:var(--panel);backdrop-filter:blur(12px)}
+#terminal .admin-terminal{margin:0;border:1px solid var(--line);background:#05070a;display:flex;flex-direction:column;min-height:620px}
+#terminal .admin-terminal-banner{padding:14px 16px;border-bottom:1px solid var(--line);font:10px/1.6 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.08em}
+#terminal .admin-terminal-banner strong{color:var(--admin-cyan)}
+#terminal .admin-terminal-screen{flex:1;min-height:430px;max-height:62vh;overflow:auto;padding:18px 18px 24px;font:13px/1.65 "JetBrains Mono",monospace;color:#d7e2ea;white-space:pre-wrap;word-break:break-word;scroll-behavior:smooth}
+#terminal .admin-terminal-line{margin:0 0 14px}
+#terminal .admin-terminal-line.prompt{color:#d7e2ea}
+#terminal .admin-terminal-line.prompt .prompt-user{color:var(--admin-cyan)}
+#terminal .admin-terminal-line.output{color:#d7e2ea}
+#terminal .admin-terminal-line.error{color:#ff8d8d}
+#terminal .admin-terminal-line.system{color:var(--muted)}
+#terminal .admin-terminal-composer{position:sticky;bottom:0;z-index:3;border-top:1px solid var(--line);background:#05070a}
+#terminal .admin-terminal-hints{display:flex;gap:6px;flex-wrap:wrap;padding:9px 12px;border-bottom:1px solid var(--line);color:var(--muted);font:9px/1.4 "JetBrains Mono",monospace}
+#terminal .admin-terminal-hints button{border:1px solid var(--line);background:transparent;color:var(--muted);padding:5px 8px;font:9px "JetBrains Mono",monospace;cursor:pointer}
+#terminal .admin-terminal-hints button:hover{color:var(--admin-cyan);border-color:rgba(110,231,255,.35)}
+#terminal .admin-terminal-input-row{display:flex;gap:8px;padding:11px 12px}
+#terminal .admin-terminal-prompt{display:flex;align-items:center;color:var(--admin-cyan);font:13px "JetBrains Mono",monospace;white-space:nowrap}
+#terminal .admin-terminal-command{flex:1;min-width:0;padding:10px 0;border:0;background:transparent;color:#d7e2ea;font:13px "JetBrains Mono",monospace}
+#terminal .admin-terminal-command:focus{outline:none}
+#terminal .admin-terminal-status{padding:0 12px 10px;color:var(--muted);font:8px/1.5 "JetBrains Mono",monospace}
+#terminal .admin-terminal-command::placeholder{color:#68737d}
+#terminal .admin-terminal-boot{color:var(--muted)}
+#terminal .admin-terminal-command-output{display:none}
+@media(max-width:700px){
+  #terminal .admin-terminal{min-height:560px}
+  #terminal .admin-terminal-screen{min-height:370px;max-height:60vh;padding:14px}
+  #terminal .admin-terminal-input-row{align-items:center}
+  #terminal .admin-terminal-prompt{font-size:11px}
+  #terminal .admin-terminal-hints{overflow:auto;flex-wrap:nowrap}
+}
