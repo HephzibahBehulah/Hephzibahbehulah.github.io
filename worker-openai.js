@@ -98,6 +98,7 @@ function getAdminIdentity() {
   };
 }
 
+
 const SANDBOX_COMMANDS = Object.freeze({
   "pwd": "pwd",
   "ls": "ls -la /workspace",
@@ -114,6 +115,97 @@ const SANDBOX_COMMANDS = Object.freeze({
   "repo-status": "git -C /workspace status --short --branch"
 });
 
+const RECON_TARGET = "https://hephzibahbehulah.com";
+const RECON_REPO = "HephzibahBehulah/HephzibahBehulah.github.io";
+
+const RECON_BASES = Object.freeze({
+  "http-status": {category:"web",label:"HTTP status",description:"GET the authorized production homepage and report status, final URL and timing."},
+  "http-headers": {category:"web",label:"HTTP headers",description:"Read all response headers from the authorized production homepage."},
+  "http-body": {category:"web",label:"HTTP body",description:"Read a bounded copy of the authorized production homepage HTML."},
+  "http-links": {category:"web",label:"HTTP links",description:"Extract same-site and external hyperlinks from the authorized homepage."},
+  "http-scripts": {category:"web",label:"Scripts",description:"Extract JavaScript resources referenced by the authorized homepage."},
+  "http-styles": {category:"web",label:"Stylesheets",description:"Extract stylesheet resources referenced by the authorized homepage."},
+  "http-images": {category:"web",label:"Images",description:"Extract image resources referenced by the authorized homepage."},
+  "http-forms": {category:"web",label:"Forms",description:"Inspect forms, methods and actions on the authorized homepage."},
+  "http-headings": {category:"web",label:"Headings",description:"Extract H1-H4 headings from the authorized homepage."},
+  "http-meta": {category:"web",label:"Meta",description:"Inspect title, description, robots, canonical and Open Graph metadata."},
+  "http-title": {category:"web",label:"Title",description:"Read the document title from the authorized homepage."},
+  "http-size": {category:"web",label:"Response size",description:"Measure the bounded HTML response size and report content-length when present."},
+  "http-methods": {category:"web",label:"HTTP methods",description:"Check GET, HEAD and OPTIONS behavior for the authorized homepage."},
+  "dns-a": {category:"dns",label:"DNS A",description:"Resolve A records for the authorized domain through Cloudflare DNS-over-HTTPS."},
+  "dns-aaaa": {category:"dns",label:"DNS AAAA",description:"Resolve AAAA records for the authorized domain."},
+  "dns-mx": {category:"dns",label:"DNS MX",description:"Resolve MX records for the authorized domain."},
+  "dns-ns": {category:"dns",label:"DNS NS",description:"Resolve NS records for the authorized domain."},
+  "dns-txt": {category:"dns",label:"DNS TXT",description:"Resolve TXT records for the authorized domain."},
+  "dns-cname": {category:"dns",label:"DNS CNAME",description:"Resolve CNAME records for the authorized domain."},
+  "dns-soa": {category:"dns",label:"DNS SOA",description:"Resolve SOA records for the authorized domain."},
+  "dns-caa": {category:"dns",label:"DNS CAA",description:"Resolve CAA records for the authorized domain."},
+  "dns-srv": {category:"dns",label:"DNS SRV",description:"Resolve SRV records for the authorized domain."},
+  "dns-dmarc": {category:"dns",label:"DMARC",description:"Read the _dmarc TXT record for the authorized domain."},
+  "dns-spf": {category:"dns",label:"SPF",description:"Read root TXT records and identify SPF records."},
+  "dns-dnssec": {category:"dns",label:"DNSSEC",description:"Inspect DS and DNSKEY records for the authorized domain."},
+  "security-headers": {category:"security",label:"Security headers",description:"Evaluate common browser security headers from the authorized site."},
+  "security-cookies": {category:"security",label:"Cookies",description:"Inspect Set-Cookie response headers without exposing cookie values beyond a bounded diagnostic."},
+  "security-csp": {category:"security",label:"Content Security Policy",description:"Inspect and summarize CSP presence."},
+  "security-hsts": {category:"security",label:"HSTS",description:"Inspect Strict-Transport-Security."},
+  "security-referrer": {category:"security",label:"Referrer Policy",description:"Inspect Referrer-Policy."},
+  "security-permissions": {category:"security",label:"Permissions Policy",description:"Inspect Permissions-Policy."},
+  "security-frame": {category:"security",label:"Frame protection",description:"Inspect X-Frame-Options and frame-ancestors in CSP."},
+  "security-content-type": {category:"security",label:"Content type protection",description:"Inspect X-Content-Type-Options."},
+  "security-cross-origin": {category:"security",label:"Cross-origin policies",description:"Inspect COOP, COEP and CORP response headers."},
+  "robots": {category:"discovery",label:"robots.txt",description:"Read the authorized site's robots.txt."},
+  "sitemap": {category:"discovery",label:"sitemap.xml",description:"Read the authorized site's sitemap.xml."},
+  "security-txt": {category:"discovery",label:"security.txt",description:"Check standard security.txt locations on the authorized site."},
+  "manifest": {category:"discovery",label:"Web manifest",description:"Check manifest.json and manifest.webmanifest."},
+  "favicon": {category:"discovery",label:"Favicon",description:"Check common favicon locations."},
+  "humans": {category:"discovery",label:"humans.txt",description:"Check humans.txt."},
+  "llms": {category:"discovery",label:"llms.txt",description:"Check llms.txt."},
+  "ai-txt": {category:"discovery",label:"AI policy text",description:"Check common AI crawler policy text locations."},
+  "ads-txt": {category:"discovery",label:"ads.txt",description:"Check ads.txt."},
+  "feed": {category:"discovery",label:"Feeds",description:"Check common RSS and Atom feed locations."},
+  "well-known": {category:"discovery",label:"Well-known resources",description:"Check a curated set of standard .well-known resources."},
+  "github-repo": {category:"github",label:"GitHub repository",description:"Read metadata for the authorized project repository."},
+  "github-commits": {category:"github",label:"GitHub commits",description:"Read recent commits from the authorized project repository."},
+  "github-branches": {category:"github",label:"GitHub branches",description:"Read branches from the authorized project repository."},
+  "github-runs": {category:"github",label:"GitHub Actions",description:"Read recent workflow runs for the authorized project repository."},
+  "github-releases": {category:"github",label:"GitHub releases",description:"Read recent releases from the authorized project repository."},
+  "github-languages": {category:"github",label:"GitHub languages",description:"Read language statistics for the authorized project repository."},
+  "github-contributors": {category:"github",label:"GitHub contributors",description:"Read contributor statistics for the authorized project repository."},
+  "github-tags": {category:"github",label:"GitHub tags",description:"Read tags from the authorized project repository."},
+  "edge": {category:"cloudflare",label:"Edge fingerprint",description:"Inspect Cloudflare edge indicators from the authorized site's response."},
+  "site-health": {category:"overview",label:"Site health",description:"Run a compact live health check against the authorized site."},
+  "site-assets": {category:"overview",label:"Site assets",description:"Inventory scripts, styles, images and links from the authorized homepage."},
+  "site-links": {category:"overview",label:"Site links",description:"Inventory hyperlinks from the authorized homepage."},
+  "site-summary": {category:"overview",label:"Site summary",description:"Run a compact passive reconnaissance summary for the authorized site."}
+});
+
+const RECON_VARIANTS = Object.freeze([
+  "json","summary","details","inspect","check","verify","report","evidence","status",
+  "raw","full","quick","audit","inventory","enumerate","fingerprint","snapshot",
+  "diagnostic","observe"
+]);
+
+const RECON_COMMANDS = Object.freeze((() => {
+  const out = {};
+  for (const base of Object.keys(RECON_BASES)) {
+    out[base] = base;
+    for (const variant of RECON_VARIANTS) out[base+"-"+variant] = base;
+  }
+  return out;
+})());
+
+const RECON_COUNT = Object.keys(RECON_COMMANDS).length;
+
+const HELP_CATEGORIES = Object.freeze({
+  "overview": Object.keys(RECON_BASES).filter(k=>RECON_BASES[k].category==="overview"),
+  "web": Object.keys(RECON_BASES).filter(k=>RECON_BASES[k].category==="web"),
+  "dns": Object.keys(RECON_BASES).filter(k=>RECON_BASES[k].category==="dns"),
+  "security": Object.keys(RECON_BASES).filter(k=>RECON_BASES[k].category==="security"),
+  "discovery": Object.keys(RECON_BASES).filter(k=>RECON_BASES[k].category==="discovery"),
+  "github": Object.keys(RECON_BASES).filter(k=>RECON_BASES[k].category==="github"),
+  "cloudflare": Object.keys(RECON_BASES).filter(k=>RECON_BASES[k].category==="cloudflare")
+});
+
 function adminSandboxId(identity) {
   const email = String(identity?.email || "").trim().toLowerCase();
   const encoded = btoa(email).replace(/[^a-z0-9]/gi, "").slice(0,48).toLowerCase();
@@ -128,10 +220,212 @@ async function getAdminSandbox(env, identity) {
   });
 }
 
+function reconHelp(topic="overview") {
+  const t=String(topic||"overview").trim().toLowerCase();
+  if(t==="help") return reconHelp("overview");
+  if(t==="all"||t==="commands") {
+    return {
+      ok:true,type:"help",target:RECON_TARGET,count:RECON_COUNT,
+      categories:HELP_CATEGORIES,
+      variants:RECON_VARIANTS,
+      usage:["help","help dns","help security","help github","help web","commands","recon","site-summary"],
+      note:"All reconnaissance commands are read-only and fixed to the authorized Hephzibah Behulah site and its public GitHub repository."
+    };
+  }
+  const category=HELP_CATEGORIES[t] ? t : "overview";
+  return {
+    ok:true,type:"help",target:RECON_TARGET,category,count:HELP_CATEGORIES[category].length,
+    commands:HELP_CATEGORIES[category].map(name=>({
+      command:name,
+      aliases:RECON_VARIANTS.map(v=>name+"-"+v),
+      description:RECON_BASES[name].description
+    })),
+    usage:["help","help all","help dns","help security","help github","help web","commands","recon"]
+  };
+}
+
+function makeDohUrl(name,type) {
+  return "https://cloudflare-dns.com/dns-query?name="+encodeURIComponent(name)+"&type="+encodeURIComponent(type);
+}
+
+async function doh(name,type) {
+  const response=await fetch(makeDohUrl(name,type),{headers:{"accept":"application/dns-json"}});
+  const data=await response.json().catch(()=>({}));
+  return {
+    httpStatus:response.status,
+    status:data.Status,
+    name,
+    type,
+    answers:(data.Answer||[]).slice(0,50).map(a=>({name:a.name,type:a.type,data:a.data,ttl:a.TTL})),
+    authority:(data.Authority||[]).slice(0,20).map(a=>({name:a.name,type:a.type,data:a.data,ttl:a.TTL}))
+  };
+}
+
+async function fetchRecon(path, options={}) {
+  const started=Date.now();
+  const response=await fetch(RECON_TARGET+path,{redirect:"follow",...options});
+  const headers=Object.fromEntries(response.headers);
+  let body=null;
+  if(options.method!=="HEAD" && options.readBody!==false) body=(await response.text()).slice(0,120000);
+  return {httpStatus:response.status,ok:response.ok,finalUrl:response.url,durationMs:Date.now()-started,headers,body};
+}
+
+function parseHtml(html) {
+  const text=String(html||"");
+  const title=(text.match(/<title[^>]*>([\s\S]*?)<\/title>/i)||[])[1]?.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()||null;
+  const links=[...text.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["']/gi)].map(m=>m[1]).filter(Boolean);
+  const scripts=[...text.matchAll(/<script\b[^>]*src\s*=\s*["']([^"']+)["']/gi)].map(m=>m[1]).filter(Boolean);
+  const styles=[...text.matchAll(/<link\b[^>]*href\s*=\s*["']([^"']+)["'][^>]*>/gi)].map(m=>m[1]).filter(Boolean);
+  const images=[...text.matchAll(/<img\b[^>]*src\s*=\s*["']([^"']+)["']/gi)].map(m=>m[1]).filter(Boolean);
+  const headings=[...text.matchAll(/<h([1-4])\b[^>]*>([\s\S]*?)<\/h\1>/gi)].map(m=>({level:Number(m[1]),text:m[2].replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()})).filter(x=>x.text);
+  const forms=[...text.matchAll(/<form\b([^>]*)>/gi)].map(m=>{const a=m[1];return {method:(a.match(/\bmethod\s*=\s*["']?([^"'\s>]+)/i)||[])[1]||"GET",action:(a.match(/\baction\s*=\s*["']([^"']*)["']/i)||[])[1]||""};});
+  const metas={};
+  for(const m of text.matchAll(/<meta\b[^>]*>/gi)){
+    const tag=m[0], name=(tag.match(/\bname\s*=\s*["']([^"']+)["']/i)||[])[1], property=(tag.match(/\bproperty\s*=\s*["']([^"']+)["']/i)||[])[1], content=(tag.match(/\bcontent\s*=\s*["']([^"']*)["']/i)||[])[1];
+    if((name||property)&&content) metas[name||property]=content;
+  }
+  const canonical=(text.match(/<link\b[^>]*rel\s*=\s*["'][^"']*\bcanonical\b[^"']*["'][^>]*href\s*=\s*["']([^"']+)["']/i)||[])[1]||null;
+  return {title,links:[...new Set(links)].slice(0,300),scripts:[...new Set(scripts)].slice(0,200),styles:[...new Set(styles)].slice(0,200),images:[...new Set(images)].slice(0,300),headings:headings.slice(0,100),forms:forms.slice(0,50),meta:metas,canonical};
+}
+
+async function githubJson(path) {
+  const response=await fetch("https://api.github.com"+path,{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
+  const data=await response.json().catch(()=>({}));
+  return {httpStatus:response.status,ok:response.ok,data};
+}
+
+async function executeReconBase(base) {
+  const started=new Date().toISOString();
+  if(base==="site-health"||base==="http-status"){
+    const r=await fetchRecon("/");
+    return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,ok:r.ok,finalUrl:r.finalUrl,durationMs:r.durationMs}};
+  }
+  if(base==="http-headers"||base.startsWith("security-")||base==="edge"){
+    const r=await fetchRecon("/",{method:"HEAD",readBody:false});
+    const h=r.headers;
+    if(base==="http-headers") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,headers:h}};
+    if(base==="security-headers") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,checks:{
+      hsts:h["strict-transport-security"]||null,csp:h["content-security-policy"]||null,xFrame:h["x-frame-options"]||null,xContentType:h["x-content-type-options"]||null,referrer:h["referrer-policy"]||null,permissions:h["permissions-policy"]||null,coop:h["cross-origin-opener-policy"]||null,coep:h["cross-origin-embedder-policy"]||null,corp:h["cross-origin-resource-policy"]||null
+    }}};
+    if(base==="security-cookies") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,setCookie:h["set-cookie"]||null}};
+    const map={"security-csp":"content-security-policy","security-hsts":"strict-transport-security","security-referrer":"referrer-policy","security-permissions":"permissions-policy","security-content-type":"x-content-type-options"};
+    if(map[base]) return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,header:map[base],value:h[map[base]]||null,present:Boolean(h[map[base]])}};
+    if(base==="security-frame") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,xFrameOptions:h["x-frame-options"]||null,cspFrameAncestors:(h["content-security-policy"]||"").match(/frame-ancestors[^;]*/i)?.[0]||null}};
+    if(base==="security-cross-origin") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,coop:h["cross-origin-opener-policy"]||null,coep:h["cross-origin-embedder-policy"]||null,corp:h["cross-origin-resource-policy"]||null}};
+    return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,cloudflareRay:h["cf-ray"]||null,server:h.server||null,edgeIndicators:{cfRay:Boolean(h["cf-ray"]),serverCloudflare:String(h.server||"").toLowerCase().includes("cloudflare")}}};
+  }
+  if(base.startsWith("http-")||base==="site-assets"||base==="site-links"||base==="http-meta"||base==="http-title"||base==="http-size"){
+    const r=await fetchRecon("/");
+    const parsed=parseHtml(r.body);
+    if(base==="http-body") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,body:r.body}};
+    if(base==="http-links"||base==="site-links") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,links:parsed.links}};
+    if(base==="http-scripts") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,scripts:parsed.scripts}};
+    if(base==="http-styles") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,styles:parsed.styles}};
+    if(base==="http-images") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,images:parsed.images}};
+    if(base==="http-forms") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,forms:parsed.forms}};
+    if(base==="http-headings") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,headings:parsed.headings}};
+    if(base==="http-meta") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,title:parsed.title,meta:parsed.meta,canonical:parsed.canonical}};
+    if(base==="http-title") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,title:parsed.title}};
+    if(base==="http-size") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,contentLength:r.headers["content-length"]||null,measuredBodyBytes:new TextEncoder().encode(r.body||"").length}};
+    if(base==="site-assets") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,scripts:parsed.scripts,styles:parsed.styles,images:parsed.images}};
+  }
+  if(base==="http-methods"){
+    const [get,head,options]=await Promise.all([
+      fetchRecon("/",{readBody:false}),
+      fetchRecon("/",{method:"HEAD",readBody:false}),
+      fetchRecon("/",{method:"OPTIONS",readBody:false})
+    ]);
+    return {target:RECON_TARGET,result:{GET:get.httpStatus,HEAD:head.httpStatus,OPTIONS:options.httpStatus}};
+  }
+  const dnsTypes={"dns-a":1,"dns-aaaa":28,"dns-mx":15,"dns-ns":2,"dns-txt":16,"dns-cname":5,"dns-soa":6,"dns-caa":257,"dns-srv":33};
+  if(dnsTypes[base]) return {target:RECON_TARGET,result:await doh("hephzibahbehulah.com",dnsTypes[base])};
+  if(base==="dns-dmarc") return {target:RECON_TARGET,result:await doh("_dmarc.hephzibahbehulah.com",16)};
+  if(base==="dns-spf"){
+    const d=await doh("hephzibahbehulah.com",16);
+    return {target:RECON_TARGET,result:{...d,spf:d.answers.filter(a=>String(a.data||"").toLowerCase().includes("v=spf1"))}};
+  }
+  if(base==="dns-dnssec"){
+    const [ds,dnskey]=await Promise.all([doh("hephzibahbehulah.com",43),doh("hephzibahbehulah.com",48)]);
+    return {target:RECON_TARGET,result:{DS:ds,DNSKEY:dnskey}};
+  }
+  const fixedPaths={
+    "robots":["/robots.txt"],"sitemap":["/sitemap.xml"],"security-txt":["/.well-known/security.txt","/security.txt"],
+    "manifest":["/manifest.json","/manifest.webmanifest"],"favicon":["/favicon.ico","/favicon.svg"],
+    "humans":["/humans.txt"],"llms":["/llms.txt"],"ai-txt":["/ai.txt","/ai-policy.txt"],
+    "ads-txt":["/ads.txt"],"feed":["/feed.xml","/rss.xml","/atom.xml"],
+    "well-known":["/.well-known/change-password","/.well-known/assetlinks.json","/.well-known/apple-app-site-association"]
+  };
+  if(fixedPaths[base]){
+    const results=await Promise.all(fixedPaths[base].map(async path=>{
+      try{const r=await fetchRecon(path,{readBody:true});return {path,httpStatus:r.httpStatus,ok:r.ok,finalUrl:r.finalUrl,content:String(r.body||"").slice(0,30000)};}
+      catch(error){return {path,error:String(error?.message||error)};}
+    }));
+    return {target:RECON_TARGET,result:{checks:results}};
+  }
+  const gh={
+    "github-repo":"/repos/"+RECON_REPO,
+    "github-commits":"/repos/"+RECON_REPO+"/commits?per_page=20",
+    "github-branches":"/repos/"+RECON_REPO+"/branches?per_page=50",
+    "github-runs":"/repos/"+RECON_REPO+"/actions/runs?per_page=20",
+    "github-releases":"/repos/"+RECON_REPO+"/releases?per_page=20",
+    "github-languages":"/repos/"+RECON_REPO+"/languages",
+    "github-contributors":"/repos/"+RECON_REPO+"/contributors?per_page=50",
+    "github-tags":"/repos/"+RECON_REPO+"/tags?per_page=50"
+  };
+  if(gh[base]){
+    const r=await githubJson(gh[base]);
+    return {target:RECON_REPO,result:r};
+  }
+  if(base==="site-summary"||base==="site-assets"||base==="site-links"){
+    const names=["site-health","security-headers","dns-a","dns-aaaa","dns-mx","dns-ns","dns-txt","robots","sitemap","http-meta","http-links","http-scripts","http-styles","edge","github-repo"];
+    const rows=await Promise.all(names.map(async name=>({command:name,...await executeReconBase(name)})));
+    return {target:RECON_TARGET,result:{checks:rows}};
+  }
+  throw new Error("Unknown reconnaissance operation: "+base);
+}
+
+function reconEvidence(base,data,actor) {
+  return evidenceRecord({
+    tool:"recon."+base,
+    target:RECON_TARGET,
+    actor,
+    status:"observed",
+    startedAt:data.startedAt,
+    result:data.result
+  });
+}
+
+async function executeReconCommand(request, command) {
+  const raw=String(command||"").trim();
+  if(!raw) return json(request,{ok:false,error:"Enter a command. Type help to see the reconnaissance catalog."},400);
+  const lower=raw.toLowerCase();
+  if(lower==="help"||lower==="commands") return json(request,reconHelp("overview"));
+  if(lower.startsWith("help ")) return json(request,reconHelp(lower.slice(5)));
+  if(lower==="recon"||lower==="full-recon"||lower==="recon-all"){
+    const started=Date.now();
+    const names=["site-health","security-headers","dns-a","dns-aaaa","dns-mx","dns-ns","dns-txt","dns-ns","dns-caa","dns-dnssec","robots","sitemap","security-txt","http-meta","http-links","http-scripts","http-styles","http-headings","edge","github-repo","github-commits","github-runs"];
+    const rows=await Promise.all(names.map(async name=>{try{return {command:name,...await executeReconBase(name)};}catch(error){return {command:name,error:String(error?.message||error)};}}));
+    const evidence=evidenceRecord({tool:"recon.full",target:RECON_TARGET,actor:getAdminIdentity().email,status:"observed",startedAt:new Date(started).toISOString(),result:{checks:rows}});
+    return json(request,{ok:true,command:raw,label:"Full passive reconnaissance",durationMs:Date.now()-started,result:{checks:rows},evidence});
+  }
+  const base=RECON_COMMANDS[lower];
+  if(!base) return null;
+  const started=new Date().toISOString();
+  try{
+    const data=await executeReconBase(base);
+    const evidence=reconEvidence(base,{...data,startedAt:started},getAdminIdentity().email);
+    return json(request,{ok:true,command:raw,baseCommand:base,label:RECON_BASES[base].label,description:RECON_BASES[base].description,target:RECON_TARGET,durationMs:Date.now()-new Date(started).getTime(),result:data.result,evidence});
+  }catch(error){
+    return json(request,{ok:false,command:raw,baseCommand:base,error:String(error?.message||error),durationMs:Date.now()-new Date(started).getTime()},502);
+  }
+}
+
 async function executeSandboxCommand(request, env, ctx, command) {
+  const recon=await executeReconCommand(request,command);
+  if(recon) return recon;
   const identity = getAdminIdentity();
   const shellCommand=SANDBOX_COMMANDS[command];
-  if(!shellCommand) return json(request,{ok:false,error:"Command is not allow-listed.",available:Object.keys(SANDBOX_COMMANDS)},400);
+  if(!shellCommand) return json(request,{ok:false,error:"Unknown command. Type help for the reconnaissance catalog.",available:["help","recon",...Object.keys(SANDBOX_COMMANDS),...Object.keys(RECON_COMMANDS)]},400);
   const started=Date.now();
   try{
     const sandbox=await getAdminSandbox(env,identity);
@@ -151,52 +445,25 @@ async function executeSandboxCommand(request, env, ctx, command) {
   }
 }
 
-const ADMIN_EXECUTABLES = Object.freeze({
-  "site-health": { label:"HTTP health", description:"Fetch the production homepage and report HTTP status, timing and final URL.", mutation:false },
-  "site-headers": { label:"Security headers", description:"Inspect production response headers without changing anything.", mutation:false },
-  "site-robots": { label:"robots.txt", description:"Read the public robots policy.", mutation:false },
-  "site-sitemap": { label:"sitemap.xml", description:"Read the public sitemap if available.", mutation:false },
-  "dns-lookup": { label:"DNS resolution", description:"Resolve the authorized production hostname through Cloudflare's DNS-over-HTTPS endpoint.", mutation:false },
-  "repository-status": { label:"Repository status", description:"Read the public repository metadata and current revision.", mutation:false }
-});
-
-async function executeAdminCommand(request, env, command) {
-  const spec = ADMIN_EXECUTABLES[command];
-  if (!spec) return json(request,{ok:false,error:"Command is not allow-listed.",available:Object.keys(ADMIN_EXECUTABLES)},400);
-  const started=Date.now();
-  try {
-    let result;
-    if(command==="site-health"){
-      const r=await fetch("https://hephzibahbehulah.com/",{redirect:"follow"});
-      result={httpStatus:r.status,ok:r.ok,finalUrl:r.url};
-    } else if(command==="site-headers"){
-      const r=await fetch("https://hephzibahbehulah.com/",{method:"HEAD",redirect:"follow"});
-      result={httpStatus:r.status,headers:Object.fromEntries(r.headers)};
-    } else if(command==="site-robots"||command==="site-sitemap"){
-      const path=command==="site-robots"?"/robots.txt":"/sitemap.xml";
-      const r=await fetch("https://hephzibahbehulah.com"+path,{redirect:"follow"});
-      result={httpStatus:r.status,ok:r.ok,content:(await r.text()).slice(0,20000)};
-    } else if(command==="dns-lookup"){
-      const r=await fetch("https://cloudflare-dns.com/dns-query?name=hephzibahbehulah.com&type=A",{headers:{"accept":"application/dns-json"}});
-      const d=await r.json();
-      result={status:d.Status,answers:(d.Answer||[]).slice(0,20).map(a=>({name:a.name,type:a.type,data:a.data,ttl:a.TTL}))};
-    } else if(command==="repository-status"){
-      const r=await fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
-      const d=await r.json().catch(()=>({}));
-      result={httpStatus:r.status,repository:d.full_name,defaultBranch:d.default_branch,updatedAt:d.updated_at,pushedAt:d.pushed_at,openIssues:d.open_issues_count};
-    }
-    return json(request,{ok:true,command,label:spec.label,mutation:false,startedAt:new Date(started).toISOString(),durationMs:Date.now()-started,result,evidence:evidenceRecord({
-      tool:command,
-      target:command==="dns-lookup" ? "hephzibahbehulah.com" : "hephzibahbehulah.com",
-      result,
-      actor:null,
-      startedAt:new Date(started).toISOString()
-    })});
-  } catch(error) {
-    return json(request,{ok:false,command,error:String(error?.message||error),durationMs:Date.now()-started},502);
+async function adminRoutes(request, env, url, ctx) {
+  if (url.pathname === "/api/admin/capabilities" && request.method === "GET") {
+    const identity = getAdminIdentity();
+    return json(request,{ok:true,manifest:capabilityManifest(env,true),identity,recon:{commandCount:RECON_COUNT,target:RECON_TARGET,readOnly:true,categories:Object.fromEntries(Object.entries(HELP_CATEGORIES).map(([k,v])=>[k,v.length]))}});
   }
-}
-
+  if (url.pathname === "/api/admin/commands" && request.method === "GET") {
+    return json(request,{ok:true,target:RECON_TARGET,count:RECON_COUNT,commands:Object.keys(RECON_COMMANDS),categories:HELP_CATEGORIES,variants:RECON_VARIANTS,sandbox:Object.keys(SANDBOX_COMMANDS)});
+  }
+  if (url.pathname === "/api/admin/status" && request.method === "GET") {
+    const identity = getAdminIdentity();
+    return json(request, { ok:true, authenticated:true, identity, authentication:"disabled" });
+  }
+  if (url.pathname === "/api/admin/command" && request.method === "POST") {
+    let body;
+    try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
+    return executeAdminCommand(request, env, String(body?.command || "").trim());
+  }
+  if (url.pathname === "/api/automation/demo" && request.method === "POST") {
+    const identity = getAdminIdentity();
 async function adminRoutes(request, env, url, ctx) {
   if (url.pathname === "/api/admin/capabilities" && request.method === "GET") {
     const identity = getAdminIdentity();
