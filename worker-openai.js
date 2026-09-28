@@ -424,7 +424,7 @@ function reconEvidence(base,data,actor) {
 async function executeReconCommand(request, command) {
   const raw=String(command||"").trim();
   if(!raw) return json(request,{ok:false,error:"Enter a command. Type help to see the reconnaissance catalog."},400);
-  const lower=raw.toLowerCase();
+  const lower=normalizeAdminCommand(raw);
   if(lower==="help"||lower==="commands") return json(request,reconHelp("overview"));
   if(lower.startsWith("help ")) return json(request,reconHelp(lower.slice(5)));
   if(lower==="recon"||lower==="full-recon"||lower==="recon-all"){
@@ -446,6 +446,11 @@ async function executeReconCommand(request, command) {
   }
 }
 
+function normalizeAdminCommand(command) {
+  const raw=String(command||"").trim().toLowerCase().replace(/\s+/g," ");
+  const aliases=Object.freeze({"dns-lookup":"dns-a","dns lookup":"dns-a","site-headers":"http-headers","site-robots":"robots","site-sitemap":"sitemap","repository-status":"github-repo","repo-status":"github-repo","github-status":"github-repo","cf":"edge","cloudflare-edge":"edge"});
+  return aliases[raw] || raw;
+}
 async function executeAdminCommand(request, env, command) {
   const raw=String(command||"").trim();
   if(!raw) return json(request,{ok:false,error:"Enter a command. Type help to see the command registry."},400);
@@ -1030,12 +1035,12 @@ async function privateAgent(request, env, url, ctx) {
     "- Never turn a planned capability into a claimed capability. Use only server evidence.\n" +
     "- Use the server checkedAt timestamp as the report date; never invent a date.\n\n" +
     "Rules:\n" +
-    "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS. Mark important claims as [OBSERVED], [CALCULATED], [INFERRED], [UNKNOWN], or [RECOMMENDATION].\n" +
-    "- For current external information, use live web search and cite the actual sources. Never fabricate vacancies, prices, availability, employers, URLs, or dates.\n" +
+    "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS. Mark important claims as [OBSERVED], [CALCULATED], [INFERRED], [UNKNOWN], or [RECOMMENDATION]. [OBSERVED] requires a traceable source or server evidence record; assumptions are never observed facts.\n" +
+    "- For current external information, use live web search and cite the actual original source. A search-result snippet is discovery evidence, not a verified fact. A vacancy is VERIFIED only after opening an identifiable source page and confirming employer, exact title, location, and current/active status when exposed. If any critical field cannot be verified, label it [UNVERIFIED] and do not count it toward a verified total. Never fabricate vacancies, prices, availability, employers, URLs, dates, salaries, job IDs, addresses, or requirements.\n" +
     "- Never claim a change was made.\n" +
     "- If a change would be required, describe the intended change and say that explicit approval is required.\n" +
     "- Do not invent Cloudflare, GitHub, security or deployment data that is absent from the evidence.\n" +
-    "- If the task is not about the website, do not force website findings into the answer.\n" +
+    "- If the task is not about the website, do not force website findings into the answer.\n- Never use WINNER, DREAM CAREER, BEST, HIGH FIT or LOW FIT as unsupported verdicts. For job matching, report transparent requirement coverage from verified profile facts, keep unknown requirements visible, and never imply hiring probability.\n" +
     "- Use Markdown and proper LaTeX when mathematics is needed.\n" +
     "- Do not expose secrets.\n\nSERVER EVIDENCE:\n" + evidence;
 
@@ -1091,6 +1096,7 @@ async function privateAgent(request, env, url, ctx) {
     plan,
     answer,
     next:"Approval-required actions are proposed only. No state-changing operation was executed.",
+    evidencePolicy:{verifiedRequiresSource:true,searchSnippetIsNotVerified:true,vacancyRequiresOriginalPage:true,unknownsMustRemainUnknown:true},
     capabilityManifest:capabilityManifest(env,true),
     evidenceIds:[
       ...investigations.flatMap(x=>(x.data?.checks||[]).map(check=>check.evidenceId).filter(Boolean)),
@@ -1155,7 +1161,7 @@ async function privateInspect(request, env, url, ctx) {
       const d=await r.json();
       result.checks.push({name:"dns",status:d.ok?"healthy":"error",result:d.result||null,error:d.error||null});
     }catch(e){result.checks.push({name:"dns",status:"error",error:String(e?.message||e)})}
-    result.checks.push({name:"cloudflare-edge",status:"observed",note:"Edge presence is inferred from live response headers. Account-level Cloudflare mutations are not exposed by this Worker."});
+    result.checks.push({name:"cloudflare-edge",status:"observed",verificationStatus:"observed",note:"Edge presence is inferred only from live response headers. Account-level Cloudflare configuration is not inspected by this Worker."});
   }
   result.checks = result.checks.map(check => {
     if (check.evidenceId) return check;
