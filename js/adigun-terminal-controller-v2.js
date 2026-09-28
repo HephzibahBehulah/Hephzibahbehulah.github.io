@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(!input||!host)return;
   const session=(()=>{try{return localStorage.getItem("hb-admin-session")||crypto.randomUUID()}catch{return String(Date.now())}})();
   try{localStorage.setItem("hb-admin-session",session)}catch{}
-  const aliases={domain:"site-summary","site health":"site-health","site status":"site-health","site summary":"site-summary","site assets":"site-assets","site links":"site-links",dns:"dns-a",headers:"http-headers",security:"security-headers",tls:"security-hsts",cf:"edge","edge-status":"edge",github:"github-repo",gh:"github-repo","deploy-status":"github-runs","repository-status":"github-repo","repo-status":"github-repo",net:"dns-a"};
+  const aliases={domain:"site-summary","site health":"site-health","site status":"site-health","site summary":"site-summary","site assets":"site-assets","site links":"site-links",dns:"dns-a",headers:"http-headers",security:"security-headers",tls:"security-hsts",csp:"security-csp",hsts:"security-hsts",referrer:"security-referrer",permissions:"security-permissions","content-type":"security-content-type",frame:"security-frame","cross-origin":"security-cross-origin",cf:"edge","edge-status":"edge",github:"github-repo",gh:"github-repo","deploy-status":"github-runs","repository-status":"github-repo","repo-status":"github-repo",net:"dns-a"};
   const grouped=new Set(["site","security","github","cloudflare","osint","admin","users","sessions","access","permissions","audit","logs","settings","activity"]);
   const line=(text,kind="output")=>{const e=document.createElement("div");e.className="admin-terminal-line "+kind;e.textContent=String(text??"");host.appendChild(e);host.scrollTop=host.scrollHeight;return e};
   const serverName=q=>{const s=q.trim().toLowerCase();return aliases[s]||((s.startsWith("help ")||s==="help"||s==="commands")?null:s)};
@@ -12,13 +12,15 @@ document.addEventListener("DOMContentLoaded",()=>{
   async function execute(raw){
     const q=String(raw||"").trim();if(!q)return;line("adigun@control:~$ "+q,"prompt");state&&(state.textContent="● EXECUTING");run&&(run.disabled=true);input.disabled=true;
     try{
-      const pieces=q.match(/(?:[^\s"]+|"[^"]*")+/g)||[],command=(pieces.shift()||"").toLowerCase(),args=pieces.map(x=>x.replace(/^"|"$/g,""));
+      const pieces=q.match(/(?:[^\s"]+|"[^"]*")+/g)||[],command=(pieces.shift()||"").toLowerCase(),args=pieces.map(x=>x.replace(/^"|"$/g,"").replace(/^<(.+)>$/,"$1"));
       if(command==="clear"){host.innerHTML="";state&&(state.textContent="READY");meta&&(meta.textContent="Terminal cleared.");return}
       if(command==="history"){const h=JSON.parse(localStorage.getItem("adigun-command-history")||"[]");line(h.length?h.map((x,i)=>String(i+1).padStart(3," ")+"  "+x).join("\n"):"No command history.");return}
       if(command==="exit"){line("ADIGUN Control remains open. Use browser navigation to leave the control center.","system");return}
       const local=window.AdigunCommandEngine?.local;
-      const localCommands=new Set(["help","commands","list","man","which","status","version","config","selftest","mean","median","mode","range","sum","min","max","percent","calculate","ohm","power","energy","resistor","voltage","current","frequency","wavelength","convert","encode","decode","base64","hash","uuid","timestamp","regex","text","format","json","cidr","ip","url","urlinfo","website","quiz","game","lesson","explain"]);
-      if(local&&localCommands.has(command)&&!(grouped.has(command)&&args.length)){meta&&(meta.textContent="Browser command engine");line(await Promise.resolve(local(command,args)),"output");return}
+      const localCommands=new Set(["help","commands","list","man","which","status","version","config","selftest","mean","median","mode","range","sum","min","max","percent","calculate","ohm","power","energy","resistor","voltage","current","frequency","wavelength","convert","encode","decode","base64","hash","uuid","timestamp","regex","text","format","json","cidr","ip","url","urlinfo","website","site","security","github","cloudflare","osint","admin","users","sessions","access","permissions","audit","logs","settings","activity","quiz","game","lesson","explain"]);
+      const helpTopic=command==="help"?String(args[0]||"").toLowerCase():"";
+      const serverHelpTopic=command==="help"&&(helpTopic==="all"||helpTopic==="linux"||helpTopic==="sandbox"||(!window.AdigunCommandEngine?.families?.[helpTopic]&&!window.AdigunCommandEngine?.registry?.[helpTopic]));
+      if(local&&localCommands.has(command)&&!serverHelpTopic&&!(grouped.has(command)&&args.length)){meta&&(meta.textContent="Browser command engine");line(await Promise.resolve(local(command,args)),"output");return}
       const serverCommand=serverName(q);if(!serverCommand)throw Error("Unknown command. Type HELP to see the registry.");
       meta&&(meta.textContent="Executing authorised server command…");
       const r=await fetch("/api/admin/sandbox",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",body:JSON.stringify({command:serverCommand})});
