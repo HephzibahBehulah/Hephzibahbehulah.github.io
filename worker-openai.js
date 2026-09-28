@@ -60,12 +60,13 @@ function capabilityManifest(env, authenticated=false) {
   return {
     generatedAt:new Date().toISOString(),
     subject:authenticated ? "private-adigun" : "public-adigun",
-    executionPolicy: authenticated ? "local-operator-sandbox-execution-plus-approval-gated-production-actions" : "public-read-only",
+    executionPolicy: authenticated ? "local-operator-read-only-recon-plus-allow-listed-sandbox-execution" : "public-read-only",
     tools: {
       "http.inspect": {available:true,execution:true,mutation:false},
       "dns.lookup": {available:true,execution:true,mutation:false},
       "github.read": {available:true,execution:true,mutation:false},
       "security.inspect": {available:true,execution:true,mutation:false},
+      "recon.passive": {available:true,execution:true,mutation:false,targetLocked:true,commandCount:RECON_COUNT},
       "python.execute": {available:true,execution:true,mutation:false,isolated:true},
       "shell.execute": {available:true,execution:true,mutation:false,isolated:true},
       "tls.inspect": {available:false,execution:false,mutation:false},
