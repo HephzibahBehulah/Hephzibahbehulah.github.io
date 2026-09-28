@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     if(!q)return;
     terminalRun.disabled=true;
     terminalState.textContent="● EXECUTING";
-    terminalMeta.textContent="Sending an allow-listed command to the authenticated Linux execution node…";
+    terminalMeta.textContent="Sending the command to ADIGUN Control. Recon commands are read-only and fixed to the authorized site; sandbox commands remain allow-listed.";
     terminalHost.textContent+="\n\n$ "+q+"\n";
     try{
       const r=await fetch("/api/admin/sandbox",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",body:JSON.stringify({command:q})});
@@ -31,8 +31,30 @@ document.addEventListener("DOMContentLoaded",()=>{
     }finally{terminalRun.disabled=false;terminalCommand.focus()}
   }
   terminalRun?.addEventListener("click",()=>runSandboxCommand(terminalCommand.value));
+
+  async function loadReconCommandCatalog(){
+    const list=document.querySelector("#terminalCommands");
+    if(!list)return;
+    try{
+      const r=await fetch("/api/admin/commands",{credentials:"same-origin",cache:"no-store"});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!Array.isArray(d.commands))return;
+      const commands=["help","commands","recon","full-recon",...(Array.isArray(d.sandbox)?d.sandbox:[]),...d.commands];
+      list.innerHTML="";
+      const seen=new Set();
+      for(const command of commands){
+        if(seen.has(command))continue;
+        seen.add(command);
+        const option=document.createElement("option");
+        option.value=command;
+        list.appendChild(option);
+      }
+      terminalMeta.textContent=String(d.count||d.commands.length)+" reconnaissance command names loaded. Type help for categories.";
+    }catch{}
+  }
+  loadReconCommandCatalog();
   terminalCommand?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSandboxCommand(terminalCommand.value)}});
-  terminalClear?.addEventListener("click",()=>{terminalHost.textContent="ADIGUN EXECUTION NODE\nstatus: waiting\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: Cloudflare Access\n";commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Every execution is server-side, allow-listed, authenticated and returned with an evidence ID.";});
+  terminalClear?.addEventListener("click",()=>{terminalHost.textContent="ADIGUN EXECUTION NODE\nstatus: waiting\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: local operator mode\n";commandOutput.textContent="No execution evidence yet.";terminalState.textContent="READY";terminalMeta.textContent="Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.";});
 
   const history=[]; let files=[];
   const session=(()=>{let v=localStorage.getItem("hb-admin-session");if(!v){v=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36);localStorage.setItem("hb-admin-session",v)}return v})();
@@ -68,7 +90,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     try{
       const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
       if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";send.disabled=true;return}
-      accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Authenticated administrator";heroAuth.textContent="AUTHENTICATED";heroIdentity.textContent=d.identity?.email||"Verified administrator";send.disabled=false;
+      accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Local operator";heroAuth.textContent="LOCAL OPERATOR";heroIdentity.textContent=d.identity?.email||"ADIGUN Control operator";send.disabled=false;
     }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";send.disabled=true}
   }
 
