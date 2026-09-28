@@ -213,7 +213,7 @@ function requireAdmin(request, env) {
 }
 
 async function authenticateAdmin(request, env) {
-  const auth = await authenticateAdmin(request, env);
+  const auth = requireAdmin(request, env);
   if (!auth.ok) return auth;
   const verified = await verifyCloudflareAccessJwt(request, env);
   if (!verified.ok) {
