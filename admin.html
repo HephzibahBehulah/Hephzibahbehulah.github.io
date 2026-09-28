@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/osint-redesign.css?v=20260925-11"><link rel="stylesheet" href="css/adigun-admin.css?v=20260926-1">
+<link rel="stylesheet" href="css/osint-redesign.css?v=20260925-11"><link rel="stylesheet" href="css/adigun-admin.css?v=20260926-1"><link rel="stylesheet" href="css/hb-global-search.css?v=20260928-2">
 </head>
 <body class="osint-redesign adigun-admin-page">
 <div class="os-shell">
@@ -19,7 +19,7 @@
 <div class="os-status">ACCESS<br><b id="accessStatus">● CHECKING</b><br>identity: <span id="identityEmail">—</span><br>scope: private control</div>
 </aside>
 <main class="os-main">
-<header class="os-top"><div class="os-breadcrumb">private / <b>ADIGUN control</b></div><div class="os-top-actions"><button class="os-btn" id="refreshStatus" type="button">REFRESH</button></div></header>
+<header class="os-top"><div class="os-breadcrumb">private / <b>ADIGUN control</b></div><div class="os-top-actions"><div class="hb-search-wrap"><input id="globalResourceSearch" class="os-search" placeholder="search everything..." aria-label="Search everything"></div><button class="os-btn" id="refreshStatus" type="button">REFRESH</button></div></header>
 <div class="os-content" id="overview">
 <section class="admin-hero">
 <div><div class="admin-kicker">HEPHZIBAH BEHULAH / PRIVATE OPERATIONS</div><h1>ADIGUN<br><span>CONTROL</span></h1><p>This interface is for authenticated administration only. Public visitors use the main ADIGUN intelligence desk and do not receive these controls.</p></div>
@@ -79,5 +79,5 @@ authentication: Cloudflare Access
 </div>
 </section>
 </div></main></div>
-<script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/contrib/auto-render.min.js"></script><script src="js/adigun-renderer.js?v=20260926-3"></script><script src="js/adigun-admin.js?v=20260926-4"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/contrib/auto-render.min.js"></script><script src="js/adigun-renderer.js?v=20260926-3"></script><script src="js/adigun-admin.js?v=20260926-4"></script><script src="js/global-search.js?v=20260928-2"></script>
 </body></html>
