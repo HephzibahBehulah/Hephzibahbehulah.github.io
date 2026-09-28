@@ -58,24 +58,34 @@
 <div class="security-grid"><div><b>01 / IDENTITY</b><span>Cloudflare Access authenticates the administrator before the application is reached.</span></div><div><b>02 / MFA</b><span>Cloudflare Access protects this application. MFA is enforced at the identity layer.</span></div><div><b>03 / SERVER SECRETS</b><span>OpenAI and other credentials are stored as Cloudflare secrets, never in browser code.</span></div><div><b>04 / AUTHORIZATION</b><span>Worker endpoints verify the authenticated Access identity before privileged operations.</span></div></div></section>
 <section class="os-panel admin-section" id="terminal">
 <div class="os-panel-head"><span>04 / ADIGUN RECONNAISSANCE + LINUX EXECUTION</span><span id="terminalState">READY</span></div>
-<div class="admin-terminal">
-  <div class="admin-terminal-banner">ADIGUN TOOL BROKER // passive reconnaissance engine + isolated Linux execution node</div>
-  <div class="admin-terminal-actions">
-    <input id="terminalCommand" class="admin-terminal-command" list="terminalCommands" placeholder="Type help, recon, dns-a, security-headers, or a sandbox command" autocomplete="off">
-    <datalist id="terminalCommands">
-      <option value="help"></option><option value="commands"></option><option value="recon"></option><option value="full-recon"></option><option value="site-summary"></option><option value="site-health"></option><option value="http-status"></option><option value="http-headers"></option><option value="http-links"></option><option value="http-scripts"></option><option value="http-meta"></option><option value="dns-a"></option><option value="dns-aaaa"></option><option value="dns-mx"></option><option value="dns-ns"></option><option value="dns-txt"></option><option value="dns-dmarc"></option><option value="dns-spf"></option><option value="dns-dnssec"></option><option value="security-headers"></option><option value="security-csp"></option><option value="security-hsts"></option><option value="security-txt"></option><option value="github-repo"></option><option value="github-commits"></option><option value="github-runs"></option><option value="edge"></option><option value="pwd"></option><option value="ls"></option><option value="whoami"></option><option value="uname"></option><option value="python-version"></option><option value="node-version"></option><option value="git-version"></option><option value="date"></option><option value="disk"></option><option value="memory"></option><option value="os"></option><option value="runtime"></option><option value="repo-status"></option>
-    </datalist>
-    <button class="os-btn primary" id="terminalRun" type="button">EXECUTE</button>
-    <button class="os-btn" id="terminalClear" type="button">CLEAR</button>
-  </div>
-  <pre id="adigunTerminal" class="adigun-terminal" aria-label="Authenticated ADIGUN Linux execution output">ADIGUN EXECUTION NODE
-status: waiting
+<div class="admin-terminal" aria-label="ADIGUN Control Terminal">
+  <div class="admin-terminal-banner"><strong>ADIGUN CONTROL TERMINAL</strong> · browser command engine<br>Type HELP to begin. Try: help · recon · domain · dns · security · status<br>Security mode: authorised reconnaissance + isolated diagnostics.</div>
+  <div id="adigunTerminal" class="admin-terminal-screen" role="log" aria-live="polite"><div class="admin-terminal-line system">ADIGUN EXECUTION NODE
+status: ready
 runtime: isolated Cloudflare Sandbox
 network: deny-by-default
 authentication: local operator mode
-</pre>
-  <div class="admin-terminal-meta" id="terminalMeta">Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.</div>
-  <pre class="admin-inspect-output" id="commandOutput">No execution evidence yet.</pre>
+
+Type HELP to begin.</div></div>
+  <div class="admin-terminal-composer">
+    <div class="admin-terminal-hints">
+      <span>COMMAND ENGINE</span>
+      <button type="button" data-terminal-command="help">help</button>
+      <button type="button" data-terminal-command="recon">recon</button>
+      <button type="button" data-terminal-command="domain">domain</button>
+      <button type="button" data-terminal-command="dns-a">dns-a</button>
+      <button type="button" data-terminal-command="security-headers">security-headers</button>
+      <button type="button" data-terminal-command="status">status</button>
+    </div>
+    <div class="admin-terminal-input-row">
+      <span class="admin-terminal-prompt">adigun@control:~$</span>
+      <input id="terminalCommand" class="admin-terminal-command" list="terminalCommands" placeholder="enter command…" autocomplete="off" spellcheck="false" aria-label="Terminal command">
+      <datalist id="terminalCommands"></datalist>
+      <button class="os-btn primary" id="terminalRun" type="button">RUN</button>
+      <button class="os-btn" id="terminalClear" type="button">CLEAR</button>
+    </div>
+    <div class="admin-terminal-status" id="terminalMeta">Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.</div>
+  </div>
 </div>
 </section>
 </div></main></div>
