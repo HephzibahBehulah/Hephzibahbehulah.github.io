@@ -114,7 +114,7 @@ function decodeJwtPart(value) {
 }
 
 function normalizeTeamDomain(value) {
-  const raw = String(value || "").trim().replace(/\\/+$/,"");
+  const raw = String(value || "").trim().replace(/\/+$/,"");
   if (!raw) return "";
   try {
     const u = new URL(raw);
@@ -1498,5 +1498,3 @@ export default {
     }
 
     return legacy.fetch(request, env, ctx);
-  }
-};
