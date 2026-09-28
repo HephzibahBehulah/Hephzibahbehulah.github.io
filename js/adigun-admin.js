@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   loadReconCommandCatalog();
   terminalCommand?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSandboxCommand(terminalCommand.value)}});
   document.querySelectorAll("[data-terminal-command]").forEach(b=>b.addEventListener("click",()=>{terminalCommand.value=b.dataset.terminalCommand||"";runSandboxCommand(terminalCommand.value)}));
-  terminalClear?.addEventListener("click",()=>{terminalHost.innerHTML='<div class="admin-terminal-line system">ADIGUN EXECUTION NODE\nstatus: ready\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: Cloudflare Access verified\n\nType HELP to begin.</div>';terminalState.textContent="READY";terminalMeta.textContent="Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.";terminalCommand.focus();});
+  terminalClear?.addEventListener("click",()=>{terminalHost.innerHTML='<div class="admin-terminal-line system">ADIGUN EXECUTION NODE\nstatus: ready\nruntime: isolated Cloudflare Sandbox\nnetwork: deny-by-default\nauthentication: Cloudflare Access JWT verified\n\nType HELP to begin.</div>';terminalState.textContent="READY";terminalMeta.textContent="Recon commands are read-only and target-locked. Sandbox commands are allow-listed. Every execution returns an evidence ID.";terminalCommand.focus();});
 
   const history=[]; let files=[];
   const session=(()=>{let v=localStorage.getItem("hb-admin-session");if(!v){v=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36);localStorage.setItem("hb-admin-session",v)}return v})();
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     try{
       const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
       if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";send.disabled=true;return}
-      accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Local operator";heroAuth.textContent="LOCAL OPERATOR";heroIdentity.textContent=d.identity?.email||"ADIGUN Control operator";send.disabled=false;
+      accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Cloudflare Access user";heroAuth.textContent="CLOUDFLARE ACCESS";heroIdentity.textContent=d.identity?.email||"ADIGUN Control administrator";send.disabled=false;
     }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";send.disabled=true}
   }
 
