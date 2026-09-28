@@ -60,7 +60,7 @@ function capabilityManifest(env, authenticated=false) {
   return {
     generatedAt:new Date().toISOString(),
     subject:authenticated ? "private-adigun" : "public-adigun",
-    executionPolicy: authenticated ? "authenticated-sandbox-execution-plus-approval-gated-production-actions" : "public-read-only",
+    executionPolicy: authenticated ? "local-operator-sandbox-execution-plus-approval-gated-production-actions" : "public-read-only",
     tools: {
       "http.inspect": {available:true,execution:true,mutation:false},
       "dns.lookup": {available:true,execution:true,mutation:false},
@@ -90,17 +90,12 @@ function capabilityManifest(env, authenticated=false) {
     }
   };
 }
-async function getAdminIdentity(ctx, env) {
-  if (!ctx?.access) return null;
-  try {
-    const identity = await ctx.access.getIdentity();
-    const email = String(identity?.email || "").trim().toLowerCase();
-    const allowed = String(env.ADIGUN_ADMIN_EMAIL || "").trim().toLowerCase();
-    if (!email || !allowed || email !== allowed) return null;
-    return { email, name: identity?.name || null, groups: identity?.groups || [] };
-  } catch {
-    return null;
-  }
+function getAdminIdentity() {
+  return {
+    email: "local-operator",
+    name: "ADIGUN Control",
+    groups: []
+  };
 }
 
 const SANDBOX_COMMANDS = Object.freeze({
@@ -134,8 +129,7 @@ async function getAdminSandbox(env, identity) {
 }
 
 async function executeSandboxCommand(request, env, ctx, command) {
-  const identity=await getAdminIdentity(ctx,env);
-  if(!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+  const identity=await getAdminIdentity();
   const shellCommand=SANDBOX_COMMANDS[command];
   if(!shellCommand) return json(request,{ok:false,error:"Command is not allow-listed.",available:Object.keys(SANDBOX_COMMANDS)},400);
   const started=Date.now();
@@ -205,33 +199,27 @@ async function executeAdminCommand(request, env, command) {
 
 async function adminRoutes(request, env, url, ctx) {
   if (url.pathname === "/api/admin/capabilities" && request.method === "GET") {
-    const identity = await getAdminIdentity(ctx, env);
-    if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+    const identity = await getAdminIdentity();
     return json(request,{ok:true,manifest:capabilityManifest(env,true),identity});
   }
   if (url.pathname === "/api/admin/status" && request.method === "GET") {
-    const identity = await getAdminIdentity(ctx, env);
-    if (!ctx?.access) return json(request, { ok:false, authenticated:false, error:"Cloudflare Access authentication is required." }, 401);
-    if (!env.ADIGUN_ADMIN_EMAIL) return json(request, { ok:false, authenticated:false, error:"Admin identity is not configured on the server." }, 503);
-    if (!identity) return json(request, { ok:false, authenticated:false, error:"Authenticated identity is not authorized for ADIGUN Control." }, 403);
-    return json(request, { ok:true, authenticated:true, identity });
+    const identity = getAdminIdentity();
+    return json(request, { ok:true, authenticated:true, identity, authentication:"disabled" });
   }
   if (url.pathname === "/api/admin/command" && request.method === "POST") {
-    const identity = await getAdminIdentity(ctx, env);
-    if (!identity) return json(request, { ok:false, error:"Authorized ADIGUN administrator required." }, 403);
+    const identity = await getAdminIdentity();
     let body;
     try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
     return executeAdminCommand(request, env, String(body?.command || "").trim());
   }
   if (url.pathname === "/api/automation/demo" && request.method === "POST") {
-    const identity = await getAdminIdentity(ctx, env);
-    if (!identity) return json(request, { ok:false, error:"Authorized ADIGUN administrator required." }, 403);
+    const identity = await getAdminIdentity();
     return json(request, {
       ok:true,
       workflow:"adigun-controlled-demo",
       actor:identity.email,
       events:[
-        "TRIGGER  / authenticated administrator workflow requested",
+        "TRIGGER  / local operator workflow requested",
         "DECISION / verify allow-listed workflow",
         "ACTION   / simulate project intelligence refresh",
         "REPORT   / generate technical summary event",
@@ -654,7 +642,7 @@ function agentActionPlan(task, checks) {
     title:"Requested change",
     description:"ADIGUN identified a potentially state-changing operation. It will not execute it automatically.",
     execution:"blocked-until-explicit-approval-and-authorized-connector",
-    requestedBy:"authenticated administrator"
+    requestedBy:"local operator"
   });
   actions.push({
     id:"verification",
@@ -705,7 +693,7 @@ function requestedSandboxCommands(task){
   ).slice(0,3);
 }
 async function privateAgent(request, env, url, ctx) {
-  const identity = await getAdminIdentity(ctx, env);
+  const identity = await getAdminIdentity();
   if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
   let body;
   try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
@@ -742,7 +730,7 @@ async function privateAgent(request, env, url, ctx) {
   const agentPrompt = "PRIVATE OPERATOR TASK:\n" + task +
     "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the read-only inspections and, when requested, allow-listed diagnostics shown below. Analyze the evidence and give the administrator a concise technical report.\n\n" +
     "PRIVATE CAPABILITY RULES:\n" +
-    "- This interface is authenticated by Cloudflare Access.\n" +
+    "- Cloudflare Access authentication is temporarily disabled for this development window.\n" +
     "- The server can execute read-only diagnostics and a fixed allow-list of commands inside an isolated Cloudflare Sandbox Linux container. This is not the production Worker host.\n" +
     "- Allow-listed diagnostics: HTTP health, response headers, robots.txt, sitemap.xml, DNS resolution and repository status.\n" +
     "- GitHub repository history and workflow-run metadata may be inspected server-side.\n" +
@@ -768,7 +756,7 @@ async function privateAgent(request, env, url, ctx) {
       headers:new Headers({"content-type":"application/json","x-hb-session":request.headers.get("x-hb-session")||"private-agent"}),
       body:JSON.stringify({
         messages:synthesisMessages,
-        siteContext:"PRIVATE ADIGUN AGENT MODE: authenticated operator investigation. Server evidence is authoritative."
+        siteContext:"PRIVATE ADIGUN AGENT MODE: local operator investigation. Server evidence is authoritative."
       })
     });
     const aiResponse = await openAIChat(aiRequest, env);
@@ -818,8 +806,7 @@ async function privateAgent(request, env, url, ctx) {
 }
 
 async function privateInspect(request, env, url, ctx) {
-  const identity=await getAdminIdentity(ctx,env);
-  if(!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+  const identity=await getAdminIdentity();
   const target=url.searchParams.get("target")||"all";
   const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:capabilityManifest(env,true)};
 
