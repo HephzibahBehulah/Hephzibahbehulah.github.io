@@ -213,7 +213,7 @@ function requireAdmin(request, env) {
 }
 
 async function authenticateAdmin(request, env) {
-  const auth = requireAdmin(request, env);
+  const auth = await authenticateAdmin(request, env);
   if (!auth.ok) return auth;
   const verified = await verifyCloudflareAccessJwt(request, env);
   if (!verified.ok) {
@@ -616,7 +616,7 @@ async function executeSandboxCommand(request, env, ctx, command) {
 }
 
 async function adminRoutes(request, env, url, ctx) {
-  const auth = requireAdmin(request, env);
+  const auth = await authenticateAdmin(request, env);
   if (!auth.ok) return auth.response;
   const identity = auth.identity;
 
@@ -1215,8 +1215,9 @@ function requestedSandboxCommands(task){
   ).slice(0,3);
 }
 async function privateAgent(request, env, url, ctx) {
-  const identity={...getAdminIdentity(),email:getRequestActor(request)};
-  if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
+  const auth = await authenticateAdmin(request, env);
+  if (!auth.ok) return auth.response;
+  const identity = getAdminIdentity(auth.identity);
   let body;
   try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
   const task = String(body?.task || body?.message || "").trim();
@@ -1333,7 +1334,9 @@ async function privateAgent(request, env, url, ctx) {
 }
 
 async function privateInspect(request, env, url, ctx) {
-  const identity={...getAdminIdentity(),email:getRequestActor(request)};
+  const auth = await authenticateAdmin(request, env);
+  if (!auth.ok) return auth.response;
+  const identity = getAdminIdentity(auth.identity);
   const target=url.searchParams.get("target")||"all";
   const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:capabilityManifest(env,true)};
 
@@ -1422,7 +1425,7 @@ export default {
     const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
 
     if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
-      const auth = requireAdmin(request, env);
+      const auth = await authenticateAdmin(request, env);
       if (!auth.ok) return auth.response;
       const adminUrl = new URL(request.url);
       adminUrl.pathname = "/admin.html";
@@ -1430,7 +1433,7 @@ export default {
     }
 
     if (isAdminApi) {
-      const auth = requireAdmin(request, env);
+      const auth = await authenticateAdmin(request, env);
       if (!auth.ok) return auth.response;
     }
 
