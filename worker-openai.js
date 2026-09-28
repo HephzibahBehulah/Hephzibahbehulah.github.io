@@ -105,6 +105,10 @@ function getAdminIdentity() {
   };
 }
 
+function getRequestActor(request) {
+  return String(request?.headers?.get("cf-access-authenticated-user-email") || "").trim().toLowerCase() || "local-operator";
+}
+
 function getAccessIdentity(request, env) {
   const configured = String(env?.ADIGUN_ADMIN_EMAIL || "").trim().toLowerCase();
   const supplied = String(request?.headers?.get("cf-access-authenticated-user-email") || "").trim().toLowerCase();
@@ -459,7 +463,7 @@ async function executeReconCommand(request, command) {
     const started=Date.now();
     const names=["site-health","security-headers","dns-a","dns-aaaa","dns-mx","dns-ns","dns-txt","dns-caa","dns-dnssec","robots","sitemap","security-txt","http-meta","http-links","http-scripts","http-styles","http-headings","edge","github-repo","github-commits","github-runs"];
     const rows=await Promise.all(names.map(async name=>{try{return {command:name,...await executeReconBase(name)};}catch(error){return {command:name,error:String(error?.message||error)};}}));
-    const evidence=evidenceRecord({tool:"recon.full",target:RECON_TARGET,actor:getAdminIdentity().email,status:"observed",startedAt:new Date(started).toISOString(),result:{checks:rows}});
+    const evidence=evidenceRecord({tool:"recon.full",target:RECON_TARGET,actor:getRequestActor(request),status:"observed",startedAt:new Date(started).toISOString(),result:{checks:rows}});
     return json(request,{ok:true,command:raw,label:"Full passive reconnaissance",durationMs:Date.now()-started,result:{checks:rows},evidence});
   }
   const base=RECON_COMMANDS[lower];
@@ -486,7 +490,7 @@ async function executeAdminCommand(request, env, command) {
   if(lower==="help"||lower==="commands"||lower.startsWith("help ")) return executeReconCommand(request,lower);
   const recon=await executeReconCommand(request,lower);
   if(recon) return recon;
-  const identity=getAdminIdentity();
+  const identity={...getAdminIdentity(),email:getRequestActor(request)};
   const shellCommand=SANDBOX_COMMANDS[lower];
   if(!shellCommand) return json(request,{ok:false,error:"Unknown command. Type HELP to see the command registry.",available:["help","commands",...Object.keys(SANDBOX_COMMANDS),...Object.keys(RECON_COMMANDS)]},400);
   return executeSandboxCommand(request,env,null,lower);
@@ -495,7 +499,7 @@ async function executeAdminCommand(request, env, command) {
 async function executeSandboxCommand(request, env, ctx, command) {
   const recon=await executeReconCommand(request,command);
   if(recon) return recon;
-  const identity = getAdminIdentity();
+  const identity={...getAdminIdentity(),email:getRequestActor(request)};
   const shellCommand=SANDBOX_COMMANDS[command];
   if(!shellCommand) return json(request,{ok:false,error:"Unknown command. Type help for the reconnaissance catalog.",available:["help","recon",...Object.keys(SANDBOX_COMMANDS),...Object.keys(RECON_COMMANDS)]},400);
   const started=Date.now();
@@ -1117,7 +1121,7 @@ function requestedSandboxCommands(task){
   ).slice(0,3);
 }
 async function privateAgent(request, env, url, ctx) {
-  const identity = getAdminIdentity();
+  const identity={...getAdminIdentity(),email:getRequestActor(request)};
   if (!identity) return json(request,{ok:false,error:"Authorized ADIGUN administrator required."},403);
   let body;
   try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
@@ -1156,7 +1160,7 @@ async function privateAgent(request, env, url, ctx) {
     "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the relevant read-only inspections and diagnostics shown below. Analyze the evidence and give the administrator a concise, evidence-led report.\n\n" +
     (liveSearchIntent ? "CURRENT-JOB-SEARCH MODE: This is an employment search. Use the OpenAI web search tool to find current, real vacancies matching the request. Do not substitute generic career advice for actual vacancies. For each useful vacancy, provide employer, role, location, current status if available, why it matches the stated profile, and a direct source URL. If no suitable live vacancy can be verified, say so and explain what was searched.\n\n" : "") +
     "PRIVATE CAPABILITY RULES:\n" +
-    "- Cloudflare Access authentication is temporarily disabled for this development window.\n" +
+    "- Cloudflare Access authentication is required for every private control endpoint.\n" +
     "- The server can execute read-only diagnostics and a fixed allow-list of commands inside an isolated Cloudflare Sandbox Linux container. This is not the production Worker host.\n" +
     "- Allow-listed diagnostics: HTTP health, response headers, robots.txt, sitemap.xml, DNS resolution and repository status.\n" +
     "- GitHub repository history and workflow-run metadata may be inspected server-side.\n" +
@@ -1235,7 +1239,7 @@ async function privateAgent(request, env, url, ctx) {
 }
 
 async function privateInspect(request, env, url, ctx) {
-  const identity = getAdminIdentity();
+  const identity={...getAdminIdentity(),email:getRequestActor(request)};
   const target=url.searchParams.get("target")||"all";
   const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:capabilityManifest(env,true)};
 
