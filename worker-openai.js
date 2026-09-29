@@ -1531,3 +1531,5 @@ export default {
     }
 
     return legacy.fetch(request, env, ctx);
+  }
+};
