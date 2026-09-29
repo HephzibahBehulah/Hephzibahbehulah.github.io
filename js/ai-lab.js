@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded",()=>{
   const messages=$("#aiMessages"),input=$("#aiInput"),send=$("#aiSend"),state=$("#aiState"),platform=$("#platformStatus");
   const attachmentInput=$("#attachmentInput"),attachmentPick=$("#attachmentPick"),attachmentButton=$("#aiAttach");
   const attachmentList=$("#attachmentList"),chips=$("#aiAttachmentChips");
-  const history=[];
+  const history=(()=>{try{return JSON.parse(localStorage.getItem("hb-ai-chats-v4")||"[]")}catch{return[]}})();
   let attachments=[];
+  const persist=()=>{try{localStorage.setItem("hb-ai-chats-v4",JSON.stringify(history.slice(-40)))}catch{}};
 
   const session=(()=>{let v=localStorage.getItem("hb-ai-session");if(!v){v=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);localStorage.setItem("hb-ai-session",v)}return v})();
 
@@ -82,6 +83,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     add(q||("Attached "+attachments.length+" file"+(attachments.length===1?"":"s")),"user");
     history.push({role:"user",content});
     input.value="";state.textContent="● GENERATING";send.disabled=true;
+    persist();
     const thinking=showThinking();
     const outgoingAttachments=attachments; attachments=[]; renderAttachments();
     try{
@@ -90,7 +92,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       const d=await r.json().catch(()=>({}));
       thinking.remove();
       if(r.ok&&d.answer){
-        add(d.answer,"assistant");history.push({role:"assistant",content:d.answer});
+        add(d.answer,"assistant");history.push({role:"assistant",content:d.answer});persist();
         state.textContent=d.attachments?"● MULTIMODAL ONLINE":(d.ragUsed?"● RAG ONLINE":"● AI ONLINE");
         send.disabled=false;return;
       }
@@ -100,7 +102,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       console.error("ADIGUN API error:",e);
       add("ADIGUN AI gateway error: "+String(e.message||"unknown error"),"assistant");
       state.textContent="● API ERROR";
-    }finally{send.disabled=false;outgoingAttachments.length=0}
+    }finally{send.disabled=false;outgoingAttachments.length=0;persist()}
   }
   send?.addEventListener("click",ask);
   input?.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});
@@ -112,5 +114,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     }catch{}
   }
   health();
+  window.addEventListener("beforeunload",persist);
   function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
 });
