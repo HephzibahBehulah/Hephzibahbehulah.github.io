@@ -692,7 +692,6 @@ The following context was retrieved from the Hephzibah Behulah site and knowledg
 
 `;
 
-
 async function callLegacy(request, env, path) {
   try {
     const u = new URL(request.url);
