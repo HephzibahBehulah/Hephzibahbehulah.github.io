@@ -77,6 +77,38 @@ document.addEventListener("DOMContentLoaded",()=>{
 
       const isHelp=command==="help"||command==="commands"||command==="list";
       const wantsAgent=["investigate","diagnose","agent","ask"].includes(command);
+
+      if(isHelp){
+        try{
+          const requestedTopic=args.join(" ").trim().toLowerCase();
+          const r=await fetch("/api/admin/commands",{credentials:"same-origin",cache:"no-store"});
+          const d=await r.json().catch(()=>({}));
+          if(r.ok&&d.ok){
+            const commands=Array.isArray(d.commands)?d.commands:[];
+            if(!requestedTopic||requestedTopic==="all"||command==="list"||requestedTopic==="commands"){
+              const shown=[...new Set(commands)].slice(0,1200);
+              line("ADIGUN CONTROL COMMAND CATALOG\\n"+"═".repeat(62)+"\\n"+
+                "TARGET: "+String(d.target||"authorized site")+"\\n"+
+                "COMMANDS: "+String(d.count||commands.length)+"\\n\\n"+
+                shown.map((x,i)=>String(i+1).padStart(4," ")+". "+x).join("\\n")+
+                "\\n\\nUse HELP <command> for details.\\nUse HELP LINUX for isolated diagnostics.","output");
+              meta&&(meta.textContent=String(d.count||commands.length)+" command names loaded.");
+              return;
+            }
+            const category=(d.categories&&d.categories[requestedTopic])||null;
+            if(Array.isArray(category)){
+              line("HELP / "+requestedTopic.toUpperCase()+"\\n\\n"+category.map(x=>"  "+x).join("\\n"),"output");
+              return;
+            }
+            if(commands.includes(requestedTopic)){
+              line("HELP / "+requestedTopic+"\\n\\nServer reconnaissance command.\\nTarget: "+String(d.target||"authorized site")+"\\nRead-only: YES","output");
+              return;
+            }
+          }
+        }catch{}
+        line("HELP\\n\\nType HELP ALL, HELP <CATEGORY>, HELP <COMMAND>, or LIST.","output");
+        return;
+      }
       if(wantsAgent){
         const task=command==="ask"||command==="agent"?args.join(" "):q.replace(/^\w+\s*/,"");
         if(!task)throw Error("Usage: investigate <problem>");
