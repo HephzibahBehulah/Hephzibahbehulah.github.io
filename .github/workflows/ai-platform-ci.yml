@@ -20,6 +20,7 @@ jobs:
           node --check worker-v2.js
           node --check worker-openai.js
           node --check js/adigun-admin.js
+          node --check js/adigun-private-operator.js
           node --check js/adigun-renderer.js
 
       - name: Validate Python ML service
