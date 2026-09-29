@@ -1027,6 +1027,18 @@ async function cloudflareFallback(request, env, messages, context) {
   }
 }
 
+async function withTimeout(promise, ms, fallback) {
+  let timer;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise(resolve => { timer = setTimeout(() => resolve(fallback), ms); })
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 async function openAIChat(request, env) {
   let body;
   try {
@@ -1050,9 +1062,9 @@ async function openAIChat(request, env) {
 
   const lastContent = messages[messages.length - 1].content;
   const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
-  const context = await retrieveContext(request, env, q);
+  const context = await withTimeout(retrieveContext(request, env, q), 4500, "");
   const clientContext = String(body?.siteContext || "").slice(0, 10000);
-  const liveEvidence = isSiteHealthQuery(q) ? await publicSiteHealthEvidence() : null;
+  const liveEvidence = isSiteHealthQuery(q) ? await withTimeout(publicSiteHealthEvidence(), 4500, null) : null;
   const evidence = evidenceContext(liveEvidence);
 
   const instructions =
@@ -1073,19 +1085,26 @@ async function openAIChat(request, env) {
 
   let response;
   try {
-    response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "authorization": "Bearer " + env.OPENAI_API_KEY,
-        "content-type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      response = await fetch("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+          "authorization": "Bearer " + env.OPENAI_API_KEY,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
   } catch {
     const fallback = await openRouterFallback(request, env, messages, context + evidence) || await cloudflareFallback(request, env, messages, context + evidence);
     if (fallback) return fallback;
     if (liveEvidence) return json(request, {ok:true,answer:evidenceOnlyHealthAnswer(liveEvidence),provider:"evidence-only",fallback:true,ragUsed:Boolean(context),siteUsed:true,webUsed:false,sources:{web:[]},attachments:attachmentCount(messages),actions:[],evidence:[liveEvidence]});
-    return json(request, { ok: false, error: "All configured AI providers are unavailable." }, 502);
+    return json(request, { ok: false, error: "AI provider timed out or was unavailable. Please retry." }, 504);
   }
 
   const data = await response.json().catch(() => ({}));
@@ -1449,8 +1468,20 @@ export default {
       try { body=await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
       return executeSandboxCommand(request,env,ctx,String(body?.command||""));
     }
-    if (url.pathname === "/api/admin/agent" && request.method === "POST") return privateAgent(request, env, url, ctx);
-    if (url.pathname === "/api/admin/inspect" && request.method === "GET") return privateInspect(request, env, url, ctx);
+    if (url.pathname === "/api/admin/agent" && request.method === "POST") {
+      try { return await privateAgent(request, env, url, ctx); }
+      catch (error) {
+        console.error("ADIGUN private agent route error", String(error?.stack || error?.message || error));
+        return json(request, {ok:false, error:"Private agent execution failed safely. Retry the investigation."}, 502);
+      }
+    }
+    if (url.pathname === "/api/admin/inspect" && request.method === "GET") {
+      try { return await privateInspect(request, env, url, ctx); }
+      catch (error) {
+        console.error("ADIGUN private inspect route error", String(error?.stack || error?.message || error));
+        return json(request, {ok:false, error:"Private inspection failed safely."}, 502);
+      }
+    }
 
     const adminResponse = await adminRoutes(request, env, url, ctx);
     if (adminResponse) return adminResponse;
@@ -1498,5 +1529,3 @@ export default {
     }
 
     return legacy.fetch(request, env, ctx);
-  }
-};
