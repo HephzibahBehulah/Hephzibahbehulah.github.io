@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
       if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";send.disabled=true;return}
       accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Cloudflare Access user";heroAuth.textContent="CLOUDFLARE ACCESS";heroIdentity.textContent=d.identity?.email||"ADIGUN Control administrator";send.disabled=false;
-    }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";send.disabled=true}
+    }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";send.disabled=false}
   }
 
   function showAgentPlan(plan){
