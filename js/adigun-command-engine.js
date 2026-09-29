@@ -13,8 +13,8 @@
     data:["mean","median","mode","range","sum","min","max","percent","calculate","json","csv","table"],
     engineering:["ohm","power","energy","resistor","voltage","current","frequency","wavelength","convert"],
     osint:["osint","username","company","domain","people","social","urlinfo","reputation"],
-    network:["ping","resolve","traceroute","latency","ip","cidr","subnet","ports"],
-    analysis:["analyze","compare","diff","summarize","correlate","timeline","report","export","investigate","diagnose","agent","ask"],
+    network:["ping","resolve","traceroute","latency","ip","cidr","subnet","ports","portcheck"],
+    analysis:["analyze","compare","diff","summarize","correlate","timeline","report","export","investigate","diagnose","agent","ask","research"],
     learning:["quiz","answer","score","game","lesson","explain"],
     utilities:["encode","decode","base64","hash","uuid","timestamp","regex","text","format"]
   };
@@ -25,7 +25,7 @@
     ohm:"Calculate voltage, current or resistance using Ohm's law.",power:"Calculate electrical power P = V × I.",energy:"Calculate electrical energy E = P × time.",resistor:"Calculate series resistor value.",voltage:"Calculate V = I × R.",current:"Calculate I = V ÷ R.",frequency:"Calculate frequency from period or cycles/time.",wavelength:"Calculate wavelength λ = c/f.",convert:"Convert common engineering units.",investigate:"Run a private evidence-led investigation and produce a report.",diagnose:"Investigate a website or system problem using authorized diagnostics.",agent:"Ask the private ADIGUN investigation agent to research and analyze.",ask:"Send a task to the private ADIGUN investigation agent.",
     encode:"Base64 encode text.",decode:"Base64 decode text.",base64:"Base64 encode or decode text.",hash:"Calculate a SHA-256 hash.",uuid:"Generate a UUID.",timestamp:"Convert a timestamp or show current UTC time.",regex:"Test a regular expression against text.",text:"Inspect text length and basic statistics.",format:"Format JSON or text data.",
     cidr:"Calculate IPv4 CIDR network information.",ip:"Inspect an IPv4/IPv6 address locally.",url:"Inspect URL structure locally.",urlinfo:"Inspect URL structure locally.",resolve:"Resolve a hostname through the server command engine.",
-    site:"Show authorized website control commands.",admin:"Show private administration capabilities.",security:"Show authorized security inspection commands.",github:"Show authorized repository intelligence commands.",cloudflare:"Show edge-control capabilities and safety policy.",osint:"Show public OSINT helper commands."
+    site:"Show authorized website control commands.",admin:"Show private administration capabilities.",security:"Show authorized security inspection commands.",github:"Show authorized repository intelligence commands.",cloudflare:"Show edge-control capabilities and safety policy.",osint:"Show public OSINT helper commands.",ping:"Perform an authorized HTTP reachability check against the protected site.",portcheck:"Show the authorized network-port diagnostic policy; no arbitrary target scanning is exposed.",research:"Send a research task to the private ADIGUN agent.",recon:"Run authorized passive reconnaissance against the protected site and repository.","full-recon":"Run the complete authorized passive reconnaissance suite.",nmap:"Raw arbitrary-target Nmap scanning is intentionally disabled.",shodan:"Shodan integration is not configured; no Shodan result will be fabricated."
   };
   const registry={};
   for(const [family,cmds] of Object.entries(families)) for(const command of cmds) registry[command]={family,description:descriptions[command]||family.toUpperCase()+" command: "+command};
@@ -72,7 +72,8 @@
     if(c==="help")return help(args[0]); if(c==="list")return help(); if(c==="man")return man(args[0]); if(c==="which")return registry[args[0]]?args[0]+"\n  family: "+registry[args[0]].family+"\n  implementation: built-in command engine":"Command not found: "+args[0];
     if(c==="status")return status(); if(c==="version")return "ADIGUN Control Terminal 1.0\nCommand Engine: 1.0\nRegistry: "+Object.keys(registry).length+" commands";
     if(c==="config")return "CONFIGURATION\n  mode: authenticated private control\n  recon target: https://hephzibahbehulah.com\n  repository: HephzibahBehulah/Hephzibahbehulah.github.io\n  production mutations: approval-gated\n  secrets: server-side only";
-    if(c==="website"||c==="site")return websiteHelp(); if(c==="security")return help("security"); if(c==="github")return help("github"); if(c==="cloudflare")return help("cloudflare"); if(c==="osint")return help("osint");
+    if(c==="website"||c==="site")return websiteHelp();
+    if(c==="ping")return fetch("https://hephzibahbehulah.com/",{method:"GET",cache:"no-store",redirect:"follow"}).then(r=>"PING / HTTP REACHABILITY\nstatus = "+r.status+"\nok = "+r.ok+"\nfinal URL = "+r.url); if(c==="security")return help("security"); if(c==="github")return help("github"); if(c==="cloudflare")return help("cloudflare"); if(c==="osint")return help("osint");
     if(c==="mean"||c==="average"){const a=nums(args);if(!a.length)throw Error("Usage: mean <numbers...>");return "mean = "+fmt(a.reduce((x,y)=>x+y,0)/a.length)}
     if(c==="sum"){const a=nums(args);return "sum = "+fmt(a.reduce((x,y)=>x+y,0))}
     if(c==="min"||c==="max"){const a=nums(args);if(!a.length)throw Error("Usage: "+c+" <numbers...>");return c+" = "+fmt(Math[c](...a))}
@@ -104,7 +105,11 @@
     if(c==="url"||c==="urlinfo"){const u=new URL(args[0]);return JSON.stringify({href:u.href,protocol:u.protocol,hostname:u.hostname,port:u.port||null,path:u.pathname,query:u.search||null,hash:u.hash||null},null,2)}
     if(c==="selftest"){const tests=[];for(const [name,fn] of [["cidr",()=>cidr("192.168.1.0/24").usableHosts===254],["mean",()=>local("mean",["2","4"])==="mean = 3"],["power",()=>local("power",["230","2"]).startsWith("P = 460")],["base64",()=>b64d(b64e("hello"))==="hello"]]){try{tests.push({name,ok:Boolean(fn())})}catch(e){tests.push({name,ok:false,error:e.message})}}return "SELFTEST\n"+tests.map(x=>(x.ok?"✓":"✗")+" "+x.name+(x.error?" — "+x.error:"")).join("\n")}
     if(c==="health")return "Use SITE HEALTH for the live authorized website check.\nThe terminal engine is online.";
+    if(c==="portcheck")return "PORT DIAGNOSTICS\nTarget policy: authorized Hephzibah Behulah assets only.\nRaw arbitrary-target port scanning is disabled.\nUse INVESTIGATE for an evidence-led authorized diagnostic.";
     if(c==="reload")return "Reload requested. Use the browser refresh control to complete the reload.";
+    if(c==="research")return "Use: research <question> — routes the task to the private ADIGUN agent.";
+    if(c==="nmap")return "NMAP INTERFACE\nRaw arbitrary-target scanning is intentionally disabled.\nUse authorized reconnaissance commands such as RECON, DNS, HTTP-STATUS, SECURITY-HEADERS, or INVESTIGATE.";
+    if(c==="shodan")return "SHODAN\nNo Shodan API is configured. No external Shodan result will be fabricated.";
     if(c==="quiz"||c==="game"||c==="lesson"||c==="explain")return "LEARNING ENGINE\nUse: quiz start · quiz score · lesson <topic> · explain <topic>.\nLearning commands are browser-local and do not perform remote execution.";
     if(c==="admin"||c==="users"||c==="sessions"||c==="access"||c==="permissions"||c==="audit"||c==="logs"||c==="settings"||c==="activity")return "ADMINISTRATION\nThis command is part of the ADIGUN control registry. Read-only administration is available through the authenticated server API; state-changing operations require explicit approval.";
     return null;
