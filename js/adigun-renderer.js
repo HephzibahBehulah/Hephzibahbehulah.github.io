@@ -9,7 +9,7 @@
     const chunks = source.split(/(```[\\s\\S]*?```)/g);
     return chunks.map((chunk, index) => {
       if (index % 2 === 1) return chunk;
-      return chunk.replace(/\\([\\`*_{}#+.!|>~-])/g, '$1');
+      return chunk.replace(/\\+([`*_{}#+.!|>~-])/g, '$1');
     }).join('');
   }
 
