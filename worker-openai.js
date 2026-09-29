@@ -880,6 +880,9 @@ function collectSources(data) {
 function isJobSearchIntent(q) {
   return /\b(job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for)\b/i.test(String(q||""));
 }
+function isCurrentInfoIntent(q) {
+  return /\b(today|now|currently|right now|this morning|this afternoon|tonight|latest|recent|live|current|what time|weather|forecast|news|where is|what happened|jobs?|vacanc(?:y|ies)|hiring|openings?|recruit(?:ment)?)\b/i.test(String(q||""));
+}
 
 function normalizeSourceUrl(value) {
   try {
@@ -1097,7 +1100,7 @@ async function openAIChat(request, env) {
     instructions,
     input: messages,
     tools: [{ type: "web_search", search_context_size: "medium" }],
-    tool_choice: "auto",
+    tool_choice: isCurrentInfoIntent(q) ? "required" : "auto",
     reasoning: { effort: env.OPENAI_REASONING_EFFORT || "medium" },
     store: false
   };
@@ -1120,7 +1123,7 @@ async function openAIChat(request, env) {
       clearTimeout(timeout);
     }
   } catch {
-    const fallback = await openRouterFallback(request, env, messages, context + evidence) || await cloudflareFallback(request, env, messages, context + evidence);
+    const fallback = isCurrentInfoIntent(q) ? null : (await openRouterFallback(request, env, messages, context + evidence) || await cloudflareFallback(request, env, messages, context + evidence));
     if (fallback) return fallback;
     if (liveEvidence) return json(request, {ok:true,answer:evidenceOnlyHealthAnswer(liveEvidence),provider:"evidence-only",fallback:true,ragUsed:Boolean(context),siteUsed:true,webUsed:false,sources:{web:[]},attachments:attachmentCount(messages),actions:[],evidence:[liveEvidence]});
     return json(request, { ok: false, error: "AI provider timed out or was unavailable. Please retry." }, 504);
@@ -1146,6 +1149,9 @@ async function openAIChat(request, env) {
   if (!answer) return json(request, { ok: false, error: "OpenAI returned no text." }, 502);
 
   const sources = collectSources(data);
+  if (isCurrentInfoIntent(q) && sources.length === 0) {
+    return json(request, { ok:false, error:"Live verification was required for this request, but no web evidence was returned. Please retry." }, 502);
+  }
   const webCitations = extractWebCitations(data);
   const jobVerification = isJobSearchIntent(q)
     ? await verifyVacancySources(webCitations)
