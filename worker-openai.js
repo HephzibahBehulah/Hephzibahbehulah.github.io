@@ -397,7 +397,8 @@ function reconHelp(topic="overview") {
 }
 
 function makeDohUrl(name,type) {
-  return "https://cloudflare-dns.com/dns-query?name="+encodeURIComponent(name)+"&type="+encodeURIComponent(type);}
+  return "https://cloudflare-dns.com/dns-query?name="+encodeURIComponent(name)+"&type="+encodeURIComponent(type);
+}
 
 async function doh(name,type) {
   const response=await fetch(makeDohUrl(name,type),{headers:{"accept":"application/dns-json"}});
@@ -818,6 +819,7 @@ function extractOutputText(data) {
   }
   return parts.join("\n\n").trim();
 }
+
 function isSiteHealthQuery(q) {
   return /(?:check|is|status|health|healthy|up|down|reachable|available).*(?:hephzibahbehulah\\.com|website|site)|(?:hephzibahbehulah\\.com|website|site).*(?:health|healthy|status|up|down|reachable)/i.test(String(q||""));
 }
@@ -1222,7 +1224,8 @@ function agentActionPlan(task, checks) {
     approvalRequired:wantsMutation,
     actions,
     policy:[
-      "Read-only investigation may run automatically.",      "State-changing operations never execute from chat text alone.",
+      "Read-only investigation may run automatically.",
+      "State-changing operations never execute from chat text alone.",
       "Every consequential operation must identify its exact target and effect before approval.",
       "Secrets and unrestricted shell access are never exposed to the model."
     ],
