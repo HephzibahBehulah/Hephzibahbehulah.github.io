@@ -87,11 +87,11 @@ document.addEventListener("DOMContentLoaded",()=>{
             const commands=Array.isArray(d.commands)?d.commands:[];
             if(!requestedTopic||requestedTopic==="all"||command==="list"||requestedTopic==="commands"){
               const shown=[...new Set(commands)].slice(0,1200);
-              line("ADIGUN CONTROL COMMAND CATALOG\\n"+"═".repeat(62)+"\\n"+
-                "TARGET: "+String(d.target||"authorized site")+"\\n"+
-                "COMMANDS: "+String(d.count||commands.length)+"\\n\\n"+
-                shown.map((x,i)=>String(i+1).padStart(4," ")+". "+x).join("\\n")+
-                "\\n\\nUse HELP <command> for details.\\nUse HELP LINUX for isolated diagnostics.","output");
+              line("ADIGUN CONTROL COMMAND CATALOG\n"+"═".repeat(62)+"\n"+
+                "TARGET: "+String(d.target||"authorized site")+"\n"+
+                "COMMANDS: "+String(d.count||commands.length)+"\n\n"+
+                shown.map((x,i)=>String(i+1).padStart(4," ")+". "+x).join("\n")+
+                "\n\nUse HELP <command> for details.\nUse HELP LINUX for isolated diagnostics.","output");
               meta&&(meta.textContent=String(d.count||commands.length)+" command names loaded.");
               return;
             }
