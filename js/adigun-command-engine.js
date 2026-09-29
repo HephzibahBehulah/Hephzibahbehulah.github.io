@@ -53,6 +53,7 @@
   function b64e(s){return btoa(unescape(encodeURIComponent(String(s))))}
   function b64d(s){return decodeURIComponent(escape(atob(String(s).trim())))}
   function help(topic){
+    if(String(topic||"").toLowerCase()==="all") topic="";
     if(!topic){
       const lines=["ADIGUN CONTROL TERMINAL 1.0","QUICK MEMORY SHEET","","Think: WEBSITE → INTELLIGENCE → SECURITY → CONTROL → DATA","","Type HELP <family> for a family. Type MAN <command> for one command.",""];
       for(const [family,cmds] of Object.entries(families)){lines.push("["+family.toUpperCase()+"]");lines.push(...cmds.slice(0,14).map(c=>"  "+c.padEnd(18)+" "+(descriptions[c]||registry[c].description)));if(cmds.length>14)lines.push("  …  HELP "+family+" for the full list");lines.push("")}
