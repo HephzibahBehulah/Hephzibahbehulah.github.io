@@ -36,11 +36,18 @@ document.addEventListener("DOMContentLoaded",()=>{
   attach?.addEventListener("click",()=>fileInput?.click());
 
   async function status(){
+    send.disabled=false;
     try{
       const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"}),d=await r.json().catch(()=>({}));
-      if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";send.disabled=true;return}
-      accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Cloudflare Access user";heroAuth.textContent="CLOUDFLARE ACCESS";heroIdentity.textContent=d.identity?.email||"ADIGUN Control administrator";send.disabled=false;
-    }catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";send.disabled=false}
+      if(!r.ok||!d.authenticated){
+        accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";
+        return;
+      }
+      accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Cloudflare Access user";heroAuth.textContent="CLOUDFLARE ACCESS";heroIdentity.textContent=d.identity?.email||"ADIGUN Control administrator";
+    }catch{
+      systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";
+      identityDetail.textContent="Authentication status could not be refreshed. The Private Operator remains available and will report request errors.";
+    }
   }
 
   function showAgentPlan(plan){
@@ -54,6 +61,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
 
   async function ask(){
+    if(!input||!send)return;
     const q=input.value.trim();if(!q&&!files.length)return;
     const content=[];if(q)content.push({type:"input_text",text:q});content.push(...files.map(f=>f.part));
     add(q||("Attached "+files.length+" file"+(files.length===1?"":"s")),"user");
@@ -80,7 +88,19 @@ document.addEventListener("DOMContentLoaded",()=>{
     }catch(e){thinking.remove();add("ADIGUN private agent error: "+String(e.message||e),"assistant")}
     finally{old.length=0;send.disabled=false}
   }
-  send?.addEventListener("click",ask);input?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ask()}});
+  if(send){
+    send.type="button";
+    send.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();void ask()});
+  }
+  if(input){
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter"&&!e.shiftKey){
+        e.preventDefault();
+        e.stopPropagation();
+        void ask();
+      }
+    });
+  }
 
   async function inspect(target){
     inspectState.textContent="● SCANNING";
