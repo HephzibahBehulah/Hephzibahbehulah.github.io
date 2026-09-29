@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(isHelp){
         const requestedTopic=args.join(" ").trim().toLowerCase();
         const localHelp=window.AdigunCommandEngine?.help;
-        if(localHelp){ line(localHelp(requestedTopic),"output"); return; }
+        if(localHelp && requestedTopic!=="linux" && requestedTopic!=="sandbox"){ line(localHelp(requestedTopic),"output"); return; }
         try{
           const requestedTopic=args.join(" ").trim().toLowerCase();
           const r=await fetch("/api/admin/commands",{credentials:"same-origin",cache:"no-store"});
