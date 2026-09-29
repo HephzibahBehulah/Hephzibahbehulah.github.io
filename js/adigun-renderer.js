@@ -4,8 +4,17 @@
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[c]));
 
+  function normalizeMarkdownEscapes(value) {
+    const source = String(value ?? '');
+    const chunks = source.split(/(```[\\s\\S]*?```)/g);
+    return chunks.map((chunk, index) => {
+      if (index % 2 === 1) return chunk;
+      return chunk.replace(/\\\\([\\\\`*_{}\\[\\]()#+.!|>~-])/g, '$1');
+    }).join('');
+  }
+
   function render(text) {
-    const source = String(text ?? '');
+    const source = normalizeMarkdownEscapes(text);
     try {
       if (window.marked && window.DOMPurify) {
         const html = window.DOMPurify.sanitize(window.marked.parse(source, {
