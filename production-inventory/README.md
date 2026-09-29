@@ -40,7 +40,7 @@ Every recorded version should include:
 
 ## Current state
 
-The current main branch is `391598be5a3d1143e4526ea7a1a9cfaa4014cd34`.
+The current main branch is the commit that contains this inventory: `efefd6dfa009745cf70b781ac675a72abcd6af1f`.
 
 The preserved rollback snapshot remains:
 
