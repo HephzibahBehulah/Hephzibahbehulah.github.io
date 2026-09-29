@@ -1483,8 +1483,10 @@ export default {
       }
     }
 
-    const adminResponse = await adminRoutes(request, env, url, ctx);
-    if (adminResponse) return adminResponse;
+    if (isAdminApi) {
+      const adminResponse = await adminRoutes(request, env, url, ctx);
+      if (adminResponse) return adminResponse;
+    }
 
     if (url.pathname === "/api/capabilities" && request.method === "GET") {
       return json(request,{ok:true,manifest:capabilityManifest(env,false)});
