@@ -1269,6 +1269,23 @@ async function privateAgent(request, env, url, ctx) {
   const task = String(body?.task || body?.message || "").trim();
   if (!task) return json(request,{ok:false,error:"Describe what you want ADIGUN to investigate."},400);
 
+  // Routine greetings are conversation, not investigations. Do not run passive
+  // inspections, generate a task report, or attach an action plan to them.
+  if (/^(?:hello|hallo|hi|hey|hiya|good morning|good afternoon|good evening)[!.\\s]*$/i.test(task)) {
+    return json(request,{
+      ok:true,
+      mode:"conversation",
+      actor:identity.email,
+      task,
+      targets:[],
+      investigations:[],
+      commandResults:[],
+      sandboxResults:[],
+      plan:null,
+      answer:"Hallo! I’m ADIGUN, Hephzibah Behulah’s AI assistant. How can I help you today?"
+    });
+  }
+
   const targets = agentTargets(task);
   const requested = requestedCommands(task);
   const commandResults = requested.length ? await runAgentCommands(request, env, requested) : [];
