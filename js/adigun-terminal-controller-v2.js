@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     "repository-status":"github-repo","repo-status":"github-repo"
   };
 
-  const localCommands=new Set(["help","commands","list","man","which","status","version","config","history","clear","selftest","health","reload",
+  const localCommands=new Set(["help","commands","list","man","which","status","version","config","history","clear","selftest","health","reload","ping","portcheck","nmap","shodan","research",
     "mean","median","mode","range","sum","min","max","percent","calculate","ohm","power","energy","resistor","voltage","current","frequency","wavelength","convert",
     "encode","decode","base64","hash","uuid","timestamp","regex","text","format","json","cidr","ip","url","urlinfo"]);
 
