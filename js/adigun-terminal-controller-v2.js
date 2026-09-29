@@ -79,6 +79,9 @@ document.addEventListener("DOMContentLoaded",()=>{
       const wantsAgent=["investigate","diagnose","agent","ask"].includes(command);
 
       if(isHelp){
+        const requestedTopic=args.join(" ").trim().toLowerCase();
+        const localHelp=window.AdigunCommandEngine?.help;
+        if(localHelp){ line(localHelp(requestedTopic),"output"); return; }
         try{
           const requestedTopic=args.join(" ").trim().toLowerCase();
           const r=await fetch("/api/admin/commands",{credentials:"same-origin",cache:"no-store"});
@@ -127,7 +130,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         return;
       }
 
-      const serverCommand=aliases[q]||aliases[command]||q;
+      const normalizedInput=q.toLowerCase().replace(/\s+/g," ").trim();
+      const serverCommand=aliases[normalizedInput]||aliases[q]||aliases[command]||q;
       const r=await fetch("/api/admin/command",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",body:JSON.stringify({command:serverCommand})});
       const d=await r.json().catch(()=>({}));
       if(!r.ok||!d.ok)throw Error(d.error||"Command failed");
