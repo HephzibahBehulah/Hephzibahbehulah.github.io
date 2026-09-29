@@ -40,7 +40,7 @@ const json = (request, body, status = 200, extra = {}) =>
     }
   });
 
-const MODEL = env => env.OPENAI_MODEL || "gpt-5.6-luna";
+const MODEL = env => env.OPENAI_MODEL || "gpt-5.6-sol";
 const MAX_CHAT_BODY = 24 * 1024 * 1024;
 
 function createEvidenceId(prefix="EVD") {
