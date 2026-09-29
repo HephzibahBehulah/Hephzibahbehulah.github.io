@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(command==="history"){let h=[];try{h=JSON.parse(localStorage.getItem("adigun-command-history")||"[]")}catch{};line(h.length?h.map((x,i)=>String(i+1).padStart(3," ")+"  "+x).join("\n"):"No command history.");return}
       if(command==="exit"){line("ADIGUN Control remains open. Use browser navigation to leave the control center.","system");return}
 
-      const isHelp=command==="help"||command==="commands";
+      const isHelp=command==="help"||command==="commands"||command==="list";
       const wantsAgent=["investigate","diagnose","agent","ask"].includes(command);
       if(wantsAgent){
         const task=command==="ask"||command==="agent"?args.join(" "):q.replace(/^\w+\s*/,"");
