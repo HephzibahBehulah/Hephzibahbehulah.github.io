@@ -46,10 +46,10 @@ function render(q){
  box.innerHTML=html;
  box.querySelectorAll("[data-query]").forEach(b=>b.onclick=()=>{const q=b.dataset.query;document.getElementById("globalSearch").value=q;render(q.toLowerCase());document.getElementById("knowledge-hub").scrollIntoView({behavior:"smooth"});});
 }
-document.addEventListener("DOMContentLoaded",()=>{
+async function loadIana(){try{const r=await fetch("data/ports/iana-service-names.json",{cache:"no-store"});if(!r.ok)return;const pack=await r.json();if(Array.isArray(pack.records)){H.protocols=[...(H.protocols||[]),...pack.records.map(x=>[x.name,x.port,x.transport.toUpperCase(),"IANA",x.summary])];}}catch(e){}}\ndocument.addEventListener("DOMContentLoaded",async()=>{
  const s=document.getElementById("globalSearch"),box=document.getElementById("knowledgeResult");
  if(!s||!box)return;
- s.addEventListener("input",()=>{const q=s.value.trim().toLowerCase();render(q);});
+ s.addEventListener("input",()=>{const q=s.value.trim().toLowerCase();render(q);});\n loadIana().then(()=>render(s.value.trim().toLowerCase()));
  s.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();render(s.value.trim().toLowerCase());document.getElementById("knowledgeResult").scrollIntoView({behavior:"smooth"});}});
  render("");
 });
