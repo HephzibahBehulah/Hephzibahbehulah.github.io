@@ -21,6 +21,7 @@ function catalogHits(q){
   ...rows("network tool",H.networkTools),
   ...rows("port/protocol",H.protocols),
   ...rows("Windows command",H.windowsCommands),
+  ...rows("PowerShell",H.powershell),
   ...rows("Linux command",H.linuxCommands),
   ...rows("shortcut",H.shortcuts),
   ...rows("power trick",H.powerTricks),
