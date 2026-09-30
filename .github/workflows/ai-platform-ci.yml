@@ -23,6 +23,20 @@ jobs:
           node --check js/adigun-private-operator.js
           node --check js/adigun-renderer.js
 
+      - name: Validate ADIGUN Cyber OS
+        run: |
+          node --check cyber-os/cyber-os.js
+          node --check cyber-os/cyber-os-graph.js
+          node --check cyber-os/learning-engine.js
+          node --check cyber-os/soc-simulator.js
+          node --check cyber-os/cyber-os-data.js
+          node --check cyber-os/source-registry.js
+          node -e "JSON.parse(require('fs').readFileSync('cyber-os/content-schema.json','utf8'))"
+          test -f cyber-os/index.html
+          test -f cyber-os/cyber-os.css
+          test -f cyber-os/PHASES.md
+          test -f cyber-os/data/README.md
+
       - name: Validate Python ML service
         run: |
           python --version
