@@ -55,7 +55,8 @@ async function loadIana(){try{const r=await fetch("data/ports/iana-service-names
 document.addEventListener("DOMContentLoaded",async()=>{
  const s=document.getElementById("globalSearch"),box=document.getElementById("knowledgeResult");
  if(!s||!box)return;
- s.addEventListener("input",()=>{const q=s.value.trim().toLowerCase();render(q);});\n loadIana().then(()=>render(s.value.trim().toLowerCase()));
+ s.addEventListener("input",()=>{const q=s.value.trim().toLowerCase();render(q);
+ loadIana().then(()=>render(s.value.trim().toLowerCase()));
  s.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();render(s.value.trim().toLowerCase());document.getElementById("knowledgeResult").scrollIntoView({behavior:"smooth"});}});
  render("");
 });
