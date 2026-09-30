@@ -29,7 +29,8 @@ function catalogHits(q){
   ...rows("security team",H.teams),
   ...rows("platform",H.platforms),
   ...rows("electronics",H.electronics),
-  ...rows("documentation",H.docs),\n  ...rows("engineering formula",H.formulas),
+  ...rows("documentation",H.docs),
+  ...rows("engineering formula",H.formulas),
   ...rows("model",H.models)
  ];
  return sets.filter(x=>JSON.stringify(x.value).toLowerCase().includes(q)).slice(0,40);
