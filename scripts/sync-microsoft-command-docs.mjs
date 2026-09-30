@@ -18,8 +18,7 @@ function parsePS(p,s){const name=(s.match(/^#\s+(.+)$/m)||[])[1]||path.basename(
 const powershell=[];
 for(const p of ps)if(p.includes(path.sep+"reference"+path.sep))powershell.push(parsePS(p,await fs.readFile(p,"utf8")));
 await fs.mkdir("cyber-os/data/generated",{recursive:true});
-await fs.writeFile("cyber-os/data/generated/windows-commands.json",JSON.stringify({source:"Microsoft Windows Server documentation",count:windows.length,records:windows},null,2)+"
-");
+await fs.writeFile("cyber-os/data/generated/windows-commands.json",JSON.stringify({source:"Microsoft Windows Server documentation",count:windows.length,records:windows},null,2)+"\\n");
 await fs.writeFile("cyber-os/data/generated/powershell.json",JSON.stringify({source:"Microsoft PowerShell documentation",count:powershell.length,records:powershell},null,2)+"
 ");
 console.log("Windows:",windows.length,"PowerShell:",powershell.length);
