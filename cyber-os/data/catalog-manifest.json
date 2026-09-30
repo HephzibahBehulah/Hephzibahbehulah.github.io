@@ -1,0 +1,25 @@
+{
+  "version":"1.0",
+  "policy":"Targets are capacity goals. Loaded counts are calculated from validated records.",
+  "catalogs":{
+    "ports":{"target":65535,"mode":"source-ingest","authority":["IANA Service Name and Transport Protocol Port Number Registry"]},
+    "protocols":{"target":10000,"mode":"source-ingest","authority":["IETF RFC Editor","IANA"]},
+    "networkTools":{"target":10000,"mode":"curated-source-backed","authority":["official project documentation"]},
+    "cybersecurityTools":{"target":10000,"mode":"curated-source-backed","authority":["official project documentation"]},
+    "windowsCommands":{"target":10000,"mode":"curated-source-backed","authority":["Microsoft Learn"]},
+    "powershell":{"target":10000,"mode":"curated-source-backed","authority":["Microsoft Learn"]},
+    "linuxCommands":{"target":10000,"mode":"curated-source-backed","authority":["Linux man-pages","GNU manuals"]},
+    "shortcuts":{"target":1000000,"mode":"curated-source-backed","authority":["official OS/application documentation"]},
+    "powerTricks":{"target":10000,"mode":"curated-source-backed","authority":["official documentation"]},
+    "detectionPatterns":{"target":10000,"mode":"defensive-source-backed","authority":["MITRE ATT&CK","SigmaHQ","NIST"]},
+    "frameworks":{"target":1000,"mode":"source-backed","authority":["NIST","CIS","OWASP","IETF","ISO"]},
+    "osintSources":{"target":10000,"mode":"source-backed","authority":["official public registries and documentation"]},
+    "securityTeams":{"target":500,"mode":"curated","authority":["NIST NICE Framework"]},
+    "actorTaxonomy":{"target":1000,"mode":"source-backed","authority":["MITRE ATT&CK","CISA"]},
+    "electronics":{"target":10000,"mode":"curated-source-backed","authority":["IEC","manufacturer documentation","engineering references"]},
+    "engineeringFormulas":{"target":900000,"mode":"source-ingest","authority":["engineering standards and verified reference sources"]},
+    "documentation":{"target":10000,"mode":"source-backed","authority":["primary documentation"]},
+    "relationships":{"target":"derived","mode":"generated-from-record-fields"},
+    "games":{"target":"derived","mode":"generated-from-knowledge-base"}
+  }
+}

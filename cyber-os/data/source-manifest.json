@@ -1,0 +1,16 @@
+{
+  "version":"1.0",
+  "sources":[
+    {"id":"iana-ports","name":"IANA Service Name and Transport Protocol Port Number Registry","url":"https://www.iana.org/assignments/service-names-port-numbers/","scope":"ports and service names","refresh":"daily"},
+    {"id":"rfc-editor","name":"IETF RFC Editor","url":"https://www.rfc-editor.org/","scope":"protocol specifications","refresh":"periodic"},
+    {"id":"microsoft-learn","name":"Microsoft Learn","url":"https://learn.microsoft.com/","scope":"Windows and PowerShell commands","refresh":"periodic"},
+    {"id":"linux-man-pages","name":"Linux man-pages","url":"https://man7.org/linux/man-pages/","scope":"Linux commands and system interfaces","refresh":"periodic"},
+    {"id":"gnu-manuals","name":"GNU Manuals","url":"https://www.gnu.org/manual/manual.html","scope":"GNU command-line tools","refresh":"periodic"},
+    {"id":"nist-csf","name":"NIST Cybersecurity Framework","url":"https://www.nist.gov/cyberframework","scope":"risk and cybersecurity framework","refresh":"periodic"},
+    {"id":"mitre-attack","name":"MITRE ATT&CK","url":"https://attack.mitre.org/","scope":"adversary tactics, techniques and software","refresh":"periodic"},
+    {"id":"owasp","name":"OWASP","url":"https://owasp.org/","scope":"application security","refresh":"periodic"},
+    {"id":"cis-controls","name":"CIS Controls","url":"https://www.cisecurity.org/controls","scope":"security controls","refresh":"periodic"},
+    {"id":"nice","name":"NIST NICE Framework","url":"https://www.nist.gov/itl/applied-cybersecurity/nice","scope":"cybersecurity workforce roles","refresh":"periodic"},
+    {"id":"wireshark-docs","name":"Wireshark Documentation","url":"https://www.wireshark.org/docs/","scope":"packet analysis","refresh":"periodic"}
+  ]
+}

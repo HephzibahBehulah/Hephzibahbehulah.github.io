@@ -1,0 +1,18 @@
+{
+  "version":"1.0",
+  "rules":[
+    {"id":"port-transport","when":["port","transport"],"relationship":"uses-transport"},
+    {"id":"protocol-port","when":["name","port"],"relationship":"commonly-associated-with-port"},
+    {"id":"protocol-layer","when":["name","layer"],"relationship":"operates-at-layer"},
+    {"id":"tool-protocol","when":["tags","protocol"],"relationship":"analyzes-or-supports"},
+    {"id":"command-platform","when":["platform"],"relationship":"runs-on"},
+    {"id":"command-purpose","when":["purpose"],"relationship":"supports-investigation"},
+    {"id":"framework-function","when":["functions"],"relationship":"contains-function"},
+    {"id":"detection-framework","when":["source"],"relationship":"informed-by"},
+    {"id":"formula-domain","when":["category"],"relationship":"belongs-to-domain"},
+    {"id":"record-source","when":["source","sourceUrl"],"relationship":"verified-by"},
+    {"id":"shared-tag","when":["tags"],"relationship":"related-by-topic"},
+    {"id":"shared-concept","when":["related"],"relationship":"related-to"}
+  ],
+  "principle":"Relationships are derived from real record fields and curated mappings. No relationship count is treated as inventory."
+}

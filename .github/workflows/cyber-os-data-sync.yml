@@ -2,6 +2,11 @@ name: Cyber OS Data Sync
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/sync-*.mjs"
+      - "cyber-os/data/catalog-manifest.json"
+      - ".github/workflows/cyber-os-data-sync.yml"
   schedule:
     - cron: "17 3 * * *"
 
@@ -9,22 +14,55 @@ permissions:
   contents: write
 
 jobs:
-  sync-iana:
+  sync-catalogs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
       - uses: actions/setup-node@v5
         with:
           node-version: 22
+
       - name: Sync IANA service and port registry
         run: node scripts/sync-iana-ports.mjs
-      - name: Validate generated registry
-        run: node -e "const x=require('./cyber-os/data/ports/iana-service-names.json'); if(!x.count || !Array.isArray(x.records)) process.exit(1); console.log(x.count)"
+
+      - name: Sync MITRE ATT&CK Enterprise
+        run: node scripts/sync-mitre-attack.mjs
+
+      - name: Sync Windows and PowerShell documentation
+        run: node scripts/sync-microsoft-command-docs.mjs
+
+      - name: Sync Linux man-pages
+        run: node scripts/sync-linux-manpages.mjs
+
+      - name: Sync RFC index
+        run: node scripts/sync-rfc-index.mjs
+
+      - name: Validate generated JSON
+        run: |
+          node - <<'NODE'
+          const fs=require("fs");
+          const files=[
+            "cyber-os/data/ports/iana-service-names.json",
+            "cyber-os/data/generated/mitre-enterprise.json",
+            "cyber-os/data/generated/windows-commands.json",
+            "cyber-os/data/generated/powershell.json",
+            "cyber-os/data/generated/linux-manpages.json",
+            "cyber-os/data/generated/rfc-index.json"
+          ];
+          for(const f of files){
+            const x=JSON.parse(fs.readFileSync(f,"utf8"));
+            if(!x.count || !Array.isArray(x.records)) throw new Error("Invalid generated catalog: "+f);
+            console.log(f,x.count);
+          }
+          NODE
+
       - name: Commit updated source data
         run: |
           git config user.name "Cyber OS Data Sync"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add cyber-os/data/ports/iana-service-names.json
+          git add cyber-os/data/ports/iana-service-names.json cyber-os/data/generated
           git diff --cached --quiet && exit 0
-          git commit -m "data: refresh IANA port registry"
+          git commit -m "data: refresh Cyber OS source catalogs"
           git push
