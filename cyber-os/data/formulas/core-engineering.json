@@ -1,0 +1,272 @@
+{
+  "source": "Cyber OS engineering formula seed pack",
+  "verification": "source-backed",
+  "records": [
+    [
+      "ohm",
+      "Ohm's Law",
+      "V = I × R",
+      "Electrical",
+      "Voltage, current and resistance."
+    ],
+    [
+      "power",
+      "Electrical Power",
+      "P = V × I",
+      "Electrical",
+      "DC or instantaneous resistive power."
+    ],
+    [
+      "energy",
+      "Electrical Energy",
+      "E = P × t",
+      "Electrical",
+      "Energy from power over time."
+    ],
+    [
+      "charge",
+      "Electric Charge",
+      "Q = I × t",
+      "Electrical",
+      "Charge moved by current over time."
+    ],
+    [
+      "resistivity",
+      "Resistance from resistivity",
+      "R = ρL/A",
+      "Electrical",
+      "Uniform conductor resistance."
+    ],
+    [
+      "conductance",
+      "Conductance",
+      "G = 1/R",
+      "Electrical",
+      "Reciprocal of resistance."
+    ],
+    [
+      "series-r",
+      "Series Resistance",
+      "R_total = ΣR_i",
+      "Electrical",
+      "Resistors in series."
+    ],
+    [
+      "parallel-r",
+      "Parallel Resistance",
+      "1/R_total = Σ(1/R_i)",
+      "Electrical",
+      "Resistors in parallel."
+    ],
+    [
+      "frequency-period",
+      "Frequency and Period",
+      "f = 1/T",
+      "Signals",
+      "Frequency and period are reciprocals."
+    ],
+    [
+      "angular-frequency",
+      "Angular Frequency",
+      "ω = 2πf",
+      "Signals",
+      "Angular frequency from frequency."
+    ],
+    [
+      "capacitor-charge",
+      "Capacitor Charge",
+      "Q = C × V",
+      "Electronics",
+      "Charge stored by a capacitor."
+    ],
+    [
+      "capacitor-energy",
+      "Capacitor Energy",
+      "E = 1/2 C V²",
+      "Electronics",
+      "Energy stored in a capacitor."
+    ],
+    [
+      "inductor-energy",
+      "Inductor Energy",
+      "E = 1/2 L I²",
+      "Electronics",
+      "Energy stored in an inductor."
+    ],
+    [
+      "inductor-voltage",
+      "Inductor Voltage",
+      "V = L(di/dt)",
+      "Electronics",
+      "Ideal inductor voltage relation."
+    ],
+    [
+      "rc-time",
+      "RC Time Constant",
+      "τ = R × C",
+      "Electronics",
+      "First-order RC time constant."
+    ],
+    [
+      "rl-time",
+      "RL Time Constant",
+      "τ = L/R",
+      "Electronics",
+      "First-order RL time constant."
+    ],
+    [
+      "dc-power-resistor",
+      "Resistor Power",
+      "P = I²R",
+      "Electrical",
+      "Power dissipated by a resistor."
+    ],
+    [
+      "voltage-divider",
+      "Voltage Divider",
+      "Vout = Vin × R2/(R1+R2)",
+      "Circuits",
+      "Ideal two-resistor divider."
+    ],
+    [
+      "current-divider",
+      "Current Divider",
+      "I1 = Itotal × R2/(R1+R2)",
+      "Circuits",
+      "Two-branch ideal current divider."
+    ],
+    [
+      "apparent-power",
+      "Apparent AC Power",
+      "S = V_rms × I_rms",
+      "AC",
+      "Apparent power in volt-amperes."
+    ],
+    [
+      "real-power-ac",
+      "AC Real Power",
+      "P = V_rms I_rms cosφ",
+      "AC",
+      "Real power for sinusoidal AC."
+    ],
+    [
+      "reactive-power",
+      "Reactive Power",
+      "Q = V_rms I_rms sinφ",
+      "AC",
+      "Reactive power for sinusoidal AC."
+    ],
+    [
+      "power-factor",
+      "Power Factor",
+      "PF = P/S",
+      "AC",
+      "Ratio of real to apparent power."
+    ],
+    [
+      "wavelength",
+      "Wavelength",
+      "λ = v/f",
+      "Waves",
+      "Wave speed divided by frequency."
+    ],
+    [
+      "bit-rate",
+      "Bit Rate",
+      "R_b = N_bits/t",
+      "Networking",
+      "Bits transmitted per unit time."
+    ],
+    [
+      "throughput",
+      "Throughput",
+      "Throughput = data/time",
+      "Networking",
+      "Observed data transfer rate."
+    ],
+    [
+      "bandwidth-delay",
+      "Bandwidth-Delay Product",
+      "BDP = bandwidth × RTT",
+      "Networking",
+      "Data that can be in flight."
+    ],
+    [
+      "subnet-hosts",
+      "IPv4 Usable Hosts",
+      "2^h - 2",
+      "Networking",
+      "Classic IPv4 subnet host count where h is host bits."
+    ],
+    [
+      "ipv4-addresses",
+      "IPv4 Addresses in Prefix",
+      "2^(32-p)",
+      "Networking",
+      "Address count for prefix length p."
+    ],
+    [
+      "nyquist",
+      "Nyquist Sampling Rate",
+      "f_s ≥ 2f_max",
+      "Signals",
+      "Minimum ideal sampling rate for band-limited signals."
+    ],
+    [
+      "snr-db",
+      "Signal-to-Noise Ratio",
+      "SNR_dB = 10 log10(P_signal/P_noise)",
+      "Signals",
+      "Power ratio expressed in decibels."
+    ],
+    [
+      "voltage-gain-db",
+      "Voltage Gain",
+      "G_dB = 20 log10(Vout/Vin)",
+      "Signals",
+      "Voltage ratio in decibels for equal impedance assumptions."
+    ],
+    [
+      "thermal-power",
+      "Joule Heating",
+      "E = I²Rt",
+      "Electrical",
+      "Resistive heating energy."
+    ],
+    [
+      "coulomb-voltage",
+      "Energy from Charge",
+      "E = QV",
+      "Electrical",
+      "Energy associated with charge and potential difference."
+    ],
+    [
+      "resonant-frequency",
+      "LC Resonance",
+      "f0 = 1/(2π√(LC))",
+      "Electronics",
+      "Ideal LC resonant frequency."
+    ],
+    [
+      "impedance-magnitude",
+      "Series RLC Magnitude",
+      "|Z| = √(R² + (XL-XC)²)",
+      "AC",
+      "Magnitude of ideal series RLC impedance."
+    ],
+    [
+      "inductive-reactance",
+      "Inductive Reactance",
+      "XL = 2πfL",
+      "AC",
+      "Ideal inductor reactance."
+    ],
+    [
+      "capacitive-reactance",
+      "Capacitive Reactance",
+      "XC = 1/(2πfC)",
+      "AC",
+      "Magnitude of ideal capacitor reactance."
+    ]
+  ]
+}
