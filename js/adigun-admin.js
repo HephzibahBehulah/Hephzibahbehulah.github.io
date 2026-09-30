@@ -4,12 +4,15 @@ document.addEventListener("DOMContentLoaded",()=>{
   const systemState=$("#systemState"),identityState=$("#identityState"),identityDetail=$("#identityDetail");
   const inspectOutput=$("#inspectOutput"),inspectState=$("#inspectState");
   const HISTORY_KEY="adigun.intelligence.history.v1";
+  const CHECKPOINT_KEY="adigun.daily.checkpoint.v2";
+  const REPO="HephzibahBehulah/HephzibahBehulah.github.io";
   let lastRaw=null;
 
-  const escapeHtml=v=>String(v??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
   const fmtDate=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"—":d.toLocaleString(undefined,{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"UTC"})+" UTC";};
   const readHistory=()=>{try{return JSON.parse(localStorage.getItem(HISTORY_KEY)||"[]")}catch{return[]}};
   const writeHistory=h=>{try{localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(0,30)))}catch{}};
+  const readCheckpoint=()=>{try{return JSON.parse(localStorage.getItem(CHECKPOINT_KEY)||"null")}catch{return null}};
+  const writeCheckpoint=v=>{try{localStorage.setItem(CHECKPOINT_KEY,JSON.stringify(v))}catch{}};
 
   function injectIntelligenceUI(){
     const section=$("#intelligence"),ops=section?.querySelector(".admin-ops"),out=$("#inspectOutput");
@@ -37,9 +40,9 @@ document.addEventListener("DOMContentLoaded",()=>{
     history.id="intelHistoryView";history.style.display="none";history.style.marginTop="12px";
     out.parentNode.insertBefore(history,out.nextSibling);
 
-    checkpoint.addEventListener("click",()=>checkpointRun());
+    checkpoint.addEventListener("click",checkpointRun);
     $("#intelRaw").addEventListener("click",()=>{raw.style.display=raw.style.display==="none"?"block":"none";raw.textContent=lastRaw?JSON.stringify(lastRaw,null,2):"No raw evidence is available yet."});
-    $("#intelHistory").addEventListener("click",()=>renderHistory());
+    $("#intelHistory").addEventListener("click",renderHistory);
     $("#intelAnalyze").addEventListener("click",()=>runOperator("Analyze the latest intelligence findings in the Intelligence panel. Explain the evidence in plain human language and distinguish observed facts from interpretation."));
     $("#intelInvestigate").addEventListener("click",()=>runOperator("Investigate the latest intelligence findings. Gather relevant evidence and explain what should be checked next."));
     $("#intelPlan").addEventListener("click",()=>runOperator("Create an approval-gated action plan from the latest intelligence findings. Do not execute production mutations."));
@@ -81,7 +84,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(missing.includes("contentSecurityPolicy"))lines.push("[MEDIUM] CSP not detected","Content-Security-Policy was not present in the observed response.","");
       if(dns?.status==="healthy")lines.push("[GOOD] DNS responding","Cloudflare DNS returned the observed address records.","");
       if(cf?.status==="observed")lines.push("[INFO] Cloudflare edge detected","Edge presence was confirmed from live response headers.","");
-      if(gh?.status==="unavailable")lines.push("[INFO] GitHub unavailable","The inspection endpoint could not retrieve the private repository metadata.","");
+      if(gh?.status==="unavailable")lines.push("[INFO] GitHub unavailable","The inspection endpoint could not retrieve the repository metadata.","");
       lines.push("","VIEW RAW EVIDENCE is available below for the complete machine-readable record.");
     }else if(d?.target&&d?.result){
       lines.push(`Target        ${d.target}`,`Status        ${d.result?.ok===false?"DEGRADED":"OBSERVED"}`);
@@ -95,17 +98,14 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
 
   function saveHistory(d,target){
-    const h=readHistory();
-    const checks=Array.isArray(d?.checks)?d.checks:[];
-    const find=n=>checks.find(x=>x.name===n);
-    h.unshift({at:d?.checkedAt||new Date().toISOString(),website:find("website")?.status||"—",dns:find("dns")?.status||"—",github:find("github")?.status||"—",security:(find("website")?.securityHeaders?"NEEDS REVIEW":"—"),target:target||"all"});
+    const h=readHistory(),checks=Array.isArray(d?.checks)?d.checks:[],find=n=>checks.find(x=>x.name===n);
+    h.unshift({at:d?.checkedAt||new Date().toISOString(),website:find("website")?.status||"—",dns:find("dns")?.status||"—",github:find("github")?.status||"—",security:find("website")?.securityHeaders?"NEEDS REVIEW":"—",target:target||"all"});
     writeHistory(h);
   }
 
   function renderHistory(){
     const box=$("#intelHistoryView");if(!box)return;
-    const h=readHistory();
-    box.style.display="block";
+    const h=readHistory();box.style.display="block";
     box.innerHTML=h.length?`<div style="font-family:var(--font-mono,monospace);white-space:pre-wrap;line-height:1.6;padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:8px"><strong>INTELLIGENCE HISTORY</strong>\n\n${h.map(x=>`${fmtDate(x.at)}\nWebsite: ${String(x.website).toUpperCase()}\nDNS: ${String(x.dns).toUpperCase()}\nGitHub: ${String(x.github).toUpperCase()}\nSecurity: ${String(x.security).toUpperCase()}\n`).join("\n")}</div>`:"<div class=\"admin-inspect-output\">No previous intelligence checks have been saved in this browser.</div>";
   }
 
@@ -126,31 +126,38 @@ document.addEventListener("DOMContentLoaded",()=>{
     finally{document.querySelectorAll("[data-inspect]").forEach(b=>b.disabled=false);}
   }
 
+  function normalizeCommit(c){return {sha:c?.sha||"",message:String(c?.commit?.message||c?.message||"").split("\n")[0],date:c?.commit?.committer?.date||c?.commit?.author?.date||c?.committer?.date||c?.author?.date||"",url:c?.html_url||c?.url||""};}
+
+  async function fetchLatestCommits(){
+    const url=`https://api.github.com/repos/${REPO}/commits?per_page=2`;
+    const r=await fetch(url,{headers:{Accept:"application/vnd.github+json"},cache:"no-store"});
+    const d=await r.json().catch(()=>[]);
+    if(!r.ok)throw new Error(d?.message||`GitHub returned HTTP ${r.status}`);
+    if(!Array.isArray(d)||!d.length)throw new Error("GitHub returned no commits for the repository.");
+    return d.map(normalizeCommit);
+  }
+
   async function checkpointRun(){
-    const b=$("#dailyCheckpoint"),human=$("#intelHumanView");
-    if(b)b.disabled=true;
-    inspectState.textContent="● CHECKPOINT";
+    const b=$("#dailyCheckpoint"),human=$("#intelHumanView"),raw=$("#intelRawView");
+    if(b)b.disabled=true;inspectState.textContent="● CHECKPOINT";
     try{
-      const r=await fetch("/api/admin/inspect?target=github-commits",{credentials:"same-origin",cache:"no-store"});
-      const d=await r.json().catch(()=>({}));
-      if(!r.ok)throw new Error(d.error||"GitHub checkpoint failed");
-      lastRaw=d;
-      const commits=Array.isArray(d?.result?.data)?d.result.data:(Array.isArray(d?.data)?d.data:[]);
-      const latest=commits[0],previous=commits[1];
-      const prior=(()=>{try{return JSON.parse(localStorage.getItem("adigun.daily.checkpoint.v1")||"null")}catch{return null}})();
-      const now=new Date().toISOString();
-      if(latest)localStorage.setItem("adigun.daily.checkpoint.v1",JSON.stringify({sha:latest.sha,date:now,message:latest.commit?.message||latest.message||""}));
-      if(human){human.style.display="block";human.textContent=["DAILY CHECKPOINT","────────────────────────────────",`Date          ${fmtDate(now)}`,`Repository    HephzibahBehulah/HephzibahBehulah.github.io`,`Latest commit ${latest?.sha||"UNAVAILABLE"}`,`Commit        ${(latest?.commit?.message||latest?.message||"Unavailable").split("\n")[0]}`,`Time          ${fmtDate(latest?.commit?.committer?.date||latest?.commit?.author?.date||now)}`,`Previous      ${previous?.sha||"UNAVAILABLE"}`,`Previous msg  ${(previous?.commit?.message||previous?.message||"Unavailable").split("\n")[0]}`,prior?.sha&&latest?.sha&&prior.sha!==latest.sha?"","CHANGE DETECTED: the latest commit differs from the previous saved daily checkpoint.":prior?.sha?"","No new commit since the previous saved daily checkpoint.","","This checkpoint is a read-only record. No repository changes were made."].join("\n")}
-      const raw=$("#intelRawView");if(raw){raw.textContent=JSON.stringify(d,null,2);raw.style.display="none"}
+      const commits=await fetchLatestCommits(),latest=commits[0],previous=commits[1],prior=readCheckpoint(),now=new Date().toISOString();
+      const changed=!!prior?.sha&&prior.sha!==latest.sha,firstRun=!prior?.sha;
+      writeCheckpoint({sha:latest.sha,date:now,message:latest.message});
+      const lines=["DAILY CHECKPOINT","────────────────────────────────",`Date           ${fmtDate(now)}`,`Repository     ${REPO}`,`Latest commit  ${latest.sha||"UNAVAILABLE"}`,`Commit         ${latest.message||"Unavailable"}`,`Commit time    ${fmtDate(latest.date||now)}`,`Previous commit ${previous?.sha||"UNAVAILABLE"}`,`Previous msg   ${previous?.message||"Unavailable"}`,"",firstRun?"BASELINE SAVED: this is the first daily checkpoint on this browser.":changed?"CHANGE DETECTED: a new commit exists since the previous saved checkpoint.":"NO CHANGE: the latest commit matches the previous saved checkpoint.","","This checkpoint is read-only. No repository changes were made."];
+      if(human){human.style.display="block";human.textContent=lines.join("\n")}
+      if(raw){raw.textContent=JSON.stringify({ok:true,repository:REPO,checkedAt:now,latest,previous,previousCheckpoint:prior||null},null,2);raw.style.display="none"}
+      inspectOutput.textContent="Daily checkpoint completed. The latest and previous commits are shown above.";
       inspectState.textContent="● COMPLETE";
-    }catch(e){if(human){human.style.display="block";human.textContent="DAILY CHECKPOINT\n────────────────────────────────\nGitHub checkpoint unavailable.\n\n"+String(e.message||e)}inspectState.textContent="● ERROR"}
-    finally{if(b)b.disabled=false;}
+    }catch(e){
+      if(human){human.style.display="block";human.textContent=["DAILY CHECKPOINT","────────────────────────────────","STATUS        FAILED","","GitHub commit history could not be retrieved.",String(e.message||e),"","No checkpoint was saved. No repository changes were made."].join("\n")}
+      inspectOutput.textContent="Daily checkpoint failed: "+String(e.message||e);inspectState.textContent="● ERROR";
+    }finally{if(b)b.disabled=false;}
   }
 
   async function runOperator(task){
-    const input=$("#adminInput"),send=$("#adminSend");
-    if(!input||!send)return;
-    const old=input.value;input.value=task;send.click();if(!old)input.value="";
+    const input=$("#adminInput"),send=$("#adminSend");if(!input||!send)return;
+    input.value=task;send.click();
   }
 
   document.querySelectorAll("[data-inspect]").forEach(b=>b.addEventListener("click",()=>inspect(b.dataset.inspect)));
