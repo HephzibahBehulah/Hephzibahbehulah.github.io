@@ -10,7 +10,7 @@ if(text.trim().startsWith("<")){
   records.push({id:"rfc-"+m[1],name:"RFC "+m[1],rfc:m[1],category:"RFC documentation",summary:m[2].replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(),date:m[3]+" "+m[4],source:"RFC Editor",sourceUrl:"https://www.rfc-editor.org/rfc/rfc"+m[1],verification:"source-backed"});
  }
 }
-const unique=[...new Map(records.map(x=>[x.id,x])).values()];
+if(!records.length){for(const line of text.split(/\r?\n/)){const m=line.match(/^\s*(\d{1,5})\s+(.+?)\s{2,}(.+)$/);if(m)records.push({id:"rfc-"+m[1],name:"RFC "+m[1],rfc:m[1],category:"RFC documentation",summary:m[2].trim(),date:m[3].trim(),source:"RFC Editor",sourceUrl:"https://www.rfc-editor.org/rfc/rfc"+m[1],verification:"source-backed"})}}\nconst unique=[...new Map(records.map(x=>[x.id,x])).values()];
 const dest="cyber-os/data/generated/rfc-index.json";
 await fs.mkdir(path.dirname(dest),{recursive:true});
 await fs.writeFile(dest,JSON.stringify({source:"RFC Editor",count:unique.length,records:unique},null,2)+"\n");
