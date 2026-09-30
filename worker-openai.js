@@ -1428,7 +1428,7 @@ async function privateInspect(request, env, url, ctx) {
       }
     }
   }
-  if(target==="github"||target==="all"){
+  if(target==="github"||target==="github-repo"||target==="all"){
     try{
       const r=await fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
       const d=await r.json().catch(()=>({}));
