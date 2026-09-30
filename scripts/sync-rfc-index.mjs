@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-const urls=["https://www.rfc-editor.org/in-notes/rfc-index.xml","https://www.rfc-editor.org/in-notes/rfc-index.txt"];
+const urls=["https://www.rfc-editor.org/in-notes/rfc-index.txt","https://www.rfc-editor.org/in-notes/rfc-index.xml"];
 let text="";
 for(const u of urls){try{const r=await fetch(u);if(r.ok){text=await r.text();if(text.length>1000)break}}catch{}}
 if(!text)throw new Error("RFC index unavailable");
