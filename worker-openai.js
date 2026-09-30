@@ -245,6 +245,24 @@ const SANDBOX_COMMANDS = Object.freeze({
 const RECON_TARGET = "https://hephzibahbehulah.com";
 const RECON_REPO = "HephzibahBehulah/HephzibahBehulah.github.io";
 
+function githubApiHeaders(env) {
+  const token = String(env?.GITHUB_TOKEN || "").trim();
+  return {
+    "accept":"application/vnd.github+json",
+    "user-agent":"ADIGUN-Private-Intelligence",
+    ...(token ? {"authorization":"Bearer "+token} : {})
+  };
+}
+
+async function githubApiFetch(env, path) {
+  const token = String(env?.GITHUB_TOKEN || "").trim();
+  if (!token) throw new Error("GitHub private-repository access is not configured. Set the GITHUB_TOKEN Worker secret.");
+  const response = await fetch("https://api.github.com"+path,{headers:githubApiHeaders(env),cf:{cacheTtl:30,cacheEverything:false}});
+  const body = await response.json().catch(()=>({}));
+  if (!response.ok) throw new Error("GitHub API "+response.status+": "+String(body?.message||"request failed"));
+  return body;
+}
+
 const RECON_BASES = Object.freeze({
   "http-status": {category:"web",label:"HTTP status",description:"GET the authorized production homepage and report status, final URL and timing."},
   "http-headers": {category:"web",label:"HTTP headers",description:"Read all response headers from the authorized production homepage."},
@@ -1430,20 +1448,17 @@ async function privateInspect(request, env, url, ctx) {
   }
   if(target==="github"||target==="github-repo"||target==="all"){
     try{
-      const r=await fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}});
-      const d=await r.json().catch(()=>({}));
-      result.checks.push({name:"github",status:r.ok?"healthy":"unavailable",repository:d.full_name||"HephzibahBehulah/HephzibahBehulah.github.io",defaultBranch:d.default_branch||null,updatedAt:d.updated_at||null,pushedAt:d.pushed_at||null,openIssues:d.open_issues_count??null});
-      if(r.ok){
-        const [commits, runs] = await Promise.all([
-          fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io/commits?per_page=8",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}}),
-          fetch("https://api.github.com/repos/HephzibahBehulah/HephzibahBehulah.github.io/actions/runs?per_page=8",{headers:{"accept":"application/vnd.github+json","user-agent":"ADIGUN-Private-Intelligence"}})
-        ]);
-        const commitData=await commits.json().catch(()=>({}));
-        const runData=await runs.json().catch(()=>({}));
-        result.checks.push({name:"github-recent-history",status:commits.ok?"observed":"unavailable",
-          commits:(commitData||[]).slice(0,8).map(x=>({sha:String(x.sha||"").slice(0,12),message:String(x.commit?.message||"").split("\n")[0].slice(0,180),date:x.commit?.author?.date||null,url:x.html_url||null})),
-          workflowRuns:(runData.workflow_runs||[]).slice(0,8).map(x=>({name:x.name,status:x.status,conclusion:x.conclusion,headSha:String(x.head_sha||"").slice(0,12),createdAt:x.created_at,updatedAt:x.updated_at,url:x.html_url||null}))
-        });
+      const d=await githubApiFetch(env,"/repos/"+RECON_REPO);
+      result.checks.push({name:"github",status:"healthy",repository:d.full_name||RECON_REPO,defaultBranch:d.default_branch||null,updatedAt:d.updated_at||null,pushedAt:d.pushed_at||null,openIssues:d.open_issues_count??null});
+      const [commitData,runData] = await Promise.all([
+        githubApiFetch(env,"/repos/"+RECON_REPO+"/commits?per_page=8"),
+        githubApiFetch(env,"/repos/"+RECON_REPO+"/actions/runs?per_page=8")
+      ]);
+      result.checks.push({name:"github-recent-history",status:"observed",
+        commits:(commitData||[]).slice(0,8).map(x=>({sha:String(x.sha||"").slice(0,12),message:String(x.commit?.message||"").split("\n")[0].slice(0,180),date:x.commit?.author?.date||null,url:x.html_url||null})),
+        workflowRuns:(runData.workflow_runs||[]).slice(0,8).map(x=>({name:x.name,status:x.status,conclusion:x.conclusion,headSha:String(x.head_sha||"").slice(0,12),createdAt:x.created_at,updatedAt:x.updated_at,url:x.html_url||null}))
+      });
+      });
       }
     }catch(e){result.checks.push({name:"github",status:"error",error:String(e?.message||e)})}
   }
