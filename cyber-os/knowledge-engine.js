@@ -50,7 +50,8 @@ if(hits.length) html+='<div class="knowledge-subgrid">'+hits.map(x=>'<article cl
  box.innerHTML=html;
  box.querySelectorAll("[data-query]").forEach(b=>b.onclick=()=>{const q=b.dataset.query;document.getElementById("globalSearch").value=q;render(q.toLowerCase());document.getElementById("knowledge-hub").scrollIntoView({behavior:"smooth"});});
 }
-async function loadIana(){try{const r=await fetch("data/ports/iana-service-names.json",{cache:"no-store"});if(r.ok){const pack=await r.json();if(Array.isArray(pack.records))H.protocols=[...(H.protocols||[]),...pack.records.map(x=>[x.name,x.port,x.transport.toUpperCase(),"IANA",x.summary])];}}catch(e){} try{const r=await fetch("data/formulas/core-engineering.json",{cache:"no-store"});if(r.ok){const pack=await r.json();if(Array.isArray(pack.records))H.formulas=pack.records;}}catch(e){} }\ndocument.addEventListener("DOMContentLoaded",async()=>{
+async function loadIana(){try{const r=await fetch("data/ports/iana-service-names.json",{cache:"no-store"});if(r.ok){const pack=await r.json();if(Array.isArray(pack.records))H.protocols=[...(H.protocols||[]),...pack.records.map(x=>[x.name,x.port,x.transport.toUpperCase(),"IANA",x.summary])];}}catch(e){} try{const r=await fetch("data/formulas/core-engineering.json",{cache:"no-store"});if(r.ok){const pack=await r.json();if(Array.isArray(pack.records))H.formulas=pack.records;}}catch(e){} }
+document.addEventListener("DOMContentLoaded",async()=>{
  const s=document.getElementById("globalSearch"),box=document.getElementById("knowledgeResult");
  if(!s||!box)return;
  s.addEventListener("input",()=>{const q=s.value.trim().toLowerCase();render(q);});\n loadIana().then(()=>render(s.value.trim().toLowerCase()));
