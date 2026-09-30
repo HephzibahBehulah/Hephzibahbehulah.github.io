@@ -26,6 +26,7 @@ jobs:
       - name: Validate ADIGUN Cyber OS
         run: |
           node --check cyber-os/cyber-os.js
+          node --check cyber-os/knowledge-hub.js
           node --check cyber-os/cyber-os-graph.js
           node --check cyber-os/learning-engine.js
           node --check cyber-os/soc-simulator.js
