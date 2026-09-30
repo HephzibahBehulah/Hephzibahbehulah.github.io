@@ -28,13 +28,13 @@ jobs:
           node --check cyber-os/cyber-os.js
           node --check cyber-os/knowledge-hub.js
           node --check cyber-os/knowledge-engine.js
-          node --check scripts/sync-iana-ports.mjs
+          node --check scripts/sync-iana-ports.mjs\n          node --check scripts/sync-mitre-attack.mjs\n          node --check scripts/sync-microsoft-command-docs.mjs\n          node --check scripts/sync-linux-manpages.mjs\n          node --check scripts/sync-rfc-index.mjs\n          node --check cyber-os/catalog-loader.js\n          node --check cyber-os/knowledge-graph-engine.js\n          node --check cyber-os/knowledge-games.js\n          node --check cyber-os/knowledge-games-ui.js\n          node --check cyber-os/scale-status.js
           node --check cyber-os/cyber-os-graph.js
           node --check cyber-os/learning-engine.js
           node --check cyber-os/soc-simulator.js
           node --check cyber-os/cyber-os-data.js
           node --check cyber-os/source-registry.js
-          node -e "JSON.parse(require('fs').readFileSync('cyber-os/content-schema.json','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('cyber-os/content-schema.json','utf8'))\n          JSON.parse(require('fs').readFileSync('cyber-os/data/catalog-manifest.json','utf8'))\n          JSON.parse(require('fs').readFileSync('cyber-os/data/source-manifest.json','utf8'))\n          JSON.parse(require('fs').readFileSync('cyber-os/data/relationships.json','utf8'))"
           test -f cyber-os/index.html
           test -f cyber-os/cyber-os.css
           test -f cyber-os/PHASES.md
