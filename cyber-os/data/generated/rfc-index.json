@@ -1,0 +1,171 @@
+{
+  "source": "RFC Editor",
+  "count": 15,
+  "records": [
+    {
+      "id": "rfc-1456",
+      "name": "RFC 1456",
+      "rfc": "1456",
+      "category": "RFC documentation",
+      "summary": "Conventions for Encoding the Vietnamese Language",
+      "date": "VISCII: VIetnamese",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc1456",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-1693",
+      "name": "RFC 1693",
+      "rfc": "1693",
+      "category": "RFC documentation",
+      "summary": "An Extension to TCP : Partial Order Service. T.",
+      "date": "Connolly, P. Amer,",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc1693",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-2063",
+      "name": "RFC 2063",
+      "rfc": "2063",
+      "category": "RFC documentation",
+      "summary": "Traffic Flow Measurement:",
+      "date": "Architecture. N. Brownlee, C. Mills, G.",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc2063",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-2064",
+      "name": "RFC 2064",
+      "rfc": "2064",
+      "category": "RFC documentation",
+      "summary": "Traffic Flow Measurement:",
+      "date": "Meter MIB. N. Brownlee. January 1997.",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc2064",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-2102",
+      "name": "RFC 2102",
+      "rfc": "2102",
+      "category": "RFC documentation",
+      "summary": "Multicast Support for Nimrod :",
+      "date": "Requirements and Solution",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc2102",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-2103",
+      "name": "RFC 2103",
+      "rfc": "2103",
+      "category": "RFC documentation",
+      "summary": "Mobility Support for Nimrod :",
+      "date": "Challenges and Solution Approaches.",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc2103",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-2162",
+      "name": "RFC 2162",
+      "rfc": "2162",
+      "category": "RFC documentation",
+      "summary": "MaXIM-11 - Mapping between X.400 / Internet mail and",
+      "date": "Mail-11 mail.",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc2162",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-2270",
+      "name": "RFC 2270",
+      "rfc": "2270",
+      "category": "RFC documentation",
+      "summary": "Using a Dedicated AS for Sites",
+      "date": "Homed to a Single Provider. J.",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc2270",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-3716",
+      "name": "RFC 3716",
+      "rfc": "3716",
+      "category": "RFC documentation",
+      "summary": "IETF in the Large:",
+      "date": "Administration and Execution. IAB Advisory",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc3716",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-3982",
+      "name": "RFC 3982",
+      "rfc": "3982",
+      "category": "RFC documentation",
+      "summary": "IRIS:",
+      "date": "A Domain Registry (dreg) Type for the Internet Registry",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc3982",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-4687",
+      "name": "RFC 4687",
+      "rfc": "4687",
+      "category": "RFC documentation",
+      "summary": "Operations and Management (OAM) Requirements",
+      "date": "for Point-to-",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc4687",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-4729",
+      "name": "RFC 4729",
+      "rfc": "4729",
+      "category": "RFC documentation",
+      "summary": "A Uniform Resource Name (URN) Namespace for",
+      "date": "the Near Field",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc4729",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-5463",
+      "name": "RFC 5463",
+      "rfc": "5463",
+      "category": "RFC documentation",
+      "summary": "Sieve Email Filtering:",
+      "date": "Ihave Extension. N. Freed. March 2009.",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc5463",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-5784",
+      "name": "RFC 5784",
+      "rfc": "5784",
+      "category": "RFC documentation",
+      "summary": "Sieve Email Filtering:",
+      "date": "Sieves and Display Directives in XML. N.",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc5784",
+      "verification": "source-backed"
+    },
+    {
+      "id": "rfc-9521",
+      "name": "RFC 9521",
+      "rfc": "9521",
+      "category": "RFC documentation",
+      "summary": "Bidirectional Forwarding Detection (BFD) for",
+      "date": "Generic Network",
+      "source": "RFC Editor",
+      "sourceUrl": "https://www.rfc-editor.org/rfc/rfc9521",
+      "verification": "source-backed"
+    }
+  ]
+}
