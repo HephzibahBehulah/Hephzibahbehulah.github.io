@@ -59,7 +59,7 @@ async function init(){
  const s=document.getElementById("globalSearch"),box=document.getElementById("knowledgeResult");
  if(!s||!box)return;
  s.addEventListener("input",()=>{const q=s.value.trim().toLowerCase();render(q);});
- loadIana().then(()=>render(s.value.trim().toLowerCase()));
+ loadIana().then(()=>{render(s.value.trim().toLowerCase());document.dispatchEvent(new CustomEvent("cyber:core-catalogs-loaded"));});
  s.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();render(s.value.trim().toLowerCase());document.getElementById("knowledgeResult").scrollIntoView({behavior:"smooth"});}});
  render("");
 }
