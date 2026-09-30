@@ -39,8 +39,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const r=await fetch("/api/admin/inspect?target=github-repo",{credentials:"same-origin",cache:"no-store"});
     const d=await r.json().catch(()=>({}));
     if(!r.ok)throw new Error(d?.error||`GitHub inspection returned HTTP ${r.status}`);
-    const source=d?.result||d?.data||d;
-    const candidates=Array.isArray(source)?source:(Array.isArray(source?.commits)?source.commits:(Array.isArray(source?.data)?source.data:[]));
+    const source=d?.result||d?.data||d;\n    const history=Array.isArray(d?.checks)?d.checks.find(x=>x.name==="github-recent-history"):null;\n    if(Array.isArray(history?.commits)&&history.commits.length)return history.commits.slice(0,2).map(normalizeCommit);\n    const candidates=Array.isArray(source)?source:(Array.isArray(source?.commits)?source.commits:(Array.isArray(source?.data)?source.data:[]));
     if(candidates.length)return candidates.slice(0,2).map(normalizeCommit);
     const latest=source?.latestCommit||source?.latest||source?.commit;
     const previous=source?.previousCommit||source?.previous;
