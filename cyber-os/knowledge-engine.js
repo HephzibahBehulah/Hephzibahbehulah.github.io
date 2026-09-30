@@ -31,10 +31,12 @@ function catalogHits(q){
   ...rows("electronics",H.electronics),
   ...rows("documentation",H.docs),
   ...rows("engineering formula",H.formulas),
-  ...rows("model",H.models),
-  ...rows("source-backed external record",H.externalRecords)
+  ...rows("model",H.models)
  ];
- return sets.filter(x=>JSON.stringify(x.value).toLowerCase().includes(q)).slice(0,40);
+ const match=v=>Array.isArray(v)?v.join(" ").toLowerCase():String(v?.name||v?.title||v?.command||v?.summary||v||"").toLowerCase();
+ const base=sets.filter(x=>match(x.value).includes(q));
+ const external=Array.isArray(H.externalRecords)?H.externalRecords.filter(x=>match(x).includes(q)).slice(0,20).map(x=>({domain:"source-backed external record",value:x})):[];
+ return [...base,...external].slice(0,40);
 }
 const TOPICS={
 tcp:{definition:"Transmission Control Protocol provides reliable, ordered, connection-oriented byte-stream delivery.",layers:["TCP/IP Transport","OSI Layer 4"],ports:["22 SSH","25 SMTP","80 HTTP","443 HTTPS","445 SMB","3389 RDP"],protocols:["HTTP","HTTPS","SSH","SMTP","IMAP","FTP","SMB","RDP","LDAP","BGP"],flags:["SYN","ACK","FIN","RST","PSH","URG","ECE","CWR"],states:["CLOSED","LISTEN","SYN-SENT","SYN-RECEIVED","ESTABLISHED","FIN-WAIT-1","FIN-WAIT-2","CLOSE-WAIT","LAST-ACK","TIME-WAIT"],commands:["ss -antp","netstat -ano","tcpdump -nn 'tcp'","tshark -Y 'tcp'","Get-NetTCPConnection"],analysis:["TCP three-way handshake","sequence and acknowledgment numbers","retransmissions","resets","window size","TCP stream reconstruction"],risks:["unexpected listeners","exposed management services","cleartext protocols","abnormal connection bursts"],detection:["baseline listeners","correlate PID/process with sockets","review IDS/firewall telemetry","investigate repeated SYN attempts"],tools:["Wireshark","TShark","tcpdump","Nmap","ss","Zeek","Suricata"],labs:["Capture a TCP handshake in an authorised lab","Map a listening port to its owning process","Compare normal and reset-heavy TCP traffic"],games:["Identify TCP flags","Map a TCP port to its application","Choose the correct layer"],docs:["https://www.rfc-editor.org/rfc/rfc9293"]},
