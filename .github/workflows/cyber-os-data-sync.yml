@@ -1,0 +1,30 @@
+name: Cyber OS Data Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync-iana:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Sync IANA service and port registry
+        run: node scripts/sync-iana-ports.mjs
+      - name: Validate generated registry
+        run: node -e "const x=require('./cyber-os/data/ports/iana-service-names.json'); if(!x.count || !Array.isArray(x.records)) process.exit(1); console.log(x.count)"
+      - name: Commit updated source data
+        run: |
+          git config user.name "Cyber OS Data Sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cyber-os/data/ports/iana-service-names.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: refresh IANA port registry"
+          git push
