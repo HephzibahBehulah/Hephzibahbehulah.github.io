@@ -18,5 +18,6 @@ function render(){
  box.innerHTML=Object.entries(s).map(([k,v])=>'<article class="cyber-card"><span class="tag">SCALE</span><h3>'+k.replace(/([A-Z])/g," $1").toUpperCase()+'</h3><p><b>'+Number(v.loaded).toLocaleString()+'</b> loaded · target '+String(v.target).replace(/\B(?=(\d{3})+(?!\d))/g,",")+'</p><p>'+((v.remaining===null)?"Derived from source data":Number(v.remaining).toLocaleString()+" remaining to target")+'</p></article>').join("");
 }
 document.addEventListener("DOMContentLoaded",render);
-document.addEventListener("cyber:catalogs-loaded",render);\ndocument.addEventListener("cyber:core-catalogs-loaded",render);
+document.addEventListener("cyber:catalogs-loaded",render);
+document.addEventListener("cyber:core-catalogs-loaded",render);
 })();
