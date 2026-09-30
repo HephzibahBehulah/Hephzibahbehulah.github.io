@@ -1458,8 +1458,6 @@ async function privateInspect(request, env, url, ctx) {
         commits:(commitData||[]).slice(0,8).map(x=>({sha:String(x.sha||"").slice(0,12),message:String(x.commit?.message||"").split("\n")[0].slice(0,180),date:x.commit?.author?.date||null,url:x.html_url||null})),
         workflowRuns:(runData.workflow_runs||[]).slice(0,8).map(x=>({name:x.name,status:x.status,conclusion:x.conclusion,headSha:String(x.head_sha||"").slice(0,12),createdAt:x.created_at,updatedAt:x.updated_at,url:x.html_url||null}))
       });
-      });
-      }
     }catch(e){result.checks.push({name:"github",status:"error",error:String(e?.message||e)})}
   }
   if(target==="cloudflare"||target==="all"){
