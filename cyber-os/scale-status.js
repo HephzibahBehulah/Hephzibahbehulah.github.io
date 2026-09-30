@@ -3,7 +3,7 @@ const H=window.CYBER_HUB||{};
 const count=a=>Array.isArray(a)?a.length:0;
 window.CYBER_SCALE_STATUS={get(){
  const loaded={
-  ports:count(H.protocols),protocols:count(H.protocols),networkTools:count(H.networkTools),
+  ports:count(H.ianaRecords),protocols:count(H.protocols),networkTools:count(H.networkTools),
   windowsCommands:count(H.windowsCommands),powershell:count(H.powershell),linuxCommands:count(H.linuxCommands),
   shortcuts:count(H.shortcuts),powerTricks:count(H.powerTricks),suspiciousCommands:count(H.suspicious),
   engineeringFormulas:count(H.formulas),teams:count(H.teams),hackerTypes:count(H.hackerTypes),
