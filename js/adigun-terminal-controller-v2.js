@@ -28,6 +28,85 @@ document.addEventListener("DOMContentLoaded",()=>{
   const parse=q=>{const m=String(q||"").trim().match(/(?:[^\s"]+|"[^"]*")+/g)||[];const command=(m.shift()||"").toLowerCase();return {command,args:m.map(x=>x.replace(/^"|"$/g,"").replace(/^<(.+)>$/,"$1"))}};
   const local=()=>window.AdigunCommandEngine?.local;
 
+  function humanValue(value, depth=0){
+    if(value===null||value===undefined||value==="") return "Not reported";
+    if(typeof value==="boolean") return value?"Yes":"No";
+    if(typeof value==="number") return String(value);
+    if(typeof value==="string") return value;
+    if(Array.isArray(value)){
+      if(!value.length) return "None";
+      if(value.every(x=>typeof x==="string"||typeof x==="number"||typeof x==="boolean")) return value.map(String).join(", ");
+      return value.slice(0,12).map((x,i)=>`${i+1}. ${humanValue(x,depth+1)}`).join("\n");
+    }
+    if(typeof value==="object"){
+      if(depth>2) return "[details available in raw evidence]";
+      return Object.entries(value).slice(0,24).map(([k,v])=>`${labelKey(k)}: ${humanValue(v,depth+1)}`).join("\n");
+    }
+    return String(value);
+  }
+
+  function labelKey(key){
+    return String(key||"").replace(/([a-z])([A-Z])/g,"$1 $2").replace(/[_-]+/g," ").replace(/\\b\\w/g,m=>m.toUpperCase());
+  }
+
+  function humanizeCommandResult(d){
+    const result=d?.result;
+    const title=String(d?.label||d?.command||"Command result").toUpperCase();
+    const lines=[title,"══════════════════════════════════════════════════════════════"];
+    if(d?.description) lines.push("",d.description);
+    if(d?.target) lines.push("", "Target", "  "+String(d.target));
+    if(d?.baseCommand && d.baseCommand!==d.command) lines.push("  Operation: "+String(d.baseCommand));
+    if(d?.durationMs!=null) lines.push("  Response time: "+String(d.durationMs)+" ms");
+    if(d?.evidence?.evidenceId) lines.push("  Evidence ID: "+String(d.evidence.evidenceId));
+    lines.push("");
+
+    if(result && typeof result==="object"){
+      const r=result;
+      if(r.httpStatus!=null) lines.push("HTTP STATUS", "  "+String(r.httpStatus)+(r.ok===true?" — successful response":r.ok===false?" — non-success response":""));
+      if(r.finalUrl) lines.push("Final URL", "  "+String(r.finalUrl));
+      if(r.durationMs!=null && d?.durationMs==null) lines.push("Response time", "  "+String(r.durationMs)+" ms");
+      if(r.title) lines.push("Title", "  "+String(r.title));
+      if(r.contentLength||r.measuredBodyBytes!=null) lines.push("Response size", "  "+String(r.contentLength||"unknown")+" content-length; "+String(r.measuredBodyBytes||0)+" measured bytes");
+      if(r.headers && typeof r.headers==="object"){
+        lines.push("Headers");
+        const entries=Object.entries(r.headers);
+        if(entries.length) entries.slice(0,40).forEach(([k,v])=>lines.push("  "+k+": "+String(v)));
+        else lines.push("  No response headers were returned.");
+      }
+      if(r.checks && typeof r.checks==="object" && !Array.isArray(r.checks)){
+        lines.push("Checks");
+        Object.entries(r.checks).forEach(([k,v])=>lines.push("  "+labelKey(k)+": "+humanValue(v)));
+      }
+      if(Array.isArray(r.checks)){
+        lines.push("Checks");
+        r.checks.slice(0,30).forEach((x,i)=>{
+          const name=x?.command||x?.name||x?.path||`Check ${i+1}`;
+          const status=x?.httpStatus!=null?`HTTP ${x.httpStatus}`:x?.ok===true?"OK":x?.ok===false?"FAILED":"OBSERVED";
+          lines.push(`  ${name}: ${status}`);
+        });
+        if(r.checks.length>30) lines.push("  … "+String(r.checks.length-30)+" more checks");
+      }
+      for(const [key,value] of Object.entries(r)){
+        if(["httpStatus","ok","finalUrl","durationMs","title","contentLength","measuredBodyBytes","headers","checks","body"].includes(key)) continue;
+        if(key==="data" && value && typeof value==="object"){
+          if(value.name) lines.push("Repository", "  "+String(value.full_name||value.name));
+          if(value.description) lines.push("Description", "  "+String(value.description));
+          if(value.default_branch) lines.push("Default branch", "  "+String(value.default_branch));
+          if(value.html_url) lines.push("Repository URL", "  "+String(value.html_url));
+          if(value.language) lines.push("Primary language", "  "+String(value.language));
+          if(Array.isArray(value)) lines.push("Records", "  "+String(value.length));
+          continue;
+        }
+        lines.push(labelKey(key), "  "+humanValue(value));
+      }
+      if(r.body) lines.push("Body", "  "+String(r.body).slice(0,3000)+(String(r.body).length>3000?"\n  … body truncated":""));
+    } else {
+      lines.push(String(result??"No result was returned."));
+    }
+    lines.push("", "This is the human-readable result. Use VIEW RAW EVIDENCE in Intelligence when the machine-readable record is needed.");
+    return lines.join("\n");
+  }
+
   function renderServer(d){
     if(!d)return "";
     if(d.type==="help"){
@@ -42,11 +121,10 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(d.category==="sandbox"){lines.push("ISOLATED LINUX");(d.commands||[]).forEach(x=>lines.push("  "+x.command+"  "+x.description));return lines.join("\n")}
       if(d.command){lines.push((d.categoryLabel||d.category||"COMMAND").toUpperCase(),"","  "+d.command);if(d.baseCommand)lines.push("  base: "+d.baseCommand);lines.push("  "+(d.description||"No description available."));if(d.aliases?.length){lines.push("","ALIASES",...d.aliases.map(x=>"  "+x))}if(d.target)lines.push("","TARGET","  "+d.target);lines.push("","READ-ONLY: "+(d.readOnly===false?"NO":"YES"),"","USAGE",...(d.usage||[]).map(x=>"  "+x));return lines.join("\n")}
     }
-    if(d.ok&&d.result!==undefined){
-      const p=[];if(d.command)p.push("COMMAND: "+d.command);if(d.baseCommand)p.push("BASE: "+d.baseCommand);if(d.label)p.push("DESCRIPTION: "+d.label);if(d.target)p.push("TARGET: "+d.target);if(d.evidence?.evidenceId)p.push("EVIDENCE: "+d.evidence.evidenceId);p.push("",typeof d.result==="string"?d.result:JSON.stringify(d.result,null,2));return p.join("\n");
-    }
-    if(d.result?.stdout||d.result?.stderr){return String(d.result.stdout||"")+(d.result.stderr?"\n[stderr]\n"+d.result.stderr:"")}
-    return JSON.stringify(d,null,2);
+    if(d.ok&&d.result!==undefined) return humanizeCommandResult(d);
+    if(d.result?.stdout||d.result?.stderr) return String(d.result.stdout||"")+(d.result.stderr?"\n[stderr]\n"+d.result.stderr:"");
+    if(d.error) return "COMMAND FAILED\n══════════════════════════════════════════════════════════════\n\n"+String(d.error);
+    return humanValue(d);
   }
 
   async function loadCatalog(){
