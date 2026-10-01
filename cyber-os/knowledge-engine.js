@@ -32,7 +32,8 @@ function catalogHits(q){
   ...rows("electronics",H.electronics),
   ...rows("documentation",H.docs),
   ...rows("engineering formula",H.formulas),
-  ...rows("model",H.models)
+  ...rows("model",H.models),
+  ...rows("structured knowledge",H.knowledgeRecords)
  ];
  const match=v=>Array.isArray(v)?v.join(" ").toLowerCase():String(v?.name||v?.title||v?.command||v?.summary||v||"").toLowerCase();
  const base=sets.filter(x=>match(x.value).includes(q));
@@ -43,12 +44,29 @@ const TOPICS={
 tcp:{definition:"Transmission Control Protocol provides reliable, ordered, connection-oriented byte-stream delivery.",layers:["TCP/IP Transport","OSI Layer 4"],ports:["22 SSH","25 SMTP","80 HTTP","443 HTTPS","445 SMB","3389 RDP"],protocols:["HTTP","HTTPS","SSH","SMTP","IMAP","FTP","SMB","RDP","LDAP","BGP"],flags:["SYN","ACK","FIN","RST","PSH","URG","ECE","CWR"],states:["CLOSED","LISTEN","SYN-SENT","SYN-RECEIVED","ESTABLISHED","FIN-WAIT-1","FIN-WAIT-2","CLOSE-WAIT","LAST-ACK","TIME-WAIT"],commands:["ss -antp","netstat -ano","tcpdump -nn 'tcp'","tshark -Y 'tcp'","Get-NetTCPConnection"],analysis:["TCP three-way handshake","sequence and acknowledgment numbers","retransmissions","resets","window size","TCP stream reconstruction"],risks:["unexpected listeners","exposed management services","cleartext protocols","abnormal connection bursts"],detection:["baseline listeners","correlate PID/process with sockets","review IDS/firewall telemetry","investigate repeated SYN attempts"],tools:["Wireshark","TShark","tcpdump","Nmap","ss","Zeek","Suricata"],labs:["Capture a TCP handshake in an authorised lab","Map a listening port to its owning process","Compare normal and reset-heavy TCP traffic"],games:["Identify TCP flags","Map a TCP port to its application","Choose the correct layer"],docs:["https://www.rfc-editor.org/rfc/rfc9293"]},
 443:{definition:"Port 443 is conventionally associated with HTTPS. HTTP/3 uses QUIC over UDP, so a port number alone does not prove the application.",layers:["TCP/IP Transport: TCP for conventional HTTPS","OSI Layer 4: TCP","OSI Layer 7: HTTP"],ports:["443/TCP HTTPS","443/UDP may be used by QUIC/HTTP/3"],protocols:["HTTPS","HTTP/2","HTTP/3","TLS","QUIC"],flags:["TCP SYN/ACK/FIN/RST for TCP transport"],states:["TCP connection states for TCP-based HTTPS","QUIC uses its own connection model over UDP"],commands:["curl -I https://example.com","curl -v https://example.com","openssl s_client -connect example.com:443","ss -antp | grep ':443'","netstat -ano | findstr ':443'"],analysis:["TCP handshake and TLS handshake","certificate chain","SNI","ALPN","HTTP request/response"],risks:["expired or misconfigured certificates","unexpected exposed web service","weak TLS configuration"],detection:["inspect TLS metadata","validate certificate chain and expiry","monitor unexpected listeners on 443","use packet metadata with web logs"],tools:["Wireshark","OpenSSL","curl","Nmap","SSL Labs"],labs:["Inspect a certificate in a controlled test service","Capture and identify a TLS handshake","Compare HTTP and HTTPS metadata"],games:["Map 443 to HTTPS/TLS","Identify transport versus application layers"],docs:["https://www.rfc-editor.org/rfc/rfc9110","https://www.rfc-editor.org/rfc/rfc9000"]},
 wireshark:{definition:"Wireshark is a network protocol analyzer used to inspect packet captures and live traffic where authorised.",layers:["Decodes protocols across multiple networking layers"],ports:["Filter by tcp.port, udp.port and protocol-specific fields"],protocols:["Ethernet","ARP","IPv4","IPv6","TCP","UDP","DNS","HTTP","TLS","DHCP"],flags:["tcp.flags.syn","tcp.flags.ack","tcp.flags.fin","tcp.flags.reset"],states:["Follow TCP Stream","TCP analysis fields","Expert Information"],commands:["wireshark","tshark -D","tshark -Y 'tcp'","tshark -Y 'tcp.port==443'"],analysis:["pcap/pcapng","display filters","protocol tree","packet bytes","stream reconstruction"],risks:["misinterpreting encrypted payloads","capturing sensitive data without authorisation"],detection:["filter relevant traffic","correlate timestamps with host logs","compare endpoints and ports","preserve capture provenance"],tools:["Wireshark","TShark","tcpdump","Zeek","Suricata"],labs:["Open a provided training PCAP","Filter for TCP handshakes","Follow an authorised TCP stream","Identify DNS and TLS metadata"],games:["Write a display filter for TCP port 443","Identify the transport protocol","Find the SYN packet"],docs:["https://www.wireshark.org/docs/"]}}
+function structuredHits(q){
+ const needle=String(q||"").toLowerCase().trim();
+ return (H.knowledgeRecords||[]).filter(r=>{
+   const hay=JSON.stringify(r).toLowerCase();
+   return hay.includes(needle);
+ }).slice(0,12);
+}
+function structuredArticle(r){
+ const sections=[
+  ["PURPOSE",r.purpose],["SYNTAX",r.syntax],["EXAMPLES",r.examples],["OPTIONS",r.option_breakdown||r.options],
+  ["INPUT",r.input],["OUTPUT",r.output],["RELATED COMMANDS",r.related_commands],["RELATED CONCEPTS",r.related_concepts],
+  ["COMMON MISTAKES",r.common_mistakes],["TROUBLESHOOTING",r.troubleshooting],["SECURITY NOTES",r.security_notes],["LAB NOTES",r.lab_notes]
+ ].filter(([,v])=>v&&((Array.isArray(v)&&v.length)||(!Array.isArray(v)&&String(v).trim())));
+ const body=sections.map(([k,v])=>'<section><h4>'+esc(k)+'</h4><div class="knowledge-record-values">'+(Array.isArray(v)?v.map(x=>'<span>'+esc(x)+'</span>').join(""):'<p>'+esc(v)+'</p>')+'</div></section>').join("");
+ return '<article class="knowledge-focus structured-record"><div><span class="tag">'+esc(String(r.type||"knowledge").toUpperCase())+' · STRUCTURED RECORD</span><h2>'+esc(r.name)+'</h2><p>'+esc(r.summary||"")+'</p><p class="knowledge-meta">'+esc([r.category,r.subcategory,(r.platform||[]).join(", "),r.difficulty].filter(Boolean).join(" · "))+'</p><div class="topic-sections">'+body+'</div><div class="knowledge-links">'+(r.sourceUrl?'<a href="'+esc(r.sourceUrl)+'" target="_blank" rel="noopener">SOURCE ↗</a>':"")+'</div></div></article>';
+}
 function direct(q){return REL.filter(x=>x.key===q||x.title.toLowerCase()===q||x.title.toLowerCase().includes(q)||q.includes(x.key)).slice(0,4)}
 function render(q){
  const box=document.getElementById("knowledgeResult"); if(!box)return;
  if(!q){box.innerHTML='<div class="detail-panel"><h3>Connected knowledge search</h3><p>Try TCP, 443, Wireshark, HTTPS, DNS, OSI, TCP/IP, PowerShell or NIST CSF 2.0.</p></div>';return;}
- const directHits=direct(q),hits=catalogHits(q);
+ const directHits=direct(q),structured=structuredHits(q),hits=catalogHits(q);
  let html="";
+ structured.slice(0,4).forEach(r=>{html+=structuredArticle(r);});
  directHits.forEach(x=>{const t=TOPICS[x.key]||TOPICS[x.title.toLowerCase()];html+='<article class="knowledge-focus"><div><span class="tag">CONNECTED CONCEPT</span><h2>'+esc(x.title)+'</h2><p>'+esc(x.summary)+'</p><div class="chips">'+x.related.map(r=>'<button data-query="'+esc(r)+'">'+esc(r)+'</button>').join("")+'</div>'+(t?'<div class="topic-sections">'+["definition","layers","ports","protocols","flags","states","commands","analysis","risks","detection","tools","labs","games"].filter(k=>t[k]).map(k=>'<section><h4>'+esc(k.toUpperCase())+'</h4><p>'+t[k].map(v=>'<span>'+esc(v)+'</span>').join("")+'</p></section>').join("")+'</div>':'')+'<div class="knowledge-links">'+x.docs.map(u=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">DOCUMENTATION ↗</a>').join(" ")+'</div></div></article>';});
 if(hits.length) html+='<div class="knowledge-subgrid">'+hits.map(x=>'<article class="cyber-card"><span class="tag">'+esc(x.domain.toUpperCase())+'</span><h3>'+esc(Array.isArray(x.value)?x.value[0]:x.value.name||x.value.title||"Record")+'</h3><p>'+esc(Array.isArray(x.value)?x.value.slice(1).join(" · "):x.value.summary||"")+'</p></article>').join("")+'</div>';
  if(!html)html='<div class="detail-panel"><h3>No direct match yet</h3><p>Search the knowledge hub for a broader term, or add a source-backed record to the data catalog.</p></div>';
