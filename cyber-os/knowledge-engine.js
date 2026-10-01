@@ -63,6 +63,7 @@ function structuredArticle(r){
 function direct(q){return REL.filter(x=>x.key===q||x.title.toLowerCase()===q||x.title.toLowerCase().includes(q)||q.includes(x.key)).slice(0,4)}
 function render(q){
  const box=document.getElementById("knowledgeResult"); if(!box)return;
+ if(q&&window.CYBER_ENCYCLOPEDIA&&window.CYBER_ENCYCLOPEDIA.render(q,"knowledgeResult"))return;
  if(!q){box.innerHTML='<div class="detail-panel"><h3>Connected knowledge search</h3><p>Try TCP, 443, Wireshark, HTTPS, DNS, OSI, TCP/IP, PowerShell or NIST CSF 2.0.</p></div>';return;}
  const directHits=direct(q),structured=structuredHits(q),hits=catalogHits(q);
  let html="";
