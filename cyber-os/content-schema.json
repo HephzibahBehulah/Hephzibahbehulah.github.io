@@ -1,1 +1,161 @@
-{"recordVersion":"1.0","required":["id","name","category","summary","source"],"optional":["details","examples","related","security","platform","layer","port","transport","tags","sourceUrl","sourceVersion","verifiedAt"],"verification":["observed","source-backed","reviewed","unknown"],"rule":"Never publish target-scale counts as populated inventory. Counts must be calculated from loaded records."}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Cyber OS Knowledge Record",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "type",
+    "category",
+    "summary",
+    "source"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "command",
+        "concept",
+        "protocol",
+        "tool",
+        "workflow",
+        "lab",
+        "troubleshooting",
+        "reference",
+        "framework"
+      ]
+    },
+    "category": {
+      "type": "string"
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "details": {
+      "type": "string"
+    },
+    "syntax": {
+      "type": "string"
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "option_breakdown": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "input": {
+      "type": "string"
+    },
+    "output": {
+      "type": "string"
+    },
+    "related_commands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_concepts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cross_platform": {
+      "type": "object"
+    },
+    "common_mistakes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "troubleshooting": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "security_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lab_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "difficulty": {
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source": {
+      "type": "string"
+    },
+    "sourceUrl": {
+      "type": "string"
+    },
+    "sourceVersion": {
+      "type": "string"
+    },
+    "verifiedAt": {
+      "type": "string"
+    },
+    "verification": {
+      "enum": [
+        "observed",
+        "source-backed",
+        "reviewed",
+        "unknown"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
