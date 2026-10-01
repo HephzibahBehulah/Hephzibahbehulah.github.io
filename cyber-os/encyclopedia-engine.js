@@ -24,7 +24,7 @@ function allCatalogs(){
 }
 function known(q){
  const n=norm(q); if(!n)return null;
- const exact=[...arr(E.concepts).map(x=>({kind:"concept",name:x.name,data:x})),...arr(E.domains).map(x=>({kind:"domain",name:x[0],data:x})),...arr(E.models).map(x=>({kind:"model",name:x.name,data:x})),...arr(E.frameworks).map(x=>({kind:"framework",name:x.name,data:x})),...arr(E.securityTeams).map(x=>({kind:"team",name:x[0],data:x})),...arr(E.platforms).map(x=>({kind:"platform",name:x[1],data:x})),...arr(E.coreSources).map(x=>({kind:"source",name:x[0],data:x}))];
+ const exact=[...arr(E.commandProfiles).map(x=>({kind:"command",name:x[0],data:x})),...arr(E.concepts).map(x=>({kind:"concept",name:x.name,data:x})),...arr(E.domains).map(x=>({kind:"domain",name:x[0],data:x})),...arr(E.models).map(x=>({kind:"model",name:x.name,data:x})),...arr(E.frameworks).map(x=>({kind:"framework",name:x.name,data:x})),...arr(E.securityTeams).map(x=>({kind:"team",name:x[0],data:x})),...arr(E.platforms).map(x=>({kind:"platform",name:x[1],data:x})),...arr(E.coreSources).map(x=>({kind:"source",name:x[0],data:x}))];
  const hit=exact.find(x=>norm(x.name)===n||norm(x.name).includes(n)||n.includes(norm(x.name)));
  if(hit)return hit;
  const c=allCatalogs().find(x=>norm(x.name)===n||norm(x.name).includes(n)||n.includes(norm(x.name)));
@@ -35,6 +35,7 @@ function search(q){
  const n=norm(q); if(!n)return [];
  const out=[];
  const push=(kind,name,data,score)=>out.push({kind,name,data,score});
+ arr(E.commandProfiles).forEach(x=>{const h=JSON.stringify(x).toLowerCase();if(h.includes(n))push("command",x[0],x,125);});
  arr(E.concepts).forEach(x=>{const h=JSON.stringify(x).toLowerCase();if(h.includes(n))push("concept",x.name,x,120);});
  arr(E.domains).forEach(x=>{const h=(x[0]+" "+x[1]+" "+x[2]).toLowerCase();if(h.includes(n))push("domain",x[0],x,100);});
  arr(E.models).forEach(x=>{const h=JSON.stringify(x).toLowerCase();if(h.includes(n))push("model",x.name,x,100);});
@@ -52,7 +53,8 @@ function section(title,content){
 function article(hit,related){
  const x=hit.data;
  let title=hit.name,summary="",sections="",source="",url="";
- if(hit.kind==="concept"){title=x.name;summary=x.summary;sections+=section("LAYERS",x.layers)+section("PORTS / SERVICES",x.ports)+section("RELATED CONCEPTS",x.related)+section("SECURITY NOTES",x.security);source=x.source;url=x.url;}
+ if(hit.kind==="command"){title=x[0];summary=x[2];sections+=section("PLATFORM",x[1])+section("WHAT IT DOES",x[2])+section("EXAMPLE",x[3])+section("OUTPUT",x[4])+section("CROSS-PLATFORM EQUIVALENTS",x[5]);}
+ else if(hit.kind==="concept"){title=x.name;summary=x.summary;sections+=section("LAYERS",x.layers)+section("PORTS / SERVICES",x.ports)+section("RELATED CONCEPTS",x.related)+section("SECURITY NOTES",x.security);source=x.source;url=x.url;}
  else if(hit.kind==="domain"){title=x[0];summary=x[1];sections+=section("WHAT THIS COVERS",x[1])+section("KNOWLEDGE AREA",x[2]);}
  else if(hit.kind==="model"){summary=x.summary;sections+=section("LAYERS",x.layers)+section("EXAMPLES",x.examples);source=x.source;url=x.url;}
  else if(hit.kind==="framework"){summary=x.summary;sections+=section("FUNCTIONS / AREAS",x.functions)+section("HOW TO USE",x.use);source=x.source;url=x.url;}
