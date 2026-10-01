@@ -1,20 +1,8 @@
 (()=>{"use strict";
-const H=window.CYBER_HUB||{},G=window.CYBER_GRAPH_ENGINE;
+const G=window.CYBER_GRAPH_ENGINE,used=new Set;let n=0;
+const PH=["identify","validate","correlate","investigate","explain"],ACT=["inspect the process tree","check the service owner","compare with expected configuration","correlate endpoint and network telemetry","review recent changes","validate the account context","inspect the file path and signer","check the relevant protocol and port","compare against known-good activity","preserve evidence before containment"],OUT=["before making a containment decision","before treating the signal as malicious","before changing the system","before escalating the case","before closing the alert"];
 const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 function pool(){return G?G.records().filter(x=>x.name):[]}
-function questionFor(r){
- const d=r.data;
- if(r.type==="protocol"&&Array.isArray(d))return {q:"Which transport or service detail is associated with "+r.name+"?",a:d[2]||d[1],ex:"The catalog record links "+r.name+" with "+(d[2]||"its recorded transport/service data")+"."};
- if(r.type==="Windows command"||r.type==="Linux command")return {q:"What is this command used for in Cyber OS learning? "+r.name,a:"Command reference",ex:"Use the command in an appropriate authorised environment and consult its primary documentation."};
- if(r.type==="shortcut"&&Array.isArray(d))return {q:"Which platform is associated with "+r.name+"?",a:d[0],ex:"The shortcut record identifies "+d[0]+" as its platform."};
- return {q:"What knowledge domain does "+r.name+" belong to?",a:r.type,ex:"Cyber OS connects the record to related concepts, sources and learning activities."};
-}
-function makeGame(q){
- const rs=pool().filter(x=>x.name.toLowerCase().includes(String(q||"").toLowerCase())||!q).slice(0,8);
- if(!rs.length)return null;
- const r=rs[Math.floor(Math.random()*rs.length)],item=questionFor(r),others=rs.filter(x=>x!==r).slice(0,3).map(x=>questionFor(x).a);
- const options=[item.a,...others];for(let i=options.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[options[i],options[j]]=[options[j],options[i]]}
- return {title:"Knowledge Challenge: "+r.name,question:item.q,options,answer:options.indexOf(item.a),explain:item.ex};
-}
-window.CYBER_KNOWLEDGE_GAMES={makeGame};
+function makeGame(q){const r=pool().filter(x=>x.name.toLowerCase().includes(String(q||"").toLowerCase())||!q);if(!r.length)return null;if(used.size>=1000000){used.clear();n=0}const id=n++;used.add(id);const x=r[id%r.length],phase=PH[Math.floor(id/Math.max(1,r.length))%5],action=ACT[Math.floor(id/100)%10],out=OUT[Math.floor(id/1000)%5],answer="Use the "+x.name+" knowledge record to "+action+" "+out+".";return{id,title:"Scenario "+(id+1).toLocaleString()+": "+x.name,question:"A "+x.name+" signal appears during the "+phase+" phase. What should the analyst do next?",options:[answer,"Delete the evidence and restart the host","Assume the alert is harmless because the tool is legitimate"],answer:0,explain:answer+" The scenario is generated from the connected Cyber OS knowledge base."}}
+window.CYBER_KNOWLEDGE_GAMES={makeGame,capacity:1000000};
 })();
