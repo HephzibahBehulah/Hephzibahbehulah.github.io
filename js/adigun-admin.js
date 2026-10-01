@@ -99,8 +99,8 @@ document.addEventListener("DOMContentLoaded",()=>{
       const dns=checks.find(x=>x.name==="dns"||String(x.command||"").startsWith("dns-"));
       const gh=checks.find(x=>x.name==="github"||x.command==="github-repo");
       const cf=checks.find(x=>x.name==="cloudflare-edge"||x.command==="edge");
-      if(site)add("Website",site.status||((site.result?.ok===true)?"HEALTHY":"OBSERVED"),site.httpStatus?\`HTTP ${site.httpStatus}\`:"");
-      if(dns)add("DNS",dns.status||"OBSERVED",dns.result?.answers?\`${dns.result.answers.length} records\`:"");
+      if(site)add("Website",site.status||((site.result?.ok===true)?"HEALTHY":"OBSERVED"),site.httpStatus?`HTTP ${site.httpStatus}`:"");
+      if(dns)add("DNS",dns.status||"OBSERVED",dns.result?.answers?`${dns.result.answers.length} records`:"");
       if(gh)add("GitHub",gh.status||"OBSERVED",gh.repository||"");
       if(cf)add("Cloudflare",cf.status||"OBSERVED","");
       lines.push(`Last check    ${fmtDate(d.checkedAt||d.observedAt||Date.now())}`,"","FINDINGS","");
