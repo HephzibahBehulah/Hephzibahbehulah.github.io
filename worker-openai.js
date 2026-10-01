@@ -1500,7 +1500,7 @@ export default {
     const isAdminHost = url.hostname === "admin.hephzibahbehulah.com";
     const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
     const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/tools":"/admin-tools.html","/tools/":"/admin-tools.html","/ai-lab":"/ai-lab.html","/ai-lab/":"/ai-lab.html","/ai-lab.html":"/ai-lab.html","/engineering-library":"/engineering-library.html","/engineering-library/":"/engineering-library.html","/engineering-library.html":"/engineering-library.html","/recon-hub":"/recon-hub.html","/recon-hub/":"/recon-hub.html","/recon-hub.html":"/recon-hub.html"});
-    const publicBlockedPath = ["/ai-lab.html","/engineering-library.html","/recon-hub.html","/recon-hub","/recon-hub/","/ai-lab","/engineering-library","/portfolio.html","/resources.html"].includes(url.pathname);
+    const publicBlockedPath = ["/ai-lab.html","/engineering-library.html","/recon-hub.html","/recon-hub","/recon-hub/","/ai-lab","/engineering-library","/portfolio.html","/resources.html","/admin-tools.html","/data/source-library.json","/js/technical-workbench.js","/js/mega-tools.js","/js/engineering-calculators-local.js","/js/engineering-library.js","/js/recon-hub.js","/js/intelligence-core.js"].includes(url.pathname);
 
     if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
       const auth = await authenticateAdmin(request, env);
