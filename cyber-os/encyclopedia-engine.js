@@ -47,8 +47,8 @@ function search(q){
 }
 function section(title,content){
  if(!content||!String(content).trim())return "";
- const body=Array.isArray(content)?content.map(v=>"<span>"+esc(v)+"</span>").join(""):"<p>"+esc(content)+"</p>";
- return "<section><h4>"+esc(title)+"</h4><div class="ency-values">"+body+"</div></section>";
+ const body=Array.isArray(content)?content.map(v=>'<span>'+esc(v)+'</span>').join(""):'<p>'+esc(content)+'</p>';
+ return '<section><h4>'+esc(title)+'</h4><div class="ency-values">'+body+'</div></section>';
 }
 function article(hit,related){
  const x=hit.data;
