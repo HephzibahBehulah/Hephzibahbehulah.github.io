@@ -1499,6 +1499,8 @@ export default {
     // the server-side ADIGUN_ADMIN_EMAIL allow-list.
     const isAdminHost = url.hostname === "admin.hephzibahbehulah.com";
     const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
+    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/tools":"/admin-tools.html","/tools/":"/admin-tools.html","/ai-lab":"/ai-lab.html","/ai-lab/":"/ai-lab.html","/ai-lab.html":"/ai-lab.html","/engineering-library":"/engineering-library.html","/engineering-library/":"/engineering-library.html","/engineering-library.html":"/engineering-library.html","/recon-hub":"/recon-hub.html","/recon-hub/":"/recon-hub.html","/recon-hub.html":"/recon-hub.html"});
+    const publicBlockedPath = ["/ai-lab.html","/engineering-library.html","/recon-hub.html","/recon-hub","/recon-hub/","/ai-lab","/engineering-library","/portfolio.html","/resources.html"].includes(url.pathname);
 
     if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
       const auth = await authenticateAdmin(request, env);
@@ -1508,6 +1510,18 @@ export default {
       return env.ASSETS.fetch(new Request(adminUrl.toString(), request));
     }
 
+    if (isAdminHost && PRIVATE_PAGE_ROUTES[url.pathname]) {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
+      const privateUrl = new URL(request.url);
+      privateUrl.pathname = PRIVATE_PAGE_ROUTES[url.pathname];
+      return env.ASSETS.fetch(new Request(privateUrl.toString(), request));
+    }
+
+    if (!isAdminHost && publicBlockedPath) {
+      return new Response("Not found", { status: 404, headers: {"cache-control":"no-store"} });
+    }
+
     if (isAdminApi) {
       const auth = await authenticateAdmin(request, env);
       if (!auth.ok) return auth.response;
@@ -1515,7 +1529,7 @@ export default {
 
     if (
       url.hostname === "hephzibahbehulah.com" &&
-      ["/admin.html", "/js/adigun-admin.js", "/css/adigun-admin.css"].includes(url.pathname)
+      ["/admin.html", "/admin-tools.html", "/js/adigun-admin.js", "/css/adigun-admin.css"].includes(url.pathname)
     ) {
       return new Response("Not found", { status: 404 });
     }
