@@ -30,7 +30,100 @@ document.addEventListener("DOMContentLoaded",()=>{
   async function status(){
     const send=$("#adminSend");if(send)send.disabled=false;
     try{const r=await fetch("/api/admin/status",{credentials:"same-origin",cache:"no-store"});const d=await r.json().catch(()=>({}));if(!r.ok||!d.authenticated){accessStatus.textContent="● DENIED";accessStatus.className="denied";systemState.textContent="BLOCKED";identityState.textContent="NOT AUTHENTICATED";identityDetail.textContent=d.error||"Cloudflare Access authentication is required.";heroAuth.textContent="ACCESS DENIED";heroIdentity.textContent=d.error||"Sign in through Cloudflare Access.";return;}accessStatus.textContent="● AUTHENTICATED";accessStatus.className="ok";identityEmail.textContent=d.identity?.email||"verified";systemState.textContent="ONLINE";identityState.textContent="AUTHORIZED";identityDetail.textContent=d.identity?.email||"Cloudflare Access user";heroAuth.textContent="CLOUDFLARE ACCESS";heroIdentity.textContent=d.identity?.email||"ADIGUN Control administrator";}catch{systemState.textContent="UNAVAILABLE";identityState.textContent="UNKNOWN";identityDetail.textContent="Authentication status could not be refreshed. The Private Operator remains available and will report request errors.";}}
-  function humanize(d,target){const lines=["SYSTEM INTELLIGENCE","────────────────────────────────"];const checks=Array.isArray(d?.checks)?d.checks:[];const add=(name,status,detail)=>lines.push(`${name.padEnd(14)} ${String(status||"UNKNOWN").toUpperCase()}${detail?"   "+detail:""}`);if(checks.length){const site=checks.find(x=>x.name==="website"),dns=checks.find(x=>x.name==="dns"),gh=checks.find(x=>x.name==="github"),cf=checks.find(x=>x.name==="cloudflare-edge");if(site)add("Website",site.status,site.httpStatus?`HTTP ${site.httpStatus}`:"");if(dns)add("DNS",dns.status,dns.result?.answers?`${dns.result.answers.length} A records`:"");if(gh)add("GitHub",gh.status,gh.repository||"");if(cf)add("Cloudflare",cf.status,"");const h=site?.securityHeaders||checks.find(x=>x.name==="command:http-headers")?.result?.headers||{};const missing=["strictTransportSecurity","contentSecurityPolicy","xContentTypeOptions","permissionsPolicy","crossOriginOpenerPolicy","crossOriginResourcePolicy"].filter(k=>h[k]==null);add("Security",missing.length?"NEEDS REVIEW":"HEALTHY",`${missing.length} headers missing`);lines.push(`Last check    ${fmtDate(d.checkedAt||d.observedAt||Date.now())}`,"","FINDINGS","");if(site?.httpStatus===522)lines.push("[HIGH] Website returned HTTP 522","The Cloudflare edge responded, but the origin connection timed out.","");if(missing.includes("strictTransportSecurity"))lines.push("[MEDIUM] HSTS not detected","Strict-Transport-Security was not present in the observed response.","");if(missing.includes("contentSecurityPolicy"))lines.push("[MEDIUM] CSP not detected","Content-Security-Policy was not present.","");if(dns?.status==="healthy")lines.push("[GOOD] DNS responding","Cloudflare DNS returned the observed address records.","");if(cf?.status==="observed")lines.push("[INFO] Cloudflare edge detected","Edge presence was confirmed from live response headers.","");if(gh?.status==="unavailable")lines.push("[INFO] GitHub unavailable","The inspection endpoint could not retrieve the repository metadata.","");lines.push("","VIEW RAW EVIDENCE is available below for the complete machine-readable record.");}else if(d?.target&&d?.result){lines.push(`Target        ${d.target}`,`Status        ${d.result?.ok===false?"DEGRADED":"OBSERVED"}`);if(d.result?.httpStatus)lines.push(`HTTP          ${d.result.httpStatus}`);if(Array.isArray(d.result?.data))lines.push(`Records       ${d.result.data.length}`);lines.push(`Last check    ${fmtDate(Date.now())}`);}else lines.push(`Target        ${target||"inspection"}`,"No structured inspection summary was returned.");return lines.join("\n");}
+  function prettyKey(key){
+    return String(key||"").replace(/([a-z])([A-Z])/g,"$1 $2").replace(/[_-]+/g," ").replace(/\\b\\w/g,m=>m.toUpperCase());
+  }
+  function prettyValue(value, depth=0){
+    if(value===null||value===undefined||value==="") return "Not reported";
+    if(typeof value==="boolean") return value?"Yes":"No";
+    if(typeof value==="number") return String(value);
+    if(typeof value==="string") return value;
+    if(Array.isArray(value)){
+      if(!value.length) return "None";
+      if(value.every(v=>["string","number","boolean"].includes(typeof v))) return value.map(String).join(", ");
+      return value.slice(0,12).map((v,i)=>`${i+1}. ${prettyValue(v,depth+1)}`).join("\n");
+    }
+    if(typeof value==="object"){
+      if(depth>2) return "[details available in raw evidence]";
+      return Object.entries(value).slice(0,30).map(([k,v])=>`${prettyKey(k)}: ${prettyValue(v,depth+1)}`).join("\n");
+    }
+    return String(value);
+  }
+  function appendResult(lines,label,result){
+    if(!result || typeof result!=="object"){lines.push(String(result??"No result returned."));return;}
+    if(result.httpStatus!=null) lines.push("HTTP status   "+String(result.httpStatus)+(result.ok===true?" — successful":result.ok===false?" — non-success":""));
+    if(result.finalUrl) lines.push("Final URL     "+String(result.finalUrl));
+    if(result.durationMs!=null) lines.push("Response time "+String(result.durationMs)+" ms");
+    if(result.title) lines.push("Title         "+String(result.title));
+    if(result.headers){
+      lines.push("","HEADERS");
+      Object.entries(result.headers).slice(0,40).forEach(([k,v])=>lines.push("  "+k+": "+String(v)));
+    }
+    if(result.checks && !Array.isArray(result.checks)){
+      lines.push("","CHECKS");
+      Object.entries(result.checks).forEach(([k,v])=>lines.push("  "+prettyKey(k)+": "+prettyValue(v)));
+    }
+    if(Array.isArray(result.checks)){
+      lines.push("","CHECKS");
+      result.checks.slice(0,30).forEach((x,i)=>{
+        const name=x?.command||x?.name||x?.path||`Check ${i+1}`;
+        const state=x?.httpStatus!=null?`HTTP ${x.httpStatus}`:x?.ok===true?"OK":x?.ok===false?"FAILED":"OBSERVED";
+        lines.push("  "+name+": "+state);
+      });
+      if(result.checks.length>30)lines.push("  … "+String(result.checks.length-30)+" more");
+    }
+    for(const [k,v] of Object.entries(result)){
+      if(["httpStatus","ok","finalUrl","durationMs","title","headers","checks"].includes(k))continue;
+      if(k==="body"){
+        const text=String(v||"");
+        lines.push("","CONTENT",text.slice(0,2500)+(text.length>2500?"\n… content truncated":""));
+      }else if(k==="data" && v && typeof v==="object"){
+        lines.push("","DETAILS");
+        if(v.full_name||v.name)lines.push("  Repository: "+String(v.full_name||v.name));
+        if(v.description)lines.push("  Description: "+String(v.description));
+        if(v.default_branch)lines.push("  Default branch: "+String(v.default_branch));
+        if(v.html_url)lines.push("  URL: "+String(v.html_url));
+        if(v.language)lines.push("  Primary language: "+String(v.language));
+        if(Array.isArray(v))lines.push("  Records: "+String(v.length));
+      }else{
+        lines.push(prettyKey(k)+"  "+prettyValue(v));
+      }
+    }
+  }
+  function humanize(d,target){
+    const lines=["SYSTEM INTELLIGENCE","────────────────────────────────"];
+    const checks=Array.isArray(d?.checks)?d.checks:[];
+    const add=(name,status,detail)=>lines.push(`${String(name).padEnd(14)} ${String(status||"UNKNOWN").toUpperCase()}${detail?"   "+detail:""}`);
+    if(checks.length){
+      const site=checks.find(x=>x.name==="website"||x.command==="site-health"||x.command==="http-status");
+      const dns=checks.find(x=>x.name==="dns"||String(x.command||"").startsWith("dns-"));
+      const gh=checks.find(x=>x.name==="github"||x.command==="github-repo");
+      const cf=checks.find(x=>x.name==="cloudflare-edge"||x.command==="edge");
+      if(site)add("Website",site.status||((site.result?.ok===true)?"HEALTHY":"OBSERVED"),site.httpStatus?\`HTTP ${site.httpStatus}\`:"");
+      if(dns)add("DNS",dns.status||"OBSERVED",dns.result?.answers?\`${dns.result.answers.length} records\`:"");
+      if(gh)add("GitHub",gh.status||"OBSERVED",gh.repository||"");
+      if(cf)add("Cloudflare",cf.status||"OBSERVED","");
+      lines.push(`Last check    ${fmtDate(d.checkedAt||d.observedAt||Date.now())}`,"","FINDINGS","");
+      if(site?.httpStatus===522||site?.result?.httpStatus===522)lines.push("[HIGH] Website returned HTTP 522","The Cloudflare edge responded, but the origin connection timed out.","");
+      if(site?.result?.ok===true)lines.push("[GOOD] Website responded successfully","The authorized production homepage returned a successful HTTP response.","");
+      if(dns?.status==="healthy"||dns?.result?.answers)lines.push("[GOOD] DNS responded","DNS evidence was returned by the inspection service.","");
+      if(cf?.status==="observed"||cf?.result)lines.push("[INFO] Cloudflare edge evidence available","The response included edge-related evidence.","");
+      lines.push("","DETAILS");
+      checks.slice(0,12).forEach(x=>{
+        lines.push("","• "+String(x.name||x.command||"Check").toUpperCase());
+        if(x.result)appendResult(lines,x.name||x.command,x.result);
+        else if(x.error)lines.push("  Error: "+String(x.error));
+      });
+    }else if(d?.target&&d?.result){
+      lines.push("Target        "+String(d.target));
+      appendResult(lines,target,d.result);
+      lines.push("","Last check    "+fmtDate(d.checkedAt||d.observedAt||Date.now()));
+    }else{
+      lines.push("Target        "+String(target||"inspection"),"No structured inspection summary was returned.");
+    }
+    lines.push("","","VIEW RAW EVIDENCE remains available when the complete machine-readable record is needed.");
+    return lines.join("\n");
+  }
   function saveHistory(d,target){const h=readHistory(),checks=Array.isArray(d?.checks)?d.checks:[],find=n=>checks.find(x=>x.name===n);h.unshift({at:d?.checkedAt||new Date().toISOString(),website:find("website")?.status||"—",dns:find("dns")?.status||"—",github:find("github")?.status||"—",security:find("website")?.securityHeaders?"NEEDS REVIEW":"—",target:target||"all"});writeHistory(h);}
   function renderHistory(){const box=$("#intelHistoryView");if(!box)return;const h=readHistory();box.style.display="block";box.innerHTML=h.length?`<div style="font-family:var(--font-mono,monospace);white-space:pre-wrap;line-height:1.6;padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:8px"><strong>INTELLIGENCE HISTORY</strong>\n\n${h.map(x=>`${fmtDate(x.at)}\nWebsite: ${String(x.website).toUpperCase()}\nDNS: ${String(x.dns).toUpperCase()}\nGitHub: ${String(x.github).toUpperCase()}\nSecurity: ${String(x.security).toUpperCase()}\n`).join("\n")}</div>`:"<div class=\"admin-inspect-output\">No previous intelligence checks have been saved in this browser.</div>";}
   async function inspect(target){inspectState.textContent="● SCANNING";inspectOutput.textContent="Running "+target+" inspection…";document.querySelectorAll("[data-inspect]").forEach(b=>b.disabled=true);try{const r=await fetch("/api/admin/inspect?target="+encodeURIComponent(target),{credentials:"same-origin",cache:"no-store"});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Inspection failed");lastRaw=d;const human=$("#intelHumanView");if(human){human.style.display="block";human.textContent=humanize(d,target)}const raw=$("#intelRawView");if(raw){raw.textContent=JSON.stringify(d,null,2);raw.style.display="none"}const hist=$("#intelHistoryView");if(hist)hist.style.display="none";saveHistory(d,target);inspectOutput.textContent="Human-readable intelligence is shown above. Use VIEW RAW EVIDENCE for the complete record.";inspectState.textContent="● COMPLETE";}catch(e){inspectOutput.textContent="Inspection error: "+String(e.message||e);inspectState.textContent="● ERROR";}finally{document.querySelectorAll("[data-inspect]").forEach(b=>b.disabled=false);}}
