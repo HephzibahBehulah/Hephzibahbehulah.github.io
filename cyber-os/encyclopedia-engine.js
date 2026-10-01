@@ -61,14 +61,10 @@ function article(hit,related){
  else if(hit.kind==="team"){summary=x[1];sections+=section("ROLE",x[1])+section("TYPICAL OUTPUTS / TECHNOLOGY",x[2]);}
  else if(hit.kind==="platform"){summary=x[2];sections+=section("PLATFORM",x[0])+section("SECURITY SURFACE",x[2]);}
  else if(hit.kind==="source"){summary=x[2];source=x[0];url=x[1];sections+=section("SOURCE ROLE",x[2]);}
- else if(hit.kind==="catalog"){
-   summary=cardSummary(x);
-   if(Array.isArray(x)){sections+=section("DETAILS",x.slice(1));}
-   else {sections+=section("PURPOSE",x.purpose||x.summary)+section("SYNTAX",x.syntax)+section("EXAMPLES",x.examples)+section("SECURITY NOTES",x.security_notes);}
- }
+ else if(hit.kind==="catalog"){summary=cardSummary(x);sections+=section("DETAILS",Array.isArray(x)?x.slice(1):[x.purpose||x.summary,x.syntax,...(x.examples||[]),...(x.security_notes||[])]);}
  const rel=related.filter(r=>r!==hit).slice(0,12);
- const relatedHtml=rel.length?"<section><h4>RELATED KNOWLEDGE</h4><div class="ency-related">"+rel.map(r=>"<button data-ency-query=""+esc(r.name)+"">"+esc(r.name)+"</button>").join("")+"</div></section>":"";
- return "<article class="ency-focus"><div class="ency-head"><span class="tag">"+esc(hit.kind.toUpperCase())+" · HUMAN-READABLE KNOWLEDGE PAGE</span><h2>"+esc(title)+"</h2><p>"+esc(summary)+"</p></div><div class="ency-sections">"+sections+relatedHtml+"</div>"+(url?"<div class="knowledge-links"><a href=""+esc(url)+"" target="_blank" rel="noopener">"+esc(source||"SOURCE")+" ↗</a></div>":"")+"</article>";
+ const relatedHtml=rel.length?'<section><h4>RELATED KNOWLEDGE</h4><div class="ency-related">'+rel.map(r=>'<button data-ency-query="'+esc(r.name)+'">'+esc(r.name)+'</button>').join("")+'</div></section>':"";
+ return '<article class="ency-focus"><div class="ency-head"><span class="tag">'+esc(hit.kind.toUpperCase())+' · HUMAN-READABLE KNOWLEDGE PAGE</span><h2>'+esc(title)+'</h2><p>'+esc(summary)+'</p></div><div class="ency-sections">'+sections+relatedHtml+'</div>'+(url?'<div class="knowledge-links"><a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(source||"SOURCE")+' ↗</a></div>':"")+'</article>';
 }
 function render(q,targetId="knowledgeResult"){
  const box=document.getElementById(targetId); if(!box)return false;
@@ -81,7 +77,7 @@ function render(q,targetId="knowledgeResult"){
 }
 function renderLanding(targetId="knowledgeResult"){
  const box=document.getElementById(targetId);if(!box)return;
- box.innerHTML="<article class="ency-focus"><div class="ency-head"><span class="tag">CYBERSECURITY ENCYCLOPEDIA</span><h2>Search → Understand → Connect → Copy → Practice</h2><p>"+esc(E.mission)+"</p></div><div class="ency-sections">"+section("KNOWLEDGE FLOW",E.flow)+section("MAJOR DOMAINS",E.domains.map(x=>x[0]+" — "+x[1]))+section("SECURITY LIFECYCLE",E.lifecycle.map(x=>x[0]+" — "+x[1]))+"</div></article>";
+ box.innerHTML='<article class="ency-focus"><div class="ency-head"><span class="tag">CYBERSECURITY ENCYCLOPEDIA</span><h2>Search → Understand → Connect → Copy → Practice</h2><p>'+esc(E.mission)+'</p></div><div class="ency-sections">'+section("KNOWLEDGE FLOW",E.flow)+section("MAJOR DOMAINS",E.domains.map(x=>x[0]+" — "+x[1]))+section("SECURITY LIFECYCLE",E.lifecycle.map(x=>x[0]+" — "+x[1]))+'</div></article>';
 }
 window.CYBER_ENCYCLOPEDIA={...E,search,known,render,renderLanding};
 })();
