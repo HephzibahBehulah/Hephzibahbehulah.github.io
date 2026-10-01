@@ -34,7 +34,7 @@ concepts:[
 ],commandProfiles:[
 ["grep","Linux / Unix","Search text using patterns. Useful for logs, configuration review and evidence triage.","grep -Rni 'pattern' /path","Searches matching lines; output depends on flags and input.","Select-String (PowerShell) · findstr (Windows CMD)"],
 ["Select-String","PowerShell","Search text in files or pipeline input using patterns.","Select-String -Path .\\*.log -Pattern 'error'","Matching lines with file and line context.","grep (Linux) · findstr (Windows CMD)"],
-["findstr","Windows CMD","Search text in files and command output.","findstr /spin "error" *.log","Matching lines and filenames depending on options.","Select-String (PowerShell) · grep (Linux)"],
+["findstr","Windows CMD","Search text in files and command output.",'findstr /spin "error" *.log',"Matching lines and filenames depending on options.","Select-String (PowerShell) · grep (Linux)"],
 ["ss","Linux","Inspect sockets, listeners and connection state.","ss -tulpn","Socket and process information when permitted.","netstat (Windows/Linux) · Get-NetTCPConnection (PowerShell)"],
 ["netstat","Windows / Linux","Display network connections, listening ports and related state; Windows can show owning PIDs.","netstat -ano","Connection and listener table; Windows PID mapping can be correlated with task tools.","ss (Linux) · Get-NetTCPConnection (PowerShell)"],
 ["Get-NetTCPConnection","PowerShell","Inspect TCP connections and listening sockets on Windows.","Get-NetTCPConnection -State Listen","Objects containing local/remote addresses, ports and connection state.","netstat -ano · ss -antp"],
