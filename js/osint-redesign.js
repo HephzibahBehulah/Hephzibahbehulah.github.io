@@ -166,7 +166,6 @@ document.addEventListener("DOMContentLoaded", function(){
     ["Projects","Open projects and workbench","#projects"],
     ["Recon Hub","Open the reconnaissance hub","recon-hub.html"],
     ["Terminal","Open the browser command terminal","#terminal"],
-    ["Engineering Library","Open the engineering library","engineering-library.html"]
   ];
 
   var overlay=document.createElement("div");
