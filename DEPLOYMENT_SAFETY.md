@@ -57,3 +57,12 @@ The repository has GitHub Actions static validation, but no repository workflow 
 ## Rule
 
 A change is not considered production-good merely because GitHub CI is green. It must also pass live regression verification.
+
+
+## Hosting portability
+
+The application is designed to keep the browser-facing API contract independent from the current hosting provider. Cloudflare-specific Worker, binding and Access configuration is treated as a runtime adapter.
+
+When changing hosts, deploy the replacement in parallel, preserve the current runtime for rollback, keep the relative `/api/*` contract stable, move secrets through the new provider's secret manager, and switch traffic only after functional verification.
+
+See `ARCHITECTURE.md` and `deployment/PORTABILITY.md` for the source-of-truth architecture and migration procedure.
