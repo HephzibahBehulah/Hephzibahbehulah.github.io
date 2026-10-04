@@ -810,12 +810,20 @@ function normalizeContent(content) {
 function normalizeMessages(body) {
   const raw = Array.isArray(body?.messages) ? body.messages : [{ role:"user", content:String(body?.message || "") }];
   const out=[]; let total=0;
+  const MAX_NORMALIZED_BYTES=22*1024*1024;
   for (const m of raw.slice(-12)) {
     const role=["user","assistant"].includes(m?.role)?m.role:"user";
     const content=normalizeContent(m?.content);
     if (!content || (typeof content==="string" && !content.trim())) continue;
-    total += typeof content==="string" ? content.length : JSON.stringify(content).length;
-    if (total>50000) break;
+    const weight = typeof content==="string"
+      ? content.length
+      : content.reduce((sum,p)=>{
+          if(p?.type==="input_image") return sum+120;
+          if(p?.type==="input_file") return sum+String(p.file_data||"").length+256;
+          return sum+String(p?.text||"").length;
+        },0);
+    if(total+weight>MAX_NORMALIZED_BYTES) break;
+    total += weight;
     out.push({role,content});
   }
   return out;
