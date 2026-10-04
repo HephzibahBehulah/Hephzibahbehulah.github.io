@@ -9,7 +9,6 @@
     {path:'./',title:'Home'},
     {path:'about.html',title:'About'},
     {path:'contact.html',title:'Contact'},
-    {path:'engineering-library.html',title:'Engineering Library'},
     {path:'recon-hub.html',title:'Recon Hub'},
     {path:'ai-lab.html',title:'AI Lab'}
   ];
