@@ -194,30 +194,21 @@ The catalogue is data-driven through **data/source-library.json**, making it sca
 
 ## 9. Engineering / Elektroniker Lab
 
-The Engineering section provides practical browser-local calculations.
+Engineering calculators are now part of the unified Mega Tools workspace rather than a separate page.
 
-The engineering calculator implementation is **js/engineering-library.js**, now consumed by the unified Mega Tools workspace.
+The engineering runtime is maintained through **js/engineering-calculators-local.js** and **js/engineering-library.js** and is indexed by **js/mega-tools.js**.
 
-The separate Engineering Library expands this into:
+The unified workspace covers practical calculations across:
 
-- electrical calculations
+- electrical engineering
 - HVAC
 - plumbing
 - construction
-- technical calculations
-- engineering method/reference guidance
+- mechanical engineering
+- electronics
+- networking-related calculations
 
-The calculation method emphasises:
-
-1. governing formula
-2. visible units
-3. input validation
-4. explicit assumptions
-5. standards and manufacturer/project conditions where applicable
-
-Safety-critical engineering decisions still require the applicable standards, manufacturer information and actual project conditions.
-
----
+Calculations execute locally in the browser where supported, with formulas, units and validation exposed through the Mega Tools interface.
 
 ## 10. Knowledge Library
 
