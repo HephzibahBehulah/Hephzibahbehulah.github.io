@@ -1,7 +1,6 @@
 /* HB GLOBAL SEARCH v2
    Central site-wide search for the main portfolio.
    Searches the current DOM, known first-party pages, tools, resources,
-   terminal commands and accessible metadata without touching Recon Hub.
 */
 (() => {
   'use strict';
@@ -11,7 +10,6 @@
     { path: './', title: 'Home / Intelligence Map' },
     { path: 'about.html', title: 'About' },
     { path: 'contact.html', title: 'Contact' },
-    { path: 'recon-hub.html', title: 'Recon Hub' },
     { path: 'ai-lab.html', title: 'AI Lab' }
   ];
 
