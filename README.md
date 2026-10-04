@@ -54,7 +54,7 @@ The canonical homepage is **index.html**.
 
 Dedicated workspaces:
 
-- **recon-hub.html** — passive OSINT and attack-surface research
+- **cyber-os/index.html — integrated reconnaissance** — passive OSINT and attack-surface research
 
 The former standalone Pentest Lab experience has been consolidated into the main Terminal.
 
@@ -661,7 +661,7 @@ External web access can also be restricted by browser CORS and the policies of t
 
 # 19. Recon Hub
 
-**recon-hub.html**
+**cyber-os/index.html — integrated reconnaissance**
 
 The Recon Hub is a passive-first OSINT and attack-surface research workspace.
 
