@@ -1,0 +1,28 @@
+/* ADIGUN MOBILE SYSTEM v1
+   Global responsive hardening. Page-specific CSS remains authoritative.
+*/
+:root{--hb-safe-x:clamp(12px,4vw,32px);--hb-touch:44px}
+html{width:100%;max-width:100%;overflow-x:hidden;scroll-padding-top:80px}
+body{width:100%;max-width:100%;min-width:0;overflow-x:hidden}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,canvas,iframe{max-width:100%;height:auto}
+pre,code{max-width:100%}
+pre{overflow:auto;-webkit-overflow-scrolling:touch;white-space:pre-wrap;overflow-wrap:anywhere}
+table{max-width:100%;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+input,select,textarea,button{max-width:100%;font:inherit}
+button,a,input,select,textarea{touch-action:manipulation}
+button,.os-btn,.btn,.nav-toggle,.os-mini{min-height:var(--hb-touch)}
+.os-shell{min-width:0;max-width:100vw}
+.os-main,.os-content,.os-panel,.os-panel-body,.os-panel-head{min-width:0;max-width:100%}
+.os-panel-head{gap:10px;flex-wrap:wrap}
+.os-search,.panel-tools input,.resource-controls input,.resource-controls select{min-width:0}
+.hb-mobile-language{position:fixed;z-index:9998;top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));display:flex;align-items:center;gap:6px;padding:5px 7px;border:1px solid rgba(125,255,178,.35);border-radius:999px;background:rgba(5,10,14,.92);backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.hb-mobile-language label{font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#9fb0bb}
+.hb-mobile-language select{min-height:34px;border:0;background:transparent;color:#e9f4f7;font-weight:700;outline:none;cursor:pointer}
+.hb-mobile-language option{background:#071015;color:#e9f4f7}
+.hb-language-hidden{display:none!important}
+@media(max-width:1024px){.os-shell{display:flex;flex-direction:column}.os-sidebar{position:relative;top:auto;left:auto;width:100%;max-height:none;overflow:visible}.os-main{width:100%;max-width:100vw}.os-content{padding-inline:var(--hb-safe-x)}.os-top{gap:10px;flex-wrap:wrap}.os-top-actions{max-width:100%;flex:1 1 320px}.cyber-top-search{max-width:100%;flex:1 1 320px}}
+@media(max-width:768px){html{font-size:15px}.os-content{padding-inline:12px}.os-top{padding-inline:12px}.os-top-actions,.cyber-top-search{width:100%;flex-basis:100%}.os-search{width:100%}.os-panel-head{align-items:flex-start}.os-actions{flex-direction:column;align-items:stretch}.os-actions>*{width:100%;max-width:none}.os-btn{justify-content:center;text-align:center;min-height:46px}.os-nav{display:grid;grid-template-columns:1fr 1fr;gap:6px}.os-nav a{min-width:0;overflow-wrap:anywhere}.os-status{overflow-wrap:anywhere}.hb-profile-command-main,.hb-profile-dashboard,.tool-lab-hero-grid,.cyber-deck-shell,.detection-layout,.formula-layout{grid-template-columns:1fr!important}.hb-profile-spectrum,.hb-flow-chain{grid-template-columns:1fr 1fr}.hb-flow-chain{display:grid;gap:6px}.hb-flow-chain i{display:none}.hb-profile-repo-toolbar,.panel-tools,.resource-controls{display:grid;grid-template-columns:1fr;gap:8px}.hb-profile-repo-toolbar>*{width:100%}.query-grid,.workflow,.evidence-grid,.learning-grid,.cyber-grid,.flow-grid,.recon-grid{grid-template-columns:1fr!important}.os-footer{overflow-wrap:anywhere}.hb-mobile-language{top:auto;bottom:max(10px,env(safe-area-inset-bottom));right:max(10px,env(safe-area-inset-right))}}
+@media(max-width:480px){.os-nav{grid-template-columns:1fr}.os-content{padding-inline:8px}.os-top{padding-inline:8px}.hb-profile-spectrum,.hb-flow-chain{grid-template-columns:1fr}.hb-mobile-language label{display:none}.hb-mobile-language{padding:4px}.hb-mobile-language select{min-height:36px}.os-panel{border-radius:10px}.os-panel-head{font-size:.78rem}.os-kicker{overflow-wrap:anywhere}}
+@media(orientation:landscape) and (max-height:520px){.os-sidebar{max-height:50vh;overflow:auto}.hb-mobile-language{bottom:8px;top:auto}}
+@media(prefers-reduced-motion:reduce){.hb-mobile-language{backdrop-filter:none}}
