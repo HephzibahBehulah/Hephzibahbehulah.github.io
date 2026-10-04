@@ -164,7 +164,6 @@ document.addEventListener("DOMContentLoaded", function(){
     ["Knowledge","Open the knowledge library","#knowledgeLibrary"],
     ["Bible Quiz","Start the Bible study section","#genzBible"],
     ["Projects","Open projects and workbench","#projects"],
-    ["Recon Hub","Open the reconnaissance hub","recon-hub.html"],
     ["Terminal","Open the browser command terminal","#terminal"],
   ];
 
