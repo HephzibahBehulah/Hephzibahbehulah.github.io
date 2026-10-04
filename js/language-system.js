@@ -97,10 +97,10 @@
 
     if(el.hasAttribute('data-i18n')){
       const key = el.getAttribute('data-i18n');
-      el.textContent = current === 'en' ? original.text : (dict[key] || lookup(original.text) || original.text);
+      const nextText = current === 'en' ? original.text : (dict[key] || lookup(original.text) || original.text);\n      if(el.textContent !== nextText) el.textContent = nextText;
     } else if(el.children.length === 0 && !['SCRIPT','STYLE','CODE','PRE'].includes(el.tagName)){
       const translated = current === 'en' ? original.text : lookup(original.text);
-      if(translated) el.textContent = translated;
+      if(translated && el.textContent !== translated) el.textContent = translated;
     }
 
     [
@@ -110,7 +110,7 @@
     ].forEach(([keyAttr,target])=>{
       if(!el.hasAttribute(keyAttr)) return;
       const key = el.getAttribute(keyAttr);
-      el.setAttribute(target, current === 'en' ? (original[target] || '') : (dict[key] || lookup(original[target] || '') || original[target] || ''));
+      const nextAttr = current === 'en' ? (original[target] || '') : (dict[key] || lookup(original[target] || '') || original[target] || '');\n      if(el.getAttribute(target) !== nextAttr) el.setAttribute(target,nextAttr);
     });
 
     // Translate common attributes even where pages do not yet have explicit keys.
@@ -120,7 +120,7 @@
         const value = original[target];
         if(!value) return;
         const translated = lookup(value);
-        if(translated) el.setAttribute(target,translated);
+        if(translated && el.getAttribute(target) !== translated) el.setAttribute(target,translated);
       });
     }
   }
