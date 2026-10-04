@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   var commands=[
-    ["Overview","Jump to the main view","#overview"],
+    ["Profile / Portfolio","Start with the public identity and live portfolio","#profile-hub"],
     ["Intelligence Tree","Explore the knowledge map","#tree"],
     ["Resource Matrix","Open technical sources","#resourceMatrix"],
     ["Ebook Vault","Open the ebook archive","#ebookVault"],
