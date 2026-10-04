@@ -1,6 +1,6 @@
 # Hephzibah Behulah AI Platform Backend
 
-This directory is the independently deployable AI service boundary. The current production site also exposes the same safe API contract from its Worker so the AI Lab can operate immediately. Later, this service can move behind a Cloudflare Service Binding without changing the frontend API contract.
+This directory is the independently deployable AI service boundary. The current production site exposes the same safe API contract from its current Worker runtime so the AI platform can operate immediately. The frontend depends on the API contract, not on the implementation vendor. A future host can replace the current Worker adapter without requiring a frontend rewrite.
 
 ## API contract
 
@@ -11,9 +11,11 @@ This directory is the independently deployable AI service boundary. The current 
 - POST `/api/knowledge/ingest` with the `x-hb-admin-key` secret header
 - GET `/api/github/repo?repo=HephzibahBehulah/name`
 
-## Cloudflare architecture
+## Current runtime adapter
 
-Workers AI provides inference through the `AI` binding. AI Search provides managed retrieval and built-in document storage through the `AI_SEARCH` namespace binding. Public chat is rate-limited. Private document ingestion requires the `AI_ADMIN_KEY` secret.
+The current deployment uses Cloudflare Workers AI through the `AI` binding and AI Search through the `AI_SEARCH` namespace binding. Public chat is rate-limited. Private document ingestion requires the `AI_ADMIN_KEY` secret.
+
+These bindings are implementation details of the current runtime. The browser-facing `/api/*` contract is the stable integration boundary.
 
 Cloudflare's current AI Search Workers Binding supports runtime instance creation, search/chat, and Items uploads. Workers AI uses the `AI` binding. The frontend keeps local document and dataset analysis as the privacy-first path.
 
