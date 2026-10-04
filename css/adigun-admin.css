@@ -197,3 +197,27 @@
 .adigun-overview-footer{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;color:var(--muted);font:7px var(--mono);letter-spacing:.08em}
 @media(max-width:1000px){.adigun-overview-grid{grid-template-columns:1fr}.adigun-overview-main{border-right:0;border-bottom:1px solid var(--line)}.adigun-status-strip{grid-template-columns:1fr 1fr}.adigun-status-strip>div:nth-child(2){border-right:0}.adigun-command-panels,.adigun-event-grid{grid-template-columns:1fr}}
 @media(max-width:650px){.adigun-overview-main{padding:24px 16px}.adigun-overview-title-row{display:block}.adigun-clearance{text-align:left;margin-top:16px}.adigun-profile-line{grid-template-columns:1fr;gap:2px}.adigun-profile-line span{padding-left:12px}.adigun-doctrine{grid-template-columns:1fr 1fr}.adigun-status-strip{grid-template-columns:1fr}.adigun-status-strip>div{border-right:0;border-bottom:1px solid var(--line)}.adigun-surface-grid{grid-template-columns:1fr}.adigun-overview-footer{flex-direction:column}}
+
+/* =========================================================
+   ADIGUN TOOL LAB / SCI-FI TECHNICAL LABORATORY DECK
+   ========================================================= */
+.adigun-private-tools .tool-lab-command-deck{position:relative;overflow:hidden}
+.adigun-private-tools .tool-lab-command-deck:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 49.7%,rgba(0,255,220,.045) 50%,transparent 50.3%),linear-gradient(0deg,transparent 0 49.7%,rgba(0,255,220,.03) 50%,transparent 50.3%);background-size:72px 72px;mask-image:linear-gradient(to bottom,#000,transparent 90%)}
+.tool-lab-hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.7fr);gap:14px}
+.tool-lab-identity{background:linear-gradient(135deg,rgba(7,20,26,.98),rgba(3,11,18,.96))}
+.tool-lab-title-row{display:grid;grid-template-columns:minmax(150px,.65fr) minmax(250px,1.35fr);gap:22px;align-items:center}
+.tool-lab-title-row .os-title{font-size:clamp(3.8rem,8vw,6.7rem);line-height:.76;letter-spacing:-.08em;margin:.2rem 0}
+.tool-lab-mission{border-left:1px solid rgba(0,255,220,.3);padding-left:20px}
+.tool-lab-flow span{padding:7px 9px;border:1px solid rgba(0,255,220,.18);background:rgba(0,0,0,.18)}
+.tool-lab-instrument-panel{background:radial-gradient(circle at 50% 30%,rgba(0,255,220,.08),transparent 42%),rgba(3,12,19,.96)}
+.tool-instrument{display:flex;align-items:center;justify-content:space-around;gap:16px;padding:18px 0}
+.instrument-dial{position:relative;width:170px;aspect-ratio:1;border-radius:50%;border:1px solid rgba(0,255,220,.24);background:radial-gradient(circle,rgba(0,255,220,.07),transparent 56%);box-shadow:inset 0 0 35px rgba(0,255,220,.06)}
+.instrument-dial:before{content:"";position:absolute;inset:14%;border:1px dashed rgba(0,255,220,.18);border-radius:50%}
+.instrument-dial b,.instrument-dial small{position:absolute;left:50%;transform:translateX(-50%);top:52%;font:800 1.2rem JetBrains Mono,monospace}.instrument-dial small{top:64%;font-size:.5rem;letter-spacing:.2em;opacity:.5}
+.dial-mark{position:absolute;left:50%;top:50%;width:2px;height:9px;background:rgba(0,255,220,.5);transform-origin:0 0}.m1{transform:rotate(-55deg) translateY(-72px)}.m2{transform:rotate(-18deg) translateY(-72px)}.m3{transform:rotate(22deg) translateY(-72px)}.m4{transform:rotate(58deg) translateY(-72px)}
+.dial-needle{position:absolute;left:50%;top:50%;width:58px;height:1px;background:#00ffd8;transform:rotate(-28deg);transform-origin:left center;box-shadow:0 0 8px rgba(0,255,216,.8)}
+.instrument-readout span,.instrument-readout b,.instrument-readout small{display:block}.instrument-readout span{font:600 .55rem JetBrains Mono,monospace;opacity:.45}.instrument-readout b{font:800 1.2rem JetBrains Mono,monospace;margin:5px 0}.instrument-readout small{font-size:.55rem;opacity:.5}
+.tool-lab-status{display:grid;grid-template-columns:1fr 1fr;gap:6px}.tool-lab-status div{padding:10px;border:1px solid rgba(0,255,220,.1);background:rgba(0,0,0,.16)}.tool-lab-status span,.tool-lab-status b{display:block}.tool-lab-status span{font:600 .55rem JetBrains Mono,monospace;opacity:.48}.tool-lab-status b{font:700 .63rem JetBrains Mono,monospace;margin-top:4px}
+.tool-lab-capability-grid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.tool-lab-capability-grid a{display:flex;flex-direction:column;gap:6px;min-height:100px;padding:13px;text-decoration:none;border:1px solid rgba(0,255,220,.12);background:rgba(4,14,21,.82);transition:.2s ease}.tool-lab-capability-grid a:hover{border-color:rgba(0,255,220,.5);transform:translateY(-2px);box-shadow:0 0 25px rgba(0,255,220,.08)}.tool-lab-capability-grid b{font:800 .82rem Inter,sans-serif;letter-spacing:.09em}.tool-lab-capability-grid small{font-size:.72rem;line-height:1.45;opacity:.62}
+@media(max-width:900px){.tool-lab-hero-grid{grid-template-columns:1fr}.tool-lab-instrument-panel{min-height:auto}}
+@media(max-width:650px){.tool-lab-title-row{grid-template-columns:1fr}.tool-lab-title-row .os-title{font-size:4rem}.tool-lab-mission{border-left:0;border-top:1px solid rgba(0,255,220,.2);padding:14px 0 0}.tool-lab-capability-grid{grid-template-columns:1fr 1fr}.tool-instrument{flex-direction:column}}
