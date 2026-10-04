@@ -9,7 +9,6 @@
     {path:'./',title:'Home'},
     {path:'about.html',title:'About'},
     {path:'contact.html',title:'Contact'},
-    {path:'recon-hub.html',title:'Recon Hub'},
   ];
 
   const clean=v=>String(v??'').replace(/\s+/g,' ').trim();
