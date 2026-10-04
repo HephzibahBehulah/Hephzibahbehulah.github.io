@@ -349,3 +349,15 @@ body[data-hb-domain="learning"]{--hb-domain-accent:#ff8a3d;--hb-domain-glow:rgba
 @keyframes hbProfileSweep{0%,18%{transform:translateX(-120%)}48%,100%{transform:translateX(120%)}}
 @media(max-width:800px){.hb-profile-capabilities{grid-template-columns:1fr}#profile-hub .hb-profile-copy{padding:24px 20px}#profile-hub .hb-profile-copy h2{letter-spacing:-2px}}
 @media(prefers-reduced-motion:reduce){#profile-hub.hb-profile-showcase::before{animation:none}.hb-capability-card,.hb-capability-card::after,.hb-profile-identity span,.hb-profile-pathway span{transition:none}}
+
+
+/* Profile analyst console + system thinking */
+.hb-profile-console{display:grid;gap:18px;align-content:start}
+.hb-analyst-console,.hb-system-model{border:1px solid var(--line);background:rgba(0,0,0,.14);padding:18px;position:relative;overflow:hidden}
+.hb-analyst-console::before,.hb-system-model::before{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent);opacity:.7}
+.hb-analyst-console pre,.hb-system-model pre{margin:12px 0 0;white-space:pre-wrap;line-height:1.65}
+.hb-analyst-console pre b{color:var(--accent)}
+.hb-analyst-console,.hb-system-model{transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.hb-analyst-console:hover,.hb-system-model:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+@media (max-width:700px){.hb-analyst-console,.hb-system-model{padding:14px}.hb-analyst-console pre,.hb-system-model pre{font-size:.82rem}}
+@media (prefers-reduced-motion:reduce){.hb-analyst-console,.hb-system-model{transition:none}.hb-analyst-console:hover,.hb-system-model:hover{transform:none}}
