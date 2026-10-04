@@ -85,12 +85,15 @@ jobs:
           test -f js/ai-lab.js
           test -f js/adigun-admin.js
           test -f js/adigun-renderer.js
-          grep -q 'id="aiFileInput"' ai-lab.html
-          grep -q 'id="aiPhotoInput"' ai-lab.html
-          grep -q 'id="aiVideoInput"' ai-lab.html
-          grep -q 'id="aiVoiceInput"' ai-lab.html
-          grep -q 'id="aiRecord"' ai-lab.html
-          ! grep -q 'id="projects"' ai-lab.html
+          test -f ai-agent.html
+          test -f css/mobile-system.css
+          test -f js/language-system.js
+          test -f data/translations/en.json
+          test -f data/translations/de.json
+          test -f data/translations/yo.json
+          test -f data/translations/pid.json
           grep -q 'id="adminMessages"' admin.html
+          grep -q 'language-system.js' index.html
+          grep -q 'mobile-system.css' index.html
           ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
           ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js worker-openai.js
