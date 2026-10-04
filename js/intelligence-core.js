@@ -148,33 +148,27 @@
     document.head.appendChild(s);
   }
 
-  function renderResources() {
-    const grid=$('sourceGrid'), filter=$('sourceFilter'), search=$('sourceSearch');
-    if(!grid) return;
-    const cats=[...new Set(resources.map(r=>r[0]))];
-    if(filter) filter.innerHTML='<option value="all">ALL DOMAINS</option>'+cats.map(c=>'<option>'+esc(c)+'</option>').join('');
-    const draw=()=>{
-      const q=(search?.value||'').toLowerCase().trim(), f=filter?.value||'all';
-      const rows=resources.filter(r=>(f==='all'||r[0]===f)&&(!q||r.join(' ').toLowerCase().includes(q)));
-      grid.innerHTML=rows.length?rows.map(r=>card(r[1],r[2],r[0],r[3])).join(''):'<div class="hb-error">No matching resources.</div>';
-      if($('sourceCount')) $('sourceCount').textContent=rows.length+' resources';
-      if($('sourceMetric')) $('sourceMetric').textContent=resources.length;
-    };
-    search?.addEventListener('input',draw); filter?.addEventListener('change',draw); $('resourceReset')?.addEventListener('click',()=>{if(search)search.value='';if(filter)filter.value='all';draw()});
-    draw();
-  }
-
   function renderDocs() {
     const grid=$('docGrid'), cat=$('docCategory'), search=$('docSearch'); if(!grid)return;
-    const cats=[...new Set(docs.map(d=>d[0]))];
+    const knowledge=[
+      ...resources.map(r=>({domain:r[0],title:r[1],description:r[2],href:r[3],kind:'RESOURCE'})),
+      ...docs.map(d=>({domain:d[0],title:d[1],description:'Open documentation or reference material.',href:d[2],kind:'DOCUMENTATION'}))
+    ];
+    const cats=[...new Set(knowledge.map(d=>d.domain))].sort();
     if(cat)cat.innerHTML='<option value="all">ALL DOMAINS</option>'+cats.map(c=>'<option>'+esc(c)+'</option>').join('');
     const draw=()=>{
-      const q=(search?.value||'').toLowerCase(), f=cat?.value||'all';
-      const rows=docs.filter(d=>(f==='all'||d[0]===f)&&(!q||d.join(' ').toLowerCase().includes(q)));
-      grid.innerHTML=rows.map(d=>card(d[1],'Open documentation or reference material.',d[0],d[2])).join('');
-      if($('docIndexCount'))$('docIndexCount').textContent=rows.length+' documents';
+      const q=(search?.value||'').toLowerCase().trim(), f=cat?.value||'all';
+      const rows=knowledge.filter(d=>(f==='all'||d.domain===f)&&(!q||[d.domain,d.title,d.description,d.kind].join(' ').toLowerCase().includes(q)));
+      grid.innerHTML=rows.length
+        ?rows.map(d=>card(d.title,d.description,d.domain+' · '+d.kind,d.href)).join('')
+        :'<div class="hb-error">No matching knowledge resources.</div>';
+      if($('docIndexCount'))$('docIndexCount').textContent=rows.length+' knowledge resources';
+      if($('sourceMetric'))$('sourceMetric').textContent=knowledge.length;
     };
-    search?.addEventListener('input',draw);cat?.addEventListener('change',draw);draw();
+    search?.addEventListener('input',draw);
+    cat?.addEventListener('change',draw);
+    $('docReset')?.addEventListener('click',()=>{if(search)search.value='';if(cat)cat.value='all';draw()});
+    draw();
   }
 
   function renderMicroTools() {
@@ -459,7 +453,6 @@
   document.addEventListener('DOMContentLoaded',()=>{
     try{
       injectRuntimeCSS();
-      renderResources();
       renderDocs();
       renderEngineering();
       renderMicroTools();
@@ -472,7 +465,7 @@
     }catch(err){
       console.error('HB Intelligence Core failed:',err);
       window.__HB_INTELLIGENCE_HUB_ERROR=String(err);
-      document.querySelectorAll('#sourceGrid,#ebookGrid,#megaToolGrid,#engineeringGrid,#docGrid,#microTools').forEach(el=>{if(el)el.innerHTML='<div class="hb-error">CORE RUNTIME ERROR. Open the browser console for details.</div>'});
+      document.querySelectorAll('#ebookGrid,#megaToolGrid,#engineeringGrid,#docGrid,#microTools').forEach(el=>{if(el)el.innerHTML='<div class="hb-error">CORE RUNTIME ERROR. Open the browser console for details.</div>'});
     }
   });
 })();
