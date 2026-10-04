@@ -12,15 +12,11 @@
 <body class="osint-redesign adigun-private-tools">
 <div class="os-shell">
 <aside class="os-sidebar"><div class="os-brand">HB <span>/ tool lab</span></div><div class="os-side-label">PRIVATE CONTROL</div>
-<nav class="os-nav"><a class="active" href="/admin">◉ ADIGUN CONTROL</a><a href="#resourceMatrix">◎ RESOURCE MATRIX</a><a href="#ebookVault">▤ EBOOK VAULT</a><a href="#toolbench">⌁ TOOLBENCH</a><a href="#projects">◫ PROJECTS</a><a href="#megaTools">◉ MEGA TOOLS</a><a href="#knowledgeLibrary">▤ KNOWLEDGE LIBRARY</a><a href="/recon-hub.html">◉ RECON HUB</a><a href="/ai-lab.html">⌁ AI LAB</a></nav>
+<nav class="os-nav"><a class="active" href="/admin">◉ ADIGUN CONTROL</a><a href="#ebookVault">▤ EBOOK VAULT</a><a href="#toolbench">⌁ TOOLBENCH</a><a href="#projects">◫ PROJECTS</a><a href="#megaTools">◉ MEGA TOOLS</a><a href="#knowledgeLibrary">▤ KNOWLEDGE LIBRARY</a><a href="/recon-hub.html">◉ RECON HUB</a><a href="/ai-lab.html">⌁ AI LAB</a></nav>
 <div class="os-status">ACCESS<br><b>● PRIVATE</b><br>authentication: Cloudflare Access<br>scope: operator tools</div></aside>
 <main class="os-main"><header class="os-top"><div class="os-breadcrumb">private / <b>tool lab</b></div><div class="os-top-actions"><input id="globalResourceSearch" class="os-search" placeholder="search private tools..." aria-label="Search private tools"><a class="os-btn" href="/admin">CONTROL</a></div></header>
 <div class="os-content" id="overview">
 <section class="os-hero"><div class="os-panel"><div class="os-panel-head"><span>ADIGUN TOOL LAB</span><span>AUTHENTICATED</span></div><div class="os-panel-body"><div class="os-kicker">ADIGUN CONTROL / PRIVATE WORKSPACE</div><h1 class="os-title">ADIGUN<br><em>TOOL LAB</em></h1><p class="os-lead">A private technical lab for exploring resources, engineering systems, knowledge, tools and projects through the authenticated operator workspace.</p></div></div></section>
-<section class="resource-hub" id="resourceMatrix"><div class="os-panel"><div class="os-panel-head"><span>RESOURCE MATRIX</span><span id="sourceCount" style="display:none">loading</span></div>
-<div class="resource-controls"><label><span>⌕</span><input id="sourceSearch" placeholder="Search OSINT, web, Linux, DFIR, OT, data..."></label><select id="sourceFilter"></select><button id="resourceReset" class="os-mini">reset</button></div>
-<div id="sourceGrid" class="intel-grid"></div></div></section>
-
 <section class="resource-hub" id="ebookVault"><div class="os-panel"><div class="os-panel-head"><span>EBOOK VAULT</span><span id="ebookCount" style="display:none">indexing</span></div>
 <div class="resource-controls"><label><span>⌕</span><input id="ebookSearch" placeholder="Search the technical ebook archive..."></label><a class="os-mini" href="https://github.com/HephzibahBehulah/Hacking-Security-Ebooks" target="_blank" rel="noopener">source repository ↗</a></div>
 <div id="ebookGrid" class="ebook-grid"></div></div></section>
@@ -55,10 +51,12 @@
 <section class="os-panel mega-section" id="knowledgeLibrary">
   <div class="os-panel-head"><span>KNOWLEDGE LIBRARY</span><span id="docIndexCount" style="display:none">catalogue</span></div>
   <div class="resource-controls">
-    <label><span>⌕</span><input id="docSearch" placeholder="search engineering, electronics, cyber, OT, networking..." aria-label="Search document library"></label>
+    <label><span>⌕</span><input id="docSearch" placeholder="search resources, documentation, OSINT, Linux, DFIR, OT, engineering..." aria-label="Search knowledge library"></label>
     <select id="docCategory"><option value="all">ALL DOMAINS</option></select>
+    <button id="docReset" class="os-mini" type="button">reset</button>
   </div>
-    <div id="docGrid" class="intel-grid"><div class="intel-empty">LOADING DOCUMENT CATALOGUE...</div></div>
+  <div class="hb-ref-label">UNIFIED RESOURCES + DOCUMENTATION</div>
+  <div id="docGrid" class="intel-grid"><div class="intel-empty">LOADING KNOWLEDGE CATALOGUE...</div></div>
 </section>
 </div></main></div>
 <div id="resourceToolModal" class="resource-tool-modal" aria-hidden="true"><div class="resource-tool-card"><button id="resourceToolClose" class="dialog-close">×</button><h2 id="resourceToolTitle">Tool</h2><div id="resourceToolBody"></div></div></div>
