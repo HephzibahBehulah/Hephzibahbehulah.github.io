@@ -1528,8 +1528,8 @@ export default {
     // the server-side ADIGUN_ADMIN_EMAIL allow-list.
     const isAdminHost = url.hostname === "admin.hephzibahbehulah.com";
     const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
-    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/tools":"/admin-tools.html","/tools/":"/admin-tools.html","/ai-lab":"/ai-lab.html","/ai-lab/":"/ai-lab.html","/ai-lab.html":"/ai-lab.html","/recon-hub":"/recon-hub.html","/recon-hub/":"/recon-hub.html","/recon-hub.html":"/recon-hub.html"});
-    const publicBlockedPath = ["/ai-lab.html","/recon-hub.html","/recon-hub","/recon-hub/","/ai-lab","/portfolio.html","/resources.html","/admin-tools.html","/data/source-library.json","/js/technical-workbench.js","/js/mega-tools.js","/js/engineering-calculators-local.js","/js/engineering-library.js","/js/recon-hub.js","/js/intelligence-core.js"].includes(url.pathname);
+    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/tools":"/admin-tools.html","/tools/":"/admin-tools.html","/recon-hub":"/recon-hub.html","/recon-hub/":"/recon-hub.html","/recon-hub.html":"/recon-hub.html"});
+    const publicBlockedPath = ["/recon-hub.html","/recon-hub","/recon-hub/","/portfolio.html","/resources.html","/admin-tools.html","/data/source-library.json","/js/technical-workbench.js","/js/mega-tools.js","/js/engineering-calculators-local.js","/js/engineering-library.js","/js/recon-hub.js","/js/intelligence-core.js"].includes(url.pathname);
 
     if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
       const auth = await authenticateAdmin(request, env);
@@ -1631,7 +1631,7 @@ export default {
     }
 
     if (url.pathname === "/api/transcribe" && request.method === "POST") {
-      if (url.hostname !== "admin.hephzibahbehulah.com") return json(request,{ok:false,error:"Private AI Lab endpoint."},404);
+      if (url.hostname !== "admin.hephzibahbehulah.com") return json(request,{ok:false,error:"Private ADIGUN AI endpoint."},404);
       const auth = await authenticateAdmin(request, env);
       if (!auth.ok) return auth.response;
       return transcribeAudio(request, env);
