@@ -1,0 +1,41 @@
+name: Public ADIGUN AI Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "worker-public.js"
+      - "ai-agent.html"
+      - "ai.html"
+      - "js/ai-lab.js"
+      - "js/adigun-agent.js"
+      - "wrangler.jsonc"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-public-ai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate public AI gateway
+        run: |
+          node --check worker-public.js
+          test -s ai-agent.html
+          test -s ai.html
+          test -s js/ai-lab.js
+          test -s js/adigun-agent.js
+          grep -q 'id="aiAdd"' ai-agent.html
+          grep -q 'id="aiFile"' ai-agent.html
+          grep -q 'id="aiPhoto"' ai-agent.html
+          grep -q 'id="aiVideo"' ai-agent.html
+          grep -q 'id="aiVoice"' ai-agent.html
+          grep -q 'id="aiRecord"' ai-agent.html
+          grep -q '/api/transcribe' worker-public.js
+          grep -q 'api.openai.com/v1/audio/transcriptions' worker-public.js
+          grep -q '"main": "worker-public.js"' wrangler.jsonc
