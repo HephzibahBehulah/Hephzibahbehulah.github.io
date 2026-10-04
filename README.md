@@ -54,7 +54,6 @@ The canonical homepage is **index.html**.
 
 Dedicated workspaces:
 
-- **engineering-library.html** — engineering calculators and method reference
 - **recon-hub.html** — passive OSINT and attack-surface research
 
 The former standalone Pentest Lab experience has been consolidated into the main Terminal.
@@ -197,7 +196,7 @@ The catalogue is data-driven through **data/source-library.json**, making it sca
 
 The Engineering section provides practical browser-local calculations.
 
-The dedicated calculator implementation is **js/engineering-library.js**.
+The engineering calculator implementation is **js/engineering-library.js**, now consumed by the unified Mega Tools workspace.
 
 The separate Engineering Library expands this into:
 
@@ -702,28 +701,6 @@ Main implementation:
 
 ---
 
-# 20. Engineering Library
-
-**engineering-library.html**
-
-The dedicated Engineering Library provides:
-
-### External reference
-
-A CalcEngineer calculator directory reference.
-
-### Local calculators
-
-Implemented through **js/engineering-library.js**.
-
-### Method reference
-
-The page explains practical engineering calculation principles around formulas, units, validation, assumptions and standards.
-
-Calculations run locally in the browser.
-
----
-
 # 21. Visual system
 
 Main styling:
@@ -806,7 +783,7 @@ Command parser, terminal output, calculations, security learning, networking hel
 
 ### engineering-library.js
 
-Dedicated Engineering Library calculators.
+Engineering calculator registry/runtime used by Mega Tools. The former standalone Engineering Library page has been retired after consolidation.
 
 ### recon-hub.js
 
@@ -920,12 +897,10 @@ The public static application deliberately does not expose arbitrary server-side
 
     FirstWebsite/
     ├── index.html
-    ├── engineering-library.html
     ├── recon-hub.html
     ├── css/
     │   ├── osint-redesign.css
     │   ├── hb-brand.css
-    │   ├── engineering-library.css
     │   └── recon-hub.css
     ├── js/
     │   ├── osint-redesign.js
