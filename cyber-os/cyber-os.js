@@ -14,3 +14,38 @@ function glossary(){const q=($("glossarySearch").value||"").toLowerCase();const 
 function graph(){const g=window.CYBER_GRAPH||{};$("graphView").innerHTML='<div class="graph-lines">'+(g.nodes||[]).map(x=>'<span>'+esc(x[0])+' <b>→</b> '+esc(x[1])+'</span>').join("")+'</div>';$("sourceRegistry").innerHTML=(window.CYBER_SOURCES||[]).map(x=>card(x[0],"SOURCE · "+x[2],'<p>Source-backed reference for Cyber OS records.</p><a href="'+esc(x[1])+'" target="_blank" rel="noopener">OPEN SOURCE ↗</a>')).join("")}function learning(){$("learningPath").innerHTML=(D.learning||[]).map(x=>'<article><span>'+x[0]+'</span><div><h3>'+esc(x[1])+'</h3><p>'+esc(x[2])+'</p></div><a href="#'+esc(x[3])+'">OPEN →</a></article>').join("")}
 function search(){const q=($("globalSearch").value||"").trim().toLowerCase();if(!q){$("searchMeta").textContent="READY";return}const map={network:"networking",command:"commands",shortcut:"shortcuts",framework:"frameworks",formula:"formulas",glossary:"glossary",team:"teams"};let hits=[];Object.entries({network:D.network,command:D.commands,shortcut:D.shortcuts,framework:D.frameworks,formula:D.formulas,glossary:D.glossary,team:D.teams}).forEach(([k,a])=>(a||[]).forEach(x=>{if(JSON.stringify(x).toLowerCase().includes(q))hits.push(k)}));const types=[...new Set(hits)];$("searchMeta").textContent=hits.length+" matches across "+types.length+" domains";if(types[0])location.hash=map[types[0]]}
 document.addEventListener("DOMContentLoaded",()=>{stats();knowledgeHub();network();commands();shortcuts();frameworks();osint();detection();teams();formulas();game();labs();glossary();learning();$("networkSearch").oninput=network;$("networkFilter").onchange=network;$("commandSearch").oninput=commands;$("commandPlatform").onchange=commands;$("shortcutSearch").oninput=shortcuts;$("shortcutPlatform").onchange=shortcuts;$("glossarySearch").oninput=glossary;$("globalSearch").onkeydown=e=>{if(e.key==="Enter")search()}})})();
+
+/* CYBER OS NAV/PAGE SYNCHRONIZER */
+document.addEventListener("DOMContentLoaded",()=>{
+  const content=document.querySelector(".cyber-os .os-content");
+  const nav=document.getElementById("cyberNav");
+  if(!content||!nav)return;
+
+  const orderedIds=[...nav.querySelectorAll('a[href^="#"]')]
+    .map(a=>a.getAttribute("href").slice(1))
+    .filter(Boolean);
+
+  const firstById=new Map();
+  orderedIds.forEach(id=>{
+    const matches=[...content.children].filter(el=>el.id===id);
+    if(matches.length){
+      firstById.set(id,matches[0]);
+      matches.slice(1).forEach(el=>el.remove());
+    }
+  });
+
+  const footer=[...content.children].find(el=>el.tagName==="FOOTER");
+  const auxiliary=[...content.children].filter(el=>
+    el!==footer && !orderedIds.includes(el.id)
+  );
+
+  orderedIds.forEach(id=>{
+    const section=firstById.get(id);
+    if(section)content.appendChild(section);
+  });
+
+  auxiliary.forEach(el=>content.appendChild(el));
+  if(footer)content.appendChild(footer);
+
+  content.classList.add("cyber-nav-synchronized");
+});
