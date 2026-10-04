@@ -1,316 +1,463 @@
-# HEPHZIBAH BEHULAH — Intelligence · Engineering · Security
+# HEPHZIBAH BEHULAH
 
-A browser-first technical learning, engineering and security platform by **Hephzibah Behulah**.
+## Engineering · Intelligence · Security
 
-This project is designed as a working technical workspace rather than a conventional static portfolio. It brings together engineering calculations, data learning, cybersecurity study, OSINT research, technical resources, projects, interactive tools, quizzes and a browser-native command terminal.
+Hephzibah Behulah is a browser-first technical platform combining engineering, software, data, networking, cybersecurity, OSINT, AI security and structured learning into one connected workspace.
 
-**Core loop:** LEARN → BUILD → TEST → SECURE
+The platform is designed as a working technical environment rather than a conventional portfolio.
 
-**Technical path:** ELECTRICITY → SIGNAL → DATA → NETWORK → SECURITY
+**Core method**
+
+`OBSERVE → RESEARCH → BUILD → TEST → DOCUMENT`
+
+**Learning model**
+
+`SEARCH → UNDERSTAND → COPY → PRACTICE`
+
+**Technical path**
+
+`ELECTRICITY → SIGNAL → DATA → NETWORK → SECURITY`
 
 ---
 
-## 1. Platform overview
+## Platform
 
-The site is a static, client-side application hosted on GitHub Pages. Most interaction runs directly in the browser using HTML, CSS and JavaScript.
+The repository is the canonical source of truth for the website and its application code.
 
-The platform contains:
+The current platform includes:
 
-- personal technical identity and portfolio
-- interactive Intelligence Tree
-- searchable Resource Matrix
+- Public technical profile and portfolio
+- Intelligence Tree
+- Resource and Knowledge systems
 - Ebook Vault
-- engineering Toolbench
-- large indexed Mega Tools catalogue
-- Engineering / Elektroniker Lab
-- Knowledge Library
-- Bible study and quiz system
-- selected public projects
-- five-part Technical Workbench
-- HB Terminal command interface
-- passive-first Recon Hub
-- dedicated Engineering Library
-- responsive layouts, motion and reduced-motion support
+- Mega Tools
+- Engineering calculators
+- Technical Workbench
+- Browser-native terminal
+- Reconnaissance and OSINT workspace
+- Cyber OS
+- ADIGUN Control
+- ADIGUN Tool Lab
+- Public AI and Admin AI interfaces
+- Learning, quiz and simulation systems
+- Responsive and accessibility systems
+- Multilingual interface support
+- Project and repository integrations
+
+The repository is currently private. The production hosting/runtime can change independently of the source repository.
 
 ---
 
-## 2. Main navigation
+# 1. Public Website
 
-The canonical homepage is **index.html**.
-
-| Area | Purpose |
-|---|---|
-| Overview | Identity, technical direction and working method |
-| Intelligence Tree | Visual map of the technical domains |
-| Resource Matrix | Searchable technical resources |
-| Ebook Vault | Technical ebook/source archive |
-| Toolbench | Engineering formulas and compact tools |
-| Mega Tools | Searchable indexed toolbox |
-| Engineering | Local engineering calculators |
-| Knowledge | Searchable technical document catalogue |
-| Bible Quiz | Scripture study and quiz interface |
-| Projects | Public repositories and Technical Workbench |
-| Terminal | Command-driven interface for the wider platform |
-
-Dedicated workspaces:
-
-- **cyber-os/index.html — integrated reconnaissance** — passive OSINT and attack-surface research
-
-The former standalone Pentest Lab experience has been consolidated into the main Terminal.
-
----
-
-## 3. Identity and design language
-
-The shared identity is:
-
-**HEPHZIBAH BEHULAH**
-
-**Engineering → Intelligence → Security**
-
-**LEARN · BUILD · TEST · SECURE**
-
-The homepage presents the working method:
-
-**observe → research → build → test → document**
-
-The public interface is designed to feel like a technical workstation while remaining readable, responsive and practical.
-
----
-
-## 4. Intelligence Tree
-
-Implemented by **js/intelligence-map.js**.
-
-Root:
-
-- HB / CORE
-
-Branches:
-
-- ENGINEERING
-- WEB / CODE
-- DATA ANALYTICS
-- CYBERSECURITY
-- OSINT
-- AI SECURITY
-- LEARNING LAB
-
-Representative leaves include:
-
-- Electronics
-- Automation / OT
-- Web Building
-- Git / GitHub
-- Water Pump ML
-- Loan Analysis
-- Security Notes
-- Terminal
-- Public Sources
-- Verification
-- Prompt Injection
-- Responsible AI
-- Resource Matrix
-- Labs / Practice
-
-The tree supports node inspection, visual connections, drag/pan, zoom and reset.
-
-Legacy tree data remains in **js/tree-data-home.js** for compatibility.
-
----
-
-## 5. Resource Matrix
-
-The Resource Matrix is a searchable technical resource interface.
-
-Primary data source:
-
-**data/source-library.json**
-
-The current data-driven index contains approximately:
-
-- **70 technical ebook/source entries**
-- **1,088 indexed toolbox modules**
-
-Features:
-
-- text search
-- category filtering
-- reset
-- source/resource opening
-- structured resource presentation
-
-The application uses metadata and source links instead of copying large external source collections into the repository.
-
----
-
-## 6. Ebook Vault
-
-The Ebook Vault provides a searchable view of the technical ebook archive.
-
-It connects users to the public **Hacking-Security-Ebooks** source repository.
-
-The vault is an index and learning entry point. It does not duplicate hundreds of megabytes of external PDF content inside this project.
-
----
-
-## 7. Toolbench
-
-The Toolbench provides compact engineering reference material.
-
-The equation deck includes:
-
-| Formula | Meaning |
-|---|---|
-| V = I × R | Ohm's Law |
-| P = V × I | Electrical power |
-| E = P × t | Energy |
-| I = Q / t | Current |
-| Vout = Vin × R2 / (R1 + R2) | Voltage divider |
-| Rt = R1 + R2 + … | Series resistance |
-| f = 1 / T | Frequency |
-| η = Pout / Pin × 100% | Efficiency |
-
-The existing micro-tools are browser-local and remain separate from the Terminal engine.
-
----
-
-## 8. Mega Tools
-
-Mega Tools is the large indexed toolbox rendered by **js/mega-tools.js**.
+The public site is the main entry point.
 
 It provides:
 
-- tool search
-- category filtering
-- indexed discovery
-- matching tool opening
-- source-index refresh
-- integration with the wider site
+- Personal technical identity
+- Engineering and software background
+- Technical learning resources
+- Interactive tools
+- Project portfolio
+- Cybersecurity and OSINT learning
+- GitHub project integration
+- Public external profiles and resources
 
-The catalogue is data-driven through **data/source-library.json**, making it scalable without manually maintaining more than a thousand tool cards.
+The homepage remains browser-first and keeps core interactive functionality available without requiring a backend.
 
 ---
 
-## 9. Engineering / Elektroniker Lab
+# 2. Private Control Platform
 
-Engineering calculators are now part of the unified Mega Tools workspace rather than a separate page.
+The private control environment extends the public platform with authenticated engineering and administration workspaces.
 
-The engineering runtime is maintained through **js/engineering-calculators-local.js** and **js/engineering-library.js** and is indexed by **js/mega-tools.js**.
+## ADIGUN Control
 
-The unified workspace covers practical calculations across:
+Path:
+
+`/admin`
+
+Purpose:
+
+**ADIGUN CONTROL // COMMAND ROOM**
+
+It provides a private operational interface for:
+
+- identity and session status
+- system intelligence
+- knowledge access
+- terminal access
+- Admin AI
+- control-room status
+- authenticated administrative capabilities
+- security boundary visibility
+
+The private control layer is protected by the application's authentication boundary and the current hosting infrastructure.
+
+## ADIGUN Tool Lab
+
+Path:
+
+`/admin-tools`
+
+Purpose:
+
+**ADIGUN TOOL LAB // TECHNICAL ENGINEERING LABORATORY**
+
+The Tool Lab unifies technical workspaces for:
+
+- calculations
+- experiments
+- testing
+- technical documentation
+- Mega Tools
+- engineering tools
+- projects
+- knowledge
+- terminal workflows
+- AI assistance
+
+The former standalone Engineering Library experience has been consolidated into the unified tool environment.
+
+---
+
+# 3. ADIGUN Cyber OS
+
+Path:
+
+`/cyber-os/`
+
+Mission:
+
+**TURN UNKNOWN SIGNALS INTO UNDERSTANDABLE, VERIFIED SECURITY KNOWLEDGE.**
+
+Core workflow:
+
+`COLLECT → CORRELATE → ANALYSE → VERIFY → LEARN`
+
+Cyber OS is the dedicated security intelligence and learning workspace.
+
+## Current navigation
+
+1. Dashboard
+2. Stats
+3. Knowledge Hub
+4. Scale Status
+5. Networking
+6. Network Academy
+7. Reconnaissance
+8. Workflow
+9. Toolkit
+10. Query Lab
+11. Evidence
+12. Learning
+13. Command Center
+14. Keyboard Lab
+15. Frameworks
+16. OSINT
+17. Detection
+18. Teams & Actors
+19. Formulas
+20. SOC Simulator
+21. Cyber Games
+22. Network Calculator
+23. Labs
+24. Glossary
+25. Knowledge Graph
+26. Learning Path
+27. Linux Terminal
+28. Admin AI
+29. Public AI
+
+The navigation order is explicitly synchronised by the Cyber OS runtime so the sidebar and page sequence remain aligned.
+
+## Security approach
+
+Cyber OS is built around:
+
+- lawful research
+- authorised testing
+- passive-first reconnaissance
+- evidence
+- verification
+- privacy awareness
+- defensive learning
+- responsible disclosure
+
+The platform does not provide unrestricted remote command execution or unrestricted offensive scanning from the browser.
+
+---
+
+# 4. Reconnaissance and OSINT
+
+Reconnaissance is integrated into Cyber OS rather than maintained as an isolated public feature.
+
+The workspace covers areas including:
+
+- domains
+- URLs
+- DNS
+- certificate transparency
+- WHOIS
+- HTTP headers
+- robots.txt
+- sitemaps
+- internet-facing assets
+- evidence collection
+- verification
+- security intelligence
+
+The design principle is:
+
+**COLLECT → CORRELATE → ANALYSE → VERIFY**
+
+Tools and explanations are intended for legal, authorised and educational use.
+
+---
+
+# 5. ADIGUN Terminal
+
+The platform contains a browser-native technical command environment.
+
+It is a learning and simulation interface, not a remote Linux shell.
+
+The terminal supports command families covering:
+
+### System
+
+- HELP
+- LIST / LS
+- MAN
+- WHICH
+- STATUS
+- VERSION
+- ABOUT / WHOAMI
+- TREE
+- HISTORY
+- CLEAR
+- PWD
+- CD
+- ECHO
+- DATE
+- NAV
+- FOCUS
+- SELFTEST
+
+### Engineering
+
+- OHM
+- POWER
+- ENERGY
+- RESISTOR
+- LED
+- COLOR
+- FREQUENCY
+- RMS
+- EFFICIENCY
+- VOLTAGE
+- CURRENT
+- IMPEDANCE
+- DIVIDER
+- SERIES-RESISTANCE
+- PARALLEL-RESISTANCE
+- POWER-FACTOR
+- THREE-PHASE
+- MOTOR-TORQUE
+- VOLTAGE-DROP
+
+### Networking
+
+- IP
+- CIDR
+- SUBNET
+- PORTS
+- PROTOCOL
+- TCP
+- UDP
+- ICMP
+- ARP
+- HTTP
+- HTTPS
+- DNS
+- DNSLOOKUP
+- NSLOOKUP
+- ROUTE
+- MAC
+- PING
+- TRACEROUTE
+- NMAP
+
+### Security
+
+- BASE64
+- ENCODE
+- DECODE
+- HASH
+- SHA256
+- JWT
+- CSRF
+- XSS
+- SQLI
+- MFA
+- PASSWORD
+
+### Data
+
+- MEAN
+- MEDIAN
+- MODE
+- RANGE
+- VARIANCE
+- STD
+- ZSCORE
+- PRECISION
+- RECALL
+- F1
+
+### OSINT
+
+- URLINFO
+- URL
+- HEADERS
+- ROBOTS
+- SITEMAP
+- CRT
+- WHOIS
+
+### Learning
+
+- QUIZ
+- GAME
+- RULES
+- CHECK
+- SELFTEST
+- EXPLAIN
+- GLOSSARY
+- LEARN
+- TOOLS
+- TOOL
+- PROJECT
+- REPO
+
+The expanded command registry adds structured technical topics and learning routes without replacing the original terminal engine.
+
+The terminal expansion currently contains hundreds of structured topics and generated learning routes across:
+
+- engineering
+- electronics
+- networking
+- web and APIs
+- cybersecurity
+- cryptography
+- OSINT
+- forensics
+- data and machine learning
+- Python
+- Linux
+- Git and GitHub
+- AI security
+
+Typical commands include:
+
+```text
+HELP ENGINEERING
+SEARCH capacitor
+MAN tcp
+FORMULA ohms-law
+EXPLAIN prompt-injection
+RELATED jwt
+CONVERT 1 kW W
+MASK 24
+GRAPH SINE
+SIMULATE RC 1000 0.000001
+PROFILE
+```
+
+The terminal uses a simulated/browser environment where an operation cannot safely or technically be executed by a static web application.
+
+---
+
+# 6. Mega Tools
+
+Mega Tools is the unified searchable technical toolbox.
+
+It combines:
+
+- engineering calculators
+- electronics tools
+- networking tools
+- security references
+- data utilities
+- technical learning tools
+- local engineering modules
+- structured technical resources
+
+The catalogue is data-driven rather than manually duplicating thousands of individual cards.
+
+Primary data source:
+
+`data/source-library.json`
+
+The system is designed around:
+
+**DATA → RENDERER → INTERACTION**
+
+This makes the catalogue scalable and maintainable.
+
+---
+
+# 7. Engineering Tools
+
+Engineering functionality is integrated into Mega Tools and the wider Tool Lab.
+
+Current domains include:
 
 - electrical engineering
+- electronics
 - HVAC
 - plumbing
 - construction
 - mechanical engineering
-- electronics
-- networking-related calculations
+- networking
+- signal analysis
 
-Calculations execute locally in the browser where supported, with formulas, units and validation exposed through the Mega Tools interface.
+Examples include:
 
-## 10. Knowledge Library
+- Ohm's law
+- power
+- energy
+- resistance
+- voltage divider
+- series and parallel resistance
+- efficiency
+- frequency
+- RMS
+- impedance
+- power factor
+- three-phase calculations
+- motor torque
+- voltage drop
+- LED resistor calculations
 
-The Knowledge Library is a searchable technical document catalogue.
-
-It supports:
-
-- document search
-- domain filtering
-- engineering references
-- electronics material
-- cybersecurity material
-- OT/industrial material
-- networking material
-- study navigation
-
-The catalogue is intended to take the learner from a topic to the underlying technical material.
-
----
-
-## 11. Bible Quiz
-
-The Bible section combines external reading with a local browser quiz.
-
-The main quiz engine is part of **js/intelligence-core.js**.
-
-Structured quiz banks include:
-
-- Bible
-- Elektroniker
-- Engineering
-- Biology
-- Geography
-- General Knowledge
-- Leben in Deutschland
-- Driving
-- Politics
-
-The quiz supports:
-
-- next question
-- answer selection
-- answer reveal
-- score
-- streak
-- category selection
-- locally generated variants
-
-The Bible section links to the external Gen Z Bible rather than copying its paraphrase text into the repository.
+Where supported, calculations execute locally in the browser.
 
 ---
 
-## 12. Projects
+# 8. Technical Workbench
 
-The current project workspace highlights public repositories including:
-
-- Water Pump Status Prediction ML
-- Loan Approval Analysis
-- Cybersecurity Study Notes
-- Prompt Injection Learning Journal
-- TryHackMe GUI
-- Power BI Samples
-
-Project compatibility data is retained in **js/projects-data.js**.
-
----
-
-## 13. HB Technical Workbench
-
-The Technical Workbench sits beside the selected project repositories.
-
-It connects:
+The Technical Workbench connects:
 
 **ELECTRICITY → SIGNAL → DATA → NETWORK → SECURITY**
 
-The five machines are:
+Its major systems include:
 
 ### Signal Decoder
 
-Works with:
+Binary, hexadecimal, decimal, ASCII and IP/CIDR representations.
 
-- binary
-- hexadecimal
-- decimal
-- ASCII
-- IP/CIDR representations
+### Color and LED Lab
 
-### Color / LED Lab
-
-Supports:
-
-- HEX colour parsing
-- RGB/RGBA
-- HSL/luminance information
-- contrast information
-- palette information
-- LED PWM reference
-- LED resistor calculation
-
-Core LED relationship:
-
-**R = (Supply − LED Vf) / Current**
+HEX, RGB/RGBA, HSL, luminance, contrast and LED resistor calculations.
 
 ### Protocol Inspector
 
@@ -333,506 +480,129 @@ Reference coverage includes:
 
 ### Engineering Signal Lab
 
-Signal types:
+Supports:
 
 - sine
 - square
 - triangle
 - sawtooth
 
-Parameters:
-
-- frequency
-- amplitude
-- phase
-
-Outputs:
-
-- period
-- frequency
-- peak
-- RMS
-- peak-to-peak
+with frequency, amplitude and phase calculations.
 
 ### Technical Challenge
 
-A procedural challenge engine spans:
+A procedural learning engine combines engineering, networking, cybersecurity, data, OSINT and AI-security concepts into generated practice scenarios.
 
-- decoder
-- colour / LED
-- protocol
-- signal lab
-- engineering
-- networking
-- cybersecurity
-- data analytics
+---
+
+# 9. Knowledge and Learning
+
+The platform combines searchable technical material with interactive learning.
+
+Major areas include:
+
+- Knowledge Library
+- Resource Matrix
+- Ebook Vault
+- Cybersecurity study material
+- Networking
+- Electronics
+- Engineering
 - OSINT
 - AI security
-- learning
+- quizzes
+- scenarios
+- simulations
+- glossary
+- learning paths
 
-It supports approximately **1,000,000 generated variants**.
-
-Implementation:
-
-**js/technical-workbench.js**
-
----
-
-# 14. HB Terminal
-
-The Terminal is the site's command-driven learning layer.
-
-Implementation:
-
-**js/terminal.js**
-
-Current version:
-
-**HB TERMINAL 1.1**
-
-It is a browser-native JavaScript command engine, not a Linux shell and not a remote command server.
-
-## System commands
-
-- HELP
-- LIST / LS
-- MAN
-- WHICH
-- STATUS / IS
-- VERSION
-- ABOUT / WHOAMI
-- TREE
-- HISTORY
-- CLEAR / CLS
-- EXIT / QUIT / Q
-- OPEN TERMINAL
-- PWD
-- CD
-- CHDIR
-- ECHO
-- DATE
-- NAV
-- FOCUS
-- IA
-
-## Engineering commands
-
-- OHM
-- POWER
-- ENERGY
-- RESISTOR
-- LED
-- COLOR
-- FREQUENCY
-- RMS
-- EFFICIENCY
-- VOLTAGE
-- CURRENT
-- IMPEDANCE
-- DIVIDER
-- VOLTAGE-DIVIDER
-- SERIES-RESISTANCE
-- PARALLEL-RESISTANCE
-- POWER-FACTOR
-- THREE-PHASE
-- MOTOR-TORQUE
-- VOLTAGE-DROP
-
-## Data commands
-
-- MEAN
-- MEDIAN
-- MODE
-- RANGE
-- VARIANCE
-- STD
-- ZSCORE
-- PRECISION
-- RECALL
-- F1
-
-## Security commands
-
-- BASE64
-- ENCODE
-- DECODE
-- HASH
-- SHA256
-- JWT
-- CSRF
-- XSS
-- SQLI
-- MFA
-- PASSWORD
-
-## Networking commands
-
-- IP
-- CIDR
-- SUBNET
-- PORTS
-- PROTOCOL
-- TCP
-- UDP
-- ICMP
-- ARP
-- HTTP
-- HTTPS
-- DNS
-- DNSLOOKUP
-- NSLOOKUP
-- ROUTE
-- MAC
-- PING
-- TRACEROUTE
-- NMAP
-- NAP
-
-## OSINT commands
-
-- URLINFO
-- URL
-- HEADERS
-- ROBOTS
-- SITEMAP
-- CRT
-- WHOIS
-
-## Learning commands
-
-- QUIZ START
-- QUIZ NEXT
-- ANSWER A|B|C|D
-- QUIZ SCORE
-- QUIZ RESET
-- GAME START
-- GAME SCORE
-- GAME RESET
-- GAME HELP
-- RULES
-- CHECK
-- SELFTEST
-- EXPLAIN
-- GLOSSARY
-- LEARN
-- TOOLS
-- TOOL
-- PROJECT
-- REPO
+The learning system is designed to move from discovery to understanding and then to practice.
 
 ---
 
-## 15. Terminal HELP memory system
+# 10. Intelligence Tree
 
-The HELP command is intentionally designed as a future memory aid.
+The Intelligence Tree provides a visual representation of the platform's technical domains.
 
-Use:
-
-**HELP**
-
-for the quick command map.
-
-Use:
-
-- **HELP ENGINEERING**
-- **HELP NETWORK**
-- **HELP SECURITY**
-- **HELP DATA**
-- **HELP OSINT**
-- **HELP LEARNING**
-- **HELP SYSTEM**
-
-for focused command lists.
-
-Use:
-
-**MAN POWER**
-
-or another command name for a short manual.
-
-Use:
-
-**LIST**
-
-when the command itself is forgotten.
-
-Use:
-
-**SELFTEST**
-
-to check important command families.
-
-The Terminal also accepts normal numbers and angle-bracket notation for numerical commands, for example:
-
-**POWER 24 5**
-
-and:
-
-**POWER <24> <5>**
-
----
-
-## 16. Terminal quiz and game
-
-The Terminal contains a separate browser-local learning game layer.
-
-### Quiz
-
-Typical flow:
-
-1. QUIZ START
-2. read the question
-3. ANSWER A/B/C/D
-4. QUIZ NEXT
-5. QUIZ SCORE
-
-Supported Terminal quiz areas currently include:
+Primary branches include:
 
 - Engineering
-- Networking
-- Security
-- Data
+- Web / Code
+- Data Analytics
+- Cybersecurity
 - OSINT
-- Learning
+- AI Security
+- Learning Lab
 
-### Game
+It supports:
 
-Start with:
-
-**GAME START**
-
-The mixed game tracks:
-
-- score
-- streak
-- level
-
-Controls:
-
-- GAME HELP
-- GAME SCORE
-- GAME RESET
-
-The game requires no server or account.
-
----
-
-## 17. Terminal navigation
-
-The Terminal can move through the rest of the website.
-
-Examples:
-
-- NAV TREE
-- NAV RESOURCES
-- NAV EBOOKS
-- NAV TOOLBENCH
-- NAV MEGA-TOOLS
-- NAV ENGINEERING
-- NAV KNOWLEDGE
-- NAV PROJECTS
-
-This makes the Terminal a command layer over the wider learning platform.
-
----
-
-## 18. Terminal limitations
-
-Because the application runs on GitHub Pages as a browser application, it cannot:
-
-- execute arbitrary Linux commands
-- execute PowerShell or CMD
-- launch programs on the user's computer
-- access the real filesystem
-- become a remote shell
-- run native Nmap
-- perform unrestricted port scanning
-- bypass browser security
-- automatically attack remote systems
-- provide unrestricted server-side penetration testing
-
-NMAP / NAP are therefore learning and explanation modes.
-
-PWD, CD and CHDIR use a simulated virtual directory tree maintained by the Terminal.
-
-External web access can also be restricted by browser CORS and the policies of the destination website.
-
----
-
-# 19. Recon Hub
-
-**cyber-os/index.html — integrated reconnaissance**
-
-The Recon Hub is a passive-first OSINT and attack-surface research workspace.
-
-Its approach emphasises:
-
-- lawful public-source research
-- verification
-- evidence
-- passive discovery
-- privacy awareness
-- authorised testing
-
-The hub maps research resources covering areas such as:
-
-- certificate transparency
-- DNS
-- WHOIS
-- URL analysis
-- URL scanning
-- internet asset discovery
-- security intelligence
+- node inspection
+- visual relationships
+- zoom
+- pan
+- reset
+- interactive exploration
 
 Main implementation:
 
-- **js/recon-hub.js**
-- **css/recon-hub.css**
-- **js/hb-hub-motion.js**
+`js/intelligence-map.js`
 
 ---
 
-# 21. Visual system
+# 11. Projects
 
-Main styling:
+The platform connects selected public technical projects and repositories.
 
-**css/osint-redesign.css**
+Project information is maintained through the repository data layer and can include areas such as:
 
-Brand styling:
+- machine learning
+- data analysis
+- cybersecurity
+- Power BI
+- security learning
+- prompt injection research
+- technical applications
 
-**css/hb-brand.css**
-
-The interface includes:
-
-- dark technical workstation styling
-- responsive layouts
-- animated panels
-- pointer-following ambient effects
-- domain-aware visual states
-- hover depth
-- navigation motion
-- animated tree nodes
-- button/card motion
-- route transitions
-- terminal motion
-- footer/social interaction
-- custom cursor treatment
-- mobile refinements
-- reduced-motion support
-
-Motion is used to reinforce hierarchy and interaction rather than replace useful content.
+The project system is designed to expose real project work rather than placeholder portfolio cards.
 
 ---
 
-# 22. JavaScript architecture
+# 12. AI Systems
 
-### osint-redesign.js
+The platform contains separate public and private AI interfaces.
 
-Handles the main visual/interface layer:
+## Public AI
 
-- branding
-- footer
-- navigation
-- theme interactions
-- pointer effects
-- custom cursor
-- panel reveal
-- active navigation
-- command palette
-- domain visual states
-- route transitions
-- reduced-motion behaviour
+Available within the public/Cyber OS experience.
 
-### intelligence-core.js
+## Admin AI
 
-Handles core data-driven application functions:
+Available inside the authenticated private control environment.
 
-- Resource Matrix
-- Ebook Vault
-- Mega Tools integration
-- Engineering rendering
-- Knowledge Library
-- Bible quiz
-- search/filter behaviour
-- quiz state
+The frontend communicates through application API contracts rather than embedding private provider credentials in browser code.
 
-### intelligence-map.js
-
-Interactive Intelligence Tree.
-
-### technical-workbench.js
-
-Five-machine Technical Workbench.
-
-### mega-tools.js
-
-Indexed toolbox rendering and interaction.
-
-### terminal.js
-
-Command parser, terminal output, calculations, security learning, networking helpers, OSINT helpers, quiz/game and site navigation.
-
-### engineering-library.js
-
-Engineering calculator registry/runtime used by Mega Tools. The former standalone Engineering Library page has been retired after consolidation.
-
-### recon-hub.js
-
-Recon Hub research-tool mapping and interaction.
-
-### hb-hub-motion.js
-
-Shared motion behaviour for dedicated workspaces.
-
-### projects-data.js
-
-Project data and compatibility renderer.
-
-### tree-data-home.js
-
-Legacy/compatible tree data.
+AI provider implementation is treated as a backend/runtime concern.
 
 ---
 
-# 23. Data architecture
+# 13. Language System
 
-The major data source is:
+The platform includes a shared language system supporting:
 
-**data/source-library.json**
+- English
+- German
+- Yoruba
+- Nigerian Pidgin
 
-The application follows:
+The language selector can persist the selected language and respond to language query parameters.
 
-**DATA → RENDERER → INTERACTION**
+The translation system also supports dynamic content and accessibility-related labels.
 
-rather than hard-coding every resource into the page.
-
-This is important because the resource/tool catalogue is large and needs to remain maintainable.
-
----
-
-# 24. Branding assets
-
-Primary logo:
-
-**assets/hb-logo.svg**
-
-Shared brand rules:
-
-**css/hb-brand.css**
-
-Public identity:
-
-**HEPHZIBAH BEHULAH**
-
-**Engineering → Intelligence → Security**
-
-**LEARN · BUILD · TEST · SECURE**
-
-The footer exposes public channels for GitHub, LinkedIn, X, Facebook, GitBook and the technical blog.
+Not every educational text block is necessarily translated yet. The system is designed so additional translations can be added without rebuilding the application architecture.
 
 ---
 
-# 25. Responsive design
+# 14. Responsive and Accessibility Systems
 
 The platform is designed for:
 
@@ -840,176 +610,274 @@ The platform is designed for:
 - tablet
 - mobile
 
-Large grids collapse at smaller widths. The Technical Workbench, equation deck, resource cards and Terminal controls adapt to available screen space.
+The shared responsive layer provides:
 
-Reduced-motion preferences are respected by the motion layer.
+- overflow protection
+- responsive grids
+- mobile navigation behaviour
+- touch-friendly controls
+- mobile language selection
+- landscape handling
+- reduced-motion support
 
----
-
-# 26. Browser-first architecture
-
-Advantages:
-
-- no backend required for core tools
-- simple GitHub Pages deployment
-- local calculations
-- transparent client-side behaviour
-- easy public access
-- modular JavaScript
-
-Trade-offs:
-
-- no native operating-system shell
-- no server-side scanning engine
-- browser CORS restrictions
-- no private application database
-- limited persistence unless browser storage is used
-- external sources may change or block embedding
+Accessibility touch sizing is applied to mobile interfaces without unnecessarily changing desktop interaction dimensions.
 
 ---
 
-# 27. Security and ethics
+# 15. Architecture
 
-Security-related features are designed for:
+The repository follows a three-layer model.
 
-- lawful use
-- authorised environments
-- privacy awareness
-- passive-first research
-- evidence-driven investigation
-- responsible disclosure
-- safe browser demonstrations
+```text
+PRIVATE GITHUB
+      |
+      | source of truth
+      v
+APPLICATION
+      |
+      +-- Public Website
+      +-- ADIGUN Control
+      +-- ADIGUN Tool Lab
+      +-- Cyber OS
+      +-- Terminal
+      +-- AI Interfaces
+      +-- Learning Systems
+      |
+      v
+SERVICE / API LAYER
+      |
+      +-- Authentication
+      +-- AI services
+      +-- GitHub integration
+      +-- Data services
+      +-- Server-side processing
+      |
+      v
+HOSTING / RUNTIME
+      |
+      +-- Current Cloudflare runtime
+      +-- Future hosting provider if required
+```
 
-The public static application deliberately does not expose arbitrary server-side command execution.
+GitHub is the canonical source repository.
 
----
+The hosting provider is treated as a deployment/runtime layer rather than the owner of the application.
 
-# 28. Repository structure
+The frontend uses relative API routes where applicable so that the application can be moved behind another compatible runtime without rewriting the entire browser application.
 
-    FirstWebsite/
-    ├── index.html
-    ├── recon-hub.html
-    ├── css/
-    │   ├── osint-redesign.css
-    │   ├── hb-brand.css
-    │   └── recon-hub.css
-    ├── js/
-    │   ├── osint-redesign.js
-    │   ├── intelligence-core.js
-    │   ├── intelligence-map.js
-    │   ├── terminal.js
-    │   ├── technical-workbench.js
-    │   ├── mega-tools.js
-    │   ├── engineering-library.js
-    │   ├── recon-hub.js
-    │   ├── hb-hub-motion.js
-    │   ├── projects-data.js
-    │   └── tree-data-home.js
-    ├── data/
-    │   └── source-library.json
-    ├── assets/
-    │   └── hb-logo.svg
-    └── README.md
-
-Additional legacy assets may exist for compatibility.
+Provider-specific configuration remains isolated in the runtime/deployment layer.
 
 ---
 
-# 29. Main application load order
+# 16. Hosting Portability
 
-The main page loads the client modules in this order:
+The platform is intentionally being maintained so a future hosting provider can replace the current runtime with minimal application disruption.
 
-1. osint-redesign.js
-2. terminal.js
-3. technical-workbench.js
-4. intelligence-map.js
-5. mega-tools.js
-6. intelligence-core.js
+The migration principle is:
 
-The modules communicate through the DOM, browser state and shared data/functions.
+```text
+GitHub
+  ↓
+Build
+  ↓
+Staging
+  ↓
+Functional verification
+  ↓
+Traffic / DNS switch
+  ↓
+Monitoring
+  ↓
+Retire old runtime
+```
 
-The architecture is intentionally modular so individual working systems can be improved without rebuilding the entire application.
+The existing runtime should remain active until the replacement has been verified.
+
+A host migration must preserve:
+
+- public URLs
+- application routes
+- API contracts
+- authentication
+- AI interfaces
+- Cyber OS
+- ADIGUN Control
+- Tool Lab
+- terminal
+- knowledge systems
+- calculators
+- learning systems
+- responsive behaviour
+
+Provider-specific secrets belong in runtime secret stores and must never be committed to source code.
+
+Detailed architecture:
+
+`ARCHITECTURE.md`
+
+Migration runbook:
+
+`deployment/PORTABILITY.md`
+
+Secret-name reference:
+
+`deployment/runtime-secrets.example`
 
 ---
 
-# 30. Development principle
+# 17. Security Model
 
-**Show the work, not the scaffolding.**
+Security-sensitive functionality follows:
 
-The public interface should expose useful technical capability without filling the experience with unnecessary implementation commentary.
+**LEGAL → AUTHORISED → PRIVACY-AWARE → EVIDENCE-DRIVEN**
 
-The website is both:
+The platform does not intentionally expose:
 
-- a public technical portfolio
-- a personal learning environment
+- arbitrary server-side command execution
+- unrestricted remote shells
+- private credentials
+- unrestricted offensive scanning
+- browser bypass mechanisms
 
-The Terminal, Workbench, Intelligence Tree, calculators, resources and quizzes are therefore parts of one connected system.
+The browser cannot directly provide capabilities that require privileged server or operating-system access.
 
----
-
-# 31. The learning model
-
-The platform is organised around a simple technical progression:
-
-**Electricity produces signals.**
-
-**Signals become data.**
-
-**Data moves through networks.**
-
-**Networks create systems.**
-
-**Systems create security problems.**
-
-**Security requires understanding the whole system.**
-
-This is why engineering, networking, data analytics, OSINT and cybersecurity live together in the same platform.
+Sensitive operations should remain behind authenticated service boundaries.
 
 ---
 
-## Author
+# 18. Repository Structure
 
-**Hephzibah Behulah**
+The repository contains the public application, private-control application, Cyber OS, shared systems, backend/runtime components and deployment documentation.
+
+Important areas include:
+
+```text
+/
+├── index.html
+├── admin.html
+├── admin-tools.html
+├── ai-agent.html
+├── cyber-os/
+│   ├── index.html
+│   ├── cyber-os.js
+│   └── cyber-os.css
+├── css/
+│   ├── adigun-admin.css
+│   ├── ai-lab.css
+│   ├── accessibility.css
+│   ├── mobile-system.css
+│   └── other shared styles
+├── js/
+│   ├── adigun-admin.js
+│   ├── adigun-agent.js
+│   ├── adigun-command-engine.js
+│   ├── adigun-private-operator.js
+│   ├── adigun-renderer.js
+│   ├── adigun-terminal-controller-v2.js
+│   ├── ai-lab.js
+│   ├── language-system.js
+│   └── other application modules
+├── data/
+├── backend/
+├── deployment/
+├── assets/
+├── ARCHITECTURE.md
+├── DEPLOYMENT_SAFETY.md
+└── README.md
+```
+
+Additional compatibility and legacy assets may remain where they are required by the existing application.
+
+---
+
+# 19. Development Principles
+
+### Preserve working functionality
+
+Existing working systems should be improved rather than unnecessarily replaced.
+
+### Build from real data
+
+Large catalogues should use structured data and reusable renderers rather than fake duplicated entries.
+
+### Keep interfaces human-readable
+
+Operational results should be understandable to a human user. Raw internal JSON should not be the default presentation for ordinary status or tool results.
+
+### Separate application from infrastructure
+
+The website should not become permanently dependent on one hosting provider when a stable API boundary can be maintained.
+
+### Keep secrets out of source
+
+Credentials belong in runtime secret management.
+
+### Verify before claiming success
+
+A repository commit, a CI result and a live deployment check are different forms of evidence.
+
+### Prefer small, reversible changes
+
+Changes should be isolated, verifiable and easy to roll back.
+
+---
+
+# 20. Browser-First Limitations
+
+The browser application cannot:
+
+- execute arbitrary Linux commands on the user's computer
+- access the user's private filesystem without explicit browser APIs and permission
+- run native Nmap from ordinary browser JavaScript
+- perform unrestricted port scanning
+- bypass CORS
+- bypass authentication
+- operate as a remote shell
+- guarantee access to external services that block browser requests
+
+Where these capabilities are not available, the platform provides education, simulation, reference information or an authenticated backend service instead.
+
+---
+
+# 21. Current Status
+
+The platform is an actively developed technical environment.
+
+Current focus areas include:
+
+- cybersecurity learning
+- OSINT
+- networking
+- engineering
+- data
+- Python
+- AI security
+- technical automation
+- private control infrastructure
+- hosting portability
+- structured technical knowledge
+
+The architecture is being developed so that new capabilities can be added without unnecessarily destabilising existing systems.
+
+---
+
+# 22. Documentation
+
+Key architecture and deployment documents:
+
+- `ARCHITECTURE.md` — platform architecture and provider boundaries
+- `DEPLOYMENT_SAFETY.md` — deployment safety rules
+- `deployment/PORTABILITY.md` — future hosting migration procedure
+- `deployment/runtime-secrets.example` — runtime secret names without secret values
+
+---
+
+# 23. Identity
+
+**HEPHZIBAH BEHULAH**
 
 Engineering · Intelligence · Security
 
-GitHub: **HephzibahBehulah**
+**Observe → Research → Build → Test → Document**
 
 © 2026 Hephzibah Behulah
-## HB Terminal 2.0 Expansion
-
-The original terminal command engine remains intact. A separate expansion layer adds a data-driven technical command registry without replacing the existing commands.
-
-### Expanded capability families
-
-- Engineering and electronics: capacitors, reactance, impedance, power systems, motors, signals, filters, ADC/DAC, PWM, PLC, PID and unit conversion.
-- Networking: IPv4/IPv6 concepts, subnetting, masks, host counts, TCP, UDP, DNS, DHCP, ARP, ICMP, MTU, MSS and protocol reference.
-- Web and API: HTTP methods/status, headers, cookies, CORS, CSP, JSON, DOM, JavaScript, REST and Fetch concepts.
-- Security and cryptography: XSS, SQL injection, CSRF, SSRF, XXE, IDOR, authentication, authorization, JWT, hashing, salts, HMAC, AES, RSA, ECC and password-security concepts.
-- OSINT and forensics: domains, URLs, DNS records, certificate transparency, robots, sitemaps, archives, ASN/IP context, IOCs, evidence, timelines, metadata and log analysis.
-- Data and ML: descriptive statistics, percentiles, IQR, MAD, correlation, normalization, standardization, classification metrics, regression metrics, ROC/AUC and data-quality concepts.
-- Python, Linux and Git learning: language structures, common shell concepts, permissions, processes, Git workflows and GitHub concepts.
-- AI security: LLMs, prompts, tokens, context, RAG, embeddings, guardrails, prompt injection, data poisoning and model-security concepts.
-- Learning system: explanations, formulas, related-topic discovery, scenarios, checks, profiles, XP, badges, daily missions, graphs and browser-local simulations.
-
-### Generated command routes
-
-The expansion contains 309 structured topics and 2,472 generated topic routes. Each topic can be explored through actions such as EXPLAIN, FORMULA, LEARN, SCENARIO, CHECK, ABOUT, RELATED and QUIZ.
-
-Examples:
-
-- `HELP ENGINEERING`
-- `SEARCH capacitor`
-- `MAN tcp`
-- `FORMULA ohms-law`
-- `EXPLAIN prompt-injection`
-- `RELATED jwt`
-- `CONVERT 1 kW W`
-- `CORRELATION 1 2 3 | 2 4 6`
-- `MASK 24`
-- `GRAPH SINE`
-- `SIMULATE RC 1000 0.000001`
-- `CASE NEW network investigation`
-- `PROFILE`
-
-The expansion is loaded after `terminal.js`, so the existing terminal engine, quiz/game behavior, navigation, calculations and aliases remain the base layer.
