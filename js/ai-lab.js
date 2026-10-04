@@ -1,45 +1,22 @@
-/* ADIGUN AI Lab frontend controller. UI is intentionally untouched. */
+/* ADIGUN AI Lab multimodal terminal controller. */
 (function(){
-  function boot(){
-    const $=s=>document.querySelector(s);
-    const messages=$("#aiMessages"),input=$("#aiInput"),send=$("#aiSend"),state=$("#aiState"),platform=$("#platformStatus");
-    async function api(historyToSend){
-      const siteContext=window.Adigun&&typeof window.Adigun.search==="function"?await window.Adigun.search(historyToSend[historyToSend.length-1]?.content||"attached file"):"";
-      const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),120000);
-      try{
-        const r=await fetch("/api/chat",{method:"POST",headers:{"content-type":"application/json","x-hb-session":session},credentials:"same-origin",cache:"no-store",signal:controller.signal,body:JSON.stringify({messages:historyToSend.slice(-10),siteContext})});
-        const raw=await r.text();let d={};try{d=raw?JSON.parse(raw):{}}catch{throw new Error("AI gateway returned invalid JSON (HTTP "+r.status+").")}
-        if(!r.ok||!d.answer)throw new Error(d.error||("AI gateway unavailable (HTTP "+r.status+")."));
-        return d;
-      }finally{clearTimeout(timer)}
-    }
-
-    async function ask(){
-      if(busy)return;
-      const q=String(input.value||"").trim();
-      if(!q)return;
-      busy=true;send.disabled=true;
-      add(q,"user");
-      history.push({role:"user",content:q});input.value="";
-      persist();const thinking=showThinking();
-      try{
-        const d=await api(history);
-        thinking.remove();add(d.answer,"assistant");history.push({role:"assistant",content:String(d.answer)});persist();
-        if(state)state.textContent=d.attachments?"● MULTIMODAL ONLINE":(d.ragUsed?"● RAG ONLINE":"● AI ONLINE");
-      }catch(e){
-        thinking.remove();const message=e?.name==="AbortError"?"ADIGUN AI request timed out. Please try again.":"ADIGUN AI gateway error: "+String(e?.message||e);
-        console.error("ADIGUN API error:",e);add(message,"assistant");history.push({role:"assistant",content:message});persist();if(state)state.textContent="● API ERROR";
-      }finally{busy=false;send.disabled=false;input.focus();messages.scrollTop=messages.scrollHeight;}
-    }
-    send.addEventListener("click",ask);
-    input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();e.stopPropagation();ask()}});
-
-    async function health(){
-      try{const r=await fetch("/api/health",{credentials:"same-origin",cache:"no-store"}),d=await r.json();if(d.ok&&platform)platform.textContent=d.rag==="ai-search-ready"?"● AI + RAG READY":d.mode==="openai-responses"?"● AI ONLINE":"● LOCAL READY";}catch{if(platform)platform.textContent="● AI READY";}
-    }
-    health();window.addEventListener("beforeunload",persist);
-    console.info("ADIGUN AI Lab chat controller ready.");
-  }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
+  "use strict";
+  const MAX_FILE_BYTES=8*1024*1024, MAX_ATTACHMENTS=8, VIDEO_FRAMES=4;
+  let attachments=[],busy=false,recording=false,recorder=null,recordChunks=[],recordStream=null;
+  const $=s=>document.querySelector(s);
   function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+  function bytes(n){const x=Number(n)||0;if(x<1024)return x+" B";if(x<1048576)return(x/1024).toFixed(1)+" KB";return(x/1048576).toFixed(1)+" MB"}
+  function add(text,role){const box=$("#aiMessages");if(!box)return;const el=document.createElement("div");el.className="ai-message "+role;if(role==="assistant"&&window.AdigunRenderer&&typeof window.AdigunRenderer.render==="function")el.innerHTML=window.AdigunRenderer.render(String(text||""));else el.textContent=String(text||"");box.appendChild(el);box.scrollTop=box.scrollHeight;return el}
+  function thinking(){const el=document.createElement("div");el.className="ai-message assistant ai-thinking";el.innerHTML="<span>ADIGUN is processing</span><i></i><i></i><i></i>";$("#aiMessages")?.appendChild(el);$("#aiMessages").scrollTop=$("#aiMessages").scrollHeight;return el}
+  function renderAttachments(){const box=$("#aiAttachmentChips");if(!box)return;box.innerHTML=attachments.map((a,i)=>'<span class="attachment-chip"><span>'+esc(a.icon||"📎")+'</span><strong>'+esc(a.name)+'</strong><small>'+esc(a.label||bytes(a.size))+'</small><button type="button" data-remove-attachment="'+i+'" aria-label="Remove '+esc(a.name)+'">×</button></span>').join("");box.querySelectorAll("[data-remove-attachment]").forEach(b=>b.addEventListener("click",()=>{attachments.splice(Number(b.dataset.removeAttachment),1);renderAttachments()}))}
+  function dataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onerror=()=>reject(new Error("Could not read "+file.name));r.onload=()=>resolve(String(r.result));r.readAsDataURL(file)})}
+  async function filePart(file,kind){if(file.size>MAX_FILE_BYTES)throw new Error(file.name+" is larger than 8 MB. Please attach a smaller file.");const data=await dataUrl(file);if(/^image\/(png|jpeg|jpg|webp|gif)$/i.test(file.type))return{name:file.name,size:file.size,icon:"▧",label:bytes(file.size),kind:"image",part:{type:"input_image",image_url:data,detail:"auto"}};return{name:file.name,size:file.size,icon:kind==="audio"?"♩":"📎",label:bytes(file.size),kind,part:{type:"input_file",filename:file.name,file_data:data}}}
+  async function videoFrames(file){if(file.size>MAX_FILE_BYTES)throw new Error(file.name+" is larger than 8 MB. Please attach a video under 8 MB.");const url=URL.createObjectURL(file);try{const v=document.createElement("video");v.preload="metadata";v.muted=true;v.playsInline=true;v.src=url;await new Promise((res,rej)=>{v.onloadedmetadata=res;v.onerror=()=>rej(new Error("Could not read video "+file.name))});const duration=Number.isFinite(v.duration)?v.duration:0;if(!duration)throw new Error("Video duration could not be read.");const times=[0,duration*.25,duration*.5,duration*.8],parts=[];for(const t of times){await new Promise((res,rej)=>{v.onseeked=res;v.onerror=()=>rej(new Error("Could not seek video."));v.currentTime=Math.min(t,Math.max(0,duration-.05))});const w=Math.min(1280,v.videoWidth||1280),h=Math.max(1,Math.round(w*(v.videoHeight||720)/(v.videoWidth||1280)));const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(v,0,0,w,h);parts.push({type:"input_image",image_url:c.toDataURL("image/jpeg",.72),detail:"auto"})}return{name:file.name,size:file.size,icon:"▶",label:bytes(file.size)+" · "+VIDEO_FRAMES+" frames",kind:"video",parts}}finally{URL.revokeObjectURL(url)}}
+  async function addFiles(list,kind){for(const file of Array.from(list||[])){if(attachments.length>=MAX_ATTACHMENTS){add("Attachment limit reached. Remove an item before adding another.","assistant");break}try{attachments.push(kind==="video"||file.type.startsWith("video/")?await videoFrames(file):await filePart(file,kind||"file"))}catch(e){add(String(e?.message||e),"assistant")}}renderAttachments()}
+  async function transcribe(blob,name){if(blob.size>25*1024*1024)throw new Error("Audio is larger than 25 MB.");const form=new FormData();form.append("audio",blob,name||"adigun-voice.webm");const r=await fetch("/api/transcribe",{method:"POST",body:form,credentials:"same-origin",cache:"no-store"});const d=await r.json().catch(()=>({}));if(!r.ok||!d.text)throw new Error(d.error||"Voice transcription failed.");return String(d.text).trim()}
+  async function recordVoice(){if(recording){recorder?.stop();return}if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){add("Voice recording is not supported by this browser.","assistant");return}try{recordStream=await navigator.mediaDevices.getUserMedia({audio:true});const mime=["audio/webm;codecs=opus","audio/webm","audio/ogg;codecs=opus"].find(x=>MediaRecorder.isTypeSupported(x))||"";recorder=new MediaRecorder(recordStream,mime?{mimeType:mime}:undefined);recordChunks=[];recording=true;$("#aiRecord").classList.add("recording");$("#aiRecord").textContent="■";$("#aiRecord").title="Stop recording";recorder.ondataavailable=e=>{if(e.data.size)recordChunks.push(e.data)};recorder.onerror=()=>{recording=false;recordStream?.getTracks().forEach(t=>t.stop());add("Voice recording failed.","assistant")};recorder.onstop=async()=>{const blob=new Blob(recordChunks,{type:recorder.mimeType||"audio/webm"});recording=false;recordStream?.getTracks().forEach(t=>t.stop());recordStream=null;$("#aiRecord").classList.remove("recording");$("#aiRecord").textContent="●";$("#aiRecord").title="Record a voice message";try{const text=await transcribe(blob,"adigun-recording.webm");attachments.push({name:"Recorded voice",size:blob.size,icon:"●",label:"transcribed",kind:"voice",transcript:text});renderAttachments();add("Voice transcription ready. Press SEND to send it to ADIGUN.","system")}catch(e){add(String(e?.message||e),"assistant")}};recorder.start();add("Recording started. Press ● again to stop.","system")}catch{recording=false;add("Microphone access was not granted or is unavailable.","assistant")}}
+  async function ask(){const input=$("#aiInput"),send=$("#aiSend"),state=$("#aiState"),q=String(input?.value||"").trim();if(busy||(!q&&!attachments.length))return;busy=true;if(send)send.disabled=true;const names=attachments.map(a=>a.name).join(", ");add((q||"Analyze the attached material.")+(names?"\n\nAttachments: "+names:""),"user");input.value="";const parts=[];if(q)parts.push({type:"input_text",text:q});for(const a of attachments){if(a.transcript)parts.push({type:"input_text",text:"Voice transcription ("+a.name+"):\n"+a.transcript});if(a.part)parts.push(a.part);if(Array.isArray(a.parts))parts.push(...a.parts)}attachments=[];renderAttachments();const wait=thinking();try{const d=await window.Adigun.ask(q,parts);wait.remove();if(d?.answer){add(d.answer,"assistant");if(state)state.textContent=d.attachments?"● MULTIMODAL ONLINE":(d.ragUsed?"● RAG ONLINE":"● AI ONLINE")}else{add(d?.error||"ADIGUN AI gateway is currently unavailable. Please try again.","assistant");if(state)state.textContent="● API ERROR"}}catch(e){wait.remove();add(String(e?.message||e),"assistant");if(state)state.textContent="● API ERROR"}finally{busy=false;if(send)send.disabled=false;input.focus()}}
+  async function health(){try{const r=await fetch("/api/health",{credentials:"same-origin",cache:"no-store"}),d=await r.json();if(d.ok&&$("#platformStatus"))$("#platformStatus").textContent=d.rag==="ai-search-ready"?"● AI + RAG READY":d.mode==="multi-provider"?"● AI ONLINE":"● LOCAL READY"}catch{if($("#platformStatus"))$("#platformStatus").textContent="● AI READY"}}
+  function bind(){const file=$("#aiFileInput"),photo=$("#aiPhotoInput"),video=$("#aiVideoInput"),voice=$("#aiVoiceInput");$("#aiAdd")?.addEventListener("click",()=>file?.click());$("#aiFile")?.addEventListener("click",()=>file?.click());$("#aiPhoto")?.addEventListener("click",()=>photo?.click());$("#aiVideo")?.addEventListener("click",()=>video?.click());$("#aiVoice")?.addEventListener("click",()=>voice?.click());$("#aiRecord")?.addEventListener("click",recordVoice);file?.addEventListener("change",e=>{addFiles(e.target.files,"file");e.target.value=""});photo?.addEventListener("change",e=>{addFiles(e.target.files,"image");e.target.value=""});video?.addEventListener("change",e=>{addFiles(e.target.files,"video");e.target.value=""});voice?.addEventListener("change",async e=>{for(const f of Array.from(e.target.files||[])){try{const text=await transcribe(f,f.name);attachments.push({name:f.name,size:f.size,icon:"♩",label:"transcribed",kind:"voice",transcript:text})}catch(err){add(String(err?.message||err),"assistant")}}renderAttachments();e.target.value=""});$("#aiSend")?.addEventListener("click",ask);$("#aiInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask()}});$("#aiInput")?.addEventListener("input",e=>{e.target.style.height="auto";e.target.style.height=Math.min(e.target.scrollHeight,160)+"px"});health()}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bind,{once:true});else bind();
 })();
