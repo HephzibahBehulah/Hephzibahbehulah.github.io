@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hephzibahbehulah-github-io",
-  "main": "worker-openai.js",
+  "main": "worker-public.js",
   "compatibility_date": "2026-09-25",
   "assets": {
     "directory": ".",
