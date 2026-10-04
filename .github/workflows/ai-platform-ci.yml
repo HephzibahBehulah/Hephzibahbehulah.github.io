@@ -19,6 +19,8 @@ jobs:
           node --check js/adigun-agent.js
           node --check worker-v2.js
           node --check worker-openai.js
+          grep -q 'api/transcribe' worker-openai.js
+          grep -q 'audio/transcriptions' worker-openai.js
           node --check js/adigun-admin.js
           node --check js/adigun-private-operator.js
           node --check js/adigun-renderer.js
@@ -83,7 +85,12 @@ jobs:
           test -f js/ai-lab.js
           test -f js/adigun-admin.js
           test -f js/adigun-renderer.js
-          grep -q 'id="attachmentInput"' ai-lab.html
+          grep -q 'id="aiFileInput"' ai-lab.html
+          grep -q 'id="aiPhotoInput"' ai-lab.html
+          grep -q 'id="aiVideoInput"' ai-lab.html
+          grep -q 'id="aiVoiceInput"' ai-lab.html
+          grep -q 'id="aiRecord"' ai-lab.html
+          ! grep -q 'id="projects"' ai-lab.html
           grep -q 'id="adminMessages"' admin.html
           ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
           ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js worker-openai.js
