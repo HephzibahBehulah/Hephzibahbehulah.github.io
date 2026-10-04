@@ -21,30 +21,76 @@ document.addEventListener("DOMContentLoaded",()=>{
   const nav=document.getElementById("cyberNav");
   if(!content||!nav)return;
 
-  const orderedIds=[...nav.querySelectorAll('a[href^="#"]')]
-    .map(a=>a.getAttribute("href").slice(1))
-    .filter(Boolean);
+  /*
+   * One canonical physical page order.
+   * The sidebar is the public navigation contract, while these support
+   * sections are deliberately placed beside the feature they support.
+   * Nothing is allowed to appear after PUBLIC AI except the site footer.
+   */
+  const pageOrder=[
+    "dashboard",
+    "stats",
+    "knowledge-hub",
+    "scale",
+    "networking",
+    "network-academy",
+    "recon-overview",
+    "recon-workflow",
+    "recon-toolkit",
+    "recon-queries",
+    "recon-evidence",
+    "recon-learning",
+    "commands",
+    "shortcuts",
+    "frameworks",
+    "osint",
+    "detection",
+    "teams",
+    "formulas",
+    "simulation",
+    "games",
+    "subnet",
+    "labs",
+    "glossary",
+    "graph",
+    "learning",
+    "terminal",
+    "operator",
+    "ai-agent"
+  ];
 
-  const firstById=new Map();
-  orderedIds.forEach(id=>{
-    const matches=[...content.children].filter(el=>el.id===id);
-    if(matches.length){
-      firstById.set(id,matches[0]);
-      matches.slice(1).forEach(el=>el.remove());
+  const byId=new Map();
+  for(const el of [...content.children]){
+    if(!el.id)continue;
+    if(!byId.has(el.id))byId.set(el.id,el);
+    else el.remove();
+  }
+
+  const used=new Set();
+  for(const id of pageOrder){
+    const el=byId.get(id);
+    if(el){
+      content.appendChild(el);
+      used.add(id);
     }
+  }
+
+  /*
+   * Preserve any future top-level support block, but keep it BEFORE the
+   * terminal/AI tail so PUBLIC AI remains the final navigational section.
+   */
+  const leftovers=[...content.children].filter(el=>
+    el.tagName!=="FOOTER" &&
+    el.id &&
+    !used.has(el.id)
+  );
+  const terminal=byId.get("terminal");
+  leftovers.forEach(el=>{
+    if(terminal)content.insertBefore(el,terminal);
+    else content.appendChild(el);
   });
 
   const footer=[...content.children].find(el=>el.tagName==="FOOTER");
-  const auxiliary=[...content.children].filter(el=>
-    el!==footer && !orderedIds.includes(el.id)
-  );
-
-  orderedIds.forEach(id=>{
-    const section=firstById.get(id);
-    if(section)content.appendChild(section);
-  });
-
-  auxiliary.forEach(el=>content.appendChild(el));
   if(footer)content.appendChild(footer);
 
   content.classList.add("cyber-nav-synchronized");
