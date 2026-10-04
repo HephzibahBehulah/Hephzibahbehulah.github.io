@@ -90,3 +90,12 @@
 .ai-thinking i:nth-of-type(2){animation-delay:.15s}.ai-thinking i:nth-of-type(3){animation-delay:.3s}
 @keyframes adigunPulse{0%,70%,100%{opacity:.25;transform:scale(.8)}35%{opacity:1;transform:scale(1.15)}}
 @media(max-width:560px){.ai-message.assistant{max-width:96%}.ai-message.assistant table{display:block;overflow:auto}}
+
+/* Multimodal terminal controls. */
+.ai-input-row{align-items:flex-end;gap:6px}
+.ai-input-row input,.ai-input-row textarea{flex:1;min-width:0;resize:none;background:transparent;border:1px solid var(--line);color:var(--text);padding:11px;font:11px/1.45 var(--mono);outline:0}
+.ai-icon-btn{width:36px;height:36px;flex:0 0 36px;border:1px solid var(--line);background:rgba(110,231,255,.025);color:var(--muted);cursor:pointer;font:16px var(--mono);display:grid;place-items:center}
+.ai-icon-btn:hover{border-color:rgba(110,231,255,.45);color:var(--ai-cyan)}
+.ai-icon-btn.record{color:#ff8d8d}.ai-icon-btn.recording{border-color:#ff8d8d;color:#ff8d8d;box-shadow:0 0 12px rgba(255,141,141,.18)}
+.attachment-chip strong{max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.attachment-chip small{color:var(--muted)}
+@media(max-width:560px){.ai-input-row{flex-wrap:wrap}.ai-input-row textarea{order:2;flex:1 1 calc(100% - 12px)}.ai-input-row #aiSend{order:3}}
