@@ -307,3 +307,18 @@ body[data-hb-domain="learning"]{--hb-domain-accent:#ff8a3d;--hb-domain-glow:rgba
 .hb-profile-empty{grid-column:1/-1;padding:45px;text-align:center;color:var(--muted);font:10px var(--mono);border:1px dashed var(--line)}
 @media(max-width:1050px){.hb-profile-hero{grid-template-columns:1fr}.hb-profile-console{border-left:0;border-top:1px solid var(--line)}.hb-profile-repo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hb-profile-repo-toolbar{grid-template-columns:1fr 1fr}.hb-profile-repo-count{padding:0}}
 @media(max-width:700px){.hb-profile-copy,.hb-profile-console{padding:20px}.hb-profile-stats{grid-template-columns:1fr 1fr}.hb-profile-principles{grid-template-columns:1fr}.hb-profile-repo-grid{grid-template-columns:1fr}.hb-profile-repo-toolbar{grid-template-columns:1fr}.hb-profile-live{padding:4px 0}}
+
+
+/* Interactive Intelligence Tree v2 */
+.os-tree-wrap{touch-action:none}
+.os-tree.map-canvas{width:1500px;height:900px;position:relative;overflow:hidden}
+.intel-map-stage{position:relative;width:1500px;height:900px;transform-origin:0 0}
+.intel-map-lines{position:absolute;inset:0;width:1500px;height:900px;pointer-events:none}
+.map-connection{fill:none;stroke:#34404a;stroke-width:1.5}
+.intel-map-layer{position:absolute;inset:0}
+.map-node,.map-leaf{position:absolute;z-index:2;min-width:150px;padding:10px 12px;border:1px solid var(--line);border-left:3px solid var(--accent);background:#14191f;border-radius:5px;cursor:pointer;font:11px var(--mono);color:#dce3e9;box-shadow:0 5px 18px #0006;transition:.18s;text-align:left}
+.map-node small,.map-leaf small{display:block;color:#687681;font:9px var(--mono);margin-top:4px}
+.map-node:hover,.map-leaf:hover{border-color:var(--accent);transform:translateY(-2px);z-index:5}
+.map-root{border-left-color:var(--green);background:#172019;font-weight:700}
+.map-node.eng,.map-leaf.eng{border-left-color:var(--yellow)}.map-node.web,.map-leaf.web{border-left-color:var(--cyan)}.map-node.data,.map-leaf.data{border-left-color:var(--purple)}.map-node.cyber,.map-leaf.cyber{border-left-color:var(--red)}.map-node.osint,.map-leaf.osint{border-left-color:var(--blue)}.map-node.ai,.map-leaf.ai{border-left-color:#d58cff}.map-node.learn,.map-leaf.learn{border-left-color:var(--green)}
+.os-tree-wrap.dragging{cursor:grabbing}
