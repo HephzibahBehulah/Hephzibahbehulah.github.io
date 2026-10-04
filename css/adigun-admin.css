@@ -139,3 +139,20 @@
 .ghk-source-document{margin-bottom:24px}.ghk-document-head{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:10px}.ghk-document-head b{color:var(--admin-cyan);font:10px var(--mono)}.ghk-document-head code{color:var(--muted);font:8px var(--mono)}
 .ghk-document-content{color:var(--text)}.ghk-document-content h1,.ghk-document-content h2,.ghk-document-content h3{font-family:var(--mono);color:var(--admin-cyan);margin:18px 0 8px}.ghk-document-content p,.ghk-document-content li{font:10px/1.65 var(--mono);color:var(--muted)}.ghk-document-content table{width:100%;border-collapse:collapse;display:block;overflow:auto}.ghk-document-content th,.ghk-document-content td{border:1px solid var(--line);padding:6px;text-align:left;white-space:nowrap}.ghk-document-content a{color:var(--admin-cyan)}.ghk-document-content pre{overflow:auto;padding:12px;border:1px solid var(--line);background:#05070a;color:var(--text)}
 @media(max-width:900px){.ghk-stats{grid-template-columns:repeat(2,1fr)}.ghk-grid{grid-template-columns:1fr}.ghk-wide{grid-column:auto}.ghk-api-row{grid-template-columns:1fr}.ghk-modal{padding:10px}}
+
+
+/* ADIGUN CONTROL INTELLIGENCE TREE */
+.admin-tree-wrap{height:620px;overflow:auto;background:#0b0f13;border-top:1px solid var(--line);background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:32px 32px}
+.admin-map-canvas{position:relative;width:1400px;height:820px;touch-action:none;overflow:hidden}
+.admin-map-stage{position:relative;width:1400px;height:820px;transform-origin:0 0}
+.admin-map-lines{position:absolute;inset:0;width:1400px;height:820px;pointer-events:none}
+.admin-map-connection{fill:none;stroke:#35424d;stroke-width:1.5}
+.admin-map-layer{position:absolute;inset:0}
+.admin-map-node,.admin-map-leaf{position:absolute;z-index:2;min-width:150px;padding:10px 12px;border:1px solid var(--line);border-left:3px solid #63d297;background:#141a20;border-radius:5px;color:var(--text);cursor:pointer;text-align:left;font:11px var(--mono);box-shadow:0 5px 18px #0007;transition:.18s}
+.admin-map-node small,.admin-map-leaf small{display:block;color:var(--muted);font:9px var(--mono);margin-top:4px}
+.admin-map-node:hover,.admin-map-leaf:hover{border-color:var(--accent);transform:translateY(-2px)}
+.admin-map-root{border-left-color:var(--green);background:#172019;font-weight:700}
+.admin-map-node.ops,.admin-map-leaf.ops{border-left-color:#f2c94c}.admin-map-node.intel,.admin-map-leaf.intel{border-left-color:#56cfe1}.admin-map-node.security,.admin-map-leaf.security{border-left-color:#ff6b6b}.admin-map-node.knowledge,.admin-map-leaf.knowledge{border-left-color:#a78bfa}.admin-map-node.terminal,.admin-map-leaf.terminal{border-left-color:#7aa2f7}.admin-map-node.tools,.admin-map-leaf.tools{border-left-color:#d58cff}
+.admin-node-info{display:flex;gap:12px;align-items:center;padding:13px 15px;border-top:1px solid var(--line);font:10px/1.5 var(--mono);color:var(--muted)}
+.admin-node-info b{color:var(--accent);min-width:140px}
+@media(max-width:900px){.admin-tree-wrap{height:500px}}
