@@ -446,7 +446,7 @@
 
   function initSearch(){
     $('globalResourceSearch')?.addEventListener('input',e=>{
-      const q=e.target.value.trim();if(q){location.hash='resourceMatrix';if($('sourceSearch')){$('sourceSearch').value=q;$('sourceSearch').dispatchEvent(new Event('input'));}}
+      const q=e.target.value.trim();if(q){location.hash='knowledgeLibrary';if($('docSearch')){$('docSearch').value=q;$('docSearch').dispatchEvent(new Event('input'));}}
     });
   }
 
