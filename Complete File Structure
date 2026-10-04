@@ -2,7 +2,6 @@ HephzibahBehulah.github.io/
 ├── index.html                         # Canonical Intelligence Portfolio
 ├── portfolio.html                     # Compatibility route → #projects
 ├── resources.html                     # Compatibility route → #resourceMatrix
-├── engineering-library.html           # Engineering calculator/library
 ├── recon-hub.html                     # Reconnaissance resource hub
 │
 ├── assets/
@@ -19,7 +18,7 @@ HephzibahBehulah.github.io/
 │   ├── intelligence-core.js            # Resource, ebook and knowledge runtime
 │   ├── mega-tools.js                   # Mega tool catalogue
 │   ├── tree-data-home.js               # Portfolio tree data
-│   ├── engineering-library.js          # Engineering calculator runtime
+│   ├── engineering-library.js          # Engineering calculator registry/runtime used by Mega Tools
 │   └── recon-hub.js                    # Recon hub runtime
 │
 ├── pentest-script/
