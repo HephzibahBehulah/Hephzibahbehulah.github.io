@@ -7,7 +7,7 @@
   'use strict';
   const SUPPORTED={en:'English',de:'Deutsch',yo:'Yorùbá',pid:'Nigerian Pidgin'};
   const KEY='hb_language';
-  const base=location.pathname.indexOf('/cyber-os/')===0?'../':'';
+  const base=location.pathname.includes('/cyber-os/')?'../':'';
   const original=new WeakMap();
   let dict={};
   let current='en';
