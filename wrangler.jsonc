@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hephzibahbehulah-github-io",
-  "main": "worker-public.js",
+  "main": "worker-public-v2.js",
   "compatibility_date": "2026-09-25",
   "assets": {
     "directory": ".",
