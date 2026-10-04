@@ -44,7 +44,7 @@
   function translateAll(){document.querySelectorAll('[data-i18n],.os-nav a,.os-side-label,.os-mini,.nav-link,.nav-cta,.panel-tools button,.resource-controls button').forEach(translateNode);document.documentElement.lang=current==='yo'?'yo':current==='pid'?'en-NG':current;const s=document.getElementById('hbLanguage');if(s)s.value=current}
   async function setLanguage(code){if(!SUPPORTED[code])code='en';localStorage.setItem(KEY,code);await load(code);translateAll();}
   async function init(){current=preferred();await load(current);makeControl();translateAll();
-    const mo=new MutationObserver(m=>{if(m.some(x=>x.addedNodes.length)){requestAnimationFrame(translateAll)}});mo.observe(document.body,{childList:true,subtree:true});
+    const mo=new MutationObserver(m=>{const added=m.some(x=>Array.from(x.addedNodes).some(n=>n.nodeType===1&&!((n.id||'')==='hbLanguageControl')));if(added)requestAnimationFrame(translateAll)});mo.observe(document.body,{childList:true,subtree:true});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.HBLanguage={set:setLanguage,get:()=>current,supported:SUPPORTED};
