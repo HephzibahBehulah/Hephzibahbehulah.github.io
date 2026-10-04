@@ -1627,6 +1627,9 @@ export default {
     }
 
     if (url.pathname === "/api/transcribe" && request.method === "POST") {
+      if (url.hostname !== "admin.hephzibahbehulah.com") return json(request,{ok:false,error:"Private AI Lab endpoint."},404);
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
       return transcribeAudio(request, env);
     }
 
