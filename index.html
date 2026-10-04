@@ -38,6 +38,42 @@
 </div></div>
 </section>
 
+<section class="os-panel ai-section" id="public-ai-agent" aria-label="ADIGUN public AI Agent">
+<div class="os-panel-head"><span>01 / AI AGENT</span><span id="aiState">● READY</span></div>
+<div class="ai-agent-grid">
+<div class="ai-console">
+<div class="ai-console-head"><span>ADIGUN / INTELLIGENCE</span><span>LOCAL + WEB · MULTIMODAL</span></div>
+<div id="aiMessages" class="ai-messages">
+<div class="ai-message system">ADIGUN // multimodal site intelligence online.</div>
+<div class="ai-message assistant">Ask a question, attach a file or image, add a video, upload voice, or record a message. ADIGUN processes the supplied material before answering.</div>
+</div>
+<div class="ai-composer">
+<div id="aiAttachmentChips" class="ai-attachment-chips" aria-live="polite"></div>
+<div class="ai-input-row">
+<button id="aiAdd" class="ai-icon-btn" type="button" title="Add an attachment" aria-label="Add an attachment">＋</button>
+<button id="aiFile" class="ai-icon-btn" type="button" title="Attach a file" aria-label="Attach a file">📎</button>
+<button id="aiPhoto" class="ai-icon-btn" type="button" title="Attach a photo or image" aria-label="Attach a photo or image">▧</button>
+<button id="aiVideo" class="ai-icon-btn" type="button" title="Attach a video" aria-label="Attach a video">▶</button>
+<button id="aiVoice" class="ai-icon-btn" type="button" title="Attach voice or audio" aria-label="Attach voice or audio">♩</button>
+<button id="aiRecord" class="ai-icon-btn record" type="button" title="Record a voice message" aria-label="Record a voice message">●</button>
+<textarea id="aiInput" rows="1" placeholder="Message ADIGUN... attach files, photos or video, add voice, or record." autocomplete="off"></textarea>
+<button id="aiSend" class="os-btn primary" type="button">SEND</button>
+</div>
+<input id="aiFileInput" type="file" hidden multiple accept=".pdf,.doc,.docx,.txt,.md,.csv,.json,.log,.xml,.xlsx,.xls,.yaml,.yml,.js,.ts,.py,.html,.css,.sql,.sh,.zip,.rtf,.odt,.ods,.ppt,.pptx">
+<input id="aiPhotoInput" type="file" hidden multiple accept="image/png,image/jpeg,image/webp,image/gif">
+<input id="aiVideoInput" type="file" hidden multiple accept="video/mp4,video/webm,video/quicktime,video/x-matroska">
+<input id="aiVoiceInput" type="file" hidden multiple accept="audio/*">
+</div>
+</div>
+<div class="ai-capabilities">
+<div class="ai-card"><b>RAG</b><span>Retrieve relevant site and knowledge records before answering.</span></div>
+<div class="ai-card"><b>FILES</b><span>Send supported documents and code directly to ADIGUN for inspection.</span></div>
+<div class="ai-card"><b>VISION</b><span>Inspect photos and representative video frames supplied with your request.</span></div>
+<div class="ai-card"><b>VOICE</b><span>Transcribe uploaded or recorded audio, then give the transcript to ADIGUN for analysis.</span></div>
+</div>
+</div>
+</section>
+
 <section class="os-panel" id="profile-hub" aria-label="Hephzibah Behulah professional profile and live portfolio">
 <div class="os-panel-head"><span>PROFESSIONAL PROFILE / PORTFOLIO</span><span id="hbGithubLiveStatus" class="hb-profile-live"><span class="hb-live-dot"></span>connecting…</span></div>
 <div class="hb-profile-hero">
@@ -135,41 +171,7 @@ secure → improve</pre></div>
   </div>
 </section>
 
-<section class="os-panel ai-section" id="public-ai-agent" aria-label="ADIGUN public AI Agent">
-<div class="os-panel-head"><span>01 / AI AGENT</span><span id="aiState">● READY</span></div>
-<div class="ai-agent-grid">
-<div class="ai-console">
-<div class="ai-console-head"><span>ADIGUN / INTELLIGENCE</span><span>LOCAL + WEB · MULTIMODAL</span></div>
-<div id="aiMessages" class="ai-messages">
-<div class="ai-message system">ADIGUN // multimodal site intelligence online.</div>
-<div class="ai-message assistant">Ask a question, attach a file or image, add a video, upload voice, or record a message. ADIGUN processes the supplied material before answering.</div>
-</div>
-<div class="ai-composer">
-<div id="aiAttachmentChips" class="ai-attachment-chips" aria-live="polite"></div>
-<div class="ai-input-row">
-<button id="aiAdd" class="ai-icon-btn" type="button" title="Add an attachment" aria-label="Add an attachment">＋</button>
-<button id="aiFile" class="ai-icon-btn" type="button" title="Attach a file" aria-label="Attach a file">📎</button>
-<button id="aiPhoto" class="ai-icon-btn" type="button" title="Attach a photo or image" aria-label="Attach a photo or image">▧</button>
-<button id="aiVideo" class="ai-icon-btn" type="button" title="Attach a video" aria-label="Attach a video">▶</button>
-<button id="aiVoice" class="ai-icon-btn" type="button" title="Attach voice or audio" aria-label="Attach voice or audio">♩</button>
-<button id="aiRecord" class="ai-icon-btn record" type="button" title="Record a voice message" aria-label="Record a voice message">●</button>
-<textarea id="aiInput" rows="1" placeholder="Message ADIGUN... attach files, photos or video, add voice, or record." autocomplete="off"></textarea>
-<button id="aiSend" class="os-btn primary" type="button">SEND</button>
-</div>
-<input id="aiFileInput" type="file" hidden multiple accept=".pdf,.doc,.docx,.txt,.md,.csv,.json,.log,.xml,.xlsx,.xls,.yaml,.yml,.js,.ts,.py,.html,.css,.sql,.sh,.zip,.rtf,.odt,.ods,.ppt,.pptx">
-<input id="aiPhotoInput" type="file" hidden multiple accept="image/png,image/jpeg,image/webp,image/gif">
-<input id="aiVideoInput" type="file" hidden multiple accept="video/mp4,video/webm,video/quicktime,video/x-matroska">
-<input id="aiVoiceInput" type="file" hidden multiple accept="audio/*">
-</div>
-</div>
-<div class="ai-capabilities">
-<div class="ai-card"><b>RAG</b><span>Retrieve relevant site and knowledge records before answering.</span></div>
-<div class="ai-card"><b>FILES</b><span>Send supported documents and code directly to ADIGUN for inspection.</span></div>
-<div class="ai-card"><b>VISION</b><span>Inspect photos and representative video frames supplied with your request.</span></div>
-<div class="ai-card"><b>VOICE</b><span>Transcribe uploaded or recorded audio, then give the transcript to ADIGUN for analysis.</span></div>
-</div>
-</div>
-</section>
+
 
 <section class="os-panel mega-section hb-terminal-section" id="terminal">
   <div class="os-panel-head"><span>TERMINAL / technical command interface</span><span id="hbTerminalStatus">● READY</span></div>
@@ -188,6 +190,6 @@ secure → improve</pre></div>
 <div class="hb-socials"><a class="hb-social gh" href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener" aria-label="GitHub">GH</a><a class="hb-social in" href="https://linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><a class="hb-social x" href="https://x.com/hephzibahBehulah" target="_blank" rel="noopener" aria-label="X">𝕏</a><a class="hb-social fb" href="https://www.facebook.com/HephzibahBehulah" target="_blank" rel="noopener" aria-label="Facebook">f</a><a class="hb-social gb" href="https://gitbook.io" target="_blank" rel="noopener" aria-label="GitBook">GB</a><a class="hb-social blog" href="https://hephzibahbehulah.blogspot.com" target="_blank" rel="noopener" aria-label="Blog">BLOG</a></div></div>
 <div class="hb-footer-bottom"><span>© 2026 Hephzibah Behulah</span><span>Electronics · Automation · Software · Data · Security</span></div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/contrib/auto-render.min.js"></script><script src="js/adigun-renderer.js?v=20260926-1"></script><script src="js/adigun-agent.js?v=20260926-1"></script><script src="js/ai-lab.js?v=20261004-1"></script><script src="js/osint-redesign.js?v=20260925-12"></script><script src="js/global-search.js?v=20260928-2"></script><script src="js/terminal.js?v=20260925-2"></script><script src="js/terminal-expansion.js?v=20260925-1"></script><script src="js/technical-workbench.js?v=20260925-1"></script><script src="js/intelligence-map.js?v=20260924-1"></script><script src="js/mega-tools.js?v=20260924-2"></script><script src="js/intelligence-core.js?v=20260924-3"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/contrib/auto-render.min.js"></script><script src="js/adigun-renderer.js?v=20260926-1"></script><script src="js/adigun-agent.js?v=20260926-1"></script><script src="js/ai-lab.js?v=20261004-1"></script><script src="js/osint-redesign.js?v=20260925-12"></script><script src="js/global-search.js?v=20260928-2"></script><script src="js/terminal.js?v=20260925-2"></script><script src="js/terminal-expansion.js?v=20260925-1"></script><script src="js/technical-workbench.js?v=20260925-1"></script><script src="js/intelligence-map.js?v=20261004-2"></script><script src="js/mega-tools.js?v=20260924-2"></script><script src="js/intelligence-core.js?v=20260924-3"></script>
 <script src="js/hb-profile-hub.js?v=20261003-1"></script>
 </body></html>
