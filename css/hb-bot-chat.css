@@ -1,0 +1,37 @@
+/* HB BOT CHAT — public website assistant */
+.hb-bot-launcher{position:fixed;right:22px;bottom:22px;z-index:100000;width:58px;height:58px;border:1px solid rgba(110,231,255,.55);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(110,231,255,.24),rgba(7,12,18,.96) 68%);color:#6ee7ff;box-shadow:0 0 28px rgba(110,231,255,.14),inset 0 0 18px rgba(110,231,255,.06);cursor:pointer;display:grid;place-items:center;font:700 18px/1 "JetBrains Mono",monospace;transition:.2s ease}
+.hb-bot-launcher:hover{transform:translateY(-3px) scale(1.03);border-color:#6ee7ff;box-shadow:0 0 38px rgba(110,231,255,.25)}
+.hb-bot-launcher .hb-bot-dot{position:absolute;right:4px;top:4px;width:9px;height:9px;border-radius:50%;background:#63d297;box-shadow:0 0 10px #63d297}
+.hb-bot-window{position:fixed;right:22px;bottom:92px;z-index:99999;width:min(410px,calc(100vw - 28px));height:min(620px,calc(100vh - 120px));display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(110,231,255,.28);background:rgba(5,9,15,.98);box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 40px rgba(110,231,255,.08);backdrop-filter:blur(16px)}
+.hb-bot-window.open{display:flex;animation:hbBotIn .18s ease-out}
+@keyframes hbBotIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.hb-bot-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-bottom:1px solid rgba(110,231,255,.13);background:linear-gradient(90deg,rgba(110,231,255,.055),rgba(167,139,250,.035))}
+.hb-bot-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.hb-bot-core{width:31px;height:31px;border:1px solid rgba(110,231,255,.45);border-radius:50%;display:grid;place-items:center;color:#6ee7ff;font:700 10px "JetBrains Mono",monospace;box-shadow:inset 0 0 14px rgba(110,231,255,.08)}
+.hb-bot-title strong{display:block;color:#e7f8ff;font:700 11px "JetBrains Mono",monospace;letter-spacing:.08em}
+.hb-bot-title span{display:block;margin-top:3px;color:#71879a;font:8px "JetBrains Mono",monospace}
+.hb-bot-actions{display:flex;gap:4px}
+.hb-bot-actions button{width:29px;height:29px;border:1px solid rgba(110,231,255,.12);background:transparent;color:#8ca5b8;cursor:pointer;font:12px "JetBrains Mono",monospace}
+.hb-bot-actions button:hover{color:#6ee7ff;border-color:rgba(110,231,255,.4)}
+.hb-bot-status{padding:6px 13px;border-bottom:1px solid rgba(110,231,255,.08);color:#71879a;font:8px "JetBrains Mono",monospace}
+.hb-bot-status b{color:#63d297}
+.hb-bot-messages{flex:1;overflow:auto;padding:13px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth}
+.hb-bot-msg{max-width:88%;padding:9px 11px;border:1px solid rgba(110,231,255,.11);color:#cbd8e2;font:10px/1.65 "JetBrains Mono",monospace;white-space:pre-wrap;word-break:break-word}
+.hb-bot-msg.bot{align-self:flex-start;background:rgba(110,231,255,.035)}
+.hb-bot-msg.user{align-self:flex-end;border-color:rgba(167,139,250,.2);background:rgba(167,139,250,.055);color:#e4ddff}
+.hb-bot-msg.system{align-self:center;border:0;color:#5f7485;font-size:8px;text-align:center}
+.hb-bot-suggestions{display:flex;gap:5px;flex-wrap:wrap;padding:0 13px 9px}
+.hb-bot-suggestions button{border:1px solid rgba(110,231,255,.14);background:rgba(110,231,255,.025);color:#8ca5b8;padding:6px 8px;cursor:pointer;font:8px "JetBrains Mono",monospace}
+.hb-bot-suggestions button:hover{color:#6ee7ff;border-color:rgba(110,231,255,.4)}
+.hb-bot-composer{display:flex;gap:6px;padding:9px;border-top:1px solid rgba(110,231,255,.11)}
+.hb-bot-composer textarea{flex:1;min-width:0;max-height:90px;resize:none;padding:9px 10px;border:1px solid rgba(110,231,255,.14);outline:0;background:rgba(0,0,0,.22);color:#e7f8ff;font:10px/1.45 "JetBrains Mono",monospace}
+.hb-bot-composer textarea:focus{border-color:rgba(110,231,255,.42)}
+.hb-bot-send{width:40px;border:1px solid rgba(110,231,255,.3);background:rgba(110,231,255,.06);color:#6ee7ff;cursor:pointer;font:11px "JetBrains Mono",monospace}
+.hb-bot-send:disabled{opacity:.45;cursor:wait}
+.hb-bot-footer{display:flex;justify-content:space-between;gap:8px;padding:6px 10px;color:#506474;font:7px "JetBrains Mono",monospace;border-top:1px solid rgba(110,231,255,.06)}
+.hb-bot-thinking{display:inline-flex;gap:4px;align-items:center}
+.hb-bot-thinking i{width:4px;height:4px;border-radius:50%;background:#6ee7ff;animation:hbBotPulse 1s infinite}
+.hb-bot-thinking i:nth-child(2){animation-delay:.15s}.hb-bot-thinking i:nth-child(3){animation-delay:.3s}
+@keyframes hbBotPulse{0%,100%{opacity:.2}50%{opacity:1}}
+@media(max-width:560px){.hb-bot-launcher{right:14px;bottom:14px}.hb-bot-window{right:10px;bottom:82px;width:calc(100vw - 20px);height:min(72vh,620px)}}
+@media(prefers-reduced-motion:reduce){.hb-bot-window.open{animation:none}}
