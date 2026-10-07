@@ -5,8 +5,8 @@
 (function(){
   "use strict";
   const VERSION=2;
-  const MAX_TURNS=60;
-  const MAX_CHARS=60000;
+  const MAX_TURNS=120;
+  const MAX_CHARS=100000;
   const PREFIX="hb-adigun-memory:v2:";
   const cleanText=value=>String(value??"").replace(/\u0000/g,"").trim().slice(0,16000);
   const normalize=items=>{
