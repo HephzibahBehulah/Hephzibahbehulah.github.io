@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const input=document.getElementById("adminInput"),send=document.getElementById("adminSend"),messages=document.getElementById("adminMessages");
   if(!input||!send||!messages)return;
   const chips=document.getElementById("adminAttachmentChips"),fileInput=document.getElementById("adminAttachmentInput"),files=[];
-  const memory=window.AdigunMemory?.create("private"),HISTORY_LIMIT=30;
+  const memory=window.AdigunMemory?.create("private"),HISTORY_LIMIT=50;
   let session="private-operator";try{session=localStorage.getItem("hb-admin-session")||((crypto.randomUUID&&crypto.randomUUID())||Date.now().toString(36));localStorage.setItem("hb-admin-session",session)}catch{}
   const add=(text,kind)=>{const e=document.createElement("div");e.className="admin-chat-message "+kind;if(kind==="assistant"&&window.AdigunRenderer)window.AdigunRenderer.mount(e,String(text));else e.textContent=String(text);messages.appendChild(e);messages.scrollTop=messages.scrollHeight;return e};
   const renderFiles=()=>{if(!chips)return;chips.textContent="";files.forEach((f,i)=>{const chip=document.createElement("span");chip.className="admin-chip";chip.textContent="📎 "+f.name+" ";const b=document.createElement("button");b.type="button";b.textContent="×";b.onclick=()=>{files.splice(i,1);renderFiles()};chip.appendChild(b);chips.appendChild(chip)})};
