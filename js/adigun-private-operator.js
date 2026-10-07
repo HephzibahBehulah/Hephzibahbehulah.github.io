@@ -26,7 +26,14 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(d.plan&&((d.plan.approvalRequired===true)||(Array.isArray(d.plan.actions)&&d.plan.actions.some(a=>String(a?.id||"")!=="verification")))){
         const lines=["AGENT PLAN // "+String(d.plan.mode||"unknown").toUpperCase(),"approval: "+(d.plan.approvalRequired?"REQUIRED":"not required"),...(d.plan.actions||[]).map(a=>"- "+String(a.title||a.id)+": "+String(a.status||"unknown")+" — "+String(a.description||""))];
         add(lines.join("\n"),"system");
-      if(memory){let assistantMemory=String(d.answer);if(d.plan){assistantMemory+="\n\nAGENT PLAN // "+String(d.plan.mode||"unknown").toUpperCase()+"\napproval: "+(d.plan.approvalRequired?"REQUIRED":"not required")+"\n"+(d.plan.actions||[]).map(a=>"- "+String(a.title||a.id)+": "+String(a.status||"unknown")+" — "+String(a.description||"")).join("\n")}memory.append("user",userText);memory.append("assistant",assistantMemory)}
+      }
+      if(memory){
+        let assistantMemory=String(d.answer);
+        if(d.plan){
+          assistantMemory+="\n\nAGENT PLAN // "+String(d.plan.mode||"unknown").toUpperCase()+"\napproval: "+(d.plan.approvalRequired?"REQUIRED":"not required")+"\n"+(d.plan.actions||[]).map(a=>"- "+String(a.title||a.id)+": "+String(a.status||"unknown")+" — "+String(a.description||"")).join("\n");
+        }
+        memory.append("user",userText);
+        memory.append("assistant",assistantMemory);
       }
     }catch(err){thinking.remove();add("ADIGUN private agent error: "+String(err.message||err),"assistant")}
     finally{send.disabled=false;input.focus()}
