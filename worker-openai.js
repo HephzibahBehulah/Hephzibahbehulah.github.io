@@ -821,7 +821,7 @@ async function retrieveContext(request, env, q) {
     );
     if (siteResponse?.ok) {
       const data = await siteResponse.json();
-      const hits = (data.hits || []).slice(0, 8);
+      const hits = (data.hits || []).slice(0, 12);
       if (hits.length) {
         pieces.push(
           "LOCAL SITE:\n" +
@@ -841,7 +841,7 @@ async function retrieveContext(request, env, q) {
     }), env);
     if (r?.ok) {
       const data = await r.json();
-      const chunks = (data.chunks || []).slice(0, 8);
+      const chunks = (data.chunks || []).slice(0, 12);
       if (chunks.length) {
         pieces.push(
           "PERSISTENT KNOWLEDGE:\n" +
@@ -851,7 +851,7 @@ async function retrieveContext(request, env, q) {
     }
   } catch {}
 
-  return pieces.join("\n\n=====\n\n").slice(0, 24000);
+  return pieces.join("\n\n=====\n\n").slice(0, 36000);
 }
 
 function normalizeContent(content) {
@@ -881,8 +881,8 @@ function normalizeContent(content) {
 function normalizeMessages(body) {
   const raw = Array.isArray(body?.messages) ? body.messages : [{ role:"user", content:String(body?.message || "") }];
   const out=[]; let total=0;
-  const MAX_NORMALIZED_BYTES=22*1024*1024;
-  for (const m of raw.slice(-30)) {
+  const MAX_NORMALIZED_BYTES=26*1024*1024;
+  for (const m of raw.slice(-50)) {
     const role=["user","assistant"].includes(m?.role)?m.role:"user";
     const content=normalizeContent(m?.content);
     if (!content || (typeof content==="string" && !content.trim())) continue;
@@ -1205,7 +1205,7 @@ async function openAIChat(request, env) {
   const lastContent = messages[messages.length - 1].content;
   const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
   const context = await withTimeout(retrieveContext(request, env, q), 4500, "");
-  const clientContext = String(body?.siteContext || "").slice(0, 10000);
+  const clientContext = String(body?.siteContext || "").slice(0, 14000);
   const liveEvidence = isSiteHealthQuery(q) ? await withTimeout(publicSiteHealthEvidence(), 4500, null) : null;
   const evidence = evidenceContext(liveEvidence);
 
