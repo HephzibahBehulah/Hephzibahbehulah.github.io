@@ -811,7 +811,7 @@ function normalizeMessages(body) {
   const raw = Array.isArray(body?.messages) ? body.messages : [{ role:"user", content:String(body?.message || "") }];
   const out=[]; let total=0;
   const MAX_NORMALIZED_BYTES=22*1024*1024;
-  for (const m of raw.slice(-12)) {
+  for (const m of raw.slice(-30)) {
     const role=["user","assistant"].includes(m?.role)?m.role:"user";
     const content=normalizeContent(m?.content);
     if (!content || (typeof content==="string" && !content.trim())) continue;
