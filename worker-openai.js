@@ -77,7 +77,10 @@ function capabilityManifest(env, authenticated=false) {
       "shell.execute": {available:true,execution:true,mutation:false,isolated:true},
       "tls.inspect": {available:false,execution:false,mutation:false},
       "git.test": {available:false,execution:false,mutation:false},
-      "security.scan": {available:false,execution:false,mutation:false},
+      "security.safe-audit": {available:true,execution:true,mutation:false,targetLocked:true,safeReadOnly:true},
+      "site.safe-audit": {available:true,execution:true,mutation:false,targetLocked:true},
+      "github.source.read": {available:true,execution:true,mutation:false,targetLocked:true},
+      "github.logs.read": {available:true,execution:true,mutation:false,targetLocked:true,redacted:true},
       "cloudflare.inspect": {available:false,execution:false,mutation:false},
       "github.write": {available:false,execution:false,mutation:true,approvalRequired:true},
       "production.deploy": {available:false,execution:false,mutation:true,approvalRequired:true}
@@ -261,6 +264,74 @@ async function githubApiFetch(env, path) {
   const body = await response.json().catch(()=>({}));
   if (!response.ok) throw new Error("GitHub API "+response.status+": "+String(body?.message||"request failed"));
   return body;
+}
+
+async function githubFetchText(env, path) {
+  const token = String(env?.GITHUB_TOKEN || "").trim();
+  if (!token) throw new Error("GitHub private-repository access is not configured.");
+  const response = await fetch("https://api.github.com"+path,{headers:githubApiHeaders(env),redirect:"follow"});
+  const text = await response.text();
+  if (!response.ok) throw new Error("GitHub API "+response.status+": "+text.slice(0,240));
+  return {status:response.status,text};
+}
+
+function redactSensitiveText(value) {
+  let text=String(value||"");
+  text=text.replace(/-----BEGIN [A-Z ]+ PRIVATE KEY-----[\s\S]*?-----END [A-Z ]+ PRIVATE KEY-----/g,"[REDACTED_PRIVATE_KEY]");
+  text=text.replace(/\b(?:Bearer|Basic)\s+[A-Za-z0-9._~+\/-]+=*/gi,"[REDACTED_AUTH_HEADER]");
+  text=text.replace(/\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]+\b/g,"[REDACTED_GITHUB_TOKEN]");
+  text=text.replace(/\bsk-[A-Za-z0-9_-]{20,}\b/g,"[REDACTED_API_KEY]");
+  text=text.replace(/(api[_-]?key|access[_-]?token|secret|password|passwd|client[_-]?secret)\s*[:=]\s*["']?[^\s"',;]+/gi,"$1=[REDACTED]");
+  return text.slice(0,60000);
+}
+
+async function privateRepositoryInspection(env, task) {
+  const tree=await githubApiFetch(env,"/repos/"+RECON_REPO+"/git/trees/main?recursive=1");
+  const entries=Array.isArray(tree?.tree)?tree.tree.filter(x=>x?.type==="blob"&&x.path):[];
+  const q=String(task||"").toLowerCase();
+  const wanted = q.includes("frontend")||q.includes("front end")||q.includes("ui")||q.includes("browser")
+    ? ["index.html","ai-agent.html","admin.html","admin-tools.html","js/adigun-agent.js","js/adigun-private-operator.js","js/ai-lab.js","css/ai-lab.css","css/adigun-admin.css"]
+    : q.includes("backend")||q.includes("back end")||q.includes("api")||q.includes("worker")||q.includes("server")
+    ? ["worker-openai.js","worker-public-v2.js","worker-v2.js","backend/src/worker.js","backend/ADIGUN-AUTOMATION.md","ARCHITECTURE.md"]
+    : ["README.md","ARCHITECTURE.md","worker-openai.js","worker-public-v2.js","admin.html","index.html","js/adigun-agent.js","js/adigun-private-operator.js"];
+  const available=new Set(entries.map(x=>x.path));
+  const paths=[...new Set(wanted.filter(p=>available.has(p)))].slice(0,16);
+  const files=[];
+  for(const path of paths){
+    try{
+      const data=await githubApiFetch(env,"/repos/"+RECON_REPO+"/contents/"+path+"?ref=main");
+      let content="";
+      if(data?.encoding==="base64"&&data?.content) content=new TextDecoder().decode(Uint8Array.from(atob(String(data.content).replace(/\s+/g,"")),ch=>ch.charCodeAt(0)));
+      else content=String(data?.content||"");
+      files.push({path,size:Number(data?.size)||content.length,content:redactSensitiveText(content).slice(0,30000)});
+    }catch(error){files.push({path,error:String(error?.message||error).slice(0,240)});}
+  }
+  const apiRoutes=[];
+  for(const file of files) for(const m of String(file.content||"").matchAll(/["'](\/api\/[A-Za-z0-9_./:-]+)["']/g)) apiRoutes.push(m[1]);
+  return {target:RECON_REPO,branch:"main",
+    repositoryTree:{fileCount:entries.length,sourceFileCount:entries.filter(x=>/\.(html?|css|js|json|ya?ml|toml|md|py|sh)$/i.test(x.path)).length,topLevel:[...new Set(entries.map(x=>String(x.path).split("/")[0]))].slice(0,100)},
+    selectedFiles:files,apiRoutes:[...new Set(apiRoutes)].slice(0,200),
+    secretReferences:[...new Set(files.flatMap(f=>[...String(f.content||"").matchAll(/\benv\.(\w+)/g)].map(m=>m[1])))]
+      .filter(n=>/KEY|TOKEN|SECRET|PASSWORD|AUTH|GITHUB|CLOUDFLARE|OPENAI|ACCESS/i.test(n)).slice(0,100)};
+}
+
+async function privateWorkflowLogInspection(env) {
+  const runs=await githubApiFetch(env,"/repos/"+RECON_REPO+"/actions/runs?per_page=6");
+  const reports=[];
+  for(const run of (runs?.workflow_runs||[]).slice(0,6)){
+    const jobs=await githubApiFetch(env,"/repos/"+RECON_REPO+"/actions/runs/"+run.id+"/jobs?per_page=20");
+    const jobReports=[];
+    for(const job of (jobs?.jobs||[]).slice(0,8)){
+      let log=null;
+      try{
+        const raw=await githubFetchText(env,"/repos/"+RECON_REPO+"/actions/jobs/"+job.id+"/logs");
+        log=redactSensitiveText(raw.text).split("\n").slice(-180).join("\n");
+      }catch(error){log="[LOG_UNAVAILABLE] "+String(error?.message||error).slice(0,180);}
+      jobReports.push({id:job.id,name:job.name,status:job.status,conclusion:job.conclusion,startedAt:job.started_at,completedAt:job.completed_at,logTail:log});
+    }
+    reports.push({runId:run.id,name:run.name,status:run.status,conclusion:run.conclusion,headSha:String(run.head_sha||"").slice(0,12),createdAt:run.created_at,jobs:jobReports});
+  }
+  return {target:RECON_REPO,runCount:reports.length,runs:reports};
 }
 
 const RECON_BASES = Object.freeze({
@@ -750,7 +821,7 @@ async function retrieveContext(request, env, q) {
     );
     if (siteResponse?.ok) {
       const data = await siteResponse.json();
-      const hits = (data.hits || []).slice(0, 8);
+      const hits = (data.hits || []).slice(0, 12);
       if (hits.length) {
         pieces.push(
           "LOCAL SITE:\n" +
@@ -770,7 +841,7 @@ async function retrieveContext(request, env, q) {
     }), env);
     if (r?.ok) {
       const data = await r.json();
-      const chunks = (data.chunks || []).slice(0, 8);
+      const chunks = (data.chunks || []).slice(0, 12);
       if (chunks.length) {
         pieces.push(
           "PERSISTENT KNOWLEDGE:\n" +
@@ -780,7 +851,7 @@ async function retrieveContext(request, env, q) {
     }
   } catch {}
 
-  return pieces.join("\n\n=====\n\n").slice(0, 24000);
+  return pieces.join("\n\n=====\n\n").slice(0, 36000);
 }
 
 function normalizeContent(content) {
@@ -810,8 +881,8 @@ function normalizeContent(content) {
 function normalizeMessages(body) {
   const raw = Array.isArray(body?.messages) ? body.messages : [{ role:"user", content:String(body?.message || "") }];
   const out=[]; let total=0;
-  const MAX_NORMALIZED_BYTES=22*1024*1024;
-  for (const m of raw.slice(-30)) {
+  const MAX_NORMALIZED_BYTES=26*1024*1024;
+  for (const m of raw.slice(-50)) {
     const role=["user","assistant"].includes(m?.role)?m.role:"user";
     const content=normalizeContent(m?.content);
     if (!content || (typeof content==="string" && !content.trim())) continue;
@@ -1134,7 +1205,7 @@ async function openAIChat(request, env) {
   const lastContent = messages[messages.length - 1].content;
   const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
   const context = await withTimeout(retrieveContext(request, env, q), 4500, "");
-  const clientContext = String(body?.siteContext || "").slice(0, 10000);
+  const clientContext = String(body?.siteContext || "").slice(0, 14000);
   const liveEvidence = isSiteHealthQuery(q) ? await withTimeout(publicSiteHealthEvidence(), 4500, null) : null;
   const evidence = evidenceContext(liveEvidence);
 
@@ -1226,11 +1297,11 @@ async function openAIChat(request, env) {
 }
 
 
-async function runAgentInspection(request, env, target, ctx) {
+async function runAgentInspection(request, env, target, ctx, task="") {
   const u = new URL(request.url);
   u.pathname = "/api/admin/inspect";
   u.search = "?target=" + encodeURIComponent(target);
-  const r = await privateInspect(new Request(u.toString(), { method:"GET", headers:request.headers }), env, u, ctx);
+  const r = await privateInspect(new Request(u.toString(), { method:"GET", headers:request.headers }), env, u, ctx, task);
   try { return await r.json(); } catch { return { ok:false, error:"Inspection returned invalid data." }; }
 }
 
@@ -1238,13 +1309,12 @@ function agentTargets(task) {
   const q = String(task || "").toLowerCase();
   const targets = new Set();
   if (/job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for/.test(q)) return [];
-  if (/github|repo|repository|commit|pull request|workflow|action/.test(q)) targets.add("github");
+  if (/github|repo|repository|commit|pull request|workflow|action|source code|codebase|frontend|front end|backend|back end|api|file|files/.test(q)) targets.add(/frontend|front end|backend|back end|source code|codebase|api|file|files/.test(q) ? "github-deep" : "github");
   if (/cloudflare|worker|edge|dns|access|deployment|deploy/.test(q)) targets.add("cloudflare");
-  if (/security|header|csp|hsts|x-frame|permissions|attack|vulnerab/.test(q)) targets.add("security");
-  if (/website|site|page|domain|homepage|frontend|broken|down|error/.test(q)) targets.add("site");
-  if (!targets.size && /full|everything|investigate|diagnose|audit|check the system|what is wrong/.test(q)) {
-    ["site","security","github","cloudflare"].forEach(x=>targets.add(x));
-  }
+  if (/security|header|csp|hsts|x-frame|permissions|attack|vulnerab|pentest|pen test|security test|exposure/.test(q)) targets.add("security");
+  if (/website|site|page|domain|homepage|frontend|broken|down|error|route|endpoint|login|log in|authentication|session/.test(q)) targets.add("site");
+  if (/recon|reconnaissance|enumerate|enumeration|attack surface|fingerprint/.test(q)) ["site","security","github-deep","cloudflare"].forEach(x=>targets.add(x));
+  if (!targets.size && /full|everything|investigate|diagnose|audit|check the system|what is wrong|pentest|security assessment/.test(q)) ["site","security","github-deep","cloudflare"].forEach(x=>targets.add(x));
   return [...targets];
 }
 
@@ -1344,7 +1414,7 @@ async function privateAgent(request, env, url, ctx) {
       }))
     : [];
   const investigations = targets.length
-    ? await Promise.all(targets.map(async target => ({target,data:await runAgentInspection(request, env, target, ctx)})))
+    ? await Promise.all(targets.map(async target => ({target,data:await runAgentInspection(request, env, target, ctx, task)})))
     : [];
 
   const flatChecks = investigations.flatMap(x => Array.isArray(x.data?.checks) ? x.data.checks : []);
@@ -1366,13 +1436,18 @@ async function privateAgent(request, env, url, ctx) {
     (liveSearchIntent ? "CURRENT-JOB-SEARCH MODE: This is an employment search. Use the OpenAI web search tool to find current, real vacancies matching the request. Do not substitute generic career advice for actual vacancies. For each useful vacancy, provide employer, role, location, current status if available, why it matches the stated profile, and a direct source URL. If no suitable live vacancy can be verified, say so and explain what was searched.\n\n" : "") +
     "PRIVATE CAPABILITY RULES:\n" +
     "- Cloudflare Access authentication is required for every private control endpoint.\n" +
-    "- The server can execute read-only diagnostics and a fixed allow-list of commands inside an isolated Cloudflare Sandbox Linux container. This is not the production Worker host.\n" +
-    "- Allow-listed diagnostics: HTTP health, response headers, robots.txt, sitemap.xml, DNS resolution and repository status.\n" +
-    "- GitHub repository history and workflow-run metadata may be inspected server-side.\n" +
-    "- Production mutation, arbitrary production-host shell access, secret access and unrelated-target scanning are not available through this interface.\n" +
+    "- ADIGUN Control is both a general-purpose assistant and the authenticated technical intelligence layer for the Hephzibah Behulah platform.\n" +
+    "- Read-only reconnaissance is target-locked to https://hephzibahbehulah.com and the authorized HephzibahBehulah/HephzibahBehulah.github.io repository.\n" +
+    "- The server can inspect frontend/backend source, API routes, GitHub history, CI workflow metadata and redacted workflow-log tails when the task requires them.\n" +
+    "- Safe web assessment uses fixed GET/HEAD/OPTIONS-style diagnostics and known application/security paths only. No exploit payloads, credential attacks, destructive requests, or unrelated-target scanning are available.\n" +
+    "- The isolated Sandbox Linux plane is separate from the production Worker and may run only its explicit allow-list. Never imply production shell access.\n" +
+    "- Login/access information means authenticated operator identity, session/access status and authorization boundary. Never reveal or invent passwords, tokens, private keys or authentication cookies.\n" +
+    "- Source and workflow evidence is redacted before it reaches the model where secret-like values could appear. Never reconstruct a redacted secret.\n" +
+    "- Production mutation, arbitrary production-host shell access, GitHub writes and unrelated-target scanning are not available through this interface.\n" +
     "- Never turn a planned capability into a claimed capability. Use only server evidence.\n" +
     "- Use the server checkedAt timestamp as the report date; never invent a date.\n\n" +
     "Rules:\n" +
+    "- For ordinary non-site questions, answer normally. For website/admin questions, prioritize the supplied server evidence and distinguish facts from interpretation.\n" +
     "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS. Mark important claims as [OBSERVED], [CALCULATED], [INFERRED], [UNKNOWN], or [RECOMMENDATION]. [OBSERVED] requires a traceable source or server evidence record; assumptions are never observed facts.\n" +
     "- For current external information, use live web search and cite the actual original source. A search-result snippet is discovery evidence, not a verified fact. A vacancy is VERIFIED only after opening an identifiable source page and confirming employer, exact title, location, and current/active status when exposed. If any critical field cannot be verified, label it [UNVERIFIED] and do not count it toward a verified total. Never fabricate vacancies, prices, availability, employers, URLs, dates, salaries, job IDs, addresses, or requirements.\n" +
     "- Never claim a change was made.\n" +
@@ -1384,7 +1459,7 @@ async function privateAgent(request, env, url, ctx) {
 
   let answer = "Investigation completed. Review the evidence and proposed actions below.";
   try {
-    const suppliedMessages = Array.isArray(body?.messages) ? body.messages.slice(-8) : [];
+    const suppliedMessages = Array.isArray(body?.messages) ? body.messages.slice(-50) : [];
     const synthesisMessages = suppliedMessages.length
       ? suppliedMessages.concat([{role:"user",content:[{type:"input_text",text:agentPrompt}]}])
       : [{role:"user",content:agentPrompt}];
@@ -1443,7 +1518,7 @@ async function privateAgent(request, env, url, ctx) {
   });
 }
 
-async function privateInspect(request, env, url, ctx) {
+async function privateInspect(request, env, url, ctx, task="") {
   const auth = await authenticateAdmin(request, env);
   if (!auth.ok) return auth.response;
   const identity = getAdminIdentity(auth.identity);
@@ -1473,9 +1548,22 @@ async function privateInspect(request, env, url, ctx) {
           result.checks.push({name:"command:"+command,status:d.ok?"observed":"error",result:d.result||null,error:d.error||null});
         }catch(e){result.checks.push({name:"command:"+command,status:"error",error:String(e?.message||e)})}
       }
+      const safePaths=["/","/robots.txt","/sitemap.xml","/.well-known/security.txt","/security.txt","/admin.html","/admin-tools.html","/api/health","/api/admin/status","/api/admin/capabilities"];
+      const safeAudit=[];
+      for(const path of safePaths){
+        try{
+          const response=await fetch(RECON_TARGET+path,{method:"GET",redirect:"follow"});
+          safeAudit.push({path,status:response.status,ok:response.ok,finalUrl:response.url,contentType:response.headers.get("content-type")||null,cacheControl:response.headers.get("cache-control")||null});
+        }catch(error){safeAudit.push({path,error:String(error?.message||error).slice(0,180)});}
+      }
+      try{
+        const response=await fetch("https://admin.hephzibahbehulah.com/",{method:"GET",redirect:"manual"});
+        safeAudit.push({path:"admin-host/",status:response.status,ok:response.ok,location:response.headers.get("location")||null,contentType:response.headers.get("content-type")||null});
+      }catch(error){safeAudit.push({path:"admin-host/",error:String(error?.message||error).slice(0,180)});}
+      result.checks.push({name:"safe-web-audit",status:"observed",result:{target:RECON_TARGET,readOnly:true,probes:safeAudit,note:"Fixed GET-only probes; no credentials supplied, no payloads injected, no destructive requests."}});
     }
   }
-  if(target==="github"||target==="github-repo"||target==="all"){
+  if(target==="github"||target==="github-repo"||target==="github-deep"||target==="all"){
     try{
       const d=await githubApiFetch(env,"/repos/"+RECON_REPO);
       result.checks.push({name:"github",status:"healthy",repository:d.full_name||RECON_REPO,defaultBranch:d.default_branch||null,updatedAt:d.updated_at||null,pushedAt:d.pushed_at||null,openIssues:d.open_issues_count??null});
@@ -1487,6 +1575,12 @@ async function privateInspect(request, env, url, ctx) {
         commits:(commitData||[]).slice(0,8).map(x=>({sha:String(x.sha||"").slice(0,12),message:String(x.commit?.message||"").split("\n")[0].slice(0,180),date:x.commit?.author?.date||null,url:x.html_url||null})),
         workflowRuns:(runData.workflow_runs||[]).slice(0,8).map(x=>({name:x.name,status:x.status,conclusion:x.conclusion,headSha:String(x.head_sha||"").slice(0,12),createdAt:x.created_at,updatedAt:x.updated_at,url:x.html_url||null}))
       });
+      if(target==="github-deep"||target==="all"){
+        try{
+          result.checks.push({name:"github-source-intelligence",status:"observed",result:await privateRepositoryInspection(env,task)});
+          result.checks.push({name:"github-workflow-logs",status:"observed",result:await privateWorkflowLogInspection(env)});
+        }catch(error){result.checks.push({name:"github-deep",status:"error",error:String(error?.message||error)})}
+      }
     }catch(e){result.checks.push({name:"github",status:"error",error:String(e?.message||e)})}
   }
   if(target==="cloudflare"||target==="all"){
