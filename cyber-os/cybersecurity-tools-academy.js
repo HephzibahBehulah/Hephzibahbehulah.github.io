@@ -13,11 +13,11 @@ function initFilters(all){
  const select=document.getElementById("cybersecurityToolsAcademyCategory");
  const nav=document.getElementById("cybersecurityToolsAcademyCategoryNav");
  const categories=[...new Set(all.map(x=>x.category||"Other tools"))].sort((a,b)=>a.localeCompare(b));
- if(select&&!select.dataset.populated){
+ if(select&&all.length&&!select.dataset.populated){
   select.innerHTML='<option value="all">All categories ('+all.length+' tools)</option>'+categories.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join("");
   select.dataset.populated="1";
  }
- if(nav&&!nav.dataset.populated){
+ if(nav&&all.length&&!nav.dataset.populated){
   nav.innerHTML='<button type="button" data-category="all">All categories</button>'+categories.map(c=>'<button type="button" data-category="'+esc(c)+'">'+esc(c)+'</button>').join("");
   nav.dataset.populated="1";
   nav.addEventListener("click",e=>{const b=e.target.closest("button[data-category]");if(!b)return;const f=document.getElementById("cybersecurityToolsAcademyCategory");if(f){f.value=b.dataset.category;render()}});
