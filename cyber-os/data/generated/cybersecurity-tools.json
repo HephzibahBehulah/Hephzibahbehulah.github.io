@@ -1,7 +1,7 @@
 {
-  "source": "Curated official project documentation",
+  "source": "Curated tool catalogue with official project documentation links; availability and package names vary by OS and release.",
   "generatedAt": "2026-10-09",
-  "count": 24,
+  "count": 132,
   "records": [
     {
       "name": "Nmap",
@@ -13,7 +13,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Port and service scanning",
+      "launchCommand": "nmap -sV 192.0.2.10",
+      "example": "nmap -sV 192.0.2.10 (documentation-range example)",
+      "install": "apt: nmap",
+      "difficulty": "Beginner",
+      "description": "Discover hosts, open ports and service details within an authorised scope.",
+      "tags": [
+        "network discovery",
+        "port and service scanning"
+      ],
+      "documentation": "https://nmap.org/book/man.html"
     },
     {
       "name": "Wireshark",
@@ -25,7 +36,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Packet analysis",
+      "launchCommand": "wireshark",
+      "example": "Capture only traffic you are authorised to monitor",
+      "install": "Official installer/package",
+      "difficulty": "Beginner",
+      "description": "Inspect packets and investigate protocol behaviour or suspicious traffic.",
+      "tags": [
+        "network monitoring",
+        "packet analysis"
+      ],
+      "documentation": "https://www.wireshark.org/docs/"
     },
     {
       "name": "tcpdump",
@@ -36,7 +58,18 @@
       "platforms": [
         "Linux",
         "macOS"
-      ]
+      ],
+      "subcategory": "Packet capture",
+      "launchCommand": "sudo tcpdump -i <lab-interface>",
+      "example": "Minimise capture scope and protect packet files as sensitive data",
+      "install": "tcpdump package",
+      "difficulty": "Intermediate",
+      "description": "Capture packets from a selected interface for troubleshooting and investigations.",
+      "tags": [
+        "network monitoring",
+        "packet capture"
+      ],
+      "documentation": "https://www.tcpdump.org/manpages/tcpdump.1.html"
     },
     {
       "name": "Zeek",
@@ -59,7 +92,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "IDS/IPS",
+      "launchCommand": "suricata -T -c /etc/suricata/suricata.yaml",
+      "example": "Start in IDS/monitoring mode and test rules before inline blocking",
+      "install": "Package/project release",
+      "difficulty": "Advanced",
+      "description": "Validate configuration and detect suspicious network activity.",
+      "tags": [
+        "blue team defense",
+        "ids/ips"
+      ],
+      "documentation": "https://docs.suricata.io/"
     },
     {
       "name": "Snort",
@@ -70,7 +114,18 @@
       "platforms": [
         "Linux",
         "Windows"
-      ]
+      ],
+      "subcategory": "Network IDS",
+      "launchCommand": "snort -V",
+      "example": "Validate configuration and tune against known-good traffic",
+      "install": "Package/project release",
+      "difficulty": "Intermediate",
+      "description": "Inspect traffic using configurable detection rules.",
+      "tags": [
+        "blue team defense",
+        "network ids"
+      ],
+      "documentation": "https://docs.snort.org/"
     },
     {
       "name": "OWASP ZAP",
@@ -82,7 +137,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Web proxy and scanner",
+      "launchCommand": "zaproxy",
+      "example": "Open ZAP and use the local quick-start target",
+      "install": "Official installer/package",
+      "difficulty": "Beginner",
+      "description": "Intercept web traffic and assess applications; start with passive analysis.",
+      "tags": [
+        "web application security",
+        "web proxy and scanner"
+      ],
+      "documentation": "https://www.zaproxy.org/docs/"
     },
     {
       "name": "Burp Suite",
@@ -94,7 +160,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Intercepting proxy",
+      "launchCommand": "Launch Burp Suite GUI",
+      "example": "Configure browser proxy for a local training app",
+      "install": "Official installer",
+      "difficulty": "Beginner",
+      "description": "Inspect and test HTTP/S requests during authorised web security work.",
+      "tags": [
+        "web application security",
+        "intercepting proxy"
+      ],
+      "documentation": "https://portswigger.net/burp/documentation"
     },
     {
       "name": "Nikto",
@@ -106,7 +183,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Web server checks",
+      "launchCommand": "nikto -h https://lab.example",
+      "example": "nikto -h https://lab.example",
+      "install": "apt: nikto",
+      "difficulty": "Intermediate",
+      "description": "Check web servers for known risky files and misconfiguration.",
+      "tags": [
+        "vulnerability assessment",
+        "web server checks"
+      ],
+      "documentation": "https://github.com/sullo/nikto"
     },
     {
       "name": "testssl.sh",
@@ -129,7 +217,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "TLS and cryptographic utilities",
+      "launchCommand": "openssl version",
+      "example": "Never paste private keys or production secrets into public tools",
+      "install": "Package/project release",
+      "difficulty": "Intermediate",
+      "description": "Inspect cryptographic versions, certificates and local test artifacts.",
+      "tags": [
+        "cryptography",
+        "tls and cryptographic utilities"
+      ],
+      "documentation": "https://www.openssl.org/docs/"
     },
     {
       "name": "Trivy",
@@ -141,7 +240,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Image and dependency scanning",
+      "launchCommand": "trivy image example/image:tag",
+      "example": "Scan images you own or are authorised to inspect",
+      "install": "Official binary/package/container",
+      "difficulty": "Beginner",
+      "description": "Scan container images, filesystems and dependencies for known issues.",
+      "tags": [
+        "container security",
+        "image and dependency scanning"
+      ],
+      "documentation": "https://trivy.dev/latest/docs/"
     },
     {
       "name": "Grype",
@@ -153,7 +263,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Image and package vulnerability scan",
+      "launchCommand": "grype example/image:tag",
+      "example": "Use on locally built or approved images",
+      "install": "Official binary/container",
+      "difficulty": "Intermediate",
+      "description": "Identify known vulnerabilities in container images and software packages.",
+      "tags": [
+        "supply chain security",
+        "image and package vulnerability scan"
+      ],
+      "documentation": "https://github.com/anchore/grype"
     },
     {
       "name": "Syft",
@@ -165,7 +286,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Software bill of materials",
+      "launchCommand": "syft example/image:tag",
+      "example": "Use on images and directories you are allowed to inspect",
+      "install": "Official binary/container",
+      "difficulty": "Beginner",
+      "description": "Generate an SBOM for container images and filesystems.",
+      "tags": [
+        "supply chain security",
+        "software bill of materials"
+      ],
+      "documentation": "https://github.com/anchore/syft"
     },
     {
       "name": "Semgrep",
@@ -213,7 +345,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Pattern-based detection",
+      "launchCommand": "yara rules.yar sample.bin",
+      "example": "Validate rules on benign test samples to reduce false positives",
+      "install": "Package/project release",
+      "difficulty": "Intermediate",
+      "description": "Match files against custom detection rules.",
+      "tags": [
+        "malware analysis",
+        "pattern-based detection"
+      ],
+      "documentation": "https://yara.readthedocs.io/"
     },
     {
       "name": "ClamAV",
@@ -225,7 +368,18 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Antivirus scanning",
+      "launchCommand": "clamscan sample.bin",
+      "example": "Treat scan results as one signal, not proof a file is safe",
+      "install": "apt: clamav",
+      "difficulty": "Beginner",
+      "description": "Scan files for known malware signatures.",
+      "tags": [
+        "malware analysis",
+        "antivirus scanning"
+      ],
+      "documentation": "https://docs.clamav.net/"
     },
     {
       "name": "Velociraptor",
@@ -237,7 +391,18 @@
         "Windows",
         "Linux",
         "macOS"
-      ]
+      ],
+      "subcategory": "Endpoint visibility",
+      "launchCommand": "velociraptor gui",
+      "example": "Deploy only to managed endpoints with approval and access controls",
+      "install": "Official release/server package",
+      "difficulty": "Advanced",
+      "description": "Collect endpoint telemetry and investigate fleets using approved queries.",
+      "tags": [
+        "threat hunting",
+        "endpoint visibility"
+      ],
+      "documentation": "https://docs.velociraptor.app/"
     },
     {
       "name": "osquery",
@@ -249,7 +414,18 @@
         "Windows",
         "Linux",
         "macOS"
-      ]
+      ],
+      "subcategory": "Endpoint SQL queries",
+      "launchCommand": "osqueryi",
+      "example": "Use read-only investigative queries and document scope",
+      "install": "Official package",
+      "difficulty": "Intermediate",
+      "description": "Query operating-system state using SQL-like tables.",
+      "tags": [
+        "threat hunting",
+        "endpoint sql queries"
+      ],
+      "documentation": "https://osquery.io/"
     },
     {
       "name": "Sigma",
@@ -279,6 +455,2627 @@
       "sourceUrl": "https://gchq.github.io/CyberChef/",
       "platforms": [
         "Browser"
+      ]
+    },
+    {
+      "name": "WHOIS",
+      "category": "Recon & OSINT",
+      "subcategory": "Domain intelligence",
+      "purpose": "Query domain registration records where available.",
+      "description": "Query domain registration records where available.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://manpages.debian.org/whois",
+      "documentation": "https://manpages.debian.org/whois",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "whois domain.example",
+      "example": "whois domain.example",
+      "install": "whois",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "domain intelligence",
+        "whois"
+      ]
+    },
+    {
+      "name": "dig",
+      "category": "Recon & OSINT",
+      "subcategory": "DNS intelligence",
+      "purpose": "Query DNS records and troubleshoot name resolution.",
+      "description": "Query DNS records and troubleshoot name resolution.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://bind9.readthedocs.io/",
+      "documentation": "https://bind9.readthedocs.io/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "dig domain.example",
+      "example": "dig domain.example A",
+      "install": "dnsutils",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "dns intelligence",
+        "dig"
+      ]
+    },
+    {
+      "name": "host",
+      "category": "Recon & OSINT",
+      "subcategory": "DNS intelligence",
+      "purpose": "Perform simple DNS lookups.",
+      "description": "Perform simple DNS lookups.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://manpages.debian.org/dnsutils",
+      "documentation": "https://manpages.debian.org/dnsutils",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "host domain.example",
+      "example": "host domain.example",
+      "install": "dnsutils",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "dns intelligence",
+        "host"
+      ]
+    },
+    {
+      "name": "nslookup",
+      "category": "Recon & OSINT",
+      "subcategory": "DNS intelligence",
+      "purpose": "Inspect DNS resolution using a widely available utility.",
+      "description": "Inspect DNS resolution using a widely available utility.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/nslookup",
+      "documentation": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/nslookup",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "nslookup domain.example",
+      "example": "nslookup domain.example",
+      "install": "dnsutils",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "dns intelligence",
+        "nslookup"
+      ]
+    },
+    {
+      "name": "DNSRecon",
+      "category": "Recon & OSINT",
+      "subcategory": "DNS enumeration",
+      "purpose": "Audit DNS records for a domain you own or are authorised to assess.",
+      "description": "Audit DNS records for a domain you own or are authorised to assess.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/darkoperator/dnsrecon",
+      "documentation": "https://github.com/darkoperator/dnsrecon",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "dnsrecon -d domain.example",
+      "example": "dnsrecon -d domain.example",
+      "install": "dnsrecon",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "dns enumeration",
+        "dnsrecon"
+      ]
+    },
+    {
+      "name": "theHarvester",
+      "category": "Recon & OSINT",
+      "subcategory": "Public-source collection",
+      "purpose": "Collect publicly indexed email, host and domain information.",
+      "description": "Collect publicly indexed email, host and domain information.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/laramies/theHarvester",
+      "documentation": "https://github.com/laramies/theHarvester",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "theHarvester -d domain.example -b crtsh",
+      "example": "theHarvester -d domain.example -b crtsh",
+      "install": "theHarvester",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "public-source collection",
+        "theharvester"
+      ]
+    },
+    {
+      "name": "SpiderFoot",
+      "category": "Recon & OSINT",
+      "subcategory": "OSINT platform",
+      "purpose": "Correlate open-source intelligence from configured sources.",
+      "description": "Correlate open-source intelligence from configured sources.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.spiderfoot.net/documentation/",
+      "documentation": "https://www.spiderfoot.net/documentation/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "spiderfoot -l 127.0.0.1:5001",
+      "example": "spiderfoot -l 127.0.0.1:5001",
+      "install": "spiderfoot",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "osint platform",
+        "spiderfoot"
+      ]
+    },
+    {
+      "name": "Maltego",
+      "category": "Recon & OSINT",
+      "subcategory": "Relationship analysis",
+      "purpose": "Visualise relationships between entities and public-source data.",
+      "description": "Visualise relationships between entities and public-source data.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.maltego.com/",
+      "documentation": "https://docs.maltego.com/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "Open Maltego desktop app",
+      "example": "GUI: launch Maltego from the applications menu",
+      "install": "maltego",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "relationship analysis",
+        "maltego"
+      ]
+    },
+    {
+      "name": "Recon-ng",
+      "category": "Recon & OSINT",
+      "subcategory": "OSINT framework",
+      "purpose": "Run modular reconnaissance workflows using configured sources.",
+      "description": "Run modular reconnaissance workflows using configured sources.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/lanmaster53/recon-ng",
+      "documentation": "https://github.com/lanmaster53/recon-ng",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "recon-ng",
+      "example": "recon-ng",
+      "install": "recon-ng",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "osint framework",
+        "recon-ng"
+      ]
+    },
+    {
+      "name": "Sherlock",
+      "category": "Recon & OSINT",
+      "subcategory": "Username OSINT",
+      "purpose": "Check public sites for accounts associated with a username.",
+      "description": "Check public sites for accounts associated with a username.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/sherlock-project/sherlock",
+      "documentation": "https://github.com/sherlock-project/sherlock",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "python3 sherlock user_name",
+      "example": "python3 sherlock user_name",
+      "install": "Python 3; project-specific setup",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "username osint",
+        "sherlock"
+      ]
+    },
+    {
+      "name": "Subfinder",
+      "category": "Recon & OSINT",
+      "subcategory": "Subdomain discovery",
+      "purpose": "Discover subdomains from passive sources.",
+      "description": "Discover subdomains from passive sources.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.projectdiscovery.io/tools/subfinder/overview",
+      "documentation": "https://docs.projectdiscovery.io/tools/subfinder/overview",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "subfinder -d domain.example",
+      "example": "subfinder -d domain.example",
+      "install": "Go binary or project release",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "subdomain discovery",
+        "subfinder"
+      ]
+    },
+    {
+      "name": "Amass",
+      "category": "Recon & OSINT",
+      "subcategory": "Attack surface mapping",
+      "purpose": "Map external assets and subdomains using passive enumeration.",
+      "description": "Map external assets and subdomains using passive enumeration.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://owasp.org/www-project-amass/",
+      "documentation": "https://owasp.org/www-project-amass/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "amass enum -passive -d domain.example",
+      "example": "amass enum -passive -d domain.example",
+      "install": "Project release or package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "attack surface mapping",
+        "amass"
+      ]
+    },
+    {
+      "name": "Sublist3r",
+      "category": "Recon & OSINT",
+      "subcategory": "Subdomain discovery",
+      "purpose": "Discover subdomains from public sources; check maintenance status before use.",
+      "description": "Discover subdomains from public sources; check maintenance status before use.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/aboul3la/Sublist3r",
+      "documentation": "https://github.com/aboul3la/Sublist3r",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "sublist3r -d domain.example",
+      "example": "sublist3r -d domain.example",
+      "install": "Python; project repository",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "subdomain discovery",
+        "sublist3r"
+      ]
+    },
+    {
+      "name": "crt.sh",
+      "category": "Recon & OSINT",
+      "subcategory": "Certificate transparency",
+      "purpose": "Search publicly logged TLS certificates for hostnames.",
+      "description": "Search publicly logged TLS certificates for hostnames.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://crt.sh/",
+      "documentation": "https://crt.sh/",
+      "platforms": [
+        "All platforms"
+      ],
+      "launchCommand": "Open https://crt.sh/?q=%25.domain.example",
+      "example": "Browser: search certificates for your authorised domain",
+      "install": "Browser",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "recon & osint",
+        "certificate transparency",
+        "crt.sh"
+      ]
+    },
+    {
+      "name": "httpx",
+      "category": "Attack Surface Management",
+      "subcategory": "HTTP service probing",
+      "purpose": "Identify responding HTTP services from an authorised target list.",
+      "description": "Identify responding HTTP services from an authorised target list.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.projectdiscovery.io/tools/httpx/overview",
+      "documentation": "https://docs.projectdiscovery.io/tools/httpx/overview",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "httpx -l targets.txt",
+      "example": "httpx -l targets.txt",
+      "install": "Project release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "attack surface management",
+        "http service probing",
+        "httpx"
+      ]
+    },
+    {
+      "name": "Katana",
+      "category": "Attack Surface Management",
+      "subcategory": "Web crawling",
+      "purpose": "Crawl a site within an approved scope to map reachable URLs.",
+      "description": "Crawl a site within an approved scope to map reachable URLs.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.projectdiscovery.io/tools/katana/overview",
+      "documentation": "https://docs.projectdiscovery.io/tools/katana/overview",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "katana -u https://app.example",
+      "example": "katana -u https://app.example",
+      "install": "Project release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "attack surface management",
+        "web crawling",
+        "katana"
+      ]
+    },
+    {
+      "name": "gau",
+      "category": "Attack Surface Management",
+      "subcategory": "URL discovery",
+      "purpose": "Collect known URLs from public sources for an owned domain.",
+      "description": "Collect known URLs from public sources for an owned domain.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/lc/gau",
+      "documentation": "https://github.com/lc/gau",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "gau domain.example",
+      "example": "gau domain.example",
+      "install": "Go binary or project release",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "attack surface management",
+        "url discovery",
+        "gau"
+      ]
+    },
+    {
+      "name": "waybackurls",
+      "category": "Attack Surface Management",
+      "subcategory": "Historical URL discovery",
+      "purpose": "Retrieve archived URLs for an authorised domain.",
+      "description": "Retrieve archived URLs for an authorised domain.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/tomnomnom/waybackurls",
+      "documentation": "https://github.com/tomnomnom/waybackurls",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "waybackurls domain.example",
+      "example": "waybackurls domain.example",
+      "install": "Go binary or project release",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "attack surface management",
+        "historical url discovery",
+        "waybackurls"
+      ]
+    },
+    {
+      "name": "Masscan",
+      "category": "Network Discovery",
+      "subcategory": "High-speed port scanning",
+      "purpose": "Perform high-speed port scans; rate-limit and obtain written scope first.",
+      "description": "Perform high-speed port scans; rate-limit and obtain written scope first.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/robertdavidgraham/masscan",
+      "documentation": "https://github.com/robertdavidgraham/masscan",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "masscan 192.0.2.10 -p80,443 --rate 100",
+      "example": "Use only on a lab host and with a conservative rate",
+      "install": "apt/package or official release",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network discovery",
+        "high-speed port scanning",
+        "masscan"
+      ]
+    },
+    {
+      "name": "Netdiscover",
+      "category": "Network Discovery",
+      "subcategory": "Local network discovery",
+      "purpose": "Identify devices on a local IPv4 segment.",
+      "description": "Identify devices on a local IPv4 segment.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/netdiscover-scanner/netdiscover",
+      "documentation": "https://github.com/netdiscover-scanner/netdiscover",
+      "platforms": [
+        "Linux",
+        "WSL with supported networking"
+      ],
+      "launchCommand": "sudo netdiscover -r 192.0.2.0/24",
+      "example": "sudo netdiscover -r <your-lab-subnet>",
+      "install": "apt: netdiscover",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network discovery",
+        "local network discovery",
+        "netdiscover"
+      ]
+    },
+    {
+      "name": "fping",
+      "category": "Network Discovery",
+      "subcategory": "Host reachability",
+      "purpose": "Check reachability for a small, explicitly scoped lab range.",
+      "description": "Check reachability for a small, explicitly scoped lab range.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://fping.org/",
+      "documentation": "https://fping.org/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "fping -a -g 192.0.2.0/28",
+      "example": "fping -a -g 192.0.2.0/28",
+      "install": "apt: fping",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network discovery",
+        "host reachability",
+        "fping"
+      ]
+    },
+    {
+      "name": "arping",
+      "category": "Network Discovery",
+      "subcategory": "ARP diagnostics",
+      "purpose": "Test Layer 2 reachability on a local network you administer.",
+      "description": "Test Layer 2 reachability on a local network you administer.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://manpages.debian.org/arping",
+      "documentation": "https://manpages.debian.org/arping",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "arping -I eth0 192.0.2.10",
+      "example": "arping -I <lab-interface> <lab-ip>",
+      "install": "iputils-arping or arping package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network discovery",
+        "arp diagnostics",
+        "arping"
+      ]
+    },
+    {
+      "name": "P0f",
+      "category": "Network Discovery",
+      "subcategory": "Passive OS fingerprinting",
+      "purpose": "Infer network-stack characteristics from observed traffic.",
+      "description": "Infer network-stack characteristics from observed traffic.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://lcamtuf.coredump.cx/p0f3/",
+      "documentation": "https://lcamtuf.coredump.cx/p0f3/",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "sudo p0f -i eth0",
+      "example": "sudo p0f -i <authorised-interface>",
+      "install": "Package or official project source",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network discovery",
+        "passive os fingerprinting",
+        "p0f"
+      ]
+    },
+    {
+      "name": "FFUF",
+      "category": "Web Application Security",
+      "subcategory": "Content discovery",
+      "purpose": "Fuzz URL paths and parameters on a permitted test application.",
+      "description": "Fuzz URL paths and parameters on a permitted test application.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/ffuf/ffuf",
+      "documentation": "https://github.com/ffuf/ffuf",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "ffuf -u https://app.example/FUZZ -w words.txt",
+      "example": "Use against a local lab or explicitly scoped host",
+      "install": "Go binary or project release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "content discovery",
+        "ffuf"
+      ]
+    },
+    {
+      "name": "Gobuster",
+      "category": "Web Application Security",
+      "subcategory": "Content discovery",
+      "purpose": "Discover web paths and DNS names in authorised assessments.",
+      "description": "Discover web paths and DNS names in authorised assessments.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/OJ/gobuster",
+      "documentation": "https://github.com/OJ/gobuster",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "gobuster dir -u https://app.example -w words.txt",
+      "example": "gobuster dir -u https://lab.example -w words.txt",
+      "install": "apt/package or project release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "content discovery",
+        "gobuster"
+      ]
+    },
+    {
+      "name": "Dirsearch",
+      "category": "Web Application Security",
+      "subcategory": "Content discovery",
+      "purpose": "Find exposed paths on an authorised web application.",
+      "description": "Find exposed paths on an authorised web application.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/maurosoria/dirsearch",
+      "documentation": "https://github.com/maurosoria/dirsearch",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "dirsearch -u https://app.example",
+      "example": "dirsearch -u https://lab.example",
+      "install": "Python project",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "content discovery",
+        "dirsearch"
+      ]
+    },
+    {
+      "name": "Dirb",
+      "category": "Web Application Security",
+      "subcategory": "Content discovery",
+      "purpose": "Check web paths using a wordlist against a test target.",
+      "description": "Check web paths using a wordlist against a test target.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "http://dirb.sourceforge.net/",
+      "documentation": "http://dirb.sourceforge.net/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "dirb https://lab.example",
+      "example": "dirb https://lab.example",
+      "install": "apt: dirb",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "content discovery",
+        "dirb"
+      ]
+    },
+    {
+      "name": "WhatWeb",
+      "category": "Web Application Security",
+      "subcategory": "Technology detection",
+      "purpose": "Identify web technologies and server fingerprints.",
+      "description": "Identify web technologies and server fingerprints.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/urbanadventurer/WhatWeb",
+      "documentation": "https://github.com/urbanadventurer/WhatWeb",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "whatweb https://app.example",
+      "example": "whatweb https://lab.example",
+      "install": "apt: whatweb",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "technology detection",
+        "whatweb"
+      ]
+    },
+    {
+      "name": "WPScan",
+      "category": "Web Application Security",
+      "subcategory": "WordPress assessment",
+      "purpose": "Assess WordPress exposure with permission and appropriate API configuration.",
+      "description": "Assess WordPress exposure with permission and appropriate API configuration.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://wpscan.com/",
+      "documentation": "https://wpscan.com/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "wpscan --url https://wp.lab.example",
+      "example": "wpscan --url https://wp.lab.example",
+      "install": "Ruby gem or package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "wordpress assessment",
+        "wpscan"
+      ]
+    },
+    {
+      "name": "Postman",
+      "category": "API Security",
+      "subcategory": "API development and testing",
+      "purpose": "Create, send and document API requests and test collections.",
+      "description": "Create, send and document API requests and test collections.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://learning.postman.com/docs/",
+      "documentation": "https://learning.postman.com/docs/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "Open Postman",
+      "example": "Import a local/demo API collection",
+      "install": "Official desktop app",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "api security",
+        "api development and testing",
+        "postman"
+      ]
+    },
+    {
+      "name": "Kiterunner",
+      "category": "API Security",
+      "subcategory": "API route discovery",
+      "purpose": "Discover API routes in an authorised test environment.",
+      "description": "Discover API routes in an authorised test environment.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/assetnote/kiterunner",
+      "documentation": "https://github.com/assetnote/kiterunner",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "kr scan",
+      "example": "Run only against a deliberately vulnerable local API",
+      "install": "Project release",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "api security",
+        "api route discovery",
+        "kiterunner"
+      ]
+    },
+    {
+      "name": "jwt_tool",
+      "category": "API Security",
+      "subcategory": "JWT inspection",
+      "purpose": "Inspect JSON Web Tokens and validate configuration in a lab.",
+      "description": "Inspect JSON Web Tokens and validate configuration in a lab.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/ticarpi/jwt_tool",
+      "documentation": "https://github.com/ticarpi/jwt_tool",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "python3 jwt_tool.py",
+      "example": "Use a synthetic token generated for a lab",
+      "install": "Python project",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "api security",
+        "jwt inspection",
+        "jwt_tool"
+      ]
+    },
+    {
+      "name": "Nuclei",
+      "category": "Vulnerability Assessment",
+      "subcategory": "Template-based scanning",
+      "purpose": "Run template-driven checks against assets in explicit scope.",
+      "description": "Run template-driven checks against assets in explicit scope.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.projectdiscovery.io/tools/nuclei/overview",
+      "documentation": "https://docs.projectdiscovery.io/tools/nuclei/overview",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "nuclei -u https://lab.example",
+      "example": "nuclei -u https://lab.example",
+      "install": "Project release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "vulnerability assessment",
+        "template-based scanning",
+        "nuclei"
+      ]
+    },
+    {
+      "name": "OpenVAS / Greenbone",
+      "category": "Vulnerability Assessment",
+      "subcategory": "Vulnerability management",
+      "purpose": "Manage vulnerability scans through the Greenbone platform.",
+      "description": "Manage vulnerability scans through the Greenbone platform.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://greenbone.github.io/docs/",
+      "documentation": "https://greenbone.github.io/docs/",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "gvm-start",
+      "example": "Use a lab target and review scan policy first",
+      "install": "Greenbone packages/appliance",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "vulnerability assessment",
+        "vulnerability management",
+        "openvas / greenbone"
+      ]
+    },
+    {
+      "name": "Nessus",
+      "category": "Vulnerability Assessment",
+      "subcategory": "Vulnerability management",
+      "purpose": "Scan assets for known vulnerabilities and configuration weaknesses.",
+      "description": "Scan assets for known vulnerabilities and configuration weaknesses.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.tenable.com/nessus/",
+      "documentation": "https://docs.tenable.com/nessus/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "Open Nessus web interface",
+      "example": "Use an approved lab scan policy",
+      "install": "Official installer; licensing varies",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "vulnerability assessment",
+        "vulnerability management",
+        "nessus"
+      ]
+    },
+    {
+      "name": "Lynis",
+      "category": "Vulnerability Assessment",
+      "subcategory": "Host hardening audit",
+      "purpose": "Audit local Unix-like system configuration and hardening.",
+      "description": "Audit local Unix-like system configuration and hardening.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://cisofy.com/documentation/lynis/",
+      "documentation": "https://cisofy.com/documentation/lynis/",
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "launchCommand": "sudo lynis audit system",
+      "example": "sudo lynis audit system",
+      "install": "apt: lynis",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "vulnerability assessment",
+        "host hardening audit",
+        "lynis"
+      ]
+    },
+    {
+      "name": "Metasploit Framework",
+      "category": "Exploitation Frameworks",
+      "subcategory": "Security validation framework",
+      "purpose": "Validate known vulnerabilities in a controlled lab and manage test sessions.",
+      "description": "Validate known vulnerabilities in a controlled lab and manage test sessions.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.metasploit.com/",
+      "documentation": "https://docs.metasploit.com/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "msfconsole",
+      "example": "msfconsole; practise only on intentionally vulnerable lab machines",
+      "install": "Kali package or official installer",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "exploitation frameworks",
+        "security validation framework",
+        "metasploit framework"
+      ]
+    },
+    {
+      "name": "sqlmap",
+      "category": "Web Application Security",
+      "subcategory": "SQL injection validation",
+      "purpose": "Automate SQL injection testing against deliberately vulnerable lab applications.",
+      "description": "Automate SQL injection testing against deliberately vulnerable lab applications.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://sqlmap.org/",
+      "documentation": "https://sqlmap.org/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "sqlmap -u https://lab.example/item?id=1 --batch",
+      "example": "Use only on a local intentionally vulnerable app; do not use OS-shell options on real systems",
+      "install": "apt: sqlmap",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "sql injection validation",
+        "sqlmap"
+      ]
+    },
+    {
+      "name": "Commix",
+      "category": "Web Application Security",
+      "subcategory": "Command-injection testing",
+      "purpose": "Test command-injection defenses in a controlled lab.",
+      "description": "Test command-injection defenses in a controlled lab.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/commixproject/commix",
+      "documentation": "https://github.com/commixproject/commix",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "commix",
+      "example": "Use only with an intentionally vulnerable local lab",
+      "install": "Project package/repository",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "web application security",
+        "command-injection testing",
+        "commix"
+      ]
+    },
+    {
+      "name": "BeEF",
+      "category": "Exploitation Frameworks",
+      "subcategory": "Browser security lab",
+      "purpose": "Study browser security risks in an isolated training environment.",
+      "description": "Study browser security risks in an isolated training environment.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/beefproject/beef",
+      "documentation": "https://github.com/beefproject/beef",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "beef-xss",
+      "example": "Never expose the control interface publicly; use disposable lab browsers",
+      "install": "Kali package/project docs",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "exploitation frameworks",
+        "browser security lab",
+        "beef"
+      ]
+    },
+    {
+      "name": "BloodHound",
+      "category": "Active Directory",
+      "subcategory": "Directory relationship analysis",
+      "purpose": "Visualise identity relationships and attack paths in an authorised AD lab.",
+      "description": "Visualise identity relationships and attack paths in an authorised AD lab.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://bloodhound.specterops.io/",
+      "documentation": "https://bloodhound.specterops.io/",
+      "platforms": [
+        "Linux",
+        "Windows"
+      ],
+      "launchCommand": "bloodhound",
+      "example": "Import sample or lab-only directory data",
+      "install": "Official release/container",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "active directory",
+        "directory relationship analysis",
+        "bloodhound"
+      ]
+    },
+    {
+      "name": "Impacket",
+      "category": "Active Directory",
+      "subcategory": "Protocol and identity tooling",
+      "purpose": "Python tools for Windows network protocols and identity security testing.",
+      "description": "Python tools for Windows network protocols and identity security testing.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/fortra/impacket",
+      "documentation": "https://github.com/fortra/impacket",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "WSL"
+      ],
+      "launchCommand": "secretsdump.py -h",
+      "example": "Start with help output and isolated test-domain exercises",
+      "install": "Python package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "active directory",
+        "protocol and identity tooling",
+        "impacket"
+      ]
+    },
+    {
+      "name": "NetExec",
+      "category": "Active Directory",
+      "subcategory": "Network service assessment",
+      "purpose": "Assess Windows/network services in authorised environments.",
+      "description": "Assess Windows/network services in authorised environments.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.netexec.wiki/",
+      "documentation": "https://www.netexec.wiki/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "nxc --help",
+      "example": "Use against a dedicated lab domain only",
+      "install": "Project release/package",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "active directory",
+        "network service assessment",
+        "netexec"
+      ]
+    },
+    {
+      "name": "Responder",
+      "category": "Active Directory",
+      "subcategory": "Network protocol auditing",
+      "purpose": "Demonstrate name-resolution and authentication exposure in an isolated lab.",
+      "description": "Demonstrate name-resolution and authentication exposure in an isolated lab.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/lgandx/Responder",
+      "documentation": "https://github.com/lgandx/Responder",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "sudo responder -I <lab-interface>",
+      "example": "Do not run on public, workplace, or shared networks",
+      "install": "Kali package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "active directory",
+        "network protocol auditing",
+        "responder"
+      ]
+    },
+    {
+      "name": "Pacu",
+      "category": "Cloud Security",
+      "subcategory": "AWS security assessment",
+      "purpose": "Assess AWS configuration and permissions with explicit account authorisation.",
+      "description": "Assess AWS configuration and permissions with explicit account authorisation.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/RhinoSecurityLabs/pacu",
+      "documentation": "https://github.com/RhinoSecurityLabs/pacu",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "pacu",
+      "example": "Use a dedicated sandbox account with least-privilege credentials",
+      "install": "Python project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "cloud security",
+        "aws security assessment",
+        "pacu"
+      ]
+    },
+    {
+      "name": "ScoutSuite",
+      "category": "Cloud Security",
+      "subcategory": "Multi-cloud posture review",
+      "purpose": "Audit cloud configuration and identify risky settings.",
+      "description": "Audit cloud configuration and identify risky settings.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/nccgroup/ScoutSuite",
+      "documentation": "https://github.com/nccgroup/ScoutSuite",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "scout aws",
+      "example": "Use read-only credentials for the intended cloud account",
+      "install": "Python project",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "cloud security",
+        "multi-cloud posture review",
+        "scoutsuite"
+      ]
+    },
+    {
+      "name": "Prowler",
+      "category": "Cloud Security",
+      "subcategory": "Cloud compliance and posture",
+      "purpose": "Evaluate cloud accounts against security best practices and compliance checks.",
+      "description": "Evaluate cloud accounts against security best practices and compliance checks.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.prowler.com/",
+      "documentation": "https://docs.prowler.com/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "prowler aws",
+      "example": "Run with approved read-only permissions",
+      "install": "Python/pipx or official container",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "cloud security",
+        "cloud compliance and posture",
+        "prowler"
+      ]
+    },
+    {
+      "name": "Cloudsplaining",
+      "category": "Cloud Security",
+      "subcategory": "AWS IAM policy review",
+      "purpose": "Identify excessive permissions in AWS IAM policies.",
+      "description": "Identify excessive permissions in AWS IAM policies.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/salesforce/cloudsplaining",
+      "documentation": "https://github.com/salesforce/cloudsplaining",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "cloudsplaining",
+      "example": "Analyse exported policy data or a sandbox account",
+      "install": "Python project",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "cloud security",
+        "aws iam policy review",
+        "cloudsplaining"
+      ]
+    },
+    {
+      "name": "ROADtools",
+      "category": "Cloud Security",
+      "subcategory": "Azure identity research",
+      "purpose": "Collect and inspect Azure AD tenant information for authorised audits.",
+      "description": "Collect and inspect Azure AD tenant information for authorised audits.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/dirkjanm/ROADtools",
+      "documentation": "https://github.com/dirkjanm/ROADtools",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "roadrecon",
+      "example": "Use a test tenant and approved read-only access",
+      "install": "Python project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "cloud security",
+        "azure identity research",
+        "roadtools"
+      ]
+    },
+    {
+      "name": "AzureHound",
+      "category": "Cloud Security",
+      "subcategory": "Azure identity mapping",
+      "purpose": "Map Azure identity relationships for defensive identity reviews.",
+      "description": "Map Azure identity relationships for defensive identity reviews.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://bloodhound.specterops.io/",
+      "documentation": "https://bloodhound.specterops.io/",
+      "platforms": [
+        "Linux",
+        "Windows"
+      ],
+      "launchCommand": "azurehound",
+      "example": "Use only on a tenant you administer or are authorised to assess",
+      "install": "Official release",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "cloud security",
+        "azure identity mapping",
+        "azurehound"
+      ]
+    },
+    {
+      "name": "kube-bench",
+      "category": "Kubernetes Security",
+      "subcategory": "Cluster configuration audit",
+      "purpose": "Check Kubernetes configuration against CIS benchmark guidance.",
+      "description": "Check Kubernetes configuration against CIS benchmark guidance.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/aquasecurity/kube-bench",
+      "documentation": "https://github.com/aquasecurity/kube-bench",
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "launchCommand": "kube-bench",
+      "example": "Use a disposable cluster or approved cluster context",
+      "install": "Container/binary release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "kubernetes security",
+        "cluster configuration audit",
+        "kube-bench"
+      ]
+    },
+    {
+      "name": "Kubescape",
+      "category": "Kubernetes Security",
+      "subcategory": "Cluster posture assessment",
+      "purpose": "Assess Kubernetes configurations and workloads against security frameworks.",
+      "description": "Assess Kubernetes configurations and workloads against security frameworks.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://kubescape.io/",
+      "documentation": "https://kubescape.io/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "launchCommand": "kubescape scan",
+      "example": "Confirm current kube-context before scanning",
+      "install": "Official CLI/container",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "kubernetes security",
+        "cluster posture assessment",
+        "kubescape"
+      ]
+    },
+    {
+      "name": "Kube-Hunter",
+      "category": "Kubernetes Security",
+      "subcategory": "Kubernetes exposure testing",
+      "purpose": "Identify Kubernetes security weaknesses in a controlled cluster.",
+      "description": "Identify Kubernetes security weaknesses in a controlled cluster.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/aquasecurity/kube-hunter",
+      "documentation": "https://github.com/aquasecurity/kube-hunter",
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "launchCommand": "kube-hunter",
+      "example": "Use only on a test cluster with explicit permission",
+      "install": "Official package/container",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "kubernetes security",
+        "kubernetes exposure testing",
+        "kube-hunter"
+      ]
+    },
+    {
+      "name": "Docker CLI",
+      "category": "Container Security",
+      "subcategory": "Container operations",
+      "purpose": "Inspect running containers, images and container state.",
+      "description": "Inspect running containers, images and container state.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.docker.com/",
+      "documentation": "https://docs.docker.com/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "docker ps",
+      "example": "Use a local development environment; avoid privileged containers by default",
+      "install": "Docker Engine/Desktop",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "container security",
+        "container operations",
+        "docker cli"
+      ]
+    },
+    {
+      "name": "John the Ripper",
+      "category": "Password & Hash Operations",
+      "subcategory": "Password auditing",
+      "purpose": "Audit password hash strength using hashes collected with authorisation.",
+      "description": "Audit password hash strength using hashes collected with authorisation.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.openwall.com/john/doc/",
+      "documentation": "https://www.openwall.com/john/doc/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "launchCommand": "john hashes.txt",
+      "example": "Use synthetic hashes or approved password-audit data",
+      "install": "Package or official jumbo build",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "password & hash operations",
+        "password auditing",
+        "john the ripper"
+      ]
+    },
+    {
+      "name": "Hashcat",
+      "category": "Password & Hash Operations",
+      "subcategory": "Hash strength auditing",
+      "purpose": "Evaluate password strength against supported hash formats.",
+      "description": "Evaluate password strength against supported hash formats.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://hashcat.net/wiki/",
+      "documentation": "https://hashcat.net/wiki/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "hashcat --help",
+      "example": "Use only synthetic hashes or an approved audit set",
+      "install": "Official release",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "password & hash operations",
+        "hash strength auditing",
+        "hashcat"
+      ]
+    },
+    {
+      "name": "Hydra",
+      "category": "Password & Hash Operations",
+      "subcategory": "Authentication testing",
+      "purpose": "Test authentication controls in an isolated lab with explicit permission.",
+      "description": "Test authentication controls in an isolated lab with explicit permission.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/vanhauser-thc/thc-hydra",
+      "documentation": "https://github.com/vanhauser-thc/thc-hydra",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "hydra -h",
+      "example": "Do not target third-party or production accounts",
+      "install": "Kali package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "password & hash operations",
+        "authentication testing",
+        "hydra"
+      ]
+    },
+    {
+      "name": "Medusa",
+      "category": "Password & Hash Operations",
+      "subcategory": "Authentication testing",
+      "purpose": "Audit authentication services in a controlled environment.",
+      "description": "Audit authentication services in a controlled environment.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/jmk-foofus/medusa",
+      "documentation": "https://github.com/jmk-foofus/medusa",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "medusa -h",
+      "example": "Use lab-only test accounts with a defined rate limit",
+      "install": "Kali package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "password & hash operations",
+        "authentication testing",
+        "medusa"
+      ]
+    },
+    {
+      "name": "Crunch",
+      "category": "Password & Hash Operations",
+      "subcategory": "Test wordlist generation",
+      "purpose": "Generate controlled test wordlists for password policy labs.",
+      "description": "Generate controlled test wordlists for password policy labs.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://sourceforge.net/projects/crunch-wordlist/",
+      "documentation": "https://sourceforge.net/projects/crunch-wordlist/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "crunch -h",
+      "example": "Keep generated lists small and lab-specific",
+      "install": "Kali package",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "password & hash operations",
+        "test wordlist generation",
+        "crunch"
+      ]
+    },
+    {
+      "name": "Aircrack-ng",
+      "category": "Wireless Security",
+      "subcategory": "Wireless auditing",
+      "purpose": "Analyse wireless capture files in a lab or authorised audit.",
+      "description": "Analyse wireless capture files in a lab or authorised audit.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.aircrack-ng.org/documentation.html",
+      "documentation": "https://www.aircrack-ng.org/documentation.html",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "aircrack-ng --help",
+      "example": "Use only your own test network and capture files",
+      "install": "Kali package",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "wireless security",
+        "wireless auditing",
+        "aircrack-ng"
+      ]
+    },
+    {
+      "name": "Kismet",
+      "category": "Wireless Security",
+      "subcategory": "Wireless monitoring",
+      "purpose": "Monitor wireless activity for network visibility and troubleshooting.",
+      "description": "Monitor wireless activity for network visibility and troubleshooting.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.kismetwireless.net/docs/",
+      "documentation": "https://www.kismetwireless.net/docs/",
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "launchCommand": "kismet",
+      "example": "Respect local law and privacy; monitor only authorised environments",
+      "install": "Official package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "wireless security",
+        "wireless monitoring",
+        "kismet"
+      ]
+    },
+    {
+      "name": "Wifite",
+      "category": "Wireless Security",
+      "subcategory": "Wireless audit automation",
+      "purpose": "Automate selected wireless security checks in a controlled lab.",
+      "description": "Automate selected wireless security checks in a controlled lab.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/kimocoder/wifite2",
+      "documentation": "https://github.com/kimocoder/wifite2",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "wifite --help",
+      "example": "Use a shielded/isolated test network you own",
+      "install": "Kali package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "wireless security",
+        "wireless audit automation",
+        "wifite"
+      ]
+    },
+    {
+      "name": "Reaver",
+      "category": "Wireless Security",
+      "subcategory": "Wireless configuration testing",
+      "purpose": "Assess WPS exposure on a dedicated test access point.",
+      "description": "Assess WPS exposure on a dedicated test access point.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/t6x/reaver-wps-fork-t6x",
+      "documentation": "https://github.com/t6x/reaver-wps-fork-t6x",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "reaver --help",
+      "example": "Do not test neighbours' or public access points",
+      "install": "Kali package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "wireless security",
+        "wireless configuration testing",
+        "reaver"
+      ]
+    },
+    {
+      "name": "Gophish",
+      "category": "Social Engineering Lab",
+      "subcategory": "Phishing-awareness simulation",
+      "purpose": "Run authorised phishing-awareness simulations and measure training outcomes.",
+      "description": "Run authorised phishing-awareness simulations and measure training outcomes.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.getgophish.com/",
+      "documentation": "https://docs.getgophish.com/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "./gophish",
+      "example": "Use approved recipients, non-credential-collecting landing pages and written consent",
+      "install": "Official release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "social engineering lab",
+        "phishing-awareness simulation",
+        "gophish"
+      ]
+    },
+    {
+      "name": "SET Toolkit",
+      "category": "Social Engineering Lab",
+      "subcategory": "Awareness exercise framework",
+      "purpose": "Build controlled social-engineering awareness demonstrations.",
+      "description": "Build controlled social-engineering awareness demonstrations.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/trustedsec/social-engineer-toolkit",
+      "documentation": "https://github.com/trustedsec/social-engineer-toolkit",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "setoolkit",
+      "example": "Use in a closed lab; never impersonate real services to collect credentials",
+      "install": "Kali package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "social engineering lab",
+        "awareness exercise framework",
+        "set toolkit"
+      ]
+    },
+    {
+      "name": "file",
+      "category": "Malware Analysis",
+      "subcategory": "File identification",
+      "purpose": "Identify file type using signatures and metadata.",
+      "description": "Identify file type using signatures and metadata.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://man7.org/linux/man-pages/man1/file.1.html",
+      "documentation": "https://man7.org/linux/man-pages/man1/file.1.html",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "file sample.bin",
+      "example": "Analyse unknown files in a disposable, isolated environment",
+      "install": "Usually preinstalled; file package",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "malware analysis",
+        "file identification",
+        "file"
+      ]
+    },
+    {
+      "name": "strings",
+      "category": "Malware Analysis",
+      "subcategory": "Static string extraction",
+      "purpose": "Extract printable strings that may reveal file contents or indicators.",
+      "description": "Extract printable strings that may reveal file contents or indicators.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://sourceware.org/binutils/docs/binutils/strings.html",
+      "documentation": "https://sourceware.org/binutils/docs/binutils/strings.html",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "strings sample.bin",
+      "example": "Do not execute suspicious samples on a host workstation",
+      "install": "binutils package",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "malware analysis",
+        "static string extraction",
+        "strings"
+      ]
+    },
+    {
+      "name": "sha256sum",
+      "category": "Malware Analysis",
+      "subcategory": "File hashing",
+      "purpose": "Calculate a cryptographic hash to identify and compare files.",
+      "description": "Calculate a cryptographic hash to identify and compare files.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.gnu.org/software/coreutils/manual/",
+      "documentation": "https://www.gnu.org/software/coreutils/manual/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "sha256sum sample.bin",
+      "example": "Hash files before analysis and record provenance",
+      "install": "coreutils package",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "malware analysis",
+        "file hashing",
+        "sha256sum"
+      ]
+    },
+    {
+      "name": "capa",
+      "category": "Malware Analysis",
+      "subcategory": "Capability identification",
+      "purpose": "Infer likely capabilities in supported executable files using rules.",
+      "description": "Infer likely capabilities in supported executable files using rules.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/mandiant/capa",
+      "documentation": "https://github.com/mandiant/capa",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "capa sample.bin",
+      "example": "Use a copy of the sample in an isolated analysis workspace",
+      "install": "Official release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "malware analysis",
+        "capability identification",
+        "capa"
+      ]
+    },
+    {
+      "name": "Ghidra",
+      "category": "Reverse Engineering",
+      "subcategory": "Binary analysis",
+      "purpose": "Disassemble and decompile binaries for defensive research.",
+      "description": "Disassemble and decompile binaries for defensive research.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://ghidra-sre.org/",
+      "documentation": "https://ghidra-sre.org/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "ghidraRun",
+      "example": "Use binaries from a lab or approved analysis case",
+      "install": "Official release",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "reverse engineering",
+        "binary analysis",
+        "ghidra"
+      ]
+    },
+    {
+      "name": "radare2",
+      "category": "Reverse Engineering",
+      "subcategory": "Binary analysis",
+      "purpose": "Inspect and analyse executable files from a terminal.",
+      "description": "Inspect and analyse executable files from a terminal.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://book.rada.re/",
+      "documentation": "https://book.rada.re/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "launchCommand": "r2 sample.bin",
+      "example": "Prefer read-only analysis until the sample is understood",
+      "install": "Package or official release",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "reverse engineering",
+        "binary analysis",
+        "radare2"
+      ]
+    },
+    {
+      "name": "GDB",
+      "category": "Reverse Engineering",
+      "subcategory": "Debugger",
+      "purpose": "Debug compiled programs and inspect runtime behaviour.",
+      "description": "Debug compiled programs and inspect runtime behaviour.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://sourceware.org/gdb/documentation/",
+      "documentation": "https://sourceware.org/gdb/documentation/",
+      "platforms": [
+        "Linux",
+        "macOS"
+      ],
+      "launchCommand": "gdb ./program",
+      "example": "Use a local sample or training binary",
+      "install": "gdb package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "reverse engineering",
+        "debugger",
+        "gdb"
+      ]
+    },
+    {
+      "name": "pwndbg",
+      "category": "Reverse Engineering",
+      "subcategory": "Debugger enhancement",
+      "purpose": "Add reverse-engineering and debugging helpers to GDB.",
+      "description": "Add reverse-engineering and debugging helpers to GDB.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://pwndbg.re/",
+      "documentation": "https://pwndbg.re/",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "gdb ./program",
+      "example": "Use on local training binaries and CTF targets only",
+      "install": "Project install instructions",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "reverse engineering",
+        "debugger enhancement",
+        "pwndbg"
+      ]
+    },
+    {
+      "name": "Autopsy",
+      "category": "Digital Forensics",
+      "subcategory": "Forensic case analysis",
+      "purpose": "Create forensic cases and analyse disk images and artifacts.",
+      "description": "Create forensic cases and analyse disk images and artifacts.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.autopsy.com/",
+      "documentation": "https://www.autopsy.com/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "Open Autopsy GUI",
+      "example": "Work from verified copies and preserve chain of custody",
+      "install": "Official installer",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "digital forensics",
+        "forensic case analysis",
+        "autopsy"
+      ]
+    },
+    {
+      "name": "Sleuth Kit",
+      "category": "Digital Forensics",
+      "subcategory": "Filesystem forensics",
+      "purpose": "Inspect filesystem structures and artifacts in disk images.",
+      "description": "Inspect filesystem structures and artifacts in disk images.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.sleuthkit.org/sleuthkit/",
+      "documentation": "https://www.sleuthkit.org/sleuthkit/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "fls image.dd",
+      "example": "Use write-protected forensic images and document hashes",
+      "install": "Package/project release",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "digital forensics",
+        "filesystem forensics",
+        "sleuth kit"
+      ]
+    },
+    {
+      "name": "Foremost",
+      "category": "Digital Forensics",
+      "subcategory": "File carving",
+      "purpose": "Recover files by known headers/footers from forensic images.",
+      "description": "Recover files by known headers/footers from forensic images.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/korczis/foremost",
+      "documentation": "https://github.com/korczis/foremost",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "foremost -i image.dd -o output",
+      "example": "Write output to a separate evidence drive or case directory",
+      "install": "Package/project",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "digital forensics",
+        "file carving",
+        "foremost"
+      ]
+    },
+    {
+      "name": "PhotoRec",
+      "category": "Digital Forensics",
+      "subcategory": "File recovery",
+      "purpose": "Recover files from media images or storage devices.",
+      "description": "Recover files from media images or storage devices.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.cgsecurity.org/wiki/PhotoRec",
+      "documentation": "https://www.cgsecurity.org/wiki/PhotoRec",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "photorec",
+      "example": "Never recover onto the source media",
+      "install": "TestDisk package",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "digital forensics",
+        "file recovery",
+        "photorec"
+      ]
+    },
+    {
+      "name": "Volatility 3",
+      "category": "Digital Forensics",
+      "subcategory": "Memory forensics",
+      "purpose": "Analyse memory images for process, module and system artifacts.",
+      "description": "Analyse memory images for process, module and system artifacts.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://volatility3.readthedocs.io/",
+      "documentation": "https://volatility3.readthedocs.io/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "vol -h",
+      "example": "Use legally obtained memory images and preserve evidence metadata",
+      "install": "Python package/project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "digital forensics",
+        "memory forensics",
+        "volatility 3"
+      ]
+    },
+    {
+      "name": "TShark",
+      "category": "Network Monitoring",
+      "subcategory": "CLI packet analysis",
+      "purpose": "Inspect packet captures from a terminal.",
+      "description": "Inspect packet captures from a terminal.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.wireshark.org/docs/man-pages/tshark.html",
+      "documentation": "https://www.wireshark.org/docs/man-pages/tshark.html",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "tshark -r capture.pcap",
+      "example": "Analyse saved lab captures before live capture",
+      "install": "Wireshark package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network monitoring",
+        "cli packet analysis",
+        "tshark"
+      ]
+    },
+    {
+      "name": "Bettercap",
+      "category": "Network Monitoring",
+      "subcategory": "Network lab toolkit",
+      "purpose": "Explore network visibility and security concepts in an isolated lab.",
+      "description": "Explore network visibility and security concepts in an isolated lab.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.bettercap.org/",
+      "documentation": "https://www.bettercap.org/",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "bettercap -iface <lab-interface>",
+      "example": "Never run active network features on shared or unapproved networks",
+      "install": "Official release/package",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network monitoring",
+        "network lab toolkit",
+        "bettercap"
+      ]
+    },
+    {
+      "name": "mitmproxy",
+      "category": "Network Monitoring",
+      "subcategory": "HTTP/S debugging proxy",
+      "purpose": "Inspect HTTP traffic for application debugging and security testing.",
+      "description": "Inspect HTTP traffic for application debugging and security testing.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://docs.mitmproxy.org/",
+      "documentation": "https://docs.mitmproxy.org/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "mitmproxy",
+      "example": "Use test clients and services; protect any captured tokens or personal data",
+      "install": "Official package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network monitoring",
+        "http/s debugging proxy",
+        "mitmproxy"
+      ]
+    },
+    {
+      "name": "Sigma CLI",
+      "category": "Threat Hunting",
+      "subcategory": "Detection rule conversion",
+      "purpose": "Validate and convert generic detection rules to supported backends.",
+      "description": "Validate and convert generic detection rules to supported backends.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/SigmaHQ/sigma-cli",
+      "documentation": "https://github.com/SigmaHQ/sigma-cli",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "sigma --help",
+      "example": "Test rules against representative logs before deployment",
+      "install": "Python package",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "threat hunting",
+        "detection rule conversion",
+        "sigma cli"
+      ]
+    },
+    {
+      "name": "Hayabusa",
+      "category": "Threat Hunting",
+      "subcategory": "Windows event-log hunting",
+      "purpose": "Detect suspicious patterns in Windows event logs.",
+      "description": "Detect suspicious patterns in Windows event logs.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/Yamato-Security/hayabusa",
+      "documentation": "https://github.com/Yamato-Security/hayabusa",
+      "platforms": [
+        "Windows",
+        "Linux"
+      ],
+      "launchCommand": "hayabusa",
+      "example": "Analyse exported or authorised event logs",
+      "install": "Official release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "threat hunting",
+        "windows event-log hunting",
+        "hayabusa"
+      ]
+    },
+    {
+      "name": "AIDE",
+      "category": "Blue Team Defense",
+      "subcategory": "File integrity monitoring",
+      "purpose": "Compare system files against a trusted integrity database.",
+      "description": "Compare system files against a trusted integrity database.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://aide.github.io/",
+      "documentation": "https://aide.github.io/",
+      "platforms": [
+        "Linux",
+        "Unix"
+      ],
+      "launchCommand": "sudo aide --check",
+      "example": "Establish a trusted baseline and protect the database",
+      "install": "Package: aide",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "blue team defense",
+        "file integrity monitoring",
+        "aide"
+      ]
+    },
+    {
+      "name": "Fail2ban",
+      "category": "Blue Team Defense",
+      "subcategory": "Abuse prevention",
+      "purpose": "Review bans and status for configured services.",
+      "description": "Review bans and status for configured services.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/fail2ban/fail2ban",
+      "documentation": "https://github.com/fail2ban/fail2ban",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "sudo fail2ban-client status",
+      "example": "Test jail configuration before enabling bans on production systems",
+      "install": "Package: fail2ban",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "blue team defense",
+        "abuse prevention",
+        "fail2ban"
+      ]
+    },
+    {
+      "name": "Garak",
+      "category": "AI Security",
+      "subcategory": "LLM vulnerability probing",
+      "purpose": "Probe language-model endpoints for known classes of weaknesses.",
+      "description": "Probe language-model endpoints for known classes of weaknesses.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://garak.ai/",
+      "documentation": "https://garak.ai/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "launchCommand": "garak --help",
+      "example": "Use a test model or endpoint with explicit approval and rate limits",
+      "install": "Python package/project",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ai security",
+        "llm vulnerability probing",
+        "garak"
+      ]
+    },
+    {
+      "name": "Promptfoo",
+      "category": "AI Security",
+      "subcategory": "LLM evaluation",
+      "purpose": "Evaluate prompts and model behaviour against repeatable test cases.",
+      "description": "Evaluate prompts and model behaviour against repeatable test cases.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.promptfoo.dev/docs/",
+      "documentation": "https://www.promptfoo.dev/docs/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "launchCommand": "promptfoo --help",
+      "example": "Use synthetic data and do not include secrets in test prompts",
+      "install": "Node.js package/project",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ai security",
+        "llm evaluation",
+        "promptfoo"
+      ]
+    },
+    {
+      "name": "PyRIT",
+      "category": "AI Security",
+      "subcategory": "AI red-team evaluation",
+      "purpose": "Support structured risk evaluation for generative AI systems.",
+      "description": "Support structured risk evaluation for generative AI systems.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/Azure/PyRIT",
+      "documentation": "https://github.com/Azure/PyRIT",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "python -m pyrit --help",
+      "example": "Use isolated evaluation environments and approved model endpoints",
+      "install": "Python project",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ai security",
+        "ai red-team evaluation",
+        "pyrit"
+      ]
+    },
+    {
+      "name": "LLM Guard",
+      "category": "AI Security",
+      "subcategory": "LLM input/output safeguards",
+      "purpose": "Evaluate and sanitise model inputs and outputs with configurable scanners.",
+      "description": "Evaluate and sanitise model inputs and outputs with configurable scanners.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://llm-guard.com/",
+      "documentation": "https://llm-guard.com/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ],
+      "launchCommand": "llm-guard --help",
+      "example": "Validate safeguards against a representative, non-sensitive test set",
+      "install": "Python project",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ai security",
+        "llm input/output safeguards",
+        "llm guard"
+      ]
+    },
+    {
+      "name": "SecLists",
+      "category": "Wordlists & Payloads",
+      "subcategory": "Security testing wordlists",
+      "purpose": "Curated wordlists for authorised testing, fuzzing and detection validation.",
+      "description": "Curated wordlists for authorised testing, fuzzing and detection validation.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/danielmiessler/SecLists",
+      "documentation": "https://github.com/danielmiessler/SecLists",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "ls /usr/share/seclists",
+      "example": "Use modest lists against lab targets; wordlists do not grant permission",
+      "install": "Kali package: seclists",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "wordlists & payloads",
+        "security testing wordlists",
+        "seclists"
+      ]
+    },
+    {
+      "name": "PayloadsAllTheThings",
+      "category": "Wordlists & Payloads",
+      "subcategory": "Security testing reference",
+      "purpose": "Reference material for understanding vulnerability classes and test cases.",
+      "description": "Reference material for understanding vulnerability classes and test cases.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/swisskyrepo/PayloadsAllTheThings",
+      "documentation": "https://github.com/swisskyrepo/PayloadsAllTheThings",
+      "platforms": [
+        "All platforms"
+      ],
+      "launchCommand": "Open project repository",
+      "example": "Study and use only in authorised labs; review content before use",
+      "install": "Git repository",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "wordlists & payloads",
+        "security testing reference",
+        "payloadsallthethings"
+      ]
+    },
+    {
+      "name": "FuzzDB",
+      "category": "Wordlists & Payloads",
+      "subcategory": "Fuzzing reference data",
+      "purpose": "Reference patterns and wordlists for application testing and detection.",
+      "description": "Reference patterns and wordlists for application testing and detection.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/fuzzdb-project/fuzzdb",
+      "documentation": "https://github.com/fuzzdb-project/fuzzdb",
+      "platforms": [
+        "All platforms"
+      ],
+      "launchCommand": "Open project repository",
+      "example": "Use only on applications in your authorised scope",
+      "install": "Git repository",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "wordlists & payloads",
+        "fuzzing reference data",
+        "fuzzdb"
+      ]
+    },
+    {
+      "name": "picoCTF",
+      "category": "CTF & Training",
+      "subcategory": "Beginner CTF",
+      "purpose": "Practise security fundamentals through guided capture-the-flag challenges.",
+      "description": "Practise security fundamentals through guided capture-the-flag challenges.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://picoctf.org/",
+      "documentation": "https://picoctf.org/",
+      "platforms": [
+        "All platforms"
+      ],
+      "launchCommand": "Open picoCTF platform",
+      "example": "Use platform-provided challenges and follow competition rules",
+      "install": "Browser platform",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ctf & training",
+        "beginner ctf",
+        "picoctf"
+      ]
+    },
+    {
+      "name": "Hack The Box",
+      "category": "CTF & Training",
+      "subcategory": "Hands-on labs",
+      "purpose": "Practise penetration testing and defensive skills in isolated labs.",
+      "description": "Practise penetration testing and defensive skills in isolated labs.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.hackthebox.com/",
+      "documentation": "https://www.hackthebox.com/",
+      "platforms": [
+        "All platforms"
+      ],
+      "launchCommand": "Open Hack The Box platform",
+      "example": "Stay within assigned lab IPs and platform rules",
+      "install": "Browser/platform",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ctf & training",
+        "hands-on labs",
+        "hack the box"
+      ]
+    },
+    {
+      "name": "TryHackMe",
+      "category": "CTF & Training",
+      "subcategory": "Guided cyber learning",
+      "purpose": "Learn security concepts through guided rooms and hands-on exercises.",
+      "description": "Learn security concepts through guided rooms and hands-on exercises.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://tryhackme.com/",
+      "documentation": "https://tryhackme.com/",
+      "platforms": [
+        "All platforms"
+      ],
+      "launchCommand": "Open TryHackMe platform",
+      "example": "Use the provided lab environment only",
+      "install": "Browser/platform",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ctf & training",
+        "guided cyber learning",
+        "tryhackme"
+      ]
+    },
+    {
+      "name": "OverTheWire",
+      "category": "CTF & Training",
+      "subcategory": "Command-line fundamentals",
+      "purpose": "Practise Linux and security fundamentals through staged wargames.",
+      "description": "Practise Linux and security fundamentals through staged wargames.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://overthewire.org/wargames/",
+      "documentation": "https://overthewire.org/wargames/",
+      "platforms": [
+        "All platforms"
+      ],
+      "launchCommand": "Open OverTheWire wargames",
+      "example": "Keep activity within the assigned wargame hosts",
+      "install": "Browser/SSH",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "ctf & training",
+        "command-line fundamentals",
+        "overthewire"
+      ]
+    },
+    {
+      "name": "Cuckoo Sandbox",
+      "category": "Sandbox Analysis",
+      "subcategory": "Malware behaviour analysis",
+      "purpose": "Analyse suspicious files in a dedicated sandbox architecture.",
+      "description": "Analyse suspicious files in a dedicated sandbox architecture.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://cuckoosandbox.org/",
+      "documentation": "https://cuckoosandbox.org/",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "cuckoo",
+      "example": "Never run malware on a personal workstation; isolate and snapshot lab VMs",
+      "install": "Self-hosted lab platform",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "sandbox analysis",
+        "malware behaviour analysis",
+        "cuckoo sandbox"
+      ]
+    },
+    {
+      "name": "Binwalk",
+      "category": "Malware Analysis",
+      "subcategory": "Firmware and file analysis",
+      "purpose": "Identify embedded files and data structures in firmware images.",
+      "description": "Identify embedded files and data structures in firmware images.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/ReFirmLabs/binwalk",
+      "documentation": "https://github.com/ReFirmLabs/binwalk",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "WSL"
+      ],
+      "launchCommand": "binwalk firmware.bin",
+      "example": "Inspect files offline; do not flash unknown firmware to devices",
+      "install": "Package/project release",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "malware analysis",
+        "firmware and file analysis",
+        "binwalk"
+      ]
+    },
+    {
+      "name": "ExifTool",
+      "category": "Digital Forensics",
+      "subcategory": "Metadata inspection",
+      "purpose": "Read and analyse metadata from many file formats.",
+      "description": "Read and analyse metadata from many file formats.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://exiftool.org/",
+      "documentation": "https://exiftool.org/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "exiftool file",
+      "example": "Treat metadata as potentially sensitive personal information",
+      "install": "Package/project release",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "digital forensics",
+        "metadata inspection",
+        "exiftool"
+      ]
+    },
+    {
+      "name": "GPG",
+      "category": "Cryptography",
+      "subcategory": "File signing and encryption",
+      "purpose": "Manage OpenPGP keys, signatures and encrypted files.",
+      "description": "Manage OpenPGP keys, signatures and encrypted files.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://gnupg.org/documentation/",
+      "documentation": "https://gnupg.org/documentation/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "gpg --version",
+      "example": "Back up keys securely and verify fingerprints out of band",
+      "install": "Package/project release",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "cryptography",
+        "file signing and encryption",
+        "gpg"
+      ]
+    },
+    {
+      "name": "Trivy config",
+      "category": "Supply Chain Security",
+      "subcategory": "Infrastructure-as-code scan",
+      "purpose": "Detect misconfigurations in infrastructure and deployment files.",
+      "description": "Detect misconfigurations in infrastructure and deployment files.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://trivy.dev/latest/docs/",
+      "documentation": "https://trivy.dev/latest/docs/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ],
+      "launchCommand": "trivy config .",
+      "example": "Review findings in context before changing production configuration",
+      "install": "Trivy",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "supply chain security",
+        "infrastructure-as-code scan",
+        "trivy config"
+      ]
+    },
+    {
+      "name": "Docker Bench for Security",
+      "category": "Container Security",
+      "subcategory": "Docker host audit",
+      "purpose": "Check Docker host configuration against common security guidance.",
+      "description": "Check Docker host configuration against common security guidance.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/docker/docker-bench-security",
+      "documentation": "https://github.com/docker/docker-bench-security",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "docker-bench-security",
+      "example": "Run only on systems you administer; review script and required privileges first",
+      "install": "Script/container",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "container security",
+        "docker host audit",
+        "docker bench for security"
+      ]
+    },
+    {
+      "name": "King Phisher",
+      "category": "Social Engineering Lab",
+      "subcategory": "Awareness simulation",
+      "purpose": "Historical phishing simulation project; verify maintenance and dependencies before use.",
+      "description": "Historical phishing simulation project; verify maintenance and dependencies before use.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://github.com/securestate/king-phisher",
+      "documentation": "https://github.com/securestate/king-phisher",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "Project-specific GUI/CLI",
+      "example": "Prefer maintained awareness platforms; do not collect real credentials",
+      "install": "Project-specific",
+      "difficulty": "Advanced",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "social engineering lab",
+        "awareness simulation",
+        "king phisher"
+      ]
+    },
+    {
+      "name": "iTerm2",
+      "category": "Terminal & Platform Controls",
+      "subcategory": "macOS terminal",
+      "purpose": "Open the iTerm terminal application on macOS.",
+      "description": "Open the iTerm terminal application on macOS.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://iterm2.com/documentation.html",
+      "documentation": "https://iterm2.com/documentation.html",
+      "platforms": [
+        "macOS"
+      ],
+      "launchCommand": "open -a iTerm",
+      "example": "Terminal access itself does not imply a tool is installed",
+      "install": "Install from official project",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "terminal & platform controls",
+        "macos terminal",
+        "iterm2"
+      ]
+    },
+    {
+      "name": "WSL",
+      "category": "Terminal & Platform Controls",
+      "subcategory": "Windows Linux environment",
+      "purpose": "List installed WSL distributions and versions.",
+      "description": "List installed WSL distributions and versions.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://learn.microsoft.com/en-us/windows/wsl/",
+      "documentation": "https://learn.microsoft.com/en-us/windows/wsl/",
+      "platforms": [
+        "Windows"
+      ],
+      "launchCommand": "wsl -l -v",
+      "example": "Confirm distribution name before shutdown or termination commands",
+      "install": "Windows optional feature",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "terminal & platform controls",
+        "windows linux environment",
+        "wsl"
+      ]
+    },
+    {
+      "name": "Ubuntu terminal",
+      "category": "Terminal & Platform Controls",
+      "subcategory": "Linux terminal",
+      "purpose": "Open a terminal emulator where installed in a desktop session.",
+      "description": "Open a terminal emulator where installed in a desktop session.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://help.ubuntu.com/",
+      "documentation": "https://help.ubuntu.com/",
+      "platforms": [
+        "Linux"
+      ],
+      "launchCommand": "gnome-terminal",
+      "example": "Some WSL environments do not have a Linux desktop terminal installed",
+      "install": "Desktop package",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "terminal & platform controls",
+        "linux terminal",
+        "ubuntu terminal"
+      ]
+    },
+    {
+      "name": "Kali Linux",
+      "category": "Terminal & Platform Controls",
+      "subcategory": "Security testing OS",
+      "purpose": "Start the Kali environment if installed and configured.",
+      "description": "Start the Kali environment if installed and configured.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://www.kali.org/docs/",
+      "documentation": "https://www.kali.org/docs/",
+      "platforms": [
+        "Linux",
+        "WSL"
+      ],
+      "launchCommand": "kali",
+      "example": "Use a dedicated lab environment; installing Kali does not authorise testing",
+      "install": "Official image/package",
+      "difficulty": "Beginner",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "terminal & platform controls",
+        "security testing os",
+        "kali linux"
+      ]
+    },
+    {
+      "name": "Netcat",
+      "category": "Network Discovery",
+      "subcategory": "Connectivity diagnostics",
+      "purpose": "Test simple TCP/UDP connectivity between lab endpoints.",
+      "description": "Test simple TCP/UDP connectivity between lab endpoints.",
+      "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
+      "sourceUrl": "https://nmap.org/ncat/",
+      "documentation": "https://nmap.org/ncat/",
+      "platforms": [
+        "Linux",
+        "macOS",
+        "Windows",
+        "WSL"
+      ],
+      "launchCommand": "nc -h",
+      "example": "Use only between systems you control; do not expose listeners unintentionally",
+      "install": "Package varies by OS",
+      "difficulty": "Intermediate",
+      "license": "Check the official project licence and distribution terms before use.",
+      "tags": [
+        "network discovery",
+        "connectivity diagnostics",
+        "netcat"
       ]
     }
   ]
