@@ -1,11 +1,45 @@
 (()=>{"use strict";
 const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 const val=(x,k,f="Not specified")=>x[k]||f;
+const quick=[
+ ["Recon","subfinder -h"],["Asset map","amass -h"],["HTTP probe","httpx -h"],["Network scan","nmap -h"],
+ ["Template scanner","nuclei -h"],["Web proxy","burpsuite"],["ZAP","zaproxy"],["SQL testing help","sqlmap --help"],
+ ["Metasploit","msfconsole"],["AD assessment help","nxc --help"],["Reverse engineering","ghidraRun"],
+ ["Binary analysis","r2 -h"],["Password audit help","john --help"],["Hashcat help","hashcat --help"],
+ ["Forensics","autopsy"],["Memory forensics","vol -h"],["Container scan","trivy --help"],
+ ["Kubernetes audit","kube-bench --help"],["Network defense","suricata -V"],["Endpoint hunting","osqueryi --help"]
+];
+function initFilters(all){
+ const select=document.getElementById("cybersecurityToolsAcademyCategory");
+ const nav=document.getElementById("cybersecurityToolsAcademyCategoryNav");
+ const categories=[...new Set(all.map(x=>x.category||"Other tools"))].sort((a,b)=>a.localeCompare(b));
+ if(select&&!select.dataset.populated){
+  select.innerHTML='<option value="all">All categories ('+all.length+' tools)</option>'+categories.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join("");
+  select.dataset.populated="1";
+ }
+ if(nav&&!nav.dataset.populated){
+  nav.innerHTML='<button type="button" data-category="all">All categories</button>'+categories.map(c=>'<button type="button" data-category="'+esc(c)+'">'+esc(c)+'</button>').join("");
+  nav.dataset.populated="1";
+  nav.addEventListener("click",e=>{const b=e.target.closest("button[data-category]");if(!b)return;const f=document.getElementById("cybersecurityToolsAcademyCategory");if(f){f.value=b.dataset.category;render()}});
+ }
+ const quickRoot=document.getElementById("cyberOsQuickLaunch");
+ if(quickRoot&&!quickRoot.dataset.populated){
+  quickRoot.innerHTML=quick.map(([label,cmd])=>'<button type="button" data-command="'+esc(cmd)+'" title="Copy command reference">'+esc(label)+'</button>').join("");
+  quickRoot.dataset.populated="1";
+  quickRoot.addEventListener("click",async e=>{
+   const b=e.target.closest("button[data-command]");if(!b)return;
+   const command=b.dataset.command;
+   try{await navigator.clipboard.writeText(command);b.textContent="COPIED: "+command;setTimeout(()=>b.textContent=quick.find(x=>x[1]===command)?.[0]||command,1400)}
+   catch{window.prompt("Copy this command reference. It will not be executed by Cyber-OS:",command)}
+  });
+ }
+}
 function render(){
  const root=document.getElementById("cybersecurityToolsAcademyGrid");
  if(!root)return;
  const H=window.CYBER_HUB||{};
  const all=Array.isArray(H.cybersecurityTools)?H.cybersecurityTools:[];
+ initFilters(all);
  const input=document.getElementById("cybersecurityToolsAcademySearch");
  const categorySelect=document.getElementById("cybersecurityToolsAcademyCategory");
  const platformSelect=document.getElementById("cybersecurityToolsAcademyPlatform");
@@ -14,8 +48,7 @@ function render(){
  const platform=String(platformSelect?.value||"all");
  const records=all.filter(x=>{
   const text=JSON.stringify(x).toLowerCase();
-  return (!query||text.includes(query))&&
-   (category==="all"||x.category===category)&&
+  return (!query||text.includes(query))&&(category==="all"||x.category===category)&&
    (platform==="all"||(Array.isArray(x.platforms)&&x.platforms.some(p=>p.toLowerCase().includes(platform.toLowerCase()))));
  });
  const count=document.getElementById("cybersecurityToolsAcademyCount");
