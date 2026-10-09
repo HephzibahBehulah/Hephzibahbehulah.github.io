@@ -64,7 +64,7 @@ function searchScore(tool,query){
  // Catch small misspellings of tool names without matching unrelated descriptions.
  if(q.length>=5&&q.length<=18){
   const d=levenshtein(q,name);
-  if(d<=2||((known.some(a=>levenshtein(q,a)<=2))))return 30-d;
+  if(d<=2||known.some(a=>levenshtein(q,a)<=2))return 30-Math.min(d,...known.map(a=>levenshtein(q,a)));
  }
  return 0;
 }
