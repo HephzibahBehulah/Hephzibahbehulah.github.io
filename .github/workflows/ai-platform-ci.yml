@@ -36,6 +36,7 @@ jobs:
           node --check scripts/sync-linux-manpages.mjs
           node --check scripts/sync-rfc-index.mjs
           node --check cyber-os/catalog-loader.js
+          node --check cyber-os/cybersecurity-tools-academy.js
           node --check cyber-os/encyclopedia-engine.js
           node -e "const d=JSON.parse(require('fs').readFileSync('cyber-os/data/generated/cybersecurity-tools.json','utf8')); if(!Array.isArray(d.records)||d.records.length!==d.count||!d.records.every(x=>x.name&&x.purpose&&x.safeUse&&/^https:/.test(x.sourceUrl))) process.exit(1)"
           node --check cyber-os/knowledge-graph-engine.js
@@ -95,6 +96,10 @@ jobs:
           test -f data/translations/yo.json
           test -f data/translations/pid.json
           grep -q 'id="adminMessages"' admin.html
+          grep -q 'hb-bot-chat.css' admin.html
+          grep -q 'hb-bot-chat.js' admin.html
+          grep -q 'Cybersecurity Tools Academy' cyber-os/index.html
+          grep -q 'cybersecurity-tools-academy.js' cyber-os/index.html
           grep -q 'language-system.js' index.html
           grep -q 'mobile-system.css' index.html
           ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
