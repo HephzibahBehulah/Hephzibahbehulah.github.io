@@ -45,3 +45,7 @@
  .academy-category-tile,.mega-category-tile{min-height:80px}
 }
 @media(prefers-reduced-motion:reduce){.os-sidebar,.hb-mobile-nav-backdrop{transition:none}}
+
+/* Mega Tools uses the existing three-column intel-grid shell. Let overview and status rows span it. */
+#megaToolGrid>.mega-category-overview,#megaToolGrid>.mega-catalog-hint,#megaToolGrid>.mega-show-more{grid-column:1/-1}
+#megaToolGrid>.mega-category-overview{width:100%;min-width:0}
