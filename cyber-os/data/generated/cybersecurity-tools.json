@@ -24,7 +24,8 @@
         "network discovery",
         "port and service scanning"
       ],
-      "documentation": "https://nmap.org/book/man.html"
+      "documentation": "https://nmap.org/book/man.html",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Wireshark",
@@ -47,7 +48,8 @@
         "network monitoring",
         "packet analysis"
       ],
-      "documentation": "https://www.wireshark.org/docs/"
+      "documentation": "https://www.wireshark.org/docs/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "tcpdump",
@@ -69,7 +71,8 @@
         "network monitoring",
         "packet capture"
       ],
-      "documentation": "https://www.tcpdump.org/manpages/tcpdump.1.html"
+      "documentation": "https://www.tcpdump.org/manpages/tcpdump.1.html",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Zeek",
@@ -80,7 +83,19 @@
       "platforms": [
         "Linux",
         "Unix"
-      ]
+      ],
+      "subcategory": "Network security monitoring",
+      "launchCommand": "zeek --help",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://docs.zeek.org/",
+      "tags": [
+        "network security monitoring",
+        "zeek"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Generate structured network logs for traffic analysis and detection."
     },
     {
       "name": "Suricata",
@@ -103,7 +118,8 @@
         "blue team defense",
         "ids/ips"
       ],
-      "documentation": "https://docs.suricata.io/"
+      "documentation": "https://docs.suricata.io/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Snort",
@@ -125,7 +141,8 @@
         "blue team defense",
         "network ids"
       ],
-      "documentation": "https://docs.snort.org/"
+      "documentation": "https://docs.snort.org/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "OWASP ZAP",
@@ -148,7 +165,8 @@
         "web application security",
         "web proxy and scanner"
       ],
-      "documentation": "https://www.zaproxy.org/docs/"
+      "documentation": "https://www.zaproxy.org/docs/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Burp Suite",
@@ -171,7 +189,8 @@
         "web application security",
         "intercepting proxy"
       ],
-      "documentation": "https://portswigger.net/burp/documentation"
+      "documentation": "https://portswigger.net/burp/documentation",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Nikto",
@@ -194,7 +213,8 @@
         "vulnerability assessment",
         "web server checks"
       ],
-      "documentation": "https://github.com/sullo/nikto"
+      "documentation": "https://github.com/sullo/nikto",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "testssl.sh",
@@ -205,7 +225,19 @@
       "platforms": [
         "Linux",
         "macOS"
-      ]
+      ],
+      "subcategory": "TLS configuration",
+      "launchCommand": "testssl.sh --help",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://testssl.sh/",
+      "tags": [
+        "tls configuration",
+        "testssl.sh"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Review TLS versions, ciphers and certificate configuration."
     },
     {
       "name": "OpenSSL",
@@ -228,7 +260,8 @@
         "cryptography",
         "tls and cryptographic utilities"
       ],
-      "documentation": "https://www.openssl.org/docs/"
+      "documentation": "https://www.openssl.org/docs/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Trivy",
@@ -251,7 +284,8 @@
         "container security",
         "image and dependency scanning"
       ],
-      "documentation": "https://trivy.dev/latest/docs/"
+      "documentation": "https://trivy.dev/latest/docs/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Grype",
@@ -274,7 +308,8 @@
         "supply chain security",
         "image and package vulnerability scan"
       ],
-      "documentation": "https://github.com/anchore/grype"
+      "documentation": "https://github.com/anchore/grype",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Syft",
@@ -297,7 +332,8 @@
         "supply chain security",
         "software bill of materials"
       ],
-      "documentation": "https://github.com/anchore/syft"
+      "documentation": "https://github.com/anchore/syft",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Semgrep",
@@ -309,7 +345,19 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Static application security testing",
+      "launchCommand": "semgrep --help",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://semgrep.dev/docs/",
+      "tags": [
+        "static application security testing",
+        "semgrep"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Find code patterns associated with bugs and security issues."
     },
     {
       "name": "Gitleaks",
@@ -321,7 +369,19 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Secret detection",
+      "launchCommand": "gitleaks --help",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://github.com/gitleaks/gitleaks",
+      "tags": [
+        "secret detection",
+        "gitleaks"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Detect likely credentials and secrets committed to Git repositories."
     },
     {
       "name": "OSV-Scanner",
@@ -333,7 +393,19 @@
         "Linux",
         "Windows",
         "macOS"
-      ]
+      ],
+      "subcategory": "Dependency vulnerability scanning",
+      "launchCommand": "osv-scanner --help",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://google.github.io/osv-scanner/",
+      "tags": [
+        "dependency vulnerability scanning",
+        "osv-scanner"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Check project dependencies against the Open Source Vulnerabilities database."
     },
     {
       "name": "YARA",
@@ -356,7 +428,8 @@
         "malware analysis",
         "pattern-based detection"
       ],
-      "documentation": "https://yara.readthedocs.io/"
+      "documentation": "https://yara.readthedocs.io/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "ClamAV",
@@ -379,7 +452,8 @@
         "malware analysis",
         "antivirus scanning"
       ],
-      "documentation": "https://docs.clamav.net/"
+      "documentation": "https://docs.clamav.net/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Velociraptor",
@@ -402,7 +476,8 @@
         "threat hunting",
         "endpoint visibility"
       ],
-      "documentation": "https://docs.velociraptor.app/"
+      "documentation": "https://docs.velociraptor.app/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "osquery",
@@ -425,7 +500,8 @@
         "threat hunting",
         "endpoint sql queries"
       ],
-      "documentation": "https://osquery.io/"
+      "documentation": "https://osquery.io/",
+      "license": "Review the project's official licence and any commercial-use terms."
     },
     {
       "name": "Sigma",
@@ -435,7 +511,19 @@
       "sourceUrl": "https://sigmahq.io/docs/",
       "platforms": [
         "Platform-independent"
-      ]
+      ],
+      "subcategory": "Detection engineering",
+      "launchCommand": "sigma --help",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://sigmahq.io/docs/",
+      "tags": [
+        "detection engineering",
+        "sigma"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Write portable detection rules that can be translated for supported SIEM platforms."
     },
     {
       "name": "MITRE ATT&CK",
@@ -445,7 +533,19 @@
       "sourceUrl": "https://attack.mitre.org/",
       "platforms": [
         "Platform-independent"
-      ]
+      ],
+      "subcategory": "Threat-informed defence",
+      "launchCommand": "Open official web platform",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://attack.mitre.org/",
+      "tags": [
+        "threat-informed defence",
+        "mitre att&ck"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Map observed behaviours to documented adversary tactics and techniques."
     },
     {
       "name": "CyberChef",
@@ -455,7 +555,19 @@
       "sourceUrl": "https://gchq.github.io/CyberChef/",
       "platforms": [
         "Browser"
-      ]
+      ],
+      "subcategory": "Incident response and data analysis",
+      "launchCommand": "Open official web platform",
+      "install": "Use the official installation guide or your distribution's package manager; verify the package name and release compatibility first.",
+      "difficulty": "Beginner to intermediate",
+      "license": "Review the project's official licence and any commercial-use terms.",
+      "documentation": "https://gchq.github.io/CyberChef/",
+      "tags": [
+        "incident response and data analysis",
+        "cyberchef"
+      ],
+      "example": "Start with the help/version command in an authorised lab; consult official documentation before active testing.",
+      "description": "Decode, transform and inspect data through a browser-based recipe workflow."
     },
     {
       "name": "WHOIS",
