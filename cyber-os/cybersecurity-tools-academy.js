@@ -55,7 +55,8 @@ function initFilters(all){
 function searchScore(tool,query){
  const q=norm(query);if(!q)return 1;
  const name=norm(tool.name),sub=norm(tool.subcategory),category=norm(tool.category);
- const known=(aliases[name]||[]).map(norm);
+ const aliasKey=Object.keys(aliases).find(k=>name===k||name.startsWith(k)||k.startsWith(name));
+ const known=(aliasKey?aliases[aliasKey]:[]).map(norm);
  if(name===q||known.includes(q))return 100;
  if(name.startsWith(q)||known.some(a=>a.startsWith(q)))return 80;
  const all=norm([tool.name,tool.category,tool.subcategory,tool.description,tool.purpose,tool.install,tool.launchCommand,tool.example,...(tool.tags||[]),...(tool.platforms||[])].join(" "));
