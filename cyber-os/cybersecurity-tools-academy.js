@@ -86,7 +86,8 @@ function guideFor(tool){
 }
 function jumpToFirstResult(){
  const root=document.getElementById("cybersecurityToolsAcademyGrid");
- const card=root?.querySelector(".cybersecurity-tool-card");
+ const cards=[...(root?.querySelectorAll(".cybersecurity-tool-card")||[])];
+ const card=cards.sort((a,b)=>Number(b.dataset.searchScore||0)-Number(a.dataset.searchScore||0))[0];
  if(card){card.scrollIntoView({behavior:"smooth",block:"start"});card.setAttribute("tabindex","-1");card.focus({preventScroll:true});}
  else root?.scrollIntoView({behavior:"smooth",block:"start"});
 }
@@ -112,7 +113,7 @@ function render(){
    const cmd=val(x,"launchCommand",val(x,"example","See official documentation")),docs=String(x.sourceUrl||x.documentation||""),tags=Array.isArray(x.tags)?x.tags:[];
    const id="tool-"+norm(x.name);
    const g=guideFor(x);
-   return '<article id="'+esc(id)+'" class="cyber-card cybersecurity-tool-card" data-tool-name="'+esc(x.name||"")+'">'+
+   return '<article id="'+esc(id)+'" class="cyber-card cybersecurity-tool-card" data-search-score="'+esc(x._score||0)+'" data-tool-name="'+esc(x.name||"")+'">'+
     '<div class="tool-card-top"><span class="tag">'+esc(x.subcategory||cat)+'</span><span class="tool-level">'+esc(val(x,"difficulty","All levels"))+'</span></div>'+
     '<h4>'+esc(x.name||"Security tool")+'</h4><p>'+esc(x.description||x.purpose||x.summary||"Purpose not supplied.")+'</p>'+
     '<div class="tool-field"><span>PURPOSE</span><p>'+esc(val(x,"purpose","See the project documentation for intended use."))+'</p></div>'+
