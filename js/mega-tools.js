@@ -497,7 +497,8 @@ window.HBUpgradeMegaTools=function(list){
  const grid=$("megaToolGrid");if(!grid)return;
  const search=$("megaToolSearch"),category=$("megaToolCategory"),typeSel=$("megaToolType"),execSel=$("megaToolExecution");
  let showAllMega=false;
- const searchable=x=>{try{return JSON.stringify(x,(k,v)=>typeof v==="function"?undefined:v).toLowerCase()}catch{return [x.name,x.category,x.type,x.formula,x.source].join(" ").toLowerCase()}};\n const normaliseSearch=v=>String(v||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+ const searchable=x=>{try{return JSON.stringify(x,(k,v)=>typeof v==="function"?undefined:v).toLowerCase()}catch{return [x.name,x.category,x.type,x.formula,x.source].join(" ").toLowerCase()}};
+ const normaliseSearch=v=>String(v||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
  const draw=()=>{
   const q=(search?.value||"").toLowerCase().trim(),f=category?.value||"all",tf=typeSel?.value||"all",ex=execSel?.value||"all";
   const hasFilters=!!q||f!=="all"||tf!=="all"||ex!=="all";
@@ -507,7 +508,8 @@ window.HBUpgradeMegaTools=function(list){
    if($("megaToolCount"))$("megaToolCount").textContent=tools.length.toLocaleString()+" capabilities across "+counts.size.toLocaleString()+" domains";
    return;
   }
-  const qNormal=normaliseSearch(q),qCompact=qNormal.replace(/\\s+/g,"");\n  const rows=tools.filter(x=>{const hay=searchable(x),normal=normaliseSearch(hay);return (f==="all"||x.category===f)&&(tf==="all"||String(x.type||"").toUpperCase()===tf)&&(ex==="all"||String(x.execution||"").toUpperCase()===ex)&&(!q||hay.includes(q)||normal.includes(qNormal)||normal.replace(/\\s+/g,"").includes(qCompact));});
+  const qNormal=normaliseSearch(q),qCompact=qNormal.replace(/\s+/g,"");
+  const rows=tools.filter(x=>{const hay=searchable(x),normal=normaliseSearch(hay);return (f==="all"||x.category===f)&&(tf==="all"||String(x.type||"").toUpperCase()===tf)&&(ex==="all"||String(x.execution||"").toUpperCase()===ex)&&(!q||hay.includes(q)||normal.includes(qNormal)||normal.replace(/\s+/g,"").includes(qCompact));});
   const shown=showAllMega?rows:rows.slice(0,36);
   grid.innerHTML=shown.map(x=>'<article class="hb-card mega-tool-card"><div class="hb-card-top"><span>'+esc(String(x.id).padStart(4,"0"))+" · "+esc(x.category)+'</span><span>● LIVE</span></div><h3>'+esc(x.name)+'</h3><p>'+esc(x.formula||x.description||"Interactive technical capability.")+'</p><small>'+esc((x.type||"TOOL")+" · "+(x.execution||"LOCAL"))+'</small><br><button class="os-btn mega-open" type="button" data-id="'+esc(x.id)+'">OPEN TOOL →</button></article>').join("")||'<div class="intel-empty">No tools match the current filters. Try a shorter query or clear one of the filters.</div>';
   if(rows.length>shown.length)grid.insertAdjacentHTML("beforeend",'<div class="mega-show-more"><button type="button" data-show-more-mega>SHOW ALL '+rows.length+' MATCHES</button></div>');
