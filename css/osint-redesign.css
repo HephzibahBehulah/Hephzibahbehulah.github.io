@@ -163,7 +163,7 @@ body[data-hb-domain="learning"]{--hb-domain-accent:#ff8a3d;--hb-domain-glow:rgba
 .os-nav a.active{color:var(--hb-domain-accent)}
 .os-panel,.resource-hub,.hb-workbench-panel{transition:border-color .35s ease,box-shadow .35s ease,transform .35s cubic-bezier(.2,.8,.2,1)}
 .os-panel:hover,.resource-hub:hover{border-color:color-mix(in srgb,var(--hb-domain-accent) 32%,var(--line));box-shadow:0 18px 55px rgba(0,0,0,.18),0 0 34px var(--hb-domain-glow)}
-.os-status b,.os-panel-head .live{color:var(--hb-domain-accent)}
+.os-status b,.os-panel-head .live{color:var(--green)}
 .hb-ambient-beacon{position:fixed;right:20px;bottom:20px;width:8px;height:8px;border-radius:50%;background:var(--hb-domain-accent);box-shadow:0 0 0 0 var(--hb-domain-glow);z-index:60;pointer-events:none;animation:hbHeartbeat 2.6s ease-out infinite}
 .hb-domain-flash{position:fixed;inset:0;z-index:55;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),var(--hb-domain-glow),transparent 35%);opacity:0;transition:opacity .18s ease}
 .hb-domain-flash.active{opacity:1}
