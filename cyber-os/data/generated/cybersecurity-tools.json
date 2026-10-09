@@ -1,0 +1,285 @@
+{
+  "source": "Curated official project documentation",
+  "generatedAt": "2026-10-09",
+  "count": 24,
+  "records": [
+    {
+      "name": "Nmap",
+      "category": "Network discovery",
+      "purpose": "Discover hosts, open ports and service details within an authorised scope.",
+      "safeUse": "Use only against systems you own or have explicit permission to assess.",
+      "sourceUrl": "https://nmap.org/book/man.html",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Wireshark",
+      "category": "Packet analysis",
+      "purpose": "Inspect network packets and troubleshoot protocols or suspicious traffic.",
+      "safeUse": "Capture traffic only on networks and devices where monitoring is authorised.",
+      "sourceUrl": "https://www.wireshark.org/docs/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "tcpdump",
+      "category": "Packet analysis",
+      "purpose": "Capture and inspect network packets from a command line.",
+      "safeUse": "Limit captures to authorised interfaces and avoid collecting unrelated personal data.",
+      "sourceUrl": "https://www.tcpdump.org/manpages/tcpdump.1.html",
+      "platforms": [
+        "Linux",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Zeek",
+      "category": "Network security monitoring",
+      "purpose": "Generate structured network logs for traffic analysis and detection.",
+      "safeUse": "Use in a monitored environment with appropriate privacy and retention controls.",
+      "sourceUrl": "https://docs.zeek.org/",
+      "platforms": [
+        "Linux",
+        "Unix"
+      ]
+    },
+    {
+      "name": "Suricata",
+      "category": "Network IDS/IPS",
+      "purpose": "Detect suspicious network activity using signatures and protocol analysis.",
+      "safeUse": "Begin with monitoring or test traffic before enabling inline blocking.",
+      "sourceUrl": "https://docs.suricata.io/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Snort",
+      "category": "Network IDS/IPS",
+      "purpose": "Inspect traffic and detect patterns that match configured rules.",
+      "safeUse": "Tune rules against known-good traffic to reduce false positives.",
+      "sourceUrl": "https://docs.snort.org/",
+      "platforms": [
+        "Linux",
+        "Windows"
+      ]
+    },
+    {
+      "name": "OWASP ZAP",
+      "category": "Web application security",
+      "purpose": "Test web applications for common security weaknesses in a controlled environment.",
+      "safeUse": "Use the passive scanner first; actively test only applications in scope.",
+      "sourceUrl": "https://www.zaproxy.org/docs/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Burp Suite",
+      "category": "Web application security",
+      "purpose": "Proxy and inspect web requests during authorised application testing.",
+      "safeUse": "Use only against permitted targets and avoid testing production data without approval.",
+      "sourceUrl": "https://portswigger.net/burp/documentation",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Nikto",
+      "category": "Web server assessment",
+      "purpose": "Check web servers for known risky files, outdated software and misconfiguration.",
+      "safeUse": "Scanning can create load and alerts; obtain written scope first.",
+      "sourceUrl": "https://github.com/sullo/nikto",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "testssl.sh",
+      "category": "TLS configuration",
+      "purpose": "Review TLS versions, ciphers and certificate configuration.",
+      "safeUse": "Run against systems you administer or are authorised to assess.",
+      "sourceUrl": "https://testssl.sh/",
+      "platforms": [
+        "Linux",
+        "macOS"
+      ]
+    },
+    {
+      "name": "OpenSSL",
+      "category": "Cryptography and TLS",
+      "purpose": "Inspect certificates and test TLS connections using standard cryptographic utilities.",
+      "safeUse": "Protect private keys and never paste secret key material into public tools.",
+      "sourceUrl": "https://docs.openssl.org/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Trivy",
+      "category": "Vulnerability and configuration scanning",
+      "purpose": "Scan container images, filesystems, repositories and configuration for known issues.",
+      "safeUse": "Review findings and verify remediation before changing production systems.",
+      "sourceUrl": "https://trivy.dev/latest/docs/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Grype",
+      "category": "Software supply-chain security",
+      "purpose": "Identify known vulnerabilities in container images and filesystems.",
+      "safeUse": "Validate package matches and prioritize fixes based on context.",
+      "sourceUrl": "https://github.com/anchore/grype",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Syft",
+      "category": "Software inventory / SBOM",
+      "purpose": "Generate a software bill of materials for images and filesystems.",
+      "safeUse": "Treat inventories as potentially sensitive because they reveal component versions.",
+      "sourceUrl": "https://github.com/anchore/syft",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Semgrep",
+      "category": "Static application security testing",
+      "purpose": "Find code patterns associated with bugs and security issues.",
+      "safeUse": "Review findings manually; static analysis can produce false positives.",
+      "sourceUrl": "https://semgrep.dev/docs/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Gitleaks",
+      "category": "Secret detection",
+      "purpose": "Detect likely credentials and secrets committed to Git repositories.",
+      "safeUse": "If a real secret is exposed, revoke and rotate it rather than only deleting it.",
+      "sourceUrl": "https://github.com/gitleaks/gitleaks",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "OSV-Scanner",
+      "category": "Dependency vulnerability scanning",
+      "purpose": "Check project dependencies against the Open Source Vulnerabilities database.",
+      "safeUse": "Confirm affected versions and upgrade paths before remediation.",
+      "sourceUrl": "https://google.github.io/osv-scanner/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "YARA",
+      "category": "Malware analysis",
+      "purpose": "Match files or memory content against analyst-defined pattern rules.",
+      "safeUse": "Use isolated analysis environments and trusted rule sources.",
+      "sourceUrl": "https://yara.readthedocs.io/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "ClamAV",
+      "category": "Malware detection",
+      "purpose": "Scan files for known malware signatures and suspicious content.",
+      "safeUse": "Keep signatures current and do not treat a clean scan as proof of safety.",
+      "sourceUrl": "https://docs.clamav.net/",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Velociraptor",
+      "category": "Endpoint detection and response",
+      "purpose": "Collect endpoint evidence and investigate suspicious activity across systems.",
+      "safeUse": "Apply least privilege, approved collection scopes and evidence-handling procedures.",
+      "sourceUrl": "https://docs.velociraptor.app/",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ]
+    },
+    {
+      "name": "osquery",
+      "category": "Endpoint visibility",
+      "purpose": "Query endpoint state using SQL-like tables for investigation and inventory.",
+      "safeUse": "Use approved queries and consider performance and privacy impact.",
+      "sourceUrl": "https://osquery.io/",
+      "platforms": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ]
+    },
+    {
+      "name": "Sigma",
+      "category": "Detection engineering",
+      "purpose": "Write portable detection rules that can be translated for supported SIEM platforms.",
+      "safeUse": "Test rules against representative logs and document false-positive conditions.",
+      "sourceUrl": "https://sigmahq.io/docs/",
+      "platforms": [
+        "Platform-independent"
+      ]
+    },
+    {
+      "name": "MITRE ATT&CK",
+      "category": "Threat-informed defence",
+      "purpose": "Map observed behaviours to documented adversary tactics and techniques.",
+      "safeUse": "Treat ATT&CK mapping as an analytic aid, not proof that an actor is identified.",
+      "sourceUrl": "https://attack.mitre.org/",
+      "platforms": [
+        "Platform-independent"
+      ]
+    },
+    {
+      "name": "CyberChef",
+      "category": "Incident response and data analysis",
+      "purpose": "Decode, transform and inspect data through a browser-based recipe workflow.",
+      "safeUse": "Do not upload confidential or sensitive evidence to public instances.",
+      "sourceUrl": "https://gchq.github.io/CyberChef/",
+      "platforms": [
+        "Browser"
+      ]
+    }
+  ]
+}
