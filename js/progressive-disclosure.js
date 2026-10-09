@@ -21,9 +21,7 @@ function splitCyberNavigation(sidebar){
   host.insertBefore(heading,nav);host.insertBefore(groupNav,nav);
  });
  nav.remove();
- const remaining=links.filter(a=>a.isConnected);
- if(remaining.length)remaining.forEach(a=>{const heading=document.createElement("div");heading.className="os-side-label";heading.textContent="MORE";host.appendChild(heading);const n=document.createElement("nav");n.className="os-nav";n.appendChild(a);host.appendChild(n);});
- sidebar.querySelectorAll(".os-side-label").forEach(el=>{if(["Cyber OS","ADIGUN NAVIGATION","External"].includes(el.textContent.trim()))el.remove();});
+ sidebar.querySelectorAll(":scope > .os-side-label").forEach(el=>{if(el.textContent.trim()==="Cyber OS")el.remove();});
  sidebar.dataset.cyberNavGrouped="1";
 }
 function makeCollapsibleGroups(sidebar){
