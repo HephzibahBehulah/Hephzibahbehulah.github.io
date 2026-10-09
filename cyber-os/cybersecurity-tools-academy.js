@@ -36,7 +36,7 @@ function initFilters(all){
   select.dataset.populated="1";
  }
  if(nav&&all.length&&!nav.dataset.populated){
-  nav.innerHTML='<button type="button" data-category="all">All categories</button>'+categories.map(c=>'<button type="button" data-category="'+esc(c)+'">'+esc(c)+'</button>').join("");
+  nav.innerHTML='<button type="button" data-category="all">All categories · '+all.length+' tools</button>';
   nav.dataset.populated="1";
   nav.addEventListener("click",e=>{const b=e.target.closest("button[data-category]");if(!b)return;const f=document.getElementById("cybersecurityToolsAcademyCategory");if(f){f.value=b.dataset.category;render()}});
  }
@@ -92,6 +92,7 @@ function jumpToFirstResult(){
  if(card){card.scrollIntoView({behavior:"smooth",block:"start"});card.setAttribute("tabindex","-1");card.focus({preventScroll:true});}
  else root?.scrollIntoView({behavior:"smooth",block:"start"});
 }
+let expandSearchResults=false;
 function render(){
  const root=document.getElementById("cybersecurityToolsAcademyGrid");if(!root)return;
  const H=window.CYBER_HUB||{},all=Array.isArray(H.cybersecurityTools)?H.cybersecurityTools:[];
@@ -107,16 +108,26 @@ function render(){
  ).sort((a,b)=>b._score-a._score||String(a.name).localeCompare(String(b.name)));
  const count=document.getElementById("cybersecurityToolsAcademyCount");
  if(count)count.textContent=records.length+" MATCHING · "+all.length+" CATALOGUED";
+ if(!query&&category==="all"&&platform==="all"){
+  const categories=new Map();
+  all.forEach(x=>{const c=x.category||"Other tools";categories.set(c,(categories.get(c)||0)+1)});
+  root.innerHTML='<div class="academy-category-overview" aria-label="Cybersecurity tool categories">'+[...categories.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([cat,n])=>
+   '<button type="button" class="academy-category-tile" data-open-category="'+esc(cat)+'"><span>'+n+' TOOLS</span><strong>'+esc(cat)+'</strong><small>Browse tools in this category →</small></button>'
+  ).join("")+'</div><p class="academy-browse-hint">Choose a category to browse tools. Search any tool name, alias, command, platform or keyword to jump directly to matching results.</p>';
+  return;
+ }
+ const shown= query&&!expandSearchResults ? records.slice(0,40) : records;
  const groups=new Map();
- records.forEach(x=>{const c=x.category||"Other tools";if(!groups.has(c))groups.set(c,[]);groups.get(c).push(x)});
+ shown.forEach(x=>{const c=x.category||"Other tools";if(!groups.has(c))groups.set(c,[]);groups.get(c).push(x)});
  root.innerHTML=[...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([cat,items])=>
-  '<section class="tool-category-group"><div class="tool-category-heading"><h3>'+esc(cat)+'</h3><span>'+items.length+' TOOLS</span></div><div class="tool-record-grid">'+items.map(x=>{
+  '<section class="tool-category-group"><div class="tool-category-heading"><h3>'+esc(cat)+'</h3><span>'+items.length+' SHOWN · '+records.filter(x=>(x.category||"Other tools")===cat).length+' MATCHES</span></div><div class="tool-record-grid">'+items.map(x=>{
    const cmd=val(x,"launchCommand",val(x,"example","See official documentation")),docs=String(x.sourceUrl||x.documentation||""),tags=Array.isArray(x.tags)?x.tags:[];
    const id="tool-"+norm(x.name);
    const g=guideFor(x);
    return '<article id="'+esc(id)+'" class="cyber-card cybersecurity-tool-card" data-search-score="'+esc(x._score||0)+'" data-tool-name="'+esc(x.name||"")+'">'+
     '<div class="tool-card-top"><span class="tag">'+esc(x.subcategory||cat)+'</span><span class="tool-level">'+esc(val(x,"difficulty","All levels"))+'</span></div>'+
     '<h4>'+esc(x.name||"Security tool")+'</h4><p>'+esc(x.description||x.purpose||x.summary||"Purpose not supplied.")+'</p>'+
+    '<details class="academy-tool-details"><summary>VIEW PURPOSE, SETUP, COMMANDS & DOCUMENTATION</summary>'+
     '<div class="tool-field"><span>PURPOSE</span><p>'+esc(val(x,"purpose","See the project documentation for intended use."))+'</p></div>'+
     '<div class="tool-field"><span>PLATFORMS</span><div class="chips">'+(Array.isArray(x.platforms)?x.platforms:[]).map(p=>'<span>'+esc(p)+'</span>').join("")+'</div></div>'+
     '<div class="tool-field"><span>INSTALLATION / SETUP</span><p>'+esc(val(x,"install","Use the official installation guide; package names vary by OS and release."))+'</p></div>'+
@@ -125,9 +136,10 @@ function render(){
     '<div class="tool-field"><span>SAFE USE</span><p>'+esc(val(x,"safeUse","Use only in an authorised environment."))+'</p></div>'+
     '<div class="tool-meta"><span>Licence: '+esc(val(x,"license","Check official terms"))+'</span>'+(tags.length?'<span>'+tags.map(esc).join(" · ")+'</span>':"")+'</div>'+
     (docs.startsWith("https://")||docs.startsWith("http://")?'<a class="os-btn tool-doc-link" href="'+esc(docs)+'" target="_blank" rel="noopener noreferrer">OFFICIAL DOCUMENTATION ↗</a>':"")+
-   '</article>';
+    '</details></article>';
   }).join("")+'</div></section>'
  ).join("")||'<div class="detail-panel">No tools match this search or filter. Try a shorter name such as “burp”, “metasploit”, or “nmap”, or clear the filters.</div>';
+ if(query&&records.length>shown.length)root.insertAdjacentHTML("beforeend",'<div class="academy-show-more"><button type="button" data-show-all-matches>SHOW ALL '+records.length+' MATCHES</button></div>');
 }
 function runSearchAndJump(){
  const academy=document.getElementById("cybersecurity-tools-academy");
