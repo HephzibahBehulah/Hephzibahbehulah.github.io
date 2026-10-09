@@ -1,5 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADIGUN Cyber OS | Cybersecurity Learning Hub</title><meta name="description" content="ADIGUN Cyber OS: interconnected cybersecurity learning, reference, simulation and investigation hub."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../css/osint-redesign.css?v=20261009-2"><link rel="stylesheet" href="cyber-os.css?v=20261009-2"><link rel="stylesheet" href="../css/adigun-admin.css?v=20260926-1"><link rel="stylesheet" href="../css/ai-lab.css?v=20261004-1"><link rel="stylesheet" href="encyclopedia.css?v=20261001-1"><link rel="stylesheet" href="../css/recon-hub.css?v=20261004-1"><link rel="stylesheet" href="../css/mobile-system.css?v=20261004-3">
 <style>
+/* Hard override for Cyber OS operational status indicators; keep status green regardless of domain accent. */
+body.cyber-os .os-status b,body.cyber-os .os-panel-head .live{color:#63d297!important}
 /* Cyber-OS security academy expansion */
 .academy-filter-row{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:12px;margin:18px 0}
 .academy-filter-row label{display:grid;gap:7px;font-size:.72rem;letter-spacing:.08em;color:var(--muted,#9fb4c9)}
