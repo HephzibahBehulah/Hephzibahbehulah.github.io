@@ -36,6 +36,8 @@ jobs:
           node --check scripts/sync-linux-manpages.mjs
           node --check scripts/sync-rfc-index.mjs
           node --check cyber-os/catalog-loader.js
+          node --check cyber-os/encyclopedia-engine.js
+          node -e "const d=JSON.parse(require('fs').readFileSync('cyber-os/data/generated/cybersecurity-tools.json','utf8')); if(!Array.isArray(d.records)||d.records.length!==d.count||!d.records.every(x=>x.name&&x.purpose&&x.safeUse&&/^https:/.test(x.sourceUrl))) process.exit(1)"
           node --check cyber-os/knowledge-graph-engine.js
           node --check cyber-os/knowledge-games.js
           node --check cyber-os/knowledge-games-ui.js
