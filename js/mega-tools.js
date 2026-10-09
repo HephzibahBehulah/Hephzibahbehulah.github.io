@@ -492,10 +492,34 @@ window.HBUpgradeMegaTools=function(list){
  const normalise=(x,i,source)=>source!=="base"?{id:"eng-"+source+"-"+i,name:x.name,category:x.category||"Engineering",type:x.type||"FORMULA",formula:x.formula||"",execution:x.execution||"BROWSER",source:x.source||source,engine:"engineering",inputs:x.inputs||[],calculate:x.calculate}:{...x,id:x.id??("base-"+i),category:x.category||"General",execution:x.execution||"LINK",source:x.source||"Indexed library"};
  const merged=[...base.map((x,i)=>normalise(x,i,"base")),...local.map((x,i)=>normalise(x,i,"local")),...library.map((x,i)=>normalise(x,i,"library")),...coreEngineering.map((x,i)=>({...x,id:"core-"+i})),...workbench.map((x,i)=>({...x,id:"workbench-"+i}))];
  const seen=new Set(),tools=merged.filter(x=>{const k=(x.name+"|"+x.category).toLowerCase();if(seen.has(k))return false;seen.add(k);return true});
- window.__HBMegaTools=tools; const grid=$("megaToolGrid");if(!grid)return;
+ window.__HBMegaTools=tools;
+ window.dispatchEvent(new CustomEvent("hb:mega-tools-ready",{detail:{count:tools.length}}));
+ const grid=$("megaToolGrid");if(!grid)return;
  const search=$("megaToolSearch"),category=$("megaToolCategory"),typeSel=$("megaToolType"),execSel=$("megaToolExecution");
- const draw=()=>{const q=(search?.value||"").toLowerCase().trim(),f=category?.value||"all",tf=typeSel?.value||"all",ex=execSel?.value||"all";const rows=tools.filter(x=>(f==="all"||x.category===f)&&(tf==="all"||String(x.type||"").toUpperCase()===tf)&&(ex==="all"||String(x.execution||"").toUpperCase()===ex)&&(!q||[x.name,x.category,x.type,x.formula,x.source].join(" ").toLowerCase().includes(q)));grid.innerHTML=rows.map(x=>'<article class="hb-card mega-tool-card"><div class="hb-card-top"><span>'+esc(String(x.id).padStart(4,"0"))+" · "+esc(x.category)+'</span><span>● LIVE</span></div><h3>'+esc(x.name)+'</h3><p>'+esc(x.formula||"Interactive technical capability.")+'</p><small>'+esc((x.type||"TOOL")+" · "+(x.execution||"LOCAL"))+'</small><br><button class="os-btn mega-open" type="button" data-id="'+esc(x.id)+'">OPEN TOOL →</button></article>').join("")||'<div class="intel-empty">No tools match the current filters.</div>';grid.querySelectorAll(".mega-open").forEach(b=>b.onclick=()=>window.HBMegaToolOpen(b.dataset.id));if($("megaToolCount"))$("megaToolCount").textContent=rows.length.toLocaleString()+" tools indexed · "+tools.length.toLocaleString()+" total capabilities"};
- const cats=[...new Set(tools.map(x=>x.category))].sort();if(category)category.innerHTML='<option value="all">ALL DOMAINS</option>'+cats.map(x=>'<option value="'+esc(x)+'">'+esc(x.toUpperCase())+'</option>').join("");if(typeSel){const vals=[...new Set(tools.map(x=>String(x.type||"TOOL").toUpperCase()))].sort();typeSel.innerHTML='<option value="all">ALL TOOL TYPES</option>'+vals.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("")}if(execSel){const vals=[...new Set(tools.map(x=>String(x.execution||"LOCAL").toUpperCase()))].sort();execSel.innerHTML='<option value="all">ALL EXECUTION</option>'+vals.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("")}[search,category,typeSel,execSel].forEach(e=>{if(e&&!e.dataset.hbBound){e.addEventListener("input",draw);e.addEventListener("change",draw);e.dataset.hbBound="1"}});draw();
+ let showAllMega=false;
+ const searchable=x=>{try{return JSON.stringify(x,(k,v)=>typeof v==="function"?undefined:v).toLowerCase()}catch{return [x.name,x.category,x.type,x.formula,x.source].join(" ").toLowerCase()}};
+ const draw=()=>{
+  const q=(search?.value||"").toLowerCase().trim(),f=category?.value||"all",tf=typeSel?.value||"all",ex=execSel?.value||"all";
+  const hasFilters=!!q||f!=="all"||tf!=="all"||ex!=="all";
+  if(!hasFilters){
+   const counts=new Map();tools.forEach(x=>{const c=x.category||"General";counts.set(c,(counts.get(c)||0)+1)});
+   grid.innerHTML='<div class="mega-category-overview" aria-label="Tool categories">'+[...counts.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([cat,n])=>'<button type="button" class="mega-category-tile" data-open-mega-category="'+esc(cat)+'"><span>'+n+' CAPABILITIES</span><strong>'+esc(cat)+'</strong><small>Browse this domain →</small></button>').join("")+'</div><p class="mega-catalog-hint">Choose a domain or search by tool name, alias, category, formula, description, keyword or source. All catalogue records remain searchable even when not shown.</p>';
+   if($("megaToolCount"))$("megaToolCount").textContent=tools.length.toLocaleString()+" capabilities across "+counts.size.toLocaleString()+" domains";
+   return;
+  }
+  const rows=tools.filter(x=>(f==="all"||x.category===f)&&(tf==="all"||String(x.type||"").toUpperCase()===tf)&&(ex==="all"||String(x.execution||"").toUpperCase()===ex)&&(!q||searchable(x).includes(q)));
+  const shown=showAllMega?rows:rows.slice(0,36);
+  grid.innerHTML=shown.map(x=>'<article class="hb-card mega-tool-card"><div class="hb-card-top"><span>'+esc(String(x.id).padStart(4,"0"))+" · "+esc(x.category)+'</span><span>● LIVE</span></div><h3>'+esc(x.name)+'</h3><p>'+esc(x.formula||x.description||"Interactive technical capability.")+'</p><small>'+esc((x.type||"TOOL")+" · "+(x.execution||"LOCAL"))+'</small><br><button class="os-btn mega-open" type="button" data-id="'+esc(x.id)+'">OPEN TOOL →</button></article>').join("")||'<div class="intel-empty">No tools match the current filters. Try a shorter query or clear one of the filters.</div>';
+  if(rows.length>shown.length)grid.insertAdjacentHTML("beforeend",'<div class="mega-show-more"><button type="button" data-show-more-mega>SHOW ALL '+rows.length+' MATCHES</button></div>');
+  grid.querySelectorAll(".mega-open").forEach(b=>b.onclick=()=>window.HBMegaToolOpen(b.dataset.id));
+  if($("megaToolCount"))$("megaToolCount").textContent=rows.length.toLocaleString()+" matching · "+tools.length.toLocaleString()+" total capabilities";
+ };
+ grid.addEventListener("click",e=>{
+  const cat=e.target.closest("[data-open-mega-category]");
+  if(cat&&category){category.value=cat.dataset.openMegaCategory;showAllMega=false;draw();grid.scrollIntoView({behavior:"smooth",block:"start"});return;}
+  if(e.target.closest("[data-show-more-mega]")){showAllMega=true;draw();}
+ });
+const cats=[...new Set(tools.map(x=>x.category))].sort();if(category)category.innerHTML='<option value="all">ALL DOMAINS</option>'+cats.map(x=>'<option value="'+esc(x)+'">'+esc(x.toUpperCase())+'</option>').join("");if(typeSel){const vals=[...new Set(tools.map(x=>String(x.type||"TOOL").toUpperCase()))].sort();typeSel.innerHTML='<option value="all">ALL TOOL TYPES</option>'+vals.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("")}if(execSel){const vals=[...new Set(tools.map(x=>String(x.execution||"LOCAL").toUpperCase()))].sort();execSel.innerHTML='<option value="all">ALL EXECUTION</option>'+vals.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join("")}[search,category,typeSel,execSel].forEach(e=>{if(e&&!e.dataset.hbBound){const update=()=>{showAllMega=false;draw()};e.addEventListener("input",update);e.addEventListener("change",update);e.dataset.hbBound="1"}});draw();
 };
 window.HBMegaToolOpen=function(id){
  const t=window.__HBMegaTools?.find(x=>String(x.id)===String(id));if(!t)return;
