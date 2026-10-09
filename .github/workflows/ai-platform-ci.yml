@@ -15,6 +15,8 @@ jobs:
         run: |
           node --version
           node --check js/global-search.js
+          node --check js/mega-tools.js
+          node --check js/progressive-disclosure.js
           node --check js/ai-lab.js
           node --check js/adigun-agent.js
           node --check worker-v2.js
@@ -37,6 +39,12 @@ jobs:
           node --check scripts/sync-rfc-index.mjs
           node --check cyber-os/catalog-loader.js
           node --check cyber-os/cybersecurity-tools-academy.js
+          grep -q "progressive-disclosure.css" index.html
+          grep -q "progressive-disclosure.css" admin-tools.html
+          grep -q "progressive-disclosure.css" cyber-os/index.html
+          grep -q "progressive-disclosure.js" index.html
+          grep -q "progressive-disclosure.js" admin-tools.html
+          grep -q "progressive-disclosure.js" cyber-os/index.html
           node --check cyber-os/encyclopedia-engine.js
           node -e "const d=JSON.parse(require('fs').readFileSync('cyber-os/data/generated/cybersecurity-tools.json','utf8')); if(!Array.isArray(d.records)||d.records.length!==d.count||!d.records.every(x=>x.name&&x.purpose&&x.safeUse&&/^https:/.test(x.sourceUrl))) process.exit(1)"
           node --check cyber-os/knowledge-graph-engine.js
