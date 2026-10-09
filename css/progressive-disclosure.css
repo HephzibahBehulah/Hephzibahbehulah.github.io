@@ -49,3 +49,25 @@
 /* Mega Tools uses the existing three-column intel-grid shell. Let overview and status rows span it. */
 #megaToolGrid>.mega-category-overview,#megaToolGrid>.mega-catalog-hint,#megaToolGrid>.mega-show-more{grid-column:1/-1}
 #megaToolGrid>.mega-category-overview{width:100%;min-width:0}
+
+
+/* Sidebar navigation groups: retain the existing theme while reducing the visible link count. */
+.hb-sidebar-group{display:block;flex:0 0 auto;min-width:0;margin:0 0 8px}
+.hb-sidebar-group>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none;padding:10px;border:1px solid transparent;border-radius:5px;color:var(--muted,#8b98a5);cursor:pointer;font:700 10px/1.4 var(--mono,monospace);letter-spacing:1.1px;text-transform:uppercase;user-select:none}
+.hb-sidebar-group>summary::-webkit-details-marker{display:none}
+.hb-sidebar-group>summary::after{content:"+";font:700 14px/1 var(--mono,monospace);color:var(--accent,#ff8a3d)}
+.hb-sidebar-group[open]>summary::after{content:"−"}
+.hb-sidebar-group>summary:hover,.hb-sidebar-group[open]>summary{color:var(--text,#e6edf3);border-color:var(--line,#26303a);background:var(--panel2,#0d1115)}
+.hb-sidebar-group>.os-nav{display:grid;gap:5px;margin:4px 0 10px;padding:0 0 0 4px;min-width:0}
+.hb-sidebar-group .os-nav a{min-width:0;white-space:normal;overflow-wrap:anywhere}
+.hb-sidebar-group .os-nav a.active{color:var(--accent,#ff8a3d)}
+@media(min-width:901px){
+ .os-shell{align-items:start}
+ .os-sidebar{position:sticky;top:0;height:100vh;max-height:100vh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;align-self:start}
+ .hb-sidebar-group{width:100%}
+}
+@media(max-width:768px){
+ .hb-sidebar-group{width:100%}
+ .hb-sidebar-group>summary{min-height:42px}
+ .hb-sidebar-group>.os-nav{padding-left:0}
+}
