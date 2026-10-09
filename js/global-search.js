@@ -98,7 +98,7 @@
     input.setAttribute('aria-expanded','false');
     input.setAttribute('aria-controls',dropdown.id);
 
-    let index=[],results=[],active=-1,loaded=false,loading=null,timer=null;
+    let index=[],results=[],active=-1,loaded=false,loading=null,timer=null,megaCatalogIndex=[];
 
     const open=()=>{
       dropdown.classList.add('open');
@@ -143,16 +143,32 @@
       active=-1;
     }
 
+    function readMegaCatalog(){
+      if(!document.getElementById('megaToolGrid')||!Array.isArray(window.__HBMegaTools))return [];
+      return window.__HBMegaTools.map(tool=>{
+        const parts=[tool.name,tool.category,tool.type,tool.formula,tool.description,tool.purpose,tool.summary,tool.keywords,tool.aliases,tool.tags,tool.source]
+          .flat().filter(v=>v!==null&&v!==undefined&&String(v).trim()!=='').map(String);
+        return {text:parts.join(' · '),section:clean(tool.category||'Mega Tools'),page:'Mega Tools',url:location.pathname,target:'megaTools',toolId:String(tool.id)};
+      });
+    }
+
     async function buildIndex(){
       if(loaded)return index;
       if(loading)return loading;
       loading=Promise.all(PAGES.map(loadPage)).then(pages=>{
-        index=pages.flat();
+        megaCatalogIndex=readMegaCatalog();
+        index=pages.flat().concat(megaCatalogIndex);
         loaded=true;
         return index;
       }).catch(()=>index);
       return loading;
     }
+
+    window.addEventListener('hb:mega-tools-ready',()=>{
+      megaCatalogIndex=readMegaCatalog();
+      if(loaded)index=index.filter(item=>!item.toolId).concat(megaCatalogIndex);
+      if(input.value.trim())runSearch();
+    });
 
     async function runSearch(){
       const q=clean(input.value);
@@ -176,7 +192,16 @@
 
     function openResult(item){
       close();
-      window.location.href=item.url;
+      if(item.toolId&&document.getElementById('megaTools')&&typeof window.HBMegaToolOpen==='function'){
+        document.getElementById('megaTools').scrollIntoView({behavior:'smooth',block:'start'});
+        window.setTimeout(()=>window.HBMegaToolOpen(item.toolId),180);
+        return;
+      }
+      if(item.target&&item.url===location.pathname&&document.getElementById(item.target)){
+        document.getElementById(item.target).scrollIntoView({behavior:'smooth',block:'start'});
+        return;
+      }
+      window.location.href=item.url+(item.target?'#'+item.target:'');
     }
 
     input.addEventListener('focus',()=>{
