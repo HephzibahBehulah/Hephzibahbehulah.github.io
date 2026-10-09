@@ -153,14 +153,29 @@ function runSearchAndJump(){
 }
 function boot(){
  ["cybersecurityToolsAcademySearch","cybersecurityToolsAcademyCategory","cybersecurityToolsAcademyPlatform"].forEach(id=>{
-  const el=document.getElementById(id);if(el&&!el.dataset.bound){el.dataset.bound="1";el.addEventListener("input",render);el.addEventListener("change",render);if(id==="cybersecurityToolsAcademySearch")el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSearchAndJump()}});}
+  const el=document.getElementById(id);
+  if(el&&!el.dataset.bound){
+   el.dataset.bound="1";
+   const update=()=>{expandSearchResults=false;render()};
+   el.addEventListener("input",update);el.addEventListener("change",update);
+   if(id==="cybersecurityToolsAcademySearch")el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSearchAndJump()}});
+  }
  });
  const global=document.getElementById("globalSearch"),academyInput=document.getElementById("cybersecurityToolsAcademySearch");
  if(global&&academyInput&&!global.dataset.academyBound){
   global.dataset.academyBound="1";global.placeholder="Search tools: Burp Suite, Metasploit, Nmap…";
   global.setAttribute("aria-label","Search Cybersecurity Tools Academy");
-  global.addEventListener("input",()=>{academyInput.value=global.value;render();if(global.value.trim())document.getElementById("cybersecurity-tools-academy")?.scrollIntoView({behavior:"smooth",block:"start"});});
+  global.addEventListener("input",()=>{academyInput.value=global.value;expandSearchResults=false;render();if(global.value.trim())document.getElementById("cybersecurity-tools-academy")?.scrollIntoView({behavior:"smooth",block:"start"});});
   global.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runSearchAndJump()}});
+ }
+ const root=document.getElementById("cybersecurityToolsAcademyGrid");
+ if(root&&!root.dataset.progressiveBound){
+  root.dataset.progressiveBound="1";
+  root.addEventListener("click",e=>{
+   const cat=e.target.closest("[data-open-category]");
+   if(cat){const select=document.getElementById("cybersecurityToolsAcademyCategory");if(select){select.value=cat.dataset.openCategory;expandSearchResults=false;render();root.scrollIntoView({behavior:"smooth",block:"start"});}return;}
+   if(e.target.closest("[data-show-all-matches]")){expandSearchResults=true;render();}
+  });
  }
  render();
 }
