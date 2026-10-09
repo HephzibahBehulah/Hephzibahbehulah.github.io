@@ -1213,8 +1213,8 @@
       "purpose": "Check web paths using a wordlist against a test target.",
       "description": "Check web paths using a wordlist against a test target.",
       "safeUse": "Use only on systems, accounts, networks, and data you own or have explicit permission to assess. Prefer a disposable lab for active testing.",
-      "sourceUrl": "http://dirb.sourceforge.net/",
-      "documentation": "http://dirb.sourceforge.net/",
+      "sourceUrl": "https://dirb.sourceforge.net/",
+      "documentation": "https://dirb.sourceforge.net/",
       "platforms": [
         "Linux",
         "WSL"
