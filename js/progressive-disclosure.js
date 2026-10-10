@@ -74,7 +74,7 @@ function boot(){
   const group=link.closest("details.hb-sidebar-group");
   if(group)group.open=true;
  }
- links.forEach(a=>a.addEventListener("click",()=>{activate(a);close();}));
+ links.forEach(a=>{a.removeAttribute("target");a.addEventListener("click",()=>{activate(a);close();});});
  function syncHash(){
   const hash=location.hash;
   if(!hash)return;
