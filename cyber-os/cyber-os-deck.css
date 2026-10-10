@@ -330,3 +330,214 @@ body.cyber-os .cyber-deck-stats span{display:block;margin-top:5px;color:#819ba9;
   body.cyber-os .cyber-command-deck-v2 *,
   body.cyber-os .cyber-deck-stats>*{transition:none!important}
 }
+
+
+/* Corrective pass: use the site's established OSINT theme and reclaim available width.
+   Keep this scoped to the dashboard redesign; do not alter other Cyber OS modules. */
+body.cyber-os .cyber-command-deck-v2{
+  --deck-cyan:var(--cyan,#56cfe1);
+  --deck-cyan-soft:rgba(86,207,225,.12);
+  --deck-violet:var(--purple,#a78bfa);
+  --deck-green:var(--green,#63d297);
+  --deck-accent:var(--accent,#ff8a3d);
+  padding:12px;
+  border-color:var(--line,#26303a);
+  border-radius:7px;
+  background:var(--panel,#11151a);
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2:before{
+  opacity:.22;
+  background-image:linear-gradient(rgba(86,207,225,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(86,207,225,.035) 1px,transparent 1px);
+}
+body.cyber-os .os-content{
+  width:100%;
+  max-width:none;
+  padding:clamp(14px,1.35vw,24px);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-deck-shell{
+  grid-template-columns:minmax(0,1fr) minmax(270px,330px);
+  gap:12px;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-identity-panel,
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{
+  border-color:var(--line,#26303a);
+  border-radius:5px;
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-identity-panel{
+  background:var(--panel,#11151a);
+}
+body.cyber-os .cyber-command-deck-v2 .os-panel-head{
+  padding:9px 13px;
+  min-height:38px;
+  border-bottom-color:var(--line,#26303a);
+  background:var(--panel2,#0d1115);
+  font-size:.62rem;
+  letter-spacing:.065em;
+}
+body.cyber-os .cyber-command-deck-v2 .os-panel-head>span:first-child{color:var(--text,#e6edf3)}
+body.cyber-os .cyber-command-deck-v2 .os-panel-body{padding:clamp(14px,1.5vw,22px)}
+body.cyber-os .cyber-command-deck-v2 .os-kicker{
+  gap:8px;
+  margin:0 0 14px;
+  color:var(--muted,#8b98a5);
+  letter-spacing:.08em;
+}
+body.cyber-os .cyber-command-deck-v2 .os-kicker:before{
+  width:16px;
+  flex-basis:16px;
+  background:var(--accent,#ff8a3d);
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-title-row{
+  grid-template-columns:minmax(190px,.52fr) minmax(0,1.48fr);
+  gap:clamp(14px,1.8vw,26px);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{
+  font-size:clamp(3.2rem,5.1vw,5.4rem);
+  line-height:.86;
+  letter-spacing:-.075em;
+  text-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title em{
+  color:var(--accent,#ff8a3d);
+  text-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-mission{
+  padding-left:18px;
+  border-left-color:var(--line,#26303a);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-label{color:var(--accent,#ff8a3d)}
+body.cyber-os .cyber-command-deck-v2 .cyber-mission strong{
+  max-width:none;
+  color:var(--text,#e6edf3);
+  font-size:clamp(1rem,1.25vw,1.24rem);
+  line-height:1.3;
+  letter-spacing:-.015em;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-mission p{
+  max-width:68ch;
+  margin-top:8px;
+  color:var(--muted,#8b98a5);
+  font-size:.8rem;
+  line-height:1.55;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-flow{
+  gap:5px;
+  margin:17px 0 13px;
+  padding:7px;
+  border-color:var(--line,#26303a);
+  border-radius:4px;
+  background:var(--panel2,#0d1115);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-flow span{
+  padding:7px 4px;
+  border-color:var(--line,#26303a);
+  color:var(--text,#e6edf3);
+  background:var(--bg,#0b0d10);
+  font-size:.58rem;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-flow b{color:var(--accent,#ff8a3d)}
+body.cyber-os .cyber-command-deck-v2 .os-btn{
+  min-height:36px;
+  padding:8px 12px;
+  border-color:var(--line,#26303a);
+  border-radius:4px;
+  background:var(--panel2,#0d1115);
+  color:var(--text,#e6edf3);
+  font-size:.64rem;
+}
+body.cyber-os .cyber-command-deck-v2 .os-btn:hover{
+  border-color:var(--accent,#ff8a3d);
+  background:var(--panel2,#0d1115);
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .os-btn.primary{
+  color:#111;
+  border-color:var(--accent,#ff8a3d);
+  background:var(--accent,#ff8a3d);
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .os-btn.primary:hover{background:#ffa15f}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability{
+  min-height:98px;
+  padding:12px;
+  border-color:var(--line,#26303a);
+  border-radius:4px;
+  background:var(--panel2,#0d1115);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability:after{color:var(--accent,#ff8a3d)}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability span{color:var(--accent,#ff8a3d)}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability b{color:var(--text,#e6edf3)}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability small{max-width:none;color:var(--muted,#8b98a5)}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability:hover,
+body.cyber-os .cyber-command-deck-v2 .cyber-capability-hot{
+  transform:translateY(-1px);
+  border-color:var(--accent,#ff8a3d);
+  background:var(--panel2,#0d1115);
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability:focus-visible,
+body.cyber-os .cyber-command-deck-v2 .os-btn:focus-visible{outline-color:var(--accent,#ff8a3d)}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{
+  background:var(--panel,#11151a);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel>.os-panel-head>span:last-child{color:var(--purple,#a78bfa)}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar{
+  width:min(76%,230px);
+  margin:14px auto 12px;
+  border-color:rgba(86,207,225,.24);
+  background:radial-gradient(circle at center,rgba(86,207,225,.055),transparent 55%),var(--bg,#0b0d10);
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .radar-ring{border-color:rgba(86,207,225,.17)}
+body.cyber-os .cyber-command-deck-v2 .radar-core{
+  width:68px;
+  height:68px;
+  border-color:var(--cyan,#56cfe1);
+  color:var(--text,#e6edf3);
+  background:var(--panel2,#0d1115);
+  box-shadow:none;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout{margin:auto 12px 12px;gap:6px}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout div{
+  min-height:48px;
+  padding:8px 10px;
+  border-color:var(--line,#26303a);
+  border-radius:4px;
+  background:var(--panel2,#0d1115);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout span{color:var(--muted,#8b98a5)}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout b{color:var(--text,#e6edf3)}
+body.cyber-os .cyber-deck-stats{gap:7px;margin-bottom:14px}
+body.cyber-os .cyber-deck-stats>div{
+  padding:10px;
+  border-color:var(--line,#26303a);
+  border-radius:4px;
+  background:var(--panel,#11151a);
+}
+body.cyber-os .cyber-deck-stats>div:hover{transform:none;border-color:var(--accent,#ff8a3d)}
+body.cyber-os .cyber-deck-stats b{color:var(--text,#e6edf3);font-size:clamp(1rem,1.25vw,1.25rem)}
+body.cyber-os .cyber-deck-stats span{color:var(--muted,#8b98a5);font-size:.54rem}
+@media(max-width:1200px){
+  body.cyber-os .cyber-command-deck-v2 .cyber-deck-shell{grid-template-columns:minmax(0,1fr) 290px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row{grid-template-columns:minmax(150px,.55fr) minmax(0,1.45fr)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{font-size:clamp(3rem,5.2vw,4.6rem)}
+}
+@media(max-width:900px){
+  body.cyber-os .cyber-command-deck-v2 .cyber-deck-shell{grid-template-columns:1fr}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,.85fr)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel>.os-panel-head{grid-column:1/-1}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar{width:min(100%,220px);margin:12px auto}
+}
+@media(max-width:650px){
+  body.cyber-os .os-content{padding:10px}
+  body.cyber-os .cyber-command-deck-v2{padding:6px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row{grid-template-columns:1fr;gap:13px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{font-size:clamp(3.4rem,19vw,5rem)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-mission{padding:12px 0 0;border-left:0;border-top:1px solid var(--line,#26303a)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-flow{margin:14px 0 12px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{display:flex}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar{width:min(78%,230px)}
+}
