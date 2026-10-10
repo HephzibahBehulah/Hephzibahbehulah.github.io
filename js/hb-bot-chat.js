@@ -22,7 +22,7 @@ const boot=()=>{
   const close=()=>{win.classList.remove("open");win.setAttribute("aria-hidden","true");launcher.setAttribute("aria-expanded","false")};
   launcher.addEventListener("click",()=>win.classList.contains("open")?close():open());
   root.querySelector("#hbBotClose").addEventListener("click",close);
-  root.querySelector("#hbBotFull").addEventListener("click",()=>location.href="ai-agent.html");
+  root.querySelector("#hbBotFull").addEventListener("click",()=>location.href="/ai-agent.html");
   root.querySelector("#hbBotClear").addEventListener("click",()=>{if(window.Adigun?.memory)window.Adigun.memory.clear();msgs.innerHTML="";add("Chat memory cleared. Start a new conversation.");});
   root.querySelectorAll("#hbBotSuggestions button").forEach(b=>b.addEventListener("click",()=>{input.value=b.textContent;form.requestSubmit()}));
   input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();form.requestSubmit()}});
