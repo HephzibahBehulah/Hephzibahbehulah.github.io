@@ -1,0 +1,161 @@
+/* ADIGUN TOOL LAB — premium sci-fi command deck.
+   Scoped to admin-tools.html; all existing application IDs and JavaScript hooks remain intact. */
+.adigun-private-tools {
+  --bg:#070b16; --panel:#0c1322; --panel2:#0a1020; --line:#22314b;
+  --text:#f1f5f9; --muted:#94a3b8; --accent:#00e5ff; --cyan:#00e5ff;
+  --purple:#8b5cf6; --green:#34d399; --blue:#60a5fa; --yellow:#fbbf24;
+  --red:#fb7185; --sans:Inter,system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
+  background:
+    radial-gradient(ellipse at 78% 0%,rgba(0,229,255,.065),transparent 36%),
+    radial-gradient(ellipse at 15% 28%,rgba(139,92,246,.055),transparent 35%),var(--bg);
+  color:var(--text);
+}
+.adigun-private-tools *{box-sizing:border-box}
+.adigun-private-tools a{transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease,box-shadow .18s ease}
+.adigun-private-tools .os-shell{grid-template-columns:248px minmax(0,1fr);background:transparent}
+.adigun-private-tools .os-sidebar{background:rgba(5,9,19,.96);border-color:rgba(75,100,143,.28);padding:22px 14px;backdrop-filter:blur(18px)}
+.adigun-private-tools .os-brand{color:var(--cyan);font-size:14px;letter-spacing:.06em;padding:8px 10px 24px}
+.adigun-private-tools .os-brand span{color:#e5edf8}
+.adigun-private-tools .os-side-label{color:#7183a0;letter-spacing:.13em}
+.adigun-private-tools .os-nav a{border-radius:7px;color:#8e9db4;padding:11px 10px;font-size:10px;letter-spacing:.015em}
+.adigun-private-tools .os-nav a:hover,.adigun-private-tools .os-nav a.active{background:linear-gradient(100deg,rgba(0,229,255,.09),rgba(139,92,246,.04));border-color:rgba(0,229,255,.22);color:#effbff}
+.adigun-private-tools .os-nav a.active{box-shadow:inset 2px 0 var(--cyan);color:var(--cyan)}
+.adigun-private-tools .os-nav-dropdown>summary::after{color:var(--cyan)}
+.adigun-private-tools .os-top{background:rgba(7,11,22,.86);border-color:rgba(75,100,143,.24);backdrop-filter:blur(18px)}
+.adigun-private-tools .os-breadcrumb{color:#8292ab}
+.adigun-private-tools .os-breadcrumb b{color:#eaf3ff}
+.adigun-private-tools .os-content{max-width:1700px;padding:clamp(18px,2.4vw,36px)}
+.adigun-private-tools .os-panel{background:linear-gradient(145deg,rgba(13,21,38,.96),rgba(9,15,28,.98));border-color:rgba(64,88,130,.38);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.15)}
+.adigun-private-tools .os-panel-head{border-color:rgba(64,88,130,.28);color:#9aabc5;letter-spacing:.12em;font-size:9px}
+.adigun-private-tools .os-btn{border-color:rgba(84,111,157,.42);border-radius:7px;background:rgba(20,31,52,.9);color:#e2eaf6;font-size:9px;letter-spacing:.04em}
+.adigun-private-tools .os-btn:hover{border-color:rgba(0,229,255,.65);box-shadow:0 0 20px rgba(0,229,255,.08);filter:none}
+.adigun-private-tools .os-btn.primary{background:var(--cyan);border-color:var(--cyan);color:#031019;font-weight:800}
+.adigun-private-tools .os-search,.adigun-private-tools .os-mini{background:#0b1323;border-color:#263a59;color:#c3d1e7;border-radius:7px}
+.adigun-private-tools .os-search:focus,.adigun-private-tools .os-mini:hover{border-color:var(--cyan);outline:none}
+.adigun-private-tools .tool-lab-command-deck{display:block;position:relative;isolation:isolate;overflow:hidden;margin:0 0 22px;border:1px solid rgba(0,229,255,.2);border-radius:15px;background:linear-gradient(135deg,#0c1527 0%,#090f1d 55%,#11102a 100%);box-shadow:0 25px 70px rgba(0,0,0,.24)}
+.adigun-private-tools .tool-lab-command-deck::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(0,229,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.035) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,#000 0%,transparent 90%)}
+.adigun-private-tools .tool-lab-command-deck::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent);opacity:.7}
+.adigun-private-tools .tool-lab-hero-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,.7fr);gap:0;align-items:stretch}
+.adigun-private-tools .tool-lab-identity{border:0;border-radius:0;background:transparent;box-shadow:none;min-width:0}
+.adigun-private-tools .tool-lab-identity .os-panel-head{min-height:48px;padding:0 clamp(17px,2.4vw,32px);background:rgba(4,9,18,.35);letter-spacing:.1em}
+.adigun-private-tools .tool-lab-mark{color:#6c7e9b;font-size:8px}
+.adigun-private-tools .tool-lab-identity .os-panel-body{padding:clamp(22px,3.5vw,48px)}
+.adigun-private-tools .tool-lab-title-row{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;gap:clamp(18px,3vw,42px);margin:0}
+.adigun-private-tools .tool-lab-title-lockup{min-width:0}
+.adigun-private-tools .tool-lab-index{display:block;margin-bottom:14px;color:var(--cyan);font:9px var(--mono);letter-spacing:.16em}
+.adigun-private-tools .tool-lab-title-row .os-title{margin:0;font-size:clamp(4rem,7.2vw,7.5rem);line-height:.79;letter-spacing:-.085em;font-weight:800}
+.adigun-private-tools .tool-lab-title-row .os-title em{color:var(--cyan);text-shadow:0 0 32px rgba(0,229,255,.16)}
+.adigun-private-tools .tool-lab-mission{min-width:0;border-left:1px solid rgba(0,229,255,.24);padding-left:clamp(16px,2vw,28px)}
+.adigun-private-tools .tool-lab-mission .tool-label{display:block;margin-bottom:13px;color:#b9a5ff;font:9px var(--mono);letter-spacing:.13em}
+.adigun-private-tools .tool-lab-mission p{margin:0;color:#b4c1d6;font-size:clamp(13px,1.1vw,16px);line-height:1.75;max-width:30ch}
+.adigun-private-tools .tool-lab-orbit-tag{display:flex;align-items:center;gap:8px;margin-top:21px;color:#7185a3;font:8px var(--mono);letter-spacing:.1em}
+.adigun-private-tools .tool-lab-orbit-tag span{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(52,211,153,.65)}
+.adigun-private-tools .tool-lab-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:clamp(26px,3.4vw,42px);color:#a7b7d0;font:8px var(--mono);letter-spacing:.1em}
+.adigun-private-tools .tool-lab-flow span{padding:7px 9px;border:1px solid rgba(82,110,157,.26);border-radius:4px;background:rgba(10,18,34,.65)}
+.adigun-private-tools .tool-lab-flow b{color:var(--cyan);font-weight:500}
+.adigun-private-tools .tool-lab-identity .os-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}
+.adigun-private-tools .tool-lab-identity .os-actions .os-btn{min-height:40px}
+.adigun-private-tools .tool-lab-instrument-panel{display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:0;min-height:360px;border:0;border-left:1px solid rgba(64,88,130,.27);border-radius:0;background:radial-gradient(circle at 50% 44%,rgba(0,229,255,.09),transparent 48%),linear-gradient(145deg,rgba(10,16,31,.45),rgba(18,15,40,.6));box-shadow:none;padding:26px 16px}
+.adigun-private-tools .tool-orbit-visual{position:relative;display:grid;place-items:center;width:min(100%,300px);aspect-ratio:1}
+.adigun-private-tools .tool-orbit{position:absolute;border:1px solid rgba(0,229,255,.23);border-radius:50%;inset:8%;box-shadow:0 0 30px rgba(0,229,255,.025) inset}
+.adigun-private-tools .tool-orbit.orbit-one{transform:rotate(-27deg) scaleY(.58);border-color:rgba(0,229,255,.5)}
+.adigun-private-tools .tool-orbit.orbit-two{inset:17%;transform:rotate(45deg) scaleY(.62);border-color:rgba(139,92,246,.52)}
+.adigun-private-tools .tool-orbit.orbit-three{inset:25%;border-style:dashed;border-color:rgba(52,211,153,.4);animation:toolLabOrbit 28s linear infinite}
+.adigun-private-tools .tool-orbit-core{display:grid;place-content:center;justify-items:center;width:34%;aspect-ratio:1;border:1px solid rgba(0,229,255,.6);border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,.17),rgba(6,12,24,.98) 70%);box-shadow:0 0 45px rgba(0,229,255,.13),inset 0 0 25px rgba(0,229,255,.08)}
+.adigun-private-tools .tool-orbit-core span{font:800 clamp(24px,3vw,38px) var(--mono);color:#e8fbff}
+.adigun-private-tools .tool-orbit-core small{margin-top:3px;color:var(--cyan);font:8px var(--mono);letter-spacing:.2em}
+.adigun-private-tools .tool-orbit-node{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 15px rgba(0,229,255,.8)}
+.adigun-private-tools .tool-orbit-node.node-one{top:18%;left:24%}
+.adigun-private-tools .tool-orbit-node.node-two{right:14%;top:47%;background:var(--purple);box-shadow:0 0 15px rgba(139,92,246,.8)}
+.adigun-private-tools .tool-orbit-node.node-three{bottom:17%;left:40%;background:var(--green);box-shadow:0 0 15px rgba(52,211,153,.8)}
+.adigun-private-tools .tool-visual-caption{display:grid;gap:7px;text-align:center;margin-top:6px;font:8px var(--mono);letter-spacing:.14em}
+.adigun-private-tools .tool-visual-caption span{color:var(--cyan)}
+.adigun-private-tools .tool-visual-caption b{color:#667a99;font-size:7px;font-weight:500}
+.adigun-private-tools .tool-lab-capability-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(64,88,130,.32)}
+.adigun-private-tools .tool-destination{--destination:var(--cyan);position:relative;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto auto;align-content:start;gap:0 12px;min-width:0;min-height:160px;padding:20px 22px 18px;border-right:1px solid rgba(64,88,130,.28);border-bottom:1px solid rgba(64,88,130,.28);background:rgba(7,13,25,.32);overflow:hidden}
+.adigun-private-tools .tool-destination:nth-child(3n){border-right:0}
+.adigun-private-tools .tool-destination:nth-last-child(-n+3){border-bottom:0}
+.adigun-private-tools .tool-destination::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--destination);opacity:.0;transition:opacity .2s}
+.adigun-private-tools .tool-destination::after{content:"";position:absolute;width:130px;height:130px;right:-75px;bottom:-90px;border:1px solid color-mix(in srgb,var(--destination) 26%,transparent);border-radius:50%;pointer-events:none;transition:transform .3s}
+.adigun-private-tools .tool-destination:hover{background:linear-gradient(120deg,color-mix(in srgb,var(--destination) 7%,transparent),rgba(10,16,30,.6));}
+.adigun-private-tools .tool-destination:hover::before{opacity:1}
+.adigun-private-tools .tool-destination:hover::after{transform:scale(1.25)}
+.adigun-private-tools .tool-destination-index{grid-column:1/-1;color:var(--destination);font:9px var(--mono);letter-spacing:.13em;text-decoration:none}
+.adigun-private-tools .tool-destination-symbol{grid-column:2;grid-row:2;align-self:center;color:var(--destination);font-size:25px;opacity:.82}
+.adigun-private-tools .tool-destination-title{grid-column:1;grid-row:2;display:flex;align-items:center;gap:8px;min-width:0;margin-top:17px;color:#edf5ff;text-decoration:none;font:700 13px var(--mono);letter-spacing:.035em}
+.adigun-private-tools .tool-destination-title span{color:var(--destination);font-size:12px;opacity:0;transform:translate(-3px,3px);transition:opacity .18s,transform .18s}
+.adigun-private-tools .tool-destination:hover .tool-destination-title span{opacity:1;transform:none}
+.adigun-private-tools .tool-destination-description{grid-column:1/-1;display:block;max-width:32ch;margin-top:10px;color:#8292ac;text-decoration:none;font:11px/1.6 var(--sans)}
+.adigun-private-tools .tool-destination-description:hover{color:#d7e8fb}
+.adigun-private-tools .destination-cyan{--destination:#00e5ff}.adigun-private-tools .destination-violet{--destination:#a78bfa}.adigun-private-tools .destination-green{--destination:#34d399}.adigun-private-tools .destination-blue{--destination:#60a5fa}.adigun-private-tools .destination-amber{--destination:#fbbf24}.adigun-private-tools .destination-pink{--destination:#f472b6}
+@keyframes toolLabOrbit{to{transform:rotate(360deg)}}
+.adigun-private-tools .resource-hub,.adigun-private-tools .mega-section,.adigun-private-tools .admin-section{margin-top:18px}
+.adigun-private-tools .resource-hub .os-panel,.adigun-private-tools .mega-section,.adigun-private-tools .admin-section{border-radius:12px}
+.adigun-private-tools .resource-controls{grid-template-columns:minmax(0,1fr) minmax(150px,240px) auto;gap:10px;background:rgba(7,13,25,.72);border-color:rgba(64,88,130,.28)}
+.adigun-private-tools .resource-controls label{min-width:0;background:#080f1d;border-color:#253858;border-radius:7px}
+.adigun-private-tools .resource-controls input,.adigun-private-tools .resource-controls select{color:#e2eaf7}
+.adigun-private-tools .resource-controls select{min-width:0;background:#0a1222;border-color:#253858;border-radius:7px}
+.adigun-private-tools .resource-controls input::placeholder,.adigun-private-tools .os-search::placeholder{color:#647590}
+.adigun-private-tools .intel-grid,.adigun-private-tools .ebook-grid{gap:10px;padding:16px}
+.adigun-private-tools .intel-card,.adigun-private-tools .ebook-card,.adigun-private-tools .engineering-card,.adigun-private-tools .micro-tool-row{border-color:rgba(64,88,130,.32);border-radius:9px;background:linear-gradient(145deg,rgba(17,28,49,.86),rgba(10,17,31,.9));}
+.adigun-private-tools .intel-card:hover,.adigun-private-tools .micro-tool-row:hover{border-color:rgba(0,229,255,.55);box-shadow:0 12px 30px rgba(0,0,0,.18),0 0 20px rgba(0,229,255,.04);transform:translateY(-2px)}
+.adigun-private-tools .intel-code,.adigun-private-tools .micro-tool-row>span{color:var(--cyan)}
+.adigun-private-tools .intel-open,.adigun-private-tools .ebook-card a{color:var(--cyan)}
+.adigun-private-tools .ebook-cat{color:#b6a4ff}
+.adigun-private-tools .toolbench-intro h2{color:#edf5ff}
+.adigun-private-tools #projects .os-item{border-color:rgba(64,88,130,.28);border-radius:8px;background:rgba(7,13,25,.7);line-height:1.6}
+.adigun-private-tools #projects .os-item:hover{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.035)}
+.adigun-private-tools .admin-terminal,.adigun-private-tools .ai-console,.adigun-private-tools .admin-chat{border-color:rgba(64,88,130,.34)}
+.adigun-private-tools .admin-terminal-screen,.adigun-private-tools .admin-terminal-composer,.adigun-private-tools .ai-messages,.adigun-private-tools .ai-composer{background:#070d19}
+.adigun-private-tools input,.adigun-private-tools textarea,.adigun-private-tools select,.adigun-private-tools button{accent-color:var(--cyan)}
+.adigun-private-tools input:focus-visible,.adigun-private-tools textarea:focus-visible,.adigun-private-tools select:focus-visible,.adigun-private-tools button:focus-visible,.adigun-private-tools a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.adigun-private-tools section[id]{scroll-margin-top:78px}
+@media(max-width:1100px){
+ .adigun-private-tools .os-shell{grid-template-columns:1fr}
+ .adigun-private-tools .os-sidebar{position:relative;height:auto;max-height:none;display:block;border-right:0;border-bottom:1px solid var(--line)}
+ .adigun-private-tools .os-nav{display:flex;flex-wrap:wrap;overflow:visible}
+ .adigun-private-tools .os-nav-dropdown{margin-right:12px}
+ .adigun-private-tools .os-side-label{display:flex}
+ .adigun-private-tools .tool-lab-hero-grid{grid-template-columns:minmax(0,1fr) 250px}
+ .adigun-private-tools .tool-lab-title-row{grid-template-columns:minmax(0,1fr)}
+ .adigun-private-tools .tool-lab-mission{border-left:0;border-top:1px solid rgba(0,229,255,.2);padding:15px 0 0;margin-top:20px}
+ .adigun-private-tools .tool-lab-title-row .os-title{font-size:clamp(4rem,9vw,6rem)}
+}
+@media(max-width:760px){
+ .adigun-private-tools .os-content{padding:14px}
+ .adigun-private-tools .os-top{padding:0 14px}
+ .adigun-private-tools .tool-lab-hero-grid{grid-template-columns:minmax(0,1fr)}
+ .adigun-private-tools .tool-lab-instrument-panel{min-height:0;padding:18px;border-left:0;border-top:1px solid rgba(64,88,130,.28)}
+ .adigun-private-tools .tool-orbit-visual{width:min(74vw,250px)}
+ .adigun-private-tools .tool-lab-identity .os-panel-body{padding:25px 20px}
+ .adigun-private-tools .tool-lab-title-row .os-title{font-size:clamp(4rem,17vw,6rem)}
+ .adigun-private-tools .tool-lab-capability-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .adigun-private-tools .tool-destination{min-height:150px;padding:17px 15px;border-right:1px solid rgba(64,88,130,.28)!important;border-bottom:1px solid rgba(64,88,130,.28)!important}
+ .adigun-private-tools .tool-destination:nth-child(2n){border-right:0!important}
+ .adigun-private-tools .tool-destination:nth-last-child(-n+2){border-bottom:0!important}
+ .adigun-private-tools .resource-controls{grid-template-columns:minmax(0,1fr)}
+ .adigun-private-tools .tool-lab-identity .os-actions .os-btn{flex:1 1 100%;justify-content:space-between}
+}
+@media(max-width:480px){
+ .adigun-private-tools .os-content{padding:10px}
+ .adigun-private-tools .os-top{height:auto;min-height:56px;gap:8px}
+ .adigun-private-tools .os-top-actions{min-width:0;justify-content:flex-end}
+ .adigun-private-tools .os-search{width:min(42vw,165px);display:block}
+ .adigun-private-tools .os-top-actions .os-btn{padding:9px 8px}
+ .adigun-private-tools .tool-lab-identity .os-panel-head{align-items:center;padding:0 16px;font-size:8px}
+ .adigun-private-tools .tool-lab-mark{display:none}
+ .adigun-private-tools .tool-lab-title-row .os-title{font-size:clamp(3.8rem,20vw,5rem)}
+ .adigun-private-tools .tool-lab-flow{gap:5px}
+ .adigun-private-tools .tool-lab-flow span{font-size:7px;padding:6px}
+ .adigun-private-tools .tool-lab-flow b{font-size:9px}
+ .adigun-private-tools .tool-lab-capability-grid{grid-template-columns:minmax(0,1fr)}
+ .adigun-private-tools .tool-destination{min-height:0;padding:16px 17px;border-right:0!important;border-bottom:1px solid rgba(64,88,130,.28)!important}
+ .adigun-private-tools .tool-destination:last-child{border-bottom:0!important}
+ .adigun-private-tools .tool-destination-title{margin-top:8px}
+ .adigun-private-tools .tool-destination-description{margin-top:7px}
+ .adigun-private-tools .tool-destination-symbol{font-size:21px}
+ .adigun-private-tools .os-panel-body{padding:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .adigun-private-tools *, .adigun-private-tools *::before,.adigun-private-tools *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
