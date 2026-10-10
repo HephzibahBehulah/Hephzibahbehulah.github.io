@@ -1,0 +1,85 @@
+/* Navigation and dashboard refinements — preserve the existing HB visual identity. */
+
+/* Keep the homepage dashboard at a practical overview scale. */
+#profile-hub .hb-command-head{padding:20px 24px 16px;gap:18px}
+#profile-hub .hb-command-head h2{font-size:clamp(30px,3.7vw,50px);line-height:1;letter-spacing:-1.8px}
+#profile-hub .hb-command-clearance{min-width:165px;padding:11px 13px}
+#profile-hub .hb-profile-command-main{grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);min-height:0}
+#profile-hub .hb-profile-identity-core{grid-template-columns:116px minmax(0,1fr);gap:20px;padding:22px}
+#profile-hub .hb-profile-orbit{width:112px;height:112px}
+#profile-hub .hb-profile-intro h3{font-size:clamp(22px,2.25vw,32px);line-height:1.12;margin:8px 0 10px}
+#profile-hub .hb-profile-intro p{font-size:13px;line-height:1.65}
+#profile-hub .hb-profile-intro .os-actions{gap:7px;margin-top:15px}
+#profile-hub .hb-profile-intro .os-btn{padding:9px 10px;font-size:10px}
+#profile-hub .hb-profile-terminal{padding:16px}
+#profile-hub .hb-profile-spectrum>div{padding:12px 14px}
+#profile-hub .hb-profile-flow{gap:14px;padding:10px 15px}
+#profile-hub .hb-flow-chain{gap:5px}
+#profile-hub .hb-flow-chain span{padding:4px 6px}
+#profile-hub .hb-profile-dashboard{padding:12px;gap:10px}
+#profile-hub .hb-profile-dashboard-card{padding:14px}
+#profile-hub .hb-dashboard-title{margin-bottom:10px}
+#profile-hub .hb-system-stack{gap:4px}
+#profile-hub .hb-system-stack>div{padding:7px}
+#profile-hub .hb-capability-matrix{gap:7px}
+#profile-hub .hb-capability-matrix>div{padding:10px}
+#profile-hub .hb-profile-command-stats{margin:0;padding:12px;gap:8px}
+#profile-hub .hb-profile-command-stats .hb-profile-stat{padding:11px}
+#profile-hub .hb-profile-project-disclosure{position:relative;z-index:3;border-top:1px solid rgba(86,207,225,.1)}
+#profile-hub .hb-profile-project-disclosure>summary{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:15px 18px;cursor:pointer;list-style:none;color:#dce9ee;background:rgba(3,8,12,.5);font:700 10px/1.5 var(--mono,monospace);letter-spacing:.08em}
+#profile-hub .hb-profile-project-disclosure>summary::-webkit-details-marker{display:none}
+#profile-hub .hb-profile-project-disclosure>summary span{color:var(--cyan,#56cfe1)}
+#profile-hub .hb-profile-project-disclosure>summary small{flex:1 1 220px;color:#84939d;font:10px/1.5 var(--sans,Inter,sans-serif);letter-spacing:0}
+#profile-hub .hb-profile-project-disclosure>summary b{margin-left:auto;color:var(--accent,#ff8a3d);font-size:9px}
+#profile-hub .hb-profile-project-disclosure[open]>summary b{font-size:0}
+#profile-hub .hb-profile-project-disclosure[open]>summary b:after{content:"CLOSE −";font-size:9px}
+#profile-hub .hb-profile-project-disclosure .hb-profile-repo-head{padding-top:18px}
+
+/* A more balanced Cyber OS dashboard; retain the existing cards and responsive behaviour. */
+.cyber-command-deck{margin-bottom:14px}
+.cyber-deck-shell{grid-template-columns:minmax(0,1.55fr) minmax(260px,.65fr);gap:12px}
+.cyber-identity-panel .os-panel-body{padding:18px}
+.cyber-title-row{grid-template-columns:minmax(120px,.55fr) minmax(0,1.45fr);gap:18px}
+.cyber-title-row .os-title{font-size:clamp(2.6rem,4.7vw,4.6rem)!important;line-height:.88!important;letter-spacing:-.065em!important}
+.cyber-mission strong{font-size:clamp(.95rem,1.3vw,1.15rem)}
+.cyber-mission p{font-size:.9rem;line-height:1.55}
+.cyber-flow{gap:6px;margin:14px 0;padding:9px}
+.cyber-flow span{padding:6px 7px}
+.cyber-capability-grid{gap:7px;margin-top:8px}
+.cyber-capability{min-height:82px;padding:10px;gap:5px}
+.cyber-capability b{font-size:.78rem}
+.cyber-capability small{font-size:.68rem}
+.cyber-radar-panel{min-height:0!important;height:auto}
+.cyber-radar-panel .os-panel-head{min-height:38px}
+.cyber-command-deck .os-panel{border-radius:7px}
+.os-content{scroll-padding-top:76px}
+.os-content [id]{scroll-margin-top:76px}
+
+@media(max-width:1100px){
+  #profile-hub .hb-profile-command-main{grid-template-columns:1fr}
+  #profile-hub .hb-profile-identity-core{grid-template-columns:116px minmax(0,1fr)}
+  .cyber-deck-shell{grid-template-columns:1fr!important}
+}
+@media(max-width:700px){
+  #profile-hub .hb-command-head{padding:18px}
+  #profile-hub .hb-command-head h2{font-size:clamp(29px,8vw,40px)}
+  #profile-hub .hb-profile-identity-core{grid-template-columns:1fr;padding:20px 16px;gap:15px}
+  #profile-hub .hb-profile-orbit{width:108px;height:108px}
+  #profile-hub .hb-profile-intro h3{font-size:clamp(22px,6vw,29px)}
+  #profile-hub .hb-profile-spectrum{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #profile-hub .hb-profile-spectrum>div{border-right:1px solid rgba(86,207,225,.09)}
+  #profile-hub .hb-profile-flow{display:block}
+  #profile-hub .hb-flow-label{margin-bottom:8px}
+  #profile-hub .hb-profile-dashboard{grid-template-columns:1fr}
+  #profile-hub .hb-capability-matrix{grid-template-columns:1fr}
+  #profile-hub .hb-profile-repo-toolbar{grid-template-columns:1fr}
+  .cyber-title-row{grid-template-columns:1fr;gap:12px}
+  .cyber-title-row .os-title{font-size:clamp(2.5rem,14vw,4rem)!important}
+  .cyber-mission{padding-left:12px}
+  .cyber-capability-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:420px){
+  #profile-hub .hb-profile-spectrum{grid-template-columns:1fr}
+  #profile-hub .hb-profile-spectrum>div{border-right:0}
+  .cyber-capability-grid{grid-template-columns:1fr}
+}
