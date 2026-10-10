@@ -1,0 +1,256 @@
+/* ADIGUN Tool Lab layout repair.
+   Scoped to admin-tools.html so shared/public pages remain unchanged. */
+.adigun-private-tools,
+.adigun-private-tools * {
+  box-sizing: border-box;
+}
+.adigun-private-tools .os-main,
+.adigun-private-tools .os-content,
+.adigun-private-tools .tool-lab-command-deck,
+.adigun-private-tools .tool-lab-hero-grid,
+.adigun-private-tools .tool-lab-identity,
+.adigun-private-tools .tool-lab-identity .os-panel-body,
+.adigun-private-tools .tool-lab-title-row,
+.adigun-private-tools .tool-lab-mission,
+.adigun-private-tools .tool-lab-instrument-panel,
+.adigun-private-tools #projects,
+.adigun-private-tools #projects > .os-panel {
+  min-width: 0;
+  max-width: 100%;
+}
+.adigun-private-tools .tool-lab-command-deck {
+  overflow: clip;
+  isolation: isolate;
+}
+.adigun-private-tools .tool-lab-hero-grid {
+  grid-template-columns: minmax(0, 1.7fr) minmax(250px, .75fr);
+  align-items: stretch;
+  gap: clamp(12px, 1.5vw, 20px);
+}
+.adigun-private-tools .tool-lab-identity .os-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 16px;
+  min-width: 0;
+}
+.adigun-private-tools .tool-lab-identity .os-panel-head > span:first-child {
+  flex: 1 1 260px;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-height: 1.55;
+}
+.adigun-private-tools .tool-lab-identity .os-panel-head > span:last-child {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.adigun-private-tools .tool-lab-identity .os-panel-body {
+  padding: clamp(16px, 2.2vw, 28px);
+}
+.adigun-private-tools .tool-lab-identity .os-kicker {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+  letter-spacing: .08em;
+}
+.adigun-private-tools .tool-lab-title-row {
+  grid-template-columns: minmax(110px, .62fr) minmax(0, 1.38fr);
+  gap: clamp(16px, 2.2vw, 28px);
+  align-items: center;
+  margin-top: clamp(18px, 2vw, 28px);
+}
+.adigun-private-tools .tool-lab-title-row > div,
+.adigun-private-tools .tool-lab-mission {
+  min-width: 0;
+  max-width: 100%;
+}
+.adigun-private-tools .tool-lab-title-row .os-title {
+  font-size: clamp(3.25rem, 6.2vw, 6.1rem);
+  line-height: .9;
+  letter-spacing: -.065em;
+  overflow-wrap: normal;
+  margin: 0;
+}
+.adigun-private-tools .tool-lab-mission {
+  padding-left: clamp(14px, 1.6vw, 22px);
+}
+.adigun-private-tools .tool-lab-mission .tool-label {
+  display: block;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  margin-bottom: 10px;
+}
+.adigun-private-tools .tool-lab-mission strong {
+  display: block;
+  max-width: 100%;
+  font-size: clamp(.9rem, 1.05vw, 1.08rem);
+  line-height: 1.55;
+  letter-spacing: .015em;
+  overflow-wrap: anywhere;
+}
+.adigun-private-tools .tool-lab-mission p {
+  max-width: 68ch;
+  margin: 12px 0 0;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+.adigun-private-tools .tool-lab-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: clamp(20px, 2.5vw, 30px);
+  min-width: 0;
+}
+.adigun-private-tools .tool-lab-flow span {
+  max-width: 100%;
+  padding: 8px 10px;
+  font-size: clamp(.62rem, .75vw, .75rem);
+  line-height: 1.35;
+  letter-spacing: .06em;
+  overflow-wrap: anywhere;
+}
+.adigun-private-tools .tool-lab-flow b {
+  flex: 0 0 auto;
+}
+.adigun-private-tools .tool-lab-identity .os-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 9px;
+  margin-top: 22px;
+  min-width: 0;
+}
+.adigun-private-tools .tool-lab-identity .os-actions .os-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  line-height: 1.4;
+}
+.adigun-private-tools .tool-lab-instrument-panel {
+  overflow: hidden;
+}
+.adigun-private-tools .tool-lab-status > div {
+  min-width: 0;
+}
+.adigun-private-tools .tool-lab-status span,
+.adigun-private-tools .tool-lab-status b {
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.adigun-private-tools .tool-lab-capability-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.adigun-private-tools .tool-lab-capability-grid a {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.adigun-private-tools .tool-lab-capability-grid b,
+.adigun-private-tools .tool-lab-capability-grid small {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
+.adigun-private-tools #projects {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(12px, 1.5vw, 20px);
+}
+.adigun-private-tools #projects .os-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px 12px;
+}
+.adigun-private-tools #projects .os-panel-head > span {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.adigun-private-tools #projects .os-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px 12px;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
+.adigun-private-tools #projects .os-item > span {
+  min-width: 0;
+  max-width: 100%;
+  margin-left: auto;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+  .adigun-private-tools .tool-lab-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .adigun-private-tools .tool-lab-title-row .os-title {
+    font-size: clamp(3.6rem, 10vw, 5.5rem);
+  }
+  .adigun-private-tools .tool-lab-instrument-panel {
+    min-height: 0;
+  }
+}
+@media (max-width: 760px) {
+  .adigun-private-tools .tool-lab-title-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .adigun-private-tools .tool-lab-title-row .os-title {
+    font-size: clamp(3.25rem, 15vw, 4.8rem);
+    line-height: .92;
+  }
+  .adigun-private-tools .tool-lab-mission {
+    border-left: 0;
+    border-top: 1px solid rgba(0,255,220,.25);
+    padding: 16px 0 0;
+  }
+  .adigun-private-tools .tool-lab-flow {
+    gap: 7px;
+  }
+  .adigun-private-tools .tool-lab-flow span {
+    flex: 0 1 auto;
+  }
+  .adigun-private-tools .tool-lab-capability-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .adigun-private-tools #projects {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 420px) {
+  .adigun-private-tools .tool-lab-identity .os-panel-body {
+    padding: 15px;
+  }
+  .adigun-private-tools .tool-lab-identity .os-panel-head {
+    padding: 12px 14px;
+  }
+  .adigun-private-tools .tool-lab-capability-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .adigun-private-tools .tool-lab-flow b {
+    font-size: .8rem;
+  }
+  .adigun-private-tools .tool-lab-identity .os-actions .os-btn {
+    flex: 1 1 100%;
+  }
+  .adigun-private-tools #projects .os-item > span {
+    margin-left: 0;
+    text-align: left;
+  }
+}
