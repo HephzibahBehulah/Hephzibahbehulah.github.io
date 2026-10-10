@@ -43,16 +43,33 @@ body.cyber-os .os-status b,body.cyber-os .os-panel-head .live{color:#63d297!impo
 @media(max-width:680px){.academy-filter-row,.academy-setup-grid,.tool-record-grid,.academy-workspace-map{grid-template-columns:1fr}.tool-category-heading{align-items:flex-start;flex-direction:column}}
 </style><link rel="stylesheet" href="/css/adigun-sidebar.css?v=20261010-1">
 </head><body class="osint-redesign cyber-os"><div class="os-shell"><aside class="os-sidebar"><div class="os-brand">ADIGUN <span>/ cyber os</span></div>
-<details class="os-nav-dropdown" data-nav-group="cyber-workspaces" open><summary class="os-side-label">CYBER OS WORKSPACES</summary><nav class="os-nav" id="cyberNav">
-<a class="active" href="#dashboard">⌂ DASHBOARD</a><a href="#knowledge-hub">▦ KNOWLEDGE HUB</a><a href="#networking">⌁ NETWORKING</a><a href="#network-academy">⌁ NETWORK ACADEMY</a><a href="#recon-overview">◉ RECONNAISSANCE</a><a href="#recon-workflow">⌁ WORKFLOW</a><a href="#recon-toolkit">◉ TOOLKIT</a><a href="#recon-queries">⌕ QUERY LAB</a><a href="#recon-evidence">▤ EVIDENCE</a><a href="#recon-learning">✦ LEARNING</a><a href="#commands">⌘ COMMAND CENTER</a><a href="#shortcuts">⌨ KEYBOARD LAB</a><a href="#frameworks">◎ FRAMEWORKS</a><a href="#osint">◉ OSINT</a><a href="#detection">△ DETECTION</a><a href="#teams">◇ TEAMS &amp; ACTORS</a><a href="#formulas">∑ FORMULAS</a><a href="#games">✦ CYBER GAMES</a><a href="#labs">▣ LABS</a><a href="#glossary">▤ GLOSSARY</a><a href="#learning">↗ LEARNING PATH</a><a href="#cybersecurity-tools-academy">▤ CYBERSECURITY TOOLS ACADEMY</a><a href="#terminal">▣ LINUX TERMINAL</a><a href="#operator">⌁ ADMIN AI</a><a href="#ai-agent">◉ PUBLIC AI</a>
+<details class="os-nav-dropdown" data-nav-group="core" open><summary class="os-side-label">CORE</summary><nav class="os-nav" aria-label="Core workspace">
+<a class="active" href="#dashboard">⌂ DASHBOARD</a><a href="#knowledge-hub">▦ KNOWLEDGE HUB</a><a href="#networking">⌁ NETWORKING</a><a href="#network-academy">⌁ NETWORK ACADEMY</a>
 </nav></details>
-<details class="os-nav-dropdown" data-nav-group="private-control"><summary class="os-side-label">PRIVATE CONTROL</summary><nav class="os-nav"><a href="/admin">◉ ADIGUN CONTROL</a></nav></details>
-<details class="os-nav-dropdown" data-nav-group="workbench"><summary class="os-side-label">ADIGUN WORKBENCH</summary><nav class="os-nav"><a href="/admin/tools/>▤ TOOL WORKSPACE</a></nav></details>
-<details class="os-nav-dropdown" data-nav-group="portfolio"><summary class="os-side-label">ADIGUN NAVIGATION</summary><nav class="os-nav"><a href="https://hephzibahbehulah.com/index.html">↩ INTELLIGENCE PORTFOLIO</a><a href="https://hephzibahbehulah.com/index.html#terminal">⌘ PORTFOLIO TERMINAL</a></nav></details>
-<details class="os-nav-dropdown" data-nav-group="external"><summary class="os-side-label">EXTERNAL</summary><nav class="os-nav">
+<details class="os-nav-dropdown" data-nav-group="reconnaissance"><summary class="os-side-label">RECONNAISSANCE</summary><nav class="os-nav" aria-label="Reconnaissance workspace">
+<a href="#recon-overview">◉ RECONNAISSANCE</a><a href="#recon-workflow">⌁ WORKFLOW</a><a href="#recon-toolkit">◉ TOOLKIT</a><a href="#recon-queries">⌕ QUERY LAB</a><a href="#recon-evidence">▤ EVIDENCE</a><a href="#recon-learning">✦ LEARNING</a>
+</nav></details>
+<details class="os-nav-dropdown" data-nav-group="intelligence"><summary class="os-side-label">INTELLIGENCE</summary><nav class="os-nav" aria-label="Intelligence workspace">
+<a href="#commands">⌘ COMMAND CENTER</a><a href="#shortcuts">⌨ KEYBOARD LAB</a><a href="#frameworks">◎ FRAMEWORKS</a><a href="#osint">◉ OSINT</a><a href="#detection">△ DETECTION</a><a href="#teams">◇ TEAMS &amp; ACTORS</a><a href="#formulas">∑ FORMULAS</a>
+</nav></details>
+<details class="os-nav-dropdown" data-nav-group="learning-labs"><summary class="os-side-label">LEARNING &amp; LABS</summary><nav class="os-nav" aria-label="Learning and labs">
+<a href="#games">✦ CYBER GAMES</a><a href="#labs">▣ LABS</a><a href="#glossary">▤ GLOSSARY</a><a href="#learning">↗ LEARNING PATH</a><a href="#cybersecurity-tools-academy">▤ CYBERSECURITY TOOLS ACADEMY</a>
+</nav></details>
+<details class="os-nav-dropdown" data-nav-group="ai-assistants"><summary class="os-side-label">AI &amp; ASSISTANTS</summary><nav class="os-nav" aria-label="AI and assistants">
+<a href="#terminal">▣ LINUX TERMINAL</a><a href="#operator">⌁ ADMIN AI</a><a href="#ai-agent">◉ PUBLIC AI</a>
+</nav></details>
+<nav class="os-nav os-nav-standalone" aria-label="Main navigation">
+<a href="https://hephzibahbehulah.com/index.html">↩ INTELLIGENCE PORTFOLIO</a>
+<a href="https://hephzibahbehulah.com/index.html#terminal">⌘ PORTFOLIO TERMINAL</a>
+<a href="/admin">◉ ADIGUN CONTROL</a>
+<a href="/admin/tools/">▤ TOOL WORKSPACE</a>
+</nav>
+<details class="os-nav-dropdown" data-nav-group="external"><summary class="os-side-label">EXTERNAL</summary><nav class="os-nav" aria-label="External links">
 <a href="https://hephzibahbehulah.com">← PUBLIC SITE</a><a href="https://github.com/HephzibahBehulah">◉ GitHub</a><a href="https://www.linkedin.com/in/isaacoluwoleadigun">in LinkedIn</a><a href="https://x.com/HephzibahBehulah">𝕏 X</a><a href="https://www.facebook.com/HephzibahBehulah">f Facebook</a><a href="https://gitbook.io/">▤ GitBook</a>
 </nav></details>
-<details class="os-nav-dropdown" data-nav-group="cyber-references"><summary class="os-side-label">CYBER REFERENCES</summary><nav class="os-nav"><a href="https://owasp.org/www-project-web-security-testing-guide/">OWASP WSTG ↗</a><a href="https://projectdiscovery.io/open-source">ProjectDiscovery ↗</a><a href="https://urlscan.io/">urlscan.io ↗</a><a href="https://crt.sh/">crt.sh ↗</a></nav></details>
+<details class="os-nav-dropdown" data-nav-group="cyber-references"><summary class="os-side-label">CYBER REFERENCES</summary><nav class="os-nav" aria-label="Cyber references">
+<a href="https://owasp.org/www-project-web-security-testing-guide/">OWASP WSTG ↗</a><a href="https://projectdiscovery.io/open-source">ProjectDiscovery ↗</a><a href="https://urlscan.io/">urlscan.io ↗</a><a href="https://crt.sh/">crt.sh ↗</a>
+</nav></details>
 <div class="os-status">CYBER OS STATUS<br><b>● READY</b><br>mode: learning + authorised practice<br>knowledge: structured + source-aware</div><div class="os-status">RECON STATUS<br><b>● READY</b><br>mode: passive-first<br>scope: authorised only<br>evidence: provenance-first</div></aside><main class="os-main"><header class="os-top"><div class="os-breadcrumb">adigun / <b>ADIGUN cyber os</b></div><div class="cyber-top-search"><input id="globalSearch" class="os-search" placeholder="Search protocols, ports, commands, frameworks, formulas..." aria-label="Search Cyber OS"><span id="searchMeta">READY</span></div></header><div class="os-content"><section class="cyber-hero cyber-command-deck" id="dashboard">
 <div class="cyber-deck-shell">
   <div class="cyber-deck-main">
