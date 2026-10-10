@@ -17,7 +17,7 @@
   function setActiveFromHash(){
     var hash=location.hash;
     if(!hash)return;
-    var match=sidebar.querySelector('.os-nav a[href="'+CSS.escape(hash)+'"]');
+    var match=Array.prototype.find.call(sidebar.querySelectorAll(".os-nav a[href^=\"#\"]"),function(a){return a.getAttribute("href")===hash;});
     if(!match)return;
     sidebar.querySelectorAll(".os-nav a.active").forEach(function(a){a.classList.remove("active");});
     match.classList.add("active");
