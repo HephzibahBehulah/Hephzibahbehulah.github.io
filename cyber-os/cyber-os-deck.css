@@ -2,25 +2,25 @@
    Scoped to the dashboard hero and its live summary strip.
    Retains the existing dark, cyan, and green intelligence-console palette. */
 body.cyber-os .cyber-command-deck-v2{
-  --deck-cyan:#00ffd8;
-  --deck-cyan-soft:rgba(0,255,216,.16);
+  --deck-cyan:var(--cyan,#56cfe1);
+  --deck-cyan-soft:rgba(86,207,225,.16);
   --deck-violet:#9a8cff;
   --deck-green:#63d297;
   isolation:isolate;
   margin:0 0 18px;
   padding:clamp(10px,1.4vw,18px);
-  border:1px solid rgba(0,255,216,.17);
+  border:1px solid rgba(86,207,225,.17);
   border-radius:12px;
   background:
-    radial-gradient(ellipse at 8% 0%,rgba(0,255,216,.095),transparent 38%),
-    radial-gradient(ellipse at 100% 100%,rgba(154,140,255,.075),transparent 42%),
+    radial-gradient(ellipse at 8% 0%,rgba(86,207,225,.095),transparent 38%),
+    radial-gradient(ellipse at 100% 100%,rgba(167,139,250,.075),transparent 42%),
     linear-gradient(145deg,#07131b 0%,#080e16 54%,#0a101a 100%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 55px rgba(0,0,0,.18);
 }
 body.cyber-os .cyber-command-deck-v2:before{
   z-index:-1;
   opacity:.7;
-  background-image:linear-gradient(rgba(0,255,216,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,216,.045) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(86,207,225,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(86,207,225,.045) 1px,transparent 1px);
   background-size:34px 34px;
   mask-image:linear-gradient(115deg,#000,transparent 76%);
 }
@@ -33,7 +33,7 @@ body.cyber-os .cyber-command-deck-v2 .cyber-identity-panel,
 body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{
   position:relative;
   overflow:hidden;
-  border:1px solid rgba(0,255,216,.16);
+  border:1px solid rgba(86,207,225,.16);
   border-radius:9px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
 }
@@ -44,7 +44,7 @@ body.cyber-os .cyber-command-deck-v2 .os-panel-head{
   min-height:43px;
   gap:12px;
   padding:12px 16px;
-  border-bottom:1px solid rgba(0,255,216,.14);
+  border-bottom:1px solid rgba(86,207,225,.14);
   background:rgba(0,0,0,.18);
   font-size:.65rem;
   letter-spacing:.09em;
@@ -71,7 +71,7 @@ body.cyber-os .cyber-command-deck-v2 .os-kicker:before{
   content:"";
   width:21px;height:2px;flex:0 0 21px;
   background:var(--deck-cyan);
-  box-shadow:0 0 12px rgba(0,255,216,.65);
+  box-shadow:0 0 12px rgba(86,207,225,.65);
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-title-row{
   grid-template-columns:minmax(140px,.58fr) minmax(0,1.42fr);
@@ -84,17 +84,17 @@ body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{
   font-size:clamp(4rem,7.2vw,7rem);
   line-height:.76;
   letter-spacing:-.095em;
-  text-shadow:0 0 35px rgba(0,255,216,.07);
+  text-shadow:0 0 35px rgba(86,207,225,.07);
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title em{
   color:var(--deck-cyan);
   font-style:normal;
-  text-shadow:0 0 28px rgba(0,255,216,.2);
+  text-shadow:0 0 28px rgba(86,207,225,.2);
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-mission{
   min-width:0;
   padding:3px 0 3px 22px;
-  border-left:1px solid rgba(0,255,216,.32);
+  border-left:1px solid rgba(86,207,225,.32);
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-label{
   color:var(--deck-cyan);
@@ -122,15 +122,15 @@ body.cyber-os .cyber-command-deck-v2 .cyber-flow{
   gap:6px;
   margin:25px 0 18px;
   padding:10px;
-  border:1px solid rgba(0,255,216,.13);
+  border:1px solid rgba(86,207,225,.13);
   border-radius:6px;
-  background:linear-gradient(90deg,rgba(0,255,216,.055),rgba(154,140,255,.045));
+  background:linear-gradient(90deg,rgba(86,207,225,.055),rgba(167,139,250,.045));
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-flow span{
   flex:1;
   text-align:center;
   padding:9px 5px;
-  border-color:rgba(0,255,216,.15);
+  border-color:rgba(86,207,225,.15);
   border-radius:4px;
   color:#b8e7e6;
   font-size:.61rem;
@@ -145,7 +145,7 @@ body.cyber-os .cyber-command-deck-v2 .os-btn{
   align-items:center;
   justify-content:center;
   padding:10px 14px;
-  border:1px solid rgba(0,255,216,.2);
+  border:1px solid rgba(86,207,225,.2);
   border-radius:5px;
   background:rgba(4,17,25,.75);
   color:#c2d5df;
@@ -156,17 +156,17 @@ body.cyber-os .cyber-command-deck-v2 .os-btn{
 }
 body.cyber-os .cyber-command-deck-v2 .os-btn:hover{
   transform:translateY(-2px);
-  border-color:rgba(0,255,216,.6);
-  background:rgba(0,255,216,.07);
+  border-color:rgba(86,207,225,.6);
+  background:rgba(86,207,225,.07);
   box-shadow:0 7px 22px rgba(0,0,0,.2);
 }
 body.cyber-os .cyber-command-deck-v2 .os-btn.primary{
   color:#041218;
   border-color:var(--deck-cyan);
-  background:linear-gradient(110deg,#00ffd8,#8cefe2);
-  box-shadow:0 0 22px rgba(0,255,216,.1);
+  background:linear-gradient(110deg,var(--cyan,#56cfe1),#8cefe2);
+  box-shadow:0 0 22px rgba(86,207,225,.1);
 }
-body.cyber-os .cyber-command-deck-v2 .os-btn.primary:hover{background:#b0fff3;box-shadow:0 0 24px rgba(0,255,216,.22)}
+body.cyber-os .cyber-command-deck-v2 .os-btn.primary:hover{background:#b0fff3;box-shadow:0 0 24px rgba(86,207,225,.22)}
 body.cyber-os .cyber-command-deck-v2 .cyber-capability-grid{
   gap:8px;
   margin-top:10px;
@@ -186,7 +186,7 @@ body.cyber-os .cyber-command-deck-v2 .cyber-capability:after{
   content:"↗";
   position:absolute;
   right:12px;top:10px;
-  color:rgba(0,255,216,.5);
+  color:rgba(86,207,225,.5);
   font:700 .8rem "JetBrains Mono",monospace;
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-capability span{
@@ -209,9 +209,9 @@ body.cyber-os .cyber-command-deck-v2 .cyber-capability small{
 body.cyber-os .cyber-command-deck-v2 .cyber-capability:hover,
 body.cyber-os .cyber-command-deck-v2 .cyber-capability-hot{
   transform:translateY(-2px);
-  border-color:rgba(0,255,216,.43);
-  background:linear-gradient(145deg,rgba(0,255,216,.075),rgba(9,16,28,.97));
-  box-shadow:0 9px 25px rgba(0,0,0,.17),inset 0 0 24px rgba(0,255,216,.025);
+  border-color:rgba(86,207,225,.43);
+  background:linear-gradient(145deg,rgba(86,207,225,.075),rgba(9,16,28,.97));
+  box-shadow:0 9px 25px rgba(0,0,0,.17),inset 0 0 24px rgba(86,207,225,.025);
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-capability:focus-visible,
 body.cyber-os .cyber-command-deck-v2 .os-btn:focus-visible{
@@ -222,7 +222,7 @@ body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{
   display:flex;
   flex-direction:column;
   background:
-    radial-gradient(ellipse at 50% 25%,rgba(0,255,216,.095),transparent 44%),
+    radial-gradient(ellipse at 50% 25%,rgba(86,207,225,.095),transparent 44%),
     linear-gradient(155deg,rgba(6,22,30,.98),rgba(6,11,21,.98));
 }
 body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel>.os-panel-head{justify-content:space-between}
@@ -233,20 +233,20 @@ body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel>.os-panel-head>span:last
 body.cyber-os .cyber-command-deck-v2 .cyber-radar{
   width:min(82%,310px);
   margin:clamp(16px,2vw,28px) auto 22px;
-  border-color:rgba(0,255,216,.3);
+  border-color:rgba(86,207,225,.3);
   background:
-    radial-gradient(circle at center,rgba(0,255,216,.075),transparent 55%),
-    repeating-radial-gradient(circle at center,transparent 0 29px,rgba(0,255,216,.045) 30px 31px),
+    radial-gradient(circle at center,rgba(86,207,225,.075),transparent 55%),
+    repeating-radial-gradient(circle at center,transparent 0 29px,rgba(86,207,225,.045) 30px 31px),
     rgba(1,8,14,.45);
-  box-shadow:0 0 45px rgba(0,255,216,.055),inset 0 0 30px rgba(0,255,216,.045);
+  box-shadow:0 0 45px rgba(86,207,225,.055),inset 0 0 30px rgba(86,207,225,.045);
 }
-body.cyber-os .cyber-command-deck-v2 .radar-ring{border-color:rgba(0,255,216,.2)}
+body.cyber-os .cyber-command-deck-v2 .radar-ring{border-color:rgba(86,207,225,.2)}
 body.cyber-os .cyber-command-deck-v2 .radar-core{
   width:82px;height:82px;
-  border-color:rgba(0,255,216,.55);
+  border-color:rgba(86,207,225,.55);
   color:#e4fffb;
   background:rgba(3,15,22,.82);
-  box-shadow:0 0 32px rgba(0,255,216,.15),inset 0 0 22px rgba(0,255,216,.05);
+  box-shadow:0 0 32px rgba(86,207,225,.15),inset 0 0 22px rgba(86,207,225,.05);
 }
 body.cyber-os .cyber-command-deck-v2 .radar-core small{color:var(--deck-cyan)}
 body.cyber-os .cyber-command-deck-v2 .radar-node{width:6px;height:6px}
@@ -280,12 +280,12 @@ body.cyber-os .cyber-deck-stats{
 body.cyber-os .cyber-deck-stats>div{
   min-width:0;
   padding:14px 12px;
-  border:1px solid rgba(0,255,216,.13);
+  border:1px solid rgba(86,207,225,.13);
   border-radius:7px;
   background:linear-gradient(145deg,rgba(9,23,32,.95),rgba(8,13,22,.95));
   transition:border-color .18s ease,transform .18s ease;
 }
-body.cyber-os .cyber-deck-stats>div:hover{transform:translateY(-2px);border-color:rgba(0,255,216,.32)}
+body.cyber-os .cyber-deck-stats>div:hover{transform:translateY(-2px);border-color:rgba(86,207,225,.32)}
 body.cyber-os .cyber-deck-stats b{color:#e0fffa;font-size:clamp(1.1rem,1.5vw,1.45rem)}
 body.cyber-os .cyber-deck-stats span{display:block;margin-top:5px;color:#819ba9;font-size:.55rem;letter-spacing:.08em;line-height:1.4}
 @media(max-width:1150px){
@@ -308,7 +308,7 @@ body.cyber-os .cyber-deck-stats span{display:block;margin-top:5px;color:#819ba9;
   body.cyber-os .cyber-command-deck-v2 .os-kicker{font-size:.54rem;letter-spacing:.07em;margin-bottom:19px}
   body.cyber-os .cyber-command-deck-v2 .cyber-title-row{grid-template-columns:1fr;gap:17px}
   body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{font-size:clamp(4.1rem,22vw,5.6rem)}
-  body.cyber-os .cyber-command-deck-v2 .cyber-mission{padding:14px 0 0;border-left:0;border-top:1px solid rgba(0,255,216,.23)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-mission{padding:14px 0 0;border-left:0;border-top:1px solid rgba(86,207,225,.23)}
   body.cyber-os .cyber-command-deck-v2 .cyber-mission strong{font-size:1.05rem}
   body.cyber-os .cyber-command-deck-v2 .cyber-mission p{font-size:.78rem}
   body.cyber-os .cyber-command-deck-v2 .cyber-flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin:20px 0 15px;padding:8px}
