@@ -9,11 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/osint-redesign.css?v=20260925-11"><link rel="stylesheet" href="css/adigun-admin.css?v=20260926-1"><link rel="stylesheet" href="css/ai-lab.css?v=20261004-1"><link rel="stylesheet" href="css/hb-global-search.css?v=20260928-2"><link rel="stylesheet" href="css/hb-bot-chat.css?v=20261010-1">
 <link rel="stylesheet" href="css/mobile-system.css?v=20261004-3"><link rel="stylesheet" href="css/progressive-disclosure.css?v=20261009-2">
+<link rel="stylesheet" href="css/adigun-sidebar.css?v=20261010-1">
 </head>
 <body class="osint-redesign adigun-private-tools">
 <div class="os-shell">
-<aside class="os-sidebar"><div class="os-brand">HB <span>/ tool lab</span></div><div class="os-side-label">PRIVATE CONTROL</div>
-<nav class="os-nav"><a class="active" href="/admin">◉ ADIGUN CONTROL</a><a href="#ebookVault">▤ EBOOK VAULT</a><a href="#toolbench">⌁ TOOLBENCH</a><a href="#projects">◫ PROJECTS</a><a href="#megaTools">◉ MEGA TOOLS</a><a href="#knowledgeLibrary">▤ KNOWLEDGE LIBRARY</a><a href="#terminal">▣ LINUX TERMINAL</a><a href="#operator">⌁ ADMIN AI</a><a href="#ai-agent">◉ PUBLIC AI</a></nav>
+<aside class="os-sidebar"><div class="os-brand">ADIGUN <span>/ tool lab</span></div>
+<details class="os-nav-dropdown" data-nav-group="private-control" open><summary class="os-side-label">PRIVATE CONTROL</summary><nav class="os-nav"><a href="/admin">◉ ADIGUN CONTROL</a></nav></details>
+<details class="os-nav-dropdown" data-nav-group="workbench" open><summary class="os-side-label">ADIGUN WORKBENCH</summary><nav class="os-nav">
+<a class="active" href="#ebookVault">▤ EBOOK VAULT</a><a href="#toolbench">⌁ TOOLBENCH</a><a href="#projects">◫ PROJECTS</a><a href="#megaTools">◉ MEGA TOOLS</a><a href="#knowledgeLibrary">▤ KNOWLEDGE LIBRARY</a><a href="#terminal">▣ LINUX TERMINAL</a><a href="#operator">⌁ ADMIN AI</a><a href="#ai-agent">◉ PUBLIC AI</a>
+</nav></details>
+<details class="os-nav-dropdown" data-nav-group="external"><summary class="os-side-label">EXTERNAL</summary><nav class="os-nav">
+<a href="https://hephzibahbehulah.com">← PUBLIC SITE</a><a href="https://github.com/HephzibahBehulah">◉ GitHub</a><a href="https://www.linkedin.com/in/isaacoluwoleadigun">in LinkedIn</a><a href="https://x.com/HephzibahBehulah">𝕏 X</a><a href="https://www.facebook.com/HephzibahBehulah">f Facebook</a><a href="https://gitbook.io/">▤ GitBook</a>
+</nav></details>
 <div class="os-status">ACCESS<br><b>● PRIVATE</b><br>authentication: Cloudflare Access<br>scope: operator tools</div></aside>
 <main class="os-main"><header class="os-top"><div class="os-breadcrumb">private / <b>tool lab</b></div><div class="os-top-actions"><input id="globalResourceSearch" class="os-search" placeholder="search private tools..." aria-label="Search private tools"><a class="os-btn" href="/admin">CONTROL</a></div></header>
 <div class="os-content" id="overview">
@@ -116,4 +123,5 @@ Type HELP to begin.</div></div><div class="admin-terminal-composer"><div class="
 <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.18.9/dist/contrib/auto-render.min.js"></script><script src="js/adigun-renderer.js?v=20260926-1"></script><script src="js/adigun-memory.js?v=20261007-1"></script><script src="js/adigun-agent.js?v=20260926-1"></script><script src="js/hb-bot-chat.js?v=20261010-1"></script><script src="js/osint-redesign.js?v=20260925-12"></script><script src="js/global-search.js?v=20261009-2"></script><script src="js/terminal.js?v=20260925-2"></script><script src="js/terminal-expansion.js?v=20260925-1"></script><script src="js/technical-workbench.js?v=20261004-2"></script><script src="js/engineering-calculators-local.js?v=20261004-1"></script><script src="js/engineering-library.js?v=20261004-1"></script><script src="js/intelligence-map.js?v=20260924-1"></script><script src="js/mega-tools.js?v=20261009-5"></script><script src="js/intelligence-core.js?v=20261004-1"></script><script src="js/adigun-command-engine.js?v=20260930-3"></script><script src="js/adigun-admin.js?v=20261001-1"></script><script src="js/adigun-private-operator.js?v=20260930-3"></script><script src="js/adigun-terminal-controller-v2.js?v=20261001-1"></script><script src="js/ai-lab.js?v=20261004-1"></script>
 <script src="js/language-system.js?v=20261004-5"></script>
 <script src="js/progressive-disclosure.js?v=20261009-2"></script>
+<script src="js/adigun-sidebar.js?v=20261010-1"></script>
 </body></html>

@@ -1,0 +1,11 @@
+/* ADIGUN shared collapsible sidebar navigation */
+.os-nav-dropdown{margin:0;flex-shrink:0}
+.os-nav-dropdown>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;user-select:none}
+.os-nav-dropdown>summary::-webkit-details-marker{display:none}
+.os-nav-dropdown>summary::after{content:"+";font:14px var(--mono);color:var(--accent);transition:transform .18s ease}
+.os-nav-dropdown[open]>summary::after{content:"−"}
+.os-nav-dropdown>.os-nav{padding:0 0 2px}
+.os-nav-dropdown>.os-nav a{min-width:0;overflow-wrap:anywhere}
+.os-nav-dropdown>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.os-nav-dropdown>.os-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media(max-width:760px){.os-nav-dropdown>summary{padding-top:11px;padding-bottom:11px}.os-nav-dropdown>.os-nav a{padding:11px}}
