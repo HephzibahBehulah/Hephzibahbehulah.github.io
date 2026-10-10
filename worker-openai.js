@@ -1622,7 +1622,7 @@ export default {
     // the server-side ADIGUN_ADMIN_EMAIL allow-list.
     const isAdminHost = url.hostname === "admin.hephzibahbehulah.com";
     const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
-    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/tools":"/admin-tools.html","/tools/":"/admin-tools.html"});
+    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/tools":"/admin-tools.html","/tools/":"/admin-tools.html","/admin/cyber-os":"/cyber-os/index.html","/admin/cyber-os/":"/cyber-os/index.html"});
     const publicBlockedPath = ["/portfolio.html","/resources.html","/admin-tools.html","/data/source-library.json","/js/technical-workbench.js","/js/mega-tools.js","/js/engineering-calculators-local.js","/js/engineering-library.js","/js/intelligence-core.js"].includes(url.pathname);
 
     if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
@@ -1639,6 +1639,27 @@ export default {
       const privateUrl = new URL(request.url);
       privateUrl.pathname = PRIVATE_PAGE_ROUTES[url.pathname];
       return env.ASSETS.fetch(new Request(privateUrl.toString(), request));
+    }
+
+    // Cyber OS HTML and its private workspace assets are served only after
+    // Cloudflare Access JWT validation on the dedicated admin hostname.
+    if (isAdminHost && (url.pathname === "/cyber-os" || url.pathname.startsWith("/cyber-os/"))) {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
+      const privateUrl = new URL(request.url);
+      if (privateUrl.pathname === "/cyber-os" || privateUrl.pathname === "/cyber-os/") {
+        privateUrl.pathname = "/cyber-os/index.html";
+      }
+      return env.ASSETS.fetch(new Request(privateUrl.toString(), request));
+    }
+
+    // Keep the legacy public entry point usable, but send it to the private
+    // ADIGUN Control workspace. Never serve Cyber OS HTML or assets publicly.
+    if (!isAdminHost && (url.pathname === "/cyber-os" || url.pathname === "/cyber-os/" || url.pathname === "/cyber-os/index.html")) {
+      return Response.redirect("https://admin.hephzibahbehulah.com/admin/cyber-os/", 302);
+    }
+    if (!isAdminHost && (url.pathname === "/cyber-os" || url.pathname.startsWith("/cyber-os/"))) {
+      return new Response("Not found", { status: 404, headers: {"cache-control":"no-store"} });
     }
 
     if (!isAdminHost && publicBlockedPath) {
