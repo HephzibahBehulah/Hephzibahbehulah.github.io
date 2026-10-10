@@ -1,0 +1,332 @@
+/* ADIGUN CYBER OS — COMMAND DECK REFRESH
+   Scoped to the dashboard hero and its live summary strip.
+   Retains the existing dark, cyan, and green intelligence-console palette. */
+body.cyber-os .cyber-command-deck-v2{
+  --deck-cyan:#00ffd8;
+  --deck-cyan-soft:rgba(0,255,216,.16);
+  --deck-violet:#9a8cff;
+  --deck-green:#63d297;
+  isolation:isolate;
+  margin:0 0 18px;
+  padding:clamp(10px,1.4vw,18px);
+  border:1px solid rgba(0,255,216,.17);
+  border-radius:12px;
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(0,255,216,.095),transparent 38%),
+    radial-gradient(ellipse at 100% 100%,rgba(154,140,255,.075),transparent 42%),
+    linear-gradient(145deg,#07131b 0%,#080e16 54%,#0a101a 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 55px rgba(0,0,0,.18);
+}
+body.cyber-os .cyber-command-deck-v2:before{
+  z-index:-1;
+  opacity:.7;
+  background-image:linear-gradient(rgba(0,255,216,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,216,.045) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:linear-gradient(115deg,#000,transparent 76%);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-deck-shell{
+  grid-template-columns:minmax(0,1.65fr) minmax(275px,.68fr);
+  gap:14px;
+  align-items:stretch;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-identity-panel,
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(0,255,216,.16);
+  border-radius:9px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-identity-panel{
+  background:linear-gradient(145deg,rgba(7,25,34,.98),rgba(5,13,22,.98) 68%,rgba(11,15,30,.98));
+}
+body.cyber-os .cyber-command-deck-v2 .os-panel-head{
+  min-height:43px;
+  gap:12px;
+  padding:12px 16px;
+  border-bottom:1px solid rgba(0,255,216,.14);
+  background:rgba(0,0,0,.18);
+  font-size:.65rem;
+  letter-spacing:.09em;
+}
+body.cyber-os .cyber-command-deck-v2 .os-panel-head>span:first-child{
+  color:#d8e9f0;
+}
+body.cyber-os .cyber-command-deck-v2 .os-panel-head .live{
+  white-space:nowrap;
+  color:var(--deck-green)!important;
+  font-size:.62rem;
+}
+body.cyber-os .cyber-command-deck-v2 .os-panel-body{padding:clamp(17px,2.1vw,29px)}
+body.cyber-os .cyber-command-deck-v2 .os-kicker{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:0 0 22px;
+  color:#83a5b5;
+  font:600 .61rem/1.5 "JetBrains Mono",monospace;
+  letter-spacing:.13em;
+}
+body.cyber-os .cyber-command-deck-v2 .os-kicker:before{
+  content:"";
+  width:21px;height:2px;flex:0 0 21px;
+  background:var(--deck-cyan);
+  box-shadow:0 0 12px rgba(0,255,216,.65);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-title-row{
+  grid-template-columns:minmax(140px,.58fr) minmax(0,1.42fr);
+  gap:clamp(18px,2.5vw,36px);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{
+  position:relative;
+  margin:0;
+  color:#edf8ff;
+  font-size:clamp(4rem,7.2vw,7rem);
+  line-height:.76;
+  letter-spacing:-.095em;
+  text-shadow:0 0 35px rgba(0,255,216,.07);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title em{
+  color:var(--deck-cyan);
+  font-style:normal;
+  text-shadow:0 0 28px rgba(0,255,216,.2);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-mission{
+  min-width:0;
+  padding:3px 0 3px 22px;
+  border-left:1px solid rgba(0,255,216,.32);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-label{
+  color:var(--deck-cyan);
+  font-size:.62rem;
+  letter-spacing:.2em;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-mission strong{
+  max-width:580px;
+  color:#f0f7fb;
+  font-size:clamp(1.05rem,1.55vw,1.45rem);
+  line-height:1.22;
+  letter-spacing:-.025em;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-mission p{
+  max-width:590px;
+  margin-top:12px;
+  color:#93a9b8;
+  font-size:.83rem;
+  line-height:1.7;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-flow{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  gap:6px;
+  margin:25px 0 18px;
+  padding:10px;
+  border:1px solid rgba(0,255,216,.13);
+  border-radius:6px;
+  background:linear-gradient(90deg,rgba(0,255,216,.055),rgba(154,140,255,.045));
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-flow span{
+  flex:1;
+  text-align:center;
+  padding:9px 5px;
+  border-color:rgba(0,255,216,.15);
+  border-radius:4px;
+  color:#b8e7e6;
+  font-size:.61rem;
+  letter-spacing:.07em;
+  background:rgba(3,12,19,.7);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-flow b{color:var(--deck-cyan);opacity:.7}
+body.cyber-os .cyber-command-deck-v2 .os-actions{display:flex;flex-wrap:wrap;gap:8px}
+body.cyber-os .cyber-command-deck-v2 .os-btn{
+  min-height:40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border:1px solid rgba(0,255,216,.2);
+  border-radius:5px;
+  background:rgba(4,17,25,.75);
+  color:#c2d5df;
+  font:600 .67rem "JetBrains Mono",monospace;
+  letter-spacing:.025em;
+  text-decoration:none;
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
+}
+body.cyber-os .cyber-command-deck-v2 .os-btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(0,255,216,.6);
+  background:rgba(0,255,216,.07);
+  box-shadow:0 7px 22px rgba(0,0,0,.2);
+}
+body.cyber-os .cyber-command-deck-v2 .os-btn.primary{
+  color:#041218;
+  border-color:var(--deck-cyan);
+  background:linear-gradient(110deg,#00ffd8,#8cefe2);
+  box-shadow:0 0 22px rgba(0,255,216,.1);
+}
+body.cyber-os .cyber-command-deck-v2 .os-btn.primary:hover{background:#b0fff3;box-shadow:0 0 24px rgba(0,255,216,.22)}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability-grid{
+  gap:8px;
+  margin-top:10px;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability{
+  position:relative;
+  min-height:116px;
+  overflow:hidden;
+  padding:15px;
+  gap:8px;
+  border:1px solid rgba(119,164,185,.16);
+  border-radius:7px;
+  background:linear-gradient(145deg,rgba(11,25,35,.94),rgba(7,14,23,.96));
+  transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability:after{
+  content:"↗";
+  position:absolute;
+  right:12px;top:10px;
+  color:rgba(0,255,216,.5);
+  font:700 .8rem "JetBrains Mono",monospace;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability span{
+  color:var(--deck-cyan);
+  font-size:.61rem;
+  opacity:.85;
+  letter-spacing:.12em;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability b{
+  color:#e5f3fa;
+  font-size:.8rem;
+  letter-spacing:.11em;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability small{
+  max-width:220px;
+  color:#8fa7b7;
+  font-size:.7rem;
+  line-height:1.5;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability:hover,
+body.cyber-os .cyber-command-deck-v2 .cyber-capability-hot{
+  transform:translateY(-2px);
+  border-color:rgba(0,255,216,.43);
+  background:linear-gradient(145deg,rgba(0,255,216,.075),rgba(9,16,28,.97));
+  box-shadow:0 9px 25px rgba(0,0,0,.17),inset 0 0 24px rgba(0,255,216,.025);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-capability:focus-visible,
+body.cyber-os .cyber-command-deck-v2 .os-btn:focus-visible{
+  outline:2px solid var(--deck-cyan);
+  outline-offset:3px;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{
+  display:flex;
+  flex-direction:column;
+  background:
+    radial-gradient(ellipse at 50% 25%,rgba(0,255,216,.095),transparent 44%),
+    linear-gradient(155deg,rgba(6,22,30,.98),rgba(6,11,21,.98));
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel>.os-panel-head{justify-content:space-between}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel>.os-panel-head>span:last-child{
+  color:#9a8cff;
+  font-size:.65rem;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar{
+  width:min(82%,310px);
+  margin:clamp(16px,2vw,28px) auto 22px;
+  border-color:rgba(0,255,216,.3);
+  background:
+    radial-gradient(circle at center,rgba(0,255,216,.075),transparent 55%),
+    repeating-radial-gradient(circle at center,transparent 0 29px,rgba(0,255,216,.045) 30px 31px),
+    rgba(1,8,14,.45);
+  box-shadow:0 0 45px rgba(0,255,216,.055),inset 0 0 30px rgba(0,255,216,.045);
+}
+body.cyber-os .cyber-command-deck-v2 .radar-ring{border-color:rgba(0,255,216,.2)}
+body.cyber-os .cyber-command-deck-v2 .radar-core{
+  width:82px;height:82px;
+  border-color:rgba(0,255,216,.55);
+  color:#e4fffb;
+  background:rgba(3,15,22,.82);
+  box-shadow:0 0 32px rgba(0,255,216,.15),inset 0 0 22px rgba(0,255,216,.05);
+}
+body.cyber-os .cyber-command-deck-v2 .radar-core small{color:var(--deck-cyan)}
+body.cyber-os .cyber-command-deck-v2 .radar-node{width:6px;height:6px}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout{
+  gap:7px;
+  margin:auto 14px 14px;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout div{
+  min-height:58px;
+  padding:11px 12px;
+  border-color:rgba(120,166,187,.15);
+  border-radius:5px;
+  background:rgba(2,9,16,.5);
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout span{
+  color:#809aa9;
+  font-size:.56rem;
+  letter-spacing:.09em;
+}
+body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout b{
+  color:#d0e9e8;
+  font-size:.68rem;
+  letter-spacing:.03em;
+}
+body.cyber-os .cyber-deck-stats{
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:8px;
+  margin:0 0 18px;
+}
+body.cyber-os .cyber-deck-stats>div{
+  min-width:0;
+  padding:14px 12px;
+  border:1px solid rgba(0,255,216,.13);
+  border-radius:7px;
+  background:linear-gradient(145deg,rgba(9,23,32,.95),rgba(8,13,22,.95));
+  transition:border-color .18s ease,transform .18s ease;
+}
+body.cyber-os .cyber-deck-stats>div:hover{transform:translateY(-2px);border-color:rgba(0,255,216,.32)}
+body.cyber-os .cyber-deck-stats b{color:#e0fffa;font-size:clamp(1.1rem,1.5vw,1.45rem)}
+body.cyber-os .cyber-deck-stats span{display:block;margin-top:5px;color:#819ba9;font-size:.55rem;letter-spacing:.08em;line-height:1.4}
+@media(max-width:1150px){
+  body.cyber-os .cyber-command-deck-v2 .cyber-deck-shell{grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row{grid-template-columns:minmax(115px,.55fr) minmax(0,1.45fr);gap:18px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{font-size:clamp(3.8rem,6.5vw,5.8rem)}
+  body.cyber-os .cyber-deck-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  body.cyber-os .cyber-command-deck-v2 .cyber-deck-shell{grid-template-columns:1fr}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.85fr);align-items:center}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel>.os-panel-head{grid-column:1/-1}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar{width:min(100%,260px);margin:16px auto}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout{margin:12px}
+}
+@media(max-width:650px){
+  body.cyber-os .cyber-command-deck-v2{padding:7px;border-radius:8px}
+  body.cyber-os .cyber-command-deck-v2 .os-panel-head{align-items:flex-start;font-size:.57rem;line-height:1.45}
+  body.cyber-os .cyber-command-deck-v2 .os-panel-body{padding:17px 14px}
+  body.cyber-os .cyber-command-deck-v2 .os-kicker{font-size:.54rem;letter-spacing:.07em;margin-bottom:19px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row{grid-template-columns:1fr;gap:17px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-title-row .os-title{font-size:clamp(4.1rem,22vw,5.6rem)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-mission{padding:14px 0 0;border-left:0;border-top:1px solid rgba(0,255,216,.23)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-mission strong{font-size:1.05rem}
+  body.cyber-os .cyber-command-deck-v2 .cyber-mission p{font-size:.78rem}
+  body.cyber-os .cyber-command-deck-v2 .cyber-flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin:20px 0 15px;padding:8px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-flow span{font-size:.54rem;padding:9px 3px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-flow b{display:none}
+  body.cyber-os .cyber-command-deck-v2 .cyber-capability-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-capability{min-height:124px;padding:12px}
+  body.cyber-os .cyber-command-deck-v2 .cyber-capability b{font-size:.72rem}
+  body.cyber-os .cyber-command-deck-v2 .cyber-capability small{font-size:.65rem}
+  body.cyber-os .cyber-command-deck-v2 .os-actions{display:grid;grid-template-columns:1fr}
+  body.cyber-os .cyber-command-deck-v2 .os-btn{width:100%;font-size:.65rem}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-panel{display:flex}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar{width:min(80%,250px)}
+  body.cyber-os .cyber-command-deck-v2 .cyber-radar-readout{width:calc(100% - 24px);margin:0 12px 12px}
+  body.cyber-os .cyber-deck-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  body.cyber-os .cyber-deck-stats>div{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.cyber-os .cyber-command-deck-v2 *,
+  body.cyber-os .cyber-deck-stats>*{transition:none!important}
+}
