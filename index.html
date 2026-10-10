@@ -8,26 +8,54 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/osint-redesign.css?v=20261004-12">
 <link rel="stylesheet" href="css/hb-global-search.css?v=20260928-2"><link rel="stylesheet" href="css/ai-lab.css?v=20261004-1"><link rel="stylesheet" href="css/hb-bot-chat.css?v=20261009-1">
-<link rel="stylesheet" href="css/mobile-system.css?v=20261004-3"><link rel="stylesheet" href="css/progressive-disclosure.css?v=20261009-2">
+<link rel="stylesheet" href="css/mobile-system.css?v=20261004-3"><link rel="stylesheet" href="css/progressive-disclosure.css?v=20261009-2"><link rel="stylesheet" href="css/navigation-dashboard.css?v=20261010-1">
 </head>
 <body class="osint-redesign">
 <div class="os-shell">
 <aside class="os-sidebar">
 <div class="os-brand">HB <span>/ intelligence portfolio</span></div>
-<div class="os-side-label">Framework</div>
+<div class="os-side-label">Dashboard</div>
 <nav class="os-nav">
-<a class="active" href="#profile-hub">◈ PROFILE / PORTFOLIO</a>
+<a class="active" href="#profile-hub">⌂ DASHBOARD / PORTFOLIO</a>
 <a href="#tree">⌘ INTELLIGENCE TREE</a>
-<a href="#public-ai-agent">◉ ADIGUN AI AGENT</a>
-<a href="/cyber-os/" class="hb-cyber-os-link">⌁ ADIGUN CYBER OS</a>
-<a href="#terminal">⌘ TERMINAL</a>
+<a href="#projects">◫ LIVE PROJECTS</a>
+</nav>
+<div class="os-side-label">Learn & Reference</div>
+<nav class="os-nav">
+<a href="/cyber-os/#learning">✦ LEARNING PATH</a>
+<a href="/cyber-os/#knowledge-hub">▤ KNOWLEDGE HUB</a>
+<a href="/cyber-os/#network-academy">⌁ NETWORK ACADEMY</a>
+<a href="/admin-tools.html#ebookVault">▤ EBOOK VAULT</a>
 <a href="#genzBible">✦ BIBLE QUIZ</a>
-<a href="about.html">◈ ABOUT</a>
-<a href="contact.html">↗ CONTACT</a>
-<a href="https://admin.hephzibahbehulah.com/adigun-contol" class="adigun-control-link" aria-label="Open ADIGUN Control" target="_blank" rel="noopener noreferrer">◈ ADIGUN CONTROL ↗</a>
+</nav>
+<div class="os-side-label">Safety & Security</div>
+<nav class="os-nav">
+<a href="/cyber-os/#safety">◈ SAFETY GUIDANCE</a>
+<a href="/cyber-os/#recon-overview">◉ RECON & OSINT</a>
+<a href="/cyber-os/#detection">△ DETECTION & RESPONSE</a>
+<a href="/cyber-os/#cybersecurity-tools-academy">▤ SECURITY TOOLS ACADEMY</a>
+</nav>
+<div class="os-side-label">Engineering Tools</div>
+<nav class="os-nav">
+<a href="/admin-tools.html#toolbench">⌁ ENGINEERING TOOLS</a>
+<a href="/admin-tools.html#megaTools">◉ MEGA TOOLS</a>
+<a href="/admin-tools.html#technicalWorkbench">⌘ TECHNICAL WORKBENCH</a>
+<a href="/admin-tools.html#knowledgeLibrary">▤ KNOWLEDGE LIBRARY</a>
+</nav>
+<div class="os-side-label">AI & Operations</div>
+<nav class="os-nav">
+<a href="#public-ai-agent">◉ ADIGUN AI AGENT</a>
+<a href="/cyber-os/#dashboard">⌁ ADIGUN CYBER OS</a>
+<a href="#terminal">⌘ TERMINAL</a>
+<a href="/admin-tools.html#projects">◫ TOOL LAB PROJECTS</a>
 </nav>
 <div class="os-side-label">External</div>
-<nav class="os-nav"><a href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener">◉ github ↗</a><a href="https://www.linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener">in linkedin ↗</a></nav>
+<nav class="os-nav">
+<a href="https://github.com/HephzibahBehulah">◉ GITHUB</a>
+<a href="https://www.linkedin.com/in/isaacoluwoleadigun">in LINKEDIN</a>
+<a href="https://x.com/hephzibahBehulah">𝕏 X</a>
+<a href="https://www.facebook.com/HephzibahBehulah">f FACEBOOK</a>
+</nav>
 <div class="os-status">SYSTEM STATUS<br><b>● ONLINE</b><br>profile_mode: public<br>resource_index: active<br>focus: systems + security</div>
 </aside>
 <main class="os-main">
@@ -131,6 +159,8 @@
 
   <div id="hbGithubStats" class="hb-profile-stats hb-profile-command-stats" aria-live="polite"></div>
 
+  <details class="hb-profile-project-disclosure">
+    <summary><span>PUBLIC GITHUB PORTFOLIO</span><small>Expand to search and explore live projects</small><b>OPEN +</b></summary>
   <div class="hb-profile-repos">
     <div class="hb-profile-repo-head">
       <div><span class="hb-command-eyebrow"><i></i> LIVE DATA CHANNEL</span><h3>PUBLIC GITHUB PORTFOLIO</h3></div>
@@ -146,6 +176,7 @@
     <div id="hbGithubRepoGrid" class="hb-profile-repo-grid" aria-live="polite"><div class="hb-profile-empty">Loading public repositories from GitHub…</div></div>
     <div class="hb-profile-repo-foot"><span>DATA SOURCE / GITHUB PUBLIC API</span><span>PRIVATE REPOSITORIES / NEVER EXPOSED</span><span>AUTO-UPDATED INDEX</span></div>
   </div>
+  </details>
 </section>
 
 <section class="os-panel" id="tree"><div class="os-panel-head"><span>intelligence tree / interactive</span><span>click a node to inspect</span></div>
