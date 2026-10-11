@@ -1,6 +1,6 @@
 {
   "source": "Linux man-pages project",
-  "count": 2633,
+  "count": 2634,
   "records": [
     {
       "id": "linux-man-diffman-git-1",
@@ -20,6 +20,17 @@
       "section": "1",
       "category": "Linux man page",
       "summary": "Linux manual-page reference for getent (section 1).",
+      "source": "Linux man-pages project",
+      "sourceUrl": "https://man7.org/linux/man-pages/",
+      "verification": "source-backed"
+    },
+    {
+      "id": "linux-man-git-bisect-rebase-1",
+      "name": "git-bisect-rebase",
+      "command": "git-bisect-rebase",
+      "section": "1",
+      "category": "Linux man page",
+      "summary": "Linux manual-page reference for git-bisect-rebase (section 1).",
       "source": "Linux man-pages project",
       "sourceUrl": "https://man7.org/linux/man-pages/",
       "verification": "source-backed"
