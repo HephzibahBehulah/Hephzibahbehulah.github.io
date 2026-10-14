@@ -1,8 +1,8 @@
 {
   "source": "MITRE ATT&CK Enterprise",
   "sourceUrl": "https://attack.mitre.org/",
-  "generatedAt": "2026-10-13T10:38:19.172Z",
-  "count": 1798,
+  "generatedAt": "2026-10-14T08:44:56.868Z",
+  "count": 1827,
   "records": [
     {
       "id": "campaign--0257b35b-93ef-4a70-80dd-ad5258e6045b",
@@ -429,7 +429,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T18:47:26.133Z",
+      "modified": "2026-10-09T21:15:15.621Z",
       "platforms": [],
       "externalId": "C0060"
     },
@@ -468,7 +468,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T20:48:17.935Z",
+      "modified": "2026-10-09T21:13:16.085Z",
       "platforms": [],
       "externalId": "C0059"
     },
@@ -741,7 +741,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2024-10-17T18:54:36.723Z",
+      "modified": "2026-09-03T19:46:42.143Z",
       "platforms": [],
       "externalId": "M1031"
     },
@@ -1308,12 +1308,12 @@
       "id": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
       "name": "APT38",
       "category": "intrusion-set",
-      "summary": "[APT38](https://attack.mitre.org/groups/G0082) is a North Korean state-sponsored threat group that specializes in financial cyber operations; it has been attributed to the Reconnaissance General Bureau.(Citation: CISA AA20-239A BeagleBoyz August 2020) Active since at least 2014, [APT38](https://attack.mitre.org/groups/G0082) has targeted banks, financial institutions, casinos, cryptocurrency exchanges, SWIFT system endpoints, and ATMs in at least 38 countries worldwide. Significant operations include the 2016 Bank of Bangladesh heist, during which [APT38](https://attack.mitre.org/groups/G0082) stole $81 million, as well as attacks against Bancomext (Citation: FireEye APT38 Oct 2018) and Banc",
+      "summary": "[APT38](https://attack.mitre.org/groups/G0082) is a North Korean state-sponsored threat group that specializes in financial cyber operations; it has been attributed to the Reconnaissance General Bureau.(Citation: CISA AA20-239A BeagleBoyz August 2020) Active since at least 2014, [APT38](https://attack.mitre.org/groups/G0082) has targeted banks, financial institutions, casinos, cryptocurrency exchanges, SWIFT system endpoints, and ATMs in at least 38 countries worldwide. Significant operations include the 2016 Bank of Bangladesh heist, Bancomext (Citation: FireEye APT38 Oct 2018) and Banco de Chile (Citation: FireEye APT38 Oct 2018), along with software supply chain compromises and destructiv",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T20:48:22.752Z",
+      "modified": "2026-10-09T03:56:03.463Z",
       "platforms": [],
       "externalId": "G0082"
     },
@@ -1555,12 +1555,12 @@
       "id": "intrusion-set--1c3dcf91-b859-4aae-a09c-ae26dc8b6390",
       "name": "Salt Typhoon",
       "category": "intrusion-set",
-      "summary": "[Salt Typhoon](https://attack.mitre.org/groups/G1045) is a People's Republic of China (PRC) state-backed actor that has been active since at least 2019 and responsible for numerous compromises of network infrastructure at major U.S. telecommunication and internet service providers (ISP).(Citation: US Dept. of Treasury Salt Typhoon JAN 2025)(Citation: Cisco Salt Typhoon FEB 2025) ",
+      "summary": "[Salt Typhoon](https://attack.mitre.org/groups/G1045) is a People's Republic of China (PRC) state-backed actor that has been active since at least 2019 and responsible for numerous compromises of network infrastructure at major U.S. telecommunication and internet service providers (ISP). [Salt Typhoon](https://attack.mitre.org/groups/G1045) has targeted and leveraged public facing network edge devices to gain access to victim environments. [Salt Typhoon](https://attack.mitre.org/groups/G1045) has been publicly associated with activities resembling other security industry reported activity groups to include OPERATOR PANDA, RedMike, GhostEmperor, and UNC5807.(Citation: US Dept. of Treasury Sal",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T18:47:41.313Z",
+      "modified": "2026-09-23T16:05:01.158Z",
       "platforms": [],
       "externalId": "G1045"
     },
@@ -1716,7 +1716,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T18:47:46.487Z",
+      "modified": "2026-10-01T23:37:12.271Z",
       "platforms": [],
       "externalId": "G0047"
     },
@@ -1924,7 +1924,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T20:48:33.778Z",
+      "modified": "2026-09-11T19:37:15.760Z",
       "platforms": [],
       "externalId": "G1015"
     },
@@ -2548,7 +2548,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T20:48:40.500Z",
+      "modified": "2026-09-02T18:51:43.655Z",
       "platforms": [],
       "externalId": "G0070"
     },
@@ -2795,7 +2795,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T20:48:43.267Z",
+      "modified": "2026-09-02T18:52:46.473Z",
       "platforms": [],
       "externalId": "G0112"
     },
@@ -2925,7 +2925,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T18:48:15.085Z",
+      "modified": "2026-09-22T18:32:31.345Z",
       "platforms": [],
       "externalId": "G1044"
     },
@@ -4904,9 +4904,10 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2024-04-10T23:47:16.416Z",
+      "modified": "2026-09-03T14:50:23.272Z",
       "platforms": [
-        "Windows"
+        "Windows",
+        "Android"
       ],
       "externalId": "S0491"
     },
@@ -16014,7 +16015,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-07-31T18:47:42.686Z",
+      "modified": "2026-09-02T17:31:48.218Z",
       "platforms": [],
       "externalId": "G1056"
     },
@@ -16047,6 +16048,306 @@
         "Windows"
       ],
       "externalId": "S9044"
+    },
+    {
+      "id": "malware--8c8b765a-fba0-4551-ae83-b12e2a8b8937",
+      "name": "MiniBrowse",
+      "category": "malware",
+      "summary": "[MiniBrowse](https://attack.mitre.org/software/S9062) is a custom stealer designed for the theft of credentials in browsers and passwords stores. [MiniBrowse](https://attack.mitre.org/software/S9062) was first observed in late-2025.(Citation: CheckPoint_NimbusManticoreEurope_Sept2025) [MiniBrowse](https://attack.mitre.org/software/S9062) has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: CheckPoint_NimbusManticoreEurope_Sept2025)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T20:13:07.752Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9062"
+    },
+    {
+      "id": "malware--363bc9c0-6e9b-4815-a072-1a92d0ad7502",
+      "name": "MiniFast",
+      "category": "malware",
+      "summary": "[MiniFast](https://attack.mitre.org/software/S9052) is a custom malware designed for long-term persistence and remote code execution. [MiniFast](https://attack.mitre.org/software/S9052) is a modular malware suspected of being generated using artificial intelligence (AI). [MiniFast](https://attack.mitre.org/software/S9052) was first observed in early-2026 and is a modified version of the [MiniJunk](https://attack.mitre.org/software/S9053) framework. [MiniFast](https://attack.mitre.org/software/S9052) has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: CheckPoint_NimbusManticore_May2026) ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T20:46:23.748Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9052"
+    },
+    {
+      "id": "malware--7eaf437c-cde7-475b-87dd-d8573ca5406b",
+      "name": "MiniJunk",
+      "category": "malware",
+      "summary": "[MiniJunk](https://attack.mitre.org/software/S9053) is a custom malware designed for long-term persistence and remote code execution.(Citation: CheckPoint_NimbusManticoreEurope_Sept2025) [MiniJunk](https://attack.mitre.org/software/S9053) was first observed in 2025 and is a modified version of the [MiniBike](https://attack.mitre.org/software/S9059) framework that was first observed in June 2022.(Citation: CheckPoint_NimbusManticoreEurope_Sept2025) [MiniJunk](https://attack.mitre.org/software/S9053) has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: CheckPoint_NimbusManticoreEurope_Sept2025)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T20:58:58.010Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9053"
+    },
+    {
+      "id": "malware--e60b857a-afe6-4f3a-b308-664d51768610",
+      "name": "TRUSTTRAP",
+      "category": "malware",
+      "summary": "[TRUSTTRAP](https://attack.mitre.org/software/S9064) is a malware that uses a fictitious prompt to trick users to submit their credentials.(Citation: Mandiant_UNC1549_Nov2025) [TRUSTTRAP](https://attack.mitre.org/software/S9064) was first observed in 2023 and has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Nov2025)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:36:37.212Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9064"
+    },
+    {
+      "id": "malware--1cf09c8f-32e1-404c-bb1e-4ac9ee7c5191",
+      "name": "MiniBike",
+      "category": "malware",
+      "summary": "[MiniBike](https://attack.mitre.org/software/S9059) is a custom backdoor written in C++ designed for command execution, data discovery, gathering, and exfiltration.(Citation: Mandiant_UNC1549_Feb2024) [MiniBike](https://attack.mitre.org/software/S9059) has been known to communicate with the C2 using Azure Cloud Infrastructure. [MiniBike](https://attack.mitre.org/software/S9059) was first observed in 2022.(Citation: Mandiant_UNC1549_Feb2024) [MiniBike](https://attack.mitre.org/software/S9059) has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Feb2024) ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:23:13.768Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9059"
+    },
+    {
+      "id": "malware--0bbfc4cf-818d-4ef0-97e0-15b423c85b08",
+      "name": "LIGHTRAIL",
+      "category": "malware",
+      "summary": "[LIGHTRAIL](https://attack.mitre.org/software/S9061) is a tunneler malware.(Citation: Mandiant_UNC1549_Feb2024) [LIGHTRAIL](https://attack.mitre.org/software/S9061) has been known to communicate with C2 SOCKS4A Websocket communications.(Citation: Mandiant_UNC1549_Feb2024) [LIGHTRAIL](https://attack.mitre.org/software/S9061) was first observed in 2022. [LIGHTRAIL](https://attack.mitre.org/software/S9061) has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Feb2024)(Citation: Mandiant_UNC1549TTPsTools_Nov2025) ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:28:13.399Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9061"
+    },
+    {
+      "id": "malware--b7c4047f-d56b-43b7-a0c8-65088a70d0cc",
+      "name": "CRASHPAD",
+      "category": "malware",
+      "summary": "[CRASHPAD](https://attack.mitre.org/software/S9057) is a Windows executable written in C++ that gathers data from web browsers.(Citation: Mandiant_UNC1549_Nov2025) [CRASHPAD](https://attack.mitre.org/software/S9057) was first observed in 2025 and has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Nov2025) ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:38:53.171Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9057"
+    },
+    {
+      "id": "malware--8460166d-ba74-405b-9944-c6f0365bc085",
+      "name": "DEEPROOT",
+      "category": "malware",
+      "summary": "[DEEPROOT](https://attack.mitre.org/software/S9063) is a Linux backdoor written in Golang.(Citation: Mandiant_UNC1549_Nov2025) [DEEPROOT](https://attack.mitre.org/software/S9063) is able to execute commands via a shell, enumerate systems, delete or download files, and exfiltrate data.(Citation: Mandiant_UNC1549_Nov2025) [DEEPROOT](https://attack.mitre.org/software/S9063) was first observed in 2025.(Citation: Mandiant_UNC1549_Nov2025) [DEEPROOT](https://attack.mitre.org/software/S9063) has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Nov2025)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:33:55.245Z",
+      "platforms": [
+        "Linux"
+      ],
+      "externalId": "S9063"
+    },
+    {
+      "id": "malware--8b325e28-6ea1-4094-929b-966d5db4ee4c",
+      "name": "MiniBus",
+      "category": "malware",
+      "summary": "[MiniBus](https://attack.mitre.org/software/S9060) is a custom backdoor used for command execution, data discovery, gathering, and exfiltration. [MiniBus](https://attack.mitre.org/software/S9060) has utilized Azure Cloud Infrastructure and unique adversary-controlled domains for command and control. [MiniBus](https://attack.mitre.org/software/S9060) is an updated platform to its predecessor [MiniBike](https://attack.mitre.org/software/S9059) and was first observed in August 2023. [MiniBus](https://attack.mitre.org/software/S9060) has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Feb2024) ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:15:12.857Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9060"
+    },
+    {
+      "id": "malware--53450019-1b2f-4912-bb3a-004bb1d7f177",
+      "name": "SIGHTGRAB",
+      "category": "malware",
+      "summary": "[SIGHTGRAB](https://attack.mitre.org/software/S9058) is a Windows executable written in C that captures and stages stolen data on victim devices.(Citation: Mandiant_UNC1549_Nov2025) [SIGHTGRAB](https://attack.mitre.org/software/S9058) was first observed in 2025 and has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Nov2025) ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T22:15:12.580Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9058"
+    },
+    {
+      "id": "malware--e6de8db2-092a-476c-a683-ad6e042a3265",
+      "name": "DCSYNCER.SLICK",
+      "category": "malware",
+      "summary": "[DCSYNCER.SLICK](https://attack.mitre.org/software/S9065) is a Windows executable that is designed to gather credentials from victim devices.(Citation: Mandiant_UNC1549_Nov2025) [DCSYNCER.SLICK](https://attack.mitre.org/software/S9065) was first observed in 2025 and has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Nov2025)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-02T12:11:29.664Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9065"
+    },
+    {
+      "id": "malware--fa6cfe4c-e83b-4e19-b687-bd26e2b656e5",
+      "name": "POLLBLEND",
+      "category": "malware",
+      "summary": "[POLLBLEND](https://attack.mitre.org/software/S9066) is a Windows tunneler written C++ that has utilized hardcoded C2 servers and leveraged hardcoded URI parameters for follow-on actions.(Citation: Mandiant_UNC1549_Nov2025) [POLLBLEND](https://attack.mitre.org/software/S9066) was first observed in 2025 and has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Nov2025)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:29:24.896Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9066"
+    },
+    {
+      "id": "malware--86adfd9a-6092-4714-9c5a-a05c5e3f63b5",
+      "name": "TWOSTROKE",
+      "category": "malware",
+      "summary": "[TWOSTROKE](https://attack.mitre.org/software/S9067) is malicious backdoor written in C++ that is capable of discovery actions, executing payloads and exfiltrating data.(Citation: Mandiant_UNC1549_Nov2025) [TWOSTROKE](https://attack.mitre.org/software/S9067) was first observed in 2025 and has been affiliated with the cyber espionage threat group [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059).(Citation: Mandiant_UNC1549_Nov2025)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-01T21:42:36.830Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9067"
+    },
+    {
+      "id": "campaign--199f5568-ca25-4892-b7a5-870503e4d0f4",
+      "name": "AI-Assisted Breach of Mexico's Government Infrastructure",
+      "category": "campaign",
+      "summary": "The [AI-Assisted Breach of Mexico's Government Infrastructure](https://attack.mitre.org/campaigns/C0064) is a campaign where human operators used Claude Code AI and OpenAI GPT GPT-4.1 AI to perform reconnaissance, vulnerability exploitation, privilege escalation, discovery, credential harvesting, and exfiltration operations. The attack impacted several Mexican government institutions including the Federal Tax Authority (Servicio de Administracion Tributaria), Mexico State Government (Estado de Mexico), Mexico City Civil Registry (Registro Civil de CDMX), Jalisco State Government, National Electoral Institute (Instituto Nacional Electoral), Michoacan State Government, SADM Monterrey Municipal",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-09T00:56:40.965Z",
+      "platforms": [],
+      "externalId": "C0064"
+    },
+    {
+      "id": "intrusion-set--973abd91-322f-4756-94b6-67381c4089b3",
+      "name": "The Gentlemen",
+      "category": "intrusion-set",
+      "summary": "[The Gentlemen](https://attack.mitre.org/groups/G1058) is a group that maintains the [The Gentlemen Ransomware](https://attack.mitre.org/software/S9051)-as-a-service (RaaS). [The Gentlemen](https://attack.mitre.org/groups/G1058) was first observed in mid-2025 who had posed [The Gentlemen Ransomware](https://attack.mitre.org/software/S9051) as a closed ransomware and shortly later opened the ransomware as a RaaS to affiliates in September 2025. [The Gentlemen](https://attack.mitre.org/groups/G1058) has been affiliated with the threat group Storm-2697 and GOLD SHERWOOD.(Citation: MSTI_GentelmenRansomware_May2026)(Citation: Intel471_TheGentlemen_Aug2026)(Citation: Sophos_TheGentlemen_Sept2026)(",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-09-30T17:41:50.958Z",
+      "platforms": [],
+      "externalId": "G1058"
+    },
+    {
+      "id": "malware--73526d60-8813-4895-88ac-915c68dfe8dd",
+      "name": "The Gentlemen Ransomware",
+      "category": "malware",
+      "summary": "[The Gentlemen Ransomware](https://attack.mitre.org/software/S9051) is a ransomware-as-a-service (RaaS). [The Gentlemen Ransomware](https://attack.mitre.org/software/S9051) has been written in Go programming language and has utilized Garble to obfuscate its code to target Windows environments. [The Gentlemen Ransomware](https://attack.mitre.org/software/S9051) is capable of executing its’ OS lockers in Windows, Linux, NAS, BSD and ESXi environments. [The Gentlemen Ransomware](https://attack.mitre.org/software/S9051) was first observed in mid-2025 as a closed ransomware and shortly later emerged as a RaaS to affiliates in September 2025. [The Gentlemen Ransomware](https://attack.mitre.org/sof",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-09-30T20:43:14.935Z",
+      "platforms": [
+        "macOS",
+        "Linux",
+        "Windows",
+        "IaaS",
+        "ESXi",
+        "Network Devices"
+      ],
+      "externalId": "S9051"
+    },
+    {
+      "id": "intrusion-set--318cf2c8-160b-4de7-be51-ecc3ded2705f",
+      "name": "NIMBUS MANTICORE",
+      "category": "intrusion-set",
+      "summary": "[NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059) is a State Sponsored cyber espionage group associated with the Iranian Regime specifically the Iranian Revolutionary Guard Corps (IRGC). [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059) has employed social engineering attacks to include HR related themes and has leveraged custom malware against its victims. [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059) has sought sensitive information in victims’ environments to include network/IT documentation, intellectual property and emails. [NIMBUS MANTICORE](https://attack.mitre.org/groups/G1059) has also leveraged compromised organizations as pivot points to access other or",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-05T14:45:56.927Z",
+      "platforms": [],
+      "externalId": "G1059"
+    },
+    {
+      "id": "malware--ab183324-4634-45bc-98af-9458bb94bcef",
+      "name": "BACKUPOSINT v9.0 APEX PREDATOR",
+      "category": "malware",
+      "summary": "[BACKUPOSINT v9.0 APEX PREDATOR](https://attack.mitre.org/software/S9045) is a 49-module Python malware developed entirely by Anthropic’s Claude Code as part of the [AI-Assisted Breach of Mexico's Government Infrastructure](https://attack.mitre.org/campaigns/C0064) campaign. [BACKUPOSINT v9.0 APEX PREDATOR](https://attack.mitre.org/software/S9045) leverages publicly available techniques for network enumeration, credential harvesting, Active Directory interrogation, database access, privilege escalation, cloud metadata extraction, and lateral movement (Citation: AI-Mexico-Govt-Compromise). ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-09T00:56:40.966Z",
+      "platforms": [
+        "Linux",
+        "Windows",
+        "IaaS",
+        "Containers"
+      ],
+      "externalId": "S9045"
+    },
+    {
+      "id": "malware--947119be-4875-49aa-8247-776c34233063",
+      "name": "Vidar",
+      "category": "malware",
+      "summary": "[Vidar](https://attack.mitre.org/software/S9050) is a Windows infostealer that was first advertised in November 2018. Written in C++, [Vidar](https://attack.mitre.org/software/S9050) collects PII, cryptocurrency wallets, documents and other data within the compromised machine. Version 2 of [Vidar](https://attack.mitre.org/software/S9050) was published in October 2025, and has been used in numerous operations since its release. [Vidar](https://attack.mitre.org/software/S9050) has been observed alongside other malware strains, including STOP/Djvu ransomware, Mina.exe (an XMRIG miner), and Clip1.exe (a Laplas Clipper sample).(Citation: Intrinsec_Vidar_April2026)(Citation: LevelBlue_Vidar_May202",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-09-23T18:54:28.219Z",
+      "platforms": [
+        "Windows"
+      ],
+      "externalId": "S9050"
+    },
+    {
+      "id": "malware--bcd0f2cd-0b21-4109-8310-8a90be320514",
+      "name": "IOControl",
+      "category": "malware",
+      "summary": "IOControl is a malware that targeted Linux ARM-based IoT/OT devices including Hikvision IP cameras, D-Link firewalls and routers, Unitronics PLCs and HMIs, Orpak and Gasboy fuel management systems, and Baicells LTE controllers across the United States and Israel. The malware has been attributed to [CyberAv3ngers](https://attack.mitre.org/groups/G1027) which is suspected to be affiliated with the Iranian Government Islamic Revolutionary Guard Corps (IRGC).(Citation: Claroty-IOCONTROL)(Citation: Dragos 2025 Year in Review)(Citation: Armis-IOCONTROL)",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-12T16:09:31.637Z",
+      "platforms": [],
+      "externalId": "S9046"
     },
     {
       "id": "attack-pattern--0042a9f5-f053-4769-b3ef-9ad018dfa298",
@@ -16260,7 +16561,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:20.468Z",
+      "modified": "2026-09-18T00:31:20.483Z",
       "platforms": [
         "PRE"
       ],
@@ -16320,7 +16621,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.620Z",
+      "modified": "2026-09-03T19:46:40.081Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -16386,7 +16687,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:21.583Z",
+      "modified": "2026-09-18T00:31:20.607Z",
       "platforms": [
         "PRE"
       ],
@@ -16538,7 +16839,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:22.302Z",
+      "modified": "2026-09-11T19:58:20.992Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -16618,12 +16919,12 @@
       "id": "attack-pattern--0c4b4fda-9062-47da-98b9-ceae2dcf052a",
       "name": "Sharepoint",
       "category": "attack-pattern",
-      "summary": "Adversaries may leverage the SharePoint repository as a source to mine valuable information. SharePoint will often contain useful information for an adversary to learn about the structure and functionality of the internal network and systems. For example, the following is a list of example information that may hold potential value to an adversary and may also be found on SharePoint: * Policies, procedures, and standards * Physical / logical network diagrams * System architecture diagrams * Technical system documentation * Testing / development credentials (i.e., [Unsecured Credentials](https://attack.mitre.org/techniques/T1552)) * Work / project schedules * Source code snippets * Links to ne",
+      "summary": "Adversaries may leverage the SharePoint repository as a source to mine valuable information.(Citation: Information architecture guidance for SharePoint Online portals) SharePoint will often contain useful information for an adversary to learn about the structure and functionality of the internal network and systems. For example, the following is a list of example information that may hold potential value to an adversary and may also be found on SharePoint: * Policies, procedures, and standards * Physical / logical network diagrams * System architecture diagrams * Technical system documentation * Testing / development credentials (i.e., [Unsecured Credentials](https://attack.mitre.org/techniq",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.620Z",
+      "modified": "2026-10-07T17:43:08.237Z",
       "platforms": [
         "Office Suite",
         "Windows"
@@ -16650,12 +16951,12 @@
       "id": "attack-pattern--0cc222f5-c3ff-48e6-9f52-3314baf9d37e",
       "name": "Artificial Intelligence",
       "category": "attack-pattern",
-      "summary": "Adversaries may obtain access to generative artificial intelligence tools, such as large language models (LLMs), to aid various techniques during targeting. These tools may be used to inform, bolster, and enable a variety of malicious tasks, including conducting [Reconnaissance](https://attack.mitre.org/tactics/TA0043), creating basic scripts, assisting social engineering, and even developing payloads.(Citation: MSFT-AI) For example, by utilizing a publicly available LLM an adversary is essentially outsourcing or automating certain tasks to the tool. Using AI, the adversary may draft and generate content in a variety of written languages to be used in [Phishing](https://attack.mitre.org/tech",
+      "summary": "Adversaries may obtain access to generative artificial intelligence (AI) tools, such as large language models (LLMs), to aid various techniques during targeting. These tools may be used to inform, bolster, and enable a variety of malicious tasks, including creating scripts, assisting social engineering, developing payloads, and to [Query Public AI Services](https://attack.mitre.org/techniques/T1682) in support of [Reconnaissance](https://attack.mitre.org/tactics/TA0043).(Citation: MSFT-AI) For example, by utilizing a publicly available LLM an adversary is essentially outsourcing or automating certain tasks to the tool. Using AI, the adversary may draft and [Generate Content](https://attack.m",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.620Z",
+      "modified": "2026-09-16T19:44:37.015Z",
       "platforms": [
         "PRE"
       ],
@@ -16721,7 +17022,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.620Z",
+      "modified": "2026-09-11T19:42:10.060Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -16883,7 +17184,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.621Z",
+      "modified": "2026-09-11T19:43:15.046Z",
       "platforms": [
         "Containers",
         "Linux",
@@ -17324,7 +17625,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.622Z",
+      "modified": "2026-10-06T16:05:56.514Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -17389,7 +17690,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.622Z",
+      "modified": "2026-09-03T19:46:40.083Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -17502,7 +17803,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.622Z",
+      "modified": "2026-09-11T19:49:27.665Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -17520,7 +17821,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.622Z",
+      "modified": "2026-09-11T19:59:49.678Z",
       "platforms": [
         "Containers",
         "ESXi",
@@ -17534,12 +17835,12 @@
       "id": "attack-pattern--1cec9319-743b-4840-bb65-431547bce82a",
       "name": "Digital Certificates",
       "category": "attack-pattern",
-      "summary": "Adversaries may create self-signed SSL/TLS certificates that can be used during targeting. SSL/TLS certificates are designed to instill trust. They include information about the key, information about its owner's identity, and the digital signature of an entity that has verified the certificate's contents are correct. If the signature is valid, and the person examining the certificate trusts the signer, then they know they can use that key to communicate with its owner. In the case of self-signing, digital certificates will lack the element of trust associated with the signature of a third-party certificate authority (CA). Adversaries may create self-signed SSL/TLS certificates that can be u",
+      "summary": "Adversaries may create self-signed SSL/TLS certificates that can be used during targeting. SSL/TLS certificates are designed to instill trust. They include information about the key, information about its owner's identity, and the digital signature of an entity that has verified the certificate's contents are correct. If the signature is valid, and the person examining the certificate trusts the signer, then they know they can use that key to communicate with its owner. In the case of self-signing, digital certificates will lack the element of trust associated with the signature of a third-party certificate authority (CA).(Citation: Spice Works Digital Certificates) Adversaries may create se",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:29.137Z",
+      "modified": "2026-08-27T14:17:14.395Z",
       "platforms": [
         "PRE"
       ],
@@ -17705,7 +18006,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.622Z",
+      "modified": "2026-09-11T19:41:40.954Z",
       "platforms": [
         "ESXi",
         "IaaS",
@@ -17887,7 +18188,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:32.066Z",
+      "modified": "2026-09-18T00:31:18.338Z",
       "platforms": [
         "PRE"
       ],
@@ -17951,12 +18252,12 @@
       "id": "attack-pattern--24bfaeba-cb0d-4525-b3dc-507c77ecec41",
       "name": "Symmetric Cryptography",
       "category": "attack-pattern",
-      "summary": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.",
+      "summary": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, DES, 3DES, Blowfish, and RC4.(Citation: Destination Certification)(Citation: Symmetric vs Asymmetric Cryptography)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.623Z",
+      "modified": "2026-09-02T20:07:39.622Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -18088,7 +18389,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.623Z",
+      "modified": "2026-09-11T19:25:59.519Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -18154,7 +18455,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.623Z",
+      "modified": "2026-09-11T19:55:38.427Z",
       "platforms": [
         "Identity Provider",
         "Linux",
@@ -18233,16 +18534,17 @@
       "id": "attack-pattern--2db31dcd-54da-405d-acef-b9129b816ed6",
       "name": "SSH",
       "category": "attack-pattern",
-      "summary": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to log into remote machines using Secure Shell (SSH). The adversary may then perform actions as the logged-on user. SSH is a protocol that allows authorized users to open remote shells on other computers. Many Linux and macOS versions come with SSH installed by default, although typically disabled until the user enables it. On ESXi, SSH can be enabled either directly on the host (e.g., via `vim-cmd hostsvc/enable_ssh`) or via vCenter.(Citation: Sygnia ESXi Ransomware 2025)(Citation: TrendMicro ESXI Ransomware)(Citation: Sygnia Abyss Locker 2025) The SSH server can be configured to use standard password authentica",
+      "summary": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to log into remote machines using Secure Shell (SSH). The adversary may then perform actions as the logged-on user. SSH is a protocol that allows authorized users to open remote shells on other computers. Many Linux and macOS versions come with SSH installed by default, although typically disabled until the user enables it. On ESXi, SSH can be enabled either directly on the host (e.g., via `vim-cmd hostsvc/enable_ssh`) or via vCenter.(Citation: Sygnia ESXi Ransomware 2025)(Citation: TrendMicro ESXI Ransomware)(Citation: Sygnia Abyss Locker 2025) Modern versions of Windows include a built-in SSH server and client.",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.624Z",
+      "modified": "2026-09-18T02:23:13.647Z",
       "platforms": [
         "ESXi",
         "Linux",
-        "macOS"
+        "macOS",
+        "Windows"
       ],
       "externalId": "T1021.004"
     },
@@ -18288,7 +18590,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.624Z",
+      "modified": "2026-09-11T19:55:20.273Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -18338,7 +18640,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.624Z",
+      "modified": "2026-09-11T19:32:27.370Z",
       "platforms": [
         "Windows"
       ],
@@ -18353,7 +18655,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.624Z",
+      "modified": "2026-09-11T19:58:54.721Z",
       "platforms": [
         "IaaS",
         "Linux",
@@ -18680,7 +18982,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.625Z",
+      "modified": "2026-09-11T19:58:37.542Z",
       "platforms": [
         "Windows"
       ],
@@ -18745,7 +19047,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.625Z",
+      "modified": "2026-09-11T19:56:24.154Z",
       "platforms": [
         "ESXi",
         "IaaS",
@@ -18765,7 +19067,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:38.368Z",
+      "modified": "2026-09-03T19:46:45.255Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -18998,7 +19300,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.627Z",
+      "modified": "2026-09-11T19:38:58.040Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -19064,7 +19366,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.627Z",
+      "modified": "2026-09-18T00:31:18.338Z",
       "platforms": [
         "PRE"
       ],
@@ -19158,7 +19460,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.628Z",
+      "modified": "2026-09-11T19:59:22.966Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -19177,7 +19479,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.628Z",
+      "modified": "2026-09-11T19:42:55.679Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -19384,7 +19686,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.629Z",
+      "modified": "2026-09-18T00:31:18.338Z",
       "platforms": [
         "PRE"
       ],
@@ -19416,7 +19718,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.629Z",
+      "modified": "2026-09-11T19:43:31.571Z",
       "platforms": [
         "Windows"
       ],
@@ -19572,7 +19874,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.629Z",
+      "modified": "2026-09-11T20:00:48.048Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -19901,12 +20203,12 @@
       "id": "attack-pattern--4eeaf8a9-c86b-4954-a663-9555fb406466",
       "name": "Scheduled Transfer",
       "category": "attack-pattern",
-      "summary": "Adversaries may schedule data exfiltration to be performed only at certain times of day or at certain intervals. This could be done to blend traffic patterns with normal activity or availability. When scheduled exfiltration is used, other exfiltration techniques likely apply as well to transfer the information out of the network, such as [Exfiltration Over C2 Channel](https://attack.mitre.org/techniques/T1041) or [Exfiltration Over Alternative Protocol](https://attack.mitre.org/techniques/T1048).",
+      "summary": "Adversaries may schedule data exfiltration to be performed only at certain times of day or at certain intervals. This could be done to blend traffic patterns with normal activity or availability.(Citation: Delay Code Execution in Java) When scheduled exfiltration is used, other exfiltration techniques likely apply as well to transfer the information out of the network, such as [Exfiltration Over C2 Channel](https://attack.mitre.org/techniques/T1041) or [Exfiltration Over Alternative Protocol](https://attack.mitre.org/techniques/T1048).",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:45.522Z",
+      "modified": "2026-09-03T19:46:50.463Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -19954,7 +20256,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.632Z",
+      "modified": "2026-09-03T19:46:46.553Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -20196,7 +20498,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:48.564Z",
+      "modified": "2026-09-03T19:46:40.083Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -20344,7 +20646,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.634Z",
+      "modified": "2026-09-11T19:48:51.536Z",
       "platforms": [
         "Windows"
       ],
@@ -20389,7 +20691,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.635Z",
+      "modified": "2026-09-11T19:22:47.433Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -20416,12 +20718,12 @@
       "id": "attack-pattern--5909f20f-3c39-4795-be06-ef1ea40d350b",
       "name": "Defacement",
       "category": "attack-pattern",
-      "summary": "Adversaries may modify visual content available internally or externally to an enterprise network, thus affecting the integrity of the original content. Reasons for [Defacement](https://attack.mitre.org/techniques/T1491) include delivering messaging, intimidation, or claiming (possibly false) credit for an intrusion. Disturbing or offensive images may be used as a part of [Defacement](https://attack.mitre.org/techniques/T1491) in order to cause user discomfort, or to pressure compliance with accompanying messages. ",
+      "summary": "Adversaries may modify visual content available internally or externally to an enterprise network, thus affecting the integrity of the original content. Reasons for [Defacement](https://attack.mitre.org/techniques/T1491) include delivering messaging, intimidation, or claiming (possibly false) credit for an intrusion. Disturbing or offensive images may be used as a part of [Defacement](https://attack.mitre.org/techniques/T1491) in order to cause user discomfort, or to pressure compliance with accompanying messages.(Citation: Defacement Attacks) ",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:49.761Z",
+      "modified": "2026-09-02T20:02:31.002Z",
       "platforms": [
         "Windows",
         "IaaS",
@@ -20504,7 +20806,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.635Z",
+      "modified": "2026-09-11T20:00:19.155Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -20570,7 +20872,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.635Z",
+      "modified": "2026-09-11T19:56:45.908Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -20605,7 +20907,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.635Z",
+      "modified": "2026-09-18T00:31:18.339Z",
       "platforms": [
         "PRE"
       ],
@@ -20792,7 +21094,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.636Z",
+      "modified": "2026-09-11T19:22:11.810Z",
       "platforms": [
         "PRE"
       ],
@@ -21004,12 +21306,12 @@
       "id": "attack-pattern--69b8fd78-40e8-4600-ae4d-662c9d7afdb3",
       "name": "External Proxy",
       "category": "attack-pattern",
-      "summary": "Adversaries may use an external proxy to act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, to provide resiliency in the face of connection loss, or to ride over existing trusted communications paths to avoid suspicion. External connection proxies are used to mask the destination of C2 traffic and are typically impleme",
+      "summary": "Adversaries may use an external proxy to act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap.(Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, to provide resiliency in the face of connection loss, or to ride over existing trusted communications paths to avoid suspicion. External connection proxies are used to mask the destination of C2 traffic and are typically implemen",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.640Z",
+      "modified": "2026-09-08T20:29:07.652Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -21382,12 +21684,12 @@
       "id": "attack-pattern--731f4f55-b6d0-41d1-a7a9-072a66389aea",
       "name": "Proxy",
       "category": "attack-pattern",
-      "summary": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, reduce the number of simultaneous outbound network connections, provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between victims ",
+      "summary": "Adversaries may use a connection proxy to direct network traffic between systems or act as an intermediary for network communications to a command and control server to avoid direct connections to their infrastructure. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap.(Citation: Trend Micro APT Attack Tools) Adversaries use these types of proxies to manage command and control communications, reduce the number of simultaneous outbound network connections, provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between victims t",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.641Z",
+      "modified": "2026-09-08T20:28:07.390Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -21573,7 +21875,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.642Z",
+      "modified": "2026-09-18T00:31:18.339Z",
       "platforms": [
         "PRE"
       ],
@@ -21617,12 +21919,12 @@
       "id": "attack-pattern--7807d3a4-a885-4639-a786-c1ed41484970",
       "name": "Malware",
       "category": "attack-pattern",
-      "summary": "Adversaries may buy, steal, or download malware that can be used during targeting. Malicious software can include payloads, droppers, post-compromise tools, backdoors, packers, and C2 protocols. Adversaries may acquire malware to support their operations, obtaining a means for maintaining control of remote machines, evading defenses, and executing post-compromise behaviors. In addition to downloading free malware from the internet, adversaries may purchase these capabilities from third-party entities. Third-party entities can include technology companies that specialize in malware development, criminal marketplaces (including Malware-as-a-Service, or MaaS), or from individuals. In addition t",
+      "summary": "Adversaries may buy, steal, or download malware that can be used during targeting. Malicious software can include payloads, droppers, post-compromise tools, backdoors, packers, and C2 protocols. Adversaries may acquire malware to support their operations, obtaining a means for maintaining control of remote machines, evading defenses, and executing post-compromise behaviors. In addition to downloading free malware from the internet, adversaries may purchase these capabilities from third-party entities. Third-party entities can include technology companies that specialize in malware development, criminal marketplaces (including Malware-as-a-Service, or MaaS), or from individuals.(Citation: BIT",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.643Z",
+      "modified": "2026-09-02T17:55:52.445Z",
       "platforms": [
         "PRE"
       ],
@@ -21687,12 +21989,12 @@
       "id": "attack-pattern--79a4052e-1a89-4b09-aea6-51f1d11fe19c",
       "name": "Exfiltration Over Symmetric Encrypted Non-C2 Protocol",
       "category": "attack-pattern",
-      "summary": "Adversaries may steal data by exfiltrating it over a symmetrically encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server. Symmetric encryption algorithms are those that use shared or the same keys/secrets on each end of the channel. This requires an exchange or pre-arranged agreement/possession of the value used to encrypt and decrypt data. Network protocols that use asymmetric encryption often utilize symmetric encryption once keys are exchanged, but adversaries may opt to manually share keys and implement symmetric cryptographic algorithms (ex: RC4, AES) vic",
+      "summary": "Adversaries may steal data by exfiltrating it over a symmetrically encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server. Symmetric encryption algorithms are those that use shared or the same keys/secrets on each end of the channel. This requires an exchange or pre-arranged agreement/possession of the value used to encrypt and decrypt data.(Citation: Exfiltration Over Symmetric Encrypted Non-C2 Protocol) Network protocols that use asymmetric encryption often utilize symmetric encryption once keys are exchanged, but adversaries may opt to manually share keys an",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:48:59.332Z",
+      "modified": "2026-09-02T18:30:25.080Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -21726,7 +22028,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.643Z",
+      "modified": "2026-09-18T00:31:18.339Z",
       "platforms": [
         "PRE"
       ],
@@ -21736,12 +22038,12 @@
       "id": "attack-pattern--7ad38ef1-381a-406d-872a-38b136eb5ecc",
       "name": "Confluence",
       "category": "attack-pattern",
-      "summary": " Adversaries may leverage Confluence repositories to mine valuable information. Often found in development environments alongside Atlassian JIRA, Confluence is generally used to store development-related documentation, however, in general may contain more diverse categories of useful information, such as: * Policies, procedures, and standards * Physical / logical network diagrams * System architecture diagrams * Technical system documentation * Testing / development credentials (i.e., [Unsecured Credentials](https://attack.mitre.org/techniques/T1552)) * Work / project schedules * Source code snippets * Links to network shares and other internal resources ",
+      "summary": " Adversaries may leverage Confluence repositories to mine valuable information.(Citation: Confluence Standards in Data Engineering) Often found in development environments alongside Atlassian JIRA, Confluence is generally used to store development-related documentation, however, in general may contain more diverse categories of useful information, such as: * Policies, procedures, and standards * Physical / logical network diagrams * System architecture diagrams * Technical system documentation * Testing / development credentials (i.e., [Unsecured Credentials](https://attack.mitre.org/techniques/T1552)) * Work / project schedules * Source code snippets * Links to network shares and other inte",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.643Z",
+      "modified": "2026-09-02T19:58:33.749Z",
       "platforms": [
         "SaaS"
       ],
@@ -21786,7 +22088,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.644Z",
+      "modified": "2026-09-11T19:45:35.899Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -22007,7 +22309,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:01.181Z",
+      "modified": "2026-09-18T00:31:20.766Z",
       "platforms": [
         "PRE"
       ],
@@ -22070,7 +22372,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.662Z",
+      "modified": "2026-10-07T17:57:15.222Z",
       "platforms": [
         "Containers"
       ],
@@ -22207,7 +22509,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.672Z",
+      "modified": "2026-09-11T19:27:14.200Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -22224,7 +22526,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.672Z",
+      "modified": "2026-09-03T19:46:46.483Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -22242,7 +22544,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.672Z",
+      "modified": "2026-09-11T19:22:30.399Z",
       "platforms": [
         "Containers",
         "IaaS",
@@ -22531,7 +22833,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.694Z",
+      "modified": "2026-09-18T00:31:18.339Z",
       "platforms": [
         "PRE"
       ],
@@ -22580,7 +22882,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:04.839Z",
+      "modified": "2026-09-17T17:49:30.904Z",
       "platforms": [
         "IaaS",
         "Identity Provider",
@@ -22681,7 +22983,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.705Z",
+      "modified": "2026-09-02T18:35:02.657Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -22732,7 +23034,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.705Z",
+      "modified": "2026-09-11T19:40:13.112Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -22857,12 +23159,12 @@
       "id": "attack-pattern--92d7da27-2d91-488e-a00c-059dc162766d",
       "name": "Exfiltration Over C2 Channel",
       "category": "attack-pattern",
-      "summary": "Adversaries may steal data by exfiltrating it over an existing command and control channel. Stolen data is encoded into the normal communications channel using the same protocol as command and control communications.",
+      "summary": "Adversaries may steal data by exfiltrating it over an existing command and control channel. Stolen data is encoded into the normal communications channel using the same protocol as command and control communications.(Citation: C2 FRAMEWORKS)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.706Z",
+      "modified": "2026-09-11T19:45:01.540Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -22981,14 +23283,16 @@
       "id": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
       "name": "PowerShell",
       "category": "attack-pattern",
-      "summary": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the <code>Start-Process</code> cmdlet which can be used to run an executable and the <code>Invoke-Command</code> cmdlet which runs a command locally or on a remote computer (though administrator permissions are required to use PowerShell to connect to remote systems). PowerShell may also be used to download and run executables from t",
+      "summary": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) PowerShell can also be installed on Linux and macOS.(Citation: Powershell installation) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the <code>Start-Process</code> cmdlet which can be used to run an executable and the <code>Invoke-Command</code> cmdlet which runs a command locally or on a remote computer (though administrator permissions are required to use PowerShell to connec",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.706Z",
+      "modified": "2026-09-18T13:23:14.419Z",
       "platforms": [
-        "Windows"
+        "Windows",
+        "Linux",
+        "macOS"
       ],
       "externalId": "T1059.001"
     },
@@ -23031,7 +23335,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.706Z",
+      "modified": "2026-09-03T19:46:40.084Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -23098,7 +23402,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:08.849Z",
+      "modified": "2026-09-03T19:46:40.085Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -23293,7 +23597,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:10.460Z",
+      "modified": "2026-09-03T19:46:48.106Z",
       "platforms": [
         "ESXi",
         "IaaS",
@@ -23331,7 +23635,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.706Z",
+      "modified": "2026-09-11T19:52:38.458Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -23390,12 +23694,12 @@
       "id": "attack-pattern--a3e1e6c5-9c74-4fc0-a16c-a9d228c17829",
       "name": "Exfiltration over USB",
       "category": "attack-pattern",
-      "summary": "Adversaries may attempt to exfiltrate data over a USB connected physical device. In certain circumstances, such as an air-gapped network compromise, exfiltration could occur via a USB device introduced by a user. The USB device could be used as the final exfiltration point or to hop between otherwise disconnected systems.",
+      "summary": "Adversaries may attempt to exfiltrate data over a USB connected physical device. In certain circumstances, such as an air-gapped network compromise, exfiltration could occur via a USB device introduced by a user. The USB device could be used as the final exfiltration point or to hop between otherwise disconnected systems.(Citation: A USB data exfiltration case study)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:10.994Z",
+      "modified": "2026-09-02T18:41:21.426Z",
       "platforms": [
         "Linux",
         "Windows",
@@ -23452,12 +23756,12 @@
       "id": "attack-pattern--a62a8db3-f23a-4d8f-afd6-9dbc77e7813b",
       "name": "Phishing",
       "category": "attack-pattern",
-      "summary": "Adversaries may send phishing messages to gain access to victim systems. All forms of phishing are electronically delivered social engineering. Phishing can be targeted, known as spearphishing. In spearphishing, a specific individual, company, or industry will be targeted by the adversary. More generally, adversaries can conduct non-targeted phishing, such as in mass malware spam campaigns. Adversaries may send victims emails containing malicious attachments or links, typically to execute malicious code on victim systems. Phishing may also be conducted via third-party services, like social media platforms. Phishing may also involve social engineering techniques, such as posing as a trusted s",
+      "summary": "Adversaries may send phishing messages to gain access to victim systems. All forms of phishing are electronically delivered social engineering. Phishing can be targeted, known as spearphishing. In spearphishing, a specific individual, company, or industry will be targeted by the adversary. More generally, adversaries can conduct non-targeted phishing, such as in mass malware spam campaigns. Adversaries may send victims emails containing malicious attachments or links, typically to execute malicious code on victim systems. Phishing may also be conducted via third-party services (like social media platforms) or delivered via calendar invites. Phishing may also involve social engineering techni",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.706Z",
+      "modified": "2026-09-18T01:13:52.216Z",
       "platforms": [
         "Identity Provider",
         "Linux",
@@ -23669,7 +23973,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.707Z",
+      "modified": "2026-09-03T19:46:47.930Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -23682,12 +23986,12 @@
       "id": "attack-pattern--ae676644-d2d2-41b7-af7e-9bed1b55898c",
       "name": "Data from Network Shared Drive",
       "category": "attack-pattern",
-      "summary": "Adversaries may search network shares on computers they have compromised to find files of interest. Sensitive data can be collected from remote systems via shared network drives (host shared directory, network file server, etc.) that are accessible from the current system prior to Exfiltration. Interactive command shells may be in use, and common functionality within [cmd](https://attack.mitre.org/software/S0106) may be used to gather information.",
+      "summary": "Adversaries may search network shares on computers they have compromised to find files of interest. Sensitive data can be collected from remote systems via shared network drives (host shared directory, network file server, etc.) that are accessible from the current system prior to Exfiltration. Interactive command shells may be in use, and common functionality within [cmd](https://attack.mitre.org/software/S0106) may be used to gather information.(Citation: Net Use)(Citation: Cybersecurity Advisory GRU Brute Force Campaign July 2021)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:13.555Z",
+      "modified": "2026-09-02T18:26:02.395Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -23704,7 +24008,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:13.641Z",
+      "modified": "2026-09-18T00:31:18.340Z",
       "platforms": [
         "PRE"
       ],
@@ -23714,12 +24018,12 @@
       "id": "attack-pattern--ae7f3575-0a5e-427e-991b-fe03ad44c754",
       "name": "Modify System Image",
       "category": "attack-pattern",
-      "summary": "Adversaries may make changes to the operating system of embedded network devices to weaken defenses and provide new capabilities for themselves. On such devices, the operating systems are typically monolithic and most of the device functionality and capabilities are contained within a single file. To change the operating system, the adversary typically only needs to affect this one file, replacing or modifying it. This can either be done live in memory during system runtime for immediate effect, or in storage to implement the change on the next boot of the network device.",
+      "summary": "Adversaries may make changes to the operating system of embedded network devices to weaken defenses and provide new capabilities for themselves. On such devices, the operating systems are typically monolithic and most of the device functionality and capabilities are contained within a single file.(Citation: Cisco Networking Software Product Lines)(Citation: Network Device Integrity Methodology) To change the operating system, the adversary typically only needs to affect this one file, replacing or modifying it. This can either be done live in memory during system runtime for immediate effect, or in storage to implement the change on the next boot of the network device.",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.707Z",
+      "modified": "2026-08-27T17:55:53.583Z",
       "platforms": [
         "Network Devices"
       ],
@@ -23734,7 +24038,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.707Z",
+      "modified": "2026-09-02T18:05:12.296Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -23781,12 +24085,12 @@
       "id": "attack-pattern--b0533c6e-8fea-4788-874f-b799cacc4b92",
       "name": "Indicator Removal from Tools",
       "category": "attack-pattern",
-      "summary": "Adversaries may remove indicators from tools if they believe their malicious tool was detected, quarantined, or otherwise curtailed. They can modify the tool by removing the indicator and using the updated version that is no longer detected by the target's defensive systems or subsequent targets that may use similar systems. A good example of this is when malware is detected with a file signature and quarantined by anti-virus software. An adversary who can determine that the malware was quarantined because of its file signature may modify the file to explicitly avoid that signature, and then re-use the malware.",
+      "summary": "Adversaries may remove indicators from tools if they believe their malicious tool was detected, quarantined, or otherwise curtailed. They can modify the tool by removing the indicator and using the updated version that is no longer detected by the target's defensive systems or subsequent targets that may use similar systems. A good example of this is when malware is detected with a file signature and quarantined by anti-virus software. An adversary who can determine that the malware was quarantined because of its file signature may modify the file to explicitly avoid that signature, and then re-use the malware.(Citation: Files and Antivirus Detection)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.707Z",
+      "modified": "2026-09-11T19:58:00.789Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -23803,7 +24107,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:13.999Z",
+      "modified": "2026-10-07T17:57:14.703Z",
       "platforms": [
         "IaaS",
         "Containers"
@@ -23858,7 +24162,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.707Z",
+      "modified": "2026-09-03T19:46:48.006Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -23891,7 +24195,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.708Z",
+      "modified": "2026-09-11T19:54:27.078Z",
       "platforms": [
         "Windows"
       ],
@@ -23984,7 +24288,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.708Z",
+      "modified": "2026-09-11T19:32:58.098Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -24019,12 +24323,12 @@
       "id": "attack-pattern--b4694861-542c-48ea-9eb1-10d356e7140a",
       "name": "Remote Email Collection",
       "category": "attack-pattern",
-      "summary": "Adversaries may target an Exchange server, Office 365, or Google Workspace to collect sensitive information. Adversaries may leverage a user's credentials and interact directly with the Exchange server to acquire information from within a network. Adversaries may also access externally facing Exchange services, Office 365, or Google Workspace to access email using credentials or access tokens. Tools such as [MailSniper](https://attack.mitre.org/software/S0413) can be used to automate searches for specific keywords.",
+      "summary": "Adversaries may target an Exchange server, Office 365, or Google Workspace to collect sensitive information. Adversaries may leverage a user's credentials and interact directly with the Exchange server to acquire information from within a network. Adversaries may also access externally facing Exchange services, Office 365, or Google Workspace to access email using credentials or access tokens. Tools such as [MailSniper](https://attack.mitre.org/software/S0413) can be used to automate searches for specific keywords.(Citation: Cybersecurity Advisory GRU Brute Force Campaign July 2021)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.708Z",
+      "modified": "2026-09-09T18:44:33.117Z",
       "platforms": [
         "Office Suite",
         "Windows"
@@ -24055,7 +24359,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.709Z",
+      "modified": "2026-09-11T19:55:56.428Z",
       "platforms": [
         "macOS",
         "Windows"
@@ -24309,7 +24613,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:17.042Z",
+      "modified": "2026-09-03T19:46:48.529Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -24376,7 +24680,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.710Z",
+      "modified": "2026-09-18T00:31:18.340Z",
       "platforms": [
         "PRE"
       ],
@@ -24442,7 +24746,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.712Z",
+      "modified": "2026-09-11T19:52:16.657Z",
       "platforms": [
         "Containers",
         "ESXi",
@@ -24557,7 +24861,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.713Z",
+      "modified": "2026-09-03T19:46:40.085Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -24641,7 +24945,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.713Z",
+      "modified": "2026-09-11T19:44:43.501Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -24678,7 +24982,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.713Z",
+      "modified": "2026-09-03T19:46:52.112Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -24758,7 +25062,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.713Z",
+      "modified": "2026-09-03T19:46:48.129Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -24840,7 +25144,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.714Z",
+      "modified": "2026-09-03T19:46:40.086Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -24868,12 +25172,12 @@
       "id": "attack-pattern--c3888c54-775d-4b2f-b759-75a2ececcbfd",
       "name": "Data Transfer Size Limits",
       "category": "attack-pattern",
-      "summary": "An adversary may exfiltrate data in fixed size chunks instead of whole files or limit packet sizes below certain thresholds. This approach may be used to avoid triggering network data transfer threshold alerts.",
+      "summary": "An adversary may exfiltrate data in fixed size chunks instead of whole files or limit packet sizes below certain thresholds. This approach may be used to avoid triggering network data transfer threshold alerts.(Citation: Chunked Encoding)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:20.770Z",
+      "modified": "2026-09-16T18:03:15.995Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -25041,7 +25345,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.716Z",
+      "modified": "2026-09-11T19:39:19.101Z",
       "platforms": [
         "IaaS",
         "Linux",
@@ -25252,12 +25556,12 @@
       "id": "attack-pattern--cc7b8c4e-9be0-47ca-b0bb-83915ec3ee2f",
       "name": "Data Encoding",
       "category": "attack-pattern",
-      "summary": "Adversaries may encode data to make the content of command and control traffic more difficult to detect. Command and control (C2) information can be encoded using a standard data encoding system. Use of data encoding may adhere to existing protocol specifications and includes use of ASCII, Unicode, Base64, MIME, or other binary-to-text and character encoding systems.(Citation: Wikipedia Binary-to-text Encoding) (Citation: Wikipedia Character Encoding) Some data encoding systems may also result in data compression, such as gzip.",
+      "summary": "Adversaries may encode data to make the content of command and control traffic more difficult to detect. Command and control (C2) information can be encoded using a standard data encoding system. Use of data encoding may adhere to existing protocol specifications and includes use of ASCII, Unicode, Base64, MIME, or other binary-to-text and character encoding systems.(Citation: Wikipedia Binary-to-text Encoding)(Citation: Wikipedia Character Encoding) Some data encoding systems may also result in data compression, such as gzip.",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.717Z",
+      "modified": "2026-09-08T20:15:04.260Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -25851,7 +26155,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.718Z",
+      "modified": "2026-09-11T19:53:31.010Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -26018,7 +26322,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.722Z",
+      "modified": "2026-09-11T19:21:13.428Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -26050,7 +26354,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.722Z",
+      "modified": "2026-09-11T19:29:05.359Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -26189,7 +26493,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.722Z",
+      "modified": "2026-09-18T00:31:18.340Z",
       "platforms": [
         "PRE"
       ],
@@ -26345,7 +26649,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.723Z",
+      "modified": "2026-09-11T19:39:55.836Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -26418,12 +26722,12 @@
       "id": "attack-pattern--e6415f09-df0e-48de-9aba-928c902b7549",
       "name": "Exfiltration Over Physical Medium",
       "category": "attack-pattern",
-      "summary": "Adversaries may attempt to exfiltrate data via a physical medium, such as a removable drive. In certain circumstances, such as an air-gapped network compromise, exfiltration could occur via a physical medium or device introduced by a user. Such media could be an external hard drive, USB drive, cellular phone, MP3 player, or other removable storage and processing device. The physical medium or device could be used as the final exfiltration point or to hop between otherwise disconnected systems.",
+      "summary": "Adversaries may attempt to exfiltrate data via a physical medium, such as a removable drive. In certain circumstances, such as an air-gapped network compromise, exfiltration could occur via a physical medium or device introduced by a user. Such media could be an external hard drive, USB drive, cellular phone, MP3 player, or other removable storage and processing device. The physical medium or device could be used as the final exfiltration point or to hop between otherwise disconnected systems.(Citation: USB Drives Threaten Enterprise Security)(Citation: Tropic Trooper’s USBferry)(Citation: APT37 Adds New Capabilities for Air-Gapped Networks)",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:32.547Z",
+      "modified": "2026-09-03T19:19:40.603Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -26440,7 +26744,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.723Z",
+      "modified": "2026-09-11T19:48:23.794Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -26775,7 +27079,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2025-10-24T17:49:34.675Z",
+      "modified": "2026-09-18T18:22:04.969Z",
       "platforms": [
         "PRE"
       ],
@@ -26872,7 +27176,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.723Z",
+      "modified": "2026-09-11T19:19:57.658Z",
       "platforms": [
         "Linux",
         "macOS",
@@ -26923,7 +27227,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.723Z",
+      "modified": "2026-09-11T19:43:47.298Z",
       "platforms": [
         "Windows"
       ],
@@ -26973,7 +27277,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.724Z",
+      "modified": "2026-09-09T18:39:15.900Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -27055,7 +27359,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.724Z",
+      "modified": "2026-09-11T19:39:36.116Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -27241,12 +27545,12 @@
       "id": "attack-pattern--f6dacc85-b37d-458e-b58d-74fc4bbf5755",
       "name": "Internal Proxy",
       "category": "attack-pattern",
-      "summary": "Adversaries may use an internal proxy to direct command and control traffic between two or more systems in a compromised environment. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap. (Citation: Trend Micro APT Attack Tools) Adversaries use internal proxies to manage command and control communications inside a compromised environment, to reduce the number of simultaneous outbound network connections, to provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between infected systems to avoid suspicion. Internal proxy connecti",
+      "summary": "Adversaries may use an internal proxy to direct command and control traffic between two or more systems in a compromised environment. Many tools exist that enable traffic redirection through proxies or port redirection, including [HTRAN](https://attack.mitre.org/software/S0040), ZXProxy, and ZXPortMap.(Citation: Trend Micro APT Attack Tools) Adversaries use internal proxies to manage command and control communications inside a compromised environment, to reduce the number of simultaneous outbound network connections, to provide resiliency in the face of connection loss, or to ride over existing trusted communications paths between infected systems to avoid suspicion. Internal proxy connectio",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.724Z",
+      "modified": "2026-09-08T20:28:40.517Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -27275,12 +27579,12 @@
       "id": "attack-pattern--f7827069-0bf2-4764-af4f-23fae0d181b7",
       "name": "Dead Drop Resolver",
       "category": "attack-pattern",
-      "summary": "Adversaries may use an existing, legitimate external Web service to host information that points to additional command and control (C2) infrastructure. Adversaries may post content, known as a dead drop resolver, on Web services with embedded (and often obfuscated/encoded) domains or IP addresses. Once infected, victims will reach out to and be redirected by these resolvers. Popular websites and social media acting as a mechanism for C2 may give a significant amount of cover due to the likelihood that hosts within a network are already communicating with them prior to a compromise. Using common services, such as those offered by Google or Twitter, makes it easier for adversaries to hide in e",
+      "summary": "Adversaries may use an existing, legitimate external Web service to host information that points to additional command and control (C2) infrastructure. Adversaries may post content, known as a dead drop resolver, on Web services with embedded (and often obfuscated/encoded) domains or IP addresses. Once infected, victims will reach out to and be redirected by these resolvers.(Citation: Dead Drop Resolver) Popular websites and social media acting as a mechanism for C2 may give a significant amount of cover due to the likelihood that hosts within a network are already communicating with them prior to a compromise. Using common services, such as those offered by Google or Twitter, makes it easie",
       "source": "MITRE ATT&CK Enterprise",
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.725Z",
+      "modified": "2026-09-11T19:23:51.161Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -27298,7 +27602,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.725Z",
+      "modified": "2026-09-03T19:46:40.087Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -27441,7 +27745,7 @@
       "sourceUrl": "https://attack.mitre.org/",
       "sourceVersion": "enterprise-attack",
       "verification": "source-backed",
-      "modified": "2026-05-12T15:12:00.726Z",
+      "modified": "2026-09-03T19:46:40.087Z",
       "platforms": [
         "ESXi",
         "Linux",
@@ -27651,6 +27955,147 @@
         "Windows"
       ],
       "externalId": "T1574.012"
+    },
+    {
+      "id": "attack-pattern--c5e8ef5d-e9b4-46b2-9dd8-afbb1c42090f",
+      "name": "Anti-Automation Evasion",
+      "category": "attack-pattern",
+      "summary": "Adversaries may employ various means to evade or complete automation checks. Automation checks distinguish human users from bot traffic and prevent bots from reaching the web pages protected by automation checks. For example, a user may be required to solve a CAPTCHA challenge before accessing a form or login page. Traditional CAPTCHAs ask the user to decipher a string of characters, type the characters into a box, and submit the form. reCAPTCHA asks the user to identify images, click a checkbox, or evaluate the user’s behavior from mouse movement and device cookies.(Citation: CAPTCHAS Cloudflare) Adversaries may pay for a service that forwards the CAPTCHA challenge to a remote human worker.",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-06T16:11:07.686Z",
+      "platforms": [
+        "SaaS"
+      ],
+      "externalId": "T1696"
+    },
+    {
+      "id": "attack-pattern--6c427a0d-e0df-41f8-b522-e59eaab44c47",
+      "name": "Steal Application Specific Passwords",
+      "category": "attack-pattern",
+      "summary": "Adversaries may steal Application Specific Passwords (ASPs) to gain access to [Valid Accounts](https://attack.mitre.org/techniques/T1078), bypassing multifactor authentication (MFA) methods. ASPs are passwords typically used to give third-party applications or legacy devices (which do not support MFA methods) account access.(Citation: Application Specific Passwords)(Citation: Application Specific Passwords Push Sec) An adversary may socially engineer a user into providing an ASP(Citation: UNC6293 ASP Creative Phishing Attack)(Citation: Application Specific Passwords Phishing) (using methods like [Phishing for Information](https://attack.mitre.org/techniques/T1598)), generate an ASP for an al",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-06T16:36:02.606Z",
+      "platforms": [
+        "Office Suite",
+        "Identity Provider",
+        "SaaS"
+      ],
+      "externalId": "T1697"
+    },
+    {
+      "id": "attack-pattern--2e45d340-f00b-4bd6-b5c9-c2ef54b8894c",
+      "name": "Indirect Prompt Injection",
+      "category": "attack-pattern",
+      "summary": "Adversaries may deliver malicious prompts to an LLM indirectly by embedding the prompts in content that the adversary expects may be processed by an LLM.(Citation: NIST indirect prompt injection) These prompts can be included in web pages,(Citation: Palo Alto Indirect Prompt Injection ITW) documents, emails, tickets,(Citation: Snyk Indirect Prompt Injection) code, or other sources that an agent, copilot, or other AI system may retrieve and process. When an LLM processes this content, the embedded instructions may cause the system to perform unintended behaviors.(Citation: GTIG AI Threats Sep 2026) Adversaries may use indirect prompt injection to [Impair Autonomous Defenses](https://attack.mi",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-12T19:53:57.228Z",
+      "platforms": [
+        "Windows",
+        "SaaS"
+      ],
+      "externalId": "T1698"
+    },
+    {
+      "id": "attack-pattern--d7e9cba9-3b43-4208-8e90-fdb18bff4a6a",
+      "name": "Direct Prompt Injection",
+      "category": "attack-pattern",
+      "summary": "Adversaries may input malicious prompts directly into an LLM’s user interface.(Citation: NIST Direct Prompt Injection) The prompts can be designed to bypass safeguards, manipulate context, override previous instructions, or coerce the LLM into unauthorized behavior.(Citation: OWASP Prompt Injection) Adversaries may use direct prompt injection to [Generate Content](https://attack.mitre.org/techniques/T1683) prohibited by the LLM's guardrails or to induce the system to utilize its capabilities in unintended or prohibited ways.(Citation: Gemini AI Misuse Jan 2025)(Citation: Palo Alto Prompt Injection) Adversaries may achieve this by instructing the LLM to ignore previous instructions or safety ",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-09-22T13:44:19.807Z",
+      "platforms": [
+        "Windows",
+        "SaaS"
+      ],
+      "externalId": "T1699"
+    },
+    {
+      "id": "attack-pattern--4484fb29-439d-4396-bbc3-4a7976710c1c",
+      "name": "AI Result Poisoning",
+      "category": "attack-pattern",
+      "summary": "Adversaries may manipulate publicly accessible web content to influence generative AI systems or AI-powered search engines into retrieving, citing, or recommending attacker-controlled information.(Citation: Digiday AI Result Poisoning)(Citation: Netcraft AI Summaries) Unlike traditional [SEO Poisoning](https://attack.mitre.org/techniques/T1608/006), which primarily attempts to influence the ordering of conventional search results, AI Result Poisoning targets systems that synthesize information from multiple sources and provide a direct answer to the user. Adversaries may create malicious or misleading websites, publish fabricated claims, generate supporting articles, or establish multiple ap",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-07T17:44:55.706Z",
+      "platforms": [
+        "PRE"
+      ],
+      "externalId": "T1608.007"
+    },
+    {
+      "id": "attack-pattern--d35b46b5-9be7-4a74-810b-2eabdd167fea",
+      "name": "Automate CAPTCHA Completion",
+      "category": "attack-pattern",
+      "summary": "Adversaries may attempt to use bots to successfully solve CAPTCHA challenges. CAPTCHA challenges are typically used by defenders to detect and prevent bot and spam traffic from accessing protected webpages. CAPTCHAs are automated tests often placed before login screens or form fields. Traditional CAPTCHAs ask the user to decipher a string of characters, type the characters into a box, and submit the form. reCAPTCHA asks the user to identify images, click a checkbox, or evaluate the user’s behavior from mouse movement and device cookies.(Citation: CAPTCHAS Cloudflare) Adversaries may use scripts or toolkits to automatically solve the CAPTCHA puzzle. For example, adversaries may develop a scri",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-09-21T19:15:50.488Z",
+      "platforms": [
+        "SaaS"
+      ],
+      "externalId": "T1696.001"
+    },
+    {
+      "id": "attack-pattern--d52e7766-3e2e-4500-8730-0bd1bb8f7eaf",
+      "name": "Avoid CAPTCHA",
+      "category": "attack-pattern",
+      "summary": "Adversaries may avoid CAPTCHA challenges by mimicking human behavior. Automation tests, such as CAPTCHA, are typically used by defenders to detect and prevent bot and spam traffic from accessing protected webpages. CAPTCHAs are often placed before login screens or form fields. Traditional CAPTCHAs ask the user to decipher a string of characters, type the characters into a box, and submit the form. reCAPTCHA asks the user to identify images, click a checkbox, or evaluate the user’s behavior from mouse movement and device cookies.(Citation: CAPTCHAS Cloudflare) Adversaries may attempt to avoid CAPTCHA challenges by constructing a bot that mimics human behavior through browser automation. The a",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-12T19:59:30.798Z",
+      "platforms": [
+        "SaaS"
+      ],
+      "externalId": "T1696.002"
+    },
+    {
+      "id": "attack-pattern--6aa4bc38-0713-4d40-ad0b-949d912da852",
+      "name": "Impair Autonomous Defenses",
+      "category": "attack-pattern",
+      "summary": "Adversaries may use methods like [Indirect Prompt Injection](https://attack.mitre.org/techniques/T1698) to disrupt, disable, or otherwise impair autonomous defensive capabilities such as LLM-assisted processing of malware, artifacts, or activity.(Citation: Prompt Injection LLM-Powered SOC Assistants) This behavior may cause a system to ignore data, fail to alert on malicious activity, abort analysis, or to be disabled completely. Adversaries may include content in malware implants that mimic an LLM prompt scaffold that contains fake system messages in order to convince the LLM that it has encountered an error.(Citation: MacOS.Gaslight Prompt Injection)(Citation: Gaslight AI triage prompt inj",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-09T03:30:57.025Z",
+      "platforms": [
+        "Windows",
+        "SaaS"
+      ],
+      "externalId": "T1685.007"
+    },
+    {
+      "id": "attack-pattern--c0a6e9ec-9ef1-46b6-8a71-cc73863e8985",
+      "name": "AI-Enabled Exfiltration",
+      "category": "attack-pattern",
+      "summary": "Adversaries may utilize [Direct Prompt Injection](https://attack.mitre.org/techniques/T1699), [Indirect Prompt Injection](https://attack.mitre.org/techniques/T1698) or other methods to instruct enterprise AI agents to exfiltrate data.(Citation: Prompt-Injection Exfil)(Citation: Anthropic Report Sep 2026) When enterprise systems incorporate the use of AI assistants or other AI agents, adversaries may abuse these systems to weaponize sanctioned tools available to the agent.(Citation: Google Security State of Prompt Injections) As an AI agent processes queries or ingests data, an injected prompt can cause the agent to use its tool connections in unauthorized or unintended ways. When AI agents a",
+      "source": "MITRE ATT&CK Enterprise",
+      "sourceUrl": "https://attack.mitre.org/",
+      "sourceVersion": "enterprise-attack",
+      "verification": "source-backed",
+      "modified": "2026-10-09T16:32:40.851Z",
+      "platforms": [
+        "Windows",
+        "SaaS"
+      ],
+      "externalId": "T1700"
     }
   ]
 }
