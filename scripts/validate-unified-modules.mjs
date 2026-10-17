@@ -20,7 +20,7 @@ for (const file of ['index.html','simulator.html','breadboard.html','engineering
   let match;
   while ((match = ref.exec(html))) {
     const target = match[1].split('?')[0];
-    if (/^(?:https?:|data:|mailto:|\/)/.test(target)) continue;
+    if (/^(?:https?:|data:|mailto:|\/)/.test(target) || target === './') continue;
     const candidate=path.normalize(path.join('apps/voltpro',target));
     if (!candidate.startsWith(path.normalize('apps/voltpro'))) throw Error('Unsafe relative path '+target);
     if (!exists(candidate)) throw Error(file+' references missing file: '+target);
