@@ -1,0 +1,5 @@
+(()=>{'use strict';const M=window.VoltProDeviceModels;
+M.register({id:'lamp',version:'1.0.0',domains:['dc','ac'],validated:true,replace:true,evaluate(d,c={}){const v=Number(d.state?.voltage??c.voltage??0),rated=Number(d.parameters?.ratedVoltage??d.props?.ratedVoltage??230);return {ok:true,energized:v>=rated*0.8,voltage:v,power:Number(d.parameters?.power??d.props?.power??0)}}});
+M.register({id:'solenoid',version:'1.0.0',domains:['dc','ac','control'],validated:true,replace:true,evaluate(d,c={}){const v=Number(d.state?.voltage??c.voltage??0),rated=Number(d.parameters?.ratedVoltage??d.props?.ratedVoltage??24);const on=v>=rated*0.8;return {ok:true,energized:on,position:on?'extended':'retracted',coilVoltage:v}}});
+M.register({id:'buzzer',version:'1.0.0',domains:['dc','ac'],validated:true,replace:true,evaluate(d,c={}){const v=Number(d.state?.voltage??c.voltage??0),rated=Number(d.parameters?.ratedVoltage??d.props?.ratedVoltage??24);return {ok:true,energized:v>=rated*0.8}}});
+})();

@@ -1,0 +1,18 @@
+{
+ "format":"voltpro-tutorials","version":1,
+ "tutorials":[
+  {"id":"first-circuit","title":"Your first circuit","level":"beginner","steps":[
+   {"instruction":"Place a DC source.","target":"battery","hint":"Start with the power source."},
+   {"instruction":"Place a switch and a lamp.","target":"switch,lamp","hint":"Use the component library search."},
+   {"instruction":"Connect source → switch → lamp → source.","target":"wiring","hint":"Click one pin, then the next pin."},
+   {"instruction":"Run the simulation and inspect current.","target":"run","hint":"The Results panel reports the calculated operating point."}
+  ]},
+  {"id":"five-safety-rules","title":"Five safety rules","level":"beginner","steps":[
+   {"instruction":"Freischalten — disconnect.","target":"safety"},
+   {"instruction":"Gegen Wiedereinschalten sichern — prevent reconnection.","target":"safety"},
+   {"instruction":"Spannungsfreiheit feststellen — verify absence of voltage.","target":"safety"},
+   {"instruction":"Erden und kurzschließen where required.","target":"safety"},
+   {"instruction":"Benachbarte unter Spannung stehende Teile abdecken/abschranken.","target":"safety"}
+  ]}
+ ]
+}

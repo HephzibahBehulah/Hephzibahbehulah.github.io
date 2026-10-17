@@ -1,0 +1,754 @@
+{
+  "format": "voltpro-components",
+  "version": 1,
+  "license": "MIT",
+  "sets": {
+    "wires": [],
+    "switches": [],
+    "protection": [],
+    "power": [],
+    "passive": [],
+    "semiconductor": [],
+    "logic": [],
+    "relays": [],
+    "contactors": [],
+    "motors": [],
+    "loads": [],
+    "measurement": [],
+    "grounding": [],
+    "panel": [],
+    "microcontroller": [],
+    "sensors": [],
+    "communication": []
+  },
+  "library": [
+    {
+      "id": "lib-001",
+      "name": "Cable 0.75 mm²",
+      "category": "Wires",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-002",
+      "name": "Cable 1.0 mm²",
+      "category": "Switches",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-003",
+      "name": "Cable 1.5 mm²",
+      "category": "Protection",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-004",
+      "name": "Cable 2.5 mm²",
+      "category": "Power",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-005",
+      "name": "Cable 4 mm²",
+      "category": "Passive",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-006",
+      "name": "Cable 6 mm²",
+      "category": "Semiconductor",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-007",
+      "name": "Cable 10 mm²",
+      "category": "Logic",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-008",
+      "name": "Cable 16 mm²",
+      "category": "Relays",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-009",
+      "name": "Cable 25 mm²",
+      "category": "Contactors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-010",
+      "name": "MCB B6",
+      "category": "Motors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-011",
+      "name": "MCB B10",
+      "category": "Loads",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-012",
+      "name": "MCB B13",
+      "category": "Measurement",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-013",
+      "name": "MCB B16",
+      "category": "Grounding",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-014",
+      "name": "MCB B20",
+      "category": "Panel",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-015",
+      "name": "MCB B25",
+      "category": "Microcontroller",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-016",
+      "name": "MCB B32",
+      "category": "Sensors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-017",
+      "name": "MCB C16",
+      "category": "Communication",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-018",
+      "name": "MCB C32",
+      "category": "Wires",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-019",
+      "name": "RCD 30mA",
+      "category": "Switches",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-020",
+      "name": "RCD 300mA",
+      "category": "Protection",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-021",
+      "name": "RCBO 16A",
+      "category": "Power",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-022",
+      "name": "SPD Type 2",
+      "category": "Passive",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-023",
+      "name": "Isolator",
+      "category": "Semiconductor",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-024",
+      "name": "Emergency Stop",
+      "category": "Logic",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-025",
+      "name": "Push Button NO",
+      "category": "Relays",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-026",
+      "name": "Push Button NC",
+      "category": "Contactors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-027",
+      "name": "Selector Switch",
+      "category": "Motors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-028",
+      "name": "Limit Switch",
+      "category": "Loads",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-029",
+      "name": "Relay 24V",
+      "category": "Measurement",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-030",
+      "name": "Relay 230V",
+      "category": "Grounding",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-031",
+      "name": "Contactor 24V",
+      "category": "Panel",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-032",
+      "name": "Contactor 230V",
+      "category": "Microcontroller",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-033",
+      "name": "Thermal Overload",
+      "category": "Sensors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-034",
+      "name": "Star-Delta Timer",
+      "category": "Communication",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-035",
+      "name": "Timer Relay",
+      "category": "Wires",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-036",
+      "name": "Three Phase Motor",
+      "category": "Switches",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-037",
+      "name": "Single Phase Motor",
+      "category": "Protection",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-038",
+      "name": "Transformer 230/24V",
+      "category": "Power",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-039",
+      "name": "Transformer 400/230V",
+      "category": "Passive",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-040",
+      "name": "Bridge Rectifier",
+      "category": "Semiconductor",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-041",
+      "name": "Voltage Regulator",
+      "category": "Logic",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-042",
+      "name": "Op Amp",
+      "category": "Relays",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-043",
+      "name": "555 Timer",
+      "category": "Contactors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-044",
+      "name": "74HC00 NAND",
+      "category": "Motors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-045",
+      "name": "74HC08 AND",
+      "category": "Loads",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-046",
+      "name": "74HC32 OR",
+      "category": "Measurement",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-047",
+      "name": "74HC04 NOT",
+      "category": "Grounding",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-048",
+      "name": "74HC86 XOR",
+      "category": "Panel",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-049",
+      "name": "Counter",
+      "category": "Microcontroller",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-050",
+      "name": "D Flip-Flop",
+      "category": "Sensors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-051",
+      "name": "7 Segment Display",
+      "category": "Communication",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-052",
+      "name": "LCD 16x2",
+      "category": "Wires",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-053",
+      "name": "Potentiometer",
+      "category": "Switches",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-054",
+      "name": "Thermistor NTC",
+      "category": "Protection",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-055",
+      "name": "LDR",
+      "category": "Power",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-056",
+      "name": "Photodiode",
+      "category": "Passive",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-057",
+      "name": "Solar Cell",
+      "category": "Semiconductor",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-058",
+      "name": "DC Fan",
+      "category": "Logic",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-059",
+      "name": "Heating Element",
+      "category": "Relays",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-060",
+      "name": "Solenoid",
+      "category": "Contactors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-061",
+      "name": "Relay Coil",
+      "category": "Motors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-062",
+      "name": "Buzzer 12V",
+      "category": "Loads",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-063",
+      "name": "Indicator Lamp Red",
+      "category": "Measurement",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-064",
+      "name": "Indicator Lamp Green",
+      "category": "Grounding",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-065",
+      "name": "Indicator Lamp Blue",
+      "category": "Panel",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-066",
+      "name": "Pilot Light",
+      "category": "Microcontroller",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-067",
+      "name": "Terminal PE",
+      "category": "Sensors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-068",
+      "name": "Terminal N",
+      "category": "Communication",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-069",
+      "name": "Terminal L",
+      "category": "Wires",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-070",
+      "name": "Busbar 1P",
+      "category": "Switches",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-071",
+      "name": "Busbar 3P",
+      "category": "Protection",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-072",
+      "name": "DIN Rail 35mm",
+      "category": "Power",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-073",
+      "name": "Distribution Board",
+      "category": "Passive",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-074",
+      "name": "Junction Box",
+      "category": "Semiconductor",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-075",
+      "name": "Schuko Plug",
+      "category": "Logic",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-076",
+      "name": "Schuko Socket",
+      "category": "Relays",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-077",
+      "name": "CEE 16A",
+      "category": "Contactors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-078",
+      "name": "CEE 32A",
+      "category": "Motors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-079",
+      "name": "CEE 63A",
+      "category": "Loads",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-080",
+      "name": "Ammeter",
+      "category": "Measurement",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-081",
+      "name": "Voltmeter",
+      "category": "Grounding",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-082",
+      "name": "Clamp Meter",
+      "category": "Panel",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-083",
+      "name": "Insulation Tester",
+      "category": "Microcontroller",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-084",
+      "name": "Oscilloscope",
+      "category": "Sensors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-085",
+      "name": "Signal Generator",
+      "category": "Communication",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-086",
+      "name": "Arduino Nano",
+      "category": "Wires",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-087",
+      "name": "Arduino Mega",
+      "category": "Switches",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-088",
+      "name": "Raspberry Pi GPIO",
+      "category": "Protection",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-089",
+      "name": "I2C Sensor",
+      "category": "Power",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-090",
+      "name": "SPI Sensor",
+      "category": "Passive",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-091",
+      "name": "UART Device",
+      "category": "Semiconductor",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-092",
+      "name": "Temperature Sensor",
+      "category": "Logic",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-093",
+      "name": "Pressure Sensor",
+      "category": "Relays",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-094",
+      "name": "Motion Sensor",
+      "category": "Contactors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-095",
+      "name": "Potentiometer Sensor",
+      "category": "Motors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-096",
+      "name": "Servo",
+      "category": "Loads",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-097",
+      "name": "Stepper Motor",
+      "category": "Measurement",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-098",
+      "name": "Encoder",
+      "category": "Grounding",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-099",
+      "name": "Ethernet PHY",
+      "category": "Panel",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-100",
+      "name": "RS485 Node",
+      "category": "Microcontroller",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-101",
+      "name": "KNX Bus Coupler",
+      "category": "Sensors",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-102",
+      "name": "PV Inverter",
+      "category": "Communication",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-103",
+      "name": "EV Charger",
+      "category": "Wires",
+      "symbol": "generic",
+      "model": "educational"
+    },
+    {
+      "id": "lib-104",
+      "name": "Heat Pump Load",
+      "category": "Switches",
+      "symbol": "generic",
+      "model": "educational"
+    }
+  ]
+}

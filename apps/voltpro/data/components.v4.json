@@ -1,0 +1,906 @@
+{
+  "format": "voltpro-components",
+  "version": 4,
+  "license": "Apache-2.0",
+  "engine": "VoltPRo MNA",
+  "components": [
+    {
+      "id": "resistor",
+      "version": "1.0.0",
+      "name": {
+        "en": "Resistor",
+        "de": "Resistor",
+        "es": "Resistor"
+      },
+      "category": "Passive",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/resistor.svg",
+        "ansiSvg": "symbols/ANSI/resistor.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/resistor.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1000,
+          "unit": "ohm"
+        }
+      },
+      "simulation": {
+        "model": "resistor",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Resistor core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "passive",
+        "resistor"
+      ]
+    },
+    {
+      "id": "capacitor",
+      "version": "1.0.0",
+      "name": {
+        "en": "Capacitor",
+        "de": "Capacitor",
+        "es": "Capacitor"
+      },
+      "category": "Passive",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/capacitor.svg",
+        "ansiSvg": "symbols/ANSI/capacitor.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/capacitor.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "capacitor",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Capacitor core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "passive",
+        "capacitor"
+      ]
+    },
+    {
+      "id": "inductor",
+      "version": "1.0.0",
+      "name": {
+        "en": "Inductor",
+        "de": "Inductor",
+        "es": "Inductor"
+      },
+      "category": "Passive",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/inductor.svg",
+        "ansiSvg": "symbols/ANSI/inductor.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/inductor.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "inductor",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Inductor core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "passive",
+        "inductor"
+      ]
+    },
+    {
+      "id": "diode",
+      "version": "1.0.0",
+      "name": {
+        "en": "Diode",
+        "de": "Diode",
+        "es": "Diode"
+      },
+      "category": "Semiconductor",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/diode.svg",
+        "ansiSvg": "symbols/ANSI/diode.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/diode.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "diode",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Diode core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "semiconductor",
+        "diode"
+      ]
+    },
+    {
+      "id": "zener",
+      "version": "1.0.0",
+      "name": {
+        "en": "Zener Diode",
+        "de": "Zener Diode",
+        "es": "Zener Diode"
+      },
+      "category": "Semiconductor",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/zener.svg",
+        "ansiSvg": "symbols/ANSI/zener.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/zener.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "zener",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Zener Diode core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "semiconductor",
+        "zener"
+      ]
+    },
+    {
+      "id": "led",
+      "version": "1.0.0",
+      "name": {
+        "en": "LED",
+        "de": "LED",
+        "es": "LED"
+      },
+      "category": "Semiconductor",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/led.svg",
+        "ansiSvg": "symbols/ANSI/led.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/led.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "led",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional LED core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "semiconductor",
+        "led"
+      ]
+    },
+    {
+      "id": "bjt",
+      "version": "1.0.0",
+      "name": {
+        "en": "BJT",
+        "de": "BJT",
+        "es": "BJT"
+      },
+      "category": "Semiconductor",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/bjt.svg",
+        "ansiSvg": "symbols/ANSI/bjt.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/bjt.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        },
+        {
+          "id": "3",
+          "type": "control",
+          "label": "3"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "bjt",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional BJT core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "semiconductor",
+        "bjt"
+      ]
+    },
+    {
+      "id": "mosfet",
+      "version": "1.0.0",
+      "name": {
+        "en": "MOSFET",
+        "de": "MOSFET",
+        "es": "MOSFET"
+      },
+      "category": "Semiconductor",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/mosfet.svg",
+        "ansiSvg": "symbols/ANSI/mosfet.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/mosfet.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        },
+        {
+          "id": "3",
+          "type": "control",
+          "label": "3"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "mosfet",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional MOSFET core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "semiconductor",
+        "mosfet"
+      ]
+    },
+    {
+      "id": "igbt",
+      "version": "1.0.0",
+      "name": {
+        "en": "IGBT",
+        "de": "IGBT",
+        "es": "IGBT"
+      },
+      "category": "Semiconductor",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/igbt.svg",
+        "ansiSvg": "symbols/ANSI/igbt.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/igbt.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        },
+        {
+          "id": "3",
+          "type": "control",
+          "label": "3"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "igbt",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional IGBT core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "semiconductor",
+        "igbt"
+      ]
+    },
+    {
+      "id": "voltage_source",
+      "version": "1.0.0",
+      "name": {
+        "en": "Voltage Source",
+        "de": "Voltage Source",
+        "es": "Voltage Source"
+      },
+      "category": "Sources",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/voltage_source.svg",
+        "ansiSvg": "symbols/ANSI/voltage_source.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/voltage_source.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "voltage_source",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Voltage Source core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "sources",
+        "voltage_source"
+      ]
+    },
+    {
+      "id": "current_source",
+      "version": "1.0.0",
+      "name": {
+        "en": "Current Source",
+        "de": "Current Source",
+        "es": "Current Source"
+      },
+      "category": "Sources",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/current_source.svg",
+        "ansiSvg": "symbols/ANSI/current_source.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/current_source.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "current_source",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "dc-sweep",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Current Source core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "sources",
+        "current_source"
+      ]
+    },
+    {
+      "id": "vcvs",
+      "version": "1.0.0",
+      "name": {
+        "en": "Dependent Voltage Source",
+        "de": "Dependent Voltage Source",
+        "es": "Dependent Voltage Source"
+      },
+      "category": "Sources",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/vcvs.svg",
+        "ansiSvg": "symbols/ANSI/vcvs.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/vcvs.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        },
+        {
+          "id": "3",
+          "type": "control",
+          "label": "3"
+        },
+        {
+          "id": "4",
+          "type": "control",
+          "label": "4"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "vcvs",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Dependent Voltage Source core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "sources",
+        "vcvs"
+      ]
+    },
+    {
+      "id": "vccs",
+      "version": "1.0.0",
+      "name": {
+        "en": "Dependent Current Source",
+        "de": "Dependent Current Source",
+        "es": "Dependent Current Source"
+      },
+      "category": "Sources",
+      "standards": {
+        "iec": [
+          "IEC 60617"
+        ],
+        "ansi": [
+          "IEEE 315 / ANSI Y32.2"
+        ]
+      },
+      "symbols": {
+        "iecSvg": "symbols/IEC/vccs.svg",
+        "ansiSvg": "symbols/ANSI/vccs.svg"
+      },
+      "assets": {
+        "panelImage": "assets/components/vccs.svg"
+      },
+      "pins": [
+        {
+          "id": "1",
+          "type": "electrical",
+          "label": "1"
+        },
+        {
+          "id": "2",
+          "type": "electrical",
+          "label": "2"
+        },
+        {
+          "id": "3",
+          "type": "control",
+          "label": "3"
+        },
+        {
+          "id": "4",
+          "type": "control",
+          "label": "4"
+        }
+      ],
+      "parameters": {
+        "value": {
+          "value": 1,
+          "unit": "SI"
+        }
+      },
+      "simulation": {
+        "model": "vccs",
+        "library": "builtin-mna-v4",
+        "analyses": [
+          "dc",
+          "ac",
+          "transient"
+        ]
+      },
+      "documentation": {
+        "description": "Functional Dependent Current Source core model for the VoltPRo MNA engine.",
+        "applications": [
+          "Educational circuit analysis"
+        ],
+        "safety": [
+          "Educational use only; verify real designs against applicable standards and manufacturer data."
+        ],
+        "datasheet": null
+      },
+      "tags": [
+        "sources",
+        "vccs"
+      ]
+    }
+  ]
+}

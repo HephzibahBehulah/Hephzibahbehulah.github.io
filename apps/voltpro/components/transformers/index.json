@@ -1,0 +1,3032 @@
+{
+  "format": "voltpro-component-family",
+  "version": 1,
+  "category": "transformers",
+  "count": 32,
+  "components": [
+    {
+      "id": "transformers-transformer-230-24v-25va",
+      "name": "Transformer 230-24V-25VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 9.583333333333334,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 25,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-24V-25VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-24v-50va",
+      "name": "Transformer 230-24V-50VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 9.583333333333334,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 50,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-24V-50VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-24v-100va",
+      "name": "Transformer 230-24V-100VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 9.583333333333334,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 100,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-24V-100VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-24v-160va",
+      "name": "Transformer 230-24V-160VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 9.583333333333334,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 160,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-24V-160VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-24v-250va",
+      "name": "Transformer 230-24V-250VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 9.583333333333334,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 250,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-24V-250VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-12v-25va",
+      "name": "Transformer 230-12V-25VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 12,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 19.166666666666668,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 25,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-12V-25VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-12v-50va",
+      "name": "Transformer 230-12V-50VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 12,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 19.166666666666668,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 50,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-12V-50VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-12v-100va",
+      "name": "Transformer 230-12V-100VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 12,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 19.166666666666668,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 100,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-12V-100VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-400-230v-100va",
+      "name": "Transformer 400-230V-100VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 1.7391304347826086,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 100,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 400-230V-100VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-400-230v-250va",
+      "name": "Transformer 400-230V-250VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 1.7391304347826086,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 250,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 400-230V-250VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-400-24v-100va",
+      "name": "Transformer 400-24V-100VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 16.666666666666668,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 100,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 400-24V-100VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-400-24v-250va",
+      "name": "Transformer 400-24V-250VA",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 16.666666666666668,
+          "min": 0.001,
+          "max": 1000
+        },
+        "ratedVA": {
+          "type": "number",
+          "unit": "VA",
+          "default": 250,
+          "min": 1,
+          "max": 1000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 400-24V-250VA.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-control-transformer",
+      "name": "Transformer Control-Transformer",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for Control-Transformer.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-isolation-transformer",
+      "name": "Transformer Isolation-Transformer",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for Isolation-Transformer.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-safety-transformer",
+      "name": "Transformer Safety-Transformer",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for Safety-Transformer.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-autotransformer",
+      "name": "Transformer Autotransformer",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for Autotransformer.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-ct-5a",
+      "name": "Transformer CT-5A",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for CT-5A.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-ct-1a",
+      "name": "Transformer CT-1A",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for CT-1A.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-pt-100v",
+      "name": "Transformer PT-100V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for PT-100V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-pt-110v",
+      "name": "Transformer PT-110V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for PT-110V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-24-12v",
+      "name": "Transformer 24-12V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 12,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 2,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 24-12V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-48-24v",
+      "name": "Transformer 48-24V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 48,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 2,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 48-24V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-110-24v",
+      "name": "Transformer 110-24V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 4.583333333333333,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 110-24V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-230-110v",
+      "name": "Transformer 230-110V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 2.090909090909091,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 230-110V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-400-110v",
+      "name": "Transformer 400-110V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary 1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary 2"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary 1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 3.6363636363636362,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "transformer",
+        "engine": "VoltPRo MNA ideal transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "ideal-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 400-110V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-3p-400-230",
+      "name": "Transformer 3P-400-230",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary L1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary L2"
+        },
+        {
+          "id": "P3",
+          "name": "Primary L3"
+        },
+        {
+          "id": "PN",
+          "name": "Primary neutral"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary L1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary L2"
+        },
+        {
+          "id": "S3",
+          "name": "Secondary L3"
+        },
+        {
+          "id": "SN",
+          "name": "Secondary neutral"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 1.7391304347826086,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "three-phase-transformer",
+        "engine": "VoltPRo MNA ideal wye-wye transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "three-phase-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 3P-400-230.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-3p-400-230-24",
+      "name": "Transformer 3P-400-230-24",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary L1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary L2"
+        },
+        {
+          "id": "P3",
+          "name": "Primary L3"
+        },
+        {
+          "id": "PN",
+          "name": "Primary neutral"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary L1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary L2"
+        },
+        {
+          "id": "S3",
+          "name": "Secondary L3"
+        },
+        {
+          "id": "SN",
+          "name": "Secondary neutral"
+        },
+        {
+          "id": "A1",
+          "name": "Auxiliary 24 V winding 1"
+        },
+        {
+          "id": "A2",
+          "name": "Auxiliary 24 V winding 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 1.7391304347826086,
+          "min": 0.001,
+          "max": 1000
+        },
+        "auxiliaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "primaryPhaseVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230.94010767585033,
+          "min": 1,
+          "max": 1000
+        },
+        "auxiliaryTurnsRatio": {
+          "type": "number",
+          "default": 9.622504486493764,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "three-phase-transformer",
+        "engine": "VoltPRo MNA ideal wye-wye transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "three-phase-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 3P-400-230-24.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-3p-400-110",
+      "name": "Transformer 3P-400-110",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "P1",
+          "name": "Primary L1"
+        },
+        {
+          "id": "P2",
+          "name": "Primary L2"
+        },
+        {
+          "id": "P3",
+          "name": "Primary L3"
+        },
+        {
+          "id": "PN",
+          "name": "Primary neutral"
+        },
+        {
+          "id": "S1",
+          "name": "Secondary L1"
+        },
+        {
+          "id": "S2",
+          "name": "Secondary L2"
+        },
+        {
+          "id": "S3",
+          "name": "Secondary L3"
+        },
+        {
+          "id": "SN",
+          "name": "Secondary neutral"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "primaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "secondaryVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "turnsRatio": {
+          "type": "number",
+          "default": 3.6363636363636362,
+          "min": 0.001,
+          "max": 1000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "three-phase-transformer",
+        "engine": "VoltPRo MNA ideal wye-wye transformer",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "three-phase-transformer",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for 3P-400-110.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-smps-24v",
+      "name": "Transformer SMPS-24V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for SMPS-24V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-smps-12v",
+      "name": "Transformer SMPS-12V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for SMPS-12V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-smps-5v",
+      "name": "Transformer SMPS-5V",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for SMPS-5V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "transformers-transformer-dc-dc-24-12",
+      "name": "Transformer DC-DC-24-12",
+      "category": "transformers",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "TRAN",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Transformer model for DC-DC-24-12.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    }
+  ]
+}

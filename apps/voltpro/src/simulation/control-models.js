@@ -1,0 +1,5 @@
+(()=>{'use strict';const M=window.VoltProDeviceModels;
+M.register({id:'selector-2pos',version:'1.0.0',domains:['control'],validated:true,replace:true,evaluate(d){const pos=String(d.state?.position??d.parameters?.defaultPosition??'0');return {ok:true,position:pos,contacts:[{id:'1-2',closed:pos==='0'},{id:'1-3',closed:pos==='1'}]}}});
+M.register({id:'emergency-stop',version:'1.0.0',domains:['control'],validated:true,replace:true,evaluate(d){const pressed=d.state?.pressed===true;return {ok:true,pressed,contacts:[{id:'11-12',closed:!pressed,type:'nc'},{id:'13-14',closed:pressed,type:'no'}]}}});
+M.register({id:'limit-switch',version:'1.0.0',domains:['control'],validated:true,replace:true,evaluate(d){const active=d.state?.active===true;return {ok:true,active,contacts:[{id:'11-12',closed:!active,type:'nc'},{id:'13-14',closed:active,type:'no'}]}}});
+})();

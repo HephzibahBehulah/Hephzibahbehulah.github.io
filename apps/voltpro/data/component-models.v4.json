@@ -1,0 +1,143 @@
+{
+  "format": "voltpro-component-models",
+  "version": 4,
+  "engine": "VoltPRo MNA",
+  "status": "functional-core-model-pack",
+  "components": [
+    {
+      "id": "resistor",
+      "version": "1.0.0",
+      "model": "resistor",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "capacitor",
+      "version": "1.0.0",
+      "model": "capacitor-companion",
+      "analyses": [
+        "dc",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "inductor",
+      "version": "1.0.0",
+      "model": "inductor-companion",
+      "analyses": [
+        "dc",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "diode",
+      "version": "1.0.0",
+      "model": "piecewise-linear-diode",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "zener",
+      "version": "1.0.0",
+      "model": "zener-piecewise-linear",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "led",
+      "version": "1.0.0",
+      "model": "led-piecewise-linear",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "bjt",
+      "version": "1.0.0",
+      "model": "bjt-beta-envelope",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "transient"
+      ]
+    },
+    {
+      "id": "mosfet",
+      "version": "1.0.0",
+      "model": "mosfet-switch-envelope",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "transient"
+      ]
+    },
+    {
+      "id": "igbt",
+      "version": "1.0.0",
+      "model": "igbt-switch-envelope",
+      "analyses": [
+        "dc",
+        "transient"
+      ]
+    },
+    {
+      "id": "voltage_source",
+      "version": "1.0.0",
+      "model": "mna-voltage-source",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "current_source",
+      "version": "1.0.0",
+      "model": "mna-current-source",
+      "analyses": [
+        "dc",
+        "dc-sweep",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "vcvs",
+      "version": "1.0.0",
+      "model": "mna-vcvs",
+      "analyses": [
+        "dc",
+        "ac",
+        "transient"
+      ]
+    },
+    {
+      "id": "vccs",
+      "version": "1.0.0",
+      "model": "mna-vccs",
+      "analyses": [
+        "dc",
+        "ac",
+        "transient"
+      ]
+    }
+  ]
+}

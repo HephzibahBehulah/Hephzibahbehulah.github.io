@@ -1,0 +1,25 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://voltpro.example/schema/project-v5.json",
+  "title":"VoltPRo Project v5",
+  "type":"object",
+  "required":["format","version","metadata","settings","workspace","devices","wires","nets","simulation"],
+  "properties":{
+    "format":{"const":"voltpro"},
+    "version":{"const":5},
+    "metadata":{"type":"object"},
+    "settings":{"type":"object"},
+    "workspace":{"enum":["schematic","panel","plc","microcontroller","reference"]},
+    "devices":{"type":"array","items":{"$ref":"#/$defs/device"}},
+    "wires":{"type":"array","items":{"$ref":"#/$defs/wire"}},
+    "nets":{"type":"array"},
+    "panel":{"type":"object"},
+    "simulation":{"type":"object"},
+    "plc":{"type":["object","null"]}
+  },
+  "$defs":{
+    "terminal":{"type":"object","required":["id","label","type","domain"],"properties":{"id":{"type":"string"},"label":{"type":"string"},"type":{"type":"string"},"number":{"type":["string","null"]},"domain":{"type":"string"}},"additionalProperties":true},
+    "device":{"type":"object","required":["id","type","terminals"],"properties":{"id":{"type":"string"},"type":{"type":"string"},"version":{"type":"string"},"ref":{"type":"string"},"position":{"type":"object"},"rotation":{"type":"number"},"terminals":{"type":"array","items":{"$ref":"#/$defs/terminal"}},"parameters":{"type":"object"},"state":{"type":"object"}},"additionalProperties":true},
+    "wire":{"type":"object","required":["id","from","to","segments","domain"],"properties":{"id":{"type":"string"},"from":{"type":"string"},"to":{"type":"string"},"segments":{"type":"array"},"number":{"type":["string","null"]},"crossSection":{"type":["number","string","null"]},"colour":{"type":["string","null"]},"material":{"type":["string","null"]},"domain":{"type":"string"},"phase":{"type":["string","null"]}},"additionalProperties":true}
+  }
+}

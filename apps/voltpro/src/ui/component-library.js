@@ -1,0 +1,4 @@
+(()=>{'use strict';
+function create(records=[]){const all=records.slice();return {all:()=>all.slice(),search(q='',filters={}){const s=String(q).toLowerCase().trim();return all.filter(x=>{const text=[x.id,x.name?.en,x.category,...(x.tags||[])].join(' ').toLowerCase();return (!s||text.includes(s))&&(!filters.category||x.category===filters.category)&&(!filters.model||x.simulation?.model===filters.model)})},categories(){return Array.from(new Set(all.map(x=>x.category).filter(Boolean))).sort()},card(x){return {id:x.id,name:x.name?.en||x.id,category:x.category,terminals:x.pins||x.terminals||[],model:x.simulation?.model||null,maturity:x.simulation?.model?'modelled':'catalogue-only',symbol:x.symbols?.iecSvg||null,panel:x.assets?.panelImage||null}}}}
+window.VoltProComponentLibrary={create};
+})();
