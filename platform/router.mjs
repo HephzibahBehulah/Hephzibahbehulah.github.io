@@ -10,9 +10,11 @@ export function resolveRoute(url){
   let decoded;try{decoded=decodeURIComponent(path);}catch{return {kind:'reject',status:400};}
   if(decoded.includes('\\')||decoded.split('/').some(x=>x==='..'||x==='.')||decoded.includes('\0')||decoded.startsWith('/_apps/'))return {kind:'reject',status:404};
   const privateHost=PRIVATE.has(host);
+  if(!privateHost&&decoded==='/_hb/admin-accounts-ui.js')return {kind:'reject',status:404};
   if(path.startsWith('/_hb/'))return {kind:'shared',privateHost,path};
   if(path==='/api/engineering/chat'||path==='/api/engineering/health')return {kind:'engineering-ai',privateHost};
   if(path==='/api/cyber/chat')return {kind:'cyber-ai',privateHost};
+  if(privateHost&&['/api/admin/accounts','/api/admin/accounts/events','/api/admin/accounts/operations'].includes(path))return {kind:'admin-accounts',privateHost:true};
   if(!privateHost&&path.startsWith('/api/'))return {kind:'reject',status:404};
   let app=PUBLIC.get(host),prefix='';
   if(privateHost){
@@ -27,7 +29,7 @@ export function resolveRoute(url){
   return {kind:'app',privateHost,app,prefix,base:prefix+asset.slice(0,asset.lastIndexOf('/')+1),path:'/_apps/'+app+asset};
 }
 
-export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI}){
+export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,accountAdmin}){
   return {async fetch(request,env,ctx){
     const url=new URL(request.url),route=resolveRoute(url);
     if(route.kind==='reject')return reply(route.status,'Not found');
@@ -39,6 +41,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI}){
     if(route.privateHost&&['GET','HEAD'].includes(request.method)&&/\/(?:sw|service-worker|serviceworker)\.js$/.test(url.pathname))return new Response(request.method==='HEAD'?null:"self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())await caches.delete(key);await self.registration.unregister();})()));",{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'private, no-store','x-robots-tag':'noindex, nofollow, noarchive'}});
     if(route.kind==='redirect'){const next=new URL(route.location,url);next.search=url.search;return Response.redirect(next.toString(),308);}
     if(route.kind==='cyber-ai')return cyberAI.fetch(request,env,ctx);
+    if(route.kind==='admin-accounts')return accountAdmin(request,env,ctx);
     if(route.kind==='engineering-ai'){
       const origin=request.headers.get('origin');if(origin&&origin!==url.origin)return reply(403,'Origin not allowed');
       if(!env.ENGINEERING_LIMITER?.limit)return reply(503,'Engineering request limiter is not configured');

@@ -2,6 +2,7 @@
 // Free Cloudflare Workers AI fallback is enabled when the primary provider is unavailable.
 import { getSandbox, Sandbox as CloudflareSandbox, ContainerProxy } from "@cloudflare/sandbox";
 import legacy from "./worker-v2.js";
+import {accountGateway} from "./platform/admin-accounts.mjs";
 
 export { ContainerProxy };
 export class Sandbox extends CloudflareSandbox {
@@ -1308,6 +1309,7 @@ async function runAgentInspection(request, env, target, ctx, task="") {
 function agentTargets(task) {
   const q = String(task || "").toLowerCase();
   const targets = new Set();
+  if (/\baccounts?\b|\blogins?\b|log in|sign.?in|supabase|authentication events|malicious login/.test(q)) targets.add("accounts");
   if (/job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for/.test(q)) return [];
   if (/github|repo|repository|commit|pull request|workflow|action|source code|codebase|frontend|front end|backend|back end|api|file|files/.test(q)) targets.add(/frontend|front end|backend|back end|source code|codebase|api|file|files/.test(q) ? "github-deep" : "github");
   if (/cloudflare|worker|edge|dns|access|deployment|deploy/.test(q)) targets.add("cloudflare");
@@ -1441,7 +1443,7 @@ async function privateAgent(request, env, url, ctx) {
     "- The server can inspect frontend/backend source, API routes, GitHub history, CI workflow metadata and redacted workflow-log tails when the task requires them.\n" +
     "- Safe web assessment uses fixed GET/HEAD/OPTIONS-style diagnostics and known application/security paths only. No exploit payloads, credential attacks, destructive requests, or unrelated-target scanning are available.\n" +
     "- The isolated Sandbox Linux plane is separate from the production Worker and may run only its explicit allow-list. Never imply production shell access.\n" +
-    "- Login/access information means authenticated operator identity, session/access status and authorization boundary. Never reveal or invent passwords, tokens, private keys or authentication cookies.\n" +
+    "- Login/access information includes verified operator identity and, when supplied by server evidence, Supabase account status and authentication audit events. Audit coverage is limited: do not invent failed-login or Cloudflare-denial history, and do not label review signals as confirmed malicious activity. Never reveal or invent passwords, tokens, private keys or authentication cookies.\n" +
     "- Source and workflow evidence is redacted before it reaches the model where secret-like values could appear. Never reconstruct a redacted secret.\n" +
     "- Production mutation, arbitrary production-host shell access, GitHub writes and unrelated-target scanning are not available through this interface.\n" +
     "- Never turn a planned capability into a claimed capability. Use only server evidence.\n" +
@@ -1524,6 +1526,16 @@ async function privateInspect(request, env, url, ctx, task="") {
   const identity = getAdminIdentity(auth.identity);
   const target=url.searchParams.get("target")||"all";
   const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:capabilityManifest(env,true)};
+
+  if(target==="accounts"){
+    for(const resource of ["","/events"]){
+      const accountUrl=new URL(request.url);accountUrl.pathname="/api/admin/accounts"+resource;accountUrl.search="";
+      const response=await accountGateway(new Request(accountUrl.toString(),{headers:request.headers}),env);
+      const data=await response.json().catch(()=>({error:"Invalid account-service response"}));
+      if(Array.isArray(data.events))data.events=data.events.slice(0,20);
+      result.checks.push({name:resource?"supabase-auth-events":"supabase-accounts",status:response.ok?"observed":"error",result:data});
+    }
+  }
 
   if(target==="all"||target==="site"||target==="security"){
     try{
