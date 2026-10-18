@@ -60,7 +60,19 @@ The main domain is public. Only the admin domain uses Cloudflare Access. Public 
 
 Old engineering account links redirect to the central account page; the existing engineering cloud-project/recovery workspace remains at `/workspace`. Public scripts bridge its project access to the shared session, preserving Supabase row ownership checks. Password recovery uses the configured email callback. Account verification and bot mitigation are distinct; existing provider/edge rate limits remain enabled.
 
-The sidebar preserves the language selector, search, existing company external links and source brand assets. Public navigation names are VoltPro Academy, Cyber Learning, Adigun AI and Adigun Terminal. Admin navigation uses Admin SI and keeps an account-menu sign-out instead of the removed sidebar entries. Nested Tool Workspace HTML uses a root asset base; Cyber OS uses its own `/cyber-os/` base.
+The sidebar preserves the language selector, search, existing company external links and source brand assets. Public navigation names are VoltPro Academy, Cyber Learning, Adigun AI and Adigun Terminal. Admin navigation uses Adigun SI and keeps an account-menu sign-out instead of the removed sidebar entries. Nested Tool Workspace HTML uses a root asset base; Cyber OS uses its own `/cyber-os/` base.
 
 Public compatibility follow-up: account and HTML responses bypass browser offline caches; static runtime assets remain available offline. Existing engineering profile and cloud-project clients use the shared member session. Mounted tool section links keep the current page path. The public header wraps search and account controls at mobile widths. Validation: 68 integration tests passed; production password and email-code sign-in verified; live two-minute expiry and owner-only boundaries verified.
 
+
+## Phase two: presentation and account verification
+
+The shared experience layer preserves original content, section IDs and tool event handlers. Cyber OS and Tool Workspace omit the Applications dropdown. Cyber OS omits Public Site and Portfolio Terminal. Terminal/AI labels are Adigun Terminal, Adigun SI and Adigun AI. External destinations are deduplicated after normalizing www, path case and trailing slash; the original footer wins over the added fallback footer. Section ordinal prefixes are removed only from presentation headings, not measurements, lessons, logs or tool results.
+
+Language, theme and account controls participate in normal header layout. The mobile menu no longer floats over the page title. Light, Dark and System settings persist, with the preference shared between production hosts using a non-sensitive cookie. Overview surfaces use the command-room palette and grid while retaining live circuit, radar and application-specific content.
+
+Email challenges and Supabase email OTP validity are four minutes (240 seconds). The account page displays a countdown and a rate-limited resend button. Resend requests a new provider code. Expired challenges cannot reach provider verification. First successful verification records an informational user-metadata welcome marker; this marker grants no privileges. The welcome panel uses existing company social links and acknowledges through the tab-bound member endpoint. Provider welcome-write failure never prevents a valid sign-in.
+
+The floating chat chooses the existing private agent on admin pages, engineering inference on engineering pages, cyber tutoring on the public cyber companion, and public assistance on the main site. Existing full AI and terminal tools remain. It does not grant new backend powers or execute arbitrary commands.
+
+Verification: 71 integration tests, original script syntax/preflight, seven layout views at 390/1366px, all three theme selections, measured header collisions and page overflow. Private layout previews intentionally do not authenticate or simulate successful live APIs.

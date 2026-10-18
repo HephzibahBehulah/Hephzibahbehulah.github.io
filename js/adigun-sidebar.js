@@ -17,14 +17,14 @@
   function setActiveFromHash(){
     var hash=location.hash;
     if(!hash)return;
-    var match=Array.prototype.find.call(sidebar.querySelectorAll(".os-nav a[href^=\"#\"]"),function(a){return a.getAttribute("href")===hash;});
+    var match=Array.prototype.find.call(sidebar.querySelectorAll(".os-nav a[href]"),function(a){return a.hash===hash&&a.pathname===location.pathname;});
     if(!match)return;
     sidebar.querySelectorAll(".os-nav a.active").forEach(function(a){a.classList.remove("active");});
     match.classList.add("active");
     var parent=match.closest("details.os-nav-dropdown");
     if(parent)parent.open=true;
   }
-  sidebar.querySelectorAll('.os-nav a[href^="#"]').forEach(function(a){
+  sidebar.querySelectorAll('.os-nav a[href]').forEach(function(a){
     a.addEventListener("click",function(){
       sidebar.querySelectorAll(".os-nav a.active").forEach(function(item){item.classList.remove("active");});
       a.classList.add("active");
