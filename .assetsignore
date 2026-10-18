@@ -25,6 +25,11 @@ _headers
 worker.js
 worker-openai.js
 worker-v2.js
+worker-public-v2.js
+worker-platform.mjs
+platform/
+dist-platform/
+wrangler.platform.jsonc
 
 # External Python ML service source
 ml-service/

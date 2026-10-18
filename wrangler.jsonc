@@ -1,11 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hephzibahbehulah-github-io",
-  "main": "worker-public-v2.js",
+  "main": "worker-platform.mjs",
   "compatibility_date": "2026-09-25",
   "assets": {
-    "directory": ".",
-    "binding": "ASSETS"
+    "directory": "dist-platform",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "none",
+    "not_found_handling": "none"
   },
   "ai": {
     "binding": "AI"
@@ -25,6 +28,14 @@
         "limit": 30,
         "period": 60
       }
+    },
+    {
+      "name": "ENGINEERING_LIMITER",
+      "namespace_id": "1785",
+      "simple": {
+        "limit": 6,
+        "period": 60
+      }
     }
   ],
   "routes": [
@@ -35,12 +46,22 @@
     {
       "pattern": "admin.hephzibahbehulah.com",
       "custom_domain": true
+    },
+    {
+      "pattern": "engineering.hephzibahbehulah.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "cyber.hephzibahbehulah.com",
+      "custom_domain": true
     }
   ],
   "secrets": {
     "required": [
       "OPENAI_API_KEY",
-      "ADIGUN_ADMIN_EMAIL"
+      "ADIGUN_ADMIN_EMAIL",
+      "ADIGUN_ACCESS_TEAM_DOMAIN",
+      "ADIGUN_ACCESS_AUD"
     ]
   },
   "triggers": {
@@ -78,5 +99,7 @@
   "vars": {
     "SANDBOX_LOG_LEVEL": "info",
     "SANDBOX_LOG_FORMAT": "json"
-  }
+  },
+  "workers_dev": false,
+  "preview_urls": false
 }
