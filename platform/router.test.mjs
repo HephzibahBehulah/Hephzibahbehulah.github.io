@@ -19,6 +19,14 @@ test('missing access configuration fails closed',async()=>{const worker=createPl
 test('public static requests do not call private authentication',async()=>{let touched=false;const worker=createPlatform({verifyAdmin:async()=>{touched=true;},legacy:{}});const r=await worker.fetch(new Request('https://cyber.'+root+'/style.css'),{ASSETS:{fetch:async r=>new Response(new URL(r.url).pathname)}});assert.equal(await r.text(),'/_apps/cyber/style.css');assert.equal(touched,false);});
 test('private responses cannot be cached publicly',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async()=>new Response('existing tools')}});for(const p of ['/engineering/style.css','/']){const r=await worker.fetch(new Request('https://'+root+p),{ASSETS:{fetch:async()=>new Response('css')}});assert.equal(r.headers.get('cache-control'),'private, no-store');}});
 test('private legacy content is preserved through the old worker',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async()=>new Response('existing tools')}});assert.equal(await(await worker.fetch(new Request('https://'+root+'/'))).text(),'existing tools');});
+test('authenticated main-domain root explicitly serves its original index with asset HTML handling disabled',async()=>{
+ const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async request=>new URL(request.url).pathname==='/index.html'?new Response('<h1>Original platform</h1>',{headers:{'content-type':'text/html'}}):new Response(null,{status:404})}});
+ for(const method of ['GET','HEAD']){const response=await worker.fetch(new Request('https://'+root+'/?from=home',{method}),{});assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'private, no-store');}
+});
+test('admin-domain root retains its control-room route',async()=>{
+ const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async request=>{assert.equal(new URL(request.url).pathname,'/');return new Response('admin control');}}});
+ assert.equal(await(await worker.fetch(new Request('https://admin.'+root+'/'),{})).text(),'admin control');
+});
 test('asset POST requests cannot turn into mutations',async()=>{const worker=createPlatform({});assert.equal((await worker.fetch(new Request('https://cyber.'+root+'/style.css',{method:'POST'}),{})).status,405);});
 test('engineering inference rejects cross-origin requests before provider access',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/api/engineering/chat',{method:'POST',headers:{origin:'https://example.com'}}),{});assert.equal(r.status,403);});
 test('engineering inference fails closed without its original six-request limiter',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/api/engineering/chat',{method:'POST'}),{});assert.equal(r.status,503);});

@@ -52,7 +52,14 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
     if(route.kind==='legacy'){
       // Preserve the existing root portfolio and all private tools. Existing
       // admin APIs keep their established hostname and authorization checks.
-      const response=await legacy.fetch(request,env,ctx);
+      // Asset HTML handling is disabled so application mounts keep their own
+      // routing. Explicitly resolve the original main-domain landing file.
+      let legacyRequest=request;
+      if(url.hostname!==ADMIN&&url.pathname==='/'&&['GET','HEAD'].includes(request.method)){
+        const landing=new URL(request.url);landing.pathname='/index.html';
+        legacyRequest=new Request(landing,request);
+      }
+      const response=await legacy.fetch(legacyRequest,env,ctx);
       const headers=new Headers(response.headers);headers.set('cache-control','private, no-store');headers.set('x-robots-tag','noindex, nofollow, noarchive');
       if(headers.get('content-type')?.includes('text/html')){headers.delete('etag');headers.delete('last-modified');headers.delete('content-length');}
       let result=new Response(response.body,{status:response.status,headers});
