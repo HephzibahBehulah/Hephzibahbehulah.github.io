@@ -22,9 +22,14 @@ jobs:
           node --check platform/engineering-ai.mjs
           node --check platform/cyber-ai.mjs
       - name: Verify authorization, routing and tutor boundaries
-        run: node --test platform/access.test.mjs platform/router.test.mjs
+        run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
+      - name: Verify the pinned browser releases and build the integrated platform
+        run: |
+          node platform/fetch-apps.mjs
+          node platform/build.mjs platform-source/engineering platform-source/cyber
+          node platform/prepare-config.mjs
 
       - name: Preserve verified platform catalogues for reproducible builds
         uses: actions/upload-artifact@v4

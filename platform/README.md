@@ -1,6 +1,6 @@
 # Integrated Hephzibah Behulah platform
 
-This is a staged integration. It does not replace the current production entry point or claim that every existing feature has passed acceptance.
+This integration is deployed on the four hostnames below. It preserves the original platform and adds the pinned public browser applications. Full product acceptance, authenticated private-tool checks and every native feature are not yet complete.
 
 ## Hostnames
 
@@ -16,25 +16,27 @@ Both private hostnames also mount the complete browser applications under `/engi
 Use the exact repository commits in `source-lock.json`. Build VoltPRo's `apps/voltpro-plc` using its lockfile and build the cybersecurity companion using `core/build_app.py`. Keep its Pyodide distribution and licence files. Then, from the main repository:
 
 ```sh
-node --test platform/access.test.mjs platform/router.test.mjs
+node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs
 node platform/preflight.mjs
 node platform/build.mjs /absolute/path/to/voltpro /absolute/path/to/cyber/build-app/web
 node platform/prepare-config.mjs
 npx wrangler deploy --dry-run --config wrangler.platform.jsonc
 ```
 
-The builder refuses incomplete original-platform snapshots and refuses to overwrite an existing release directory. Use a fresh checkout or preserve the previous generated directory before building again. The release manifest records source versions and asset checksums. The existing `wrangler.jsonc` remains the production default until a verified rollout is possible.
+The builder refuses incomplete original-platform snapshots and refuses to overwrite an existing release directory. Use a fresh checkout or preserve the previous generated directory before building again. The release manifest records source versions and asset checksums. `wrangler.jsonc` now uses the integrated entry point and requires the generated assets; it cannot silently fall back to the older public root.
+
+For Cloudflare automatic builds, use `node platform/release.mjs` as the build command and `npx wrangler deploy` as the deploy command. The release command downloads the exact browser-only release archives in `public-apps-lock.json`, verifies SHA-256 checksums, runs the boundary tests, rebuilds the complete original platform plus both apps, and prepares deployment configuration. It does not require public repositories or a cross-repository GitHub token. These archives contain browser-delivered application assets, not backend secrets or the native Kali execution application. A hash mismatch stops the build. To update an app, build and validate its new pinned revision, publish its versioned browser archive, and update both locks together.
 
 ## Required deployment checks
 
-1. Renew deployment access with approved, limited permissions. The previous broad Cloudflare device-login request was rejected by automatic approval review; it must not be bypassed.
-2. Configure Cloudflare Access for both private hostnames, with the approved owner identity and MFA. The Worker requires the same issuer, audience and owner email through `ADIGUN_ACCESS_TEAM_DOMAIN`, `ADIGUN_ACCESS_AUD` and `ADIGUN_ADMIN_EMAIL`. If configuration is absent, it fails closed. A hostname existing in DNS is not proof that an Access policy exists.
+1. Deployment login was renewed with explicitly approved account/user/zone read, Worker script/route write, container write and background access. The container permission was approved separately after Cloudflare required it to preserve the existing terminal container.
+2. Both private hostnames now share the existing owner-email Access application, with authenticator MFA required. Signed-out requests to both hosts and their API/assets redirect to Cloudflare login. The Worker additionally verifies issuer, audience, signature and owner identity. Authenticated acceptance still requires the owner's login and MFA; denied public requests do not prove successful owner access.
 3. Use the generated configuration's `run_worker_first: true`. Static assets must never bypass authorization. Keep the alternative `workers.dev` and preview URLs disabled.
-4. Verify Supabase Auth redirect destinations for both public hostnames. The existing publishable-key client is reused; privileged keys must not be published. The shared account form supports sign-in, email confirmation and password recovery. The same identity can sign into both apps, but sessions are per origin; cross-domain single sign-on is not claimed.
+4. Supabase now has exact confirmation/recovery callbacks for both public roots and the engineering account page. Its default site URL is the clean engineering account URL. Existing GitHub Pages callbacks remain allowed. The existing publishable-key client is reused; privileged keys must not be published. The same identity can sign into both apps, but sessions are per origin; cross-domain single sign-on is not claimed.
 5. Test email delivery, account recovery, cloud-project ownership, logout and denied direct API requests using real test accounts. Client code alone does not establish these checks.
-6. Verify model availability, request limits, public tutor responses, existing private AI, bot and terminal against the deployed runtime. Local previews return a real unavailable response for live APIs rather than simulated success.
+6. Engineering health and both public tutors returned successful responses from the deployed Workers AI runtime. The engineering health regression is covered by a test. Private AI, bot and terminal still need owner-authenticated acceptance. Local previews return an unavailable response for live APIs rather than simulated success.
 7. Complete the feature-by-feature comparison and the remaining page/button acceptance matrix, including physical mobile and WSL operation. Browser viewport checks are not physical-device certification.
-8. Verify existing main-platform catalogue files, rollback, deployed version and signed-out access before switching traffic or changing VoltPRo repository visibility.
+8. All fourteen original catalogue files were restored byte-for-byte against their original Git blob hashes. Original-platform preflight and 28 live route/access checks passed. The original production rollback version is `d9affc88-749f-49f6-acf8-7c9c71d5f969`; rolling it back does not remove the new Cloudflare Access policy. Keep private protection active during any rollback.
 
 ## Supabase hardening applied
 

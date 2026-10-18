@@ -4,7 +4,7 @@ config.main='worker-platform.mjs';
 config.assets={directory:'dist-platform',binding:'ASSETS',run_worker_first:true,html_handling:'none',not_found_handling:'none'};
 config.workers_dev=false;
 config.preview_urls=false;
-config.ratelimits.push({name:'ENGINEERING_LIMITER',namespace_id:'1785',simple:{limit:6,period:60}});
+if(!config.ratelimits.some(binding=>binding.name==='ENGINEERING_LIMITER'))config.ratelimits.push({name:'ENGINEERING_LIMITER',namespace_id:'1785',simple:{limit:6,period:60}});
 config.routes=['hephzibahbehulah.com','admin.hephzibahbehulah.com','engineering.hephzibahbehulah.com','cyber.hephzibahbehulah.com'].map(pattern=>({pattern,custom_domain:true}));
 config.secrets.required=[...new Set([...config.secrets.required,'ADIGUN_ACCESS_TEAM_DOMAIN','ADIGUN_ACCESS_AUD'])];
 fs.writeFileSync('wrangler.platform.jsonc',JSON.stringify(config,null,2)+'\n');
