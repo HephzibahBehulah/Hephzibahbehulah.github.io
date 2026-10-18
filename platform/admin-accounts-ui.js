@@ -1,0 +1,26 @@
+const make=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
+const button=(text,fn)=>{const b=make('button',text);b.type='button';b.addEventListener('click',fn);return b;};
+const date=value=>value?new Date(value).toLocaleString():'No record';
+async function api(path='',options={}){
+ const response=await fetch('/api/admin/accounts'+path,{credentials:'same-origin',cache:'no-store',...options,headers:{'content-type':'application/json',...options.headers},signal:AbortSignal.timeout(22000)});
+ let data;try{data=await response.json();}catch{throw Error('The account service did not return account data. Refresh your private sign-in and retry.');}
+ if(!response.ok)throw Error(data.error||'Account service unavailable.');return data;
+}
+export function openAccounts(){
+ const existing=document.querySelector('#hb-admin-accounts');if(existing){existing.focus();return;}
+ const dialog=make('dialog');dialog.id='hb-admin-accounts';dialog.className='hb-platform-dialog';dialog.setAttribute('aria-label','Accounts and sign-ins');
+ const status=make('p','Loading accounts…');status.setAttribute('role','status');
+ const content=make('div'),filterLabel=make('label','Filter this page'),filter=make('input');filter.type='search';filterLabel.append(filter);
+ let page=1,users=[],busy=false;
+ const previous=button('Previous',()=>load(page-1)),next=button('Next',()=>load(page+1)),refresh=button('Refresh',()=>load(page));
+ dialog.append(make('h2','Accounts and sign-ins'),button('Close',()=>dialog.close()),make('p','Owner controls for public-app accounts. These controls do not grant private administrator access.'),status,refresh,previous,next,filterLabel,content);
+ dialog.addEventListener('close',()=>dialog.remove(),{once:true});document.body.append(dialog);dialog.showModal();
+ function render(){content.replaceChildren();const term=filter.value.trim().toLowerCase();const visible=users.filter(u=>(u.email+' '+u.id).toLowerCase().includes(term));for(const u of visible){const card=make('section');card.className='hb-account-row';card.append(make('h3',u.email||u.id),make('p',(u.email_confirmed_at?'Email confirmed':'Email pending')+' · Created '+date(u.created_at)),make('p','Latest sign-in: '+date(u.last_sign_in_at)));const paused=u.banned_until&&new Date(u.banned_until)>new Date();if(paused)card.append(make('p','New sign-ins paused until '+date(u.banned_until)));if(u.owner)card.append(make('p','Protected owner account'));else card.append(button(paused?'Allow new sign-ins':'Pause new sign-ins for 24 hours',async()=>{if(busy)return;const action=paused?'allow_login':'pause_login_24h';if(!confirm((paused?'Allow new sign-ins for ':'Pause new sign-ins for 24 hours for ')+u.email+'? Existing access tokens may remain valid until expiry.'))return;busy=true;try{const result=await api('',{method:'POST',body:JSON.stringify({user_id:u.id,action})});await load(page);status.textContent=result.message+(result.audit_warning?' '+result.audit_warning:'');}catch(e){status.textContent=e.message;}finally{busy=false;}}));content.append(card);}if(!visible.length)content.append(make('p','No accounts match on this page.'));}
+ filter.addEventListener('input',render);
+ const activity=make('details'),operations=make('details');activity.append(make('summary','Recent authentication activity'));operations.append(make('summary','Administrator action history'));dialog.append(activity,operations);
+ async function load(target){refresh.disabled=true;previous.disabled=true;next.disabled=true;status.textContent='Loading accounts…';try{const result=await api('?page='+target);if(!dialog.isConnected)return;page=result.page;users=result.users;render();previous.disabled=page<=1;next.disabled=!(result.next_page||(users.length===50&&(!result.last_page||page<result.last_page)));status.textContent='Account page '+page+'. '+users.length+' accounts shown.';}catch(e){status.textContent=e.message;}finally{refresh.disabled=false;}}
+ async function loadDetails(details,path,key){const summary=details.querySelector('summary');try{const data=await api(path);details.replaceChildren(summary);if(data.coverage)details.append(make('p',data.coverage));const rows=data[key]||[];for(const item of rows){const row=make('p');row.className='hb-account-row';row.textContent=key==='events'?date(item.created_at)+' · '+item.action+' · '+(item.actor_email||item.actor_id||'Unknown actor')+' · '+(item.ip_address||'IP not recorded'):date(item.created_at)+' · '+item.action+' · '+item.status+' · '+item.target_user_id;details.append(row);}if(!rows.length)details.append(make('p','No recorded activity yet.'));}catch(e){details.append(make('p',e.message));}}
+ activity.addEventListener('toggle',()=>{if(activity.open)loadDetails(activity,'/events','events');});operations.addEventListener('toggle',()=>{if(operations.open)loadDetails(operations,'/operations','operations');});
+ const privateInput=document.querySelector('#adminInput'),privateSend=document.querySelector('#adminSend');if(privateInput&&privateSend)dialog.append(button('Ask private AI to review sign-ins',()=>{privateInput.value='Review the available Supabase account and authentication audit records. Explain coverage gaps and any activity worth reviewing without assuming malicious intent. Do not change any accounts.';dialog.close();privateSend.click();}));
+ load(page);
+}

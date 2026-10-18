@@ -3,9 +3,10 @@ const domain='hephzibahbehulah.com',isPrivate=document.documentElement.dataset.h
 const make=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
 const link=(text,href)=>{const n=make('a',text);n.href=href;return n;};
 const action=(text,fn)=>{const n=make('button',text);n.type='button';n.addEventListener('click',fn);return n;};
+const accountCard=document.querySelector('#accountCard');if(accountCard)accountCard.append(make('p','Already registered? Use Sign in or Forgot password. Creating the same account again may show a confirmation notice without sending a new email.'));
 const header=make('header');header.className='hb-platform-bar';const brand=link('','/');brand.className='hb-platform-brand';const logo=make('img');logo.src='/_hb/hb-logo.svg';logo.alt='Hephzibah Behulah sci-fi monogram';const name=make('span','HEPHZIBAH BEHULAH');name.append(make('small','ENGINEERING · INTELLIGENCE · SECURITY'));brand.append(logo,name);
 const nav=make('div');nav.className='hb-platform-links';nav.setAttribute('role','navigation');nav.setAttribute('aria-label','Hephzibah Behulah applications');nav.append(link('Engineering',isPrivate?'/engineering/':'https://engineering.'+domain+'/'),link('Cybersecurity',isPrivate?'/cyber/':'https://cyber.'+domain+'/'));
-if(isPrivate)nav.append(link('Control room','https://admin.'+domain+'/'),link('Existing workspace','https://'+domain+'/'),link('Admin sign out','/cdn-cgi/access/logout'));
+if(isPrivate)nav.append(link('Control room','https://admin.'+domain+'/'),link('Existing workspace','https://'+domain+'/'),action('Accounts & sign-ins',async()=>{try{(await import('/_hb/admin-accounts-ui.js')).openAccounts();}catch{const d=dialog('Account administration');d.append(make('p','Account controls could not load. Refresh and retry.'));}}),link('Admin sign out','/cdn-cgi/access/logout'));
 else nav.append(action('Account',()=>account()));
 if(isCyber)nav.append(action('AI tutor',()=>tutor()));
 header.append(brand,nav);const sidebar=isPrivate&&document.querySelector('.os-sidebar');if(sidebar){const section=make('details'),summary=make('summary','APPLICATIONS');section.className='hb-platform-apps';section.append(summary,nav);sidebar.querySelector('.os-brand')?.after(section);}else document.body.prepend(header);

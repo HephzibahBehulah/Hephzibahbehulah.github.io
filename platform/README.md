@@ -44,4 +44,12 @@ For Cloudflare automatic builds, use `node platform/release.mjs` as the build co
 
 ## Remaining product work
 
-This integration makes existing browser applications available together; it does not establish full functional parity with every native desktop feature. Central user-administration tools, comprehensive Cloudflare/Supabase log ingestion, shared cross-domain sessions and additional private-AI management actions require further implementation and deployment verification. No new unrestricted administrator or shell capability is granted by this branch.
+This integration makes existing browser applications available together; it does not establish full functional parity with every native desktop feature. Comprehensive Cloudflare/Supabase log ingestion, shared cross-domain sessions and additional private-AI management actions require further implementation and deployment verification. No new unrestricted administrator or shell capability is granted by this branch.
+
+## Owner account administration
+
+The private Applications menu includes Accounts & sign-ins. Both Cloudflare Worker routing and the Supabase `hb-admin-accounts` function independently verify the signed Cloudflare owner identity. The server-only service credential never reaches the client. Public origins reject the account API and its UI module. The function entry point is `platform/admin-accounts-entry.ts`; deploy it with `admin-accounts-core.mjs` and `access.mjs`. Platform JWT verification is replaced by the function's explicit Cloudflare signature, issuer, audience, expiry and owner checks. Apply `admin-accounts-schema.sql` to provision the restricted audit view and RLS-enabled operation history.
+
+The panel lists 50 accounts per page, recent Supabase audit events and recorded owner operations. Member accounts can have new sign-ins paused for 24 hours or allowed again, with confirmation. Both known owner identities are protected. Existing access tokens can remain valid until expiry; this is not immediate session revocation. Account changes require an audit record first; a finalization failure is reported separately from the applied change. Neither this panel nor private AI claims that audit coverage proves malicious behavior. Private AI can inspect account and event summaries but cannot change account state through its chat tools.
+
+Owner-authenticated private AI and terminal HELP have returned real responses. The public owner account is confirmed and recorded a successful sign-in on 2026-10-18. End-to-end cloud-project save/reload and recovery-email delivery still require acceptance in an authenticated public session. Supabase leaked-password protection is shown as requiring Pro on the current Free plan; no paid upgrade was made.

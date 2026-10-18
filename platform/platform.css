@@ -19,4 +19,6 @@
 .hb-platform-cyber{background:#070a12;color:#e2e8f0;font-family:Inter,system-ui,sans-serif}.hb-platform-cyber>header:not(.hb-platform-bar){background:radial-gradient(ellipse at top right,#8b5cf622,transparent),#09121e}.hb-platform-cyber .card{border-color:#22d3ee44;background:linear-gradient(135deg,#0b1c2b,#111329);transition:border-color .2s,box-shadow .2s}.hb-platform-cyber .card:hover{border-color:#22d3ee88;box-shadow:0 8px 25px #8b5cf611}.hb-platform-cyber pre{max-width:100%;overflow:auto}
 @media(max-width:600px){.hb-platform-bar{padding:10px;gap:8px}.hb-platform-bar .hb-platform-links{width:100%;gap:6px}.hb-platform-bar .hb-platform-links a,.hb-platform-bar button{flex:1;font-size:11px;padding:8px}.hb-platform-footer{padding:20px 12px}.hb-platform-brand{font-size:11px}.hb-platform-dialog{padding:18px}}
 @media(prefers-reduced-motion:reduce){.hb-platform-bar *,.hb-platform-footer *,.hb-platform-cyber .card{transition:none!important}}
+.hb-platform-cyber #content :is(h1,h2,h3,p,a,code){overflow-wrap:anywhere}.hb-platform-cyber #content .card{min-width:0}
+.hb-account-row{padding:12px 0;border-bottom:1px solid #22d3ee44;overflow-wrap:anywhere;min-width:0}.hb-account-row h3{font-size:16px}.hb-platform-dialog details summary{min-height:44px;cursor:pointer;padding:10px 0}.hb-platform-dialog>button{margin:4px}.hb-platform-dialog{box-sizing:border-box}
 
