@@ -1,4 +1,5 @@
 import {publicAuth} from './public-auth.mjs';
+import {publicServiceWorker} from './public-sw.mjs';
 const ROOT='hephzibahbehulah.com';
 const ADMIN='admin.'+ROOT;
 const PUBLIC=new Map([['engineering.'+ROOT,'engineering'],['cyber.'+ROOT,'cyber']]);
@@ -39,6 +40,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
   return {async fetch(request,env,ctx){
     const url=new URL(request.url),route=resolveRoute(url);
     if(route.kind==='reject')return reply(route.status,'Not found');
+    if(!route.privateHost&&['GET','HEAD'].includes(request.method)&&/\/(?:sw|service-worker|serviceworker)\.js$/.test(url.pathname))return new Response(request.method==='HEAD'?null:publicServiceWorker,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'no-store'}});
     if(route.kind==='member')return memberAuth.endpoint(request,env);
     if(route.kind==='account'){
       if(url.hostname!==ROOT){const target=new URL('https://'+ROOT+'/account');let destination=new URL(url.searchParams.get('next')||'/',url.origin);if(destination.origin!==url.origin)destination=new URL(url.origin+'/');target.searchParams.set('next',destination.href);return Response.redirect(target,302);}

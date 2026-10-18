@@ -3,6 +3,10 @@ const domain='hephzibahbehulah.com',isPrivate=document.documentElement.dataset.h
 const make=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
 const link=(text,href)=>{const n=make('a',text);n.href=href;return n;};
 const action=(text,fn)=>{const n=make('button',text);n.type='button';n.addEventListener('click',fn);return n;};
+// Mounted pages use a base for assets; section links must stay on their current page.
+function sectionLink(a){const href=a?.getAttribute('href');if(href?.startsWith('#'))a.setAttribute('href',location.pathname+location.search+href);}
+document.querySelectorAll('a[href^="#"]').forEach(sectionLink);
+document.addEventListener('click',event=>sectionLink(event.target.closest?.('a[href^="#"]')),true);
 const accountCard=document.querySelector('#accountCard');if(accountCard)accountCard.append(make('p','Already registered? Use Sign in or Forgot password. Creating the same account again may show a confirmation notice without sending a new email.'));
 const header=make('header');header.className='hb-platform-bar';const brand=link('','/');brand.className='hb-platform-brand';const logo=make('img');logo.src='/_hb/hb-logo.svg';logo.alt='Hephzibah Behulah sci-fi monogram';const name=make('span','HEPHZIBAH BEHULAH');name.append(make('small','ENGINEERING · INTELLIGENCE · SECURITY'));brand.append(logo,name);
 const nav=make('div');nav.className='hb-platform-links';nav.setAttribute('role','navigation');nav.setAttribute('aria-label','Hephzibah Behulah applications');
