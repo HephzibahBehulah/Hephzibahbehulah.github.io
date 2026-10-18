@@ -23,7 +23,7 @@ jobs:
           node --check platform/cyber-ai.mjs
           node --check platform/admin-accounts-ui.js
       - name: Verify authorization, routing and tutor boundaries
-        run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs
+        run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
       - name: Check every original browser script

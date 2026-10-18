@@ -33,7 +33,7 @@ const preferences=path.join(destination,'_apps/engineering/platform/user-prefere
 const preferenceSource=fs.readFileSync(preferences,'utf8');
 if(!preferenceSource.includes("new URL('/api/engineering/chat'"))fs.writeFileSync(preferences,preferenceSource.replace("'https://voltpro-engineering-ai.hephzibah-behulah.workers.dev/chat'","new URL('/api/engineering/chat',root.location?.origin||'https://engineering.hephzibahbehulah.com').href").replace("const u=new URL(String(input.aiEndpoint));","const u=new URL(String(input.aiEndpoint));if(u.href==='https://voltpro-engineering-ai.hephzibah-behulah.workers.dev/chat')u.href=defaults.aiEndpoint;"));
 const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
-for(const file of ['platform.css','platform.js','admin-accounts-ui.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
+for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
 for(const file of ['account-config.js','account-client.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
 const manifest={version:1,applications:lock,assets:{}};

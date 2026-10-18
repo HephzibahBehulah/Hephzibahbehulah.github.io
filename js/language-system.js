@@ -91,7 +91,7 @@
   }
 
   function translateElement(el){
-    if(el.nodeType !== 1 || el.id === 'hbLanguageControl') return;
+    if(el.nodeType !== 1 || el.id === 'hbLanguageControl' || el.closest('[translate="no"],[role="status"]')) return;
 
     const original = rememberOriginal(el);
 

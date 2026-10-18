@@ -6,10 +6,10 @@ This integration is deployed on the four hostnames below. It preserves the origi
 
 - `engineering.hephzibahbehulah.com`: the pinned VoltPRo application.
 - `cyber.hephzibahbehulah.com`: the pinned cybersecurity browser companion.
-- `hephzibahbehulah.com`: the existing combined platform, with Cloudflare Access verification required for every request.
+- `hephzibahbehulah.com`: the public company platform, with a two-minute guest preview and central public account login.
 - `admin.hephzibahbehulah.com`: the existing control room, with the same outer Access verification and its existing private API checks.
 
-Both private hostnames also mount the complete browser applications under `/engineering/` and `/cyber/`. Existing root content, control tools, Cyber OS, knowledge libraries, bot and terminal remain in the original Worker implementation. Native Kali/WSL execution remains local; publishing the browser companion does not publish a remote shell.
+The private admin hostname also mounts the complete browser applications under `/engineering/` and `/cyber/`. Existing root content, control tools, Cyber OS, knowledge libraries, bot and terminal remain in the original Worker implementation. Native Kali/WSL execution remains local; publishing the browser companion does not publish a remote shell.
 
 ## Build
 
@@ -53,3 +53,11 @@ The private Applications menu includes Accounts & sign-ins. Both Cloudflare Work
 The panel lists 50 accounts per page, recent Supabase audit events and recorded owner operations. Member accounts can have new sign-ins paused for 24 hours or allowed again, with confirmation. Both known owner identities are protected. Existing access tokens can remain valid until expiry; this is not immediate session revocation. Account changes require an audit record first; a finalization failure is reported separately from the applied change. Neither this panel nor private AI claims that audit coverage proves malicious behavior. Private AI can inspect account and event summaries but cannot change account state through its chat tools.
 
 Owner-authenticated private AI and terminal HELP have returned real responses. The public owner account is confirmed and recorded a successful sign-in on 2026-10-18. End-to-end cloud-project save/reload and recovery-email delivery still require acceptance in an authenticated public session. Supabase leaked-password protection is shown as requiring Pro on the current Free plan; no paid upgrade was made.
+
+## Public accounts — 19 October 2026
+
+The main domain is public. Only the admin domain uses Cloudflare Access. Public accounts use the central `/account` page, password validation followed by an email OTP, and an encrypted HttpOnly session cookie shared across the three approved public origins. `HB_PUBLIC_SESSION_KEY` is a generated Worker secret and must never be committed. Per-tab tickets are stored in sessionStorage and passed between approved app origins in URL fragments, never to third-party links. Normal tab closure discards the ticket; browsers that restore sessionStorage can restore tab state, so sign-out remains the reliable explicit end-of-session action. Server checks enforce the two-minute signed guest deadline and two-hour inactivity deadline; clearing all browser cookies can start a new guest preview, so this is not a paywall or a claim to prevent all automation. Existing browser-delivered offline files cannot be recalled.
+
+Old engineering account links redirect to the central account page; the existing engineering cloud-project/recovery workspace remains at `/workspace`. Public scripts bridge its project access to the shared session, preserving Supabase row ownership checks. Password recovery uses the configured email callback. Account verification and bot mitigation are distinct; existing provider/edge rate limits remain enabled.
+
+The sidebar preserves the language selector, search, existing company external links and source brand assets. Public navigation names are VoltPro Academy, Cyber Learning, Adigun AI and Adigun Terminal. Admin navigation uses Admin SI and keeps an account-menu sign-out instead of the removed sidebar entries. Nested Tool Workspace HTML uses a root asset base; Cyber OS uses its own `/cyber-os/` base.
