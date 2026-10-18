@@ -8,7 +8,7 @@
   const SUPPORTED = { en:'English', de:'Deutsch', yo:'Yorùbá', pid:'Nigerian Pidgin' };
   const KEY = 'hb_language';
 
-  const scriptEl = Array.from(document.scripts).find(s => /language-system\\.js(?:\\?|$)/.test(s.src));
+  const scriptEl = Array.from(document.scripts).find(s => /language-system\.js(?:\?|$)/.test(s.src));
   const scriptUrl = scriptEl ? new URL(scriptEl.src, location.href) : new URL('/js/language-system.js', location.origin);
   const translationBase = new URL('../data/translations/', scriptUrl).href;
 
@@ -18,9 +18,9 @@
 
   function clean(value){
     return String(value || '')
-      .replace(/^[^\\p{L}\\p{N}]+/u,'')
-      .replace(/[^\\p{L}\\p{N}]+$/u,'')
-      .replace(/\\s+/g,' ')
+      .replace(/^[^\p{L}\p{N}]+/u,'')
+      .replace(/[^\p{L}\p{N}]+$/u,'')
+      .replace(/\s+/g,' ')
       .trim()
       .toLowerCase();
   }
@@ -72,7 +72,7 @@
       let out = String(value);
       for(const phrase of phrases){
         const translated = dict[phrase];
-        const re = new RegExp('(^|[^\\p{L}\\p{N}])' + phrase.replace(/[.*+?^{}()|[\\]\\\\]/g,'\\\\$&') + '(?=$|[^\\p{L}\\p{N}])','giu');
+        const re = new RegExp('(^|[^\\p{L}\\p{N}])' + phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '(?=$|[^\\p{L}\\p{N}])','giu');
         out = out.replace(re, (m,prefix)=>prefix + translated);
       }
       if(out !== value) return out;
@@ -80,9 +80,9 @@
 
     // Word fallback makes labels and navigation translate even when they contain
     // punctuation, numbering or mixed technical terms.
-    const words = Object.keys(dict).filter(k => /^\\p{L}[\\p{L}\\p{N} &'’.-]*$/u.test(k) && !k.includes(' '));
+    const words = Object.keys(dict).filter(k => /^\p{L}[\p{L}\p{N} &'’.-]*$/u.test(k) && !k.includes(' '));
     let changed = false;
-    const out = String(value).replace(/\\p{L}[\\p{L}\\p{N}’'-]*/gu, token=>{
+    const out = String(value).replace(/\p{L}[\p{L}\p{N}’'-]*/gu, token=>{
       const translated = dict[token.toLowerCase()];
       if(translated && translated !== token){ changed = true; return translated; }
       return token;
@@ -97,7 +97,8 @@
 
     if(el.hasAttribute('data-i18n')){
       const key = el.getAttribute('data-i18n');
-      const nextText = current === 'en' ? original.text : (dict[key] || lookup(original.text) || original.text);\n      if(el.textContent !== nextText) el.textContent = nextText;
+      const nextText = current === 'en' ? original.text : (dict[key] || lookup(original.text) || original.text);
+      if(el.textContent !== nextText) el.textContent = nextText;
     } else if(el.children.length === 0 && !['SCRIPT','STYLE','CODE','PRE'].includes(el.tagName)){
       const translated = current === 'en' ? original.text : lookup(original.text);
       if(translated && el.textContent !== translated) el.textContent = translated;
@@ -110,7 +111,8 @@
     ].forEach(([keyAttr,target])=>{
       if(!el.hasAttribute(keyAttr)) return;
       const key = el.getAttribute(keyAttr);
-      const nextAttr = current === 'en' ? (original[target] || '') : (dict[key] || lookup(original[target] || '') || original[target] || '');\n      if(el.getAttribute(target) !== nextAttr) el.setAttribute(target,nextAttr);
+      const nextAttr = current === 'en' ? (original[target] || '') : (dict[key] || lookup(original[target] || '') || original[target] || '');
+      if(el.getAttribute(target) !== nextAttr) el.setAttribute(target,nextAttr);
     });
 
     // Translate common attributes even where pages do not yet have explicit keys.

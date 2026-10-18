@@ -12,3 +12,13 @@ for(const [name,claims]of [['expired',{exp:1}],['future',{nbf:Date.now()/1000+60
 test('forged signature is rejected',async()=>assert.equal((await verify(await request({},false),env,options)).ok,false));
 test('unconfigured access is rejected',async()=>assert.equal((await verify(await request(),{},options)).status,503));
 test('issuer cannot point to arbitrary network hosts',async()=>assert.equal((await verify(await request(),{...env,ADIGUN_ACCESS_TEAM_DOMAIN:'https://example.com'},options)).status,503));
+test('signing keys use the supported edge redirect mode without following redirects',async()=>{
+ const issuer='https://edge-runtime-test.cloudflareaccess.com';let fetched=false;
+ const result=await verify(await request({iss:issuer}),{...env,ADIGUN_ACCESS_TEAM_DOMAIN:issuer},{fetcher:async(url,init)=>{fetched=true;assert.equal(url,issuer+'/cdn-cgi/access/certs');assert.equal(init.redirect,'manual');return Response.json({keys:[jwk]});}});
+ assert.equal(fetched,true);assert.equal(result.ok,true);
+});
+test('a redirected signing-key endpoint fails closed',async()=>{
+ const issuer='https://redirected-keys-test.cloudflareaccess.com';
+ const result=await verify(await request({iss:issuer}),{...env,ADIGUN_ACCESS_TEAM_DOMAIN:issuer},{fetcher:async()=>new Response(null,{status:302,headers:{location:'https://example.com/keys'}})});
+ assert.equal(result.ok,false);assert.equal(result.code,'signing_keys_unavailable');
+});

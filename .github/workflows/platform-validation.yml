@@ -25,6 +25,8 @@ jobs:
         run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
+      - name: Check every original browser script
+        run: node platform/check-browser-scripts.mjs
       - name: Verify the pinned browser releases and build the integrated platform
         run: |
           node platform/fetch-apps.mjs
