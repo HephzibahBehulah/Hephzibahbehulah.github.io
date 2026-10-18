@@ -25,3 +25,11 @@ jobs:
         run: node --test platform/access.test.mjs platform/router.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
+
+      - name: Preserve verified platform catalogues for reproducible builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: verified-platform-catalogues
+          path: cyber-os/data/
+          if-no-files-found: error
+          retention-days: 1
