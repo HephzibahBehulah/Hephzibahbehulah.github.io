@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded",()=>{
   const $=s=>document.querySelector(s);
-  const accessStatus=$("#accessStatus"),identityEmail=$("#identityEmail"),heroAuth=$("#heroAuth"),heroIdentity=$("#heroIdentity");
+  const accessStatus=$("#accessStatus"),identityEmail=$("#identityEmail"),heroAuth=$("#heroAuth")||$("#overviewClearance"),heroIdentity=$("#heroIdentity")||$("#overviewIdentity");
   const overviewState=$("#overviewAccessState"),overviewDot=$("#overviewAccessDot"),overviewClearance=$("#overviewClearance"),overviewIdentity=$("#overviewIdentity"),overviewIdentityStatus=$("#overviewIdentityStatus"),overviewIdentityDetail=$("#overviewIdentityDetail"),overviewSessionStatus=$("#overviewSessionStatus"),overviewSessionDetail=$("#overviewSessionDetail"),overviewEdgeState=$("#overviewEdgeState"),overviewLastSeen=$("#overviewLastSeen"),overviewEventTime=$("#overviewEventTime"),overviewEventTitle=$("#overviewEventTitle"),overviewEventText=$("#overviewEventText"),overviewHeartbeat=$("#overviewHeartbeat");
-  const systemState=$("#systemState"),identityState=$("#identityState"),identityDetail=$("#identityDetail");
+  const systemState=$("#systemState")||$("#overviewEdgeState"),identityState=$("#identityState")||$("#overviewIdentityStatus"),identityDetail=$("#identityDetail")||$("#overviewIdentityDetail");
   const inspectOutput=$("#inspectOutput"),inspectState=$("#inspectState");
   const HISTORY_KEY="adigun.intelligence.history.v1";
   const CHECKPOINT_KEY="adigun.daily.checkpoint.v2";

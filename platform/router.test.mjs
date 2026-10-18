@@ -28,3 +28,14 @@ test('tutor rejects foreign origins',async()=>assert.equal((await cyberAI.fetch(
 test('tutor enforces limiter before inference',async()=>{let inferred=false;const r=await cyberAI.fetch(new Request('https://cyber.'+root+'/api/cyber/chat',{method:'POST'}),{AI:{run(){inferred=true;}},API_LIMITER:{limit:async()=>({success:false})}});assert.equal(r.status,429);assert.equal(inferred,false);});
 test('tutor bounds request size',async()=>{const r=await cyberAI.fetch(new Request('https://cyber.'+root+'/api/cyber/chat',{method:'POST',body:'x'.repeat(13000)}),{AI:{},API_LIMITER:{limit:async()=>({success:true})}});assert.equal(r.status,413);});
 test('tutor returns actual inference output',async()=>{const r=await cyberAI.fetch(new Request('https://cyber.'+root+'/api/cyber/chat',{method:'POST',body:JSON.stringify({question:'What is DNS?'})}),{AI:{run:async()=>({response:'DNS maps names to records.'})},API_LIMITER:{limit:async()=>({success:true})}});assert.equal((await r.json()).answer,'DNS maps names to records.');});
+test('private pages cannot reuse stale public HTML through conditional requests',async()=>{
+ const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async(request)=>{assert.equal(request.headers.has('if-none-match'),false);assert.equal(request.headers.has('if-modified-since'),false);return new Response('<html></html>',{headers:{'content-type':'text/html',etag:'old-public-version','last-modified':'yesterday'}});}}});
+ const result=await worker.fetch(new Request('https://admin.'+root+'/admin',{headers:{'if-none-match':'old-public-version','if-modified-since':'yesterday'}}),{});
+ assert.equal(result.status,200);assert.equal(result.headers.has('etag'),false);assert.equal(result.headers.has('last-modified'),false);assert.equal(result.headers.get('cache-control'),'private, no-store');
+});
+test('private service workers retire only after authorization',async()=>{
+ let granted=false;const worker=createPlatform({verifyAdmin:async()=>({ok:granted})});
+ const request=new Request('https://admin.'+root+'/engineering/service-worker.js');
+ assert.equal((await worker.fetch(request,{})).status,401);granted=true;
+ const result=await worker.fetch(request,{});assert.equal(result.status,200);assert.match(await result.text(),/registration\.unregister/);assert.equal(result.headers.get('cache-control'),'private, no-store');
+});

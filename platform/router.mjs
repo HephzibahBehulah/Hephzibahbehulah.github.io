@@ -33,8 +33,10 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI}){
     if(route.kind==='reject')return reply(route.status,'Not found');
     if(route.privateHost){
       const verified=await verifyAdmin(request,env);
-      if(!verified.ok)return reply(verified.status||401,'Private workspace. Sign in through Cloudflare Access.');
+      if(!verified.ok){console.warn('HB_PRIVATE_ACCESS_DENIED',verified.code||'configuration_or_identity_rejected');return reply(verified.status||401,'Private workspace. Sign in through Cloudflare Access.');}
     }
+    if(['GET','HEAD'].includes(request.method)&&(route.privateHost||route.kind==='app'&&route.path.endsWith('.html'))){const headers=new Headers(request.headers);headers.delete('if-none-match');headers.delete('if-modified-since');request=new Request(request,{headers});}
+    if(route.privateHost&&['GET','HEAD'].includes(request.method)&&/\/(?:sw|service-worker|serviceworker)\.js$/.test(url.pathname))return new Response(request.method==='HEAD'?null:"self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())await caches.delete(key);await self.registration.unregister();})()));",{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'private, no-store','x-robots-tag':'noindex, nofollow, noarchive'}});
     if(route.kind==='redirect'){const next=new URL(route.location,url);next.search=url.search;return Response.redirect(next.toString(),308);}
     if(route.kind==='cyber-ai')return cyberAI.fetch(request,env,ctx);
     if(route.kind==='engineering-ai'){
@@ -49,6 +51,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI}){
       // admin APIs keep their established hostname and authorization checks.
       const response=await legacy.fetch(request,env,ctx);
       const headers=new Headers(response.headers);headers.set('cache-control','private, no-store');headers.set('x-robots-tag','noindex, nofollow, noarchive');
+      if(headers.get('content-type')?.includes('text/html')){headers.delete('etag');headers.delete('last-modified');headers.delete('content-length');}
       let result=new Response(response.body,{status:response.status,headers});
       if(response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined')result=new HTMLRewriter().on('head',{element(el){el.append('<link rel="stylesheet" href="/_hb/platform.css"><script src="/_hb/platform.js" defer></script>',{html:true});}}).transform(result);
       return result;
@@ -57,6 +60,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI}){
     const next=new URL(request.url);next.pathname=route.path;
     const response=await env.ASSETS.fetch(new Request(next,{method:request.method,headers:request.headers}));
     const headers=new Headers(response.headers);headers.set('x-content-type-options','nosniff');
+    if(route.kind==='app'&&headers.get('content-type')?.includes('text/html')){headers.delete('etag');headers.delete('last-modified');headers.delete('content-length');}
     if(route.privateHost){headers.set('cache-control','private, no-store');headers.set('x-robots-tag','noindex, nofollow, noarchive');}
     let result=new Response(response.body,{status:response.status,headers});
     if(route.kind==='app'&&response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined'){
