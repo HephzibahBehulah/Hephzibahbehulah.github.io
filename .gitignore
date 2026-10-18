@@ -83,5 +83,8 @@ secrets.yml
 credentials.yml
 
 # Custom
+dist-platform/
+wrangler.platform.jsonc
+platform-source/
 /assets/images/original/
 /assets/images/cache/

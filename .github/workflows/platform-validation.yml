@@ -1,0 +1,27 @@
+name: Integrated platform validation
+on:
+  pull_request:
+  push:
+    branches: ["codex/**"]
+    paths: ["platform/**", "worker-platform.mjs", ".github/workflows/platform-validation.yml"]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check integration JavaScript
+        run: |
+          node --check worker-platform.mjs
+          node --check platform/platform.js
+          node --check platform/build.mjs
+          node --check platform/engineering-ai.mjs
+          node --check platform/cyber-ai.mjs
+      - name: Verify authorization, routing and tutor boundaries
+        run: node --test platform/access.test.mjs platform/router.test.mjs
+      - name: Verify preservation of the original platform
+        run: node platform/preflight.mjs
