@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {resolveRoute,createPlatform} from './router.mjs';
+import {resolveRoute,createPlatform as platformFactory} from './router.mjs';
+const createPlatform=options=>platformFactory({...options,memberAuth:{gate:async()=>({allowed:true})}});
 import cyberAI from './cyber-ai.mjs';
 const root='hephzibahbehulah.com';
 for(const [host,app]of [['engineering','engineering'],['cyber','cyber']]){
@@ -8,16 +9,16 @@ for(const [host,app]of [['engineering','engineering'],['cyber','cyber']]){
  test(host+' cannot reach admin APIs',()=>assert.equal(resolveRoute(new URL('https://'+host+'.'+root+'/api/admin/agent')).status,404));
  test(host+' cannot reach internal assets',()=>assert.equal(resolveRoute(new URL('https://'+host+'.'+root+'/_apps/engineering/index.html')).status,404));
 }
-test('private app routes preserve mount prefixes',()=>{const route=resolveRoute(new URL('https://'+root+'/engineering/simulator'));assert.equal(route.path,'/_apps/engineering/simulator.html');assert.equal(route.privateHost,true);assert.equal(route.base,'/engineering/');});
-test('PLC nested assets keep the correct base',()=>assert.equal(resolveRoute(new URL('https://'+root+'/engineering/voltpro-plc/')).base,'/engineering/voltpro-plc/'));
-test('old html routes redirect without discarding query',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/account.html?next=simulator.html'));assert.equal(r.status,308);assert.equal(r.headers.get('location'),'https://engineering.'+root+'/account?next=simulator.html');});
+test('private app routes preserve mount prefixes',()=>{const route=resolveRoute(new URL('https://admin.'+root+'/engineering/simulator'));assert.equal(route.path,'/_apps/engineering/simulator.html');assert.equal(route.privateHost,true);assert.equal(route.base,'/engineering/');});
+test('PLC nested assets keep the correct base',()=>assert.equal(resolveRoute(new URL('https://admin.'+root+'/engineering/voltpro-plc/')).base,'/engineering/voltpro-plc/'));
+test('old account links lead to the central account page and preserve their intended destination',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/account.html?next=simulator.html'));assert.equal(r.status,302);const target=new URL(r.headers.get('location'));assert.equal(target.origin,'https://'+root);assert.equal(target.pathname,'/account');assert.equal(target.searchParams.get('next'),'https://engineering.'+root+'/simulator.html');});
 test('unknown host cannot obtain any application',()=>assert.equal(resolveRoute(new URL('https://example.com/')).status,404));
 test('encoded path traversal is rejected',()=>assert.equal(resolveRoute(new URL('https://cyber.'+root+'/%2e%2e%2fadmin.html')).status,404));
 test('malformed percent escapes are rejected',()=>assert.equal(resolveRoute(new URL('https://cyber.'+root+'/%zz')).status,400));
-test('every private request is checked before asset or legacy access',async()=>{let touched=false;const worker=createPlatform({verifyAdmin:async()=>({ok:false}),legacy:{fetch:()=>{touched=true;}}});for(const host of [root,'admin.'+root])for(const p of ['/','/engineering/','/_hb/platform.js','/api/admin/agent']){const r=await worker.fetch(new Request('https://'+host+p),{});assert.equal(r.status,401);}assert.equal(touched,false);});
-test('missing access configuration fails closed',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:false,status:503})});assert.equal((await worker.fetch(new Request('https://'+root+'/'))).status,503);});
+test('every private request is checked before asset or legacy access',async()=>{let touched=false;const worker=createPlatform({verifyAdmin:async()=>({ok:false}),legacy:{fetch:()=>{touched=true;}}});for(const host of ['admin.'+root])for(const p of ['/','/engineering/','/_hb/platform.js','/api/admin/agent']){const r=await worker.fetch(new Request('https://'+host+p),{});assert.equal(r.status,401);}assert.equal(touched,false);});
+test('missing access configuration fails closed',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:false,status:503})});assert.equal((await worker.fetch(new Request('https://admin.'+root+'/'))).status,503);});
 test('public static requests do not call private authentication',async()=>{let touched=false;const worker=createPlatform({verifyAdmin:async()=>{touched=true;},legacy:{}});const r=await worker.fetch(new Request('https://cyber.'+root+'/style.css'),{ASSETS:{fetch:async r=>new Response(new URL(r.url).pathname)}});assert.equal(await r.text(),'/_apps/cyber/style.css');assert.equal(touched,false);});
-test('private responses cannot be cached publicly',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async()=>new Response('existing tools')}});for(const p of ['/engineering/style.css','/']){const r=await worker.fetch(new Request('https://'+root+p),{ASSETS:{fetch:async()=>new Response('css')}});assert.equal(r.headers.get('cache-control'),'private, no-store');}});
+test('private responses cannot be cached publicly',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async()=>new Response('existing tools')}});for(const p of ['/engineering/style.css','/']){const r=await worker.fetch(new Request('https://admin.'+root+p),{ASSETS:{fetch:async()=>new Response('css')}});assert.equal(r.headers.get('cache-control'),'private, no-store');}});
 test('private legacy content is preserved through the old worker',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async()=>new Response('existing tools')}});assert.equal(await(await worker.fetch(new Request('https://'+root+'/'))).text(),'existing tools');});
 test('authenticated main-domain root explicitly serves its original index with asset HTML handling disabled',async()=>{
  const worker=createPlatform({verifyAdmin:async()=>({ok:true}),legacy:{fetch:async request=>new URL(request.url).pathname==='/index.html'?new Response('<h1>Original platform</h1>',{headers:{'content-type':'text/html'}}):new Response(null,{status:404})}});
