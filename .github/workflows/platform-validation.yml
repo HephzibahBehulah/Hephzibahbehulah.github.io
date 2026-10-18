@@ -18,6 +18,9 @@ jobs:
         run: |
           node --check worker-platform.mjs
           node --check platform/platform.js
+          node --check platform/experience.js
+          node --check platform/account-page.js
+          node --check platform/member.js
           node --check platform/build.mjs
           node --check platform/engineering-ai.mjs
           node --check platform/cyber-ai.mjs

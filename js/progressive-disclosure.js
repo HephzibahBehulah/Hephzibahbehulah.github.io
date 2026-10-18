@@ -13,7 +13,7 @@ function splitCyberNavigation(sidebar){
  const links=[...nav.querySelectorAll("a")];
  const host=nav.parentElement;
  groups.forEach(([label,hrefs])=>{
-  const selected=hrefs.map(h=>links.find(a=>a.getAttribute("href")===h)).filter(Boolean);
+  const selected=hrefs.map(h=>links.find(a=>a.hash===h&&a.pathname===location.pathname)).filter(Boolean);
   if(!selected.length)return;
   const heading=document.createElement("div");heading.className="os-side-label";heading.textContent=label;
   const groupNav=document.createElement("nav");groupNav.className="os-nav";
@@ -78,13 +78,13 @@ function boot(){
  function syncHash(){
   const hash=location.hash;
   if(!hash)return;
-  const link=links.find(a=>a.getAttribute("href")===hash);
+  const link=links.find(a=>a.hash===h&&a.pathname===location.pathnameash);
   if(link)activate(link);
  }
  window.addEventListener("hashchange",syncHash);
  syncHash();
  if("IntersectionObserver" in window){
-  const targets=links.map(a=>({a,target:document.getElementById((a.getAttribute("href")||"").slice(1))})).filter(x=>x.target);
+  const targets=links.map(a=>({a,target:document.getElementById((a.pathname===location.pathname?a.hash:"").slice(1))})).filter(x=>x.target);
   const observer=new IntersectionObserver(entries=>{
    const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
    if(!visible)return;
