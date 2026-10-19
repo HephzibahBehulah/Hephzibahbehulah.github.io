@@ -17,6 +17,7 @@ export function resolveRoute(url){
   if(!privateHost&&path.startsWith('/api/member/'))return {kind:'member',privateHost:false};
   if(!privateHost&&['/account','/account/','/account.html'].includes(path))return {kind:'account',privateHost:false};
   if(!privateHost&&decoded==='/_hb/admin-accounts-ui.js')return {kind:'reject',status:404};
+  if(['/api/assistant/chat','/api/assistant/tools','/api/assistant/capabilities'].includes(path))return {kind:'assistant',privateHost};
   if(path.startsWith('/_hb/'))return {kind:'shared',privateHost,path};
   if(path==='/api/engineering/chat'||path==='/api/engineering/health')return {kind:'engineering-ai',privateHost};
   if(path==='/api/cyber/chat')return {kind:'cyber-ai',privateHost};
@@ -36,7 +37,7 @@ export function resolveRoute(url){
   return {kind:'app',privateHost,app,prefix,base:prefix+asset.slice(0,asset.lastIndexOf('/')+1),path:'/_apps/'+app+asset};
 }
 
-export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,accountAdmin,memberAuth=publicAuth}){
+export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,accountAdmin,assistant,memberAuth=publicAuth}){
   return {async fetch(request,env,ctx){
     const url=new URL(request.url),route=resolveRoute(url);
     if(route.kind==='reject')return reply(route.status,'Not found');
@@ -60,6 +61,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
       if(!visit.allowed){if(url.pathname.startsWith('/api/'))return Response.json({error:'Sign in to continue',account:'https://'+ROOT+'/account'},{status:401,headers:{'cache-control':'no-store'}});const target=new URL('https://'+ROOT+'/account');target.searchParams.set('next',url.href);return Response.redirect(target,302);}
     }
     const withVisit=response=>{if(!visit?.cookie)return response;const headers=new Headers(response.headers);headers.append('set-cookie',visit.cookie);return new Response(response.body,{status:response.status,headers});};
+    if(route.kind==='assistant')return withVisit(assistant?await assistant(request,env,ctx,{privateHost:route.privateHost}):reply(503,'Assistant unavailable'));
     if(route.kind==='cyber-ai')return withVisit(await cyberAI.fetch(request,env,ctx));
     if(route.kind==='admin-accounts')return accountAdmin(request,env,ctx);
     if(route.kind==='engineering-ai'){

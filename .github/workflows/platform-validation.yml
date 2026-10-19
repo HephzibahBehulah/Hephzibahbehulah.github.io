@@ -21,6 +21,10 @@ jobs:
           node --check platform/experience.js
           node --check platform/account-page.js
           node --check platform/member.js
+          node --check platform/assistant.js
+          node --check platform/assistant.mjs
+          node --check platform/assistant-tools.mjs
+          node --check platform/assistant-policy.mjs
           node --check platform/studio.js
           node --check platform/studio-bank.js
           node --check platform/studio-search-worker.js
@@ -30,7 +34,7 @@ jobs:
           node --check platform/cyber-ai.mjs
           node --check platform/admin-accounts-ui.js
       - name: Verify authorization, routing and tutor boundaries
-        run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs
+        run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/assistant.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
       - name: Check every original browser script
