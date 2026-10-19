@@ -1,5 +1,38 @@
 # HEPHZIBAH BEHULAH
 
+## Current integrated release — 19 October 2026
+
+| Workspace | Live address | Access |
+| --- | --- | --- |
+| Main website | https://hephzibahbehulah.com/ | Public entry and shared member account |
+| Engineering | https://engineering.hephzibahbehulah.com/ | Public learning workspace |
+| Cybersecurity | https://cyber.hephzibahbehulah.com/ | Public learning workspace |
+| Admin control | https://admin.hephzibahbehulah.com/admin | Owner-only Cloudflare Access and MFA |
+| Admin tools | https://admin.hephzibahbehulah.com/admin/tools/ | Private |
+| Admin Cyber OS | https://admin.hephzibahbehulah.com/admin/cyber-os/ | Private |
+
+### VoltPRo Studio
+
+- [Simulator](https://engineering.hephzibahbehulah.com/simulator), [Breadboard](https://engineering.hephzibahbehulah.com/breadboard) and [VoltProPLC](https://engineering.hephzibahbehulah.com/voltpro-plc/) use compact studio menus, native editing controls, project libraries, component sidebars, inspectors and results docks.
+- Phone layouts use side drawers and grouped commands. Company branding, theme choices, language selector, account controls and external links remain available.
+- Each workspace exposes **100,000 editable parameter studies** across ten study families/control templates. These are variations, not 100,000 distinct circuit topologies.
+- The Component Bank supplements existing devices with **1,000,000 value configurations across four generic electrical models**: resistor, capacitor, inductor and DC source. These are not one million manufacturer parts. PLC directs electrical configurations to Simulator.
+- Studies include explanations and exercises. Loading preserves recovery data; PLC imports validate before modifying native state.
+- Decorative heading numbering, the simulator build label and breadboard footer implementation wording are removed from the interface. Useful pin numbers, measurements, project search identifiers and model limitations remain.
+- Original pinned downloads are preserved before studio integration; a checksum/size change for an unchanged source commit blocks the build.
+
+Validation: 77 integration/unit tests; syntax checks for 67 original browser scripts; 300,000 project structures; 200,000 DC solves; 200,000 native PLC scans; and positive finite values for all 1,000,000 configurations. Laptop and phone layouts were inspected for all three workspaces. Live checks confirmed circuit loading, expected 6 V divider output from 12 V, PLC study import and Run/Stop. Public routes responded successfully and unauthenticated admin routes retained Cloudflare Access protection.
+
+These checks do not certify physical hardware, every transient response or every possible user drawing. Fresh authenticated admin interaction was not repeated for this release. Existing member inactivity timeout remains five hours; verification-code expiry remains four minutes.
+
+Implementation: [PR #37](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/pull/37), [PR #38](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/pull/38). Published Worker version: `09289d49-1c09-4c73-b913-49def9dfb8a8`.
+
+### Documentation maintenance
+
+Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
+
+---
+
 ## Engineering · Intelligence · Security
 
 Hephzibah Behulah is a browser-first technical platform combining engineering, software, data, networking, cybersecurity, OSINT, AI security and structured learning into one connected workspace.
