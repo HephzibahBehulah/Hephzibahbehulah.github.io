@@ -65,3 +65,5 @@ html:not([data-hb-theme=light]) .hb-studio-plc .canvas{background:var(--st-bg);c
 
 @media(max-width:700px){.hb-studio-breadboard .board-head{padding-top:38px!important}.hb-studio-breadboard .board-head>div:first-child{flex:1 1 100%;max-width:100%}.hb-studio-breadboard .board-head{flex-wrap:wrap!important}}
 .hb-studio-breadboard .footer>div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+
+.hb-studio .footer>span[hidden]{display:none!important}
