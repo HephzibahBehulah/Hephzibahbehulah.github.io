@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://voltpro.example/schema/component-v4.json",
+  "title": "VoltPRo Component Definition v4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "name",
+    "category",
+    "standards",
+    "symbols",
+    "assets",
+    "pins",
+    "parameters",
+    "simulation",
+    "documentation",
+    "tags"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "name": {
+      "type": "object",
+      "required": [
+        "en"
+      ],
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "standards": {
+      "type": "object",
+      "properties": {
+        "iec": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ansi": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "iec",
+        "ansi"
+      ],
+      "additionalProperties": false
+    },
+    "symbols": {
+      "type": "object",
+      "required": [
+        "iecSvg",
+        "ansiSvg"
+      ],
+      "properties": {
+        "iecSvg": {
+          "type": "string"
+        },
+        "ansiSvg": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "assets": {
+      "type": "object",
+      "required": [
+        "panelImage"
+      ],
+      "properties": {
+        "panelImage": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pins": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "electrical",
+              "power",
+              "control",
+              "ground",
+              "digital",
+              "analog",
+              "passive"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "value",
+          "unit"
+        ],
+        "properties": {
+          "value": {},
+          "unit": {
+            "type": "string"
+          },
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "editable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "simulation": {
+      "type": "object",
+      "required": [
+        "model"
+      ],
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "library": {
+          "type": "string"
+        },
+        "analyses": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "dc",
+              "dc-sweep",
+              "ac",
+              "transient",
+              "digital"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "documentation": {
+      "type": "object",
+      "required": [
+        "description",
+        "applications",
+        "safety"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "applications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "safety": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "datasheet": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

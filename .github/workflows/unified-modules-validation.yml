@@ -1,0 +1,30 @@
+name: Unified Modules Validation
+
+on:
+  pull_request:
+    paths:
+      - 'apps/**'
+      - 'docs/UNIFIED-MODULE-RECEIPT-2026-10-17.md'
+      - 'index.html'
+      - '.github/workflows/unified-modules-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  module-validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do node --check "$file"; done < <(find apps -type f -name '*.js' -print0)
+      - name: Verify isolated browser applications and main-site preservation
+        run: |
+          node scripts/validate-unified-modules.mjs

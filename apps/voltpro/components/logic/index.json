@@ -1,0 +1,2935 @@
+{
+  "format": "voltpro-component-family",
+  "version": 1,
+  "category": "logic",
+  "count": 32,
+  "components": [
+    {
+      "id": "logic-logic-and",
+      "name": "Logic AND",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-gate",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-input-logic-gate",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational logic gate with electrical input thresholds and a driven output voltage.",
+        "usage": "Connect input terminals to logic-level sources and Y to a load referenced to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-or",
+      "name": "Logic OR",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-gate",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-input-logic-gate",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational logic gate with electrical input thresholds and a driven output voltage.",
+        "usage": "Connect input terminals to logic-level sources and Y to a load referenced to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-not",
+      "name": "Logic NOT",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-inverter",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "not-gate",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational logic gate with electrical input thresholds and a driven output voltage.",
+        "usage": "Connect input terminals to logic-level sources and Y to a load referenced to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-nand",
+      "name": "Logic NAND",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-gate",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-input-logic-gate",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational logic gate with electrical input thresholds and a driven output voltage.",
+        "usage": "Connect input terminals to logic-level sources and Y to a load referenced to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-nor",
+      "name": "Logic NOR",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-gate",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-input-logic-gate",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational logic gate with electrical input thresholds and a driven output voltage.",
+        "usage": "Connect input terminals to logic-level sources and Y to a load referenced to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-xor",
+      "name": "Logic XOR",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-gate",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-input-logic-gate",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational logic gate with electrical input thresholds and a driven output voltage.",
+        "usage": "Connect input terminals to logic-level sources and Y to a load referenced to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-xnor",
+      "name": "Logic XNOR",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-gate",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-input-logic-gate",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational logic gate with electrical input thresholds and a driven output voltage.",
+        "usage": "Connect input terminals to logic-level sources and Y to a load referenced to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-rs-latch",
+      "name": "Logic RS-Latch",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "S",
+          "name": "Set"
+        },
+        {
+          "id": "R",
+          "name": "Reset"
+        },
+        {
+          "id": "Q",
+          "name": "Q"
+        },
+        {
+          "id": "QB",
+          "name": "Q̅"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-sequential",
+        "engine": "VoltPro stateful logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rs-latch",
+        "states": [
+          "Q-low",
+          "Q-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Stateful digital logic component with electrical Q and complementary QB outputs.",
+        "usage": "Connect logic inputs and clock/enable pins; outputs are referenced to circuit ground and state persists between simulation ticks.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-d-latch",
+      "name": "Logic D-Latch",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "D",
+          "name": "Data"
+        },
+        {
+          "id": "EN",
+          "name": "Enable"
+        },
+        {
+          "id": "Q",
+          "name": "Q"
+        },
+        {
+          "id": "QB",
+          "name": "Q̅"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-sequential",
+        "engine": "VoltPro stateful logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "d-latch",
+        "states": [
+          "Q-low",
+          "Q-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Stateful digital logic component with electrical Q and complementary QB outputs.",
+        "usage": "Connect logic inputs and clock/enable pins; outputs are referenced to circuit ground and state persists between simulation ticks.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-d-flipflop",
+      "name": "Logic D-FlipFlop",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "D",
+          "name": "Data"
+        },
+        {
+          "id": "CLK",
+          "name": "Clock"
+        },
+        {
+          "id": "Q",
+          "name": "Q"
+        },
+        {
+          "id": "QB",
+          "name": "Q̅"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-sequential",
+        "engine": "VoltPro stateful logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "d-flipflop",
+        "states": [
+          "Q-low",
+          "Q-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Stateful digital logic component with electrical Q and complementary QB outputs.",
+        "usage": "Connect logic inputs and clock/enable pins; outputs are referenced to circuit ground and state persists between simulation ticks.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-jk-flipflop",
+      "name": "Logic JK-FlipFlop",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "J",
+          "name": "J"
+        },
+        {
+          "id": "K",
+          "name": "K"
+        },
+        {
+          "id": "CLK",
+          "name": "Clock"
+        },
+        {
+          "id": "Q",
+          "name": "Q"
+        },
+        {
+          "id": "QB",
+          "name": "Q̅"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-sequential",
+        "engine": "VoltPro stateful logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "jk-flipflop",
+        "states": [
+          "Q-low",
+          "Q-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Stateful digital logic component with electrical Q and complementary QB outputs.",
+        "usage": "Connect logic inputs and clock/enable pins; outputs are referenced to circuit ground and state persists between simulation ticks.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-t-flipflop",
+      "name": "Logic T-FlipFlop",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "T",
+          "name": "Toggle"
+        },
+        {
+          "id": "CLK",
+          "name": "Clock"
+        },
+        {
+          "id": "Q",
+          "name": "Q"
+        },
+        {
+          "id": "QB",
+          "name": "Q̅"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-sequential",
+        "engine": "VoltPro stateful logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "t-flipflop",
+        "states": [
+          "Q-low",
+          "Q-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Stateful digital logic component with electrical Q and complementary QB outputs.",
+        "usage": "Connect logic inputs and clock/enable pins; outputs are referenced to circuit ground and state persists between simulation ticks.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-counter-up",
+      "name": "Logic Counter-Up",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "CLK",
+          "name": "Clock"
+        },
+        {
+          "id": "EN",
+          "name": "Enable"
+        },
+        {
+          "id": "Q0",
+          "name": "Q0"
+        },
+        {
+          "id": "Q1",
+          "name": "Q1"
+        },
+        {
+          "id": "Q2",
+          "name": "Q2"
+        },
+        {
+          "id": "Q3",
+          "name": "Q3"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-counter-up",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-counter-up",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-counter-down",
+      "name": "Logic Counter-Down",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "CLK",
+          "name": "Clock"
+        },
+        {
+          "id": "EN",
+          "name": "Enable"
+        },
+        {
+          "id": "Q0",
+          "name": "Q0"
+        },
+        {
+          "id": "Q1",
+          "name": "Q1"
+        },
+        {
+          "id": "Q2",
+          "name": "Q2"
+        },
+        {
+          "id": "Q3",
+          "name": "Q3"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-counter-down",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-counter-down",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-timer-delay",
+      "name": "Logic Timer-Delay",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "IN",
+          "name": "Input"
+        },
+        {
+          "id": "OUT",
+          "name": "Output"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "delayMs": {
+          "type": "number",
+          "unit": "ms",
+          "default": 1000,
+          "min": 0,
+          "max": 600000
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-timer",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-timer",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-pulse",
+      "name": "Logic Pulse",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "IN",
+          "name": "Input"
+        },
+        {
+          "id": "OUT",
+          "name": "Output"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "pulseDurationMs": {
+          "type": "number",
+          "unit": "ms",
+          "default": 100,
+          "min": 1,
+          "max": 600000
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-pulse",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-pulse",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-edge-rising",
+      "name": "Logic Edge-Rising",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "IN",
+          "name": "Input"
+        },
+        {
+          "id": "OUT",
+          "name": "Output"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-edge-rising",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-edge-rising",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-edge-falling",
+      "name": "Logic Edge-Falling",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "IN",
+          "name": "Input"
+        },
+        {
+          "id": "OUT",
+          "name": "Output"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-edge-falling",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-edge-falling",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-comparator",
+      "name": "Logic Comparator",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Signal A"
+        },
+        {
+          "id": "B",
+          "name": "Reference B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        },
+        "comparisonOffset": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": -24,
+          "max": 24
+        },
+        "hysteresis": {
+          "type": "number",
+          "unit": "V",
+          "default": 0.4,
+          "min": 0,
+          "max": 10
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "analog-comparator",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "voltage-comparator",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Analog comparator with differential input and electrical output.",
+        "usage": "Connect signal to A, reference to B, and load to Y relative to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-schmitt",
+      "name": "Logic Schmitt",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Signal A"
+        },
+        {
+          "id": "B",
+          "name": "Reference B"
+        },
+        {
+          "id": "Y",
+          "name": "Output Y"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        },
+        "comparisonOffset": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": -24,
+          "max": 24
+        },
+        "hysteresis": {
+          "type": "number",
+          "unit": "V",
+          "default": 0.4,
+          "min": 0,
+          "max": 10
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "schmitt-trigger",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "hysteretic-comparator",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Schmitt trigger with configurable hysteresis.",
+        "usage": "Connect signal to A, reference to B, and load to Y relative to circuit ground.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-multiplexer",
+      "name": "Logic Multiplexer",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "S",
+          "name": "Select"
+        },
+        {
+          "id": "Y",
+          "name": "Output"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-multiplexer",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-multiplexer",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational digital block with explicit signal inputs and driven output terminals.",
+        "usage": "Connect signal inputs to logic-level sources and outputs to compatible logic or load components.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-demultiplexer",
+      "name": "Logic Demultiplexer",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "D",
+          "name": "Data"
+        },
+        {
+          "id": "S",
+          "name": "Select"
+        },
+        {
+          "id": "Y0",
+          "name": "Output 0"
+        },
+        {
+          "id": "Y1",
+          "name": "Output 1"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-demultiplexer",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-demultiplexer",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational digital block with explicit signal inputs and driven output terminals.",
+        "usage": "Connect signal inputs to logic-level sources and outputs to compatible logic or load components.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-encoder",
+      "name": "Logic Encoder",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "I0",
+          "name": "Input 0"
+        },
+        {
+          "id": "I1",
+          "name": "Input 1"
+        },
+        {
+          "id": "I2",
+          "name": "Input 2"
+        },
+        {
+          "id": "I3",
+          "name": "Input 3"
+        },
+        {
+          "id": "Y0",
+          "name": "Bit 0"
+        },
+        {
+          "id": "Y1",
+          "name": "Bit 1"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-encoder-4to2",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-encoder-4to2",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational digital block with explicit signal inputs and driven output terminals.",
+        "usage": "Connect signal inputs to logic-level sources and outputs to compatible logic or load components.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-decoder",
+      "name": "Logic Decoder",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A0",
+          "name": "Address 0"
+        },
+        {
+          "id": "A1",
+          "name": "Address 1"
+        },
+        {
+          "id": "Y0",
+          "name": "Output 0"
+        },
+        {
+          "id": "Y1",
+          "name": "Output 1"
+        },
+        {
+          "id": "Y2",
+          "name": "Output 2"
+        },
+        {
+          "id": "Y3",
+          "name": "Output 3"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-decoder-2to4",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-decoder-2to4",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational digital block with explicit signal inputs and driven output terminals.",
+        "usage": "Connect signal inputs to logic-level sources and outputs to compatible logic or load components.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-shiftregister",
+      "name": "Logic ShiftRegister",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-node",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Logic model for ShiftRegister.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-adder",
+      "name": "Logic Adder",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Cin",
+          "name": "Carry In"
+        },
+        {
+          "id": "Sum",
+          "name": "Sum"
+        },
+        {
+          "id": "Cout",
+          "name": "Carry Out"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-full-adder",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-full-adder",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational digital block with explicit signal inputs and driven output terminals.",
+        "usage": "Connect signal inputs to logic-level sources and outputs to compatible logic or load components.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-subtractor",
+      "name": "Logic Subtractor",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "A",
+          "name": "Input A"
+        },
+        {
+          "id": "B",
+          "name": "Input B"
+        },
+        {
+          "id": "Bin",
+          "name": "Borrow In"
+        },
+        {
+          "id": "Diff",
+          "name": "Difference"
+        },
+        {
+          "id": "Borrow",
+          "name": "Borrow Out"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        },
+        "outputLowVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 0,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-full-subtractor",
+        "engine": "VoltPro combinational logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-full-subtractor",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Combinational digital block with explicit signal inputs and driven output terminals.",
+        "usage": "Connect signal inputs to logic-level sources and outputs to compatible logic or load components.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-logic-high",
+      "name": "Logic Logic-High",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-constant",
+        "engine": "VoltPro logic-level source",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-constant",
+        "states": [
+          "low",
+          "high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Logic model for Logic-High.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-logic-low",
+      "name": "Logic Logic-Low",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-constant",
+        "engine": "VoltPro logic-level source",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-constant",
+        "states": [
+          "low",
+          "high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Logic model for Logic-Low.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-clock",
+      "name": "Logic Clock",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "OUT",
+          "name": "Clock Out"
+        },
+        {
+          "id": "GND",
+          "name": "Ground"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "frequencyHz": {
+          "type": "number",
+          "unit": "Hz",
+          "default": 1,
+          "min": 0.01,
+          "max": 10000
+        },
+        "scanTimeMs": {
+          "type": "number",
+          "unit": "ms",
+          "default": 10,
+          "min": 1,
+          "max": 1000
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-clock",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-clock",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-oneshot",
+      "name": "Logic OneShot",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "IN",
+          "name": "Trigger"
+        },
+        {
+          "id": "OUT",
+          "name": "Output"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        },
+        "pulseDurationMs": {
+          "type": "number",
+          "unit": "ms",
+          "default": 100,
+          "min": 1,
+          "max": 600000
+        },
+        "inputThreshold": {
+          "type": "number",
+          "unit": "V",
+          "default": 2.5,
+          "min": 0,
+          "max": 5
+        },
+        "logicVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 5,
+          "min": 0,
+          "max": 24
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic-pulse",
+        "engine": "VoltPro timed digital logic MNA",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-pulse",
+        "states": [
+          "output-low",
+          "output-high"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Timed logic component with persistent state and electrical output.",
+        "usage": "Configure timing, connect input/clock pins and connect output pins to a logic-level load.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "logic-logic-statemachine",
+      "name": "Logic StateMachine",
+      "category": "logic",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "LOGI",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "logic",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "logic-node",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Logic model for StateMachine.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    }
+  ]
+}

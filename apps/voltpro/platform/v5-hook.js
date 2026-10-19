@@ -1,0 +1,4 @@
+(()=>{'use strict';
+function bind(){const b=document.querySelector('#runBtn');if(!b||b.dataset.v5bound)return;b.dataset.v5bound='1';b.addEventListener('click',()=>{try{const r=window.VoltProV5Runtime?.analyze?.(window.S||{});if(!r)return;const c=document.querySelector('#console');if(c)c.textContent+='\nV5 topology: '+(r.topology.valid?'VALID':'CHECK ERRORS')+' · nets: '+r.topology.nets.length+' · behaviour models: '+r.behaviour.length;window.dispatchEvent(new CustomEvent('voltpro-v5-analysis',{detail:r}))}catch(e){console.warn('VoltPRo v5 runtime:',e.message)}})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();

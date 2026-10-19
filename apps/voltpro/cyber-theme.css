@@ -1,0 +1,442 @@
+/* VoltPRo Cyber Deck theme — visual layer only; application behaviour is unchanged. */
+:root {
+  --cyber-void: #050711;
+  --cyber-deep: #080d1b;
+  --cyber-surface: rgba(12, 20, 39, .88);
+  --cyber-surface-2: rgba(15, 27, 51, .92);
+  --cyber-line: rgba(83, 133, 180, .28);
+  --cyber-cyan: #4ce9ff;
+  --cyber-blue: #6e9dff;
+  --cyber-violet: #a78bfa;
+  --cyber-lime: #a3ffcb;
+  --cyber-amber: #ffcc70;
+  --cyber-text: #edf6ff;
+  --cyber-muted: #8da5c4;
+  --cyber-glow: 0 0 24px rgba(76, 233, 255, .12);
+}
+.academy-page, .simulator-page, .engineering-page {
+  background-color: var(--cyber-void) !important;
+  color: var(--cyber-text);
+  background-image:
+    radial-gradient(ellipse at 12% 0%, rgba(26, 90, 143, .24), transparent 34%),
+    radial-gradient(ellipse at 92% 16%, rgba(106, 58, 183, .16), transparent 28%),
+    linear-gradient(145deg, #050711 0%, #080d1b 55%, #060a15 100%) !important;
+}
+.academy-page::before, .simulator-page::before, .engineering-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .14;
+  background-image: linear-gradient(rgba(92, 153, 207, .11) 1px, transparent 1px), linear-gradient(90deg, rgba(92, 153, 207, .11) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+}
+.academy-page button, .simulator-page button, .engineering-page button,
+.academy-page a, .simulator-page a, .engineering-page a,
+.academy-page input, .simulator-page input, .engineering-page input {
+  transition: border-color .18s ease, background-color .18s ease, color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.academy-page #app, .simulator-page .sim-app, .engineering-page header, .engineering-page main {
+  position: relative;
+  z-index: 1;
+}
+.academy-page ::selection, .simulator-page ::selection, .engineering-page ::selection {
+  color: #020710;
+  background: var(--cyber-cyan);
+}
+
+/* Academy dashboard */
+.academy-page .app-shell { grid-template-columns: 264px minmax(0, 1fr); }
+.academy-page .sidebar {
+  background: linear-gradient(180deg, rgba(7, 12, 26, .98), rgba(6, 10, 21, .96)) !important;
+  border-right: 1px solid rgba(76, 233, 255, .22) !important;
+  box-shadow: 10px 0 42px rgba(0, 0, 0, .18);
+}
+.academy-page .brand { padding-bottom: 28px; }
+.academy-page .brand-mark {
+  position: relative;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #4ce9ff 0%, #6e9dff 52%, #a78bfa 100%) !important;
+  box-shadow: 0 0 24px rgba(76, 233, 255, .25), inset 0 1px rgba(255,255,255,.65);
+}
+.academy-page .brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(5, 12, 26, .42);
+  border-radius: 8px;
+}
+.academy-page .eyebrow { color: var(--cyber-cyan) !important; letter-spacing: .22em !important; }
+.academy-page .brand h1 { letter-spacing: -.045em; }
+.academy-page .student-mini, .academy-page .progress-mini {
+  background: linear-gradient(135deg, rgba(15, 27, 51, .9), rgba(9, 17, 34, .92)) !important;
+  border-color: var(--cyber-line) !important;
+  border-radius: 13px !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.025);
+}
+.academy-page .avatar {
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-violet)) !important;
+  box-shadow: 0 0 18px rgba(76, 233, 255, .14);
+}
+.academy-page .nav { gap: 5px; }
+.academy-page .nav-item {
+  position: relative;
+  border-radius: 9px !important;
+  border-color: transparent !important;
+  letter-spacing: .005em;
+}
+.academy-page .nav-item span { color: var(--cyber-cyan); }
+.academy-page .nav-item:hover {
+  color: #fff !important;
+  background: rgba(35, 65, 105, .34) !important;
+  border-color: rgba(76, 233, 255, .2) !important;
+  transform: translateX(2px);
+}
+.academy-page .nav-item.active {
+  color: #f4fbff !important;
+  background: linear-gradient(90deg, rgba(76, 233, 255, .13), rgba(110, 157, 255, .055)) !important;
+  border-color: rgba(76, 233, 255, .25) !important;
+  box-shadow: inset 2px 0 var(--cyber-cyan), 0 0 22px rgba(76, 233, 255, .055) !important;
+}
+.academy-page .main { background: transparent; }
+.academy-page .topbar {
+  background: rgba(6, 10, 22, .78) !important;
+  border-bottom-color: rgba(83, 133, 180, .24) !important;
+  backdrop-filter: blur(18px);
+}
+.academy-page .crumb span, .academy-page .crumb b { color: #728aa9; }
+.academy-page .crumb strong { color: #eaf7ff; }
+.academy-page .search, .academy-page input, .academy-page select, .academy-page textarea {
+  background: rgba(5, 11, 24, .85) !important;
+  border-color: rgba(87, 135, 182, .34) !important;
+}
+.academy-page .search:focus-within, .academy-page input:focus, .academy-page select:focus, .academy-page textarea:focus {
+  border-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(76, 233, 255, .09), 0 0 22px rgba(76, 233, 255, .06);
+}
+.academy-page .icon-btn, .academy-page .mobile-menu {
+  border-color: rgba(87, 135, 182, .32) !important;
+  background: rgba(13, 24, 45, .82) !important;
+}
+.academy-page .icon-btn:hover, .academy-page .mobile-menu:hover {
+  border-color: var(--cyber-cyan) !important;
+  color: var(--cyber-cyan) !important;
+  box-shadow: var(--cyber-glow);
+}
+.academy-page .view { position: relative; }
+.academy-page .view h1, .academy-page .view h2, .academy-page .view h3 { letter-spacing: -.035em; }
+.academy-page .view h1 { text-shadow: 0 0 28px rgba(76, 233, 255, .10); }
+.academy-page .view article, .academy-page .view .card, .academy-page .view .panel,
+.academy-page .view .stat, .academy-page .view .metric, .academy-page .view .lesson-card,
+.academy-page .view .course-card, .academy-page .view .lab-card, .academy-page .view .quiz-card {
+  border-color: var(--cyber-line) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .16), inset 0 1px rgba(255,255,255,.025);
+}
+.academy-page .view article:hover, .academy-page .view .card:hover,
+.academy-page .view .lesson-card:hover, .academy-page .view .course-card:hover,
+.academy-page .view .lab-card:hover {
+  border-color: rgba(76, 233, 255, .48) !important;
+  box-shadow: 0 14px 38px rgba(0,0,0,.22), 0 0 28px rgba(76,233,255,.055);
+}
+.academy-page .view button:not(.nav-item), .academy-page dialog button {
+  border-color: rgba(76, 233, 255, .28);
+}
+.academy-page .view button:not(.nav-item):hover, .academy-page dialog button:hover {
+  box-shadow: 0 0 22px rgba(76, 233, 255, .13);
+  transform: translateY(-1px);
+}
+
+/* Simulator workbench: neon instrument panel, restrained enough for readable schematics */
+.simulator-page .sim-app {
+  background: rgba(5, 8, 17, .45);
+  grid-template-rows: 66px 50px minmax(0, 1fr) 28px;
+}
+.simulator-page .sim-top {
+  background: linear-gradient(90deg, rgba(7, 12, 26, .98), rgba(12, 18, 38, .96)) !important;
+  border-bottom-color: rgba(76, 233, 255, .23) !important;
+  box-shadow: 0 6px 28px rgba(0,0,0,.16);
+}
+.simulator-page .brand .mark {
+  border-radius: 11px !important;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-blue) 58%, var(--cyber-violet)) !important;
+  box-shadow: 0 0 22px rgba(76, 233, 255, .2);
+}
+.simulator-page .brand b { letter-spacing: -.035em; }
+.simulator-page .brand small { color: var(--cyber-cyan) !important; letter-spacing: .2em !important; }
+.simulator-page .mode-tabs { gap: 5px; }
+.simulator-page .mode, .simulator-page .top-actions button, .simulator-page .top-actions a,
+.simulator-page .toolbar button {
+  border-color: rgba(83, 133, 180, .27) !important;
+  background: rgba(12, 22, 42, .86) !important;
+  color: #a7bbd5 !important;
+  border-radius: 7px !important;
+}
+.simulator-page .mode:hover, .simulator-page .top-actions button:hover,
+.simulator-page .top-actions a:hover, .simulator-page .toolbar button:hover {
+  color: #f4fbff !important;
+  border-color: rgba(76, 233, 255, .64) !important;
+  background: rgba(25, 48, 79, .92) !important;
+  box-shadow: 0 0 20px rgba(76, 233, 255, .08);
+}
+.simulator-page .mode.active {
+  color: var(--cyber-cyan) !important;
+  border-color: rgba(76, 233, 255, .42) !important;
+  background: linear-gradient(135deg, rgba(76, 233, 255, .13), rgba(110, 157, 255, .09)) !important;
+  box-shadow: inset 0 -2px var(--cyber-cyan), 0 0 20px rgba(76, 233, 255, .06) !important;
+}
+.simulator-page .toolbar {
+  background: rgba(8, 14, 28, .96) !important;
+  border-bottom-color: rgba(83, 133, 180, .23) !important;
+}
+.simulator-page .toolbar .primary {
+  background: linear-gradient(110deg, var(--cyber-cyan), #8fffe0) !important;
+  color: #04111b !important;
+  border: 0 !important;
+  box-shadow: 0 0 18px rgba(76, 233, 255, .17);
+}
+.simulator-page .toolbar .primary:hover { box-shadow: 0 0 26px rgba(76, 233, 255, .3); }
+.simulator-page .workspace { grid-template-columns: 260px minmax(0, 1fr) 292px; }
+.simulator-page .palette, .simulator-page .inspector {
+  background: linear-gradient(180deg, rgba(7, 13, 27, .98), rgba(8, 14, 27, .98)) !important;
+}
+.simulator-page .palette { border-right-color: rgba(76, 233, 255, .2) !important; }
+.simulator-page .inspector { border-left-color: rgba(76, 233, 255, .2) !important; }
+.simulator-page .panel-title {
+  color: var(--cyber-cyan) !important;
+  letter-spacing: .16em !important;
+  text-shadow: 0 0 16px rgba(76, 233, 255, .1);
+}
+.simulator-page .palette input, .simulator-page .inspector input,
+.simulator-page .inspector select, .simulator-page .inspector textarea {
+  background: rgba(4, 10, 22, .94) !important;
+  border-color: rgba(83, 133, 180, .34) !important;
+}
+.simulator-page .palette input:focus, .simulator-page .inspector input:focus,
+.simulator-page .inspector select:focus, .simulator-page .inspector textarea:focus {
+  border-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(76, 233, 255, .08);
+}
+.simulator-page .canvas-wrap {
+  background-color: #070c19 !important;
+  background-image: radial-gradient(ellipse at 50% 45%, rgba(24, 54, 93, .18), transparent 58%);
+}
+.simulator-page #canvas { filter: drop-shadow(0 0 12px rgba(76, 233, 255, .025)); }
+.simulator-page #gridRect { opacity: .9; }
+.simulator-page .canvas-help, .simulator-page .zoom {
+  border: 1px solid rgba(83, 133, 180, .3) !important;
+  background: rgba(5, 11, 24, .86) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.22);
+}
+.simulator-page .zoom button { color: var(--cyber-cyan); }
+.simulator-page .status { color: var(--cyber-lime) !important; text-shadow: 0 0 14px rgba(163,255,203,.22); }
+.simulator-page .meter, .simulator-page .calc-panel, .simulator-page .console {
+  border-color: rgba(83, 133, 180, .29) !important;
+  background: rgba(4, 10, 22, .82) !important;
+}
+.simulator-page .console { color: #a6f5d2 !important; }
+.simulator-page .sim-footer {
+  background: rgba(5, 9, 19, .96);
+  border-top: 1px solid rgba(83, 133, 180, .2);
+  color: #829ab8;
+}
+
+/* Engineering tools */
+.engineering-page header {
+  background: linear-gradient(90deg, rgba(7, 12, 26, .98), rgba(12, 18, 38, .96)) !important;
+  border-bottom-color: rgba(76, 233, 255, .23) !important;
+  backdrop-filter: blur(18px);
+}
+.engineering-page .brand>span {
+  border-radius: 11px !important;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-blue) 58%, var(--cyber-violet)) !important;
+  box-shadow: 0 0 22px rgba(76, 233, 255, .2);
+}
+.engineering-page .brand small { color: var(--cyber-cyan) !important; letter-spacing: .2em !important; }
+.engineering-page nav a {
+  border-color: rgba(83, 133, 180, .3) !important;
+  background: rgba(12, 22, 42, .86) !important;
+}
+.engineering-page nav a:hover {
+  color: var(--cyber-cyan) !important;
+  border-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 20px rgba(76, 233, 255, .1);
+}
+.engineering-page .hero {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(76, 233, 255, .28) !important;
+  background:
+    radial-gradient(ellipse at 88% 0%, rgba(117, 82, 221, .19), transparent 35%),
+    linear-gradient(120deg, rgba(15, 34, 62, .97), rgba(8, 15, 31, .97)) !important;
+  box-shadow: 0 18px 48px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.035);
+}
+.engineering-page .hero::after {
+  content: "";
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  right: -80px;
+  top: -100px;
+  border: 1px solid rgba(76,233,255,.19);
+  border-radius: 50%;
+  box-shadow: 0 0 0 18px rgba(76,233,255,.025), 0 0 0 38px rgba(167,139,250,.025);
+  pointer-events: none;
+}
+.engineering-page .hero small { color: var(--cyber-cyan) !important; letter-spacing: .19em !important; }
+.engineering-page .hero h1 { text-shadow: 0 0 28px rgba(76, 233, 255, .12); letter-spacing: -.045em; }
+.engineering-page .grid article {
+  border-color: rgba(83, 133, 180, .29) !important;
+  background: linear-gradient(145deg, rgba(13, 23, 44, .96), rgba(8, 15, 30, .96)) !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,.15), inset 0 1px rgba(255,255,255,.025);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.engineering-page .grid article:hover {
+  transform: translateY(-2px);
+  border-color: rgba(76,233,255,.47) !important;
+  box-shadow: 0 18px 38px rgba(0,0,0,.22), 0 0 26px rgba(76,233,255,.055);
+}
+.engineering-page input {
+  background: rgba(4, 10, 22, .94) !important;
+  border-color: rgba(83, 133, 180, .34) !important;
+}
+.engineering-page input:focus {
+  border-color: var(--cyber-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(76,233,255,.08);
+}
+.engineering-page button {
+  background: linear-gradient(110deg, var(--cyber-cyan), #8fffe0) !important;
+  color: #04111b !important;
+  box-shadow: 0 0 16px rgba(76,233,255,.1);
+}
+.engineering-page button:hover { box-shadow: 0 0 24px rgba(76,233,255,.22); transform: translateY(-1px); }
+.engineering-page output {
+  background: rgba(4, 17, 28, .92) !important;
+  border-color: rgba(76,233,255,.24) !important;
+  color: var(--cyber-lime) !important;
+}
+.engineering-page .notice {
+  background: rgba(40, 30, 13, .7) !important;
+  border-color: rgba(255, 204, 112, .3) !important;
+  color: #e8d8a8 !important;
+}
+
+/* Keep the futuristic treatment usable on touch screens and for reduced-motion users. */
+@media (max-width: 980px) {
+  .simulator-page .sim-app { overflow: auto; min-height: 100vh; height: auto; grid-template-rows: auto auto minmax(620px, 1fr) auto; }
+  .simulator-page .sim-top { flex-wrap: wrap; padding: 10px 12px; gap: 10px; }
+  .simulator-page .brand { min-width: 150px; }
+  .simulator-page .mode-tabs { flex-wrap: wrap; }
+  .simulator-page .top-actions { flex-wrap: wrap; }
+  .simulator-page .toolbar { flex-wrap: wrap; }
+  .simulator-page .workspace { min-height: 650px; grid-template-columns: minmax(190px, 240px) minmax(0, 1fr); }
+  .simulator-page .inspector { grid-column: 1 / -1; border-left: 0 !important; border-top: 1px solid rgba(76,233,255,.2); }
+}
+@media (max-width: 640px) {
+  .academy-page .app-shell { grid-template-columns: minmax(0, 1fr); }
+  .academy-page .sidebar { z-index: 20; }
+  .simulator-page .workspace { grid-template-columns: minmax(0, 1fr); }
+  .simulator-page .palette { max-height: 340px; border-right: 0 !important; border-bottom: 1px solid rgba(76,233,255,.2); }
+  .simulator-page .canvas-wrap { min-height: 420px; }
+  .simulator-page .inspector { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .academy-page *, .simulator-page *, .engineering-page * { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* High-visibility Cyber Deck pass: intentionally stronger contrast from the original navy UI. */
+.academy-page, .simulator-page, .engineering-page {
+  background-color:#03050d!important;
+  background-image:
+    radial-gradient(ellipse at 8% 8%,rgba(0,208,255,.19),transparent 29%),
+    radial-gradient(ellipse at 94% 12%,rgba(139,92,246,.2),transparent 31%),
+    radial-gradient(ellipse at 52% 100%,rgba(0,255,170,.055),transparent 42%),
+    linear-gradient(135deg,#03050d 0%,#070b18 48%,#050714 100%)!important;
+}
+.academy-page::before,.simulator-page::before,.engineering-page::before {
+  opacity:.23;
+  background-size:36px 36px;
+  background-image:linear-gradient(rgba(76,233,255,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(76,233,255,.13) 1px,transparent 1px);
+  mask-image:linear-gradient(to bottom,black,transparent 96%);
+}
+.academy-page .topbar,.simulator-page .sim-top,.engineering-page header {
+  background:linear-gradient(100deg,rgba(3,8,20,.98),rgba(10,17,39,.96) 58%,rgba(23,12,46,.94))!important;
+  border-bottom:1px solid rgba(76,233,255,.42)!important;
+  box-shadow:0 8px 35px rgba(0,0,0,.28),0 1px 0 rgba(76,233,255,.08);
+}
+.academy-page .brand-mark,.simulator-page .brand .mark,.engineering-page .brand>span {
+  background:linear-gradient(135deg,#36f4ff 0%,#4f8cff 48%,#bb76ff 100%)!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0 32px rgba(76,233,255,.34)!important;
+}
+.academy-page .view .hero {
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 88% 0%,rgba(145,80,255,.25),transparent 38%),
+    radial-gradient(ellipse at 0% 100%,rgba(0,218,255,.14),transparent 42%),
+    linear-gradient(125deg,rgba(10,27,53,.98),rgba(5,12,28,.98) 68%,rgba(12,13,36,.98))!important;
+  border:1px solid rgba(76,233,255,.48)!important;
+  box-shadow:0 22px 55px rgba(0,0,0,.32),0 0 35px rgba(76,233,255,.075),inset 0 1px rgba(255,255,255,.07)!important;
+}
+.academy-page .view .hero::after {
+  content:"";position:absolute;right:-80px;top:-145px;width:280px;height:280px;border:1px solid rgba(76,233,255,.28);border-radius:50%;
+  box-shadow:0 0 0 22px rgba(76,233,255,.035),0 0 0 48px rgba(167,139,250,.04),0 0 0 78px rgba(76,233,255,.025);pointer-events:none;
+}
+.academy-page .view .hero h1,.academy-page .view .hero h2 {
+  color:#f5fbff!important;text-shadow:0 0 34px rgba(76,233,255,.22)!important;
+}
+.academy-page .view .stat,.academy-page .view .card,.academy-page .view article,
+.academy-page .view .module,.academy-page .view .quiz-card,.academy-page .view .lab-card,
+.academy-page .view .catalog-item,.academy-page .view .rule {
+  background:linear-gradient(145deg,rgba(13,25,49,.97),rgba(5,12,27,.97))!important;
+  border:1px solid rgba(93,144,196,.32)!important;
+}
+.academy-page .view .stat strong,.academy-page .view .pill {text-shadow:0 0 18px rgba(76,233,255,.12)}
+.academy-page .view .stat.accent {
+  background:linear-gradient(135deg,rgba(0,190,220,.17),rgba(17,24,57,.96) 65%,rgba(107,63,175,.16))!important;
+  border-color:rgba(76,233,255,.4)!important;
+}
+.academy-page .view .btn.primary,.academy-page .view button.primary {
+  background:linear-gradient(105deg,#45edff,#8dffe0)!important;color:#03111c!important;
+  border:0!important;box-shadow:0 0 24px rgba(76,233,255,.2)!important;
+}
+.academy-page .sidebar {
+  background:linear-gradient(180deg,rgba(4,8,20,.99),rgba(7,10,25,.98))!important;
+  border-right-color:rgba(76,233,255,.34)!important;
+}
+.academy-page .nav-item.active {
+  background:linear-gradient(100deg,rgba(0,220,255,.19),rgba(101,91,255,.12))!important;
+  border-color:rgba(76,233,255,.42)!important;
+  box-shadow:inset 3px 0 #4ce9ff,0 0 24px rgba(76,233,255,.075)!important;
+}
+.simulator-page .palette,.simulator-page .inspector {
+  background:linear-gradient(180deg,rgba(4,9,22,.99),rgba(7,12,27,.98))!important;
+}
+.simulator-page .toolbar {
+  background:linear-gradient(90deg,rgba(5,13,29,.99),rgba(12,15,37,.98))!important;
+  border-bottom:1px solid rgba(76,233,255,.3)!important;
+}
+.simulator-page .canvas-wrap {
+  background-color:#040713!important;
+  background-image:radial-gradient(ellipse at 50% 45%,rgba(0,142,255,.16),transparent 56%),radial-gradient(ellipse at 90% 5%,rgba(141,92,246,.09),transparent 35%)!important;
+}
+.simulator-page .canvas-wrap::after {
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.3;
+  background:linear-gradient(135deg,transparent 49.8%,rgba(76,233,255,.045) 50%,transparent 50.2%);
+}
+.simulator-page .panel-title {color:#63f1ff!important;text-shadow:0 0 18px rgba(76,233,255,.2)!important}
+.simulator-page .toolbar .primary {background:linear-gradient(105deg,#45edff,#8dffe0)!important;color:#03111c!important}
+.engineering-page .grid article {
+  background:linear-gradient(145deg,rgba(14,26,52,.98),rgba(5,11,25,.98))!important;
+  border-color:rgba(91,143,198,.38)!important;
+}
+.engineering-page .grid article h2 {color:#eff8ff}
+.engineering-page .hero {
+  border-color:rgba(76,233,255,.48)!important;
+  box-shadow:0 20px 55px rgba(0,0,0,.32),0 0 34px rgba(76,233,255,.07)!important;
+}
+.academy-page a:focus-visible,.academy-page button:focus-visible,.simulator-page button:focus-visible,.engineering-page button:focus-visible {
+  outline:2px solid #63f1ff!important;outline-offset:3px;
+}
+@media(max-width:640px){.academy-page .view .hero::after{right:-170px;opacity:.65}}

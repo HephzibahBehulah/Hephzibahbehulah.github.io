@@ -1,0 +1,3658 @@
+{
+  "format": "voltpro-component-family",
+  "version": 1,
+  "category": "contactors",
+  "count": 32,
+  "components": [
+    {
+      "id": "contactors-contactor-24vac",
+      "name": "Contactor 24VAC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 24VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-24vdc",
+      "name": "Contactor 24VDC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 24VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-48vac",
+      "name": "Contactor 48VAC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 48,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 48VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-48vdc",
+      "name": "Contactor 48VDC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 48,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 48VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-110vac",
+      "name": "Contactor 110VAC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 110VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-110vdc",
+      "name": "Contactor 110VDC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 110VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-230vac",
+      "name": "Contactor 230VAC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 230VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-230vdc",
+      "name": "Contactor 230VDC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 230VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-400vac",
+      "name": "Contactor 400VAC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 400VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-415vac",
+      "name": "Contactor 415VAC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 415,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 415VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-2p",
+      "name": "Contactor 2P",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 2,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 2P.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-3p",
+      "name": "Contactor 3P",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 3,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 3P.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-4p",
+      "name": "Contactor 4P",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "L1",
+          "name": "L1 line"
+        },
+        {
+          "id": "T1",
+          "name": "L1 load"
+        },
+        {
+          "id": "L2",
+          "name": "L2 line"
+        },
+        {
+          "id": "T2",
+          "name": "L2 load"
+        },
+        {
+          "id": "L3",
+          "name": "L3 line"
+        },
+        {
+          "id": "T3",
+          "name": "L3 load"
+        },
+        {
+          "id": "N",
+          "name": "N line"
+        },
+        {
+          "id": "TN",
+          "name": "N load"
+        },
+        {
+          "id": "13",
+          "name": "Auxiliary NO 13"
+        },
+        {
+          "id": "14",
+          "name": "Auxiliary NO 14"
+        },
+        {
+          "id": "21",
+          "name": "Auxiliary NC 21"
+        },
+        {
+          "id": "22",
+          "name": "Auxiliary NC 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "mainPoles": {
+          "type": "number",
+          "default": 4,
+          "min": 1,
+          "max": 4
+        },
+        "auxNO": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "auxNC": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 4
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 4P.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-1no",
+      "name": "Contactor 1NO",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "13",
+          "name": "NO common 13"
+        },
+        {
+          "id": "14",
+          "name": "NO normally open 14"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA auxiliary contactor",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 1NO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-2no",
+      "name": "Contactor 2NO",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "13",
+          "name": "NO common 13"
+        },
+        {
+          "id": "14",
+          "name": "NO normally open 14"
+        },
+        {
+          "id": "23",
+          "name": "NO common 23"
+        },
+        {
+          "id": "24",
+          "name": "NO normally open 24"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA auxiliary contactor",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 2NO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-3no",
+      "name": "Contactor 3NO",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 3NO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-4no",
+      "name": "Contactor 4NO",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 4NO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-1nc",
+      "name": "Contactor 1NC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "21",
+          "name": "NC common 21"
+        },
+        {
+          "id": "22",
+          "name": "NC normally closed 22"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA auxiliary contactor",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 1NC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-2nc",
+      "name": "Contactor 2NC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "21",
+          "name": "NC common 21"
+        },
+        {
+          "id": "22",
+          "name": "NC normally closed 22"
+        },
+        {
+          "id": "31",
+          "name": "NC common 31"
+        },
+        {
+          "id": "32",
+          "name": "NC normally closed 32"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 82,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "contactor",
+        "engine": "VoltPRo MNA auxiliary contactor",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "contactor",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 2NC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-3nc",
+      "name": "Contactor 3NC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 3NC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-4nc",
+      "name": "Contactor 4NC",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for 4NC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-mini",
+      "name": "Contactor Mini",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Mini.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-motor-duty",
+      "name": "Contactor Motor-Duty",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Motor-Duty.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-capacitor-duty",
+      "name": "Contactor Capacitor-Duty",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Capacitor-Duty.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-reversing",
+      "name": "Contactor Reversing",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Reversing.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-star-delta",
+      "name": "Contactor Star-Delta",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Star-Delta.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-safety",
+      "name": "Contactor Safety",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Safety.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-mechanically-latched",
+      "name": "Contactor Mechanically-Latched",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Mechanically-Latched.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-undervoltage",
+      "name": "Contactor Undervoltage",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Undervoltage.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-modular",
+      "name": "Contactor Modular",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Modular.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-power-contactor",
+      "name": "Contactor Power-Contactor",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Power-Contactor.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "contactors-contactor-lighting-contactor",
+      "name": "Contactor Lighting-Contactor",
+      "category": "contactors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "CONT",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Contactor model for Lighting-Contactor.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    }
+  ]
+}

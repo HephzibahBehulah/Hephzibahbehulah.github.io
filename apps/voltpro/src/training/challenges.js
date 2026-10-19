@@ -1,0 +1,5 @@
+(()=>{'use strict';
+function create(spec={}){return {id:spec.id||'CH1',type:spec.type||'build',title:spec.title||'Challenge',objective:spec.objective||'',requirements:structuredClone(spec.requirements||{}),maxScore:Number(spec.maxScore||100),attempts:0}}
+function evaluate(project,ch){let score=0,feedback=[];const req=ch.requirements||{};const types=new Set((project.devices||[]).map(d=>d.type));if(req.requiredTypes){for(const t of req.requiredTypes){if(types.has(t))score+=10;else feedback.push('Missing '+t)}}if(req.minWires&&((project.wires||[]).length>=req.minWires))score+=20;else if(req.minWires)feedback.push('Insufficient wiring');if(req.faultType&&((project.faults||[]).some(f=>f.type===req.faultType)))score+=20;return {passed:score>=ch.maxScore*.8,score:Math.min(ch.maxScore,score),feedback}}
+window.VoltProChallenges={create,evaluate};
+})();

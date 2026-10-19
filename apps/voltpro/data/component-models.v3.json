@@ -1,0 +1,20 @@
+{
+  "format":"voltpro-component-models",
+  "version":3,
+  "standards":["IEC 60617","IEEE 315/ANSI Y32.2"],
+  "components":[
+    {"id":"resistor","category":"passive","pins":["1","2"],"parameters":{"resistance":{"type":"number","unit":"ohm","min":0.001}},"simulation":{"dc":"resistor"}},
+    {"id":"capacitor","category":"passive","pins":["1","2"],"parameters":{"capacitance":{"type":"number","unit":"F","min":1e-15}},"simulation":{"dc":"open","transient":"capacitor-companion","ac":"capacitor"}},
+    {"id":"inductor","category":"passive","pins":["1","2"],"parameters":{"inductance":{"type":"number","unit":"H","min":1e-12}},"simulation":{"dc":"short","transient":"inductor-companion","ac":"inductor"}},
+    {"id":"diode","category":"semiconductor","pins":["A","K"],"parameters":{"forward":{"type":"number","unit":"V"}},"simulation":{"dc":"piecewise-linear","transient":"piecewise-linear"}},
+    {"id":"led","category":"semiconductor","pins":["A","K"],"parameters":{"forward":{"type":"number","unit":"V"},"resistance":{"type":"number","unit":"ohm"}},"simulation":{"dc":"piecewise-linear"}},
+    {"id":"switch","category":"switches","pins":["1","2"],"parameters":{"closed":{"type":"boolean"}},"simulation":{"dc":"ideal-switch"}},
+    {"id":"fuse","category":"protection","pins":["1","2"],"parameters":{"rating":{"type":"number","unit":"A"}},"simulation":{"dc":"thermal-trip-envelope"}},
+    {"id":"breaker","category":"protection","pins":["1","2"],"parameters":{"rating":{"type":"number","unit":"A"},"curve":{"type":"string"}},"simulation":{"dc":"trip-curve-envelope"}},
+    {"id":"rcd","category":"protection","pins":["L","N"],"parameters":{"trip":{"type":"number","unit":"A"}},"simulation":{"dc":"residual-current-envelope"}},
+    {"id":"contactor","category":"switchgear","pins":["A1","A2","L1","T1"],"parameters":{"coil":{"type":"number","unit":"V"},"closed":{"type":"boolean"}},"simulation":{"dc":"coil-contact-envelope"}},
+    {"id":"motor_3ph","category":"machines","pins":["L1","L2","L3","PE"],"parameters":{"power":{"type":"number","unit":"kW"},"voltage":{"type":"number","unit":"V"},"cosphi":{"type":"number"}},"simulation":{"ac":"three-phase-motor-envelope"}},
+    {"id":"arduino_uno","category":"microcontroller","pins":["D0-D13","A0-A5","5V","GND"],"parameters":{"board":{"type":"string"}},"simulation":{"digital":"mcu-adapter"}},
+    {"id":"raspberry_pi","category":"microcontroller","pins":["GPIO","3V3","5V","GND","I2C","SPI","UART"],"parameters":{"board":{"type":"string"}},"simulation":{"digital":"gpio-adapter"}}
+  ]
+}

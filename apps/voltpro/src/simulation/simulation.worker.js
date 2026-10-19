@@ -1,0 +1,1 @@
+self.onmessage=function(e){const m=e.data||{};try{if(m.type==='ping'){self.postMessage({id:m.id,ok:true,result:{pong:true}});return}if(m.type==='step'){self.postMessage({id:m.id,ok:true,result:{accepted:true,payload:m.payload||null}});return}throw Error('Unknown worker command: '+m.type)}catch(err){self.postMessage({id:m.id,ok:false,error:err.message})}};

@@ -1,0 +1,8 @@
+(()=>{'use strict';
+const TYPES=new Set(['open-wire','short-circuit','open-neutral','earth-fault','phase-loss','overload','blown-fuse','breaker-trip','rcd-trip','stuck-open-contact','welded-contact','coil-failure','sensor-failure','wrong-terminal','loose-connection']);
+function inject(project,fault){if(!TYPES.has(fault.type))throw Error('Unknown fault type: '+fault.type);const faults=project.faults||(project.faults=[]);const f={id:fault.id||'F'+String(faults.length+1).padStart(3,'0'),active:fault.active!==false,type:fault.type,target:fault.target||null,parameters:structuredClone(fault.parameters||{}),description:fault.description||fault.type};const i=faults.findIndex(x=>x.id===f.id);if(i>=0)faults[i]=f;else faults.push(f);return f}
+function clear(project,id){if(!Array.isArray(project.faults))return false;const i=project.faults.findIndex(x=>x.id===id);if(i<0)return false;project.faults.splice(i,1);return true}
+function active(project,type){return (project.faults||[]).filter(f=>f.active!==false&&(type?f.type===type:true))}
+function applyToDevice(device,project){for(const f of active(project)){if(f.target!==device.id)continue;if(f.type==='stuck-open-contact')device.state={...(device.state||{}),forcedOpen:true};if(f.type==='welded-contact')device.state={...(device.state||{}),forcedClosed:true};if(f.type==='coil-failure')device.state={...(device.state||{}),coilFailed:true}}return device}
+window.VoltProFaults={TYPES:Array.from(TYPES),inject,clear,active,applyToDevice};
+})();

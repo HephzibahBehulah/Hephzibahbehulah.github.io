@@ -1,0 +1,243 @@
+/* Simulator layout restoration layer.
+   Keeps every toolbar action reachable and prevents the component category tabs
+   from shrinking into unreadable fragments. Visual theme colours remain intact. */
+.simulator-page .sim-app {
+  height: 100vh;
+  min-height: 0;
+  max-height: 100vh;
+  grid-template-rows: 64px 48px minmax(0, 1fr) 28px;
+  overflow: hidden;
+}
+
+.simulator-page .sim-top {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  min-height: 64px;
+  min-width: 0;
+  padding: 0 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #31516d #07111d;
+}
+
+.simulator-page .sim-top > .brand,
+.simulator-page .sim-top > .mode-tabs,
+.simulator-page .sim-top > .top-actions {
+  flex: 0 0 auto;
+  width: max-content;
+  max-width: none;
+}
+
+.simulator-page .sim-top > .brand {
+  min-width: 170px;
+}
+
+.simulator-page .sim-top > .mode-tabs {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 4px;
+  overflow: visible;
+}
+
+.simulator-page .mode-tabs .mode,
+.simulator-page .top-actions button,
+.simulator-page .top-actions a {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.simulator-page .sim-top > .top-actions {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  justify-content: flex-start;
+}
+
+.simulator-page .toolbar {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  min-height: 48px;
+  min-width: 0;
+  padding: 5px 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: #31516d #091522;
+}
+
+.simulator-page .toolbar > * {
+  flex: 0 0 auto;
+}
+
+.simulator-page .toolbar button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.simulator-page .toolbar .status {
+  flex: 0 0 auto;
+}
+
+.simulator-page .workspace {
+  min-width: 0;
+  min-height: 0;
+}
+
+.simulator-page .palette,
+.simulator-page .inspector,
+.simulator-page .canvas-wrap {
+  min-width: 0;
+  min-height: 0;
+}
+
+.simulator-page .panel-title {
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.simulator-page .panel-title > span {
+  flex: 0 0 auto;
+}
+
+.simulator-page .cat-tabs {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #31516d #081321;
+}
+
+.simulator-page .cat-tabs button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-width: max-content;
+  max-width: none;
+  padding: 6px 9px;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 650px) {
+  .simulator-page .sim-top {
+    padding-inline: 10px;
+    gap: 10px;
+  }
+
+  .simulator-page .sim-top > .brand {
+    min-width: 145px;
+  }
+
+  .simulator-page .top-actions button,
+  .simulator-page .top-actions a {
+    display: inline-flex;
+  }
+
+  .simulator-page .toolbar {
+    padding-inline: 8px;
+  }
+}
+
+
+/* Functional toolbar navigation and reliable canvas-first panel collapse. */
+.simulator-page .toolbar .academy-toolbar-link {
+  display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center;
+  min-height: 30px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: #0d1b2b; color: var(--muted); text-decoration: none; font-size: 11px;
+  line-height: 1.2; white-space: nowrap;
+}
+.simulator-page .toolbar .academy-toolbar-link:hover,
+.simulator-page .toolbar .academy-toolbar-link:focus-visible {
+  color: var(--text); border-color: var(--cyan); background: #123047; outline-offset: 2px;
+}
+.simulator-page .workspace.palette-hidden { grid-template-columns: minmax(0, 1fr) 290px !important; }
+.simulator-page .workspace.inspector-hidden { grid-template-columns: 260px minmax(0, 1fr) !important; }
+.simulator-page .workspace.palette-hidden.inspector-hidden { grid-template-columns: minmax(0, 1fr) !important; }
+@media (min-width: 801px) {
+  .simulator-page .workspace.palette-hidden #palette,
+  .simulator-page .workspace.inspector-hidden #inspectorPanel { display: none !important; }
+}
+@media (max-width: 800px) {
+  .simulator-page .workspace.palette-hidden,
+  .simulator-page .workspace.inspector-hidden,
+  .simulator-page .workspace.palette-hidden.inspector-hidden { grid-template-columns: minmax(0, 1fr) !important; }
+  .simulator-page .workspace.palette-hidden #palette,
+  .simulator-page .workspace.inspector-hidden #inspectorPanel { display: block !important; }
+}
+
+
+/* Single-source toolbar dropdowns. Popovers are fixed-positioned by toolbar-menus.js
+   so they remain visible above the horizontally scrolling toolbar. */
+.simulator-page .toolbar-menus { gap: 5px; }
+.simulator-page .toolbar .vp-menu-trigger {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 30px; padding: 7px 9px; white-space: nowrap;
+  color: var(--text); border: 1px solid #31516d; background: #0d1b2b;
+  border-radius: 8px; font-size: 10px; cursor: pointer;
+}
+.simulator-page .toolbar .vp-menu-trigger:hover,
+.simulator-page .toolbar .vp-menu-trigger:focus-visible,
+.simulator-page .toolbar .vp-menu-trigger[aria-expanded="true"] {
+  color: var(--text); border-color: var(--cyan); background: #123047;
+  outline-offset: 2px;
+}
+.vp-toolbar-popover {
+  position: fixed; z-index: 15000; width: min(290px, calc(100vw - 16px));
+  max-height: min(72vh, calc(100dvh - 16px)); overflow: auto;
+  padding: 7px; border: 1px solid #31516d; border-radius: 11px;
+  background: #081522; color: #eaf5ff; box-shadow: 0 18px 55px #000b;
+  overscroll-behavior: contain;
+}
+.vp-toolbar-popover-title {
+  padding: 8px 10px 9px; margin-bottom: 4px;
+  color: #35d5ff; border-bottom: 1px solid #203b53;
+  font: 800 10px/1.4 ui-monospace,monospace; letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.vp-toolbar-popover button[role="menuitem"] {
+  display: block; width: 100%; min-height: 36px; padding: 9px 10px;
+  text-align: left; white-space: normal; overflow-wrap: anywhere;
+  color: #dcecff; background: transparent; border: 1px solid transparent;
+  border-radius: 7px; font: 500 12px/1.35 system-ui,sans-serif; cursor: pointer;
+}
+.vp-toolbar-popover button[role="menuitem"]:hover,
+.vp-toolbar-popover button[role="menuitem"]:focus-visible {
+  color: #fff; background: #102b3d; border-color: #35d5ff; outline: none;
+}
+@media(max-width:520px) {
+  .simulator-page .toolbar .vp-menu-trigger { padding: 7px 8px; font-size: 10px; }
+  .vp-toolbar-popover { width: min(270px, calc(100vw - 16px)); }
+}

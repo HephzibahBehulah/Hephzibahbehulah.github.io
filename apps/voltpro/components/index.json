@@ -1,0 +1,33 @@
+{
+  "format": "voltpro-component-manifest",
+  "version": 2,
+  "count": 24,
+  "files": [
+    "components/protection/index.json",
+    "components/switching/index.json",
+    "components/contactors/index.json",
+    "components/relays/index.json",
+    "components/motors/index.json",
+    "components/transformers/index.json",
+    "components/sensors/index.json",
+    "components/lighting/index.json",
+    "components/measurement/index.json",
+    "components/semiconductor/index.json",
+    "components/electronics/index.json",
+    "components/plc/index.json",
+    "components/automation/index.json",
+    "components/renewable/index.json",
+    "components/knx/index.json",
+    "components/industrial/index.json",
+    "components/communication/index.json",
+    "components/wires/index.json",
+    "components/power/index.json",
+    "components/grounding/index.json",
+    "components/panel/index.json",
+    "components/microcontroller/index.json",
+    "components/loads/index.json",
+    "components/logic/index.json"
+  ],
+  "recordsPerFamily": 32,
+  "totalRecords": 768
+}
