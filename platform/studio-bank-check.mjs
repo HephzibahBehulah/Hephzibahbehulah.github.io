@@ -1,0 +1,8 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const ctx={console,structuredClone};ctx.window=ctx;vm.createContext(ctx);for(const path of ['platform/studio-bank.js','platform-source/engineering/engine/voltpro-engine.js','platform-source/engineering/engine/breadboard-mna.js','platform-source/engineering/engine/breadboard-project.js','platform-source/engineering/platform/plc-project-bank.js'])vm.runInContext(fs.readFileSync(path,'utf8'),ctx);
+const bank=ctx.HBStudioBank,started=Date.now();let solves=0;
+for(let i=0;i<100000;i++){const sim=bank.schematic(i),board=bank.breadboard(i);ctx.VoltProBreadboardProject.validate(board);const pins=new Set(sim.components.flatMap(c=>c.pins));assert.equal(new Set(sim.components.map(c=>c.id)).size,sim.components.length);for(const wire of sim.wires){assert(pins.has(wire.a));assert(pins.has(wire.b));}const plc=ctx.VoltProPLCLibrary.get(i+1),ids=new Set(plc.nodes.map(n=>n.id));for(const e of plc.edges){assert(ids.has(e.source));assert(ids.has(e.target));}
+ if(true){const result=ctx.VoltProEngine.dc(sim);assert(result.ok,bank.descriptor(i).name+': '+result.error);assert.equal(ctx.VoltProBreadboardMNA.analyze(board,ctx.VoltProEngine).status,'solved');solves+=2;}}
+for(let i=0;i<1000000;i++){const c=bank.component(i);assert(Number.isFinite(c.value)&&c.value>0);assert.equal(c.index,i);}
+assert.equal(bank.query({q:'ST-100000'}).items[0].index,99999);assert.equal(bank.query({kind:'components',q:'CFG-1000000'}).items[0].index,999999);assert.equal(bank.query({family:'divider'}).total,10000);assert.throws(()=>bank.descriptor(100000));
+console.log(JSON.stringify({projectStructures:300000,componentConfigurations:1000000,electricalDCSolves:solves,seconds:(Date.now()-started)/1000}));

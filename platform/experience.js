@@ -26,7 +26,7 @@ function reconcile(){
  }
  if(document.querySelector('.os-footer,.hb-footer-brand'))document.querySelectorAll('.hb-platform-footer').forEach(n=>n.remove());
  for(const node of document.querySelectorAll('.os-panel-head>span,.network-tag,.tool-lab-index,.adigun-doctrine-head>span,.adigun-overview-footer>span'))if(!node.id&&/^(?:\d{2}(?:\s*\/\s*\d{2})?|(?:HB|SYS-THINK)\s*\/+\s*\d{2})$/.test(node.textContent.trim()))node.hidden=true;
- for(const node of document.querySelectorAll('.os-panel-head>span:first-child,h1,h2,h3,.eyebrow,.adigun-overline,.hb-id-cap>b')){
+ for(const node of document.querySelectorAll('.os-panel-head>span:first-child,h1,h2,h3,.eyebrow,.adigun-overline,.hb-id-cap>b,.section-kicker,.section-index,.section-number,.panel-index')){
   if(node.closest('[role="log"],pre,code'))continue;
   if(node.children.length){const first=node.firstChild;if(first?.nodeType===3&&/^\s*\d{2}\s*\//.test(first.textContent))first.textContent=first.textContent.replace(/^\s*\d{2}\s*\/\s*/,'');continue;}
   const text=node.textContent,replacement=text.replace(/^\s*\d{2}\s*\/\s*/,'');
@@ -34,7 +34,7 @@ function reconcile(){
  }
  // Utility controls stay in normal document flow, never above workspace buttons.
  const topHeader=document.querySelector('.os-top'),mobileMenu=document.querySelector('#hbMobileNavToggle');if(topHeader&&mobileMenu&&mobileMenu.parentElement!==topHeader)topHeader.prepend(mobileMenu);
- let target=document.querySelector('#vpSiteHeader .hb-vp-tools')||document.querySelector('.os-top-actions')||document.querySelector('.hb-platform-bar')||document.querySelector('.hb-account-page');
+ let target=document.querySelector('#vpSiteHeader .studio-utilities-body')||document.querySelector('#vpSiteHeader .hb-vp-tools')||document.querySelector('.os-top-actions')||document.querySelector('.hb-platform-bar')||document.querySelector('.hb-account-page');
  if(!target&&document.querySelector('.os-top')){target=el('div','os-top-actions');const header=document.querySelector('.os-top'),search=header.querySelector('.cyber-top-search');header.append(target);if(search)target.prepend(search);}
  if(target){let utility=target.querySelector('.hb-utilities');if(!utility){utility=el('div','hb-utilities');utility.setAttribute('aria-label','Display preferences');utility.setAttribute('translate','no');if(target.classList.contains('hb-account-page'))target.querySelector('.hb-account-card')?.before(utility);else target.append(utility);}
   const language=document.querySelector('#hbLanguageControl');if(language&&language.parentElement!==utility)utility.prepend(language);
@@ -42,9 +42,10 @@ function reconcile(){
   for(const member of document.querySelectorAll('.hb-member-actions')){if(member.parentElement!==target)target.append(member);}
  }
  decorateOverview();
+ if(document.querySelector('#vpSiteHeader')&&!document.querySelector('script[src="/_hb/studio.js"]'))loadScript('/_hb/studio.js');
 }
 function repairEngineering(){
- const header=document.querySelector('#vpSiteHeader');if(!header)return;
+ const header=document.querySelector('#vpSiteHeader');if(!header)return;if(document.body.classList.contains('hb-studio'))return;
  document.body.classList.add('hb-engineering');
  let tools=header.querySelector('.hb-vp-tools');if(!tools){tools=el('div','hb-vp-tools');header.append(tools);}
  const brand=header.querySelector('.vp-site-brand');if(brand&&!brand.querySelector('img')){const image=el('img');image.src='/_hb/hb-logo.svg';image.alt='Hephzibah Behulah';brand.replaceChildren(image);brand.setAttribute('aria-label','Hephzibah Behulah engineering home');}
@@ -54,7 +55,6 @@ function repairEngineering(){
  const member=document.querySelector('.hb-member-actions');if(member&&member.parentElement!==tools)tools.append(member);
  if(identity)identity.classList.toggle('hb-native-guest-hidden',!!member&&!identity.querySelector('details'));
  const bot=document.querySelector('#hbBotLauncher');if(bot&&bot.parentElement!==tools){bot.setAttribute('translate','no');bot.setAttribute('aria-label','Open company website assistant');const label=bot.querySelector('span');if(label)label.textContent='Site AI';tools.append(bot);}const nativeBot=document.querySelector('#vpBotLauncher');if(nativeBot&&nativeBot.parentElement!==tools){nativeBot.setAttribute('translate','no');nativeBot.textContent='Circuit AI';nativeBot.setAttribute('aria-label','Open engineering circuit assistant');tools.append(nativeBot);}
- const toolbar=document.querySelector('.sim-app>.toolbar');if(toolbar&&!toolbar.querySelector('.hb-sim-more')){const groups=[...toolbar.children],more=el('details','hb-sim-more'),summary=el('summary','','All simulator tools'),body=el('div','hb-sim-tool-groups');const wide=matchMedia('(min-width:1100px)');more.open=wide.matches;wide.addEventListener('change',()=>{more.open=wide.matches;});more.append(summary,body);for(const group of groups.slice(1))body.append(group);toolbar.append(more);}
  for(const link of header.querySelectorAll('.vp-account-menu a'))if(/cloud projects/i.test(link.textContent))link.href='https://engineering.hephzibahbehulah.com/workspace';
  const simulator=document.querySelector('.sim-app');if(simulator&&!simulator.dataset.hbSized){simulator.dataset.hbSized='true';const resize=()=>{const heights=[header,simulator.querySelector('.sim-top'),simulator.querySelector('.toolbar')].reduce((sum,n)=>sum+(n?.getBoundingClientRect().height||0),0);simulator.style.setProperty('--hb-canvas-height',Math.max(420,innerHeight-heights-40)+'px');};const observer=new ResizeObserver(resize);for(const n of [header,simulator.querySelector('.sim-top'),simulator.querySelector('.toolbar')])if(n)observer.observe(n);window.addEventListener('resize',resize);resize();}
 }

@@ -32,8 +32,14 @@ fs.writeFileSync(assistant,fs.readFileSync(assistant,'utf8').replace('https://vo
 const preferences=path.join(destination,'_apps/engineering/platform/user-preferences.js');
 const preferenceSource=fs.readFileSync(preferences,'utf8');
 if(!preferenceSource.includes("new URL('/api/engineering/chat'"))fs.writeFileSync(preferences,preferenceSource.replace("'https://voltpro-engineering-ai.hephzibah-behulah.workers.dev/chat'","new URL('/api/engineering/chat',root.location?.origin||'https://engineering.hephzibahbehulah.com').href").replace("const u=new URL(String(input.aiEndpoint));","const u=new URL(String(input.aiEndpoint));if(u.href==='https://voltpro-engineering-ai.hephzibah-behulah.workers.dev/chat')u.href=defaults.aiEndpoint;"));
+// The pinned PLC module owns validation and state; the studio never reparents React controls.
+const plcModule=path.join(destination,'_apps/engineering/voltpro-plc/assets/index-DSp8g4IS.js');const plcCode=fs.readFileSync(plcModule,'utf8');
+if(!plcCode.includes('xt.getState().setProject')||!plcCode.includes('const V=Ei(R.data)'))throw Error('PLC integration contract changed; review the native import bridge before release.');
+const integratedPLC=plcCode+'\n'+fs.readFileSync(path.join(root,'platform/studio-plc-bridge.js'),'utf8');const plcName='index-studio-'+crypto.createHash('sha256').update(integratedPLC).digest('hex').slice(0,12)+'.js';fs.writeFileSync(path.join(path.dirname(plcModule),plcName),integratedPLC);const plcHTML=path.join(destination,'_apps/engineering/voltpro-plc/index.html');fs.writeFileSync(plcHTML,fs.readFileSync(plcHTML,'utf8').replace('index-DSp8g4IS.js',plcName));
+// Runtime values and React-owned text must not be rewritten by the static page translator.
+for(const [file,needle,replacement]of [['simulator.html','class="sim-app"','class="sim-app" translate="no"'],['breadboard.html','class="app"','class="app" translate="no"'],['voltpro-plc/index.html','id="root"','id="root" translate="no"']]){const target=path.join(destination,'_apps/engineering',file);fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace(needle,replacement));}
 const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
-for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
+for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
 for(const file of ['account-config.js','account-client.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
 const manifest={version:1,applications:lock,assets:{}};
