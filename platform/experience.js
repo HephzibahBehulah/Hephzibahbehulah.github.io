@@ -10,6 +10,8 @@ function reconcile(){
  repairEngineering();
  const side=document.querySelector('.os-sidebar');
  if(side){
+  if(privatePage&&!side.querySelector('[data-hb-monitor]')){const nav=side.querySelector('[data-nav-group="private-control"] nav')||side.querySelector('.os-nav');if(nav){const a=el('a','','◈ USERS & SIGN-INS');a.href='/admin#users-signins';a.dataset.hbMonitor='true';a.setAttribute('translate','no');a.onclick=async e=>{e.preventDefault();try{const module=await import('/_hb/admin-accounts-ui.js');module.openAccounts();}catch{alert('The private monitor could not load. Refresh the page and retry.');}};nav.append(a);}}
+
   if(/^\/(?:admin\/)?(?:tools|cyber-os)(?:\/|$)/.test(location.pathname))side.querySelectorAll('.hb-platform-apps').forEach(n=>n.remove());
   for(const a of side.querySelectorAll('a')){
    const name=clean(a.textContent),replacement=sectionNames.get(name);
@@ -74,6 +76,7 @@ function decorateOverview(){
 function loadScript(src){if([...document.scripts].some(s=>new URL(s.src,location.href).pathname===src))return;const s=el('script');s.src=src;s.defer=true;document.head.append(s);}
 function init(){const sheet=document.querySelector('link[href="/_hb/experience.css"]');if(sheet)document.head.append(sheet);document.body.classList.add('hb-unified');applyTheme();reconcile();
  const observer=new MutationObserver(records=>{if(queued||!records.some(r=>r.addedNodes.length))return;queued=true;requestAnimationFrame(reconcile);});observer.observe(document.body,{childList:true,subtree:true});
+ if(privatePage&&location.hash==='#users-signins')document.querySelector('[data-hb-monitor]')?.click();
  if(!window.HBLanguage)loadScript('/js/language-system.js');
  if(!document.querySelector('#hbBotLauncher')){const css=el('link');css.rel='stylesheet';css.href='/css/hb-bot-chat.css';document.head.append(css);loadScript('/js/hb-bot-chat.js');}
 }
