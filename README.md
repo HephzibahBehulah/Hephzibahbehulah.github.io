@@ -1,5 +1,19 @@
 # HEPHZIBAH BEHULAH
 
+## ADIGUN AI, SI and workspace tutor — 19 October 2026
+
+The shared assistant workspace is available through **ADIGUN AI** on public pages and **ADIGUN SI** on the protected admin hostname. In engineering studios, open **Workspace settings → ADIGUN AI/SI**. Existing full AI Lab uploads, voice, native circuit proposals and terminal features remain available.
+
+- Public AI and the tutor support multi-turn technical conversations, Stop, Retry, conversation export and optional tab-local text memory. Select **Include current drawing** to send the open Simulator, Breadboard or PLC project with a question.
+- Explicit tools provide structural drawing review, bounded study lookup, five engineering calculations (Ohm’s law, divider, RC, RL and LED resistor) and fixed-target public website reachability checks. Results include execution receipts and an **Explain this result** action that re-runs the selected tool before synthesis.
+- Private SI uses the existing owner-authenticated investigation/terminal agent, adds the same engineering tools and a bounded sign-in-event summary, and opens the detailed Users & sign-ins monitor. Summaries omit account emails and IP addresses. No new database permissions or public access to private tools are introduced.
+- SI respects explicit no-tool requests and distinguishes explanatory questions from execution requests. The server chooses public/private privileges from the authenticated hostname and verified route, never chat text or browser role fields. Same-origin checks, request-size limits, rate limits and the existing five-hour member sessions remain in force.
+- Chat responses use the existing provider integration and current-source search. Live provider availability, quotas, model quality and tool coverage still limit results. Stop cancels the browser request; an upstream operation may already be running.
+- Structural review is not an electrical simulation or hardware certification. The assistant does not autonomously modify production, deploy code, expose secrets or gain unrestricted shell access. Existing controlled admin interfaces remain responsible for consequential actions.
+- New assistant request logs contain request IDs, role scope, status and selected tool name; they do not record chat text or raw account-event records. These are runtime logs, not a new durable audit database.
+
+Validation: 87 integration/unit tests, including numerical results, malformed project connections, public/admin separation, cross-origin rejection, bounded inputs, rate-limit failures and fixed-target health checks. Browser and live release verification are recorded with each deployment; automated checks do not imply every possible AI answer is correct.
+
 ## Current integrated release — 19 October 2026
 
 | Workspace | Live address | Access |
@@ -32,6 +46,7 @@ Implementation: [PR #37](https://github.com/HephzibahBehulah/Hephzibahbehulah.gi
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
 
 ---
+
 
 ## Engineering · Intelligence · Security
 

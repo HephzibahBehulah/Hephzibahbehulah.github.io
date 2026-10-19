@@ -2,6 +2,8 @@
 // Free Cloudflare Workers AI fallback is enabled when the primary provider is unavailable.
 import { getSandbox, Sandbox as CloudflareSandbox, ContainerProxy } from "@cloudflare/sandbox";
 import legacy from "./worker-v2.js";
+import {operatorIntent} from "./platform/assistant-policy.mjs";
+import {ASSISTANT_PROFILE,SI_PROFILE} from "./platform/assistant.mjs";
 import {accountGateway} from "./platform/admin-accounts.mjs";
 
 export { ContainerProxy };
@@ -1182,7 +1184,7 @@ async function transcribeAudio(request, env) {
   } catch(error) { return json(request,{ok:false,error:"Voice transcription request failed: "+String(error?.message||error)},502); }
 }
 
-async function openAIChat(request, env) {
+export async function openAIChat(request, env, assistantProfile=ASSISTANT_PROFILE) {
   let body;
   try {
     body = await request.json();
@@ -1211,7 +1213,7 @@ async function openAIChat(request, env) {
   const evidence = evidenceContext(liveEvidence);
 
   const instructions =
-    SYSTEM +
+    SYSTEM + (assistantProfile ? "\n\n"+assistantProfile : "") +
     (context ? "\n" + context : "") +
     evidence +
     (clientContext ? "\n\nCLIENT-SUPPLIED SITE CONTEXT:\n" + clientContext : "");
@@ -1229,7 +1231,7 @@ async function openAIChat(request, env) {
   let response;
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
+    const timeout = setTimeout(() => controller.abort(), 45000);
     try {
       response = await fetch("https://api.openai.com/v1/responses", {
         method: "POST",
@@ -1322,7 +1324,7 @@ function agentTargets(task) {
 
 function agentActionPlan(task, checks) {
   const q = String(task || "").toLowerCase();
-  const wantsMutation = /change|modify|edit|update|fix|deploy|delete|remove|commit|push|merge|purge|restart|rotate|configure/.test(q);
+  const wantsMutation = operatorIntent(task).mutation;
   const actions = [];
   if (wantsMutation) actions.push({
     id:"mutation-request",
@@ -1379,7 +1381,7 @@ function requestedSandboxCommands(task){
     q.includes("run "+command) || q.includes("execute "+command) || q.includes("check "+command)
   ).slice(0,3);
 }
-async function privateAgent(request, env, url, ctx) {
+export async function privateAgent(request, env, url, ctx) {
   const auth = await authenticateAdmin(request, env);
   if (!auth.ok) return auth.response;
   const identity = getAdminIdentity(auth.identity);
@@ -1401,14 +1403,15 @@ async function privateAgent(request, env, url, ctx) {
       commandResults:[],
       sandboxResults:[],
       plan:null,
-      answer:"Hallo! I’m ADIGUN, Hephzibah Behulah’s AI assistant. How can I help you today?"
+      answer:"Hello! I’m ADIGUN SI, your private Hephzibah Behulah assistant. What would you like to investigate or build?"
     });
   }
 
-  const targets = agentTargets(task);
-  const requested = requestedCommands(task);
+  const execute = operatorIntent(task).execute;
+  const targets = execute ? agentTargets(task) : [];
+  const requested = execute ? requestedCommands(task) : [];
   const commandResults = requested.length ? await runAgentCommands(request, env, requested) : [];
-  const sandboxCommands = requestedSandboxCommands(task);
+  const sandboxCommands = execute ? requestedSandboxCommands(task) : [];
   const sandboxResults = sandboxCommands.length
     ? await Promise.all(sandboxCommands.map(async command => {
         const response = await executeSandboxCommand(request, env, ctx, command);
@@ -1426,6 +1429,7 @@ async function privateAgent(request, env, url, ctx) {
     task,
     generatedAt:new Date().toISOString(),
     capabilityManifest:capabilityManifest(env,true),
+    workspaceContext:String(body.siteContext||"unused").slice(0,70000),
     investigation:investigations,
     commandResults,
     sandboxResults,
@@ -1434,7 +1438,7 @@ async function privateAgent(request, env, url, ctx) {
 
   const liveSearchIntent = /job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for/.test(task.toLowerCase());
   const agentPrompt = "PRIVATE OPERATOR TASK:\n" + task +
-    "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the relevant read-only inspections and diagnostics shown below. Analyze the evidence and give the administrator a concise, evidence-led report.\n\n" +
+    "\n\nYou are ADIGUN SI, the private investigation, technical assistance and planning layer of Hephzibah Behulah. The server has already executed the relevant read-only inspections and diagnostics shown below. For a platform investigation, analyze the evidence and give the administrator an evidence-led report. For ordinary conversation, learning, programming or engineering questions, answer naturally and directly without forcing an investigation report.\n\n" +
     (liveSearchIntent ? "CURRENT-JOB-SEARCH MODE: This is an employment search. Use the OpenAI web search tool to find current, real vacancies matching the request. Do not substitute generic career advice for actual vacancies. For each useful vacancy, provide employer, role, location, current status if available, why it matches the stated profile, and a direct source URL. If no suitable live vacancy can be verified, say so and explain what was searched.\n\n" : "") +
     "PRIVATE CAPABILITY RULES:\n" +
     "- Cloudflare Access authentication is required for every private control endpoint.\n" +
@@ -1473,7 +1477,7 @@ async function privateAgent(request, env, url, ctx) {
         siteContext:"PRIVATE ADIGUN AGENT MODE: local operator investigation. Server evidence is authoritative."
       })
     });
-    const aiResponse = await openAIChat(aiRequest, env);
+    const aiResponse = await openAIChat(aiRequest, env, SI_PROFILE);
     const aiData = await aiResponse.json().catch(()=>({}));
     if (aiData?.answer) answer = aiData.answer;
     else if (flatChecks.length) {
