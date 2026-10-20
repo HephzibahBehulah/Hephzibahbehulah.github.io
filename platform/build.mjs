@@ -47,7 +47,7 @@ const simulatorPage=path.join(engineeringOut,'simulator.html');
 const simulatorHtml=fs.readFileSync(simulatorPage,'utf8');
 const oldSimulatorActions='<div class="top-actions"><a href="index.html" aria-label="Academy home">Academy</a><a href="engineering.html">Engineering Tools</a><button id="themeBtn">Theme</button></div>';
 const newSimulatorActions='<nav class="top-actions" aria-label="VoltPro platforms"><a href="index.html">Academy</a><a href="simulator.html" aria-current="page">Simulator</a><a href="voltpro-plc/">VoltPro PLC</a><a href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a href="breadboard.html">VoltPro Breadboard</a><a href="engineering.html">Engineering</a><a href="academy-workbench.html">Workbench</a><a href="simulator.html">AI Circuit Designer</a><button id="themeBtn">Theme</button></nav>';
-if(simulatorHtml.includes('class="top-actions"'))fs.writeFileSync(simulatorPage,simulatorHtml.replace(/<div class="top-actions">[\\s\\S]*?<\\/div>/,newSimulatorActions));
+if(simulatorHtml.includes('class="top-actions"'))fs.writeFileSync(simulatorPage,simulatorHtml.replace(/<div class="top-actions">[\s\S]*?<\/div>/,newSimulatorActions));
 const breadboardPage=path.join(engineeringOut,'breadboard.html');
 let breadboardHtml=fs.readFileSync(breadboardPage,'utf8');
 const oldBreadboardNav='<nav class="nav"><a class="btn" href="index.html">Academy</a><a class="btn" href="engineering.html">Engineering Tools</a><a class="btn" href="academy-workbench.html">Workbench</a></nav>';
