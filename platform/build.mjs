@@ -38,11 +38,6 @@ const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
 for(const file of ['account-config.js','account-client.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
-const manifest={version:1,applications:lock,assets:{}};
-const releases=publishArchives(destination,lock);
-const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
-for(const [name,release]of Object.entries(releases.applications)){const expected=pinnedDownloads.applications[name];if(expected?.commit===release.commit&&(expected.sha256!==release.sha256||expected.bytes!==release.bytes))throw Error('Pinned '+name+' download changed; release blocked.');}
-fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
 const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
 if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
 copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
@@ -86,6 +81,12 @@ const integratedPLC=plcCode+'\n'+fs.readFileSync(path.join(root,'platform/studio
 // Runtime values and React-owned text must not be rewritten by the static page translator.
 for(const [file,needle,replacement]of [['simulator.html','class="sim-app"','class="sim-app" translate="no"'],['breadboard.html','class="app"','class="app" translate="no"'],['voltpro-plc/index.html','id="root"','id="root" translate="no"']]){const target=path.join(destination,'_apps/engineering',file);fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace(needle,replacement));}
 
+// Publish archives only after all app patches and generated assets have been applied.
+const manifest={version:1,applications:lock,assets:{}};
+const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
+const releases=publishArchives(destination,lock);
+for(const [name,release]of Object.entries(releases.applications)){const expected=pinnedDownloads.applications[name];if(expected?.commit===release.commit&&(expected.sha256!==release.sha256||expected.bytes!==release.bytes))throw Error('Pinned '+name+' download changed; release blocked.');}
+fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
 function inventory(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())inventory(file);else manifest.assets[path.relative(destination,file).replaceAll('\\','/')]=crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');}}
 inventory(destination);fs.writeFileSync(path.join(destination,'release-manifest.json'),JSON.stringify(manifest,null,2));
 console.log(JSON.stringify({destination,files:Object.keys(manifest.assets).length,applications:lock},null,2));
