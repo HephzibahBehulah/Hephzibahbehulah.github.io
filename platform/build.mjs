@@ -25,6 +25,17 @@ function copy(from,to,{main=false,cyber=false}={}){
 }
 copy(root,destination,{main:true});
 copy(engineering,path.join(destination,'_apps/engineering'));
+const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
+if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
+copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
+// Keep shared navigation consistent across the native engineering HTML entry points.
+const oldBreadboardLink='<a class="nav-item" href="breadboard.html"><span>▦</span>Breadboard Electronics</a>';
+const newWorkspaceLinks='<a class="nav-item" href="/voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>';
+let navigationPages=0;
+function updateEngineeringNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())updateEngineeringNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');if(html.includes(oldBreadboardLink)){fs.writeFileSync(file,html.replaceAll(oldBreadboardLink,newWorkspaceLinks));navigationPages++;}}}}
+updateEngineeringNavigation(path.join(destination,'_apps/engineering'));
+if(!navigationPages)throw Error('VoltPro studio navigation anchor was not found; refusing to ship without the ElectCAD link.');
+
 for(const name of ['LICENSE','THIRD_PARTY_LICENSES.md','ASSET_ATTRIBUTIONS.md'])if(fs.existsSync(path.join(engineering,name)))fs.copyFileSync(path.join(engineering,name),path.join(destination,'_apps/engineering',name));
 copy(cyber,path.join(destination,'_apps/cyber'),{cyber:true});
 const assistant=path.join(destination,'_apps/engineering/voltpro-assistant.js');

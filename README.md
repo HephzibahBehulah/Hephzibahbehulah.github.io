@@ -14,6 +14,7 @@
 ### VoltPRo Studio
 
 - [Simulator](https://engineering.hephzibahbehulah.com/simulator), [Breadboard](https://engineering.hephzibahbehulah.com/breadboard) and [VoltProPLC](https://engineering.hephzibahbehulah.com/voltpro-plc/) use compact studio menus, native editing controls, project libraries, component sidebars, inspectors and results docks.
+- [VoltPro ElectCAD](https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/) is integrated from React/TypeScript source in `apps/voltpro-electcad/`; the static build is mounted by the shared engineering Worker. Its optional development API is not exposed publicly.
 - Phone layouts use side drawers and grouped commands. Company branding, theme choices, language selector, account controls and external links remain available.
 - Each workspace exposes **100,000 editable parameter studies** across ten study families/control templates. These are variations, not 100,000 distinct circuit topologies.
 - The Component Bank supplements existing devices with **1,000,000 value configurations across four generic electrical models**: resistor, capacitor, inductor and DC source. These are not one million manufacturer parts. PLC directs electrical configurations to Simulator.

@@ -48,3 +48,20 @@ test('private service workers retire only after authorization',async()=>{
  assert.equal((await worker.fetch(request,{})).status,401);granted=true;
  const result=await worker.fetch(request,{});assert.equal(result.status,200);assert.match(await result.text(),/registration\.unregister/);assert.equal(result.headers.get('cache-control'),'private, no-store');
 });
+
+test('ElectCAD route maps the app root and keeps the canonical base path',()=>{
+ const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/'));
+ assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/voltPro-ElectCAD/');
+});
+test('ElectCAD route without a slash redirects to the canonical path',()=>{
+ const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD'));
+ assert.equal(route.kind,'redirect');assert.equal(route.location,'/voltPro-ElectCAD/');
+});
+test('ElectCAD assets resolve beneath the application directory',()=>{
+ const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/assets/index.js'));
+ assert.equal(route.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(route.base,'/voltPro-ElectCAD/');
+});
+test('ElectCAD route is also mounted under the authenticated admin engineering prefix',()=>{
+ const route=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/'));
+ assert.equal(route.privateHost,true);assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/engineering/voltPro-ElectCAD/');
+});

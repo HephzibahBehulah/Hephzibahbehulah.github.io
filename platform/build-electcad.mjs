@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const app=path.join(root,'apps','voltpro-electcad');
+const run=(command,args)=>{const result=spawnSync(command,args,{cwd:app,stdio:'inherit',shell:process.platform==='win32'});if(result.error)throw result.error;if(result.status!==0)throw Error(command+' '+args.join(' ')+' failed with status '+result.status);};
+if(!fs.existsSync(path.join(app,'package.json'))||!fs.existsSync(path.join(app,'App.tsx')))throw Error('Migrated VoltPro ElectCAD source is incomplete.');
+run('npm',['install','--no-audit','--no-fund']);
+run('npm',['run','build']);
+if(!fs.existsSync(path.join(app,'dist','index.html')))throw Error('VoltPro ElectCAD build did not produce dist/index.html.');
+console.log('VoltPro ElectCAD frontend built for /voltPro-ElectCAD/; optional development API excluded.');

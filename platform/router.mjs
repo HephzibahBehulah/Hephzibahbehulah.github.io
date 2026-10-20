@@ -30,6 +30,12 @@ export function resolveRoute(url){
   }
   if(prefix&&path===prefix)return {kind:'redirect',privateHost,location:prefix+'/'};
   const relative=path.slice(prefix.length)||'/';
+  if(app==='engineering'&&/^\/voltpro-electcad(?:\/|$)/i.test(relative)){
+    const suffix=relative.slice('/voltPro-ElectCAD'.length);
+    if(!suffix)return {kind:'redirect',privateHost,location:prefix+'/voltPro-ElectCAD/'};
+    const assetSuffix=suffix==='/'?'/index.html':suffix;
+    return {kind:'app',privateHost,app,prefix,base:prefix+'/voltPro-ElectCAD/',path:'/_apps/engineering/voltpro-electcad'+assetSuffix};
+  }
   if(app==='engineering'&&relative==='/voltpro-plc')return {kind:'redirect',privateHost,location:prefix+'/voltpro-plc/'};
   if(relative.endsWith('.html'))return {kind:'redirect',privateHost,location:(prefix+relative.replace(/\/index\.html$/,'/').replace(/\.html$/,''))||'/'};
   const asset=app==='engineering'&&relative==='/workspace'?'/account.html':relative.endsWith('/')?relative+'index.html':/\.[^/]+$/.test(relative)?relative:relative+'.html';
