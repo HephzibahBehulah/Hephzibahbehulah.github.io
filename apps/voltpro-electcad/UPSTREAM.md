@@ -1,6 +1,6 @@
 # VoltPro ElectCAD — migrated source
 
-This application is migrated from [HephzibahBehulah/VoltPro-ElexCAD](https://github.com/HephzibahBehulah/VoltPro-ElexCAD). The React/TypeScript frontend and its MIT license are retained; the optional SQLite/Node API, local database, recordings, screenshots, test fixtures and development-only files are not deployed to the public browser workspace.
+This application is migrated from [HephzibahBehulah/VoltPro-ElexCAD](https://github.com/HephzibahBehulah/VoltPro-ElexCAD) at upstream commit `ec40ad8f50759f01d9a86a0d10d24a4736130387`. The React/TypeScript frontend and its MIT license are retained; the optional SQLite/Node API, local database, recordings, screenshots, test fixtures and development-only files are not deployed to the public browser workspace.
 
 ## Build
 
