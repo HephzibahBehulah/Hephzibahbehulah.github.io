@@ -51,7 +51,7 @@ if(simulatorHtml.includes('class="top-actions"'))fs.writeFileSync(simulatorPage,
 const breadboardPage=path.join(engineeringOut,'breadboard.html');
 let breadboardHtml=fs.readFileSync(breadboardPage,'utf8');
 const oldBreadboardNav='<nav class="nav"><a class="btn" href="index.html">Academy</a><a class="btn" href="engineering.html">Engineering Tools</a><a class="btn" href="academy-workbench.html">Workbench</a></nav>';
-const newBreadboardNav='<nav class="nav" aria-label="VoltPro platforms"><a class="btn" href="index.html">Academy</a><a class="btn" href="simulator.html">Simulator</a><a class="btn" href="voltpro-plc/">VoltPro PLC</a><a class="btn" href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a class="btn" href="breadboard.html" aria-current="page">VoltPro Breadboard</a><a class="btn" href="engineering.html">Engineering</a><a class="btn" href="academy-workbench.html">Workbench</a><a class="btn" href="simulator.html">AI Circuit Designer</a></nav>';
+const newBreadboardNav='<nav class="nav" aria-label="VoltPro platforms"><a class="btn" href="index.html">Academy</a><a class="btn" href="simulator.html">Simulator</a><a class="btn" href="voltpro-plc/">VoltPro PLC</a><a class="btn" href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a class="btn" href="breadboard.html" aria-current="page">VoltPro Breadboard</a><a class="btn" href="engineering.html">Engineering</a><a class="btn" href="academy-workbench.html">Workbench</a><a class="btn" href="simulator.html#ai-designer">AI Circuit Designer</a></nav>';
 if(breadboardHtml.includes(oldBreadboardNav))breadboardHtml=breadboardHtml.replace(oldBreadboardNav,newBreadboardNav);
 fs.writeFileSync(breadboardPage,breadboardHtml);
 // Keep the breadboard welcome flow fresh on entry; explicit Save and Import remain available.
