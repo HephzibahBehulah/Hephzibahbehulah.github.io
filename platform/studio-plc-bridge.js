@@ -21,7 +21,7 @@ if(typeof document!=='undefined'&&!window.__voltProPLCCanvasTools){
   if(topbar&&!document.querySelector('.vp-platform-nav')){
    const nav=document.createElement('nav');nav.className='vp-platform-nav';nav.setAttribute('aria-label','VoltPro platforms');
    nav.style.cssText='display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:600 11px system-ui;margin:4px 10px';
-   const links=[['Academy','../index.html'],['Simulator','../simulator.html'],['VoltPro PLC','./'],['VoltPro ElectCAD','../voltPro-ElectCAD/'],['VoltPro Breadboard','../breadboard.html'],['Engineering','../engineering.html'],['Workbench','../academy-workbench.html'],['AI Circuit Designer','../simulator.html']];
+   const links=[['Academy','../index.html'],['Simulator','../simulator.html'],['VoltPro PLC','./'],['VoltPro ElectCAD','../voltPro-ElectCAD/'],['VoltPro Breadboard','../breadboard.html'],['Engineering','../engineering.html'],['Workbench','../academy-workbench.html'],['AI Circuit Designer','../simulator.html#ai-designer']];
    for(const [label,href]of links){const a=document.createElement('a');a.textContent=label;a.href=href;a.style.cssText='color:#b5c7d2;text-decoration:none;padding:6px 7px;border:1px solid #365264;border-radius:6px';if(label==='VoltPro PLC')a.setAttribute('aria-current','page');nav.appendChild(a);}
    const toolbar=topbar.querySelector('.toolbar');topbar.insertBefore(nav,toolbar||null);
   }
