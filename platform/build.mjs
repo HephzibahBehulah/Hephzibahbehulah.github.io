@@ -25,16 +25,7 @@ function copy(from,to,{main=false,cyber=false}={}){
 }
 copy(root,destination,{main:true});
 copy(engineering,path.join(destination,'_apps/engineering'));
-const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
-if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
-copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
-// Keep shared navigation consistent across the native engineering HTML entry points.
-const oldBreadboardLink='<a class="nav-item" href="breadboard.html"><span>▦</span>Breadboard Electronics</a>';
-const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>';
-let navigationPages=0;
-function updateEngineeringNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())updateEngineeringNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');if(html.includes(oldBreadboardLink)){fs.writeFileSync(file,html.replaceAll(oldBreadboardLink,newWorkspaceLinks));navigationPages++;}}}}
-updateEngineeringNavigation(path.join(destination,'_apps/engineering'));
-if(!navigationPages)throw Error('VoltPro studio navigation anchor was not found; refusing to ship without the ElectCAD link.');
+
 
 for(const name of ['LICENSE','THIRD_PARTY_LICENSES.md','ASSET_ATTRIBUTIONS.md'])if(fs.existsSync(path.join(engineering,name)))fs.copyFileSync(path.join(engineering,name),path.join(destination,'_apps/engineering',name));
 copy(cyber,path.join(destination,'_apps/cyber'),{cyber:true});
@@ -52,6 +43,16 @@ const releases=publishArchives(destination,lock);
 const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
 for(const [name,release]of Object.entries(releases.applications)){const expected=pinnedDownloads.applications[name];if(expected?.commit===release.commit&&(expected.sha256!==release.sha256||expected.bytes!==release.bytes))throw Error('Pinned '+name+' download changed; release blocked.');}
 fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
+const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
+if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
+copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
+// Keep shared navigation consistent across the native engineering HTML entry points.
+const oldBreadboardLink='<a class="nav-item" href="breadboard.html"><span>▦</span>Breadboard Electronics</a>';
+const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>';
+let navigationPages=0;
+function updateEngineeringNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())updateEngineeringNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');if(html.includes(oldBreadboardLink)){fs.writeFileSync(file,html.replaceAll(oldBreadboardLink,newWorkspaceLinks));navigationPages++;}}}}
+updateEngineeringNavigation(path.join(destination,'_apps/engineering'));
+if(!navigationPages)throw Error('VoltPro studio navigation anchor was not found; refusing to ship without the ElectCAD link.');
 // The pinned PLC module owns validation and state; the studio never reparents React controls.
 const plcModule=path.join(destination,'_apps/engineering/voltpro-plc/assets/index-DSp8g4IS.js');const plcCode=fs.readFileSync(plcModule,'utf8');
 if(!plcCode.includes('xt.getState().setProject')||!plcCode.includes('const V=Ei(R.data)'))throw Error('PLC integration contract changed; review the native import bridge before release.');
