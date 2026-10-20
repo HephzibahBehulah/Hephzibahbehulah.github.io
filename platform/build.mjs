@@ -53,6 +53,13 @@ let navigationPages=0;
 function updateEngineeringNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())updateEngineeringNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');if(html.includes(oldBreadboardLink)){fs.writeFileSync(file,html.replaceAll(oldBreadboardLink,newWorkspaceLinks));navigationPages++;}}}}
 updateEngineeringNavigation(path.join(destination,'_apps/engineering'));
 if(!navigationPages)throw Error('VoltPro studio navigation anchor was not found; refusing to ship without the ElectCAD link.');
+// Remove only the extra AI Circuit Designer entry from the shared Design & Simulation navigation.
+// The Simulator's existing designer implementation and all other workspace links remain untouched.
+let removedAICircuitDesignerLinks=0;
+const aiCircuitDesignerNavItem=/<a\b(?=[^>]*\bclass=["'][^"']*\bnav-item\b[^"']*["'])[^>]*>\s*<span\b[^>]*>\s*(?:✦|&#10022;|&#x2726;)\s*<\/span>\s*AI Circuit Designer\s*<\/a>/giu;
+function removeAICircuitDesignerNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())removeAICircuitDesignerNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');const updated=html.replace(aiCircuitDesignerNavItem,()=>{removedAICircuitDesignerLinks++;return '';});if(updated!==html)fs.writeFileSync(file,updated);}}}
+removeAICircuitDesignerNavigation(path.join(destination,'_apps/engineering'));
+
 // The pinned PLC module owns validation and state; the studio never reparents React controls.
 const plcModule=path.join(destination,'_apps/engineering/voltpro-plc/assets/index-DSp8g4IS.js');const plcCode=fs.readFileSync(plcModule,'utf8');
 if(!plcCode.includes('xt.getState().setProject')||!plcCode.includes('const V=Ei(R.data)'))throw Error('PLC integration contract changed; review the native import bridge before release.');
