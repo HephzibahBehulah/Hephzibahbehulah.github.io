@@ -65,3 +65,8 @@ test('ElectCAD route is also mounted under the authenticated admin engineering p
  const route=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/'));
  assert.equal(route.privateHost,true);assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/engineering/voltPro-ElectCAD/');
 });
+
+test('ElectCAD route normalizes lowercase aliases without changing asset paths',()=>{
+ const route=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/'));
+ assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/voltPro-ElectCAD/');
+});
