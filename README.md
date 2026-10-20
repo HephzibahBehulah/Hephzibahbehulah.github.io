@@ -1,6 +1,6 @@
 # HEPHZIBAH BEHULAH
 
-## Current integrated release — 19 October 2026
+## Current integrated release — 20 October 2026
 
 | Workspace | Live address | Access |
 | --- | --- | --- |
