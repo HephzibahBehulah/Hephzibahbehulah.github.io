@@ -46,6 +46,32 @@ fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify
 const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
 if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
 copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
+// Apply the shared workspace navigation to the browser apps in the pinned release.
+const engineeringOut=path.join(destination,'_apps/engineering');
+const simulatorPage=path.join(engineeringOut,'simulator.html');
+const simulatorHtml=fs.readFileSync(simulatorPage,'utf8');
+const oldSimulatorActions='<div class="top-actions"><a href="index.html" aria-label="Academy home">Academy</a><a href="engineering.html">Engineering Tools</a><button id="themeBtn">Theme</button></div>';
+const newSimulatorActions='<nav class="top-actions" aria-label="VoltPro platforms"><a href="index.html">Academy</a><a href="simulator.html" aria-current="page">Simulator</a><a href="voltpro-plc/">VoltPro PLC</a><a href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a href="breadboard.html">VoltPro Breadboard</a><a href="engineering.html">Engineering</a><a href="academy-workbench.html">Workbench</a><a href="simulator.html">AI Circuit Designer</a><button id="themeBtn">Theme</button></nav>';
+if(simulatorHtml.includes(oldSimulatorActions))fs.writeFileSync(simulatorPage,simulatorHtml.replace(oldSimulatorActions,newSimulatorActions));
+const breadboardPage=path.join(engineeringOut,'breadboard.html');
+let breadboardHtml=fs.readFileSync(breadboardPage,'utf8');
+const oldBreadboardNav='<nav class="nav"><a class="btn" href="index.html">Academy</a><a class="btn" href="engineering.html">Engineering Tools</a><a class="btn" href="academy-workbench.html">Workbench</a></nav>';
+const newBreadboardNav='<nav class="nav" aria-label="VoltPro platforms"><a class="btn" href="index.html">Academy</a><a class="btn" href="simulator.html">Simulator</a><a class="btn" href="voltpro-plc/">VoltPro PLC</a><a class="btn" href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a class="btn" href="breadboard.html" aria-current="page">VoltPro Breadboard</a><a class="btn" href="engineering.html">Engineering</a><a class="btn" href="academy-workbench.html">Workbench</a><a class="btn" href="simulator.html">AI Circuit Designer</a></nav>';
+if(breadboardHtml.includes(oldBreadboardNav))breadboardHtml=breadboardHtml.replace(oldBreadboardNav,newBreadboardNav);
+fs.writeFileSync(breadboardPage,breadboardHtml);
+// Keep the breadboard welcome flow fresh on entry; explicit Save and Import remain available.
+const breadboardStudio=path.join(engineeringOut,'src/ui/breadboard-studio.js');
+if(fs.existsSync(breadboardStudio)){
+ let studio=fs.readFileSync(breadboardStudio,'utf8');
+ const restore='Promise.resolve(window.VoltProRegistry?.ready).then(()=>{try{const saved=localStorage.getItem(\'voltpro-breadboard-project\');if(saved){restoring=true;ui.loadData(JSON.parse(saved));last=snapshot();restoring=false;welcome.hidden=S.parts.length>0}}catch(error){restoring=false;ui.setStatus(\'Stored project needs attention: \'+error.message)}}).finally(()=>{cataloguePending=false;});';
+ if(studio.includes(restore))studio=studio.replace(restore,'Promise.resolve(window.VoltProRegistry?.ready).then(()=>{welcome.hidden=false;}).finally(()=>{cataloguePending=false;});');
+ studio=studio.replace("clearTimeout(dirtyTimer);dirtyTimer=setTimeout(()=>{if(running||!scope.hidden)recompute();autosave()},180)","clearTimeout(dirtyTimer);dirtyTimer=setTimeout(()=>{if(running||!scope.hidden)recompute()},180)");
+ studio=studio.replace("window.addEventListener('beforeunload',autosave);","");
+ const welcomeClose="welcome.querySelector('.bb-welcome-close').onclick=()=>welcome.hidden=true;";
+ const welcomeActions="welcome.querySelector('.bb-welcome-close').onclick=()=>welcome.hidden=true;const welcomeActions=document.createElement('div');welcomeActions.className='bb-welcome-actions';welcomeActions.innerHTML='<button type=\"button\" id=\"bbWelcomeBlank\">Start blank</button><button type=\"button\" id=\"bbWelcomeImport\">Import project</button>';welcome.appendChild(welcomeActions);welcome.querySelector('#bbWelcomeBlank').onclick=()=>{S.parts=[];S.wires=[];S.selectedPart=S.selectedWire=null;S.lastSimulation=null;ui.render();welcome.hidden=true;ui.setStatus('BLANK BOARD READY')};welcome.querySelector('#bbWelcomeImport').onclick=()=>{welcome.hidden=true;$('#loadProject').click()};";
+ if(studio.includes(welcomeClose))studio=studio.replace(welcomeClose,welcomeActions);
+ fs.writeFileSync(breadboardStudio,studio);
+}
 // Keep shared navigation consistent across the native engineering HTML entry points.
 const oldBreadboardLink='<a class="nav-item" href="breadboard.html"><span>▦</span>Breadboard Electronics</a>';
 const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>\n        <a class="nav-item" href="/simulator"><span>✦</span>AI Circuit Designer</a>';
