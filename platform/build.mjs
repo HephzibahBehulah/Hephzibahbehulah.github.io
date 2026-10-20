@@ -38,17 +38,40 @@ const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
 for(const file of ['account-config.js','account-client.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
-const manifest={version:1,applications:lock,assets:{}};
-const releases=publishArchives(destination,lock);
-const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
-for(const [name,release]of Object.entries(releases.applications)){const expected=pinnedDownloads.applications[name];if(expected?.commit===release.commit&&(expected.sha256!==release.sha256||expected.bytes!==release.bytes))throw Error('Pinned '+name+' download changed; release blocked.');}
-fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
 const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
 if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
 copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
+// Apply the shared workspace navigation to the browser apps in the pinned release.
+const engineeringOut=path.join(destination,'_apps/engineering');
+const simulatorPage=path.join(engineeringOut,'simulator.html');
+let simulatorHtml=fs.readFileSync(simulatorPage,'utf8');
+const newSimulatorActions='<nav class="top-actions" aria-label="VoltPro platforms"><a href="index.html">Academy</a><a href="simulator.html" aria-current="page">Simulator</a><a href="voltpro-plc/">VoltPro PLC</a><a href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a href="breadboard.html">VoltPro Breadboard</a><a href="engineering.html">Engineering</a><a href="academy-workbench.html">Workbench</a><a href="simulator.html#ai-designer">AI Circuit Designer</a><button id="themeBtn">Theme</button></nav>';
+if(simulatorHtml.includes('class="top-actions"'))simulatorHtml=simulatorHtml.replace(/<div class="top-actions">[\s\S]*?<\/div>/,newSimulatorActions);
+const simulatorWelcome=`<style>#vp-sim-welcome{position:fixed;inset:0;z-index:100000;background:#020914ed;display:grid;place-items:center;padding:18px}#vp-sim-welcome[hidden]{display:none}#vp-sim-welcome .card{width:min(760px,100%);max-height:90vh;overflow:auto;background:#0c1a29;color:#e6f0fa;border:1px solid #31516b;border-radius:18px;padding:24px;box-shadow:0 25px 90px #000b}#vp-sim-welcome h1{margin:8px 0}#vp-sim-welcome p{color:#a8bdd0;line-height:1.6}#vp-sim-welcome .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:20px 0}#vp-sim-welcome button{cursor:pointer;border:1px solid #2c4a63;background:#10263a;color:#e6f0fa;border-radius:9px;padding:12px;text-align:left}#vp-sim-welcome .grid button{min-height:82px}#vp-sim-welcome strong,#vp-sim-welcome span{display:block}#vp-sim-welcome span{font-size:12px;color:#a8bdd0;margin-top:5px}#vp-sim-welcome .actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}</style><div id="vp-sim-welcome" role="dialog" aria-modal="true" aria-labelledby="vp-sim-welcome-title"><section class="card"><div style="color:#75dcff;font-size:11px;font-weight:800;letter-spacing:.15em">VOLTPro · SIMULATOR</div><h1 id="vp-sim-welcome-title">Start a circuit simulation</h1><p>Choose a starter circuit, open the project library, or begin with a blank canvas. Starter circuits load only when selected.</p><div class="grid"><button data-vp-demo="LED Indicator · Starter"><strong>LED Circuit</strong><span>LED indicator and current-limiting resistance</span></button><button data-vp-demo="Series Resistor Study · Starter"><strong>Series Resistor Study</strong><span>Explore resistance and voltage distribution</span></button><button data-vp-demo="RC Learning Circuit · Starter"><strong>RC Charging</strong><span>Observe a capacitor charging response</span></button><button data-vp-demo="Protected DC Lamp · Starter"><strong>Switched DC Lamp</strong><span>Study a protected switched load</span></button></div><div class="actions"><button id="vp-sim-library">Open project library</button><button id="vp-sim-blank">Start blank</button><button id="vp-sim-close">Close</button></div></section></div><script>(function(){const init=()=>{const box=document.getElementById('vp-sim-welcome');if(!box||box.dataset.ready)return;box.dataset.ready='1';const hide=()=>box.hidden=true;box.querySelectorAll('[data-vp-demo]').forEach(button=>button.addEventListener('click',()=>{const lib=window.VoltProDemoLibrary,demo=lib?.demos?.().find(item=>item.title===button.dataset.vpDemo);if(!demo){const p=box.querySelector('p');p.textContent='Starter library is still loading. Please try again in a moment.';return}lib.load(demo);hide()}));document.getElementById('vp-sim-blank').addEventListener('click',()=>{document.getElementById('newBtn')?.click();hide()});document.getElementById('vp-sim-library').addEventListener('click',()=>{hide();if(window.VoltProProjectWorkspace?.open)window.VoltProProjectWorkspace.open();else window.VoltProDemoLibrary?.open?.()});document.getElementById('vp-sim-close').addEventListener('click',hide)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init()})();</script>`;
+if(!simulatorHtml.includes('id="vp-sim-welcome"'))simulatorHtml=simulatorHtml.replace('</body>',simulatorWelcome+'</body>');
+fs.writeFileSync(simulatorPage,simulatorHtml);
+const breadboardPage=path.join(engineeringOut,'breadboard.html');
+let breadboardHtml=fs.readFileSync(breadboardPage,'utf8');
+const oldBreadboardNav='<nav class="nav"><a class="btn" href="index.html">Academy</a><a class="btn" href="engineering.html">Engineering Tools</a><a class="btn" href="academy-workbench.html">Workbench</a></nav>';
+const newBreadboardNav='<nav class="nav" aria-label="VoltPro platforms"><a class="btn" href="index.html">Academy</a><a class="btn" href="simulator.html">Simulator</a><a class="btn" href="voltpro-plc/">VoltPro PLC</a><a class="btn" href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a class="btn" href="breadboard.html" aria-current="page">VoltPro Breadboard</a><a class="btn" href="engineering.html">Engineering</a><a class="btn" href="academy-workbench.html">Workbench</a><a class="btn" href="simulator.html#ai-designer">AI Circuit Designer</a></nav>';
+if(breadboardHtml.includes(oldBreadboardNav))breadboardHtml=breadboardHtml.replace(oldBreadboardNav,newBreadboardNav);
+fs.writeFileSync(breadboardPage,breadboardHtml);
+// Keep the breadboard welcome flow fresh on entry; explicit Save and Import remain available.
+const breadboardStudio=path.join(engineeringOut,'src/ui/breadboard-studio.js');
+if(fs.existsSync(breadboardStudio)){
+ let studio=fs.readFileSync(breadboardStudio,'utf8');
+ const restore='Promise.resolve(window.VoltProRegistry?.ready).then(()=>{try{const saved=localStorage.getItem(\'voltpro-breadboard-project\');if(saved){restoring=true;ui.loadData(JSON.parse(saved));last=snapshot();restoring=false;welcome.hidden=S.parts.length>0}}catch(error){restoring=false;ui.setStatus(\'Stored project needs attention: \'+error.message)}}).finally(()=>{cataloguePending=false;});';
+ if(studio.includes(restore))studio=studio.replace(restore,'Promise.resolve(window.VoltProRegistry?.ready).then(()=>{welcome.hidden=false;}).finally(()=>{cataloguePending=false;});');
+ studio=studio.replace("clearTimeout(dirtyTimer);dirtyTimer=setTimeout(()=>{if(running||!scope.hidden)recompute();autosave()},180)","clearTimeout(dirtyTimer);dirtyTimer=setTimeout(()=>{if(running||!scope.hidden)recompute()},180)");
+ studio=studio.replace("window.addEventListener('beforeunload',autosave);","");
+ const welcomeClose="welcome.querySelector('.bb-welcome-close').onclick=()=>welcome.hidden=true;";
+ const welcomeActions="welcome.querySelector('.bb-welcome-close').onclick=()=>welcome.hidden=true;const welcomeActions=document.createElement('div');welcomeActions.className='bb-welcome-actions';welcomeActions.innerHTML='<button type=\"button\" id=\"bbWelcomeBlank\">Start blank</button><button type=\"button\" id=\"bbWelcomeImport\">Import project</button>';welcome.appendChild(welcomeActions);welcome.querySelector('#bbWelcomeBlank').onclick=()=>{S.parts=[];S.wires=[];S.selectedPart=S.selectedWire=null;S.lastSimulation=null;ui.render();welcome.hidden=true;ui.setStatus('BLANK BOARD READY')};welcome.querySelector('#bbWelcomeImport').onclick=()=>{welcome.hidden=true;$('#loadProject').click()};";
+ if(studio.includes(welcomeClose))studio=studio.replace(welcomeClose,welcomeActions);
+ fs.writeFileSync(breadboardStudio,studio);
+}
 // Keep shared navigation consistent across the native engineering HTML entry points.
 const oldBreadboardLink='<a class="nav-item" href="breadboard.html"><span>▦</span>Breadboard Electronics</a>';
-const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>';
+const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>\n        <a class="nav-item" href="/simulator#ai-designer"><span>✦</span>AI Circuit Designer</a>';
 let navigationPages=0;
 function updateEngineeringNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())updateEngineeringNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');if(html.includes(oldBreadboardLink)){fs.writeFileSync(file,html.replaceAll(oldBreadboardLink,newWorkspaceLinks));navigationPages++;}}}}
 updateEngineeringNavigation(path.join(destination,'_apps/engineering'));
@@ -60,6 +83,20 @@ const integratedPLC=plcCode+'\n'+fs.readFileSync(path.join(root,'platform/studio
 // Runtime values and React-owned text must not be rewritten by the static page translator.
 for(const [file,needle,replacement]of [['simulator.html','class="sim-app"','class="sim-app" translate="no"'],['breadboard.html','class="app"','class="app" translate="no"'],['voltpro-plc/index.html','id="root"','id="root" translate="no"']]){const target=path.join(destination,'_apps/engineering',file);fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace(needle,replacement));}
 
+// Publish archives only after all app patches and generated assets have been applied.
+const manifest={version:1,applications:lock,assets:{}};
+const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
+const releases=publishArchives(destination,lock);
+for(const [name,release]of Object.entries(releases.applications)){const expected=pinnedDownloads.applications[name];if(expected?.commit===release.commit&&(expected.sha256!==release.sha256||expected.bytes!==release.bytes))throw Error('Pinned '+name+' download changed; release blocked.');}
+fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
+// Let shared AI navigation open the existing circuit designer panel directly.
+const designerScript=path.join(engineeringOut,'src/ui/ai-circuit-designer.js');
+if(fs.existsSync(designerScript)){
+ let designer=fs.readFileSync(designerScript,'utf8');
+ const designerApi='window.VoltProCircuitDesigner={open,close,generate:()=>generate.click(),getDraft:()=>draft,getValidation:()=>lastValidation};';
+ if(designer.includes(designerApi)&&!designer.includes('location.hash==="#ai-designer"'))designer=designer.replace(designerApi,designerApi+'if(location.hash==="#ai-designer")setTimeout(open,0);');
+ fs.writeFileSync(designerScript,designer);
+}
 function inventory(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())inventory(file);else manifest.assets[path.relative(destination,file).replaceAll('\\','/')]=crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');}}
 inventory(destination);fs.writeFileSync(path.join(destination,'release-manifest.json'),JSON.stringify(manifest,null,2));
 console.log(JSON.stringify({destination,files:Object.keys(manifest.assets).length,applications:lock},null,2));
