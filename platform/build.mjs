@@ -46,7 +46,7 @@ const engineeringOut=path.join(destination,'_apps/engineering');
 const simulatorPage=path.join(engineeringOut,'simulator.html');
 const simulatorHtml=fs.readFileSync(simulatorPage,'utf8');
 const oldSimulatorActions='<div class="top-actions"><a href="index.html" aria-label="Academy home">Academy</a><a href="engineering.html">Engineering Tools</a><button id="themeBtn">Theme</button></div>';
-const newSimulatorActions='<nav class="top-actions" aria-label="VoltPro platforms"><a href="index.html">Academy</a><a href="simulator.html" aria-current="page">Simulator</a><a href="voltpro-plc/">VoltPro PLC</a><a href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a href="breadboard.html">VoltPro Breadboard</a><a href="engineering.html">Engineering</a><a href="academy-workbench.html">Workbench</a><a href="simulator.html">AI Circuit Designer</a><button id="themeBtn">Theme</button></nav>';
+const newSimulatorActions='<nav class="top-actions" aria-label="VoltPro platforms"><a href="index.html">Academy</a><a href="simulator.html" aria-current="page">Simulator</a><a href="voltpro-plc/">VoltPro PLC</a><a href="voltPro-ElectCAD/">VoltPro ElectCAD</a><a href="breadboard.html">VoltPro Breadboard</a><a href="engineering.html">Engineering</a><a href="academy-workbench.html">Workbench</a><a href="simulator.html#ai-designer">AI Circuit Designer</a><button id="themeBtn">Theme</button></nav>';
 if(simulatorHtml.includes('class="top-actions"'))fs.writeFileSync(simulatorPage,simulatorHtml.replace(/<div class="top-actions">[\s\S]*?<\/div>/,newSimulatorActions));
 const breadboardPage=path.join(engineeringOut,'breadboard.html');
 let breadboardHtml=fs.readFileSync(breadboardPage,'utf8');
@@ -69,7 +69,7 @@ if(fs.existsSync(breadboardStudio)){
 }
 // Keep shared navigation consistent across the native engineering HTML entry points.
 const oldBreadboardLink='<a class="nav-item" href="breadboard.html"><span>▦</span>Breadboard Electronics</a>';
-const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>\n        <a class="nav-item" href="/simulator"><span>✦</span>AI Circuit Designer</a>';
+const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>\n        <a class="nav-item" href="/simulator#ai-designer"><span>✦</span>AI Circuit Designer</a>';
 let navigationPages=0;
 function updateEngineeringNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())updateEngineeringNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');if(html.includes(oldBreadboardLink)){fs.writeFileSync(file,html.replaceAll(oldBreadboardLink,newWorkspaceLinks));navigationPages++;}}}}
 updateEngineeringNavigation(path.join(destination,'_apps/engineering'));
@@ -87,6 +87,14 @@ const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public
 const releases=publishArchives(destination,lock);
 for(const [name,release]of Object.entries(releases.applications)){const expected=pinnedDownloads.applications[name];if(expected?.commit===release.commit&&(expected.sha256!==release.sha256||expected.bytes!==release.bytes))throw Error('Pinned '+name+' download changed; release blocked.');}
 fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
+// Let shared AI navigation open the existing circuit designer panel directly.
+const designerScript=path.join(engineeringOut,'src/ui/ai-circuit-designer.js');
+if(fs.existsSync(designerScript)){
+ let designer=fs.readFileSync(designerScript,'utf8');
+ const designerApi='window.VoltProCircuitDesigner={open,close,generate:()=>generate.click(),getDraft:()=>draft,getValidation:()=>lastValidation};';
+ if(designer.includes(designerApi)&&!designer.includes('location.hash==="#ai-designer"'))designer=designer.replace(designerApi,designerApi+'if(location.hash==="#ai-designer")setTimeout(open,0);');
+ fs.writeFileSync(designerScript,designer);
+}
 function inventory(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())inventory(file);else manifest.assets[path.relative(destination,file).replaceAll('\\','/')]=crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');}}
 inventory(destination);fs.writeFileSync(path.join(destination,'release-manifest.json'),JSON.stringify(manifest,null,2));
 console.log(JSON.stringify({destination,files:Object.keys(manifest.assets).length,applications:lock},null,2));
