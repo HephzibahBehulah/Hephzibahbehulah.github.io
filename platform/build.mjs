@@ -42,7 +42,9 @@ const manifest={version:1,applications:lock,assets:{}};
 const releases=publishArchives(destination,lock);
 const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
 for(const [name,release]of Object.entries(releases.applications)){const expected=pinnedDownloads.applications[name];if(expected?.commit===release.commit&&(expected.sha256!==release.sha256||expected.bytes!==release.bytes))throw Error('Pinned '+name+' download changed; release blocked.');}
-fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
+const releaseLockText=JSON.stringify(releases,null,2)+'\n';
+fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),releaseLockText);
+fs.writeFileSync(path.join(destination,'platform/public-apps-lock.json'),releaseLockText);
 const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
 if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
 copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
