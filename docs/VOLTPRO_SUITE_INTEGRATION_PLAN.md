@@ -60,6 +60,7 @@ The main platform README describes the shared engineering Worker as the deployme
 - `platform/README.md` documents preflight, build, configuration preparation and a Wrangler dry run. Production deploy still requires an authorized Cloudflare release process and independent version/route smoke checks.
 - ElexCAD's standalone README/security docs explicitly say its optional SQLite API is development-only until authentication, per-project authorization, tenant isolation, rate limiting, logging, backup/restore and deployment security are implemented. Do not enable it publicly as a shortcut to cloud persistence.
 - Current production state must remain untouched until the release artifact, checksum, build, security configuration and rollback snapshot have all been verified.
+- Observed during this audit: integrated-platform CI passes its 82 platform tests and the 67-script syntax check, but the release/build step fails when `platform/fetch-apps.mjs` requests the locked engineering archive and receives HTTP 404. Treat this as an existing release-artifact availability blocker; do not bypass checksum verification or publish a partially assembled Worker.
 
 ## Execution order and acceptance gates
 
