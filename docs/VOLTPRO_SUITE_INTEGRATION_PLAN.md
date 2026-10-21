@@ -53,6 +53,14 @@ The main platform README describes the shared engineering Worker as the deployme
 - Keep a deterministic local path when AI credentials/services are absent. Report provider unavailability clearly; do not simulate a successful AI response.
 - Cross-tool agent actions must use the same validation and authorization boundaries as direct user actions.
 
+## Production release constraints discovered
+
+- The main platform repository's `DEPLOYMENT_SAFETY.md` says there is no repository workflow that directly runs `wrangler deploy`; the available GitHub integration can change code but does not expose Cloudflare deployment controls. Do not claim a production release from a commit or green CI alone.
+- `platform/public-apps-lock.json` pins the engineering app to a specific source commit and immutable release archive with SHA-256 and byte count. A VoltPRo release must update the lock/manifest through the documented builder and verify the artifact checksum before any shared Worker build.
+- `platform/README.md` documents preflight, build, configuration preparation and a Wrangler dry run. Production deploy still requires an authorized Cloudflare release process and independent version/route smoke checks.
+- ElexCAD's standalone README/security docs explicitly say its optional SQLite API is development-only until authentication, per-project authorization, tenant isolation, rate limiting, logging, backup/restore and deployment security are implemented. Do not enable it publicly as a shortcut to cloud persistence.
+- Current production state must remain untouched until the release artifact, checksum, build, security configuration and rollback snapshot have all been verified.
+
 ## Execution order and acceptance gates
 
 1. **Inventory current HEADs and routes.** Identify route handlers, build scripts, CI workflows, deployment configuration and artifact source for each live tool.
