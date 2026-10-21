@@ -52,7 +52,7 @@ export function runDcOperatingPoint(sheet) {
   const electrical=[];
   const warnings=[];
   for(const p of parts){
-    const model=p.simulationModel||({power:'voltage',battery:'voltage','voltage-source-ac':'unsupported','current-source':'unsupported',resistor:'resistor','variable-resistor':'resistor',potentiometer:'resistor','potentiometer-trimmer':'resistor',thermistor:'resistor',capacitor:'unsupported','polarized-capacitor':'unsupported',inductor:'unsupported',diode:'unsupported','zener-diode':'unsupported',led:'unsupported','npn-transistor':'unsupported','pnp-transistor':'unsupported',switch:'switch','push-button-no':'switch','push-button-nc':'switch','relay-contact-no':'switch','relay-contact-nc':'switch','circuit-breaker':'switch',fuse:'switch'})[p.type]||'unsupported';
+    const model=p.simulationModel||({power:'voltage',battery:'voltage',ground:'ground','terminal-ground':'ground','shield-ground':'ground','chassis-ground':'ground','analog-ground':'ground','digital-ground':'ground','voltage-source-ac':'unsupported','current-source':'unsupported',resistor:'resistor','variable-resistor':'resistor',potentiometer:'resistor','potentiometer-trimmer':'resistor',thermistor:'resistor',capacitor:'unsupported','polarized-capacitor':'unsupported',inductor:'unsupported',diode:'unsupported','zener-diode':'unsupported',led:'unsupported','npn-transistor':'unsupported','pnp-transistor':'unsupported',switch:'switch','push-button-no':'switch','push-button-nc':'switch','relay-contact-no':'switch','relay-contact-nc':'switch','circuit-breaker':'switch',fuse:'switch'})[p.type]||'unsupported';
     if(model==='ground')continue;
     if(model==='voltage'||p.type==='power'||p.type==='battery'){
       const pins2=pinPositions(p);if(pins2.length<2)continue;
