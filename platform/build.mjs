@@ -56,7 +56,7 @@ if(!navigationPages)throw Error('VoltPro studio navigation anchor was not found;
 // Remove only the extra AI Circuit Designer entry from the shared Design & Simulation navigation.
 // The Simulator's existing designer implementation and all other workspace links remain untouched.
 let removedAICircuitDesignerLinks=0;
-const aiCircuitDesignerNavItem=/<a\b(?=[^>]*\bclass=["'][^"']*\bnav-item\b[^"']*["'])[^>]*>(?:(?!<\/a>)[\s\S])*?AI Circuit Designer(?:(?!<\/a>)[\s\S])*?<\/a>/giu
+const aiCircuitDesignerNavItem=/<a\b(?=[^>]*\bclass=["'][^"']*\bnav-item\b[^"']*["'])[^>]*>(?:(?!<\/a>)[\s\S])*?AI Circuit Designer(?:(?!<\/a>)[\s\S])*?<\/a>/giu;
 function removeAICircuitDesignerNavigation(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())removeAICircuitDesignerNavigation(file);else if(entry.isFile()&&entry.name.endsWith('.html')){const html=fs.readFileSync(file,'utf8');const updated=html.replace(aiCircuitDesignerNavItem,()=>{removedAICircuitDesignerLinks++;return '';});if(updated!==html)fs.writeFileSync(file,updated);}}}
 removeAICircuitDesignerNavigation(path.join(destination,'_apps/engineering'));
 
