@@ -234,21 +234,21 @@ export default function App() {
     if(native?.format!=='voltpro'||native?.version!==3||!Array.isArray(native.components)||!Array.isArray(native.wires))throw new Error('The shared AI response was not a VoltPRo v3 project.');
     if(native.components.length>60||native.wires.length>200)throw new Error('The proposed project exceeds the review limit of 60 components or 200 wire paths.');
     const byNativeId=new Map<string,Part>();
-    for(const p of parts){byNativeId.set(p.ref,p);byNativeId.set(p.id,p);}
+    for(const p of parts){byNativeId.set(p.ref.toLowerCase(),p);byNativeId.set(p.id.toLowerCase(),p);}
     const seen=new Set<string>(),additions:Part[]=[];
     for(const raw of native.components){
       if(!raw||typeof raw.id!=='string'||!/^[A-Za-z][A-Za-z0-9_-]{0,39}$/.test(raw.id)||typeof raw.type!=='string'||!Number.isFinite(raw.x)||!Number.isFinite(raw.y)||Math.abs(raw.x)>100000||Math.abs(raw.y)>100000)throw new Error('The AI proposed a component with invalid identity or coordinates.');
-      if(seen.has(raw.id))throw new Error('The AI repeated component reference '+raw.id+'.');seen.add(raw.id);
-      const existing=byNativeId.get(raw.id);
+      const refKey=raw.id.toLowerCase();if(seen.has(refKey))throw new Error('The AI repeated component reference '+raw.id+'.');seen.add(refKey);
+      const existing=byNativeId.get(refKey);
       if(existing){if(existing.type!==raw.type)throw new Error('The AI attempted to change existing component '+raw.id+'; no existing component was modified.');continue;}
       const definition=componentById(raw.type as ComponentKind);
       if(!definition)throw new Error('The AI proposed unsupported component type '+raw.type+'. Nothing was applied.');
       const props=raw.props&&typeof raw.props==='object'?raw.props as Record<string,unknown>:{};
       const value=String(props.label??props.value??(props.voltage!==undefined?String(props.voltage)+' V':props.resistance!==undefined?String(props.resistance)+' Ω':definition.defaultValue));
       const part:Part={id:uid(),type:raw.type as ComponentKind,x:raw.x,y:raw.y,ref:raw.id,value,...(Number.isFinite(raw.rotation)?{rotation:raw.rotation}:{}),...(typeof raw.mirrorX==='boolean'?{mirrorX:raw.mirrorX}:{})};
-      byNativeId.set(raw.id,part);byNativeId.set(part.id,part);additions.push(part);
+      byNativeId.set(refKey,part);byNativeId.set(part.id.toLowerCase(),part);additions.push(part);
     }
-    const endpoint=(value:unknown)=>{if(typeof value!=='string')throw new Error('The AI returned a wire without a terminal reference.');const split=value.lastIndexOf(':');if(split<1)throw new Error('Invalid terminal reference '+value+'.');const part=byNativeId.get(value.slice(0,split)),terminal=Number(value.slice(split+1));if(!part||!Number.isInteger(terminal)||terminal<0)throw new Error('Wire endpoint '+value+' does not identify a known terminal.');const pin=connectablePins(part)[terminal];if(!pin)throw new Error('Wire endpoint '+value+' is outside the component terminal range.');return {x:pin.x,y:pin.y};};
+    const endpoint=(value:unknown)=>{if(typeof value!=='string')throw new Error('The AI returned a wire without a terminal reference.');const split=value.lastIndexOf(':');if(split<1)throw new Error('Invalid terminal reference '+value+'.');const part=byNativeId.get(value.slice(0,split).toLowerCase()),terminal=Number(value.slice(split+1));if(!part||!Number.isInteger(terminal)||terminal<0)throw new Error('Wire endpoint '+value+' does not identify a known terminal.');const pin=connectablePins(part)[terminal];if(!pin)throw new Error('Wire endpoint '+value+' is outside the component terminal range.');return {x:pin.x,y:pin.y};};
     const generated:Wire[]=[];
     for(const raw of native.wires){
       if(!raw||typeof raw!=='object'||!('a'in raw)||!('b'in raw))throw new Error('The AI returned a wire that does not use explicit terminal references.');
