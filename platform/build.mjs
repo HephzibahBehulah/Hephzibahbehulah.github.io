@@ -37,7 +37,7 @@ if(!preferenceSource.includes("new URL('/api/engineering/chat'"))fs.writeFileSyn
 const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
-for(const file of ['account-config.js','account-client.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
+for(const file of ['account-config.js','account-client.js','cloud-projects.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
 const manifest={version:1,applications:lock,assets:{}};
 const releases=publishArchives(destination,lock);
 const pinnedDownloads=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
@@ -46,6 +46,9 @@ fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify
 const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
 if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
 copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
+const electCadIndex=path.join(destination,'_apps/engineering/voltpro-electcad/index.html');
+const electCadHtml=fs.readFileSync(electCadIndex,'utf8');
+for(const file of ['account-config.js','account-client.js','cloud-projects.js'])if(!electCadHtml.includes('/_hb/'+file)||!fs.existsSync(path.join(shared,file)))throw Error('VoltPro ElectCAD shared cloud bridge is missing: '+file);
 // Keep shared navigation consistent across the native engineering HTML entry points.
 const oldBreadboardLink='<a class="nav-item" href="breadboard.html"><span>▦</span>Breadboard Electronics</a>';
 const newWorkspaceLinks='<a class="nav-item" href="voltPro-ElectCAD/"><span>⌁</span>VoltPro ElectCAD</a>\n        <a class="nav-item" href="breadboard.html"><span>▦</span>VoltPro Breadboard</a>';
