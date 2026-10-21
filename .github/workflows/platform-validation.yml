@@ -35,13 +35,15 @@ jobs:
         run: node platform/preflight.mjs
       - name: Check every original browser script
         run: node platform/check-browser-scripts.mjs
-      - name: Verify the pinned browser releases and build the integrated platform
+      - name: Rebuild pinned app sources and validate the integrated platform
         run: |
           node platform/build-electcad.mjs
           node platform/fetch-apps.mjs
           node platform/studio-bank-check.mjs
           node platform/studio-plc-check.mjs
           node platform/build.mjs platform-source/engineering platform-source/cyber
+          echo '--- GENERATED PUBLIC APPLICATION LOCK ---'
+          cat platform/public-apps-lock.json
           node platform/prepare-config.mjs
 
       - name: Preserve verified platform catalogues for reproducible builds
