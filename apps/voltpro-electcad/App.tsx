@@ -249,12 +249,12 @@ export default function App() {
       byNativeId.set(refKey,part);byNativeId.set(part.id.toLowerCase(),part);additions.push(part);
     }
     const endpoint=(value:unknown)=>{if(typeof value!=='string')throw new Error('The AI returned a wire without a terminal reference.');const split=value.lastIndexOf(':');if(split<1)throw new Error('Invalid terminal reference '+value+'.');const part=byNativeId.get(value.slice(0,split).toLowerCase()),terminal=Number(value.slice(split+1));if(!part||!Number.isInteger(terminal)||terminal<0)throw new Error('Wire endpoint '+value+' does not identify a known terminal.');const pin=connectablePins(part)[terminal];if(!pin)throw new Error('Wire endpoint '+value+' is outside the component terminal range.');return {x:pin.x,y:pin.y};};
-    const generated:Wire[]=[];
+    const generated:Wire[]=[],wireKey=(w:Wire)=>{const a=w.x1+','+w.y1,b=w.x2+','+w.y2;return a<b?a+'|'+b:b+'|'+a;},knownWireKeys=new Set(wires.map(wireKey));
     for(const raw of native.wires){
       if(!raw||typeof raw!=='object'||!('a'in raw)||!('b'in raw))throw new Error('The AI returned a wire that does not use explicit terminal references.');
       const bends=Array.isArray(raw.bends)?raw.bends.map((p:any)=>{if(!p||!Number.isFinite(p.x)||!Number.isFinite(p.y)||Math.abs(p.x)>100000||Math.abs(p.y)>100000)throw new Error('The AI returned an invalid wire bend.');return {x:p.x,y:p.y};}):[];
       const points=[endpoint(raw.a),...bends,endpoint(raw.b)];
-      for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i];if(a.x===b.x&&a.y===b.y)continue;if(generated.length>=200)throw new Error('The proposed wire routing exceeds 200 drawable segments.');generated.push({id:uid(),x1:a.x,y1:a.y,x2:b.x,y2:b.y});}
+      for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i];if(a.x===b.x&&a.y===b.y)continue;const segment:Wire={id:uid(),x1:a.x,y1:a.y,x2:b.x,y2:b.y},key=wireKey(segment);if(knownWireKeys.has(key))continue;if(generated.length>=200)throw new Error('The proposed wire routing exceeds 200 drawable segments.');knownWireKeys.add(key);generated.push(segment);}
     }
     if(!additions.length&&!generated.length)throw new Error('The AI did not produce any new components or connections.');
     const summary=answer.slice(0,start).trim().slice(0,900)||'Shared VoltPRo AI proposal ready for review.';
