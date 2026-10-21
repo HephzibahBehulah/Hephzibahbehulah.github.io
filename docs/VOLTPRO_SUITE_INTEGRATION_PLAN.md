@@ -10,11 +10,21 @@
 |---|---|---|
 | Main portfolio and shared platform | `HephzibahBehulah/Hephzibahbehulah.github.io` | https://hephzibahbehulah.com/ |
 | Simulator, academy and Breadboard source | `HephzibahBehulah/Hephzibah-VoltPRo` | https://engineering.hephzibahbehulah.com/simulator and /breadboard |
-| PLC workspace | Existing PLC source in the VoltPRo repository must be traced; `HephzibahBehulah/VoltProPlc` currently has no files | https://engineering.hephzibahbehulah.com/voltpro-plc/ |
+| PLC workspace | `apps/voltpro-plc/` in `HephzibahBehulah/Hephzibah-VoltPRo`; the separate `HephzibahBehulah/VoltProPlc` repository is empty | https://engineering.hephzibahbehulah.com/voltpro-plc/ |
 | ElexCAD standalone source | `HephzibahBehulah/VoltPro-ElexCAD` | Legacy repository URL redirects to the integrated deployment |
 | ElexCAD integrated source | `apps/voltpro-electcad/` in the main platform repository | https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/ |
 
 The main platform README describes the shared engineering Worker as the deployment surface for the static ElexCAD build. Verify the actual route configuration and artifact provenance before changing deployment wiring. Do not assume similarly named repositories are interchangeable.
+
+## Changes merged during the current work session
+
+- VoltPRo solver: merged the contact-state normalization fix and regression tests in the VoltPRo repository. The reviewed PR's CI passed its tests, validation and PLC build checks.
+- ElectCAD cloud persistence: merged the main-platform changes to use the existing authenticated VoltPro account client and RLS-protected `projects` store for save/list/load/archive, with version-checked updates and archive-preserved revision history.
+- Cross-app project handoff: merged a schema-aware account-library route for ElectCAD documents and a one-time import handoff that restores the project ID/version. Historical revisions open as copies.
+- ElectCAD AI/voice path: merged routing to the shared same-origin `/api/engineering/chat` gateway when no dedicated design API is configured. Proposals are parsed and validated against the component catalogue and terminal mappings before the explicit apply step; unsupported/malformed proposals fall back locally without partial application. The UI discloses that a bounded sheet summary may be sent to the shared AI service.
+- Supabase: the existing `projects` and `project_revisions` tables and owner-scoped RLS policies were inspected. No database migration or production data change was made. The `hb_admin_operations` advisor warning is not an exposed client table in the inspected grants: it has no client-role grants or policies. Leaked-password protection remains disabled; the Supabase organization is on the Free plan, and Supabase documents that this feature requires Pro or above.
+
+**Important:** these are source merges, not a verified production release. The shared engineering build is still blocked by the pinned release archive described below.
 
 ## Verified source-level risks to resolve
 
@@ -60,7 +70,9 @@ The main platform README describes the shared engineering Worker as the deployme
 - `platform/README.md` documents preflight, build, configuration preparation and a Wrangler dry run. Production deploy still requires an authorized Cloudflare release process and independent version/route smoke checks.
 - ElexCAD's standalone README/security docs explicitly say its optional SQLite API is development-only until authentication, per-project authorization, tenant isolation, rate limiting, logging, backup/restore and deployment security are implemented. Do not enable it publicly as a shortcut to cloud persistence.
 - Current production state must remain untouched until the release artifact, checksum, build, security configuration and rollback snapshot have all been verified.
-- Observed during this audit: integrated-platform CI passes its 82 platform tests and the 67-script syntax check, but the release/build step fails when `platform/fetch-apps.mjs` requests the locked engineering archive and receives HTTP 404. Treat this as an existing release-artifact availability blocker; do not bypass checksum verification or publish a partially assembled Worker.
+- Confirmed blocker: `platform/fetch-apps.mjs` requests `https://engineering.hephzibahbehulah.com/releases/750edec9a021cb55ca75a6b37abb71c8cd270661.tar` and receives HTTP 404. The lock expects SHA-256 `e4942516b4d5e89a63c125404f76eb88fbb653bd2a64a49b1f56bb5ceb78ba52` and 6,005,248 bytes. Do not bypass checksum verification or publish a partially assembled Worker.
+- The current private VoltPRo source repository is accessible through the authorized GitHub integration, but an anonymous GitHub Actions source rebuild failed with `fatal: could not read Username`. The attempted source-rebuild PR was closed without merge. Restoring the exact pinned browser archive or providing a least-privilege cross-repository build credential is required before the release pipeline can bootstrap safely.
+- The separate legacy GitHub Pages workflow cannot enable its Pages site with the current integration's permissions. This is distinct from the canonical Cloudflare engineering Worker deployment.
 
 ## Execution order and acceptance gates
 
