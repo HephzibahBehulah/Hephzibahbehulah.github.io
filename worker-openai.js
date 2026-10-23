@@ -685,7 +685,7 @@ const SANDBOX_STDERR_BYTES = 48 * 1024;
 function truncateUtf8(value, maxBytes) {
   const bytes = new TextEncoder().encode(String(value || ""));
   if (bytes.byteLength <= maxBytes) return new TextDecoder().decode(bytes);
-  return new TextDecoder().decode(bytes.subarray(0, maxBytes)) + "\\n[output truncated]";
+  return new TextDecoder().decode(bytes.subarray(0, maxBytes)) + "\n[output truncated]";
 }
 
 async function executeSandboxCommand(request, env, ctx, command) {
