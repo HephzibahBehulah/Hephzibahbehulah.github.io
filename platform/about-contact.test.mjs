@@ -9,5 +9,5 @@ test('about page has shared shell and all four engineering tools',()=>{
 });
 test('contact page has a usable email form, social links, location, and privacy note',()=>{
  const html=read('contact.html');
- for(const value of ['name="name"','name="email"','name="message"','type="email"','mailto:isaacadigunoluwole@gmail.com','Hamburg, Germany','GitHub','LinkedIn','Privacy:'])assert.ok(html.includes(value),value);
+ for(const value of ['name="name"','name="email"','name="message"','type="email"','mailto:isaacadigunoluwole@gmail.com','Hamburg, Germany','GitHub','LinkedIn','Privacy:','href="contact.html" aria-current="page"'])assert.ok(html.includes(value),value);
 });
