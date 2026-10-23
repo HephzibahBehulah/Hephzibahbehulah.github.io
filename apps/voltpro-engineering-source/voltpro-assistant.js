@@ -6,7 +6,7 @@
   const sessionKey = "voltpro-public-assistant-session";
   const PROJECT_CONTEXT = `
 VOLTPRO ACADEMY — PROJECT KNOWLEDGE BASE (public user; no admin privileges)
-Owner/brand: Hephzibah Behulah. This repository/site is HephzibahBehulah/Hephzibah-VoltPRo. Keep its existing HB theme/fonts and do not imply the separate hephzibahbehulah.com portfolio is part of this codebase.
+Owner/brand: Hephzibah Behulah. This engineering workspace is hosted at engineering.hephzibahbehulah.com and maintained in the Hephzibahbehulah.github.io repository. Keep its existing HB theme/fonts and do not imply the separate portfolio homepage is part of this codebase.
 Purpose: browser-based electrical/electronics engineering learning, simulation, automation concepts and safe practical learning. All simulations and calculations are educational; they do not certify real installations or authorize work.
 CANONICAL CONTENT OWNERSHIP:
 1. Dashboard (index.html / script.js): progress overview and links into learning, labs, simulator and engineering workspaces.

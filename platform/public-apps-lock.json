@@ -1,8 +1,19 @@
 {
-  "version": 2,
-  "source": "local repository subfolders",
+  "version": 1,
   "applications": {
-    "engineering": {"repository":"apps/voltpro-engineering-source","commit":"c522343d1d61308fa37b939cca7bbf9c3a8aacf9"},
-    "cyber": {"repository":"apps/pentest-source","commit":"d5201c0847bda78f85918c653fbabb5589d285f3"}
+    "engineering": {
+      "repository": "apps/voltpro-engineering-source",
+      "commit": "c522343d1d61308fa37b939cca7bbf9c3a8aacf9",
+      "url": "https://engineering.hephzibahbehulah.com/releases/c522343d1d61308fa37b939cca7bbf9c3a8aacf9.tar",
+      "sha256": "c26cf8b8786baf27672198017a5399e87a772f518b00021526aeb67d19bed8c7",
+      "bytes": 5989376
+    },
+    "cyber": {
+      "repository": "apps/pentest-source",
+      "commit": "d5201c0847bda78f85918c653fbabb5589d285f3",
+      "url": "https://cyber.hephzibahbehulah.com/releases/d5201c0847bda78f85918c653fbabb5589d285f3.tar",
+      "sha256": "1ea74b656edfeded3380262c96fd3455f138fbfb99ae925a8ddd317713241d39",
+      "bytes": 14393856
+    }
   }
 }

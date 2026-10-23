@@ -4,7 +4,7 @@ VoltPRo Academy is a free, open-source, browser-based electrical and electronics
 
 The project is being developed as a local-first alternative to subscription-based electrical training and control-panel simulation tools. The goal is to let students, technicians, engineers, makers, and educators build circuits, wire components, explore control logic, run simulations, study component behaviour, practise fault diagnosis, and save their work without requiring an account or subscription.
 
-Project repository: https://github.com/HephzibahBehulah/Hephzibah-VoltPRo
+Project source: https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/tree/main/apps/voltpro-engineering-source
 
 Canonical production workspace: https://engineering.hephzibahbehulah.com/
 

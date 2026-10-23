@@ -71,7 +71,7 @@ This is not production-ready or certified electrical engineering software. Trans
 ## Deployment
 
 The GitHub Pages workflow deploys only the static frontend:
-https://hephzibahbehulah.github.io/VoltPro-ElexCAD/
+https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/
 
 GitHub Pages cannot host the SQLite API or keep an AI API key. Host the backend separately in a secured Node environment before enabling persistent multi-user projects or hosted AI.
 

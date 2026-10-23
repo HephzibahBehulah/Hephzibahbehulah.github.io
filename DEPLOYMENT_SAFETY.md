@@ -36,7 +36,7 @@ If a release regresses production:
 
 ## Current deployment limitation
 
-The repository has GitHub Actions static validation, but no repository workflow currently performs `wrangler deploy`. The available GitHub integration can change repository code but does not provide Cloudflare account deployment controls. Therefore a GitHub commit can trigger an existing Cloudflare/GitHub-connected build, but a successful production deployment must not be claimed without deployment evidence.
+`.github/workflows/platform-validation.yml` builds the consolidated applications and runs `npx wrangler deploy`. The source build no longer downloads application archives from production hosts. The latest deployment attempt completed the build and stopped at Wrangler authentication because `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` were empty in the workflow environment. Those Cloudflare credentials must be configured as GitHub Actions secrets before a production deployment can succeed; a source-only change cannot replace Cloudflare account authentication.
 
 ## Regression checklist
 
