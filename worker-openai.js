@@ -7,7 +7,7 @@ import {accountGateway} from "./platform/admin-accounts.mjs";
 export { ContainerProxy };
 export class Sandbox extends CloudflareSandbox {
   enableInternet = false;
-  allowedHosts = ["hephzibahbehulah.com", "admin.hephzibahbehulah.com", "api.github.com"];
+  allowedHosts = [];
 }
 
 const corsHeaders = request => {
@@ -680,6 +680,14 @@ async function executeAdminCommand(request, env, command) {
   return executeSandboxCommand(request,env,null,lower);
 }
 
+const SANDBOX_STDOUT_BYTES = 192 * 1024;
+const SANDBOX_STDERR_BYTES = 48 * 1024;
+function truncateUtf8(value, maxBytes) {
+  const bytes = new TextEncoder().encode(String(value || ""));
+  if (bytes.byteLength <= maxBytes) return new TextDecoder().decode(bytes);
+  return new TextDecoder().decode(bytes.subarray(0, maxBytes)) + "\\n[output truncated]";
+}
+
 async function executeSandboxCommand(request, env, ctx, command) {
   const recon=await executeReconCommand(request,command);
   if(recon) return recon;
@@ -689,16 +697,22 @@ async function executeSandboxCommand(request, env, ctx, command) {
   const started=Date.now();
   try{
     const sandbox=await getAdminSandbox(env,identity);
-    const result=await sandbox.exec(shellCommand,{timeout:30000});
+    const result=await sandbox.exec("ulimit -t 5; "+shellCommand,{timeout:10000});
+    const boundedResult={
+      exitCode:result.exitCode,
+      success:result.success,
+      stdout:truncateUtf8(result.stdout,SANDBOX_STDOUT_BYTES),
+      stderr:truncateUtf8(result.stderr,SANDBOX_STDERR_BYTES)
+    };
     const evidence=evidenceRecord({
       tool:"sandbox.exec",
       target:adminSandboxId(identity),
       actor:identity.email,
-      status:result.success?"observed":"failed",
+      status:boundedResult.success?"observed":"failed",
       startedAt:new Date(started).toISOString(),
-      result:{command,exitCode:result.exitCode,success:result.success,stdout:String(result.stdout||"").slice(0,200000),stderr:String(result.stderr||"").slice(0,200000)}
+      result:{command,...boundedResult}
     });
-    return json(request,{ok:true,command,shellCommand,durationMs:Date.now()-started,result,evidence,executedAt:evidence.observedAt});
+    return json(request,{ok:true,command,shellCommand,durationMs:Date.now()-started,result:boundedResult,evidence,executedAt:evidence.observedAt});
   }catch(error){
     const evidence=evidenceRecord({tool:"sandbox.exec",target:adminSandboxId(identity),actor:identity.email,status:"error",startedAt:new Date(started).toISOString(),result:{command,error:String(error?.message||error)}});
     return json(request,{ok:false,command,error:String(error?.message||error),evidence},502);
