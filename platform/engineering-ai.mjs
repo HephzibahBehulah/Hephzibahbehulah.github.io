@@ -16,14 +16,14 @@ function response(origin,data,status=200){return new Response(JSON.stringify(dat
 async function limited(request,env){const ip=request.headers.get('CF-Connecting-IP')||'anonymous';if(env.API_LIMITER?.limit)return !(await env.API_LIMITER.limit({key:'voltpro:'+ip})).success;const now=Date.now(),old=buckets.get(ip),item=old&&now-old.time<60000?old:{time:now,count:0};item.count++;buckets.set(ip,item);if(buckets.size>512)for(const [key,value]of buckets)if(now-value.time>60000)buckets.delete(key);return item.count>6;}
 
 function deltaOf(value){if(typeof value==='string')return value;if(typeof value?.response==='string')return value.response;if(typeof value?.output_text==='string')return value.output_text;if(typeof value?.choices?.[0]?.delta?.content==='string')return value.choices[0].delta.content;if(typeof value?.choices?.[0]?.text==='string')return value.choices[0].text;return '';}
-function event(controller,value){controller.enqueue(new TextEncoder().encode('data: '+JSON.stringify(value)+'\\n\\n'));}
+function event(controller,value){controller.enqueue(new TextEncoder().encode('data: '+JSON.stringify(value)+'\n\n'));}
 function streamingResponse(origin,env,modelMessages){
  const stream=new ReadableStream({start(controller){(async()=>{let output='';try{
   const upstream=await env.AI.run(MODEL,{messages:modelMessages,max_tokens:7000,temperature:.2,stream:true});
   const reader=upstream?.getReader?.();if(!reader)throw Error('Streaming is not available');
   const decoder=new TextDecoder();let buffer='';
   const accept=(raw)=>{const line=raw.trim();if(!line.startsWith('data:'))return;const payload=line.slice(5).trim();if(!payload||payload==='[DONE]')return;let value;try{value=JSON.parse(payload);}catch{return;}const delta=deltaOf(value);if(delta){output+=delta;event(controller,{type:'delta',text:delta});}};
-  while(true){const item=await reader.read();if(item.done)break;const chunk=typeof item.value==='string'?item.value:decoder.decode(item.value,{stream:true});buffer+=chunk;const lines=buffer.split(/\\r?\\n/);buffer=lines.pop()||'';for(const line of lines)accept(line);}
+  while(true){const item=await reader.read();if(item.done)break;const chunk=typeof item.value==='string'?item.value:decoder.decode(item.value,{stream:true});buffer+=chunk;const lines=buffer.split(/\r?\n/);buffer=lines.pop()||'';for(const line of lines)accept(line);}
   if(buffer)accept(buffer);if(!output.trim())throw Error('Empty stream');event(controller,{type:'done'});
  }catch{
   try{event(controller,{type:'reset'});const result=await env.AI.run(MODEL,{messages:modelMessages,max_tokens:7000,temperature:.2});const answer=textOf(result).trim();if(!answer)throw Error('Empty fallback');event(controller,{type:'delta',text:answer});event(controller,{type:'done'});}
