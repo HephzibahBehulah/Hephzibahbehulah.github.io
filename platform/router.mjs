@@ -4,11 +4,13 @@ const ROOT='hephzibahbehulah.com';
 const ADMIN='admin.'+ROOT;
 const PUBLIC=new Map([['engineering.'+ROOT,'engineering'],['cyber.'+ROOT,'cyber']]);
 const PRIVATE=new Set([ADMIN]);
+const WORKERS_DEV='hephzibahbehulah-github-io.hephzibah-behulah.workers.dev';
 const MAIN=new Set([ROOT,'www.'+ROOT]);
 const reply=(status,message)=>new Response(message,{status,headers:{'content-type':'text/plain; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
 
 export function resolveRoute(url){
   const host=url.hostname.toLowerCase(),path=url.pathname;
+  if(host===WORKERS_DEV)return {kind:'redirect',privateHost:false,location:'https://'+ROOT+path};
   if(!PUBLIC.has(host)&&!PRIVATE.has(host)&&!MAIN.has(host))return {kind:'reject',status:404};
   let decoded;try{decoded=decodeURIComponent(path);}catch{return {kind:'reject',status:400};}
   if(decoded.includes('\\')||decoded.split('/').some(x=>x==='..'||x==='.')||decoded.includes('\0')||decoded.startsWith('/_apps/'))return {kind:'reject',status:404};
