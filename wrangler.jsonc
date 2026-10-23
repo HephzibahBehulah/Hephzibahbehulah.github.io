@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hephzibahbehulah-github-io",
+  "account_id": "4ba25f0c9e0b7bf55d54d129acd63251",
   "main": "worker-platform.mjs",
   "compatibility_date": "2026-09-25",
   "assets": {
@@ -44,6 +45,10 @@
       "custom_domain": true
     },
     {
+      "pattern": "www.hephzibahbehulah.com",
+      "custom_domain": true
+    },
+    {
       "pattern": "admin.hephzibahbehulah.com",
       "custom_domain": true
     },
@@ -61,12 +66,9 @@
       "OPENAI_API_KEY",
       "ADIGUN_ADMIN_EMAIL",
       "ADIGUN_ACCESS_TEAM_DOMAIN",
-      "ADIGUN_ACCESS_AUD"
-    ]
-  },
-  "triggers": {
-    "crons": [
-      "0 */6 * * *"
+      "ADIGUN_ACCESS_AUD",
+      "GITHUB_TOKEN",
+      "HB_PUBLIC_SESSION_KEY"
     ]
   },
   "compatibility_flags": [
@@ -100,6 +102,6 @@
     "SANDBOX_LOG_LEVEL": "info",
     "SANDBOX_LOG_FORMAT": "json"
   },
-  "workers_dev": false,
+  "workers_dev": true,
   "preview_urls": false
 }
