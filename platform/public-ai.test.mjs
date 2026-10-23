@@ -18,7 +18,7 @@ test('public SI falls back to non-streaming Workers AI when streaming setup fail
 });
 
 test('public SI rejects foreign origins and enforces the API limiter',async()=>{
- const foreign=await si.fetch(request({messages:[{role:'user',content:'hi'}],headers:{origin:'https://evil.example'}}),env(async()=>{throw Error('must not run');}));
+ const foreign=await si.fetch(request({messages:[{role:'user',content:'hi'}]},{headers:{origin:'https://evil.example'}}),env(async()=>{throw Error('must not run');}));
  assert.equal(foreign.status,403);
  const limited=await si.fetch(request({messages:[{role:'user',content:'hi'}]}),env(async()=>{throw Error('must not run');},async()=>({success:false})));
  assert.equal(limited.status,429);
