@@ -1,19 +1,8 @@
 {
-  "version": 1,
+  "version": 2,
+  "source": "local repository subfolders",
   "applications": {
-    "engineering": {
-      "repository": "HephzibahBehulah/Hephzibah-VoltPRo",
-      "commit": "750edec9a021cb55ca75a6b37abb71c8cd270661",
-      "url": "https://engineering.hephzibahbehulah.com/releases/750edec9a021cb55ca75a6b37abb71c8cd270661.tar",
-      "sha256": "e4942516b4d5e89a63c125404f76eb88fbb653bd2a64a49b1f56bb5ceb78ba52",
-      "bytes": 6005248
-    },
-    "cyber": {
-      "repository": "HephzibahBehulah/Hephzibah-PenTestingApp",
-      "commit": "d5201c0847bda78f85918c653fbabb5589d285f3",
-      "url": "https://cyber.hephzibahbehulah.com/releases/d5201c0847bda78f85918c653fbabb5589d285f3.tar",
-      "sha256": "2da6400771705624a5a29855231dc6d483916787dd921769515067f647398021",
-      "bytes": 14392832
-    }
+    "engineering": {"repository":"apps/voltpro-engineering-source","commit":"c522343d1d61308fa37b939cca7bbf9c3a8aacf9"},
+    "cyber": {"repository":"apps/pentest-source","commit":"d5201c0847bda78f85918c653fbabb5589d285f3"}
   }
 }

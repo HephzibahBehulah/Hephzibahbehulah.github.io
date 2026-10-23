@@ -1,0 +1,3 @@
+(()=>{'use strict';const M=window.VoltProDeviceModels;
+M.register({id:'thermal-overload',version:'1.0.0',domains:['three-phase','ac','control'],validated:true,replace:true,evaluate(d,c={}){const s=d.state||{},i=Math.abs(Number(c.current??s.current??0)),rated=Number(d.parameters?.ratedCurrent??d.props?.ratedCurrent??10),heat=Number(s.thermalLevel??0),tripLevel=Number(d.parameters?.tripLevel??1),next=Math.max(0,heat+(i/rated-1)*0.05),trip=s.tripped===true||next>=tripLevel;return {ok:true,state:trip?'tripped':'ready',closed:!trip,thermalLevel:next,ratedCurrent:rated,tripReason:trip?'thermal-overload':null}}});
+})();

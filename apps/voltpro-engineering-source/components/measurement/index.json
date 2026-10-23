@@ -1,0 +1,2312 @@
+{
+  "format": "voltpro-component-family",
+  "version": 1,
+  "category": "measurement",
+  "count": 32,
+  "components": [
+    {
+      "id": "measurement-meter-voltmeter-dc",
+      "name": "Meter Voltmeter-DC",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Voltmeter-DC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-voltmeter-ac",
+      "name": "Meter Voltmeter-AC",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Voltmeter-AC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-ammeter-dc",
+      "name": "Meter Ammeter-DC",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Ammeter-DC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-ammeter-ac",
+      "name": "Meter Ammeter-AC",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Ammeter-AC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-wattmeter",
+      "name": "Meter Wattmeter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Wattmeter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-energy-meter",
+      "name": "Meter Energy-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Energy-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-frequency-meter",
+      "name": "Meter Frequency-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Frequency-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-powerfactor-meter",
+      "name": "Meter PowerFactor-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for PowerFactor-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-multimeter",
+      "name": "Meter Multimeter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Multimeter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-clamp-meter",
+      "name": "Meter Clamp-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Clamp-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-insulation-tester",
+      "name": "Meter Insulation-Tester",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Insulation-Tester.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-continuity-tester",
+      "name": "Meter Continuity-Tester",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Continuity-Tester.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-oscilloscope-1ch",
+      "name": "Meter Oscilloscope-1ch",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Oscilloscope-1ch.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-oscilloscope-2ch",
+      "name": "Meter Oscilloscope-2ch",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Oscilloscope-2ch.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-oscilloscope-4ch",
+      "name": "Meter Oscilloscope-4ch",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Oscilloscope-4ch.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-signal-generator",
+      "name": "Meter Signal-Generator",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Signal-Generator.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-logic-analyzer",
+      "name": "Meter Logic-Analyzer",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Logic-Analyzer.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-phase-meter",
+      "name": "Meter Phase-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Phase-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-rpm-meter",
+      "name": "Meter RPM-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for RPM-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-temperature-meter",
+      "name": "Meter Temperature-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Temperature-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-pressure-meter",
+      "name": "Meter Pressure-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Pressure-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-flow-meter",
+      "name": "Meter Flow-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Flow-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-level-meter",
+      "name": "Meter Level-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Level-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-lcr-meter",
+      "name": "Meter LCR-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for LCR-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-esr-meter",
+      "name": "Meter ESR-Meter",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for ESR-Meter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-diode-tester",
+      "name": "Meter Diode-Tester",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Diode-Tester.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-earth-tester",
+      "name": "Meter Earth-Tester",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Earth-Tester.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-loop-impedance",
+      "name": "Meter Loop-Impedance",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Loop-Impedance.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-rcd-tester",
+      "name": "Meter RCD-Tester",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for RCD-Tester.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-cable-tester",
+      "name": "Meter Cable-Tester",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Cable-Tester.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-network-tester",
+      "name": "Meter Network-Tester",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Network-Tester.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "measurement-meter-thermal-camera",
+      "name": "Meter Thermal-Camera",
+      "category": "measurement",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "METE",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Meter model for Thermal-Camera.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('multimeter exposes engineering unit',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/instruments/instruments.js','utf8'),ctx);assert.equal(ctx.window.VoltProInstruments.multimeter('voltage',230).unit,'V')});
+test('three-phase meter exposes all line-line channels',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/instruments/instruments.js','utf8'),ctx);assert.equal(ctx.window.VoltProInstruments.threePhaseMeter({L1L2:400}).L1L2,400)})

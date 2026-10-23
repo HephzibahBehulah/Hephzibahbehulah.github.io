@@ -1,12 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {extractArchive,digest} from './app-archives.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const lock=JSON.parse(fs.readFileSync(path.join(root,'platform/public-apps-lock.json'),'utf8'));
-for(const [app,release]of Object.entries(lock.applications)){
- const url=new URL(release.url);if(url.protocol!=='https:'||url.hostname!==app+'.hephzibahbehulah.com'||!url.pathname.endsWith('/'+release.commit+'.tar'))throw Error('Unexpected application release URL');
- const response=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(60000)});if(!response.ok)throw Error('Release download failed: '+response.status);
- const data=Buffer.from(await response.arrayBuffer());if(data.length!==release.bytes||digest(data)!==release.sha256)throw Error('Release checksum mismatch for '+app);
- const count=extractArchive(data,path.join(root,'platform-source',app));console.log(`Verified and extracted ${app}: ${count} browser assets at ${release.commit}`);
+const output=path.join(root,'platform-source');
+fs.rmSync(output,{recursive:true,force:true});
+for(const [source,destination] of [['apps/voltpro-engineering-source','engineering'],['apps/pentest-source','cyber']]){
+  const from=path.join(root,source),to=path.join(output,destination);
+  if(!fs.existsSync(from))throw Error('Consolidated application source is missing: '+source);
+  fs.cpSync(from,to,{recursive:true,filter:file=>!/(^|[\\/])(?:\.git|node_modules|build-app|dist-app)(?:[\\/]|$)/.test(file)});
 }
+for(const required of ['engineering/simulator.html','engineering/breadboard.html','engineering/engine/voltpro-engine.js','engineering/platform/plc-project-bank.js','engineering/apps/voltpro-plc/package-lock.json','cyber/core/build_app.py','cyber/app/index.html','cyber/master_index.json']){
+  if(!fs.existsSync(path.join(output,required)))throw Error('Required consolidated source missing: '+required);
+}
+console.log('Prepared engineering and cybersecurity source from repository-owned apps/ folders.');

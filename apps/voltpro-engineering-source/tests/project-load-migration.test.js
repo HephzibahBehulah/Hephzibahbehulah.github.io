@@ -1,0 +1,11 @@
+const test=require("node:test");
+const assert=require("node:assert/strict");
+const fs=require("node:fs");
+const path=require("node:path");
+const vm=require("node:vm");
+const root=path.join(__dirname,"..");
+function api(){const window={defs:{resistor:{pins:2},contactor:{pins:12}},VoltProRegistry:{definition:()=>null}};vm.runInNewContext(fs.readFileSync(path.join(root,"platform/project-format.js"),"utf8"),{window,structuredClone,console});return window.VoltProProject}
+test("legacy v1 projects preserve canvas positions and numeric wire endpoints",()=>{const p=api().toLegacy({format:"voltpro",version:1,mode:"schematic",components:[{id:"V1",type:"battery",x:120,y:200,props:{voltage:12},pins:[]},{id:"R1",type:"resistor",x:300,y:200,props:{resistance:100},pins:[]}],wires:[{a:"V1:0",b:"R1:0"}]});assert.equal(p.components[0].x,120);assert.equal(p.components[0].y,200);assert.equal(p.wires[0].a,"V1:0");assert.equal(p.wires[0].b,"R1:0")});
+test("v5 named terminal endpoints migrate to legacy numeric pin indices",()=>{const p=api().toLegacy({format:"voltpro",version:5,workspace:"schematic",devices:[{id:"QF1",type:"breaker",position:{x:50,y:60},terminals:[{id:"L1",label:"L1"},{id:"T1",label:"T1"}],parameters:{rating:16}},{id:"R1",type:"resistor",position:{x:200,y:60},terminals:[{id:"A",label:"A"},{id:"B",label:"B"}],parameters:{resistance:100}}],wires:[{id:"W1",from:"QF1:T1",to:"R1:A"}]});assert.equal(p.components[0].x,50);assert.equal(p.components[0].props.rating,16);assert.equal(p.wires[0].a,"QF1:1");assert.equal(p.wires[0].b,"R1:0")});
+test("VoltPRo export envelopes unwrap and retain panel data",()=>{const project={format:"voltpro",version:5,devices:[{id:"R1",type:"resistor",position:{x:1,y:2},terminals:[{id:"1"},{id:"2"}]}],wires:[],panel:{rails:[{id:"R1",length:18}],items:[]}};const p=api().toLegacy({format:"voltpro-export",version:1,project});assert.equal(p.components.length,1);assert.equal(p.panel.rails[0].id,"R1")});
+test("migration rejects a wire whose named terminal does not exist",()=>{assert.throws(()=>api().toLegacy({format:"voltpro",version:5,devices:[{id:"R1",type:"resistor",terminals:[{id:"A"},{id:"B"}]}],wires:[{from:"R1:missing",to:"R1:A"}]}),/Unknown terminal/)});

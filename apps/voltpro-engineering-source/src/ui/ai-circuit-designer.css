@@ -1,0 +1,35 @@
+.terminal-label{font:700 8px/1 ui-monospace,SFMono-Regular,Consolas,monospace;fill:var(--text,#dce8f2);pointer-events:none;user-select:none}
+#vpCircuitDesigner{position:fixed;right:18px;bottom:20px;z-index:1000;font-family:inherit;color:var(--text,#e8f0f7)}
+#vpCircuitDesigner .vp-cd-launch{border:1px solid #4a9ec5;background:#0e2636;color:#e8f7ff;border-radius:999px;padding:12px 17px;font-family:inherit;font-size:12px;font-weight:700;line-height:1.2;letter-spacing:.02em;box-shadow:0 8px 30px #0005;cursor:pointer}
+#vpCircuitDesigner .vp-cd-launch:hover,#vpCircuitDesigner button:focus-visible{outline:2px solid #80d8ff;outline-offset:2px}
+#vpCircuitDesigner .vp-cd-panel{display:none;position:absolute;right:0;bottom:54px;width:min(420px,calc(100vw - 28px));max-height:min(78vh,760px);overflow:auto;padding:16px;border:1px solid #36546a;border-radius:14px;background:#0d151f;color:#e5edf5;box-shadow:0 20px 70px #0009}
+#vpCircuitDesigner .vp-cd-panel.open{display:block}
+#vpCircuitDesigner .vp-cd-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+#vpCircuitDesigner .vp-cd-head strong{display:block;font-size:12px;letter-spacing:.09em}
+#vpCircuitDesigner .vp-cd-head small{display:block;margin-top:5px;color:#9fb2c3;font-size:11px}
+#vpCircuitDesigner .vp-cd-head button,#vpCircuitDesigner .vp-cd-actions button,#vpCircuitDesigner .vp-cd-insert{border:1px solid #395367;border-radius:8px;background:#142432;color:#e5edf5;padding:8px 11px;cursor:pointer}
+#vpCircuitDesigner .vp-cd-label{display:block;margin-bottom:7px;font-size:11px;font-weight:700}
+#vpCircuitDesigner textarea{display:block;width:100%;box-sizing:border-box;resize:vertical;min-height:80px;border:1px solid #385269;border-radius:9px;background:#080e15;color:#eef7ff;padding:10px;font-family:inherit;font-size:12px;line-height:1.5}
+#vpCircuitDesigner .vp-cd-actions{display:flex;gap:8px;margin:10px 0}
+#vpCircuitDesigner .vp-cd-actions .vp-cd-primary{background:#164e6a;border-color:#267da5;font-weight:700}
+#vpCircuitDesigner .vp-cd-status{border:1px solid #334b5f;border-radius:8px;background:#111e2a;color:#b8cbd9;padding:10px;font-size:11px;line-height:1.5}
+#vpCircuitDesigner .vp-cd-status[data-state=valid]{border-color:#28785d;color:#a8f1d0}
+#vpCircuitDesigner .vp-cd-status[data-state=invalid]{border-color:#96534d;color:#ffb9b2}
+#vpCircuitDesigner .vp-cd-preview{margin-top:12px;border-top:1px solid #293c4c;padding-top:10px;font-size:11px;line-height:1.5}
+#vpCircuitDesigner .vp-cd-preview h3{font-size:14px;margin:0 0 6px}
+#vpCircuitDesigner .vp-cd-preview h4{font-size:10px;text-transform:uppercase;letter-spacing:.08em;margin:12px 0 5px;color:#91cce8}
+#vpCircuitDesigner .vp-cd-preview p{color:#b4c3d0;margin:5px 0}
+#vpCircuitDesigner .vp-cd-preview ul,#vpCircuitDesigner .vp-cd-warnings ul{margin:5px 0;padding-left:19px;overflow-wrap:anywhere}
+#vpCircuitDesigner .vp-cd-preview li,#vpCircuitDesigner .vp-cd-warnings li{margin:3px 0}
+#vpCircuitDesigner .vp-cd-warning{border-left:2px solid #d1a65c;padding:5px 8px;background:#251f16;color:#f1d7a8}
+#vpCircuitDesigner .vp-cd-insert{width:100%;margin-top:10px;background:#155c48;border-color:#318a70;font-weight:700}
+#vpCircuitDesigner .vp-cd-insert:disabled{opacity:.45;cursor:not-allowed}
+#vpCircuitDesigner footer{margin-top:12px;color:#8498a9;font-size:9px;line-height:1.5}
+@media(max-width:600px){#vpCircuitDesigner{right:10px;bottom:12px}#vpCircuitDesigner .vp-cd-panel{right:0;bottom:52px;max-height:75vh}}
+
+.symbol-style-control{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--muted,#9eafbf);white-space:nowrap}.symbol-style-control select{max-width:145px;border:1px solid var(--border,#33485a);border-radius:6px;background:var(--panel,#111c27);color:var(--text,#e5edf5);padding:6px 7px;font:inherit}
+
+#vpCircuitDesigner .vp-cd-component{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid #20313f}
+#vpCircuitDesigner .vp-cd-component-name{min-width:0;overflow-wrap:anywhere}
+#vpCircuitDesigner .vp-cd-device-face{flex:0 0 48px;width:48px;height:60px;overflow:hidden;border:1px solid #344a5b;border-radius:5px;background:#e8edf2}
+#vpCircuitDesigner .vp-cd-device-face svg{display:block;width:100%;height:100%}

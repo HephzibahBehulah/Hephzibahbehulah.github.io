@@ -1,0 +1,2216 @@
+{
+  "format": "voltpro-component-family",
+  "version": 1,
+  "category": "industrial",
+  "count": 32,
+  "components": [
+    {
+      "id": "industrial-industrial-vfd",
+      "name": "Industrial VFD",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for VFD.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-soft-starter",
+      "name": "Industrial Soft-Starter",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Soft-Starter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-motor-protection",
+      "name": "Industrial Motor-Protection",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Motor-Protection.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-thermal-relay",
+      "name": "Industrial Thermal-Relay",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Thermal-Relay.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-overload-relay",
+      "name": "Industrial Overload-Relay",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Overload-Relay.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-phase-monitor",
+      "name": "Industrial Phase-Monitor",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Phase-Monitor.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-safety-relay",
+      "name": "Industrial Safety-Relay",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Safety-Relay.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-safety-plc",
+      "name": "Industrial Safety-PLC",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Safety-PLC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-machine-light",
+      "name": "Industrial Machine-Light",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Machine-Light.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-stack-light",
+      "name": "Industrial Stack-Light",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Stack-Light.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-hmi-4",
+      "name": "Industrial HMI-4",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for HMI-4.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-hmi-7",
+      "name": "Industrial HMI-7",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for HMI-7.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-hmi-10",
+      "name": "Industrial HMI-10",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for HMI-10.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-industrial-pc",
+      "name": "Industrial Industrial-PC",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Industrial-PC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-panel-pc",
+      "name": "Industrial Panel-PC",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Panel-PC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-remote-io",
+      "name": "Industrial Remote-IO",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Remote-IO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-gateway",
+      "name": "Industrial Gateway",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Gateway.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-modbus-gateway",
+      "name": "Industrial Modbus-Gateway",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Modbus-Gateway.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-ethernet-switch",
+      "name": "Industrial Ethernet-Switch",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Ethernet-Switch.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-managed-switch",
+      "name": "Industrial Managed-Switch",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Managed-Switch.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-unmanaged-switch",
+      "name": "Industrial Unmanaged-Switch",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Unmanaged-Switch.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-barcode-reader",
+      "name": "Industrial Barcode-Reader",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Barcode-Reader.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-rfid-reader",
+      "name": "Industrial RFID-Reader",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for RFID-Reader.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-vision-camera",
+      "name": "Industrial Vision-Camera",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Vision-Camera.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-light-curtain",
+      "name": "Industrial Light-Curtain",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Light-Curtain.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-safety-mat",
+      "name": "Industrial Safety-Mat",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Safety-Mat.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-door-lock",
+      "name": "Industrial Door-Lock",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Door-Lock.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-solenoid-lock",
+      "name": "Industrial Solenoid-Lock",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Solenoid-Lock.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-pneumatic-valve",
+      "name": "Industrial Pneumatic-Valve",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Pneumatic-Valve.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-pressure-regulator",
+      "name": "Industrial Pressure-Regulator",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Pressure-Regulator.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-air-filter",
+      "name": "Industrial Air-Filter",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Air-Filter.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "industrial-industrial-flow-control",
+      "name": "Industrial Flow-Control",
+      "category": "industrial",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 0,
+          "max": 1000
+        },
+        "value": {
+          "type": "number",
+          "default": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "INDU",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "automation",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "actuator",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Industrial model for Flow-Control.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    }
+  ]
+}

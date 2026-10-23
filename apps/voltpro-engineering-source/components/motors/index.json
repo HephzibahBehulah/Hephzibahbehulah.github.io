@@ -1,0 +1,2952 @@
+{
+  "format": "voltpro-component-family",
+  "version": 1,
+  "category": "motors",
+  "count": 32,
+  "components": [
+    {
+      "id": "motors-motor-dc-12v",
+      "name": "Motor DC-12V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for DC-12V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-dc-24v",
+      "name": "Motor DC-24V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for DC-24V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-dc-48v",
+      "name": "Motor DC-48V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for DC-48V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-dc-110v",
+      "name": "Motor DC-110V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for DC-110V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-dc-220v",
+      "name": "Motor DC-220V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for DC-220V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-ac-1p-120v",
+      "name": "Motor AC-1P-120V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for AC-1P-120V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-ac-1p-230v",
+      "name": "Motor AC-1P-230V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for AC-1P-230V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-ac-3p-230v",
+      "name": "Motor AC-3P-230V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for AC-3P-230V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-ac-3p-400v",
+      "name": "Motor AC-3P-400V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for AC-3P-400V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-ac-3p-415v",
+      "name": "Motor AC-3P-415V",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for AC-3P-415V.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-0-12kw",
+      "name": "Motor Induction-0.12kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-0.12kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-0-25kw",
+      "name": "Motor Induction-0.25kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-0.25kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-0-37kw",
+      "name": "Motor Induction-0.37kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-0.37kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-0-55kw",
+      "name": "Motor Induction-0.55kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-0.55kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-0-75kw",
+      "name": "Motor Induction-0.75kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-0.75kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-1-1kw",
+      "name": "Motor Induction-1.1kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-1.1kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-1-5kw",
+      "name": "Motor Induction-1.5kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-1.5kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-2-2kw",
+      "name": "Motor Induction-2.2kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-2.2kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-3kw",
+      "name": "Motor Induction-3kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-3kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-4kw",
+      "name": "Motor Induction-4kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-4kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-5-5kw",
+      "name": "Motor Induction-5.5kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-5.5kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-7-5kw",
+      "name": "Motor Induction-7.5kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-7.5kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-11kw",
+      "name": "Motor Induction-11kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-11kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-15kw",
+      "name": "Motor Induction-15kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-15kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-18-5kw",
+      "name": "Motor Induction-18.5kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-18.5kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-induction-22kw",
+      "name": "Motor Induction-22kW",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Induction-22kW.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-fan",
+      "name": "Motor Fan",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Fan.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-pump",
+      "name": "Motor Pump",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Pump.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-compressor",
+      "name": "Motor Compressor",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Compressor.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-gearmotor",
+      "name": "Motor Gearmotor",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Gearmotor.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-servo",
+      "name": "Motor Servo",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Servo.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "motors-motor-stepper",
+      "name": "Motor Stepper",
+      "category": "motors",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 400,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 32,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "ratedPower": {
+          "type": "number",
+          "unit": "kW",
+          "default": 1.5,
+          "min": 0.01,
+          "max": 500
+        },
+        "efficiency": {
+          "type": "number",
+          "unit": "%",
+          "default": 88,
+          "min": 1,
+          "max": 100
+        },
+        "powerFactor": {
+          "type": "number",
+          "default": 0.82,
+          "min": 0.1,
+          "max": 1
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "MOTO",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 4,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "motor",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "rotating-load",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Motor model for Stepper.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    }
+  ]
+}

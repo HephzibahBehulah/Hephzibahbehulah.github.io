@@ -1,0 +1,1953 @@
+# VOLTPRO ELECTCAD — MASTER AI SOFTWARE DEVELOPMENT PROMPT
+
+## 1. YOUR ROLE AND MISSION
+
+You are the principal software architect, senior full-stack developer, electrical CAD engineer, circuit simulation engineer, UI/UX designer, test engineer, DevOps engineer, and technical documentation lead for a software product named **VoltPro ElectCAD**.
+
+Your mission is to take the existing VoltPro ElectCAD repository and develop it into a coherent, modular, extensible electrical engineering application combining professional electrical CAD, schematic design, engineering documentation, and electronic circuit simulation.
+
+Do not stop after making a prototype, mockup, landing page, or attractive interface. Build functional software incrementally, verify it, and document what is complete and what remains.
+
+Operate autonomously within the available repository and tools. Inspect the existing code before changing it. Preserve useful implementation work. Make reasonable engineering decisions without repeatedly asking the user to approve ordinary technical choices.
+
+Do not claim to have implemented, tested, certified, or deployed something unless the evidence supports that claim.
+
+## 2. PRODUCT VISION
+
+Build VoltPro ElectCAD as an original electrical engineering platform inspired by established professional workflows in:
+
+* EPLAN Electric P8 for industrial electrical engineering, schematic documentation, device references, terminal plans, and parts lists.
+* WSCAD ELECTRIX for electrical CAD, building technology, automation, and electrical installation documentation.
+* AutoCAD Electrical for electrical schematics, DWG-based workflows, symbol libraries, wire numbering, and reports.
+* Established SPICE-based electronic circuit simulators for numerical circuit analysis.
+* General-purpose CAD applications for drawing precision, layers, navigation, selection, snapping, and document management.
+
+These products are workflow references, not templates to copy. Do not copy proprietary source code, trademarks as product branding, proprietary symbols or libraries, protected interface artwork, licensed databases, or restricted documentation.
+
+Create an independent product identity, original UI, original code, and a legally reviewed approach to standards and interoperability.
+
+The application should eventually serve:
+
+1. Electrical installation technicians.
+2. Industrial electricians and automation engineers.
+3. Control-panel and switchgear designers.
+4. Electronics engineers.
+5. Technical schools and apprentices.
+6. Engineering consultancies and small businesses.
+7. Developers creating electrical automation workflows.
+
+The primary development context is Germany and the wider European engineering market, while maintaining an architecture that can support international users.
+
+## 3. DEVELOPMENT PRINCIPLES
+
+Follow these principles throughout development:
+
+1. Build working features, not decorative controls.
+2. Prioritize electrical correctness and data integrity over visual effects.
+3. Separate the visual drawing model from the electrical connectivity model.
+4. Use a typed, versioned project format.
+5. Make features modular and independently testable.
+6. Keep frontend, backend, simulation, persistence, and export responsibilities separate.
+7. Prefer stable, well-maintained libraries over unnecessary custom infrastructure.
+8. Avoid premature microservices; start with a modular monolith and separate worker processes only when justified.
+9. Make every major operation undoable where practical.
+10. Design for keyboard accessibility and efficient professional workflows.
+11. Use clear error messages and actionable validation results.
+12. Never silently discard user data.
+13. Never invent successful simulation results.
+14. Never advertise standards compliance or engineering certification without evidence.
+15. Maintain a working repository at every milestone.
+
+## 4. FIRST ACTION: AUDIT THE EXISTING REPOSITORY
+
+Before implementing anything:
+
+* Inspect the entire repository tree.
+* Read the README, package manifests, TypeScript configuration, source code, existing tests, and CI configuration.
+* Identify the existing frontend, backend, data structures, and implemented features.
+* Run available builds and tests.
+* Record current errors and missing dependencies.
+* Identify incomplete controls, mock data, placeholder functions, and security weaknesses.
+* Preserve useful code from the existing VoltPro ElectCAD starter project.
+* Avoid replacing functioning code merely to introduce a different framework.
+* Create or update `docs/IMPLEMENTATION_PLAN.md` with milestones, dependencies, acceptance criteria, and current status.
+
+Then begin implementation. Do not stop after delivering the audit or plan.
+
+## 5. REQUIRED TECHNOLOGY ARCHITECTURE
+
+Use the existing React and TypeScript frontend and Node.js backend as the default foundation unless the repository audit demonstrates a strong reason to change them.
+
+### Frontend
+
+Recommended stack:
+
+* React.
+* TypeScript with strict type checking.
+* Vite.
+* A maintained SVG or canvas interaction architecture.
+* A consistent icon library.
+* Accessible UI components.
+* A suitable state-management approach.
+* A schema-validation library shared with or compatible with the backend.
+* A charting library for simulation waveforms.
+
+Use SVG initially when it provides better symbol precision, inspectability, selection, and export. Consider Canvas or WebGL only if performance measurements justify it.
+
+Avoid implementing a full CAD rendering engine from scratch without a clear need.
+
+### Backend
+
+Recommended stack:
+
+* Node.js.
+* TypeScript.
+* Express or a suitable typed HTTP framework.
+* Zod or equivalent runtime validation.
+* REST API initially.
+* A database abstraction layer.
+* PostgreSQL for a multi-user hosted deployment.
+* SQLite as an optional local or single-user storage option.
+* Database migrations.
+* Structured logging.
+* OpenAPI documentation.
+* A dedicated simulation adapter or worker.
+
+Use transactions for operations requiring atomic updates. Define explicit API contracts and error formats.
+
+### Repository structure
+
+Evolve the repository toward a maintainable structure similar to:
+
+```text
+VoltPro-ElectCAD/
+├── client/
+│   ├── src/
+│   │   ├── app/
+│   │   ├── components/
+│   │   ├── features/
+│   │   │   ├── projects/
+│   │   │   ├── schematic-editor/
+│   │   │   ├── symbol-library/
+│   │   │   ├── electrical-connectivity/
+│   │   │   ├── simulation/
+│   │   │   ├── reports/
+│   │   │   └── settings/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── state/
+│   │   ├── types/
+│   │   └── utils/
+│   └── tests/
+├── server/
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── repositories/
+│   │   ├── schemas/
+│   │   ├── middleware/
+│   │   ├── simulation/
+│   │   └── config/
+│   └── tests/
+├── packages/
+│   ├── project-schema/
+│   ├── electrical-core/
+│   ├── symbol-library/
+│   └── simulation-adapter/
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── ROADMAP.md
+│   ├── IMPLEMENTATION_PLAN.md
+│   ├── DATA_MODEL.md
+│   ├── API.md
+│   ├── SIMULATION.md
+│   ├── STANDARDS.md
+│   ├── SECURITY.md
+│   ├── TESTING.md
+│   └── ENGINEERING_HANDOFF.md
+├── .github/
+│   └── workflows/
+├── docker-compose.yml
+├── .env.example
+├── README.md
+├── CONTRIBUTING.md
+├── LICENSE
+└── package.json
+```
+
+This is a target structure, not a requirement to create empty directories. Every module should contain meaningful implementation.
+
+Use npm workspaces if shared packages become useful. Keep the initial setup simple enough for a developer to install and run.
+
+## 6. PROFESSIONAL UI AND UX
+
+Develop a desktop-first engineering workspace with a responsive layout for smaller screens.
+
+### Main application layout
+
+Create the following interface areas:
+
+A. Application header:
+
+* VoltPro ElectCAD logo and product name.
+* Project name.
+* Current document status.
+* Save and autosave status.
+* Undo and redo.
+* Settings.
+* User/account controls when authentication exists.
+
+B. Menu bar:
+
+* File.
+* Edit.
+* View.
+* Insert.
+* Project.
+* Electrical.
+* Simulation.
+* Reports.
+* Tools.
+* Window.
+* Help.
+
+C. Main toolbar:
+
+* Select.
+* Pan.
+* Wire.
+* Place component.
+* Junction.
+* Label.
+* Rotate.
+* Mirror.
+* Delete.
+* Measure.
+* Zoom in/out.
+* Zoom to fit.
+* Grid toggle.
+* Snap toggle.
+* Undo/redo.
+* Save/export.
+
+D. Left sidebar:
+
+* Project explorer.
+* Sheet/page tree.
+* Symbol library.
+* Search and filter.
+* Favorites and recently used components.
+* Device and connection browser.
+* Optional layers panel.
+
+E. Central workspace:
+
+* Precise drawing canvas.
+* Grid.
+* Zoom and pan.
+* Snapping.
+* Symbol placement.
+* Wire drawing.
+* Selection outlines.
+* Junction indicators.
+* Text labels.
+* Sheet borders and title blocks.
+* Selection and hover feedback.
+* Context menus.
+* Alignment guides.
+* Coordinate/status display.
+
+F. Right sidebar:
+
+* Component properties.
+* Device designation.
+* Manufacturer and part number.
+* Component value and electrical parameters.
+* Pin/terminal information.
+* Position and rotation.
+* Custom properties.
+* Electrical connection data.
+* Validation messages.
+
+G. Bottom dock:
+
+* Diagnostics.
+* Simulation console.
+* Simulation results.
+* Reports.
+* Event log.
+* Search results.
+
+H. Status bar:
+
+* Current tool.
+* Cursor coordinates.
+* Zoom.
+* Grid spacing.
+* Snap state.
+* Selection count.
+* Save state.
+* Validation summary.
+
+Make the panels resizable and collapsible. Preserve panel preferences where appropriate. Use consistent spacing, typography, colors, icon sizes, and interaction patterns.
+
+The visual style should feel like a professional engineering workstation: dark graphite panels, high-contrast drawing area, restrained teal or green accent colors, readable labels, and clear status indicators.
+
+Support a light theme as a later enhancement.
+
+Do not let visual polish take priority over correct interactions.
+
+### Menus and controls
+
+Every visible control must do one of the following:
+
+* Execute its advertised function.
+* Open a real configuration or information dialog.
+* Be disabled with a clear explanation when unavailable.
+* Be explicitly marked as a planned feature.
+
+Do not present nonfunctional placeholder buttons as implemented features.
+
+### Accessibility and usability
+
+* Support keyboard navigation.
+* Provide tooltips.
+* Provide accessible labels.
+* Maintain visible focus states.
+* Use meaningful contrast.
+* Support standard keyboard shortcuts.
+* Confirm destructive actions where appropriate.
+* Provide recoverable error messages.
+* Keep important functions available without relying exclusively on a mouse.
+
+## 7. SCHEMATIC EDITOR
+
+Implement a real schematic editor, not a static illustration.
+
+### Essential interactions
+
+Users must be able to:
+
+* Create a project.
+* Create, rename, duplicate, reorder, and delete sheets.
+* Place components.
+* Select single and multiple components.
+* Move components.
+* Rotate components in 90-degree increments.
+* Mirror components when supported.
+* Copy, paste, duplicate, and delete components.
+* Draw wires.
+* Add junctions.
+* Add labels and text.
+* Edit component properties.
+* Change grid spacing.
+* Enable or disable snapping.
+* Zoom and pan.
+* Fit the sheet to the viewport.
+* Undo and redo supported actions.
+* Save and reopen projects.
+* Export a schematic to SVG and PDF.
+* Print a sheet with a title block.
+
+### Coordinate model
+
+Store all drawing geometry in logical document units, not screen pixels.
+
+Implement a consistent transformation between:
+
+* Document coordinates.
+* Canvas coordinates.
+* Screen coordinates.
+
+Ensure zooming, panning, snapping, and placement remain consistent.
+
+Use stable object IDs and deterministic serialization.
+
+### Selection
+
+Support:
+
+* Single selection.
+* Shift-selection or another documented additive selection method.
+* Selection rectangle.
+* Escape to cancel.
+* Delete/backspace for selected objects.
+* Keyboard movement where appropriate.
+* Context menus.
+* Clear visual feedback for selected objects.
+
+### Wires
+
+Implement a real wire drawing state machine:
+
+1. Activate wire tool.
+2. Choose a valid start point or component port.
+3. Preview the wire path.
+4. Route through intermediate points.
+5. Finish at a valid endpoint.
+6. Cancel with Escape.
+7. Commit the wire to the document model.
+
+Implement orthogonal routing initially.
+
+Support wire bends, junctions, endpoint snapping, and reconnection after a component moves.
+
+A wire crossing must not automatically mean electrical connectivity. Represent junctions explicitly.
+
+Implement wire splitting and merging when inserting a junction into an existing wire.
+
+Do not rely on arbitrary SVG line crossings as the source of truth for circuit connectivity.
+
+## 8. ELECTRICAL SYMBOL LIBRARY
+
+Create a typed, searchable component library.
+
+Include initial symbol definitions for:
+
+### Sources
+
+* DC voltage source.
+* AC voltage source.
+* Battery.
+* Ground/reference.
+* Protective earth.
+* Three-phase supply.
+
+### Passive components
+
+* Resistor.
+* Variable resistor.
+* Potentiometer.
+* Capacitor.
+* Polarized capacitor.
+* Inductor.
+* Transformer.
+
+### Semiconductor components
+
+* Diode.
+* Zener diode.
+* LED.
+* NPN transistor.
+* PNP transistor.
+* MOSFET.
+* Operational amplifier.
+
+### Switching and control
+
+* Normally open contact.
+* Normally closed contact.
+* Changeover contact.
+* Push button.
+* Selector switch.
+* Relay coil.
+* Contactor coil.
+* Thermal overload contact.
+* Circuit breaker.
+* Fuse.
+
+### Industrial and installation components
+
+* Motor.
+* Terminal block.
+* Connector.
+* Cable.
+* PLC input/output.
+* Sensor.
+* Lamp.
+* Socket or connection point where appropriate to the selected diagram type.
+
+Each component definition should specify:
+
+* Stable library identifier.
+* Display name.
+* Symbol geometry.
+* Connection ports.
+* Port positions.
+* Port names.
+* Component category.
+* Electrical model capability.
+* Default properties.
+* Reference designator prefix.
+* Optional manufacturer part metadata.
+* Symbol version.
+* License and source information when relevant.
+
+Distinguish IEC-style and other symbol variants where appropriate.
+
+Use original or legally usable symbol definitions. Record sources and licensing. Do not claim a symbol is standards-compliant until it has been checked against the applicable licensed or authoritative standard.
+
+Allow future custom-symbol creation.
+
+## 9. ELECTRICAL DATA MODEL
+
+The electrical model must be separate from the drawing geometry.
+
+Define a versioned project schema containing:
+
+* Project metadata.
+* Sheets.
+* Components.
+* Symbol instances.
+* Component references.
+* Ports and terminals.
+* Wires.
+* Junctions.
+* Nets.
+* Labels.
+* Layers.
+* Document settings.
+* Custom properties.
+* Library references.
+* Simulation configurations.
+* Simulation results or references to results.
+
+Every entity must have a stable ID.
+
+A component must have an explicit relationship between its visual symbol and its electrical model.
+
+Every port must have a defined electrical identity.
+
+Connectivity must be derived from explicit port-to-wire relationships and junctions.
+
+### Net model
+
+Implement an electrical connectivity graph.
+
+The graph must support:
+
+* Net identification.
+* Net membership.
+* Port connectivity.
+* Wire connectivity.
+* Junction connectivity.
+* Net highlighting.
+* Floating/unconnected pin detection.
+* Duplicate connection detection where relevant.
+* Short-circuit checks where the electrical model allows them.
+* Connectivity diagnostics.
+
+Implement deterministic net extraction and add unit tests for difficult cases.
+
+Test wire crossings, junctions, multiple wire segments, moved components, deleted segments, and connected pins.
+
+Never infer electrical behavior solely from how a schematic looks on screen.
+
+## 10. COMPONENT DESIGNATIONS AND ENGINEERING DOCUMENTATION
+
+Implement a configurable reference designation system.
+
+Support user-configurable prefixes and sequential numbering.
+
+Provide examples such as:
+
+* Q1 for switching or protective devices where appropriate to the selected designation scheme.
+* K1 for relays/contactors where appropriate.
+* S1 for switches.
+* F1 for fuses.
+* R1 for resistors.
+* C1 for capacitors.
+* X1 for terminal strips or connectors.
+* M1 for motors.
+
+These are configurable conventions, not universal mandatory assignments.
+
+Prevent accidental duplicate designations within the relevant scope.
+
+Implement:
+
+* Automatic wire numbering.
+* Manual wire labels.
+* Device cross-references.
+* Coil/contact cross-references.
+* Terminal numbering.
+* Terminal strip plans.
+* Cable schedules.
+* Device lists.
+* Bill of materials.
+* Sheet lists.
+* Connection lists.
+* Project revision history.
+* Revision tables.
+* Title blocks.
+* PDF documentation packages.
+
+Reports must be generated from the underlying structured project data, not by scraping the drawing.
+
+Allow users to inspect and correct data before generating final documentation.
+
+## 11. GERMAN AND EUROPEAN ENGINEERING SUPPORT
+
+Design the software to support German-language workflows and relevant European engineering conventions.
+
+Include:
+
+* German and English localization.
+* SI units.
+* Configurable number and date formatting.
+* Metric drawing units.
+* Configurable title blocks.
+* Device designation settings.
+* Configurable sheet numbering.
+* Electrical installation and industrial control documentation profiles.
+* Symbol variants appropriate to different domains.
+* Versioned engineering rules.
+
+Investigate relevant standards, including where applicable:
+
+* IEC 60617 for graphical symbols.
+* IEC 61082 for preparation of electrotechnical documents.
+* IEC 81346 for reference designation systems.
+* IEC 60204-1 for electrical equipment of machinery.
+* Relevant DIN/EN implementations and applicable VDE rules for the selected product scope.
+* Other standards required for specific installation, machine, or control-panel workflows.
+
+Do not copy copyrighted standards text or restricted databases into the repository.
+
+Do not imply that every listed standard applies to every drawing.
+
+Create `docs/STANDARDS.md` documenting the intended scope, the relevant versions to be verified, implementation status, source/licensing considerations, and outstanding review work.
+
+All standards checks must identify their rule source and applicability.
+
+Never market the application as certified or standards-compliant merely because it includes symbol libraries or validation checks.
+
+## 12. CIRCUIT SIMULATION ENGINE
+
+Develop circuit simulation as a separate subsystem.
+
+Do not build a fake simulation engine that merely generates plausible-looking charts.
+
+### Initial simulation milestones
+
+First implement DC operating-point analysis.
+
+Then add:
+
+1. Transient analysis.
+2. AC small-signal analysis.
+3. Interactive waveform visualization.
+4. Operating-point tables.
+5. Node voltage inspection.
+6. Branch current inspection.
+7. Solver error and convergence reporting.
+
+Use a mature SPICE-compatible engine or a documented adapter where feasible. Evaluate licensing, deployment requirements, supported models, maintenance, and security before selecting an implementation.
+
+Do not assume that a native solver will run directly inside the browser or that a particular solver license permits every deployment scenario.
+
+### Simulation workflow
+
+1. User draws a circuit.
+2. Electrical graph is extracted.
+3. Components are mapped to simulation models.
+4. Parameters and analysis settings are validated.
+5. A simulation job is created.
+6. The solver runs in an isolated, bounded execution environment.
+7. Solver output is parsed and validated.
+8. Results are returned to the user.
+9. Charts and tables display actual results.
+10. Unsupported components and failed convergence are clearly reported.
+
+### Initial supported models
+
+Implement or map to validated solver models for:
+
+* Resistors.
+* Capacitors.
+* Inductors.
+* Independent voltage sources.
+* Independent current sources.
+* Diodes.
+* Basic transistor models.
+* Ground/reference.
+* Switches where supported by the solver.
+
+Do not pretend a symbol has a simulation model just because it can be drawn.
+
+### Solver safeguards
+
+* Set simulation time limits.
+* Limit input sizes.
+* Limit memory and output size.
+* Prevent arbitrary shell execution.
+* Isolate solver execution.
+* Validate netlists and parameters.
+* Do not expose server file paths.
+* Report convergence failures honestly.
+* Store analysis settings with results.
+* Include units and relevant solver metadata.
+
+Create `docs/SIMULATION.md` with supported analyses, supported components, numerical limitations, solver licensing, setup instructions, and test results.
+
+## 13. BACKEND AND PERSISTENCE
+
+Replace in-memory-only project storage with a durable storage architecture.
+
+Implement:
+
+* Project creation.
+* Project listing.
+* Project retrieval.
+* Project updates.
+* Project deletion with appropriate safeguards.
+* Sheet CRUD operations.
+* Versioned project data.
+* Autosave support.
+* Save conflict detection.
+* Database migrations.
+* Input validation.
+* Standardized API errors.
+* Pagination where necessary.
+* Logging and health checks.
+
+Use a repository/service architecture.
+
+The initial application may support local development without a production database, but it must clearly distinguish local/demo storage from durable production storage.
+
+Never silently lose saved work.
+
+Implement schema validation on both the frontend and backend.
+
+Use atomic saves and project revision numbers or equivalent concurrency controls.
+
+## 14. API CONTRACTS
+
+Create and maintain an OpenAPI specification.
+
+Define documented endpoints for:
+
+* Health and readiness.
+* Projects.
+* Sheets.
+* Symbols and library search.
+* Components.
+* Wires and connections.
+* Validation.
+* Reports.
+* Export and import.
+* Simulation jobs.
+* Simulation results.
+* User and workspace settings when authentication is implemented.
+
+Use consistent HTTP status codes.
+
+Validate request bodies, route parameters, and query parameters.
+
+Return machine-readable error codes and helpful messages.
+
+Avoid returning internal stack traces or sensitive server details in production.
+
+Add API integration tests for success cases, invalid requests, missing resources, and permission failures where applicable.
+
+## 15. FILE IMPORT AND EXPORT
+
+Implement export in a staged, verifiable order.
+
+### First stage
+
+* Project JSON.
+* SVG schematic.
+* PDF sheets.
+* CSV reports.
+* BOM export.
+* Connection and terminal lists.
+
+### Second stage
+
+* Structured project import.
+* Schema version migrations.
+* Validated project archive format.
+* DXF interoperability.
+* DWG interoperability through an appropriate licensed SDK or compliant conversion adapter.
+
+### File handling requirements
+
+* Validate uploaded file types and sizes.
+* Avoid path traversal.
+* Do not trust filenames.
+* Never execute imported content.
+* Validate imported project schemas.
+* Provide preview and error reports before accepting imports.
+* Preserve original files when conversion fails.
+* Document any loss of information during conversion.
+
+DWG is a proprietary CAD format with licensing and interoperability considerations. Do not implement a fake DWG exporter by renaming an SVG, DXF, or JSON file to `.dwg`.
+
+Never claim full DWG compatibility unless the actual implementation has been tested against representative DWG files.
+
+## 16. DATA SECURITY AND USER ACCOUNTS
+
+Before public multi-user deployment, implement or document:
+
+* Authentication.
+* Authorization.
+* Workspace and project permissions.
+* Secure session management.
+* Password hashing through a suitable established library if passwords are used.
+* Rate limiting.
+* CORS allow-list.
+* CSRF protections where relevant.
+* Request size limits.
+* Input validation.
+* Secret management.
+* Secure logging.
+* Database access controls.
+* Backup and recovery procedures.
+* Dependency vulnerability scanning.
+* Account and project deletion policies.
+
+Never hard-code secrets or credentials.
+
+Commit `.env.example`, not actual environment secrets.
+
+Do not add an authentication system that only looks functional without enforcing authorization on the backend.
+
+## 17. TESTING AND QUALITY ASSURANCE
+
+Create a comprehensive test strategy.
+
+### Frontend unit tests
+
+Test:
+
+* Project state.
+* Component placement.
+* Component movement.
+* Selection.
+* Undo/redo.
+* Wire creation.
+* Wire deletion.
+* Snapping.
+* Project serialization.
+* Validation feedback.
+* Property editing.
+
+### Electrical core tests
+
+Test:
+
+* Net extraction.
+* Port identity.
+* Wire segments.
+* Junction behavior.
+* Disconnected ports.
+* Crossing wires without junctions.
+* Connected wires with junctions.
+* Component deletion.
+* Component movement.
+* Duplicate designations.
+* Reference numbering.
+
+### Backend tests
+
+Test:
+
+* API validation.
+* Project CRUD.
+* Persistence.
+* Revision conflicts.
+* Error handling.
+* Permissions.
+* Import validation.
+* Export endpoints.
+
+### Simulation tests
+
+Use small reference circuits with analytically known answers.
+
+Examples:
+
+* A resistive voltage divider.
+* A simple RC transient response.
+* A resistor driven by a DC voltage source.
+* A basic diode circuit where the model and expected assumptions are specified.
+
+Compare results against known values within documented tolerances.
+
+Never accept a test merely because a chart was generated.
+
+### End-to-end tests
+
+Verify workflows such as:
+
+1. Create a project.
+2. Place components.
+3. Connect components.
+4. Save.
+5. Reload.
+6. Confirm all properties and connectivity remain correct.
+7. Export a PDF.
+8. Run a supported simulation.
+9. Inspect results.
+10. Export a report.
+
+Run the available test and build commands after meaningful changes.
+
+Report any tests that could not run because of missing dependencies, native tools, or environment limitations.
+
+## 18. GITHUB AND AUTOMATION
+
+Prepare the repository for GitHub.
+
+Include:
+
+* `.gitignore`.
+* Clear README.
+* License.
+* Contribution guide.
+* Issue templates.
+* Pull request template.
+* CI workflow.
+* Build checks.
+* Automated tests.
+* Type checking.
+* Dependency auditing.
+* Code formatting or linting.
+* Security scanning where feasible.
+* Release notes or changelog.
+
+Use GitHub Actions to install dependencies and run the actual build and tests.
+
+Pin or constrain dependencies appropriately and commit lockfiles.
+
+Do not commit generated `node_modules`, secrets, local databases, or private user projects.
+
+Document GitHub setup, branch workflow, environment configuration, and release procedures.
+
+Do not claim deployment is complete unless the deployment actually occurred and the resulting service was verified.
+
+## 19. HOSTING AND DEPLOYMENT
+
+Prepare a deployment architecture suitable for GitHub-hosted source code.
+
+Important distinction: GitHub stores source code and can host static frontend files with GitHub Pages, but it does not run a persistent Node.js backend simply by publishing the repository.
+
+Provide:
+
+* A static frontend deployment option if appropriate.
+* A separate backend hosting configuration.
+* Environment variable documentation.
+* Database setup and migration instructions.
+* Health checks.
+* Production build commands.
+* Deployment verification steps.
+* Backup recommendations.
+* A Docker configuration where it provides practical value.
+
+GitHub Pages alone is insufficient for the full application when it requires persistent API services, a database, or server-side circuit simulation.
+
+Never publish development credentials or private engineering designs.
+
+## 20. DOCUMENTATION AND HANDOFF
+
+Maintain a complete, accurate README with:
+
+* Product overview.
+* Features implemented.
+* Features planned.
+* Screenshots when available.
+* Architecture.
+* Requirements.
+* Installation.
+* Local development.
+* Environment variables.
+* Build commands.
+* Test commands.
+* Deployment.
+* Troubleshooting.
+* Security notes.
+* Engineering limitations.
+* Contribution workflow.
+
+Create these documents:
+
+* `docs/ARCHITECTURE.md`
+* `docs/ROADMAP.md`
+* `docs/IMPLEMENTATION_PLAN.md`
+* `docs/DATA_MODEL.md`
+* `docs/API.md`
+* `docs/SIMULATION.md`
+* `docs/STANDARDS.md`
+* `docs/SECURITY.md`
+* `docs/TESTING.md`
+* `docs/ENGINEERING_HANDOFF.md`
+
+The handoff must identify:
+
+* Current architecture.
+* Completed milestones.
+* Known bugs.
+* Outstanding tasks.
+* Design decisions.
+* Database migration status.
+* Simulation engine status.
+* Export/import limitations.
+* Standards review requirements.
+* Commands to run.
+* Next recommended implementation steps.
+
+Update documentation as implementation changes. Do not leave documentation claiming features are complete when they are only planned.
+
+## 21. PERFORMANCE AND SCALE
+
+Design for progressively larger projects.
+
+Support:
+
+* Hundreds of symbols without degrading normal interactions.
+* Large sheets with efficient rendering.
+* Efficient selection and hit testing.
+* Debounced autosave.
+* Incremental updates.
+* Avoidance of unnecessary React rerenders.
+* Efficient graph recalculation.
+* Bounded simulation jobs.
+* Cancellation of long-running operations.
+
+Set performance targets only after measuring a baseline.
+
+Add performance tests or benchmarks when the editor's data volume justifies them.
+
+Do not prematurely introduce distributed systems, queues, or complex infrastructure without a demonstrated need.
+
+## 22. USER EXPERIENCE FOR ENGINEERS
+
+Support professional workflows such as:
+
+* New project templates.
+* Multi-sheet documents.
+* Project navigation.
+* Device search.
+* Symbol search.
+* Component property editing.
+* Automatic designations.
+* Connection highlighting.
+* Validation results.
+* Cross-reference navigation.
+* BOM generation.
+* Terminal strip documentation.
+* Sheet numbering.
+* Revision management.
+* Export previews.
+* Simulation setup and results.
+
+Use clear engineering terminology in both English and German.
+
+Where an electrical operation is ambiguous, explain what the application needs from the user rather than silently guessing.
+
+Make warnings distinguishable from errors and informational messages.
+
+## 23. IMPLEMENTATION PHASES
+
+Execute the work in the following order. Adapt the order only when repository evidence justifies it.
+
+### Phase 0 — Repository audit and stabilization
+
+* Inspect existing source.
+* Confirm development commands.
+* Establish a reproducible baseline.
+* Fix critical build failures.
+* Document architecture and current status.
+
+Acceptance: the repository's actual state and build status are documented.
+
+### Phase 1 — Functional CAD editor
+
+* Refactor the existing interface into maintainable components.
+* Implement robust canvas coordinate transforms.
+* Implement placement, selection, movement, rotation, deletion, and snapping.
+* Implement functional wires and junctions.
+* Add undo/redo.
+* Add project serialization.
+* Add import/export to the native project format.
+* Add sheet management.
+
+Acceptance: a user can draw a basic schematic, save it, reload it, and continue editing without losing its structure.
+
+### Phase 2 — Electrical data model
+
+* Implement component ports.
+* Implement connectivity graph.
+* Implement net extraction.
+* Implement wire endpoint snapping.
+* Implement net highlighting.
+* Add connectivity diagnostics.
+* Add automated tests.
+
+Acceptance: electrical connections are represented explicitly and correctly for the supported cases.
+
+### Phase 3 — Professional documentation
+
+* Implement reference designations.
+* Implement wire numbering.
+* Implement title blocks.
+* Implement PDF and SVG export.
+* Implement device lists and BOM.
+* Implement terminal and connection reports.
+* Add German localization.
+
+Acceptance: a basic engineering project produces consistent documentation derived from structured data.
+
+### Phase 4 — Backend persistence
+
+* Implement durable database storage.
+* Add migrations.
+* Add API validation and OpenAPI documentation.
+* Implement project revisions and save conflict handling.
+* Add integration tests.
+
+Acceptance: saved projects survive server restarts and concurrent changes are handled safely.
+
+### Phase 5 — Simulation
+
+* Select and integrate a suitable SPICE-compatible engine.
+* Implement model mapping.
+* Implement DC operating-point analysis.
+* Add reference circuit tests.
+* Add result inspection and waveform plotting.
+* Add transient analysis.
+* Document unsupported models and solver limitations.
+
+Acceptance: supported test circuits produce verified numerical results or clear, truthful failure messages.
+
+### Phase 6 — Interoperability
+
+* Implement validated project import/export.
+* Implement PDF, SVG, and CSV reports.
+* Evaluate DXF and DWG adapters.
+* Add conversion tests and failure handling.
+
+Acceptance: every claimed file format is backed by a real implementation and representative tests.
+
+### Phase 7 — Security and deployment
+
+* Implement necessary authentication and authorization.
+* Configure production database.
+* Add CI and deployment automation.
+* Add security controls.
+* Document backups and recovery.
+
+Acceptance: production deployment steps are reproducible, security limitations are explicit, and the service is verified if deployment access is available.
+
+### Phase 8 — Release readiness
+
+* Run full builds and tests.
+* Resolve high-priority defects.
+* Check accessibility.
+* Review dependencies and licensing.
+* Update documentation.
+* Prepare release notes and engineering handoff.
+
+Acceptance: the repository reflects the true status of the product and another engineer can continue development.
+
+## 24. WORKING METHOD FOR THE AI AGENT
+
+Use this execution loop:
+
+1. Inspect the repository.
+2. Identify the highest-priority incomplete requirement.
+3. Define a small, testable implementation task.
+4. Implement the actual feature.
+5. Add or update tests.
+6. Run relevant tests and type checks.
+7. Fix regressions.
+8. Update documentation.
+9. Mark the task complete only when its acceptance criteria are met.
+10. Continue to the next task.
+
+Maintain a task checklist in `docs/IMPLEMENTATION_PLAN.md`.
+
+Work in small, coherent changes. Do not rewrite the entire application in one unverified operation.
+
+If a dependency or external service is unavailable, implement a sound interface or adapter, document the limitation, and continue with other independent work. Do not fake the unavailable functionality.
+
+If you reach an execution limit, leave the repository in a working state and document the exact next steps for continuation.
+
+If Git operations are available and authorized, use meaningful commits. Never overwrite remote history or remove existing project work without clear authorization.
+
+## 25. ACCEPTANCE CRITERIA
+
+The project must not be described as production-ready merely because the interface looks professional.
+
+At minimum, before declaring the initial engineering milestone complete:
+
+* Frontend builds successfully.
+* Backend builds successfully.
+* Automated tests pass where configured.
+* Project serialization is deterministic and validated.
+* Components can be placed, edited, moved, and deleted.
+* Wires and junctions have a real data model.
+* Save and reload preserve supported project data.
+* Errors are visible and actionable.
+* Exported files use the correct actual formats.
+* Documentation matches implementation.
+* No critical feature is represented by a fake result.
+* Security and engineering limitations are documented.
+
+Before declaring the simulation milestone complete, demonstrate verified numerical results from reference circuits.
+
+Before declaring a production release, verify persistence, access control, backups, deployment, dependency licensing, and the applicable engineering review requirements.
+
+## 26. REQUIRED FINAL REPORT
+
+At the end of each substantial work session, provide a concise but precise engineering report containing:
+
+1. Features implemented.
+2. Files or modules changed.
+3. Build commands executed and their actual results.
+4. Tests executed and their actual results.
+5. Known defects.
+6. Features not yet implemented.
+7. Security or licensing issues requiring attention.
+8. Exact next tasks.
+9. Whether the changes were committed or deployed, with evidence where available.
+
+Do not say "everything is complete" if the acceptance criteria are unmet.
+
+Do not claim access to GitHub, hosting services, or remote systems unless access is actually available.
+
+## 27. START NOW
+
+Begin by inspecting the existing VoltPro ElectCAD repository.
+
+Do not respond with only a plan. Produce the implementation plan and then immediately begin making the highest-priority code changes.
+
+Preserve existing working functionality, establish a stable baseline, and proceed through the milestones in order.
+
+Your objective is to create a genuinely useful, maintainable electrical CAD and circuit simulation platform that can be continued by another engineer—not merely a demonstration interface.
+
+The product name is VoltPro ElectCAD.
+
+Treat electrical correctness, software quality, honest capability reporting, and long-term maintainability as non-negotiable requirements.
+
+# ADDITIONAL MASTER SPECIFICATION — VOLTPRO ELECTCAD: FUTURISTIC AI-POWERED ELECTRICAL ENGINEERING PLATFORM
+
+## 1. Product vision and design references
+
+Extend the existing VoltPro ElectCAD project with this specification. Do not discard or rewrite the previous project instructions. Treat this document as an additional product, UI/UX, AI and engineering specification.
+
+Build VoltPro ElectCAD as a **free, open-source, AI-assisted electrical CAD and circuit engineering platform** for electricians, electrical engineers, automation engineers, students, panel builders, electronics designers and engineering companies.
+
+The platform should unite the best *workflow concepts* from:
+
+* **EPLAN Electric P8:** project structure, page navigator, intelligent electrical objects, cross-references, device tagging, connection management and automatically generated engineering documentation.
+* **WSCAD ELECTRIX / ELECTRIX AI:** integrated electrical disciplines, component databases, panel design, BOM generation, engineering automation and AI-assisted repetitive tasks.
+* **AutoCAD Electrical:** precision drafting, command-driven interaction, symbol libraries, wire numbering, component tagging, terminal diagrams and configurable reports.
+* **SPICE-based simulators:** electrically meaningful circuit models, operating-point calculations, transient analysis, AC analysis and numerical verification.
+
+Reference products and official feature descriptions:
+
+* EPLAN: https://www.eplan.com/
+* WSCAD ELECTRIX: https://www.wscad.com/en/electrix/
+* Autodesk AutoCAD Electrical: https://www.autodesk.com/products/autocad/included-toolsets/autocad-electrical
+* ngspice: https://ngspice.sourceforge.io/
+
+These are functional references, not templates to copy. Study their publicly documented workflows and user needs. Create an original interface, original implementation, original icons and an independent data model. Do not copy proprietary source code, artwork, protected interface assets or licensed symbol libraries.
+
+**Product principle:** combine professional engineering depth with the simplicity of telling an AI what needs to be designed.
+
+The software must remain useful without AI, without an internet connection, and without a paid subscription. Core design files must belong to the user and be exportable in documented formats.
+
+## 2. The visual identity: professional engineering meets a futuristic workstation
+
+Design a sophisticated desktop-first application that feels like a next-generation electrical engineering instrument.
+
+### Visual direction
+
+Use a refined dark engineering theme as the default:
+
+* Main application background: deep graphite or charcoal.
+* Work canvas: nearly black or neutral dark grey, with a subtle configurable engineering grid.
+* Primary accent: electric cyan or blue.
+* Secondary accents: restrained violet for AI functions and amber for warnings.
+* Green: valid electrical connections or verified checks.
+* Red: errors, electrical faults and dangerous conditions.
+* White and cool grey: readable text, symbols, dimensions and labels.
+
+Avoid excessive neon glow, excessive gradients, oversized rounded cards, decorative animations and gaming-style visual effects. The interface must look credible to a professional electrical engineer.
+
+Support a complete light theme, high-contrast mode, configurable symbol colours, and accessible text sizes.
+
+Use consistent iconography, tooltips, keyboard shortcuts, contextual menus, resizable panels, dockable inspectors and configurable workspaces. Every important action must have an understandable visual state.
+
+### Three operating experiences
+
+Provide three interface profiles that use the same underlying project model:
+
+1. **Quick Design:** a simple, guided interface for describing a task, generating a draft, placing symbols, connecting components and exporting a drawing.
+2. **Professional CAD:** a full engineering workspace with project navigation, precision tools, symbol libraries, electrical properties, reports and diagnostics.
+3. **Advanced Engineering:** additional simulation controls, component model editing, automation, scripting, validation rules, detailed connectivity and optional 2D/3D cabinet design.
+
+Do not create three separate applications. They are configurable layouts over the same system.
+
+Remember each user's chosen workspace and panel arrangement.
+
+## 3. Exact main application layout
+
+Use a structured engineering workstation layout, not a collection of floating cards.
+
+### Zone A — application title and global controls
+
+At the top, provide a compact application header containing:
+
+* VoltPro ElectCAD logo and application name.
+* Current project name and file status.
+* Save status and autosave indicator.
+* Undo and redo.
+* Global search and command launcher.
+* AI assistant status.
+* Notifications and validation summary.
+* Workspace selector.
+* Settings, help and user profile where applicable.
+
+Show a clear unsaved-changes indicator. Never imply that a project is saved until the write has succeeded.
+
+### Zone B — classic menu bar
+
+Provide the following menus, with consistent shortcuts and contextual availability:
+
+**File**
+
+* New project, open, recent projects and project templates.
+* Save, Save As, save a copy and autosave recovery.
+* Import and export.
+* Print preview, page setup and PDF export.
+* Project archive, backup, restore and close.
+
+**Edit**
+
+* Undo, redo, cut, copy, paste, duplicate and delete.
+* Select all, group, ungroup, align and distribute.
+* Rotate, mirror, move and edit properties.
+* Find and replace.
+* Project-wide reference and attribute updates.
+
+**View**
+
+* Zoom in, zoom out, zoom to fit and zoom to selection.
+* Pan, grid, snap, rulers and guides.
+* Show or hide panels, layers, annotations and connection labels.
+* Toggle light/dark theme.
+* Switch 2D, 3D or simulation visualisations where supported.
+
+**Insert**
+
+* Electrical symbol, component, connector, terminal, wire and junction.
+* Power supply, ground, reference potential and net label.
+* PLC I/O, cable, terminal strip and device macro.
+* Sheet, cross-reference, note, dimension, image and title block.
+
+**Project**
+
+* Project structure and settings.
+* Pages, devices, designations and revision management.
+* Numbering schemes and naming conventions.
+* Project-wide validation and change tracking.
+* Project documentation and archives.
+
+**Electrical**
+
+* Wiring and connectivity.
+* Wire and device numbering.
+* Potential management.
+* Terminal and cable management.
+* Cross-references.
+* Electrical rule checking.
+* Bill of materials and engineering reports.
+
+**Simulation**
+
+* Configure solver and simulation settings.
+* DC operating point.
+* Transient analysis.
+* AC sweep.
+* Digital or mixed-signal simulation when implemented.
+* Run, pause, stop, inspect results and view errors.
+
+**AI Engineering**
+
+* Describe a design.
+* Generate a new project.
+* Modify the current project.
+* Explain a circuit.
+* Suggest components.
+* Check requirements and detect errors.
+* Generate reports and documentation.
+* View AI-generated changes and restore earlier versions.
+
+**Tools**
+
+* Symbol editor.
+* Component library manager.
+* Part and manufacturer data.
+* Validation rules.
+* Keyboard shortcuts.
+* Plugins, scripting and integrations.
+
+**Window**
+
+* Manage open projects, sheets, inspectors and workspace layouts.
+
+**Help**
+
+* Documentation, interactive tutorials, keyboard shortcuts, examples, troubleshooting and community resources.
+
+Menus should reflect implemented functionality. Disabled or planned features must not appear to be working features.
+
+### Zone C — contextual toolbar
+
+Place a horizontal toolbar below the menu bar. Its contents should change with the current workspace and selection.
+
+Include commonly used tools:
+
+* Select, pan and zoom.
+* Place symbol.
+* Draw wire.
+* Insert junction.
+* Insert connection or net label.
+* Rotate and mirror.
+* Measure.
+* Align and distribute.
+* Delete.
+* Undo and redo.
+* Validate.
+* Run simulation.
+
+When a component is selected, display contextual commands for its properties, designation, part assignment, orientation and connections.
+
+When a wire is selected, show its potential, wire designation, conductor information, style and relevant connection settings.
+
+When the user is placing a symbol, show its placement preview, orientation and snap status.
+
+Do not force the user to repeatedly open menus for common operations.
+
+### Zone D — left navigation and engineering library
+
+Make the left panel dockable, collapsible and resizable. Provide tabbed sections for **Project Explorer**, **Symbol Library**, **Components**, **Search** and **Layers**.
+
+**Project Explorer**
+
+Represent the project as a searchable, hierarchical tree:
+
+* Project information.
+* Installation or functional structure.
+* Pages and sheets.
+* Electrical schematics.
+* Power distribution.
+* Control circuits.
+* PLC and I/O documentation.
+* Terminal diagrams.
+* Cable schedules.
+* Panel layouts.
+* Reports and generated documents.
+* Simulation configurations and results.
+* Revisions and project history.
+
+Show sheet names, page numbers, status indicators, validation warnings and unsaved changes where relevant. Support context menus, drag-and-drop organisation, duplication and multi-page navigation.
+
+**Symbol Library**
+
+Organise symbols by engineering function, not merely by arbitrary folders:
+
+* Power sources and distribution.
+* AC and DC supplies.
+* Protection and switching.
+* Fuses and circuit breakers.
+* Contactors and relays.
+* Push buttons, selectors and emergency-stop devices.
+* Sensors, actuators and motors.
+* PLCs, digital inputs and outputs.
+* Analog inputs and outputs.
+* Terminals, connectors and plugs.
+* Ground, earth and potential symbols.
+* Resistors, capacitors, inductors and semiconductors.
+* Integrated circuits and electronic components.
+* Measurement and test instruments.
+* Communication and industrial networking.
+* User-created symbols and reusable macros.
+
+Provide thumbnail previews, symbol names, identifiers, standards metadata, search filters and keyboard-driven placement.
+
+**Component catalogue**
+
+Allow searching by component type, manufacturer, part number, ratings, footprint, model availability and project usage. Display provenance for component data and distinguish verified manufacturer data from user-entered or AI-suggested information.
+
+Never fabricate manufacturer part numbers, ratings or catalogue availability.
+
+### Zone E — central engineering canvas
+
+The central canvas is the main work area and should receive the most screen space.
+
+Use a performant 2D vector-based drawing engine with a coordinate system, layers, precise snapping, selection and zoom. Avoid treating the drawing as a static image.
+
+Required canvas behaviours:
+
+* Smooth pan and zoom.
+* Zoom to fit and zoom to selection.
+* Configurable grid and snapping.
+* Rulers, alignment guides and measurement tools.
+* Selection rectangles and multi-selection.
+* Symbol placement previews.
+* Orthogonal wire routing with visible endpoints.
+* Junction dots and connection markers.
+* Automatic label placement that avoids collisions where practical.
+* Undo and redo for every supported edit.
+* Multi-sheet navigation.
+* Clipboard operations and duplication.
+* Selection highlighting and connection tracing.
+* Contextual right-click actions.
+* Keyboard shortcuts.
+* Large-project performance through viewport rendering and spatial indexing.
+
+Allow users to configure drawing colours, line weights, page dimensions, title blocks, text sizes and symbol presentation.
+
+Provide a separate **logical connectivity model** behind the drawing. A line that visually touches a symbol must not be assumed to create a valid electrical connection unless the connectivity rules confirm it. Conversely, a logical connection must remain correct if the drawing is rearranged.
+
+### Zone F — right properties and engineering inspector
+
+The right-side inspector should adapt to the selected object.
+
+For a component, provide tabs such as:
+
+* **General:** name, designation, description and symbol.
+* **Electrical:** terminals, pin definitions, voltage, current, poles and other applicable ratings.
+* **Parts:** manufacturer, part number, catalogue reference and assigned models.
+* **Connections:** connected terminals, nets, wires and potential names.
+* **Documentation:** notes, datasheets and references.
+* **Simulation:** model assignment, parameters and simulation-specific settings where relevant.
+* **AI review:** proposed improvements, unresolved assumptions and associated validation findings.
+
+For wires, show conductor type, connection endpoints, potential, wire number, cross-section, colour, cable membership and relevant rating metadata.
+
+For sheets, show sheet number, title, scale, format, revision and title-block properties.
+
+Make all fields editable with validation, clear units and helpful tooltips. Keep engineering data structured rather than embedding everything in free-text descriptions.
+
+### Zone G — bottom engineering console
+
+Provide a dockable bottom panel with tabs for:
+
+* Problems and electrical rule checks.
+* Warnings and unresolved requirements.
+* Simulation console.
+* Simulation plots and results.
+* Generation history.
+* Import/export logs.
+* Reports.
+* AI task history.
+* Engineering change log.
+
+Every diagnostic should have a severity, explanation, affected object or page, and a navigation action to locate the problem.
+
+Where possible, provide a suggested repair with a preview. Never automatically silence a safety-critical warning simply because the AI cannot resolve it.
+
+### Zone H — status bar
+
+At the bottom of the application, show:
+
+* Current page.
+* Cursor coordinates.
+* Grid and snap status.
+* Active tool.
+* Selected object count.
+* Zoom percentage.
+* Project save status.
+* Validation summary.
+* Active simulation state.
+* Current units and relevant drawing settings.
+
+The status bar should be compact and informative.
+
+## 4. Futuristic AI copilot: the signature feature
+
+Create an integrated **VoltPro AI Engineering Copilot** that can understand plain-language instructions, plan electrical work, create editable designs, validate its output and explain its decisions.
+
+It must be part of the engineering workspace rather than a separate chatbot that only returns text.
+
+### AI interaction panel
+
+Provide a dockable right-side or bottom panel with:
+
+* A natural-language text input.
+* A microphone button for voice instructions.
+* A stop-listening button and visible recording state.
+* A send or execute button.
+* Suggested example commands.
+* Conversation history.
+* A project-context indicator.
+* An execution-plan preview.
+* A list of proposed changes.
+* Accept, reject, edit and undo actions.
+* Links to affected sheets, components and diagnostics.
+
+The user should be able to type or say instructions in ordinary language, including German and English. Design the architecture for additional languages.
+
+Support voice input using a configurable speech-to-text engine. Prefer local speech recognition when feasible, and make any cloud-based processing explicit and optional. Show when audio is being captured or transmitted. Do not leave the microphone active without clear user consent.
+
+### Example instructions the AI should understand
+
+* “Create a 24-volt DC control circuit for a small industrial machine.”
+* “Design a start-stop motor control circuit with a contactor, overload protection and emergency-stop function.”
+* “Build a three-phase motor starter schematic and generate the associated terminal plan.”
+* “Create a PLC-controlled conveyor with start and stop buttons, sensors, a motor and fault indication.”
+* “Add a 24-volt power supply and calculate the total connected load from the specified devices.”
+* “Find all unconnected wires and duplicate device designations.”
+* “Explain how this circuit works in simple language.”
+* “Generate a bill of materials and terminal schedule.”
+* “Make this schematic easier to read without changing its electrical connectivity.”
+* “Check the project against the requirements I supplied and list every unresolved issue.”
+* “Show me which devices need manufacturer data before this design can be released.”
+* “Create a low-voltage electronic circuit and prepare it for SPICE simulation.”
+
+The AI must understand whether a request is asking for a new design, an edit, an explanation, a calculation, a simulation or a report.
+
+### The AI design pipeline
+
+Implement a controlled engineering workflow:
+
+1. **Understand:** parse the request and identify its purpose, operating conditions, supply system, loads, control behaviour, constraints and required deliverables.
+2. **Clarify:** ask targeted questions when essential engineering details are missing. Do not invent unknown supply voltages, fault levels, load ratings, protective-device requirements or safety assumptions.
+3. **Plan:** produce a structured design plan with intended pages, devices, connections, component requirements and verification steps.
+4. **Model:** translate the plan into a structured, machine-readable electrical design specification.
+5. **Generate:** construct real project objects, symbol instances, terminal connections, wire objects, designations and required metadata.
+6. **Validate:** run deterministic engineering checks and any applicable calculations before presenting the design as complete.
+7. **Preview:** show the planned modifications, assumptions, warnings and expected deliverables.
+8. **Execute:** apply the changes to the project only according to the user's selected approval settings.
+9. **Review:** report completed actions, unresolved items, changed objects and verification results.
+10. **Revise:** allow follow-up requests that modify the existing design without unnecessarily rebuilding it.
+
+For significant designs, use a visible progress sequence such as *Understanding → Planning → Building → Checking → Ready for review*. Provide cancellation and recovery for long-running tasks.
+
+### AI must generate real CAD objects
+
+This is a critical requirement.
+
+The AI must not generate a picture of a circuit and pretend it is an editable electrical design. It must create the same structured components, terminals, connections, attributes and project records that a human user would create through the editor.
+
+All AI-created designs must be editable through the ordinary CAD interface. They must be saved in the normal project format, navigable through the Project Explorer and usable by the validation and simulation engines.
+
+A generated drawing should include, where appropriate:
+
+* Correctly selected and placed symbols.
+* Unique device designations.
+* Defined terminal and pin identities.
+* Logical electrical connections.
+* Wire and potential information.
+* Required ratings and component metadata.
+* Cross-references and page references.
+* Title blocks and sheet organisation.
+* A component list and relevant engineering reports.
+* A validation report and a list of assumptions.
+
+### AI-generated design preview
+
+Before applying a substantial AI-generated change, show a review screen with:
+
+* A summary of the proposed design.
+* A preview of the schematic or affected sheets.
+* A list of components and their purposes.
+* A list of connections and important ratings.
+* Assumptions and missing information.
+* Validation warnings.
+* Estimated scope of changes.
+* Buttons to apply, edit, reject or regenerate the plan.
+
+Offer two execution modes:
+
+**Guided mode:** the AI proposes changes and waits for approval before applying them.
+
+**Trusted automation mode:** the AI may perform explicitly authorised, reversible tasks within the current project. It must still request confirmation before destructive operations, external transmission, irreversible actions or safety-critical changes.
+
+Provide a single-step undo and a transaction history for AI operations.
+
+### AI should explain engineering decisions
+
+When it selects a component or creates a connection, the AI should be able to explain why.
+
+Separate facts from assumptions. Link recommendations to relevant project requirements, verified component documentation, calculation results or authoritative standards references when available.
+
+Never fabricate citations, standards clauses, calculations, datasheets or compliance claims. If information is unavailable, say so.
+
+### AI context and project memory
+
+Give the copilot access to the active project model, selected objects, sheet structure, component catalogue, project requirements, validation results and simulation outputs, subject to user permissions.
+
+Let the user attach project specifications, datasheets and company guidelines to a local project knowledge base. Retrieve relevant passages with source references when answering technical questions.
+
+Keep project data local by default where practical. Clearly disclose any external AI provider, data sent, retention behaviour and privacy limitations. Provide an option to disable AI entirely.
+
+## 5. Engineering intelligence: AI must not replace verification
+
+Build the AI around deterministic engineering services rather than trusting language-model output as an electrical authority.
+
+Create separate services for:
+
+* Connectivity and graph validation.
+* Component and terminal consistency.
+* Designation and wire-number rules.
+* Electrical rating checks.
+* Cable and conductor calculations.
+* Voltage-drop calculations.
+* Protective-device coordination checks where sufficient data and rules are available.
+* Circuit simulation.
+* Documentation consistency.
+* Requirements traceability.
+
+The AI may orchestrate these services, interpret their findings and propose changes. The actual calculations and rule checks should be implemented and tested in ordinary code or verified engineering tools.
+
+For electrical installations and industrial control systems, request the information required for the relevant system and jurisdiction. Distinguish educational examples from designs intended for real installations.
+
+A generated design must never be labelled “safe,” “certified” or “compliant” merely because the AI has completed it. Use explicit verification states such as:
+
+* Not checked.
+* Checks passed for the stated scope.
+* Warnings remain.
+* Failed checks.
+* Requires qualified engineering review.
+
+Standards such as IEC 60617, IEC 61082, IEC 81346, IEC 60204-1 and applicable DIN/EN/VDE requirements should be considered where relevant. Standards content must be obtained and used lawfully; do not distribute copyrighted standards text without permission.
+
+## 6. Advanced electrical CAD functionality
+
+Build the data model and UI so that the product can grow beyond a basic schematic editor.
+
+### Project-wide intelligence
+
+A component should be one logical device even if it appears on multiple pages or in multiple representations. Changing its designation or part assignment should update linked references consistently.
+
+Support:
+
+* Unique device identifiers.
+* Functional and location-based designation structures.
+* Cross-references between contacts, coils and related devices.
+* Automatic wire numbering.
+* Potential and net naming.
+* Terminal strip organisation.
+* Cable and conductor schedules.
+* PLC address and I/O assignment.
+* Revision and change tracking.
+* Reusable circuit macros.
+* Device and component data management.
+* Project-wide consistency checks.
+
+### Multiple engineering domains
+
+Use a modular architecture that can support, in stages:
+
+1. Electrical schematics and control circuits.
+2. Electronic circuit design and SPICE simulation.
+3. Industrial automation and PLC I/O documentation.
+4. Terminal and cable plans.
+5. Control cabinet and panel layouts.
+6. Electrical installation and distribution documentation.
+7. Building automation.
+8. P&ID and fluid-related engineering as later optional modules.
+
+Do not implement these as unrelated drawing tools. Where technically appropriate, link their objects to shared project data and traceable device identities.
+
+### Symbol and parts libraries
+
+Provide an original, documented symbol format with support for:
+
+* Symbol geometry.
+* Connection points.
+* Electrical pin or terminal definitions.
+* Component categories.
+* Designation attributes.
+* Manufacturer part references.
+* Simulation-model references where applicable.
+* Standards and provenance metadata.
+
+Include a library manager that supports import, export, versioning, validation and user-created libraries. Keep library licensing information attached to imported assets.
+
+## 7. Simulation workspace
+
+Provide a dedicated simulation experience connected to the same project data.
+
+The interface should support:
+
+* Solver selection and configuration.
+* Model and parameter inspection.
+* DC operating-point analysis.
+* Transient response.
+* AC frequency sweep.
+* Simulation run controls.
+* Interactive plots and measurement cursors.
+* Voltage and current probes.
+* Waveform comparison.
+* Solver messages and error navigation.
+* Export of simulation data.
+
+For electronic circuits, integrate a real SPICE-compatible engine such as ngspice through a controlled adapter. Do not substitute fake calculations or random waveforms.
+
+Maintain a clear distinction between an electrical installation schematic and a circuit that has sufficient model information for numerical simulation. For example, a circuit-breaker symbol used for installation documentation does not automatically provide a complete physical simulation model.
+
+Run simulations in a restricted process with time, memory and resource limits. Validate input files and handle solver errors gracefully.
+
+## 8. Drawing and documentation outputs
+
+Treat documentation as a first-class part of the product.
+
+Support, in a practical implementation order:
+
+* Native project save/load.
+* SVG export.
+* PDF export and printing.
+* CSV and spreadsheet-compatible reports.
+* JSON interchange.
+* DXF import/export through a suitable implementation.
+* DWG compatibility only through a verified, legally permitted library, SDK or external conversion adapter.
+
+Do not rename SVG or DXF files to `.dwg` and claim native DWG support. Display the actual capabilities and limitations of each import/export route.
+
+Generate project documents from the underlying engineering model, not by scraping text from the canvas.
+
+Reports should include appropriate combinations of:
+
+* Bill of materials.
+* Device lists.
+* Wire and connection lists.
+* Terminal plans.
+* Cable schedules.
+* PLC I/O lists.
+* Cross-reference tables.
+* Component and rating summaries.
+* Validation reports.
+* Revision histories.
+* Simulation summaries.
+
+Let users configure report columns, sorting, filters, title blocks and export formats.
+
+## 9. Keyboard-first productivity and accessibility
+
+Support professional keyboard workflows as well as mouse interaction.
+
+Include:
+
+* A command palette activated by a configurable shortcut.
+* Search across commands, components, devices and pages.
+* Customisable shortcuts.
+* Quick component placement.
+* Repeat-last-command.
+* Contextual command suggestions.
+* Keyboard navigation through the project tree and property inspector.
+* Tooltips and accessible labels.
+* Clear focus indicators.
+* High-contrast mode and scalable interface text.
+
+The AI command bar should coexist with traditional CAD commands. Expert users must be able to work rapidly without the AI panel obstructing the canvas.
+
+## 10. Performance and software architecture
+
+Implement the interface and engineering services as a coherent product, not a collection of disconnected prototypes.
+
+Use the existing repository as the starting point. Inspect the current implementation before changing it. Preserve working functionality and introduce new features incrementally.
+
+Suggested architectural boundaries:
+
+* **Application shell:** menus, toolbars, dock panels and workspace state.
+* **CAD engine:** geometry, selection, rendering, snapping and editing operations.
+* **Electrical domain model:** devices, symbols, terminals, connections, potentials and project metadata.
+* **Project persistence:** versioned native format, migration and recovery.
+* **Engineering rules engine:** deterministic validation and calculations.
+* **AI orchestration:** intent parsing, clarification, planning, proposed changes and tool execution.
+* **Simulation adapter:** SPICE integration and results management.
+* **Documentation engine:** reports, title blocks, PDF and other exports.
+* **Library services:** symbols, parts and simulation models.
+* **Backend services:** optional collaboration, authentication, storage and remote AI integration.
+
+Keep domain logic independent from React components. Use typed schemas and versioned data structures. Validate all imported files and AI-generated project modifications before committing them.
+
+Design for large projects using incremental rendering, efficient selection, spatial indexing, background processing and cancellation where necessary.
+
+## 11. Open-source strategy and licensing
+
+Make the product genuinely free and open source.
+
+Choose a suitable OSI-approved licence after reviewing dependencies and distribution requirements. Document third-party licences and attribution. Keep proprietary integrations optional so the core application remains buildable without them.
+
+Prioritise:
+
+* Local-first project storage.
+* Transparent file formats.
+* Reproducible builds.
+* Public issue tracking and contribution guidelines.
+* Automated tests and continuous integration.
+* Documented APIs and extension points.
+* Exportable user data.
+* No mandatory subscription or account for local CAD work.
+* Optional self-hosted AI and backend services.
+* Clear disclosure of any features that require external services.
+
+Do not promise that every future feature, such as native DWG handling or advanced cloud collaboration, is already available. Build a reliable open-source core first.
+
+## 12. Implementation milestones
+
+Work in incremental, testable releases rather than trying to generate the entire application in one step.
+
+**Milestone 1 — Professional interface**
+Build the full application shell, menus, toolbars, resizable side panels, project explorer, symbol library, properties inspector, bottom diagnostics panel and status bar.
+
+**Milestone 2 — Real schematic editing**
+Implement component placement, selection, movement, rotation, wire routing, logical connections, undo/redo, save/load and SVG/PDF output.
+
+**Milestone 3 — Electrical intelligence**
+Add designations, wire numbering, terminal identities, project-wide references, validation, component metadata and reports.
+
+**Milestone 4 — AI-assisted editing**
+Implement text commands, structured design plans, preview/approval, reversible change application and project-aware explanations.
+
+**Milestone 5 — Voice**
+Add explicit microphone activation, speech recognition, transcription review, voice-command parsing and spoken or text-based confirmations.
+
+**Milestone 6 — Engineering verification**
+Add deterministic electrical checks, calculation services, validation reporting and test projects.
+
+**Milestone 7 — Circuit simulation**
+Integrate ngspice or another suitable solver, model mapping, run controls, error handling and interactive waveform plots.
+
+**Milestone 8 — Advanced design disciplines**
+Add panel layout, cable and terminal planning, expanded component catalogues, import/export adapters and optional automation integrations.
+
+At each milestone, ensure the application builds, tests pass, the README matches reality and the features already implemented remain functional.
+
+## 13. Definition of done for AI-generated electrical designs
+
+A design-generation task is complete only when:
+
+* The generated objects exist in the native project model.
+* Symbol terminals and connection relationships are represented correctly.
+* Device designations and applicable metadata are consistent.
+* The schematic is editable through the ordinary CAD tools.
+* Required project pages and reports are generated or explicitly identified as outstanding.
+* The validation engine has run and reported its findings.
+* Missing assumptions, component data and unresolved engineering questions are visible.
+* The user can review, modify, save and export the result.
+* The AI can explain the design and identify the evidence supporting its conclusions.
+* No unsupported claim of safety, certification or standards compliance is made.
+
+## 14. Final instruction to the coding agent
+
+Do not respond to this specification with a mock-up alone, a long proposal, or a screenshot that cannot be interacted with.
+
+Inspect the existing VoltPro ElectCAD repository, determine what already works, and implement the next highest-value milestone. Prioritise a polished and usable interface, a real editable schematic engine, reliable project persistence and a structured AI design pipeline.
+
+Build a product where the AI can turn a user's plain-language or spoken request into a reviewable, editable and verifiable engineering project—not merely a drawing.
+
+The ultimate ambition is a professional, futuristic and trustworthy electrical engineering workstation that combines traditional CAD precision, open-source freedom, simulation and genuinely useful AI automation.
+
+**Engineering integrity takes priority over visual spectacle, speed claims or artificial intelligence marketing.**
+
+14. Final instruction to the coding agent
+
+Do not respond to this specification with a mock-up alone, a long proposal, or a screenshot that cannot be interacted with.
+
+Inspect the existing VoltPro ElectCAD repository, determine what already works, and implement the next highest-value milestone. Prioritise a polished and usable interface, a real editable schematic engine, reliable project persistence and a structured AI design pipeline.
+
+Build a product where the AI can turn a user's plain-language or spoken request into a reviewable, editable and verifiable engineering project—not merely a drawing.
+
+The ultimate ambition is a professional, futuristic and trustworthy electrical engineering workstation that combines traditional CAD precision, open-source freedom, simulation and genuinely useful AI automation.
+
+Engineering integrity takes priority over visual spectacle, speed claims or artificial intelligence marketing.

@@ -1,0 +1,2928 @@
+{
+  "format": "voltpro-component-family",
+  "version": 1,
+  "category": "relays",
+  "count": 32,
+  "components": [
+    {
+      "id": "relays-relay-24vac",
+      "name": "Relay 24VAC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 24VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-24vdc",
+      "name": "Relay 24VDC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 24VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-48vac",
+      "name": "Relay 48VAC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 48,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 48VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-48vdc",
+      "name": "Relay 48VDC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 48,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 48VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-110vac",
+      "name": "Relay 110VAC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 110VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-110vdc",
+      "name": "Relay 110VDC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 110,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 110VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-230vac",
+      "name": "Relay 230VAC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 230VAC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-230vdc",
+      "name": "Relay 230VDC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 230VDC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-1no",
+      "name": "Relay 1NO",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 1NO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-1nc",
+      "name": "Relay 1NC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 1NC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-2no",
+      "name": "Relay 2NO",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 2NO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-2nc",
+      "name": "Relay 2NC",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 2NC.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-2co",
+      "name": "Relay 2CO",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 2CO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-4co",
+      "name": "Relay 4CO",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for 4CO.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-spdt",
+      "name": "Relay SPDT",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for SPDT.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-dpdt",
+      "name": "Relay DPDT",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "A1",
+          "name": "Coil A1"
+        },
+        {
+          "id": "A2",
+          "name": "Coil A2"
+        },
+        {
+          "id": "11",
+          "name": "Common 1"
+        },
+        {
+          "id": "12",
+          "name": "NC 1"
+        },
+        {
+          "id": "14",
+          "name": "NO 1"
+        },
+        {
+          "id": "21",
+          "name": "Common 2"
+        },
+        {
+          "id": "22",
+          "name": "NC 2"
+        },
+        {
+          "id": "24",
+          "name": "NO 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        },
+        "coilVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 24,
+          "min": 1,
+          "max": 1000
+        },
+        "coilResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 240,
+          "min": 1,
+          "max": 100000
+        },
+        "energized": {
+          "type": "boolean",
+          "default": false
+        },
+        "onResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 0.000001,
+          "min": 0.000001,
+          "max": 1
+        },
+        "offResistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 30000000000,
+          "min": 1,
+          "max": 1000000000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "relay",
+        "engine": "VoltPRo MNA electromechanical",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "relay",
+        "states": [
+          "deenergized",
+          "energized"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for DPDT.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-timer-on",
+      "name": "Relay Timer-On",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Timer-On.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-timer-off",
+      "name": "Relay Timer-Off",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Timer-Off.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-pulse",
+      "name": "Relay Pulse",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Pulse.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-latching",
+      "name": "Relay Latching",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Latching.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-monitoring",
+      "name": "Relay Monitoring",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Monitoring.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-phase-sequence",
+      "name": "Relay Phase-Sequence",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Phase-Sequence.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-phase-failure",
+      "name": "Relay Phase-Failure",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Phase-Failure.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-overvoltage",
+      "name": "Relay Overvoltage",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Overvoltage.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-undervoltage",
+      "name": "Relay Undervoltage",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Undervoltage.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-current",
+      "name": "Relay Current",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Current.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-voltage",
+      "name": "Relay Voltage",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Voltage.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-level",
+      "name": "Relay Level",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Level.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-interface",
+      "name": "Relay Interface",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Interface.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-safety",
+      "name": "Relay Safety",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Safety.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-solid-state",
+      "name": "Relay Solid-State",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Solid-State.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    },
+    {
+      "id": "relays-relay-reed",
+      "name": "Relay Reed",
+      "category": "relays",
+      "terminals": [
+        {
+          "id": "T1",
+          "name": "Terminal 1"
+        },
+        {
+          "id": "T2",
+          "name": "Terminal 2"
+        }
+      ],
+      "parameters": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ratedVoltage": {
+          "type": "number",
+          "unit": "V",
+          "default": 230,
+          "min": 0,
+          "max": 1000
+        },
+        "resistance": {
+          "type": "number",
+          "unit": "Ω",
+          "default": 100,
+          "min": 0.001,
+          "max": 10000000
+        }
+      },
+      "ratings": {
+        "frequency": 50
+      },
+      "symbol": {
+        "style": "IEC",
+        "label": "RELA",
+        "original": true
+      },
+      "panelModel": {
+        "mount": "DIN35",
+        "widthModules": 2,
+        "interactive": true
+      },
+      "electricalModel": {
+        "type": "lumped",
+        "engine": "VoltPro MNA educational",
+        "editable": true
+      },
+      "behaviorModel": {
+        "type": "two-terminal",
+        "states": [
+          "enabled",
+          "disabled"
+        ]
+      },
+      "faultModes": [
+        "open-circuit",
+        "short-circuit",
+        "parameter-out-of-range"
+      ],
+      "documentation": {
+        "summary": "Educational Relay model for Reed.",
+        "usage": "Double-click to edit parameters, connect terminals and run simulation.",
+        "standards": [
+          "IEC-oriented educational representation"
+        ]
+      }
+    }
+  ]
+}

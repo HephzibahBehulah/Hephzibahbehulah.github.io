@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('three-phase motor current follows transparent formula',()=>{const ctx={window:{},structuredClone:global.structuredClone};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/engineering/calculations.js','utf8'),ctx);const e=ctx.window.VoltProEngineering;assert.ok(e.motorCurrent({powerKw:4,voltage:400,pf:.8,efficiency:.9})>0);assert.equal(e.report({powerKw:4,voltage:400}).inputs.powerKw,4)})

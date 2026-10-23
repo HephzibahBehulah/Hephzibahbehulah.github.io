@@ -1,0 +1,8 @@
+{
+ "format":"voltpro-challenges","version":1,
+ "challenges":[
+  {"id":"light-basic","level":"beginner","title":"Switch a lamp","objective":"Build a closed DC source → switch → lamp circuit.","required":["battery","switch","lamp"],"validation":{"minComponents":3,"mustContainTypes":["battery","switch","lamp"],"closedSwitches":true}},
+  {"id":"motor-starter","level":"professional","title":"3-phase motor starter","objective":"Create the educational topology for a protected motor starter.","required":["threephase","breaker","contactor","motor","ground"],"validation":{"mustContainTypes":["threephase","contactor","motor","ground"]}},
+  {"id":"arduino-blink","level":"intermediate","title":"MCU Blink","objective":"Connect a GPIO output to a virtual LED and run a blink program.","required":["arduino","led"],"validation":{"mustContainTypes":["arduino","led"]}}
+ ]
+}

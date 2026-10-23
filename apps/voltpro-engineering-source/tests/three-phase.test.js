@@ -1,0 +1,5 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/simulation/three-phase.js','utf8'),ctx);return ctx.window.VoltProThreePhase}
+test('400V balanced source produces approximately 230V phase voltage',()=>{const t=load(),s=t.source({lineVoltage:400});assert.ok(Math.abs(s.phaseVoltage-230.94)<0.1);assert.equal(s.phases.L1.angleDeg,0);assert.equal(s.phases.L2.angleDeg,-120);assert.equal(s.phases.L3.angleDeg,120)});
+test('line-line voltage is approximately the configured system voltage',()=>{const t=load(),s=t.source({lineVoltage:400});assert.ok(Math.abs(t.lineLine(s,'L1','L2').magnitude-400)<0.1)});
+test('phase loss is explicitly reported',()=>{const t=load(),s=t.source({});const r=t.status(s,{L1:true,L2:false,L3:true});assert.equal(r.phaseLoss,true);assert.equal(r.missing.join(','),'L2')})

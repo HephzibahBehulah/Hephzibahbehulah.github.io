@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{},structuredClone:global.structuredClone};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/core/commands.js','utf8'),ctx);return ctx.window.VoltProCommands}
+test('command history executes, undoes and redoes',()=>{const c=load(),p={devices:[]},h=c.history();const cmd=c.insert(['devices'],0,{id:'KM1'});h.execute(p,cmd);assert.equal(p.devices.length,1);assert.equal(h.canUndo(),true);h.undo(p);assert.equal(p.devices.length,0);h.redo(p);assert.equal(p.devices[0].id,'KM1')});
+test('setPath restores exact previous value',()=>{const c=load(),p={settings:{grid:20}},h=c.history();h.execute(p,c.setPath(['settings','grid'],20,10));assert.equal(p.settings.grid,10);h.undo(p);assert.equal(p.settings.grid,20)})

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+<title id="title">VoltPRo Academy by Hephzibah Behulah</title>
+<desc id="desc">Electrical engineering, electronics, automation learning and browser-based simulation.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071018"/><stop offset="1" stop-color="#11192b"/></linearGradient><linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#56cfe1"/><stop offset=".52" stop-color="#a78bfa"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#56cfe1" stroke-opacity=".09"/></pattern></defs>
+<rect width="1200" height="630" rx="0" fill="url(#bg)"/><rect width="1200" height="630" fill="url(#grid)"/><circle cx="1050" cy="90" r="280" fill="#a78bfa" opacity=".08"/><circle cx="140" cy="590" r="300" fill="#56cfe1" opacity=".07"/>
+<g transform="translate(74 74)"><path d="M52 0 96 25v51L52 102 8 76V25z" fill="none" stroke="url(#accent)" stroke-width="5"/><path d="M30 32v38m0-38 22 16 22-16m-44 20 22 16 22-16" fill="none" stroke="url(#accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><text x="120" y="42" fill="#f2f8ff" font-family="Arial,sans-serif" font-size="28" font-weight="800" letter-spacing="3">HEPHZIBAH</text><text x="120" y="76" fill="#a7c3d7" font-family="Arial,sans-serif" font-size="28" font-weight="800" letter-spacing="3">BEHULAH</text></g>
+<text x="78" y="292" fill="#56cfe1" font-family="Arial,sans-serif" font-size="19" font-weight="700" letter-spacing="5">ENGINEERING LEARNING · SIMULATION · AUTOMATION</text>
+<text x="72" y="385" fill="#f4f8ff" font-family="Arial,sans-serif" font-size="76" font-weight="800" letter-spacing="-2">VoltPRo Academy</text>
+<text x="78" y="444" fill="#b1c0ce" font-family="Arial,sans-serif" font-size="27">Build circuits. Explore systems. Learn by doing.</text>
+<rect x="78" y="504" width="1044" height="1" fill="#56cfe1" opacity=".35"/><text x="78" y="550" fill="#8ca7bd" font-family="monospace" font-size="18" letter-spacing="2">A HEPHZIBAH BEHULAH PROJECT</text><text x="1122" y="550" fill="#56cfe1" font-family="monospace" font-size="18" text-anchor="end">LEARN → BUILD → SIMULATE</text>
+</svg>

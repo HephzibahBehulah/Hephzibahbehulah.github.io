@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/rendering/net-visuals.js','utf8'),ctx);return ctx.window.VoltProNetVisuals}
+test('junction detector finds shared three-way connection',()=>{const v=load();const j=v.junctions([{segments:[{x1:0,y1:0,x2:10,y2:0},{x1:0,y1:0,x2:0,y2:10},{x1:0,y1:0,x2:-10,y2:0}]}]);assert.equal(j.length,1)});
+test('net highlight returns only terminals in selected net',()=>{const v=load();assert.equal(v.highlight('N1',[{id:'N1',terminals:['A','B']},{id:'N2',terminals:['C']}]).has('B'),true)})

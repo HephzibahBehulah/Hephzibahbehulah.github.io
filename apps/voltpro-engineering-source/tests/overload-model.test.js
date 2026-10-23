@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);for(const p of ['src/simulation/model-registry.js','src/simulation/overload-model.js'])vm.runInContext(fs.readFileSync(p,'utf8'),ctx);return ctx.window}
+test('overload accumulates thermal state under sustained overcurrent',()=>{const w=load();let d={id:'OL1',model:'thermal-overload',parameters:{ratedCurrent:10},state:{current:20,thermalLevel:0}};let r=w.VoltProDeviceModels.evaluate(d);assert.ok(r.thermalLevel>0);assert.equal(r.state,'ready');d.state.thermalLevel=1;r=w.VoltProDeviceModels.evaluate(d);assert.equal(r.state,'tripped')})

@@ -1,0 +1,2413 @@
+{
+  "source": "HephzibahBehulah/Hephzibahbehulah.github.io:data/source-library.json",
+  "generatedFrom": "template source-library; only electrical/electronics, installation, automation/PLC and directly relevant engineering entries retained",
+  "count": 401,
+  "tools": [
+    {
+      "id": 1,
+      "category": "Electrical & Electronics",
+      "name": "Ohm's Law",
+      "description": "Browser-based ohm's law for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 2,
+      "category": "Electrical & Electronics",
+      "name": "Power Law",
+      "description": "Browser-based power law for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 3,
+      "category": "Electrical & Electronics",
+      "name": "Series Resistance",
+      "description": "Browser-based series resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 4,
+      "category": "Electrical & Electronics",
+      "name": "Parallel Resistance",
+      "description": "Browser-based parallel resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 5,
+      "category": "Electrical & Electronics",
+      "name": "Voltage Divider",
+      "description": "Browser-based voltage divider for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 6,
+      "category": "Electrical & Electronics",
+      "name": "Current Divider",
+      "description": "Browser-based current divider for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 7,
+      "category": "Electrical & Electronics",
+      "name": "RC Time Constant",
+      "description": "Browser-based rc time constant for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 8,
+      "category": "Electrical & Electronics",
+      "name": "RL Time Constant",
+      "description": "Browser-based rl time constant for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 9,
+      "category": "Electrical & Electronics",
+      "name": "Capacitor Energy",
+      "description": "Browser-based capacitor energy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 10,
+      "category": "Electrical & Electronics",
+      "name": "Inductor Energy",
+      "description": "Browser-based inductor energy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 11,
+      "category": "Electrical & Electronics",
+      "name": "Electrical Work",
+      "description": "Browser-based electrical work for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 12,
+      "category": "Electrical & Electronics",
+      "name": "Electrical Power",
+      "description": "Browser-based electrical power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 13,
+      "category": "Electrical & Electronics",
+      "name": "Apparent Power",
+      "description": "Browser-based apparent power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 14,
+      "category": "Electrical & Electronics",
+      "name": "Reactive Power",
+      "description": "Browser-based reactive power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 15,
+      "category": "Electrical & Electronics",
+      "name": "Power Factor",
+      "description": "Browser-based power factor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 16,
+      "category": "Electrical & Electronics",
+      "name": "Impedance",
+      "description": "Browser-based impedance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 17,
+      "category": "Electrical & Electronics",
+      "name": "Reactance",
+      "description": "Browser-based reactance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 18,
+      "category": "Electrical & Electronics",
+      "name": "Resonant Frequency",
+      "description": "Browser-based resonant frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 19,
+      "category": "Electrical & Electronics",
+      "name": "LC Resonance",
+      "description": "Browser-based lc resonance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 20,
+      "category": "Electrical & Electronics",
+      "name": "Transformer Ratio",
+      "description": "Browser-based transformer ratio for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 21,
+      "category": "Electrical & Electronics",
+      "name": "Transformer Current",
+      "description": "Browser-based transformer current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 22,
+      "category": "Electrical & Electronics",
+      "name": "LED Resistor",
+      "description": "Browser-based led resistor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 23,
+      "category": "Electrical & Electronics",
+      "name": "LED Power",
+      "description": "Browser-based led power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 24,
+      "category": "Electrical & Electronics",
+      "name": "Diode Power",
+      "description": "Browser-based diode power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 25,
+      "category": "Electrical & Electronics",
+      "name": "Zener Resistor",
+      "description": "Browser-based zener resistor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 26,
+      "category": "Electrical & Electronics",
+      "name": "Battery Energy",
+      "description": "Browser-based battery energy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 27,
+      "category": "Electrical & Electronics",
+      "name": "Battery Runtime",
+      "description": "Browser-based battery runtime for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 28,
+      "category": "Electrical & Electronics",
+      "name": "Battery Capacity",
+      "description": "Browser-based battery capacity for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 29,
+      "category": "Electrical & Electronics",
+      "name": "Coulomb Charge",
+      "description": "Browser-based coulomb charge for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 30,
+      "category": "Electrical & Electronics",
+      "name": "Frequency Period",
+      "description": "Browser-based frequency period for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 31,
+      "category": "Electrical & Electronics",
+      "name": "Duty Cycle",
+      "description": "Browser-based duty cycle for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 32,
+      "category": "Electrical & Electronics",
+      "name": "PWM Average Voltage",
+      "description": "Browser-based pwm average voltage for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 33,
+      "category": "Electrical & Electronics",
+      "name": "ADC Resolution",
+      "description": "Browser-based adc resolution for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 34,
+      "category": "Electrical & Electronics",
+      "name": "DAC Resolution",
+      "description": "Browser-based dac resolution for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 35,
+      "category": "Electrical & Electronics",
+      "name": "ADC Voltage",
+      "description": "Browser-based adc voltage for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 36,
+      "category": "Electrical & Electronics",
+      "name": "Quantization Error",
+      "description": "Browser-based quantization error for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 37,
+      "category": "Electrical & Electronics",
+      "name": "Logic Level Check",
+      "description": "Browser-based logic level check for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 38,
+      "category": "Electrical & Electronics",
+      "name": "Pull-Up Resistor",
+      "description": "Browser-based pull-up resistor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 39,
+      "category": "Electrical & Electronics",
+      "name": "Pull-Down Resistor",
+      "description": "Browser-based pull-down resistor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 40,
+      "category": "Electrical & Electronics",
+      "name": "Voltage Drop",
+      "description": "Browser-based voltage drop for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 41,
+      "category": "Electrical & Electronics",
+      "name": "Cable Loss",
+      "description": "Browser-based cable loss for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 42,
+      "category": "Electrical & Electronics",
+      "name": "Fuse Current",
+      "description": "Browser-based fuse current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 43,
+      "category": "Electrical & Electronics",
+      "name": "Fuse Energy",
+      "description": "Browser-based fuse energy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 44,
+      "category": "Electrical & Electronics",
+      "name": "Conductor Resistance",
+      "description": "Browser-based conductor resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 45,
+      "category": "Electrical & Electronics",
+      "name": "Temperature Coefficient",
+      "description": "Browser-based temperature coefficient for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 46,
+      "category": "Electrical & Electronics",
+      "name": "Thermistor Beta",
+      "description": "Browser-based thermistor beta for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 47,
+      "category": "Electrical & Electronics",
+      "name": "Thermal Power",
+      "description": "Browser-based thermal power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 48,
+      "category": "Electrical & Electronics",
+      "name": "Heat Sink Estimate",
+      "description": "Browser-based heat sink estimate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 49,
+      "category": "Electrical & Electronics",
+      "name": "Efficiency",
+      "description": "Browser-based efficiency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 50,
+      "category": "Electrical & Electronics",
+      "name": "Motor Input Power",
+      "description": "Browser-based motor input power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 51,
+      "category": "Electrical & Electronics",
+      "name": "Motor Output Power",
+      "description": "Browser-based motor output power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 52,
+      "category": "Electrical & Electronics",
+      "name": "Motor Torque",
+      "description": "Browser-based motor torque for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 53,
+      "category": "Electrical & Electronics",
+      "name": "Motor Speed",
+      "description": "Browser-based motor speed for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 54,
+      "category": "Electrical & Electronics",
+      "name": "Gear Ratio",
+      "description": "Browser-based gear ratio for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 55,
+      "category": "Electrical & Electronics",
+      "name": "Mechanical Power",
+      "description": "Browser-based mechanical power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 56,
+      "category": "Electrical & Electronics",
+      "name": "Generator Frequency",
+      "description": "Browser-based generator frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 57,
+      "category": "Electrical & Electronics",
+      "name": "Three-Phase Power",
+      "description": "Browser-based three-phase power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 58,
+      "category": "Electrical & Electronics",
+      "name": "Three-Phase Current",
+      "description": "Browser-based three-phase current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 59,
+      "category": "Electrical & Electronics",
+      "name": "Star Delta Voltage",
+      "description": "Browser-based star delta voltage for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 60,
+      "category": "Electrical & Electronics",
+      "name": "Star Delta Current",
+      "description": "Browser-based star delta current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 61,
+      "category": "Electrical & Electronics",
+      "name": "Cable Voltage Drop",
+      "description": "Browser-based cable voltage drop for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 62,
+      "category": "Electrical & Electronics",
+      "name": "Transformer VA",
+      "description": "Browser-based transformer va for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 63,
+      "category": "Electrical & Electronics",
+      "name": "Relay Coil Current",
+      "description": "Browser-based relay coil current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 64,
+      "category": "Electrical & Electronics",
+      "name": "Relay Power",
+      "description": "Browser-based relay power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 65,
+      "category": "Electrical & Electronics",
+      "name": "Contact Load",
+      "description": "Browser-based contact load for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 66,
+      "category": "Electrical & Electronics",
+      "name": "Switch Rating",
+      "description": "Browser-based switch rating for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 67,
+      "category": "Electrical & Electronics",
+      "name": "Connector Current",
+      "description": "Browser-based connector current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 68,
+      "category": "Electrical & Electronics",
+      "name": "Ground Fault Current",
+      "description": "Browser-based ground fault current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 69,
+      "category": "Electrical & Electronics",
+      "name": "Short Circuit Estimate",
+      "description": "Browser-based short circuit estimate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 70,
+      "category": "Electrical & Electronics",
+      "name": "Inrush Current",
+      "description": "Browser-based inrush current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 71,
+      "category": "Electrical & Electronics",
+      "name": "Surge Energy",
+      "description": "Browser-based surge energy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 72,
+      "category": "Electrical & Electronics",
+      "name": "Battery C-Rate",
+      "description": "Browser-based battery c-rate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 73,
+      "category": "Electrical & Electronics",
+      "name": "Battery Charge Time",
+      "description": "Browser-based battery charge time for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 74,
+      "category": "Electrical & Electronics",
+      "name": "Battery Discharge Time",
+      "description": "Browser-based battery discharge time for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 75,
+      "category": "Electrical & Electronics",
+      "name": "Solar Panel Power",
+      "description": "Browser-based solar panel power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 76,
+      "category": "Electrical & Electronics",
+      "name": "Solar Energy",
+      "description": "Browser-based solar energy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 77,
+      "category": "Electrical & Electronics",
+      "name": "Solar Runtime",
+      "description": "Browser-based solar runtime for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 78,
+      "category": "Electrical & Electronics",
+      "name": "Resistor Colour Code",
+      "description": "Browser-based resistor colour code for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 79,
+      "category": "Electrical & Electronics",
+      "name": "Resistor Tolerance",
+      "description": "Browser-based resistor tolerance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 80,
+      "category": "Electrical & Electronics",
+      "name": "Capacitor Code",
+      "description": "Browser-based capacitor code for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 81,
+      "category": "Electrical & Electronics",
+      "name": "Inductor Code",
+      "description": "Browser-based inductor code for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 82,
+      "category": "Electrical & Electronics",
+      "name": "SMD Resistor Code",
+      "description": "Browser-based smd resistor code for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 83,
+      "category": "Electrical & Electronics",
+      "name": "SMD Capacitor Code",
+      "description": "Browser-based smd capacitor code for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 84,
+      "category": "Electrical & Electronics",
+      "name": "Series Capacitor",
+      "description": "Browser-based series capacitor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 85,
+      "category": "Electrical & Electronics",
+      "name": "Parallel Capacitor",
+      "description": "Browser-based parallel capacitor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 86,
+      "category": "Electrical & Electronics",
+      "name": "Series Inductor",
+      "description": "Browser-based series inductor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 87,
+      "category": "Electrical & Electronics",
+      "name": "Parallel Inductor",
+      "description": "Browser-based parallel inductor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 88,
+      "category": "Electrical & Electronics",
+      "name": "RC Filter Cutoff",
+      "description": "Browser-based rc filter cutoff for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 89,
+      "category": "Electrical & Electronics",
+      "name": "RL Filter Cutoff",
+      "description": "Browser-based rl filter cutoff for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 90,
+      "category": "Electrical & Electronics",
+      "name": "Low Pass Cutoff",
+      "description": "Browser-based low pass cutoff for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 91,
+      "category": "Electrical & Electronics",
+      "name": "High Pass Cutoff",
+      "description": "Browser-based high pass cutoff for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 92,
+      "category": "Electrical & Electronics",
+      "name": "Band Pass Center",
+      "description": "Browser-based band pass center for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 93,
+      "category": "Electrical & Electronics",
+      "name": "Notch Frequency",
+      "description": "Browser-based notch frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 94,
+      "category": "Electrical & Electronics",
+      "name": "Gain dB",
+      "description": "Browser-based gain db for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 95,
+      "category": "Electrical & Electronics",
+      "name": "Voltage Gain",
+      "description": "Browser-based voltage gain for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 96,
+      "category": "Electrical & Electronics",
+      "name": "Current Gain",
+      "description": "Browser-based current gain for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 97,
+      "category": "Electrical & Electronics",
+      "name": "Power Gain",
+      "description": "Browser-based power gain for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 98,
+      "category": "Electrical & Electronics",
+      "name": "Op-Amp Gain",
+      "description": "Browser-based op-amp gain for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 99,
+      "category": "Electrical & Electronics",
+      "name": "Non-Inverting Gain",
+      "description": "Browser-based non-inverting gain for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 100,
+      "category": "Electrical & Electronics",
+      "name": "Inverting Gain",
+      "description": "Browser-based inverting gain for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 101,
+      "category": "Electrical & Electronics",
+      "name": "Differential Gain",
+      "description": "Browser-based differential gain for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 102,
+      "category": "Electrical & Electronics",
+      "name": "Comparator Threshold",
+      "description": "Browser-based comparator threshold for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 103,
+      "category": "Electrical & Electronics",
+      "name": "Schmitt Trigger Threshold",
+      "description": "Browser-based schmitt trigger threshold for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 104,
+      "category": "Electrical & Electronics",
+      "name": "555 Frequency",
+      "description": "Browser-based 555 frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 105,
+      "category": "Electrical & Electronics",
+      "name": "555 Duty Cycle",
+      "description": "Browser-based 555 duty cycle for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 106,
+      "category": "Electrical & Electronics",
+      "name": "Binary to Decimal",
+      "description": "Browser-based binary to decimal for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 107,
+      "category": "Electrical & Electronics",
+      "name": "Decimal to Binary",
+      "description": "Browser-based decimal to binary for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 108,
+      "category": "Electrical & Electronics",
+      "name": "Hex to Decimal",
+      "description": "Browser-based hex to decimal for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 109,
+      "category": "Electrical & Electronics",
+      "name": "Decimal to Hex",
+      "description": "Browser-based decimal to hex for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 110,
+      "category": "Electrical & Electronics",
+      "name": "Binary to Hex",
+      "description": "Browser-based binary to hex for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 111,
+      "category": "Electrical & Electronics",
+      "name": "Hex to Binary",
+      "description": "Browser-based hex to binary for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 112,
+      "category": "Electrical & Electronics",
+      "name": "Binary Addition",
+      "description": "Browser-based binary addition for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 113,
+      "category": "Electrical & Electronics",
+      "name": "Binary Subtraction",
+      "description": "Browser-based binary subtraction for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 114,
+      "category": "Electrical & Electronics",
+      "name": "Two's Complement",
+      "description": "Browser-based two's complement for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 115,
+      "category": "Electrical & Electronics",
+      "name": "Bit Mask",
+      "description": "Browser-based bit mask for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 116,
+      "category": "Electrical & Electronics",
+      "name": "Bit Shift",
+      "description": "Browser-based bit shift for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 117,
+      "category": "Electrical & Electronics",
+      "name": "Bitwise AND",
+      "description": "Browser-based bitwise and for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 118,
+      "category": "Electrical & Electronics",
+      "name": "Bitwise OR",
+      "description": "Browser-based bitwise or for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 119,
+      "category": "Electrical & Electronics",
+      "name": "Bitwise XOR",
+      "description": "Browser-based bitwise xor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 120,
+      "category": "Electrical & Electronics",
+      "name": "Parity Bit",
+      "description": "Browser-based parity bit for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 121,
+      "category": "Electrical & Electronics",
+      "name": "Gray Code",
+      "description": "Browser-based gray code for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 122,
+      "category": "Electrical & Electronics",
+      "name": "ASCII Code",
+      "description": "Browser-based ascii code for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 123,
+      "category": "Electrical & Electronics",
+      "name": "Unicode Code Point",
+      "description": "Browser-based unicode code point for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 124,
+      "category": "Electrical & Electronics",
+      "name": "BCD Converter",
+      "description": "Browser-based bcd converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 125,
+      "category": "Electrical & Electronics",
+      "name": "Boolean Simplifier",
+      "description": "Browser-based boolean simplifier for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 126,
+      "category": "Electrical & Electronics",
+      "name": "Karnaugh Map Helper",
+      "description": "Browser-based karnaugh map helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 127,
+      "category": "Electrical & Electronics",
+      "name": "Logic Gate Truth Table",
+      "description": "Browser-based logic gate truth table for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 128,
+      "category": "Electrical & Electronics",
+      "name": "Flip-Flop Frequency",
+      "description": "Browser-based flip-flop frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 129,
+      "category": "Electrical & Electronics",
+      "name": "Counter Modulus",
+      "description": "Browser-based counter modulus for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 130,
+      "category": "Electrical & Electronics",
+      "name": "Clock Divider",
+      "description": "Browser-based clock divider for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 131,
+      "category": "Electrical & Electronics",
+      "name": "Memory Address Space",
+      "description": "Browser-based memory address space for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 132,
+      "category": "Electrical & Electronics",
+      "name": "EEPROM Size",
+      "description": "Browser-based eeprom size for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 133,
+      "category": "Electrical & Electronics",
+      "name": "Flash Size",
+      "description": "Browser-based flash size for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 134,
+      "category": "Electrical & Electronics",
+      "name": "Microcontroller GPIO Budget",
+      "description": "Browser-based microcontroller gpio budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 135,
+      "category": "Electrical Installation",
+      "name": "Voltage Drop",
+      "description": "Browser-based voltage drop for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 136,
+      "category": "Electrical Installation",
+      "name": "Cable Sizing",
+      "description": "Browser-based cable sizing for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 137,
+      "category": "Electrical Installation",
+      "name": "Conductor Ampacity",
+      "description": "Browser-based conductor ampacity for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 138,
+      "category": "Electrical Installation",
+      "name": "Breaker Selection",
+      "description": "Browser-based breaker selection for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 139,
+      "category": "Electrical Installation",
+      "name": "Fuse Selection",
+      "description": "Browser-based fuse selection for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 140,
+      "category": "Electrical Installation",
+      "name": "RCD Current",
+      "description": "Browser-based rcd current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 141,
+      "category": "Electrical Installation",
+      "name": "RCD Test Current",
+      "description": "Browser-based rcd test current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 142,
+      "category": "Electrical Installation",
+      "name": "Loop Impedance",
+      "description": "Browser-based loop impedance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 143,
+      "category": "Electrical Installation",
+      "name": "Earth Fault Loop",
+      "description": "Browser-based earth fault loop for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 144,
+      "category": "Electrical Installation",
+      "name": "Protective Conductor",
+      "description": "Browser-based protective conductor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 145,
+      "category": "Electrical Installation",
+      "name": "PE Conductor",
+      "description": "Browser-based pe conductor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 146,
+      "category": "Electrical Installation",
+      "name": "Neutral Current",
+      "description": "Browser-based neutral current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 147,
+      "category": "Electrical Installation",
+      "name": "Phase Balance",
+      "description": "Browser-based phase balance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 148,
+      "category": "Electrical Installation",
+      "name": "Three-Phase Load",
+      "description": "Browser-based three-phase load for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 149,
+      "category": "Electrical Installation",
+      "name": "Load Diversity",
+      "description": "Browser-based load diversity for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 150,
+      "category": "Electrical Installation",
+      "name": "Demand Factor",
+      "description": "Browser-based demand factor for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 151,
+      "category": "Electrical Installation",
+      "name": "Connected Load",
+      "description": "Browser-based connected load for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 152,
+      "category": "Electrical Installation",
+      "name": "Maximum Demand",
+      "description": "Browser-based maximum demand for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 153,
+      "category": "Electrical Installation",
+      "name": "Installation Power",
+      "description": "Browser-based installation power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 154,
+      "category": "Electrical Installation",
+      "name": "Circuit Power",
+      "description": "Browser-based circuit power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 155,
+      "category": "Electrical Installation",
+      "name": "Lighting Load",
+      "description": "Browser-based lighting load for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 156,
+      "category": "Electrical Installation",
+      "name": "Socket Load",
+      "description": "Browser-based socket load for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 157,
+      "category": "Electrical Installation",
+      "name": "Motor Circuit",
+      "description": "Browser-based motor circuit for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 158,
+      "category": "Electrical Installation",
+      "name": "Heating Circuit",
+      "description": "Browser-based heating circuit for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 159,
+      "category": "Electrical Installation",
+      "name": "Cable Length",
+      "description": "Browser-based cable length for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 160,
+      "category": "Electrical Installation",
+      "name": "Cable Resistance",
+      "description": "Browser-based cable resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 161,
+      "category": "Electrical Installation",
+      "name": "Conduit Fill",
+      "description": "Browser-based conduit fill for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 162,
+      "category": "Electrical Installation",
+      "name": "Cable Tray Fill",
+      "description": "Browser-based cable tray fill for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 163,
+      "category": "Electrical Installation",
+      "name": "Voltage Drop Percent",
+      "description": "Browser-based voltage drop percent for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 164,
+      "category": "Electrical Installation",
+      "name": "Short Circuit Current",
+      "description": "Browser-based short circuit current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 165,
+      "category": "Electrical Installation",
+      "name": "Prospective Fault Current",
+      "description": "Browser-based prospective fault current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 166,
+      "category": "Electrical Installation",
+      "name": "Breaking Capacity",
+      "description": "Browser-based breaking capacity for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 167,
+      "category": "Electrical Installation",
+      "name": "Breaker Coordination",
+      "description": "Browser-based breaker coordination for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 168,
+      "category": "Electrical Installation",
+      "name": "Selectivity Check",
+      "description": "Browser-based selectivity check for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 169,
+      "category": "Electrical Installation",
+      "name": "Overload Check",
+      "description": "Browser-based overload check for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 170,
+      "category": "Electrical Installation",
+      "name": "Cable Derating",
+      "description": "Browser-based cable derating for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 171,
+      "category": "Electrical Installation",
+      "name": "Ambient Derating",
+      "description": "Browser-based ambient derating for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 172,
+      "category": "Electrical Installation",
+      "name": "Grouping Derating",
+      "description": "Browser-based grouping derating for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 173,
+      "category": "Electrical Installation",
+      "name": "Thermal Derating",
+      "description": "Browser-based thermal derating for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 174,
+      "category": "Electrical Installation",
+      "name": "Installation Temperature",
+      "description": "Browser-based installation temperature for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 175,
+      "category": "Electrical Installation",
+      "name": "IP Rating Lookup",
+      "description": "Browser-based ip rating lookup for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 176,
+      "category": "Electrical Installation",
+      "name": "IK Rating Lookup",
+      "description": "Browser-based ik rating lookup for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 177,
+      "category": "Electrical Installation",
+      "name": "Protection Class",
+      "description": "Browser-based protection class for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 178,
+      "category": "Electrical Installation",
+      "name": "Insulation Class",
+      "description": "Browser-based insulation class for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 179,
+      "category": "Electrical Installation",
+      "name": "Touch Voltage",
+      "description": "Browser-based touch voltage for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 180,
+      "category": "Electrical Installation",
+      "name": "Step Voltage",
+      "description": "Browser-based step voltage for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 181,
+      "category": "Electrical Installation",
+      "name": "Earth Electrode Resistance",
+      "description": "Browser-based earth electrode resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 182,
+      "category": "Electrical Installation",
+      "name": "Ground Rod Resistance",
+      "description": "Browser-based ground rod resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 183,
+      "category": "Electrical Installation",
+      "name": "Ground Grid Resistance",
+      "description": "Browser-based ground grid resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 184,
+      "category": "Electrical Installation",
+      "name": "Lightning Risk Notes",
+      "description": "Browser-based lightning risk notes for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 185,
+      "category": "Electrical Installation",
+      "name": "Surge Protection",
+      "description": "Browser-based surge protection for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 186,
+      "category": "Electrical Installation",
+      "name": "SPD Selection",
+      "description": "Browser-based spd selection for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 187,
+      "category": "Electrical Installation",
+      "name": "Type 1 SPD",
+      "description": "Browser-based type 1 spd for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 188,
+      "category": "Electrical Installation",
+      "name": "Type 2 SPD",
+      "description": "Browser-based type 2 spd for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 189,
+      "category": "Electrical Installation",
+      "name": "Type 3 SPD",
+      "description": "Browser-based type 3 spd for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 190,
+      "category": "Electrical Installation",
+      "name": "Residual Current",
+      "description": "Browser-based residual current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 191,
+      "category": "Electrical Installation",
+      "name": "Power Factor Correction",
+      "description": "Browser-based power factor correction for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 192,
+      "category": "Electrical Installation",
+      "name": "Capacitor Bank",
+      "description": "Browser-based capacitor bank for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 193,
+      "category": "Electrical Installation",
+      "name": "Capacitor kVAR",
+      "description": "Browser-based capacitor kvar for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 194,
+      "category": "Electrical Installation",
+      "name": "Energy Cost",
+      "description": "Browser-based energy cost for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 195,
+      "category": "Electrical Installation",
+      "name": "Meter Reading",
+      "description": "Browser-based meter reading for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 196,
+      "category": "Electrical Installation",
+      "name": "Energy Consumption",
+      "description": "Browser-based energy consumption for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 197,
+      "category": "Electrical Installation",
+      "name": "Energy Bill Estimate",
+      "description": "Browser-based energy bill estimate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 198,
+      "category": "Electrical Installation",
+      "name": "Operating Hours",
+      "description": "Browser-based operating hours for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 199,
+      "category": "Electrical Installation",
+      "name": "Tariff Cost",
+      "description": "Browser-based tariff cost for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 200,
+      "category": "Electrical Installation",
+      "name": "Standby Cost",
+      "description": "Browser-based standby cost for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 201,
+      "category": "Electrical Installation",
+      "name": "Load Profile",
+      "description": "Browser-based load profile for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 202,
+      "category": "Electrical Installation",
+      "name": "Peak Demand",
+      "description": "Browser-based peak demand for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 203,
+      "category": "Electrical Installation",
+      "name": "Transformer Loading",
+      "description": "Browser-based transformer loading for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 204,
+      "category": "Electrical Installation",
+      "name": "Transformer Utilization",
+      "description": "Browser-based transformer utilization for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 205,
+      "category": "Electrical Installation",
+      "name": "Generator Sizing",
+      "description": "Browser-based generator sizing for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 206,
+      "category": "Electrical Installation",
+      "name": "UPS Sizing",
+      "description": "Browser-based ups sizing for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 207,
+      "category": "Electrical Installation",
+      "name": "UPS Runtime",
+      "description": "Browser-based ups runtime for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 208,
+      "category": "Electrical Installation",
+      "name": "Inverter Sizing",
+      "description": "Browser-based inverter sizing for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 209,
+      "category": "Electrical Installation",
+      "name": "Battery Bank",
+      "description": "Browser-based battery bank for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 210,
+      "category": "Electrical Installation",
+      "name": "Battery Series Count",
+      "description": "Browser-based battery series count for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 211,
+      "category": "Electrical Installation",
+      "name": "Battery Parallel Count",
+      "description": "Browser-based battery parallel count for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 212,
+      "category": "Electrical Installation",
+      "name": "Cable AWG Metric",
+      "description": "Browser-based cable awg metric for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 213,
+      "category": "Electrical Installation",
+      "name": "AWG to mm2",
+      "description": "Browser-based awg to mm2 for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 214,
+      "category": "Electrical Installation",
+      "name": "mm2 to AWG",
+      "description": "Browser-based mm2 to awg for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 215,
+      "category": "Electrical Installation",
+      "name": "Conductor Weight",
+      "description": "Browser-based conductor weight for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 216,
+      "category": "Electrical Installation",
+      "name": "Copper Resistance",
+      "description": "Browser-based copper resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 217,
+      "category": "Electrical Installation",
+      "name": "Aluminium Resistance",
+      "description": "Browser-based aluminium resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 218,
+      "category": "Electrical Installation",
+      "name": "Busbar Current",
+      "description": "Browser-based busbar current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 219,
+      "category": "Electrical Installation",
+      "name": "Busbar Voltage Drop",
+      "description": "Browser-based busbar voltage drop for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 220,
+      "category": "Electrical Installation",
+      "name": "Busbar Temperature",
+      "description": "Browser-based busbar temperature for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 221,
+      "category": "Electrical Installation",
+      "name": "Panel Heat",
+      "description": "Browser-based panel heat for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 222,
+      "category": "Electrical Installation",
+      "name": "Enclosure Volume",
+      "description": "Browser-based enclosure volume for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 223,
+      "category": "Electrical Installation",
+      "name": "DIN Rail Space",
+      "description": "Browser-based din rail space for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 224,
+      "category": "Electrical Installation",
+      "name": "Terminal Count",
+      "description": "Browser-based terminal count for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 225,
+      "category": "Electrical Installation",
+      "name": "Wire Ferrule Size",
+      "description": "Browser-based wire ferrule size for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 226,
+      "category": "Electrical Installation",
+      "name": "Crimp Ratio",
+      "description": "Browser-based crimp ratio for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 227,
+      "category": "Electrical Installation",
+      "name": "Torque Conversion",
+      "description": "Browser-based torque conversion for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 228,
+      "category": "Electrical Installation",
+      "name": "Screw Torque",
+      "description": "Browser-based screw torque for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 229,
+      "category": "Electrical Installation",
+      "name": "Terminal Torque",
+      "description": "Browser-based terminal torque for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 230,
+      "category": "Electrical Installation",
+      "name": "Cable Bend Radius",
+      "description": "Browser-based cable bend radius for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 231,
+      "category": "Electrical Installation",
+      "name": "Cable Pull Estimate",
+      "description": "Browser-based cable pull estimate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 232,
+      "category": "Electrical Installation",
+      "name": "Conduit Diameter",
+      "description": "Browser-based conduit diameter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 233,
+      "category": "Electrical Installation",
+      "name": "Junction Box Fill",
+      "description": "Browser-based junction box fill for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 234,
+      "category": "Electrical Installation",
+      "name": "Distribution Board Fill",
+      "description": "Browser-based distribution board fill for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 235,
+      "category": "Electrical Installation",
+      "name": "Phase Sequence",
+      "description": "Browser-based phase sequence for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 236,
+      "category": "Electrical Installation",
+      "name": "Phase Angle",
+      "description": "Browser-based phase angle for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 237,
+      "category": "Electrical Installation",
+      "name": "Frequency Check",
+      "description": "Browser-based frequency check for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 238,
+      "category": "Electrical Installation",
+      "name": "Voltage Tolerance",
+      "description": "Browser-based voltage tolerance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 239,
+      "category": "Electrical Installation",
+      "name": "Supply Variation",
+      "description": "Browser-based supply variation for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 240,
+      "category": "Electrical Installation",
+      "name": "Motor Starting Current",
+      "description": "Browser-based motor starting current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 241,
+      "category": "Electrical Installation",
+      "name": "Motor Protection",
+      "description": "Browser-based motor protection for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 242,
+      "category": "Electrical Installation",
+      "name": "Contactor Selection",
+      "description": "Browser-based contactor selection for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 243,
+      "category": "Electrical Installation",
+      "name": "Overload Relay",
+      "description": "Browser-based overload relay for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 244,
+      "category": "Electrical Installation",
+      "name": "Thermal Relay",
+      "description": "Browser-based thermal relay for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 245,
+      "category": "Electrical Installation",
+      "name": "Emergency Stop Circuit",
+      "description": "Browser-based emergency stop circuit for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 246,
+      "category": "Electrical Installation",
+      "name": "Safety Relay Logic",
+      "description": "Browser-based safety relay logic for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 247,
+      "category": "Electrical Installation",
+      "name": "Control Transformer",
+      "description": "Browser-based control transformer for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 248,
+      "category": "Electrical Installation",
+      "name": "Control Fuse",
+      "description": "Browser-based control fuse for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 249,
+      "category": "Electrical Installation",
+      "name": "Control Voltage",
+      "description": "Browser-based control voltage for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 250,
+      "category": "Electrical Installation",
+      "name": "PLC I/O Count",
+      "description": "Browser-based plc i/o count for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 251,
+      "category": "Electrical Installation",
+      "name": "PLC Power Budget",
+      "description": "Browser-based plc power budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 252,
+      "category": "Electrical Installation",
+      "name": "Industrial Power Budget",
+      "description": "Browser-based industrial power budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 253,
+      "category": "Electrical Installation",
+      "name": "Site Load Summary",
+      "description": "Browser-based site load summary for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 254,
+      "category": "Electrical Installation",
+      "name": "Electrical Inspection Checklist",
+      "description": "Browser-based electrical inspection checklist for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 255,
+      "category": "Electrical Installation",
+      "name": "Test Interval Planner",
+      "description": "Browser-based test interval planner for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 256,
+      "category": "Electrical Installation",
+      "name": "Maintenance Interval",
+      "description": "Browser-based maintenance interval for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 257,
+      "category": "Automation & PLC",
+      "name": "PLC I/O Count",
+      "description": "Browser-based plc i/o count for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 258,
+      "category": "Automation & PLC",
+      "name": "PLC Scan Time",
+      "description": "Browser-based plc scan time for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 259,
+      "category": "Automation & PLC",
+      "name": "PLC Memory Estimate",
+      "description": "Browser-based plc memory estimate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 260,
+      "category": "Automation & PLC",
+      "name": "Digital Input Budget",
+      "description": "Browser-based digital input budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 261,
+      "category": "Automation & PLC",
+      "name": "Digital Output Budget",
+      "description": "Browser-based digital output budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 262,
+      "category": "Automation & PLC",
+      "name": "Analog Input Scaling",
+      "description": "Browser-based analog input scaling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 263,
+      "category": "Automation & PLC",
+      "name": "Analog Output Scaling",
+      "description": "Browser-based analog output scaling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 264,
+      "category": "Automation & PLC",
+      "name": "4-20mA Scaling",
+      "description": "Browser-based 4-20ma scaling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 265,
+      "category": "Automation & PLC",
+      "name": "0-10V Scaling",
+      "description": "Browser-based 0-10v scaling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 266,
+      "category": "Automation & PLC",
+      "name": "0-20mA Scaling",
+      "description": "Browser-based 0-20ma scaling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 267,
+      "category": "Automation & PLC",
+      "name": "Sensor Range Scaling",
+      "description": "Browser-based sensor range scaling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 268,
+      "category": "Automation & PLC",
+      "name": "Engineering Unit Scaling",
+      "description": "Browser-based engineering unit scaling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 269,
+      "category": "Automation & PLC",
+      "name": "Linear Interpolation",
+      "description": "Browser-based linear interpolation for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 270,
+      "category": "Automation & PLC",
+      "name": "Signal Conversion",
+      "description": "Browser-based signal conversion for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 271,
+      "category": "Automation & PLC",
+      "name": "PLC Timer Preset",
+      "description": "Browser-based plc timer preset for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 272,
+      "category": "Automation & PLC",
+      "name": "PLC Counter Preset",
+      "description": "Browser-based plc counter preset for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 273,
+      "category": "Automation & PLC",
+      "name": "Pulse Frequency",
+      "description": "Browser-based pulse frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 274,
+      "category": "Automation & PLC",
+      "name": "Encoder PPR",
+      "description": "Browser-based encoder ppr for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 275,
+      "category": "Automation & PLC",
+      "name": "Encoder RPM",
+      "description": "Browser-based encoder rpm for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 276,
+      "category": "Automation & PLC",
+      "name": "Encoder Resolution",
+      "description": "Browser-based encoder resolution for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 277,
+      "category": "Automation & PLC",
+      "name": "Stepper Steps",
+      "description": "Browser-based stepper steps for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 278,
+      "category": "Automation & PLC",
+      "name": "Stepper RPM",
+      "description": "Browser-based stepper rpm for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 279,
+      "category": "Automation & PLC",
+      "name": "Servo Speed",
+      "description": "Browser-based servo speed for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 280,
+      "category": "Automation & PLC",
+      "name": "Servo Torque",
+      "description": "Browser-based servo torque for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 281,
+      "category": "Automation & PLC",
+      "name": "Gear Ratio",
+      "description": "Browser-based gear ratio for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 282,
+      "category": "Automation & PLC",
+      "name": "Lead Screw Speed",
+      "description": "Browser-based lead screw speed for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 283,
+      "category": "Automation & PLC",
+      "name": "Linear Motion",
+      "description": "Browser-based linear motion for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 284,
+      "category": "Automation & PLC",
+      "name": "Pneumatic Force",
+      "description": "Browser-based pneumatic force for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 285,
+      "category": "Automation & PLC",
+      "name": "Pneumatic Cylinder",
+      "description": "Browser-based pneumatic cylinder for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 286,
+      "category": "Automation & PLC",
+      "name": "Hydraulic Force",
+      "description": "Browser-based hydraulic force for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 287,
+      "category": "Automation & PLC",
+      "name": "Hydraulic Flow",
+      "description": "Browser-based hydraulic flow for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 288,
+      "category": "Automation & PLC",
+      "name": "Valve Cv Estimate",
+      "description": "Browser-based valve cv estimate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 289,
+      "category": "Automation & PLC",
+      "name": "Valve Flow",
+      "description": "Browser-based valve flow for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 290,
+      "category": "Automation & PLC",
+      "name": "Pump Head",
+      "description": "Browser-based pump head for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 291,
+      "category": "Automation & PLC",
+      "name": "Pump Flow",
+      "description": "Browser-based pump flow for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 292,
+      "category": "Automation & PLC",
+      "name": "Pump Power",
+      "description": "Browser-based pump power for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 293,
+      "category": "Automation & PLC",
+      "name": "Fan Affinity",
+      "description": "Browser-based fan affinity for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 294,
+      "category": "Automation & PLC",
+      "name": "Conveyor Speed",
+      "description": "Browser-based conveyor speed for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 295,
+      "category": "Automation & PLC",
+      "name": "Conveyor Throughput",
+      "description": "Browser-based conveyor throughput for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 296,
+      "category": "Automation & PLC",
+      "name": "Belt Length",
+      "description": "Browser-based belt length for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 297,
+      "category": "Automation & PLC",
+      "name": "Motor Gearbox",
+      "description": "Browser-based motor gearbox for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 298,
+      "category": "Automation & PLC",
+      "name": "Industrial Ethernet",
+      "description": "Browser-based industrial ethernet for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 299,
+      "category": "Automation & PLC",
+      "name": "Modbus RTU Frame",
+      "description": "Browser-based modbus rtu frame for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 300,
+      "category": "Automation & PLC",
+      "name": "Modbus TCP Port",
+      "description": "Browser-based modbus tcp port for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 301,
+      "category": "Automation & PLC",
+      "name": "CAN Bit Timing",
+      "description": "Browser-based can bit timing for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 302,
+      "category": "Automation & PLC",
+      "name": "CAN Baud Rate",
+      "description": "Browser-based can baud rate for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 303,
+      "category": "Automation & PLC",
+      "name": "PROFINET Notes",
+      "description": "Browser-based profinet notes for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 304,
+      "category": "Automation & PLC",
+      "name": "EtherNet/IP Notes",
+      "description": "Browser-based ethernet/ip notes for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 305,
+      "category": "Automation & PLC",
+      "name": "OPC UA Notes",
+      "description": "Browser-based opc ua notes for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 306,
+      "category": "Automation & PLC",
+      "name": "MQTT Topic Helper",
+      "description": "Browser-based mqtt topic helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 307,
+      "category": "Automation & PLC",
+      "name": "MQTT Payload Size",
+      "description": "Browser-based mqtt payload size for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 308,
+      "category": "Automation & PLC",
+      "name": "SCADA Tag Count",
+      "description": "Browser-based scada tag count for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 309,
+      "category": "Automation & PLC",
+      "name": "HMI Resolution",
+      "description": "Browser-based hmi resolution for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 310,
+      "category": "Automation & PLC",
+      "name": "Alarm Priority",
+      "description": "Browser-based alarm priority for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 311,
+      "category": "Automation & PLC",
+      "name": "Alarm Deadband",
+      "description": "Browser-based alarm deadband for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 312,
+      "category": "Automation & PLC",
+      "name": "Process Deadband",
+      "description": "Browser-based process deadband for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 313,
+      "category": "Automation & PLC",
+      "name": "PID Proportional",
+      "description": "Browser-based pid proportional for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 314,
+      "category": "Automation & PLC",
+      "name": "PID Integral",
+      "description": "Browser-based pid integral for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 315,
+      "category": "Automation & PLC",
+      "name": "PID Derivative",
+      "description": "Browser-based pid derivative for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 316,
+      "category": "Automation & PLC",
+      "name": "PID Tuning",
+      "description": "Browser-based pid tuning for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 317,
+      "category": "Automation & PLC",
+      "name": "PID Output",
+      "description": "Browser-based pid output for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 318,
+      "category": "Automation & PLC",
+      "name": "Control Loop Cycle",
+      "description": "Browser-based control loop cycle for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 319,
+      "category": "Automation & PLC",
+      "name": "Sampling Frequency",
+      "description": "Browser-based sampling frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 320,
+      "category": "Automation & PLC",
+      "name": "Nyquist Frequency",
+      "description": "Browser-based nyquist frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 321,
+      "category": "Automation & PLC",
+      "name": "Sensor Sampling",
+      "description": "Browser-based sensor sampling for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 322,
+      "category": "Automation & PLC",
+      "name": "Filter Time Constant",
+      "description": "Browser-based filter time constant for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 323,
+      "category": "Automation & PLC",
+      "name": "Moving Average",
+      "description": "Browser-based moving average for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 324,
+      "category": "Automation & PLC",
+      "name": "Exponential Average",
+      "description": "Browser-based exponential average for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 325,
+      "category": "Automation & PLC",
+      "name": "Signal Noise Ratio",
+      "description": "Browser-based signal noise ratio for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 326,
+      "category": "Automation & PLC",
+      "name": "Sensor Accuracy",
+      "description": "Browser-based sensor accuracy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 327,
+      "category": "Automation & PLC",
+      "name": "Sensor Resolution",
+      "description": "Browser-based sensor resolution for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 328,
+      "category": "Automation & PLC",
+      "name": "Sensor Repeatability",
+      "description": "Browser-based sensor repeatability for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 329,
+      "category": "Automation & PLC",
+      "name": "Sensor Hysteresis",
+      "description": "Browser-based sensor hysteresis for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 330,
+      "category": "Automation & PLC",
+      "name": "Calibration Error",
+      "description": "Browser-based calibration error for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 331,
+      "category": "Automation & PLC",
+      "name": "Calibration Interval",
+      "description": "Browser-based calibration interval for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 332,
+      "category": "Automation & PLC",
+      "name": "Linear Sensor Error",
+      "description": "Browser-based linear sensor error for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 333,
+      "category": "Automation & PLC",
+      "name": "ADC Counts",
+      "description": "Browser-based adc counts for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 334,
+      "category": "Automation & PLC",
+      "name": "DAC Counts",
+      "description": "Browser-based dac counts for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 335,
+      "category": "Automation & PLC",
+      "name": "PLC Address Helper",
+      "description": "Browser-based plc address helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 336,
+      "category": "Automation & PLC",
+      "name": "Memory Address Helper",
+      "description": "Browser-based memory address helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 337,
+      "category": "Automation & PLC",
+      "name": "IEC Timer Helper",
+      "description": "Browser-based iec timer helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 338,
+      "category": "Automation & PLC",
+      "name": "IEC Counter Helper",
+      "description": "Browser-based iec counter helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 339,
+      "category": "Automation & PLC",
+      "name": "State Machine Table",
+      "description": "Browser-based state machine table for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 340,
+      "category": "Automation & PLC",
+      "name": "Sequence Step Planner",
+      "description": "Browser-based sequence step planner for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 341,
+      "category": "Automation & PLC",
+      "name": "Interlock Matrix",
+      "description": "Browser-based interlock matrix for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 342,
+      "category": "Automation & PLC",
+      "name": "Permissive Matrix",
+      "description": "Browser-based permissive matrix for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 343,
+      "category": "Automation & PLC",
+      "name": "Cause Effect Matrix",
+      "description": "Browser-based cause effect matrix for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 344,
+      "category": "Automation & PLC",
+      "name": "I/O List Builder",
+      "description": "Browser-based i/o list builder for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 345,
+      "category": "Automation & PLC",
+      "name": "Tag Naming Helper",
+      "description": "Browser-based tag naming helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 346,
+      "category": "Automation & PLC",
+      "name": "Alarm Naming Helper",
+      "description": "Browser-based alarm naming helper for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 347,
+      "category": "Automation & PLC",
+      "name": "PLC Network Budget",
+      "description": "Browser-based plc network budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 348,
+      "category": "Automation & PLC",
+      "name": "Industrial IP Plan",
+      "description": "Browser-based industrial ip plan for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 349,
+      "category": "Automation & PLC",
+      "name": "OT Subnet Planner",
+      "description": "Browser-based ot subnet planner for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 350,
+      "category": "Automation & PLC",
+      "name": "Device Count",
+      "description": "Browser-based device count for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 351,
+      "category": "Automation & PLC",
+      "name": "Network Load",
+      "description": "Browser-based network load for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 352,
+      "category": "Automation & PLC",
+      "name": "Cycle Time Budget",
+      "description": "Browser-based cycle time budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 353,
+      "category": "Automation & PLC",
+      "name": "Response Time Budget",
+      "description": "Browser-based response time budget for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 354,
+      "category": "Automation & PLC",
+      "name": "Safety Margin",
+      "description": "Browser-based safety margin for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 355,
+      "category": "Automation & PLC",
+      "name": "Machine Availability",
+      "description": "Browser-based machine availability for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 356,
+      "category": "Automation & PLC",
+      "name": "OEE Availability",
+      "description": "Browser-based oee availability for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 357,
+      "category": "Automation & PLC",
+      "name": "OEE Performance",
+      "description": "Browser-based oee performance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 358,
+      "category": "Automation & PLC",
+      "name": "OEE Quality",
+      "description": "Browser-based oee quality for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 359,
+      "category": "Automation & PLC",
+      "name": "Overall Equipment Effectiveness",
+      "description": "Browser-based overall equipment effectiveness for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 360,
+      "category": "Automation & PLC",
+      "name": "MTBF",
+      "description": "Browser-based mtbf for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 361,
+      "category": "Automation & PLC",
+      "name": "MTTR",
+      "description": "Browser-based mttr for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 362,
+      "category": "Automation & PLC",
+      "name": "Maintenance Window",
+      "description": "Browser-based maintenance window for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 363,
+      "category": "Automation & PLC",
+      "name": "Production Capacity",
+      "description": "Browser-based production capacity for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 364,
+      "category": "Automation & PLC",
+      "name": "Cycle Throughput",
+      "description": "Browser-based cycle throughput for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 365,
+      "category": "Automation & PLC",
+      "name": "Downtime Cost",
+      "description": "Browser-based downtime cost for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 366,
+      "category": "Automation & PLC",
+      "name": "Energy per Unit",
+      "description": "Browser-based energy per unit for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 367,
+      "category": "Automation & PLC",
+      "name": "Compressed Air Cost",
+      "description": "Browser-based compressed air cost for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 368,
+      "category": "Automation & PLC",
+      "name": "Steam Energy",
+      "description": "Browser-based steam energy for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 369,
+      "category": "Automation & PLC",
+      "name": "Pump Efficiency",
+      "description": "Browser-based pump efficiency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 370,
+      "category": "Automation & PLC",
+      "name": "Motor Efficiency",
+      "description": "Browser-based motor efficiency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 371,
+      "category": "Automation & PLC",
+      "name": "Drive Efficiency",
+      "description": "Browser-based drive efficiency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 372,
+      "category": "Automation & PLC",
+      "name": "VFD Frequency",
+      "description": "Browser-based vfd frequency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 373,
+      "category": "Automation & PLC",
+      "name": "VFD Motor Speed",
+      "description": "Browser-based vfd motor speed for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 374,
+      "category": "Automation & PLC",
+      "name": "VFD Acceleration",
+      "description": "Browser-based vfd acceleration for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 375,
+      "category": "Automation & PLC",
+      "name": "VFD Deceleration",
+      "description": "Browser-based vfd deceleration for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 376,
+      "category": "Automation & PLC",
+      "name": "PLC Documentation Index",
+      "description": "Browser-based plc documentation index for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 377,
+      "category": "Automation & PLC",
+      "name": "Control Panel Checklist",
+      "description": "Browser-based control panel checklist for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 378,
+      "category": "Automation & PLC",
+      "name": "Commissioning Checklist",
+      "description": "Browser-based commissioning checklist for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 379,
+      "category": "Automation & PLC",
+      "name": "FAT Checklist",
+      "description": "Browser-based fat checklist for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 380,
+      "category": "Automation & PLC",
+      "name": "SAT Checklist",
+      "description": "Browser-based sat checklist for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 943,
+      "category": "Units & Engineering",
+      "name": "Energy Converter",
+      "description": "Browser-based energy converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 944,
+      "category": "Units & Engineering",
+      "name": "Power Converter",
+      "description": "Browser-based power converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 948,
+      "category": "Units & Engineering",
+      "name": "Frequency Converter",
+      "description": "Browser-based frequency converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 952,
+      "category": "Units & Engineering",
+      "name": "Voltage Converter",
+      "description": "Browser-based voltage converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 953,
+      "category": "Units & Engineering",
+      "name": "Current Converter",
+      "description": "Browser-based current converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 954,
+      "category": "Units & Engineering",
+      "name": "Resistance Converter",
+      "description": "Browser-based resistance converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 958,
+      "category": "Units & Engineering",
+      "name": "Charge Converter",
+      "description": "Browser-based charge converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 959,
+      "category": "Units & Engineering",
+      "name": "Magnetic Flux Converter",
+      "description": "Browser-based magnetic flux converter for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1004,
+      "category": "Units & Engineering",
+      "name": "dB Power Ratio",
+      "description": "Browser-based db power ratio for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1005,
+      "category": "Units & Engineering",
+      "name": "dB Voltage Ratio",
+      "description": "Browser-based db voltage ratio for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1057,
+      "category": "Units & Engineering",
+      "name": "Power Law",
+      "description": "Browser-based power law for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1076,
+      "category": "Units & Engineering",
+      "name": "Thermal Resistance",
+      "description": "Browser-based thermal resistance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1077,
+      "category": "Units & Engineering",
+      "name": "Thermal Conductance",
+      "description": "Browser-based thermal conductance for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1078,
+      "category": "Units & Engineering",
+      "name": "Thermal Expansion",
+      "description": "Browser-based thermal expansion for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1082,
+      "category": "Units & Engineering",
+      "name": "Ohm Law",
+      "description": "Browser-based ohm law for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1083,
+      "category": "Units & Engineering",
+      "name": "Kirchhoff Voltage",
+      "description": "Browser-based kirchhoff voltage for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1084,
+      "category": "Units & Engineering",
+      "name": "Kirchhoff Current",
+      "description": "Browser-based kirchhoff current for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1085,
+      "category": "Units & Engineering",
+      "name": "Energy Efficiency",
+      "description": "Browser-based energy efficiency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1086,
+      "category": "Units & Engineering",
+      "name": "Mechanical Efficiency",
+      "description": "Browser-based mechanical efficiency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1087,
+      "category": "Units & Engineering",
+      "name": "Electrical Efficiency",
+      "description": "Browser-based electrical efficiency for study, engineering calculations and technical reference."
+    },
+    {
+      "id": 1088,
+      "category": "Units & Engineering",
+      "name": "Overall Efficiency",
+      "description": "Browser-based overall efficiency for study, engineering calculations and technical reference."
+    }
+  ]
+}

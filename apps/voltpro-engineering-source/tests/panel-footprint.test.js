@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/rendering/panel-footprint.js','utf8'),ctx);return ctx.window.VoltProPanelFootprints}
+test('panel footprint derives DIN rail occupancy',()=>{const p=load().footprint({id:'QF1',width:18,height:80});assert.equal(p.railUnits,1);assert.equal(p.mounting,'DIN-rail')});
+test('panel layout wraps across rails',()=>{const p=load().layout([{id:'A',width:36},{id:'B',width:36},{id:'C',width:18}],3);assert.equal(p[2].row,1)})

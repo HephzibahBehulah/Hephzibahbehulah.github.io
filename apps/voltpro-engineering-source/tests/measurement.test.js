@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/simulation/measurement.js','utf8'),ctx);return ctx.window.VoltProMeasurement}
+test('measures voltage, current and resistance from state',()=>{const m=load(),s={nodeVoltages:{1:24,2:0},branches:[{id:'R1',voltage:24,current:.01}]};assert.equal(m.voltage(s,1,2),24);assert.equal(m.current(s,'R1'),.01);assert.equal(m.resistance(s,'R1'),2400);assert.equal(m.continuity({branches:[{id:'W1',voltage:.001,current:1}]},'W1'),true)});

@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/rendering/device-face.js','utf8'),ctx);return ctx.window.VoltProDeviceFace}
+test('physical face includes reference and terminal labels',()=>{const s=load().face({id:'KM1',ref:'KM1',type:'contactor',terminals:[{id:'A1',number:'A1'},{id:'A2',number:'A2'},{id:'L1',number:'L1'}]});assert.ok(s.includes('KM1'));assert.ok(s.includes('A1'));assert.ok(s.includes('L1'))})

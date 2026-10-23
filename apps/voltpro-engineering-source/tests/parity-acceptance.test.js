@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('production acceptance matrix references all major subsystems',()=>{const text=fs.readFileSync('docs/WIREONA-PARITY-ACCEPTANCE.md','utf8');for(const x of ['Component library','Terminal wiring','Panel/DIN rail','Contactors/relays','Three-phase','PLC ladder','Fault training','Local project persistence','Licensing/provenance'])assert.ok(text.includes(x));});

@@ -1,0 +1,57 @@
+name: API container and LibreDWG
+on:
+  push:
+    paths:
+      - 'Dockerfile.api'
+      - 'server/**'
+      - 'src/engineering-tools.mjs'
+      - 'docker-compose.yml'
+      - '.github/workflows/api-container.yml'
+  pull_request:
+    paths:
+      - 'Dockerfile.api'
+      - 'server/**'
+      - '.github/workflows/api-container.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-and-smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate local Docker Compose configuration
+        run: docker compose config --quiet
+      # LibreDWG source build includes generated documentation and native converter smoke tests.
+      - name: Build API image with LibreDWG
+        run: docker build --progress=plain -f Dockerfile.api -t voltpro-api:test .
+      - name: Check DWG converter binary
+        run: docker run --rm --entrypoint /usr/local/bin/dxf2dwg voltpro-api:test --version
+      - name: Start API container
+        run: docker run -d --name voltpro-api-test -p 4000:4000 -e CLIENT_ORIGIN=http://localhost:5173 voltpro-api:test
+      - name: Wait for health endpoint
+        run: |
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4000/api/health; then
+              echo
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs voltpro-api-test
+          exit 1
+      - name: Exercise native DXF-to-DWG conversion
+        run: |
+          node --input-type=module <<'NODE'
+          import { exportDrawingDxf } from './src/engineering-tools.mjs';
+          const dxf = exportDrawingDxf({schemaVersion:2,projectName:'DWG conversion smoke test',activeSheetId:'smoke',sheets:[{id:'smoke',name:'DWG smoke',parts:[{id:'r1',type:'resistor',ref:'R1',value:'1k',x:100,y:100}],wires:[]}]});
+          const response = await fetch('http://127.0.0.1:4000/api/export/dwg', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ dxf }) });
+          if (!response.ok) throw new Error('DWG conversion returned ' + response.status + ': ' + await response.text());
+          const bytes = Buffer.from(await response.arrayBuffer());
+          if (bytes.length < 64 || !bytes.subarray(0, 6).toString('ascii').startsWith('AC10')) throw new Error('Converter did not return a recognized DWG signature');
+          console.log('DWG conversion passed; bytes:', bytes.length, 'signature:', bytes.subarray(0, 6).toString('ascii'));
+          NODE
+      - name: Clean up
+        if: always()
+        run: docker logs voltpro-api-test || true; docker rm -f voltpro-api-test || true

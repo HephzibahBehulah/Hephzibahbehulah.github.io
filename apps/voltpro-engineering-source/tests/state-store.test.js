@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{},structuredClone:global.structuredClone};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/simulation/state-store.js','utf8'),ctx);return ctx.window.VoltProSimulationStore}
+test('electrical and device state are independently updateable',()=>{const s=load().create();s.setElectrical({nodes:{N1:24}});s.setDevice('KM1',{state:'energized'});assert.equal(s.get().electrical.nodes.N1,24);assert.equal(s.get().devices.KM1.state,'energized')});

@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('platform boundary keeps local-first capabilities explicit',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/platform/capabilities.js','utf8'),ctx);assert.equal(ctx.window.VoltProPlatform.available('offlineProjects'),true);assert.equal(ctx.window.VoltProPlatform.available('cloudRequired'),false)})

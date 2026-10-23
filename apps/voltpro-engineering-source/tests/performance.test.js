@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('performance limits flag unusually large projects',()=>{const ctx={window:{},performance:{now:()=>0}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/validation/performance.js','utf8'),ctx);const r=ctx.window.VoltProPerformance.limits({devices:Array.from({length:501},()=>({})),wires:[]});assert.ok(r.warnings.includes('device-count-high'))})

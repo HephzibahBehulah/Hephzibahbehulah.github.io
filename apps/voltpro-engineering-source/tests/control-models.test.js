@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);for(const p of ['src/simulation/model-registry.js','src/simulation/control-models.js'])vm.runInContext(fs.readFileSync(p,'utf8'),ctx);return ctx.window}
+test('selector chooses exactly one position contact',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'S1',type:'selector-2pos',model:'selector-2pos',state:{position:'1'}});assert.equal(r.contacts[0].closed,false);assert.equal(r.contacts[1].closed,true)});
+test('emergency stop opens NC contact when pressed',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'S0',type:'emergency-stop',model:'emergency-stop',state:{pressed:true}});assert.equal(r.contacts[0].closed,false)})

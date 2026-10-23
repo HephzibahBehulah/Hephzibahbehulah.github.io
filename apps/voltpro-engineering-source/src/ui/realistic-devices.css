@@ -1,0 +1,2 @@
+/* VoltPRo physical-device visuals are styled by realistic-devices.js. */
+.vp-device-svg{display:inline-flex;align-items:center;justify-content:center;overflow:hidden}.vp-device-svg svg{width:100%;height:100%;display:block}.vp-panel-device:focus-visible{outline:3px solid #35d5ff;outline-offset:2px}@media(prefers-reduced-motion:reduce){.vp-panel-device{transition:none!important}}

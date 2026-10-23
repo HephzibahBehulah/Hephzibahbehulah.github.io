@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('DOL acceptance validates device identities and terminal completeness',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/templates/motor-starters.js','utf8'),ctx);vm.runInContext(fs.readFileSync('src/validation/acceptance.js','utf8'),ctx);const r=ctx.window.VoltProAcceptance.validate(ctx.window.VoltProTemplates.dol());assert.equal(r.passed,true,r.errors.join('; '))})

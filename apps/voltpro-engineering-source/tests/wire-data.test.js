@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/core/wire-data.js','utf8'),ctx);return ctx.window.VoltProWireData}
+test('wire numbering is deterministic',()=>{const w=load().numberWires([{id:'a'},{id:'b',number:'X9'}]);assert.equal(w[0].number,'W001');assert.equal(w[1].number,'X9')});
+test('wire metadata preserves engineering attributes',()=>{const w=load().metadata({id:'W1'},{crossSection:2.5,phase:'L1'});assert.equal(w.crossSection,2.5);assert.equal(w.phase,'L1')})

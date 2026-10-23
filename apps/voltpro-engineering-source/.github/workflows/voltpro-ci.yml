@@ -1,0 +1,28 @@
+name: VoltPRo CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: |
+          node --check simulator.js
+          node --check src/ui/project-workspace.js
+          node --check src/ui/engineering-workspaces.js
+          node --check src/ui/realistic-devices.js
+      - name: Run tests and validators
+        run: npm test

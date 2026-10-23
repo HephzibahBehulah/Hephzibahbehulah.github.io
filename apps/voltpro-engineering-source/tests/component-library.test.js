@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/ui/component-library.js','utf8'),ctx);return ctx.window.VoltProComponentLibrary}
+test('library search returns engineering cards',()=>{const l=load().create([{id:'mcb',name:{en:'MCB'},category:'Protection',tags:['breaker'],simulation:{model:'mcb'},pins:[{id:'1'}]}]);const r=l.search('breaker');assert.equal(r.length,1);assert.equal(l.card(r[0]).maturity,'modelled')})

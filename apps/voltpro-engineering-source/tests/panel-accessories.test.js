@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/panel/accessories.js','utf8'),ctx);return ctx.window.VoltProPanelAccessories}
+test('terminal strip allocates numbered terminals',()=>{const a=load(),s=a.terminalStrip({id:'X1',count:3,prefix:'PE-'});a.allocate(s,['Motor','Stop','Start']);assert.equal(s.terminals[2].label,'Start');assert.equal(s.terminals[2].used,true)});
+test('terminal strip rejects overflow',()=>{const a=load(),s=a.terminalStrip({count:2});assert.throws(()=>a.allocate(s,['a','b','c']))})

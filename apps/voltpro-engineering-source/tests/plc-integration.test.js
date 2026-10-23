@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('PLC output drives contactor coil state',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/plc/integration.js','utf8'),ctx);const p={devices:[{id:'KM1',state:{}}]};ctx.window.VoltProPLCIntegration.applyOutputs(p,{Q0_0:1},{outputs:{Q0_0:'KM1'}});assert.equal(p.devices[0].state.plcCommand,true)});

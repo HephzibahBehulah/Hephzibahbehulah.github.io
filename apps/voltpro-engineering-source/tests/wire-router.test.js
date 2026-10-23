@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/rendering/wire-router.js','utf8'),ctx);return ctx.window.VoltProWireRouter}
+test('wire router creates orthogonal segments',()=>{const r=load().route({x:13,y:17},{x:83,y:57},{grid:10});assert.ok(r.length>=2);assert.ok(r.every(s=>s.orientation==='h'||s.orientation==='v'))});

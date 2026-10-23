@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/simulation/state-machine.js','utf8'),ctx);return ctx.window.VoltProStateMachine}
+test('state machine transitions deterministically',()=>{const m=load().machine({states:['OFF','ON'],initial:'OFF',transitions:[{from:'OFF',event:'energize',to:'ON'},{from:'ON',event:'drop',to:'OFF'}]});assert.equal(m.state,'OFF');assert.equal(m.step('energize').after,'ON');assert.equal(m.state,'ON');assert.equal(m.step('unknown').ignored,true);m.reset();assert.equal(m.state,'OFF')})

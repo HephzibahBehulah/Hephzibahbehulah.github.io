@@ -1,0 +1,14 @@
+{
+  "name": "voltpro-academy",
+  "private": true,
+  "version": "3.0.0",
+  "description": "Open-source browser electrical learning and simulation laboratory",
+  "scripts": {
+    "test": "node --test tests/*.test.js && node scripts/validate-v3.js && node scripts/validate-components.js",
+    "validate": "node scripts/validate-v3.js",
+    "validate-components": "node scripts/validate-components.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

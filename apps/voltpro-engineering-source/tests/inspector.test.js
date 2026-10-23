@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('inspector separates editable parameters from runtime state',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/ui/inspector.js','utf8'),ctx);const i=ctx.window.VoltProInspector.fields({id:'KM1',parameters:{coilVoltage:24},state:{energized:true}});assert.equal(i.find(x=>x.key==='coilVoltage').editable,true);assert.equal(i.find(x=>x.key==='energized').editable,false)})

@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('keyboard map exposes core CAD commands',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/ui/accessibility.js','utf8'),ctx);const a=ctx.window.VoltProAccessibility;assert.equal(a.shortcuts['Ctrl+S'],'save');assert.equal(a.commandFor({key:'w'}),'wire')})

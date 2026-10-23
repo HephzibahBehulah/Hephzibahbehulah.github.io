@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('ribbon exposes engineering workbench groups',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/ui/ribbon.js','utf8'),ctx);const r=ctx.window.VoltProRibbon;assert.ok(r.tabs.WIRING.includes('wire'));assert.ok(r.tabs.TEST_TRAIN.includes('challenge'));assert.ok(r.commands().some(x=>x.id==='ladder'))})

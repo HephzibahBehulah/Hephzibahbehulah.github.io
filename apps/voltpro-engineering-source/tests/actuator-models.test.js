@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);for(const p of ['src/simulation/model-registry.js','src/simulation/actuator-models.js'])vm.runInContext(fs.readFileSync(p,'utf8'),ctx);return ctx.window}
+test('lamp becomes energized at rated voltage',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'H1',type:'lamp',model:'lamp',parameters:{ratedVoltage:24},state:{voltage:24}});assert.equal(r.energized,true)});
+test('solenoid exposes physical position',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'Y1',type:'solenoid',model:'solenoid',parameters:{ratedVoltage:24},state:{voltage:0}});assert.equal(r.position,'retracted')})

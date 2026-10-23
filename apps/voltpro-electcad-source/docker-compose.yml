@@ -1,0 +1,29 @@
+services:
+  voltpro-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: voltpro-api:local
+    restart: unless-stopped
+    ports:
+      # Local-only binding: the API currently has no user authentication.
+      - "127.0.0.1:4000:4000"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4000
+      VOLTPRO_DB_PATH: /data/voltpro.sqlite
+      CLIENT_ORIGIN: http://localhost:5173
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      LIBREDWG_DXF2DWG: /usr/local/bin/dxf2dwg
+    volumes:
+      - voltpro-data:/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+volumes:
+  voltpro-data:

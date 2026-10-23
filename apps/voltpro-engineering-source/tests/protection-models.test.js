@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);for(const p of ['src/simulation/model-registry.js','src/simulation/protection-models.js'])vm.runInContext(fs.readFileSync(p,'utf8'),ctx);return ctx.window}
+test('MCB trips on educational overcurrent threshold',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'QF1',model:'mcb',parameters:{ratedCurrent:10},state:{current:20}});assert.equal(r.state,'tripped');assert.equal(r.closed,false)});
+test('RCD trips on residual current',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'F1',model:'rcd',parameters:{tripCurrent:0.03},state:{residualCurrent:0.04}});assert.equal(r.tripReason,'residual-current')})

@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{},structuredClone:global.structuredClone};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/simulation/faults.js','utf8'),ctx);return ctx.window.VoltProFaults}
+test('faults are injected, listed and cleared deterministically',()=>{const f=load(),p={faults:[]};f.inject(p,{id:'FLT1',type:'phase-loss',target:'L2'});assert.equal(f.active(p,'phase-loss').length,1);assert.equal(f.clear(p,'FLT1'),true);assert.equal(f.active(p).length,0)});
+test('device fault mutation is explicit',()=>{const f=load(),p={faults:[]};f.inject(p,{id:'F1',type:'coil-failure',target:'KM1'});const d=f.applyToDevice({id:'KM1',state:{}},p);assert.equal(d.state.coilFailed,true)})

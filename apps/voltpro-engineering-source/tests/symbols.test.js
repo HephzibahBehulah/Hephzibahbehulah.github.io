@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/rendering/symbols.js','utf8'),ctx);return ctx.window.VoltProSymbols}
+test('symbol renderer returns SVG with accessible label',()=>{const s=load().svg('switch',{label:'IEC switch'});assert.ok(s.includes('<svg'));assert.ok(s.includes('IEC switch'))});
+test('symbol terminals have stable geometry',()=>{const s=load();assert.equal(s.terminalPoint('coil','A1').join(','),'-30,0')})

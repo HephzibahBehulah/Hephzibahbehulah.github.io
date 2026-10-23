@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/simulation/model-registry.js','utf8'),ctx);vm.runInContext(fs.readFileSync('src/simulation/core-models.js','utf8'),ctx);return ctx.window}
+test('catalogue type without model is not falsely simulation-capable',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'M1',type:'mystery'});assert.equal(r.status,'catalogue-only')});
+test('registered pushbutton model exposes contact state',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'S1',type:'pushbutton-no',model:'pushbutton-no',state:{pressed:true}});assert.equal(r.ok,true);assert.equal(r.contacts[0].closed,true)})

@@ -1,0 +1,43 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { spawn } from 'node:child_process';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { exportDrawingDxf } from '../src/engineering-tools.mjs';
+
+test('SQLite API persists projects and detects revision conflicts',async t=>{
+  const dir=await mkdtemp(join(tmpdir(),'voltpro-api-'));
+  const port=42000+Math.floor(Math.random()*15000);
+  const child=spawn(process.execPath,['server/server.mjs'],{cwd:process.cwd(),env:{...process.env,HOST:'127.0.0.1',PORT:String(port),VOLTPRO_DB_PATH:join(dir,'test.sqlite'),OPENAI_API_KEY:'',LIBREDWG_DXF2DWG:join(dir,'missing-dxf2dwg')},stdio:'ignore'});
+  const base='http://127.0.0.1:'+port;
+  t.after(async()=>{child.kill('SIGTERM');await new Promise(r=>setTimeout(r,150));await rm(dir,{recursive:true,force:true});});
+  let ready=false;
+  for(let i=0;i<60;i++){try{const response=await fetch(base+'/api/health');if(response.ok){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,100));}
+  assert.ok(ready,'API server should start');
+  const validDoc={schemaVersion:2,projectName:'Regression project',activeSheetId:'s1',sheets:[{id:'s1',name:'Main',parts:[],wires:[]}]};
+  const created=await fetch(base+'/api/projects',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:'Regression project',schemaVersion:2,data:validDoc})});
+  assert.equal(created.status,201);
+  const {project}=await created.json();
+  assert.equal(project.revision,1);
+  const updated=await fetch(base+'/api/projects/'+project.id,{method:'PUT',headers:{'content-type':'application/json','if-match':'1'},body:JSON.stringify({name:'Updated project',schemaVersion:2,data:{...validDoc,projectName:'Updated project',sheets:[{...validDoc.sheets[0],name:'Updated main'}]}})});
+  assert.equal(updated.status,200);
+  const conflict=await fetch(base+'/api/projects/'+project.id,{method:'PUT',headers:{'content-type':'application/json','if-match':'1'},body:JSON.stringify({name:'Stale update',schemaVersion:2,data:validDoc})});
+  assert.equal(conflict.status,409);
+  const loaded=await fetch(base+'/api/projects/'+project.id);
+  const result=await loaded.json();
+  assert.equal(result.project.name,'Updated project');
+  assert.equal(result.project.revision,2);
+  const revisions=await fetch(base+'/api/projects/'+project.id+'/revisions');
+  assert.equal((await revisions.json()).revisions.length,2);
+  const ai=await fetch(base+'/api/ai/design',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({instruction:'Create a resistor circuit'})});
+  assert.equal(ai.status,503);
+  const aiPackage=await fetch(base+'/api/ai/project-package',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({instruction:'Design a 100-page industrial electrical project',projectName:'Test project',templateId:'industrial-facility',pageCount:100,region:'EU-DE'})});
+  assert.equal(aiPackage.status,503,'model-assisted engineering endpoint must clearly report missing server-side API configuration');
+  const badDwg=await fetch(base+'/api/export/dwg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({dxf:'not a drawing'})});
+  assert.equal(badDwg.status,400);
+  const validDxf=exportDrawingDxf({projectName:'Regression project',activeSheetId:'s1',sheets:[{id:'s1',name:'Main',parts:[],wires:[]}]});
+  const missingConverter=await fetch(base+'/api/export/dwg',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({dxf:validDxf})});
+  assert.equal(missingConverter.status,503);
+  assert.match((await missingConverter.json()).error,/Install GNU LibreDWG/);
+});

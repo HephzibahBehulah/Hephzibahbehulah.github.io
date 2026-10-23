@@ -1,0 +1,179 @@
+/* VoltPRo × HB ecosystem — shared visual layer. No application logic is changed. */
+:root {
+  --vp-hb-bg:#080b10; --vp-hb-panel:#10151c; --vp-hb-panel-2:#151c25;
+  --vp-hb-line:#28323e; --vp-hb-text:#e7edf4; --vp-hb-muted:#91a0af;
+  --vp-hb-cyan:#56cfe1; --vp-hb-orange:#ff8a3d; --vp-hb-green:#63d297;
+  --vp-hb-violet:#a78bfa; --vp-hb-radius:14px;
+}
+.academy-page,.simulator-page,.engineering-page {
+  color:var(--vp-hb-text)!important;
+  background-color:var(--vp-hb-bg)!important;
+  background-image:radial-gradient(ellipse at 12% 0%,rgba(40,104,125,.18),transparent 34%),
+    radial-gradient(ellipse at 92% 14%,rgba(115,72,165,.10),transparent 28%),
+    linear-gradient(145deg,#080b10 0%,#0b1017 56%,#080b10 100%)!important;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-wrap:anywhere;
+}
+.academy-page *, .simulator-page *, .engineering-page * {min-width:0}
+.academy-page img,.simulator-page img,.engineering-page img,.academy-page svg,.simulator-page svg,.engineering-page svg {max-width:100%}
+.academy-page h1,.academy-page h2,.academy-page h3,.academy-page h4,
+.simulator-page h1,.simulator-page h2,.simulator-page h3,.engineering-page h1,.engineering-page h2 {overflow-wrap:anywhere}
+.academy-page .app-shell {grid-template-columns:264px minmax(0,1fr);max-width:100%;overflow:clip}
+.academy-page .sidebar {overflow-y:auto;overscroll-behavior:contain}
+.academy-page .brand-mark,.simulator-page .brand .mark,.engineering-page header .brand>span {
+  background:linear-gradient(135deg,var(--vp-hb-cyan),#6e9dff 55%,var(--vp-hb-violet))!important;
+  color:#071018!important;box-shadow:0 0 24px rgba(86,207,225,.18);
+}
+.academy-page .brand h1,.simulator-page .brand b,.engineering-page header .brand b {letter-spacing:-.04em}
+.academy-page .eyebrow,.academy-page .section-head span {color:var(--vp-hb-cyan)!important}
+.academy-page .topbar,.simulator-page .sim-top,.engineering-page>header {
+  border-color:rgba(86,207,225,.20)!important;
+  background:rgba(8,12,19,.92)!important;
+  backdrop-filter:blur(18px);
+}
+.academy-page .topbar {gap:12px;padding-inline:clamp(12px,2.2vw,30px)}
+.academy-page .crumb {min-width:0;flex-wrap:wrap;line-height:1.4}
+.academy-page .top-actions {min-width:0;flex-wrap:wrap;justify-content:flex-end}
+.academy-page .search {min-width:0;max-width:100%}
+.academy-page .stat,.academy-page .card,.academy-page .hero,.academy-page .module,
+.academy-page .quiz-card,.academy-page .catalog-item,.academy-page .lab-card,
+.academy-page .safety-gate,.academy-page .rule,.academy-page .progress-mini {
+  border-color:rgba(86,207,225,.16)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.018);
+}
+.academy-page .btn.primary,.academy-page .track i {background:linear-gradient(110deg,var(--vp-hb-cyan),var(--vp-hb-green))!important}
+.academy-page .nav-item.active {box-shadow:inset 3px 0 var(--vp-hb-cyan),0 0 18px rgba(86,207,225,.035)}
+.academy-page .view {width:100%;padding:clamp(14px,2.2vw,30px)}
+.academy-page .hero {grid-template-columns:minmax(0,1fr) auto}
+.academy-page .hero-actions {flex-wrap:wrap}
+.academy-page .stats {grid-template-columns:repeat(4,minmax(0,1fr))}
+.academy-page .grid2,.academy-page .grid3,.academy-page .lab-grid {min-width:0}
+.academy-page .module {grid-template-columns:45px minmax(0,1fr) auto}
+.academy-page .module small,.academy-page .catalog-item small {overflow-wrap:anywhere}
+.academy-page .toast {max-width:min(420px,calc(100vw - 32px));overflow-wrap:anywhere}
+.simulator-page .sim-app {max-width:100%;overflow:clip}
+.simulator-page .sim-top {flex-wrap:wrap;gap:10px;padding:12px clamp(10px,1.5vw,22px)}
+.simulator-page .mode-tabs,.simulator-page .top-actions {display:flex;flex-wrap:wrap;gap:6px;max-width:100%}
+.simulator-page .mode-tabs {overflow-x:auto;overscroll-behavior-x:contain}
+.simulator-page .top-actions a,.simulator-page .top-actions button {white-space:normal}
+.simulator-page .toolbar {flex-wrap:wrap;max-width:100%;height:auto;min-height:48px;gap:7px;padding:8px 12px}
+.simulator-page .workspace {min-width:0;max-width:100%}
+.simulator-page .panel-title,.simulator-page .palette-note {overflow-wrap:anywhere}
+.engineering-page>header {display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.engineering-page>header nav {display:flex;flex-wrap:wrap;gap:8px}
+.engineering-page main {width:min(100%,1440px);padding:clamp(14px,2.5vw,32px);margin-inline:auto}
+.engineering-page .grid {grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.engineering-page article,.engineering-page .hero,.engineering-page .notice {min-width:0;overflow-wrap:anywhere}
+.engineering-page input,.engineering-page output {max-width:100%;min-width:0}
+.engineering-page output {display:block;line-height:1.6;white-space:normal;overflow-wrap:anywhere}
+.vp-ecosystem-links {display:grid;gap:5px;padding:13px 8px 12px;margin-top:10px;border-top:1px solid rgba(86,207,225,.15)}
+.vp-ecosystem-links a {display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid transparent;border-radius:8px;color:var(--vp-hb-muted);font:10px/1.5 "JetBrains Mono",monospace;letter-spacing:.06em;text-decoration:none;overflow-wrap:anywhere}
+.vp-ecosystem-links a:hover {color:var(--vp-hb-cyan);border-color:rgba(86,207,225,.2);background:rgba(86,207,225,.04)}
+/* ADIGUN-inspired VoltPRo assistant */
+.vp-bot-launcher {position:fixed;right:22px;bottom:22px;z-index:100000;width:58px;height:58px;border:1px solid rgba(86,207,225,.62);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(86,207,225,.23),rgba(7,12,18,.98) 70%);color:var(--vp-hb-cyan);box-shadow:0 0 28px rgba(86,207,225,.16),inset 0 0 18px rgba(86,207,225,.06);cursor:pointer;display:grid;place-items:center;font:700 17px/1 "JetBrains Mono",monospace;transition:transform .2s,border-color .2s,box-shadow .2s}
+.vp-bot-launcher:hover {transform:translateY(-3px);border-color:var(--vp-hb-cyan);box-shadow:0 0 36px rgba(86,207,225,.25)}
+.vp-bot-dot {position:absolute;right:4px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--vp-hb-green);box-shadow:0 0 10px var(--vp-hb-green)}
+.vp-bot-window {position:fixed;right:22px;bottom:92px;z-index:99999;width:min(410px,calc(100vw - 28px));height:min(620px,calc(100dvh - 120px));display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(86,207,225,.3);border-radius:14px;background:rgba(5,9,15,.98);box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 40px rgba(86,207,225,.08);backdrop-filter:blur(16px)}
+.vp-bot-window.open {display:flex;animation:vpBotIn .18s ease-out}
+@keyframes vpBotIn {from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.vp-bot-head {display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-bottom:1px solid rgba(86,207,225,.14);background:linear-gradient(90deg,rgba(86,207,225,.07),rgba(167,139,250,.045))}
+.vp-bot-brand {display:flex;align-items:center;gap:9px;min-width:0}
+.vp-bot-core {flex:0 0 32px;width:32px;height:32px;border:1px solid rgba(86,207,225,.48);border-radius:50%;display:grid;place-items:center;color:var(--vp-hb-cyan);font:700 10px "JetBrains Mono",monospace;box-shadow:inset 0 0 14px rgba(86,207,225,.08)}
+.vp-bot-title {min-width:0}
+.vp-bot-title strong {display:block;color:#e7f8ff;font:700 11px/1.4 "JetBrains Mono",monospace;letter-spacing:.06em;overflow-wrap:anywhere}
+.vp-bot-title span {display:block;margin-top:3px;color:#91a0af;font:8px/1.4 "JetBrains Mono",monospace;overflow-wrap:anywhere}
+.vp-bot-actions {display:flex;flex:0 0 auto;gap:4px}
+.vp-bot-actions button {width:29px;height:29px;border:1px solid rgba(86,207,225,.16);border-radius:6px;background:transparent;color:#a6b7c6;cursor:pointer;font:12px "JetBrains Mono",monospace}
+.vp-bot-actions button:hover {color:var(--vp-hb-cyan);border-color:rgba(86,207,225,.45)}
+.vp-bot-status {padding:7px 13px;border-bottom:1px solid rgba(86,207,225,.08);color:#91a0af;font:8px/1.5 "JetBrains Mono",monospace;overflow-wrap:anywhere}
+.vp-bot-status b {color:var(--vp-hb-green)}
+.vp-bot-messages {flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:13px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth}
+.vp-bot-msg {max-width:92%;padding:9px 11px;border:1px solid rgba(86,207,225,.13);border-radius:9px;color:#cbd8e2;font:11px/1.65 "JetBrains Mono",monospace;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
+.vp-bot-msg.bot {align-self:flex-start;background:rgba(86,207,225,.04)}
+.vp-bot-msg.user {align-self:flex-end;border-color:rgba(167,139,250,.24);background:rgba(167,139,250,.07);color:#e4ddff}
+.vp-bot-msg.system {align-self:center;border:0;color:#91a0af;font-size:9px;text-align:center}
+.vp-bot-suggestions {display:flex;gap:5px;flex-wrap:wrap;padding:0 13px 9px}
+.vp-bot-suggestions button {max-width:100%;border:1px solid rgba(86,207,225,.17);border-radius:6px;background:rgba(86,207,225,.03);color:#a6b7c6;padding:7px 9px;cursor:pointer;font:9px/1.4 "JetBrains Mono",monospace;overflow-wrap:anywhere}
+.vp-bot-suggestions button:hover {color:var(--vp-hb-cyan);border-color:rgba(86,207,225,.45)}
+.vp-bot-composer {display:flex;align-items:stretch;gap:7px;padding:9px;border-top:1px solid rgba(86,207,225,.13)}
+.vp-bot-composer textarea {flex:1;width:0;min-width:0;max-height:100px;resize:vertical;padding:10px;border:1px solid rgba(86,207,225,.18);border-radius:7px;outline:0;background:rgba(0,0,0,.24);color:#e7f8ff;font:11px/1.5 "JetBrains Mono",monospace}
+.vp-bot-composer textarea:focus {border-color:rgba(86,207,225,.55)}
+.vp-bot-send {flex:0 0 42px;width:42px;border:1px solid rgba(86,207,225,.35);border-radius:7px;background:rgba(86,207,225,.07);color:var(--vp-hb-cyan);cursor:pointer;font:14px "JetBrains Mono",monospace}
+.vp-bot-send:disabled {opacity:.45;cursor:wait}
+.vp-bot-footer {display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;padding:7px 10px;color:#718293;font:8px/1.4 "JetBrains Mono",monospace;border-top:1px solid rgba(86,207,225,.07)}
+@media(max-width:1100px) {
+ .academy-page .app-shell {grid-template-columns:230px minmax(0,1fr)}
+ .academy-page .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .engineering-page .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .simulator-page .sim-top {align-items:flex-start}
+}
+@media(max-width:760px) {
+ .academy-page .app-shell {display:block;overflow:clip}
+ .academy-page .sidebar {position:fixed;left:0;top:0;bottom:0;width:min(300px,86vw);height:100dvh;z-index:1000;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(0,0,0,.45)}
+ .academy-page .sidebar.open {transform:translateX(0)}
+ .academy-page .mobile-menu {display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+ .academy-page .topbar {height:auto;min-height:64px;flex-wrap:wrap;padding:10px 12px}
+ .academy-page .crumb {flex:1 1 180px;font-size:11px}
+ .academy-page .top-actions {width:100%;justify-content:flex-start}
+ .academy-page .search {width:100%;flex:1 1 180px}
+ .academy-page .view {padding:14px}
+ .academy-page .hero {grid-template-columns:minmax(0,1fr);padding:19px}
+ .academy-page .ring {width:90px;height:90px}
+ .academy-page .grid2,.academy-page .grid3,.academy-page .lab-grid {grid-template-columns:minmax(0,1fr)}
+ .academy-page .module {grid-template-columns:38px minmax(0,1fr);gap:10px}
+ .academy-page .module-icon {width:38px;height:38px}
+ .academy-page .module>.meter,.academy-page .module>.pill {grid-column:2;justify-self:start}
+ .academy-page .skill {grid-template-columns:minmax(0,1fr) 40px;gap:8px}
+ .academy-page .skill .meter {grid-column:1/-1;grid-row:2}
+ .simulator-page .sim-top {display:flex;flex-direction:column;align-items:stretch}
+ .simulator-page .brand,.simulator-page .mode-tabs,.simulator-page .top-actions {width:100%}
+ .simulator-page .mode-tabs {padding-bottom:2px}
+ .simulator-page .toolbar {align-items:center}
+ .engineering-page>header {padding:14px}
+ .engineering-page .grid {grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:420px) {
+ .vp-bot-launcher {right:14px;bottom:14px;width:54px;height:54px}
+ .vp-bot-window {right:8px;bottom:76px;width:calc(100vw - 16px);height:min(72dvh,620px);max-height:calc(100dvh - 90px)}
+ .vp-bot-head {padding:10px}
+ .vp-bot-messages {padding:10px}
+ .vp-bot-msg {max-width:96%;font-size:10px}
+ .vp-bot-suggestions {padding-inline:10px}
+ .vp-bot-composer {padding:8px}
+}
+@media(prefers-reduced-motion:reduce) {
+ .vp-bot-window.open {animation:none}
+ .vp-bot-launcher,.academy-page .sidebar {transition:none}
+}
+
+/* Consistent owner-to-product identity across the Academy, Simulator, and Engineering Tools. */
+.vp-brand-lockup{display:flex;align-items:center;gap:10px;min-width:0;color:inherit;text-decoration:none}
+.vp-brand-lockup>img{display:block;flex:0 0 auto;width:112px;height:auto;max-height:34px;object-fit:contain;object-position:left center}
+.vp-brand-divider{display:block;align-self:stretch;width:1px;min-height:31px;background:linear-gradient(180deg,rgba(86,207,225,.55),rgba(167,139,250,.2))}
+.vp-brand-product{display:grid;gap:3px;min-width:0}
+.vp-brand-product>b{color:var(--vp-hb-text,#e7edf4);font-size:15px;line-height:1.15;letter-spacing:-.02em}
+.vp-brand-product>small{color:var(--vp-hb-cyan,#56cfe1);font:700 7px/1.5 "JetBrains Mono",monospace;letter-spacing:.07em;overflow-wrap:anywhere}
+.vp-brand-lockup:focus-visible{outline:2px solid var(--vp-hb-cyan,#56cfe1);outline-offset:3px;border-radius:6px}
+.simulator-page .vp-brand-lockup{flex:0 0 auto}
+.simulator-page .vp-brand-lockup .vp-brand-product>b{font-size:16px}
+.engineering-page .vp-brand-lockup{max-width:min(55vw,460px)}
+.engineering-page .vp-brand-lockup .vp-brand-product>b{font-size:16px}
+@media(max-width:900px){
+ .simulator-page .vp-brand-lockup>img,.engineering-page .vp-brand-lockup>img{width:88px}
+ .simulator-page .vp-brand-product>small,.engineering-page .vp-brand-product>small{font-size:6px;letter-spacing:.035em}
+}
+@media(max-width:560px){
+ .simulator-page .vp-brand-lockup{gap:7px}
+ .simulator-page .vp-brand-lockup>img,.engineering-page .vp-brand-lockup>img{width:76px}
+ .simulator-page .vp-brand-product>b,.engineering-page .vp-brand-product>b{font-size:13px}
+ .simulator-page .vp-brand-product>small,.engineering-page .vp-brand-product>small{max-width:125px;font-size:6px;line-height:1.35}
+ .engineering-page .vp-brand-lockup{max-width:65vw}
+}
+
+
+/* Public external-reference controls shared by the floating assistant on every workspace. */
+.vp-bot-external{display:flex;align-items:center;gap:8px;padding:8px 14px;color:var(--vp-hb-muted,#91a6bf);font-size:11px;border-top:1px solid rgba(86,207,225,.1)}
+.vp-bot-external input{accent-color:var(--vp-hb-cyan,#35d5ff)}
+.vp-bot-sources{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px}
+.vp-bot-sources a{display:inline-block;border:1px solid rgba(86,207,225,.22);border-radius:8px;padding:6px 8px;color:var(--vp-hb-cyan,#35d5ff);font-size:11px;text-decoration:none}
+.vp-bot-sources a:hover{border-color:var(--vp-hb-cyan,#35d5ff)}

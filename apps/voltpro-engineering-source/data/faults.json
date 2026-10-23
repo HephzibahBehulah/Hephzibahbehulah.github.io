@@ -1,0 +1,11 @@
+{
+ "format":"voltpro-faults","version":1,
+ "faults":[
+  {"id":"open-circuit","name":"Open conductor","effects":["no current"],"diagnostic":"Trace continuity from source to load."},
+  {"id":"short-circuit","name":"Short circuit","effects":["very high current","protection may trip"],"diagnostic":"Isolate safely and identify the unintended low-impedance path."},
+  {"id":"overload","name":"Overload","effects":["excess current","thermal stress"],"diagnostic":"Compare load current with conductor and protective-device design."},
+  {"id":"reverse-polarity","name":"Reverse polarity","effects":["polarity-sensitive device may fail"],"diagnostic":"Verify source polarity and device pin orientation."},
+  {"id":"ground-fault","name":"Ground fault","effects":["residual current","protective device may operate"],"diagnostic":"Use an appropriate safe test procedure; do not defeat protection."},
+  {"id":"phase-loss","name":"Phase loss","effects":["motor abnormal operation"],"diagnostic":"Verify all intended phases and protection/control conditions."}
+ ]
+}

@@ -1,0 +1,3 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+function load(){const ctx={window:{}};vm.createContext(ctx);for(const p of ['src/simulation/model-registry.js','src/simulation/motor-model.js'])vm.runInContext(fs.readFileSync(p,'utf8'),ctx);return ctx.window}
+test('three-phase induction motor reports synchronous speed and running state',()=>{const w=load();const r=w.VoltProDeviceModels.evaluate({id:'M1',model:'induction-motor-3ph',parameters:{poles:4,ratedSpeed:1450,ratedCurrent:10},state:{running:true,loadFraction:.5}},{frequency:50});assert.equal(r.running,true);assert.equal(r.synchronousSpeed,1500);assert.ok(r.speed>0);assert.ok(r.slip>0);assert.equal(r.phaseCount,3)})

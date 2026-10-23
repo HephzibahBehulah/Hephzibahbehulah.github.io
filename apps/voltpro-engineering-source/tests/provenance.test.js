@@ -1,0 +1,2 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const vm=require('node:vm');
+test('provenance audit enforces project licence and attribution records',()=>{const ctx={window:{}};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/validation/provenance.js','utf8'),ctx);const r=ctx.window.VoltProProvenance.audit({license:'Apache-2.0'},['ASSET_ATTRIBUTIONS.md','THIRD_PARTY_LICENSES.md']);assert.equal(r.passed,true)})
