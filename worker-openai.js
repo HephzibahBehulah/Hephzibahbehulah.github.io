@@ -3,6 +3,7 @@
 import { getSandbox, Sandbox as CloudflareSandbox, ContainerProxy } from "@cloudflare/sandbox";
 import legacy from "./worker-v2.js";
 import {accountGateway} from "./platform/admin-accounts.mjs";
+import {boundSandboxOutput} from "./platform/sandbox-limits.mjs";
 
 export { ContainerProxy };
 export class Sandbox extends CloudflareSandbox {
@@ -680,14 +681,6 @@ async function executeAdminCommand(request, env, command) {
   return executeSandboxCommand(request,env,null,lower);
 }
 
-const SANDBOX_STDOUT_BYTES = 192 * 1024;
-const SANDBOX_STDERR_BYTES = 48 * 1024;
-function truncateUtf8(value, maxBytes) {
-  const bytes = new TextEncoder().encode(String(value || ""));
-  if (bytes.byteLength <= maxBytes) return new TextDecoder().decode(bytes);
-  return new TextDecoder().decode(bytes.subarray(0, maxBytes)) + "\n[output truncated]";
-}
-
 async function executeSandboxCommand(request, env, ctx, command) {
   const recon=await executeReconCommand(request,command);
   if(recon) return recon;
@@ -698,21 +691,22 @@ async function executeSandboxCommand(request, env, ctx, command) {
   try{
     const sandbox=await getAdminSandbox(env,identity);
     const result=await sandbox.exec("ulimit -t 5; "+shellCommand,{timeout:10000});
+    const boundedOutput=boundSandboxOutput(result.stdout,result.stderr);
     const boundedResult={
       exitCode:result.exitCode,
       success:result.success,
-      stdout:truncateUtf8(result.stdout,SANDBOX_STDOUT_BYTES),
-      stderr:truncateUtf8(result.stderr,SANDBOX_STDERR_BYTES)
+      ...boundedOutput
     };
     const evidence=evidenceRecord({
       tool:"sandbox.exec",
       target:adminSandboxId(identity),
       actor:identity.email,
-      status:boundedResult.success?"observed":"failed",
+      status:boundedResult.success&&!boundedOutput.outputLimitExceeded?"observed":"failed",
       startedAt:new Date(started).toISOString(),
-      result:{command,...boundedResult}
+      result:{command,exitCode:boundedResult.exitCode,success:boundedResult.success,outputBytes:boundedOutput.outputBytes,outputLimitExceeded:boundedOutput.outputLimitExceeded}
     });
-    return json(request,{ok:true,command,shellCommand,durationMs:Date.now()-started,result:boundedResult,evidence,executedAt:evidence.observedAt});
+    const outputError=boundedOutput.outputLimitExceeded?"Sandbox output exceeded the 1 MiB limit; captured output was truncated.":undefined;
+    return json(request,{ok:boundedResult.success&&!boundedOutput.outputLimitExceeded,command,shellCommand,durationMs:Date.now()-started,result:boundedResult,error:outputError,evidence,executedAt:evidence.observedAt},boundedOutput.outputLimitExceeded?413:200);
   }catch(error){
     const evidence=evidenceRecord({tool:"sandbox.exec",target:adminSandboxId(identity),actor:identity.email,status:"error",startedAt:new Date(started).toISOString(),result:{command,error:String(error?.message||error)}});
     return json(request,{ok:false,command,error:String(error?.message||error),evidence},502);
