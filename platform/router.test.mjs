@@ -70,3 +70,5 @@ test('ElectCAD route normalizes lowercase aliases without changing asset paths',
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/'));
  assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/voltPro-ElectCAD/');
 });
+
+test('the workers.dev origin canonicalizes to the main domain',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://hephzibahbehulah-github-io.hephzibah-behulah.workers.dev/?from=worker'),{});assert.equal(r.status,308);assert.equal(r.headers.get('location'),'https://'+root+'/?from=worker');});
