@@ -36,7 +36,7 @@ test('engineering chat applies domain-specific system contracts for all four too
 test('engineering chat streams chunks through Workers AI',async()=>{
  let options;
  const origin='https://engineering.hephzibahbehulah.com';
- const upstream=new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('data: {"response":"first "}\n\ndata: {"response":"second"}\\n\\n'));c.close();}});
+ const upstream=new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('data: {"response":"first "}\n\ndata: {"response":"second"}\n\n'));c.close();}});
  const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'simulator',stream:true,messages:[{role:'user',content:'Explain this circuit'}]})}),{AI:{run:async(_model,opts)=>{options=opts;return upstream;}}});
  assert.equal(result.status,200);
  assert.match(result.headers.get('content-type'),/text\/event-stream/);
