@@ -1442,6 +1442,9 @@ async function privateAgent(request, env, url, ctx) {
   const auth = await authenticateAdmin(request, env);
   if (!auth.ok) return auth.response;
   const identity = getAdminIdentity(auth.identity);
+  if (!env.ADMIN_AI_LIMITER?.limit) return json(request,{ok:false,error:"Private AI rate limiter is not configured."},503);
+  const limit = await env.ADMIN_AI_LIMITER.limit({key:"private-adigun:"+identity.email});
+  if (!limit.success) return json(request,{ok:false,error:"Private AI rate limit exceeded. Try again shortly."},429,{"retry-after":"1"});
   let body;
   try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
   const task = String(body?.task || body?.message || "").trim();
