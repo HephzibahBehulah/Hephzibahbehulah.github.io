@@ -31,6 +31,14 @@
       }
     },
     {
+      "name": "ADMIN_AI_LIMITER",
+      "namespace_id": "9002",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    },
+    {
       "name": "ENGINEERING_LIMITER",
       "namespace_id": "1785",
       "simple": {
