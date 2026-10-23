@@ -15,7 +15,7 @@ export function AIAssistant(){
    if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.error||'AI service unavailable. Try again.');}
    const reader=response.body?.getReader();if(!reader)throw new Error('AI streaming is unavailable. Try again.');
    const decoder=new TextDecoder();let buffer='',text='';const handle=(line:string)=>{if(!line.startsWith('data:'))return;let event:any;try{event=JSON.parse(line.slice(5).trim());}catch{return;}if(event.type==='reset'){text='';setAnswer('');}else if(event.type==='delta'){text+=String(event.text||'');setAnswer(text);}else if(event.type==='error')throw new Error(event.error||'AI service unavailable. Try again.');};
-   while(true){const part=await reader.read();if(part.done)break;buffer+=decoder.decode(part.value,{stream:true});const lines=buffer.split(/\\r?\\n/);buffer=lines.pop()||'';for(const line of lines)handle(line);}
+   while(true){const part=await reader.read();if(part.done)break;buffer+=decoder.decode(part.value,{stream:true});const lines=buffer.split(/\r?\n/);buffer=lines.pop()||'';for(const line of lines)handle(line);}
    if(buffer)handle(buffer);if(!text.trim())throw new Error('The AI returned no answer. Try a smaller request.');
    const code=text.match(/```(?:json)?\s*([\s\S]*?)```/i)?.[1];
    if(code){try{const p=JSON.parse(code) as Project;if(validate(p).length===0)setProposal(p);}catch{}}
