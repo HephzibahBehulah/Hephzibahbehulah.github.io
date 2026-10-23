@@ -1,6 +1,6 @@
 /* Shared system workspace; native editors keep their own complete documents. */
 (()=>{'use strict';
-const A=window.VoltProSystem;if(!A)return;const base=new URL('../../',document.currentScript.src),routes={schematic:'simulator.html',plc:'voltpro-plc/',breadboard:'breadboard.html',engineering:'engineering.html'},labels={schematic:'Circuit simulator',plc:'VoltProPLC',breadboard:'Breadboard',engineering:'Engineering worksheet'},storage=A.store(localStorage),$=s=>document.querySelector(s);let adapter=null,dialog=null,project=null;
+const A=window.VoltProSystem;if(!A)return;const base=new URL('../../',location.href),routes={schematic:'simulator.html',plc:'voltpro-plc/',breadboard:'breadboard.html',engineering:'engineering.html'},labels={schematic:'Circuit simulator',plc:'VoltProPLC',breadboard:'Breadboard',engineering:'Engineering worksheet'},storage=A.store(localStorage),$=s=>document.querySelector(s);let adapter=null,dialog=null,project=null;
 const el=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};const button=(text,fn)=>{const b=el('button',text);b.type='button';b.onclick=async()=>{try{await fn();}catch(e){status(e.message);}};return b;};
 function status(text){if(dialog)dialog.querySelector('[role=status]').textContent=text;}
 function download(name,value){const url=URL.createObjectURL(new Blob([typeof value==='string'?value:JSON.stringify(value,null,2)],{type:'application/json'})),a=el('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}

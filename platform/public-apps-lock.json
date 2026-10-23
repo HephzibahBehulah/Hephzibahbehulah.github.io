@@ -5,14 +5,14 @@
       "repository": "apps/voltpro-engineering-source",
       "commit": "c522343d1d61308fa37b939cca7bbf9c3a8aacf9",
       "url": "https://engineering.hephzibahbehulah.com/releases/c522343d1d61308fa37b939cca7bbf9c3a8aacf9.tar",
-      "sha256": "177bb82ee1cdb97d8984b08a606c98030c2fa2973b7b5314022fc84b62931c30",
-      "bytes": 6030848
+      "sha256": "9be16dae53ca48c8a096b96f34639439d8c8d7724012724a4bba15de0593f59d",
+      "bytes": 6088192
     },
     "cyber": {
       "repository": "apps/pentest-source",
       "commit": "d5201c0847bda78f85918c653fbabb5589d285f3",
       "url": "https://cyber.hephzibahbehulah.com/releases/d5201c0847bda78f85918c653fbabb5589d285f3.tar",
-      "sha256": "c829f021cb5cd120d0fa889160ee7780f750bf0fc1c8d8e9297a12393b485f3f",
+      "sha256": "85a78e3077f226274d62239c50f61ac4c8b229bf34c51238dbcf73418f722dbf",
       "bytes": 14393856
     }
   }

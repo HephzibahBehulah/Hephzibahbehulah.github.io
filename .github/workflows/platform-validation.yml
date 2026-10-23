@@ -42,6 +42,9 @@ jobs:
       - name: Install Cloudflare Worker deployment dependencies
         run: npm install --no-audit --no-fund
 
+      - name: Build the pinned ADIGUN sandbox image
+        run: docker build --tag adigun-private-sandbox:ci .
+
       - name: Deploy integrated Worker and assets to Cloudflare
         if: startsWith(github.ref, 'refs/tags/deploy-')
         run: npx wrangler deploy

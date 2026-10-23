@@ -31,6 +31,14 @@
       }
     },
     {
+      "name": "ADMIN_AI_LIMITER",
+      "namespace_id": "9002",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    },
+    {
       "name": "ENGINEERING_LIMITER",
       "namespace_id": "1785",
       "simple": {
@@ -77,9 +85,13 @@
   "containers": [
     {
       "class_name": "Sandbox",
-      "image": "docker.io/cloudflare/sandbox:0.12.10-python",
-      "instance_type": "lite",
-      "max_instances": 1
+      "name": "adigun-private-sandbox-v1",
+      "scheduling_policy": "durable_object",
+      "images": {
+        "sandbox": {
+          "dockerfile": "./Dockerfile"
+        }
+      }
     }
   ],
   "durable_objects": {

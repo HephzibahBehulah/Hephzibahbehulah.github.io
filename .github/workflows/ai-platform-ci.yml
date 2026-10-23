@@ -73,14 +73,15 @@ jobs:
       - name: Validate Cloudflare Sandbox execution plane
         run: |
           test -f package.json
-          grep -q '"@cloudflare/sandbox": "0.12.10"' package.json
+          grep -q '"@cloudflare/sandbox": "1.0.3"' package.json
           grep -q 'class_name.*Sandbox' wrangler.jsonc
           grep -q 'durable_objects' wrangler.jsonc
           grep -q 'new_sqlite_classes' wrangler.jsonc
           grep -q '/api/admin/sandbox' worker-openai.js
           grep -q 'SANDBOX_COMMANDS' worker-openai.js
           grep -q 'sandbox.exec' worker-openai.js
-          grep -q 'CloudflareSandbox' worker-openai.js
+          grep -q 'import { DurableObject } from "cloudflare:workers"' worker-openai.js
+          grep -q 'enableInternet:false' worker-openai.js
 
       - name: Validate secure execution lab
         run: |

@@ -1,7 +1,7 @@
-import legacy, { Sandbox, ContainerProxy } from "./worker-openai.js";
+import legacy, { Sandbox } from "./worker-openai.js";
 import publicSI from "./platform/public-ai.mjs";
 
-export { Sandbox, ContainerProxy };
+export { Sandbox };
 
 const PUBLIC_HOSTS = new Set(["hephzibahbehulah.com", "www.hephzibahbehulah.com"]);
 
