@@ -7,6 +7,7 @@
 
   const SUPPORTED = { en:'English', de:'Deutsch', yo:'Yorùbá', pid:'Nigerian Pidgin' };
   const KEY = 'hb_language';
+  const COOKIE_DOMAIN = 'hephzibahbehulah.com';
 
   const scriptEl = Array.from(document.scripts).find(s => /language-system\.js(?:\?|$)/.test(s.src));
   const scriptUrl = scriptEl ? new URL(scriptEl.src, location.href) : new URL('/js/language-system.js', location.origin);
@@ -28,8 +29,20 @@
   function getRequestedLanguage(){
     const q = new URLSearchParams(location.search).get('lang');
     if (SUPPORTED[q]) return q;
+    const cookie = document.cookie.split(';').map(part=>part.trim()).find(part=>part.startsWith(KEY + '='));
+    const shared = cookie ? cookie.slice(KEY.length + 1) : '';
+    if (SUPPORTED[shared]) return shared;
     const saved = localStorage.getItem(KEY);
     return SUPPORTED[saved] ? saved : 'en';
+  }
+
+  function rememberLanguage(code){
+    localStorage.setItem(KEY,code);
+    const host = location.hostname.toLowerCase();
+    if(host === COOKIE_DOMAIN || host.endsWith('.' + COOKIE_DOMAIN)){
+      const secure = location.protocol === 'https:' ? '; Secure' : '';
+      document.cookie = KEY + '=' + encodeURIComponent(code) + '; Domain=' + COOKIE_DOMAIN + '; Path=/; Max-Age=31536000; SameSite=Lax' + secure;
+    }
   }
 
   function rememberOriginal(el){
@@ -162,7 +175,7 @@
 
     select.addEventListener('change',function(){
       const code = SUPPORTED[this.value] ? this.value : 'en';
-      localStorage.setItem(KEY,code);
+      rememberLanguage(code);
       const url = new URL(location.href);
       url.searchParams.set('lang',code);
       location.assign(url.href);
@@ -201,7 +214,7 @@
   window.HBLanguage = {
     set: async function(code){
       if(!SUPPORTED[code]) code='en';
-      localStorage.setItem(KEY,code);
+      rememberLanguage(code);
       const url=new URL(location.href);
       url.searchParams.set('lang',code);
       location.assign(url.href);
