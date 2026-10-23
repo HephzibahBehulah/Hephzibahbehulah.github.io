@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches: ["main", "codex/**"]
-    paths: ["platform/**", "apps/**", "worker-platform.mjs", ".github/workflows/platform-validation.yml"]
+    paths: ["platform/**", "apps/**", "worker-platform.mjs", "wrangler.jsonc", ".github/workflows/platform-validation.yml"]
 permissions:
   contents: read
 jobs:
