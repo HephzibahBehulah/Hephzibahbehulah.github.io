@@ -1,14 +1,62 @@
 // ADIGUN deployment verification marker — 2026-09-26
 // Free Cloudflare Workers AI fallback is enabled when the primary provider is unavailable.
-import { getSandbox, Sandbox as CloudflareSandbox, ContainerProxy } from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
 import legacy from "./worker-v2.js";
 import {accountGateway} from "./platform/admin-accounts.mjs";
 import {boundSandboxOutput} from "./platform/sandbox-limits.mjs";
 
-export { ContainerProxy };
-export class Sandbox extends CloudflareSandbox {
-  enableInternet = false;
-  allowedHosts = [];
+const SANDBOX_INACTIVITY_TIMEOUT_MS=30*60*1000;
+export class Sandbox extends DurableObject {
+  constructor(ctx,env){
+    super(ctx,env);
+    if(ctx.container?.running)void ctx.blockConcurrencyWhile(()=>ctx.container.setInactivityTimeout(SANDBOX_INACTIVITY_TIMEOUT_MS));
+  }
+  get container(){
+    const container=this.ctx.container;
+    if(!container)throw new Error("Sandbox execution plane is not configured.");
+    return container;
+  }
+  setup=null;
+  async ensureRunning(actor){
+    if(this.setup===null||!this.container.running){
+      this.setup=this.startContainer(actor).catch(error=>{this.setup=null;throw error;});
+    }
+    return this.setup;
+  }
+  async startContainer(actor){
+    if(!this.container.running)this.container.start({
+      image:this.container.images.sandbox,
+      instance:"lite",
+      enableInternet:false,
+      labels:{workload:"adigun-private-execution",actor:String(actor||"operator").slice(0,64)}
+    });
+    await this.container.setInactivityTimeout(SANDBOX_INACTIVITY_TIMEOUT_MS);
+  }
+  async runCommand(command,actor){
+    await this.ensureRunning(actor);
+    const process=await this.container.exec(["sh","-c","ulimit -t 5; exec "+command],{cwd:"/workspace"});
+    let timer;
+    const outputPromise=process.output();
+    const timedOut=Symbol("sandbox-timeout");
+    const timeoutPromise=new Promise(resolve=>{timer=setTimeout(()=>resolve(timedOut),10000);});
+    let output=await Promise.race([outputPromise,timeoutPromise]);
+    clearTimeout(timer);
+    let timeoutExceeded=false;
+    if(output===timedOut){
+      timeoutExceeded=true;
+      try{process.kill(9);}catch{}
+      output=await outputPromise;
+    }
+    const cpuLimitExceeded=!timeoutExceeded&&[137,152].includes(output.exitCode);
+    return {
+      exitCode:output.exitCode,
+      success:!timeoutExceeded&&!cpuLimitExceeded&&output.exitCode===0,
+      timedOut:timeoutExceeded,
+      cpuLimitExceeded,
+      stdout:new TextDecoder().decode(output.stdout),
+      stderr:new TextDecoder().decode(output.stderr)
+    };
+  }
 }
 
 const corsHeaders = request => {
@@ -430,12 +478,9 @@ function adminSandboxId(identity) {
   return "adigun-admin-" + (encoded || "operator");
 }
 
-async function getAdminSandbox(env, identity) {
+function getAdminSandbox(env, identity) {
   if (!env.Sandbox) throw new Error("Sandbox execution plane is not configured.");
-  return getSandbox(env.Sandbox, adminSandboxId(identity), {
-    sleepAfter:"30m",
-    labels:{workload:"adigun-private-execution",actor:identity.email}
-  });
+  return env.Sandbox.getByName(adminSandboxId(identity));
 }
 
 function reconHelp(topic="overview") {
@@ -690,11 +735,13 @@ async function executeSandboxCommand(request, env, ctx, command) {
   const started=Date.now();
   try{
     const sandbox=await getAdminSandbox(env,identity);
-    const result=await sandbox.exec("ulimit -t 5; "+shellCommand,{timeout:10000});
+    const result=await sandbox.runCommand(shellCommand,identity.email);
     const boundedOutput=boundSandboxOutput(result.stdout,result.stderr);
     const boundedResult={
       exitCode:result.exitCode,
       success:result.success,
+      timedOut:result.timedOut,
+      cpuLimitExceeded:result.cpuLimitExceeded,
       ...boundedOutput
     };
     const evidence=evidenceRecord({
@@ -703,10 +750,14 @@ async function executeSandboxCommand(request, env, ctx, command) {
       actor:identity.email,
       status:boundedResult.success&&!boundedOutput.outputLimitExceeded?"observed":"failed",
       startedAt:new Date(started).toISOString(),
-      result:{command,exitCode:boundedResult.exitCode,success:boundedResult.success,outputBytes:boundedOutput.outputBytes,outputLimitExceeded:boundedOutput.outputLimitExceeded}
+      result:{command,exitCode:boundedResult.exitCode,success:boundedResult.success,timedOut:boundedResult.timedOut,cpuLimitExceeded:boundedResult.cpuLimitExceeded,outputBytes:boundedOutput.outputBytes,outputLimitExceeded:boundedOutput.outputLimitExceeded}
     });
+    if(result.timedOut||result.cpuLimitExceeded){
+      const message=result.timedOut?"Sandbox command exceeded its 10-second wall-clock limit and was stopped.":"Sandbox command exceeded its 5-second CPU limit and was stopped.";
+      return json(request,{ok:false,command,shellCommand,error:message,durationMs:Date.now()-started,result:boundedResult,evidence,executedAt:evidence.observedAt},408);
+    }
     const outputError=boundedOutput.outputLimitExceeded?"Sandbox output exceeded the 1 MiB limit; captured output was truncated.":undefined;
-    return json(request,{ok:boundedResult.success&&!boundedOutput.outputLimitExceeded,command,shellCommand,durationMs:Date.now()-started,result:boundedResult,error:outputError,evidence,executedAt:evidence.observedAt},boundedOutput.outputLimitExceeded?413:200);
+    return json(request,{ok:result.success&&!boundedOutput.outputLimitExceeded,command,shellCommand,error:outputError,durationMs:Date.now()-started,result:boundedResult,evidence,executedAt:evidence.observedAt},boundedOutput.outputLimitExceeded?413:200);
   }catch(error){
     const evidence=evidenceRecord({tool:"sandbox.exec",target:adminSandboxId(identity),actor:identity.email,status:"error",startedAt:new Date(started).toISOString(),result:{command,error:String(error?.message||error)}});
     return json(request,{ok:false,command,error:String(error?.message||error),evidence},502);
