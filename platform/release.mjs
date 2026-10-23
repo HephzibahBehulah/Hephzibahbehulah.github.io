@@ -9,7 +9,7 @@ const engineering=path.join(root,'platform-source/engineering');
 const plc=path.join(engineering,'apps/voltpro-plc');
 const cyber=path.join(root,'apps/pentest-source');
 node('platform/check-browser-scripts.mjs');
-node('--test','platform/access.test.mjs','platform/router.test.mjs','platform/engineering-ai.test.mjs','platform/app-archives.test.mjs','platform/admin-accounts.test.mjs','platform/public-auth.test.mjs','platform/studio-bank.test.mjs','platform/release-assets.test.mjs','platform/about-contact.test.mjs');
+node('--test','platform/access.test.mjs','platform/router.test.mjs','platform/engineering-ai.test.mjs','platform/app-archives.test.mjs','platform/admin-accounts.test.mjs','platform/public-auth.test.mjs','platform/studio-bank.test.mjs','platform/release-assets.test.mjs','platform/about-contact.test.mjs','platform/public-language.test.mjs');
 node('platform/fetch-apps.mjs');
 run('npm',['ci','--no-audit','--no-fund'],plc);
 run('npm',['test'],plc);
