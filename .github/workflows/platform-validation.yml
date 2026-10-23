@@ -38,6 +38,15 @@ jobs:
       - name: Build the self-contained release from consolidated source
         run: node platform/release.mjs
 
+      - name: Install Cloudflare Worker deployment dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Deploy integrated Worker and assets to Cloudflare
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Preserve verified platform catalogues for reproducible builds
         uses: actions/upload-artifact@v4
         with:
