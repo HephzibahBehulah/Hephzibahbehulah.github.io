@@ -26,8 +26,8 @@ export function createAccountService({readEnv,verify=verifyCloudflareAccessJwt,f
    const text=await request.text();if(text.length>4096)return json({error:'Request too large'},413);
    let body;try{body=JSON.parse(text);}catch{return json({error:'Invalid JSON'},400);}
    if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.user_id||'')||!['pause_login_24h','allow_login'].includes(body.action))return json({error:'Invalid account action'},400);
-   const reason=typeof body.reason==='string'?body.reason.trim():'';if(reason.length<10||reason.length>500)return json({error:'Provide an audit reason of 10 to 500 characters'},400);
    const user=await api('/auth/v1/admin/users/'+body.user_id);if(account(user).owner)return json({error:'The owner account is protected from this action'},403);
+   const reason=typeof body.reason==='string'?body.reason.trim():'';if(reason.length<10||reason.length>500)return json({error:'Provide an audit reason of 10 to 500 characters'},400);
    const confirmation=(body.action==='pause_login_24h'?'PAUSE LOGIN ':'ALLOW LOGIN ')+String(user.email||'').trim();if(body.confirmation!==confirmation)return json({error:'Confirmation must name the exact action and account email'},400);
    const actorEmail=String(identity.identity?.email||OWNER).trim().toLowerCase();if(!PROTECTED.has(actorEmail))return json({error:'Owner authentication required'},401);
    const audit=await api('/rest/v1/hb_admin_operations',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({actor_email:actorEmail,target_user_id:body.user_id,action:body.action,reason,status:'requested'})});const auditId=audit?.[0]?.id;if(!auditId)throw Error('Audit recording failed');
