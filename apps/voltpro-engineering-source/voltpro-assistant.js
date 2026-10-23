@@ -132,9 +132,11 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
         }),
         signal: AbortSignal.timeout(Math.max(8000,Math.min(120000,Number(preferences.aiTimeoutMs)||60000)))
       });
-      if (response.ok) {
-        const data = await response.json();
-        if (data && typeof data.answer === "string" && data.answer.trim()) { answer = data.answer.trim(); responseMode = "ai"; }
+      if (response.ok && response.body) {
+        const reader=response.body.getReader(),decoder=new TextDecoder();let buffer="";
+        const handle=line=>{if(!line.startsWith("data:"))return;let event;try{event=JSON.parse(line.slice(5).trim());}catch{return;}if(event.type==="reset"){answer="";options.onChunk?.("",{reset:true});}else if(event.type==="delta"){answer+=String(event.text||"");options.onChunk?.(answer);}else if(event.type==="error")throw Error(event.error||"AI service unavailable");};
+        while(true){const part=await reader.read();if(part.done)break;buffer+=decoder.decode(part.value,{stream:true});const lines=buffer.split(/\r?\n/);buffer=lines.pop()||"";for(const line of lines)handle(line);}
+        if(buffer)handle(buffer);if(answer.trim())responseMode="ai";
       }
     } catch (_) {}
     if(!answer&&parts.length)answer=parts.map(r=>r.name+'\n'+r.description+'\nTerminals: '+r.terminals.map((t,i)=>(i+1)+' '+t.label).join(', ')+'\nParameters: '+Object.entries(r.props||{}).map(([k,v])=>k+' = '+v).join(', ')+'\nModel limits: '+r.limitations).join('\n\n');
