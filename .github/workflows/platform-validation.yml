@@ -31,7 +31,7 @@ jobs:
           node --check platform/admin-accounts-ui.js
           node --check js/language-system.js
       - name: Verify authorization, routing and tutor boundaries
-        run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs
+        run: node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
       - name: Check every original browser script
