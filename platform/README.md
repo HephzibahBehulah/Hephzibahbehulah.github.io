@@ -4,8 +4,8 @@ This integration is deployed on the four hostnames below. It preserves the origi
 
 ## Hostnames
 
-- `engineering.hephzibahbehulah.com`: the pinned VoltPRo application.
-- `cyber.hephzibahbehulah.com`: the pinned cybersecurity browser companion.
+- `engineering.hephzibahbehulah.com`: the repository-built VoltPRo application.
+- `cyber.hephzibahbehulah.com`: the repository-built cybersecurity browser companion.
 - `hephzibahbehulah.com`: the public company platform, with a two-minute guest preview and central public account login.
 - `admin.hephzibahbehulah.com`: the existing control room, with the same outer Access verification and its existing private API checks.
 
@@ -25,7 +25,7 @@ npx wrangler deploy --dry-run --config wrangler.platform.jsonc
 
 The builder refuses incomplete original-platform snapshots and refuses to overwrite an existing release directory. Use a fresh checkout or preserve the previous generated directory before building again. The release manifest records source versions and asset checksums. `wrangler.jsonc` now uses the integrated entry point and requires the generated assets; it cannot silently fall back to the older public root.
 
-For Cloudflare automatic builds, use `node platform/release.mjs` as the build command and `npx wrangler deploy` as the deploy command. The release command downloads the exact browser-only release archives in `public-apps-lock.json`, verifies SHA-256 checksums, runs the boundary tests, rebuilds the complete original platform plus both apps, and prepares deployment configuration. It does not require public repositories or a cross-repository GitHub token. These archives contain browser-delivered application assets, not backend secrets or the native Kali execution application. A hash mismatch stops the build. To update an app, build and validate its new pinned revision, publish its versioned browser archive, and update both locks together.
+For Cloudflare automatic builds, use `node platform/release.mjs` as the build command and `npx wrangler deploy` as the deploy command. Engineering, ElectCAD, and cybersecurity source is committed under `apps/` in this repository. The release command stages those local files, runs the PLC tests and build, builds the cybersecurity web companion from its local source with the pinned Pyodide runtime, runs platform and integration checks, builds ElectCAD, and prepares the single Worker asset directory. The release path makes no requests to the former application repositories or to a versioned release archive. Source commit provenance is recorded in `platform/source-lock.json`.
 
 ## Required deployment checks
 
