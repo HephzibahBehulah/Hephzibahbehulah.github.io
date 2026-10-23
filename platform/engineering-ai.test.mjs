@@ -32,3 +32,21 @@ test('engineering chat applies domain-specific system contracts for all four too
   assert.match(captured.messages[1].content,/Supported project contract/);
  }
 });
+
+test('engineering chat streams chunks through Workers AI',async()=>{
+ let options;
+ const origin='https://engineering.hephzibahbehulah.com';
+ const upstream=new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('data: {"response":"first "}\\n\\ndata: {"response":"second"}\\n\\n'));c.close();}});
+ const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'simulator',stream:true,messages:[{role:'user',content:'Explain this circuit'}]})}),{AI:{run:async(_model,opts)=>{options=opts;return upstream;}}});
+ assert.equal(result.status,200);
+ assert.match(result.headers.get('content-type'),/text\/event-stream/);
+ assert.equal(options.stream,true);
+ const body=await result.text();assert.match(body,/"text":"first "/);assert.match(body,/"text":"second"/);assert.match(body,/"type":"done"/);
+});
+
+test('engineering chat falls back to non-streaming when stream setup fails',async()=>{
+ let calls=0;
+ const origin='https://engineering.hephzibahbehulah.com';
+ const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'breadboard',stream:true,messages:[{role:'user',content:'Map a breadboard prototype'}]})}),{AI:{run:async(_model,opts)=>{calls++;if(opts.stream)throw Error('stream unavailable');return {response:'Fallback answer'};}}});
+ const body=await result.text();assert.equal(calls,2);assert.match(body,/"type":"reset"/);assert.match(body,/"text":"Fallback answer"/);assert.match(body,/"type":"done"/);
+});
