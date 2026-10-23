@@ -63,7 +63,7 @@ removeAICircuitDesignerNavigation(path.join(destination,'_apps/engineering'));
 
 // The pinned PLC module owns validation and state; the studio never reparents React controls.
 const plcAssets=path.join(destination,'_apps/engineering/voltpro-plc/assets');
-const plcBundle=fs.readdirSync(plcAssets).find(name=>/^index-.+\\.js$/.test(name));
+const plcBundle=fs.readdirSync(plcAssets).find(name=>/^index-.+\.js$/.test(name));
 if(!plcBundle)throw Error('PLC production JavaScript bundle is missing.');
 const plcModule=path.join(plcAssets,plcBundle);const plcCode=fs.readFileSync(plcModule,'utf8');
 if(!plcCode.includes('xt.getState().setProject')||!plcCode.includes('const V=Ei(R.data)'))throw Error('PLC integration contract changed; review the native import bridge before release.');
