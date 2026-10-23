@@ -1,4 +1,5 @@
 import legacy, { Sandbox, ContainerProxy } from "./worker-openai.js";
+import publicSI from "./platform/public-ai.mjs";
 
 export { Sandbox, ContainerProxy };
 
@@ -76,6 +77,8 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const originHost = url.hostname.toLowerCase();
+
+    if (url.pathname === "/api/chat" && request.method === "POST" && PUBLIC_HOSTS.has(originHost)) return publicSI.fetch(request, env);
 
     if (url.pathname === "/api/transcribe" && request.method === "OPTIONS" && PUBLIC_HOSTS.has(originHost)) {
       return preflight(originHost);
