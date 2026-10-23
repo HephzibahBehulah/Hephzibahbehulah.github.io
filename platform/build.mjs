@@ -4,6 +4,7 @@ import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {verifyMainAssets} from './preflight.mjs';
 import {publishArchives} from './app-archives.mjs';
+import {copySharedAssets} from './release-assets.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const engineering=path.resolve(process.argv[2]||'../engineering-source');
 const cyber=path.resolve(process.argv[3]||'../cyber/build-app/web');
@@ -17,6 +18,8 @@ function copy(from,to,{main=false,cyber=false}={}){
  for(const entry of fs.readdirSync(from,{withFileTypes:true})){
   if(entry.name.startsWith('.')||['node_modules','dist-platform','platform-source','platform','tests','scripts','server','apps','docs','backend','deployment','production-inventory','ml-service','pentest-script'].includes(entry.name)&&main)continue;
   if(!main&&['node_modules','.git','.github','server','apps','tests','scripts','docs'].includes(entry.name))continue;
+  if(main&&['js','css'].includes(entry.name))continue;
+  if(main&&entry.name==='favicon.ico')continue;
   const src=path.join(from,entry.name),dst=path.join(to,entry.name);
   if(entry.isDirectory()){copy(src,dst,{main,cyber});continue;}
   if(!extensions.has(path.extname(entry.name))||main&&/^worker.*\.[cm]?js$/.test(entry.name)||!cyber&&['.py','.zip'].includes(path.extname(entry.name)))continue;
@@ -24,6 +27,7 @@ function copy(from,to,{main=false,cyber=false}={}){
  }
 }
 copy(root,destination,{main:true});
+copySharedAssets(root,destination);
 copy(engineering,path.join(destination,'_apps/engineering'));
 
 
