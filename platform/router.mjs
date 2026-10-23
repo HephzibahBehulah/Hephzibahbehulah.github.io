@@ -10,6 +10,7 @@ const reply=(status,message)=>new Response(message,{status,headers:{'content-typ
 
 export function resolveRoute(url){
   const host=url.hostname.toLowerCase(),path=url.pathname;
+  if(host==='www.'+ROOT)return {kind:'redirect',privateHost:false,location:'https://'+ROOT+path};
   if(host===WORKERS_DEV)return {kind:'redirect',privateHost:false,location:'https://'+ROOT+path};
   if(!PUBLIC.has(host)&&!PRIVATE.has(host)&&!MAIN.has(host))return {kind:'reject',status:404};
   let decoded;try{decoded=decodeURIComponent(path);}catch{return {kind:'reject',status:400};}
