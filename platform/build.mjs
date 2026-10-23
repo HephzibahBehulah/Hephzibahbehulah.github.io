@@ -77,6 +77,8 @@ const integratedPLC=plcCode+'\n'+fs.readFileSync(path.join(root,'platform/studio
 for(const [file,needle,replacement]of [['simulator.html','class="sim-app"','class="sim-app" translate="no"'],['breadboard.html','class="app"','class="app" translate="no"'],['voltpro-plc/index.html','id="root"','id="root" translate="no"']]){const target=path.join(destination,'_apps/engineering',file);fs.writeFileSync(target,fs.readFileSync(target,'utf8').replace(needle,replacement));}
 
 generateSeo(destination);
+for(const file of ['robots.txt','sitemap.xml','_apps/engineering/robots.txt','_apps/engineering/sitemap.xml','_apps/cyber/robots.txt','_apps/cyber/sitemap.xml'])if(!fs.existsSync(path.join(destination,file)))throw Error('Required SEO release asset is missing: '+file);
+for(const file of ['sitemap.xml','_apps/engineering/sitemap.xml','_apps/cyber/sitemap.xml'])if(!/<loc>https:\/\//.test(fs.readFileSync(path.join(destination,file),'utf8')))throw Error('Generated sitemap has no public routes: '+file);
 
 function inventory(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())inventory(file);else manifest.assets[path.relative(destination,file).replaceAll('\\','/')]=crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');}}
 inventory(destination);fs.writeFileSync(path.join(destination,'release-manifest.json'),JSON.stringify(manifest,null,2));
