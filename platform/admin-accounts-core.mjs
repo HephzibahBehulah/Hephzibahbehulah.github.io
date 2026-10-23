@@ -18,7 +18,7 @@ export function createAccountService({readEnv,verify=verifyCloudflareAccessJwt,f
    if(request.method==='GET'){
     if(resource==='users'){const page=Number(url.searchParams.get('page')||1);if(!Number.isInteger(page)||page<1||page>10000)return json({error:'Invalid page'},400);const data=await api('/auth/v1/admin/users?page='+page+'&per_page=50');return json({users:(data.users||[]).map(account),page,next_page:data.next_page||null,last_page:data.last_page||null,total:data.total??null});}
     if(resource==='events')return json({events:await api('/rest/v1/hb_admin_auth_events?select=id,created_at,action,actor_id,actor_email,ip_address&order=created_at.desc&limit=100'),coverage:'Supabase authentication audit events. Cloudflare edge denials and failed-password attempts may require provider logs. Review signals are not proof of abuse.'});
-    if(resource==='operations')return json({operations:await api('/rest/v1/hb_admin_operations?select=id,created_at,actor_email,target_user_id,action,status&order=created_at.desc&limit=50')});
+    if(resource==='operations')return json({operations:await api('/rest/v1/hb_admin_operations?select=id,created_at,actor_email,target_user_id,action,reason,status&order=created_at.desc&limit=50')});
     return json({error:'Unknown resource'},404);
    }
    if(resource!=='users')return json({error:'Method not allowed'},405);
@@ -27,7 +27,10 @@ export function createAccountService({readEnv,verify=verifyCloudflareAccessJwt,f
    let body;try{body=JSON.parse(text);}catch{return json({error:'Invalid JSON'},400);}
    if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.user_id||'')||!['pause_login_24h','allow_login'].includes(body.action))return json({error:'Invalid account action'},400);
    const user=await api('/auth/v1/admin/users/'+body.user_id);if(account(user).owner)return json({error:'The owner account is protected from this action'},403);
-   const audit=await api('/rest/v1/hb_admin_operations',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({actor_email:OWNER,target_user_id:body.user_id,action:body.action,status:'requested'})});const auditId=audit?.[0]?.id;if(!auditId)throw Error('Audit recording failed');
+   const reason=typeof body.reason==='string'?body.reason.trim():'';if(reason.length<10||reason.length>500)return json({error:'Provide an audit reason of 10 to 500 characters'},400);
+   const confirmation=(body.action==='pause_login_24h'?'PAUSE LOGIN ':'ALLOW LOGIN ')+String(user.email||'').trim();if(body.confirmation!==confirmation)return json({error:'Confirmation must name the exact action and account email'},400);
+   const actorEmail=String(identity.identity?.email||OWNER).trim().toLowerCase();if(!PROTECTED.has(actorEmail))return json({error:'Owner authentication required'},401);
+   const audit=await api('/rest/v1/hb_admin_operations',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({actor_email:actorEmail,target_user_id:body.user_id,action:body.action,reason,status:'requested'})});const auditId=audit?.[0]?.id;if(!auditId)throw Error('Audit recording failed');
    let updated;
    try{updated=await api('/auth/v1/admin/users/'+body.user_id,{method:'PUT',body:JSON.stringify({ban_duration:body.action==='pause_login_24h'?'24h':'none'})});}
    catch(error){await api('/rest/v1/hb_admin_operations?id=eq.'+auditId,{method:'PATCH',body:JSON.stringify({status:'failed'})}).catch(()=>{});throw error;}

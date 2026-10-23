@@ -15,8 +15,10 @@ create table if not exists public.hb_admin_operations (
  actor_email text not null,
  target_user_id uuid not null,
  action text not null check (action in ('pause_login_24h','allow_login')),
+ reason text not null check (length(reason) between 10 and 500),
  status text not null check (status in ('requested','succeeded','failed'))
 );
+alter table public.hb_admin_operations add column if not exists reason text not null default 'Legacy operation';
 alter table public.hb_admin_operations enable row level security;
 revoke all on public.hb_admin_operations from public, anon, authenticated;
 grant select, insert, update on public.hb_admin_operations to service_role;
