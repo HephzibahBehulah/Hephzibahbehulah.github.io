@@ -43,3 +43,17 @@ test('preview hosts keep language locally without setting the project parent-dom
   assert.equal(app.store.get('hb_language'),'pid');
   assert.equal(app.document.cookie,'');
 });
+
+test('language selector offers all four languages and safely initializes once',async()=>{
+  const app=browser({readyState:'complete'});
+  await new Promise(resolve=>setImmediate(resolve));
+  const select=app.document.getElementById('hbLanguage');
+  assert.ok(select);
+  assert.deepEqual(select.children.map(option=>option.value),['en','de','yo','pid']);
+  select.value='pid';
+  select.listeners.change.call(select);
+  assert.equal(app.store.get('hb_language'),'pid');
+  assert.match(app.assigned[0],/[?&]lang=pid/);
+  vm.runInNewContext(source,app.context);
+  assert.equal(app.document.body.children.filter(child=>child.id==='hbLanguageControl').length,1);
+});
