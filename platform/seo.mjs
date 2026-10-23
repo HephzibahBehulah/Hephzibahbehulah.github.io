@@ -30,8 +30,9 @@ function applyHtml(file,relative){
  if(!/<meta\b(?=[^>]*\bproperty=["']og:title["'])/i.test(html))html=html.replace(/<head\b[^>]*>/i,match=>`${match}<meta property="og:title" content="${escape(title)}">`);
  if(!/<meta\b(?=[^>]*\bproperty=["']og:description["'])/i.test(html))html=html.replace(/<head\b[^>]*>/i,match=>`${match}<meta property="og:description" content="${escape(description)}">`);
  if(!/<meta\b(?=[^>]*\bproperty=["']og:type["'])/i.test(html))html=html.replace(/<head\b[^>]*>/i,match=>`${match}<meta property="og:type" content="website">`);
- if(!/<link\b(?=[^>]*\brel=["']icon["'])/i.test(html))html=html.replace(/<head\b[^>]*>/i,match=>`${match}<link rel="icon" href="/favicon.ico">`);
+ if(!/<link\b(?=[^>]*\brel=["']icon["'])/i.test(html))html=html.replace(/<head\b[^>]*>/i,match=>`${match}<link rel="icon" href="${MAIN}/favicon.ico">`);
  const url=publicUrl(relative);
+ if(url&&!/<meta\b(?=[^>]*\bproperty=["']og:url["'])/i.test(html))html=html.replace(/<head\b[^>]*>/i,match=>`${match}<meta property="og:url" content="${escape(url)}">`);
  const learning=/academy|learn|learning|engineering|simulator|breadboard|plc|pentest|resource|course|tutorial/i.test(`${title} ${relative}`);
  if(url&&learning&&!/"@type"\s*:\s*"LearningResource"/i.test(html)){
   const schema={'@context':'https://schema.org','@type':'LearningResource',name:title,description,url,inLanguage:'en',provider:{'@type':'Person',name:'Hephzibah Behulah'}};
@@ -53,8 +54,15 @@ export function generateSeo(destination){
  }}
  walk(destination);
  const unique=[...new Set(urls)].sort();
- fs.writeFileSync(path.join(destination,'robots.txt'),`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /account\nDisallow: /member\nDisallow: /api/\nDisallow: /_hb/\nSitemap: ${MAIN}/sitemap.xml\n`);
- fs.writeFileSync(path.join(destination,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${unique.map(url=>`<url><loc>${escape(url)}</loc></url>`).join('')}</urlset>\n`);
+ const writeSitemap=(dir,origin,items)=>{
+  fs.writeFileSync(path.join(dir,'robots.txt'),`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /account\nDisallow: /member\nDisallow: /api/\nDisallow: /_hb/\nSitemap: ${origin}/sitemap.xml\n`);
+  fs.writeFileSync(path.join(dir,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${items.map(url=>`<url><loc>${escape(url)}</loc></url>`).join('')}</urlset>\n`);
+ };
+ writeSitemap(destination,MAIN,unique.filter(url=>url.startsWith(MAIN+'/')));
+ for(const [app,origin]of Object.entries(APP_HOSTS)){
+  const dir=path.join(destination,'_apps',app);
+  if(fs.existsSync(dir))writeSitemap(dir,origin,unique.filter(url=>url.startsWith(origin+'/')));
+ }
  return unique;
 }
 
