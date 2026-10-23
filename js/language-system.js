@@ -4,6 +4,8 @@
 */
 (function(){
   'use strict';
+  if(window.__HB_LANGUAGE_SYSTEM_LOADED__) return;
+  window.__HB_LANGUAGE_SYSTEM_LOADED__=true;
 
   const SUPPORTED = { en:'English', de:'Deutsch', yo:'Yorùbá', pid:'Nigerian Pidgin' };
   const KEY = 'hb_language';

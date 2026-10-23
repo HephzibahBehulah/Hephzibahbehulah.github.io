@@ -72,3 +72,20 @@ test('ElectCAD route normalizes lowercase aliases without changing asset paths',
 });
 
 test('the workers.dev origin canonicalizes to the main domain',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://hephzibahbehulah-github-io.hephzibah-behulah.workers.dev/?from=worker'),{});assert.equal(r.status,308);assert.equal(r.headers.get('location'),'https://'+root+'/?from=worker');});
+
+test('public engineering and legacy HTML receive the global language system',async()=>{
+ const original=globalThis.HTMLRewriter;
+ class TestHTMLRewriter{
+  on(selector,handlers){this.handlers=handlers;return this;}
+  transform(response){let markup='';this.handlers.element({prepend(value){markup+=value;}});return response.text().then(html=>new Response(html.replace('<head>','<head>'+markup),{status:response.status,headers:response.headers}));}
+ }
+ globalThis.HTMLRewriter=TestHTMLRewriter;
+ try{
+  const worker=createPlatform({legacy:{fetch:async()=>new Response('<html><head></head><body></body></html>',{headers:{'content-type':'text/html'}})}});
+  for(const url of ['https://engineering.'+root+'/simulator','https://'+root+'/ai.html']){
+   const r=await worker.fetch(new Request(url),{ASSETS:{fetch:async()=>new Response('<html><head></head><body></body></html>',{headers:{'content-type':'text/html'}})}});
+   assert.equal(r.status,200);
+   assert.ok((await r.text()).includes('<script src="/js/language-system.js" defer></script>'));
+  }
+ }finally{if(original===undefined)delete globalThis.HTMLRewriter;else globalThis.HTMLRewriter=original;}
+});
