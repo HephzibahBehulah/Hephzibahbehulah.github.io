@@ -38,14 +38,27 @@ const boot=()=>{
     const thinking=add("","bot");thinking.innerHTML='<span class="hb-bot-thinking"><i></i><i></i><i></i></span>';
     try{
       let d;
-      if(!privatePage&&!engineering&&!cyber&&window.Adigun?.ask)d=await window.Adigun.ask(q);
-      else{
-        const path=privatePage?"/api/admin/agent":engineering?"/api/engineering/chat":cyber?"/api/cyber/chat":"/api/chat";
-        const body=privatePage?{task:q}:cyber?{question:q}:{messages:[{role:"user",content:q}]};
-        const response=await fetch(path,{method:"POST",credentials:"same-origin",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout(90000)});
-        d=await response.json();if(!response.ok)throw Error(d.error||"Assistant request failed");
-      }
-      if(d.error&&!d.ok)throw Error(d.error);
+      const path=privatePage?"/api/admin/agent":engineering?"/api/engineering/chat":cyber?"/api/cyber/chat":"/api/chat";
+      const body=privatePage?{task:q}:cyber?{question:q}:{messages:[{role:"user",content:q}],language:window.HBLanguage?.get?.()||"en"};
+      const response=await fetch(path,{method:"POST",credentials:"same-origin",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout(90000)});
+      if(!response.ok)throw Error((await response.json().catch(()=>({}))).error||"Assistant request failed");
+      if(response.headers.get("content-type")?.includes("text/event-stream")){
+        const reader=response.body.getReader(),decoder=new TextDecoder();let buffer="",answer="";
+        while(true){
+          const chunk=await reader.read();
+          buffer+=decoder.decode(chunk.value||new Uint8Array(),{stream:!chunk.done});
+          const lines=buffer.split(/\r?\n/);buffer=lines.pop()||"";
+          for(const line of lines){
+            if(!line.startsWith("data:"))continue;
+            const data=line.slice(5).trim();if(!data||data==="[DONE]")continue;
+            try{const piece=JSON.parse(data).response;if(typeof piece==="string"){answer+=piece;thinking.textContent=answer;}}catch{}
+          }
+          if(chunk.done)break;
+        }
+        if(!answer)throw Error("The assistant returned an empty response.");
+        d={answer};
+      }else{d=await response.json();if(d.error&&!d.ok)throw Error(d.error);}
+
       thinking.remove();
       add(d?.answer||"I could not complete that request. Please try again.");
     }catch(err){thinking.remove();add(String(err.message||"ADIGUN is temporarily unavailable. Please try again shortly."));}
