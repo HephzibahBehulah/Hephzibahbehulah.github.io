@@ -32,8 +32,10 @@ export function resolveRoute(url){
     if(!app)return {kind:'legacy',privateHost:true};
   }
   if(prefix&&path===prefix)return {kind:'redirect',privateHost,location:prefix+'/'};
-  const relative=path.slice(prefix.length)||'/';
+  let relative=path.slice(prefix.length)||'/';
   const embedded=url.searchParams.get('vp_embed')==='1';
+  // Older shell builds incorrectly prefixed iframe URLs with /engineering on the public subdomain.
+  if(app==='engineering'&&embedded&&!prefix&&relative.startsWith('/engineering/'))relative=relative.slice('/engineering'.length)||'/';
   const workspaceAliases=['/simulator','/plc','/electcad','/tools','/engineering','/breadboard','/electrical','/voltpro-plc','/voltpro-plc/','/voltpro-electcad','/voltpro-electcad/'];
   if(app==='engineering'&&!embedded&&workspaceAliases.includes(relative.toLowerCase()))return {kind:'app',privateHost,app,prefix,base:prefix+'/',path:'/_apps/engineering/workspace-shell.html'};
   if(app==='engineering'&&/^\/voltpro-electcad(?:\/|$)/i.test(relative)){

@@ -8,7 +8,7 @@
     { path: "/breadboard", title: "VoltPro Breadboard", src: "/breadboard.html?vp_embed=1" },
     { path: "/electrical", title: "VoltPro Electrical Building", src: "/electrical-canvas.html?vp_embed=1" }
   ];
-  const rootPrefix = /^\/engineering(?:\/|$)/.test(location.pathname) ? "/engineering" : "";
+  const rootPrefix = location.hostname.startsWith("admin.") && /^\/engineering(?:\/|$)/.test(location.pathname) ? "/engineering" : "";
   const root = document.getElementById("vpWorkspace");
   const panels = new Map();
 
