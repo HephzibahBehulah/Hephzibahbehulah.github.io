@@ -43,6 +43,8 @@ const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
 for(const file of ['account-config.js','account-client.js','cloud-projects.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
+fs.copyFileSync(path.join(root,'js/language-system.js'),path.join(shared,'language-system.js'));
+fs.cpSync(path.join(root,'data/translations'),path.join(shared,'data/translations'),{recursive:true});
 const manifest={version:1,applications:lock,assets:{}};
 const releases=publishArchives(destination,lock);
 fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
