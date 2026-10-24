@@ -553,3 +553,6 @@ html.vp-electcad-embed .print-document{display:none}
   html.vp-electcad-embed .print-title-company span{font-size:6pt;color:#58646a}
   html.vp-electcad-embed .print-title-reference{grid-column:4;grid-row:1/3}
 }
+
+/* Dropdowns must escape the header; overflow-x:auto makes overflow-y:visible compute to auto and clips menus. */
+html.vp-electcad-embed .topbar{overflow:visible!important}
