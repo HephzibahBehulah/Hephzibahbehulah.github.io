@@ -1,5 +1,5 @@
 (()=>{'use strict';if(document.querySelector('.hb-platform-bar'))return;
-const domain='hephzibahbehulah.com',isPrivate=document.documentElement.dataset.hbPrivate==='true'||location.hostname==='admin.'+domain,isCyber=location.hostname==='cyber.'+domain||location.pathname.startsWith('/cyber/'),isElectCADWorkspace=location.hostname==='engineering.'+domain&&/^\/electcad(?:\/|$)/.test(location.pathname);
+const domain='hephzibahbehulah.com',isPrivate=document.documentElement.dataset.hbPrivate==='true'||location.hostname==='admin.'+domain,isCyber=location.hostname==='cyber.'+domain||location.pathname.startsWith('/cyber/'),isElectCADWorkspace=location.hostname==='engineering.'+domain&&/^\/(?:electcad|voltpro-electcad)(?:\/|$)/i.test(location.pathname);
 const make=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
 const link=(text,href)=>{const n=make('a',text);n.href=href;return n;};
 const action=(text,fn)=>{const n=make('button',text);n.type='button';n.addEventListener('click',fn);return n;};

@@ -1,4 +1,5 @@
 import type { ComponentKind } from './editor-model';
+import { terminalCount } from './terminal-geometry.mjs';
 
 export type SimulationModel = 'voltage'|'ground'|'resistor'|'capacitor'|'inductor'|'diode'|'bjt'|'switch'|'unsupported';
 export type LibraryComponent = { id: ComponentKind; label: string; prefix: string; defaultValue: string; category: string; model: SimulationModel; pins: number; description: string };
@@ -1102,14 +1103,9 @@ const raw: Array<[ComponentKind,string,string,string,string,SimulationModel]> = 
 ];
 
 export const componentLibrary: LibraryComponent[] = raw.map(([id,label,prefix,defaultValue,category,model])=>({
-  id,label,prefix,defaultValue,category,model,
-  pins: ['ground','terminal-ground','shield-ground','chassis-ground','analog-ground','digital-ground'].includes(id)?1:
-    id==='three-phase-source'||id==='three-phase-motor'?4:
-    ['circuit-breaker-3p','thermal-relay'].includes(id)?6:
-    id==='contactor-3p'?8:
-    ['op-amp','comparator','microcontroller','plc','io-module','plc-input','plc-output'].includes(id)?3:
-    ['nmos','pmos','npn-transistor','pnp-transistor','darlington-transistor','igbt','scr','triac','n-channel-jfet','p-channel-jfet'].includes(id)?3:2,
-  description: `${label}. Editable schematic symbol and properties. Simulation support: ${model==='unsupported'?'not implemented':model}.`
+  id,label,prefix,defaultValue:id==='microcontroller'?'ATmega328P-PU · DIP-28':defaultValue,category,model,
+  pins: terminalCount(id),
+  description: `${label}. ${terminalCount(id)} visible electrical terminal(s). Device-specific symbol data is identified by its selected value; simulation support: ${model==='unsupported'?'not implemented':model}.`
 }));
 
 export const componentById = (id: string) => componentLibrary.find(item=>item.id===id);

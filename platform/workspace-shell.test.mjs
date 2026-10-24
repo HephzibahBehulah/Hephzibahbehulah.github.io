@@ -201,12 +201,20 @@ test("ElectCAD account controls stay inside the CAD header instead of floating o
   assert.match(read("apps/voltpro-electcad/App.tsx"), /className="account-popover"/);
 });
 
+test("legacy ElectCAD URL casing cannot inject the portfolio header or member controls", () => {
+  assert.match(platformScript, /isElectCADWorkspace=.*voltpro-electcad.*\/i\.test\(location\.pathname\)/);
+  assert.match(read("platform/member.js"), /voltpro-electcad.*\/i\.test\(location\.pathname\)/);
+  assert.match(read("platform/router.mjs"), /voltpro-electcad.*\/i\.test\(relative\)/);
+  assert.ok(read("platform/build.mjs").includes('href="/electcad"'));
+  assert.match(read("apps/voltpro-electcad-source/vite.config.ts"), /hephzibahbehulah\.com\/electcad/);
+});
+
 test("ElectCAD File to Help dropdowns escape horizontal menu clipping and stack above the canvas", () => {
   const css = read("apps/voltpro-electcad/styles.css");
   assert.match(css, /menubar\{position:relative;z-index:10002;overflow:visible!important\}/);
   assert.match(css, /menu-pop\{position:absolute;z-index:10004/);
   assert.match(css, /canvas-area\{position:relative;z-index:0\}/);
-  assert.match(css, /Dropdowns must escape the header[\\s\\S]*?\\.topbar\\{overflow:visible!important\\}/);
+  assert.match(css, /Dropdowns must escape the header[\s\S]*?\.topbar\{overflow:visible!important\}/);
 });
 
 test("Breadboard command menu proxies only to implemented native controls", () => {

@@ -49,15 +49,17 @@ test('private service workers retire only after authorization',async()=>{
  const result=await worker.fetch(request,{});assert.equal(result.status,200);assert.match(await result.text(),/registration\.unregister/);assert.equal(result.headers.get('cache-control'),'private, no-store');
 });
 
-test('ElectCAD route enters the SPA shell while its embedded app keeps the canonical base',()=>{
- const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/'));
- assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');assert.equal(route.base,'/');
+test('legacy mixed-case ElectCAD entry redirects to the single canonical workspace route',()=>{
+ for(const path of ['/voltPro-ElectCAD/','/voltPro-ElectCAD','/voltpro-electcad/']){
+  const route=resolveRoute(new URL('https://engineering.'+root+path));
+  assert.deepEqual(route,{kind:'redirect',privateHost:false,location:'/electcad'});
+ }
  const frame=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/?vp_embed=1'));
  assert.equal(frame.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(frame.base,'/voltPro-ElectCAD/');
 });
-test('ElectCAD route without a slash opens the persistent shell',()=>{
+test('legacy ElectCAD route redirects when opened without a slash',()=>{
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD'));
- assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');
+ assert.equal(route.kind,'redirect');assert.equal(route.location,'/electcad');
 });
 test('ElectCAD assets resolve beneath the application directory',()=>{
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/assets/index.js'));
@@ -65,14 +67,14 @@ test('ElectCAD assets resolve beneath the application directory',()=>{
 });
 test('ElectCAD SPA route retains authenticated admin prefix for its embedded app',()=>{
  const shell=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/'));
- assert.equal(shell.privateHost,true);assert.equal(shell.path,'/_apps/engineering/workspace-shell.html');assert.equal(shell.base,'/engineering/');
+ assert.equal(shell.privateHost,true);assert.equal(shell.kind,'redirect');assert.equal(shell.location,'/engineering/electcad');
  const frame=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/?vp_embed=1'));
  assert.equal(frame.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(frame.base,'/engineering/voltPro-ElectCAD/');
 });
 
-test('lowercase ElectCAD alias enters the shell and keeps embedded assets direct',()=>{
+test('lowercase ElectCAD alias redirects while embedded assets remain available',()=>{
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/'));
- assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');
+ assert.equal(route.kind,'redirect');assert.equal(route.location,'/electcad');
  const asset=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/assets/index.js?vp_embed=1'));
  assert.equal(asset.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(asset.base,'/voltPro-ElectCAD/');
 });
@@ -108,6 +110,6 @@ test('embedded tool pages bypass SPA shell routing without remounting the shell'
  assert.equal(resolveRoute(new URL('https://engineering.'+root+'/electrical-canvas.html?vp_embed=1')).path,'/_apps/engineering/electrical-canvas.html');
 });
 
-for(const path of ['/engineering','/voltpro-plc','/voltpro-plc/','/voltpro-electcad','/voltpro-electcad/']){
+for(const path of ['/engineering','/voltpro-plc','/voltpro-plc/']){
  test('legacy workspace route '+path+' enters the SPA shell',()=>assert.equal(resolveRoute(new URL('https://engineering.'+root+path)).path,'/_apps/engineering/workspace-shell.html'));
 }

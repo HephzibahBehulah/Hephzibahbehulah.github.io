@@ -556,3 +556,6 @@ html.vp-electcad-embed .print-document{display:none}
 
 /* Dropdowns must escape the header; overflow-x:auto makes overflow-y:visible compute to auto and clips menus. */
 html.vp-electcad-embed .topbar{overflow:visible!important}
+.symbol-preview{width:30px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;color:#ff933b;font-family:inherit}
+.symbol-preview svg{width:30px;height:32px;overflow:visible}
+.symbol-preview svg text{display:none}

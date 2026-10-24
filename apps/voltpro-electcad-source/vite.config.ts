@@ -7,7 +7,7 @@ const legacyRedirect = {
   transformIndexHtml: {
     order: 'post' as const,
     handler() {
-      const target = 'https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/';
+      const target = 'https://engineering.hephzibahbehulah.com/electcad';
       return `<!doctype html>
 <html lang="en">
 <head>
