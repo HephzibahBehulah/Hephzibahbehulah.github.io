@@ -1,6 +1,6 @@
 {
   "source": "Linux man-pages project",
-  "count": 2634,
+  "count": 2636,
   "records": [
     {
       "id": "linux-man-diffman-git-1",
@@ -1120,6 +1120,28 @@
       "section": "2",
       "category": "Linux man page",
       "summary": "Linux manual-page reference for fgetxattr (section 2).",
+      "source": "Linux man-pages project",
+      "sourceUrl": "https://man7.org/linux/man-pages/",
+      "verification": "source-backed"
+    },
+    {
+      "id": "linux-man-file-getattr-2",
+      "name": "file_getattr",
+      "command": "file_getattr",
+      "section": "2",
+      "category": "Linux man page",
+      "summary": "Linux manual-page reference for file_getattr (section 2).",
+      "source": "Linux man-pages project",
+      "sourceUrl": "https://man7.org/linux/man-pages/",
+      "verification": "source-backed"
+    },
+    {
+      "id": "linux-man-file-setattr-2",
+      "name": "file_setattr",
+      "command": "file_setattr",
+      "section": "2",
+      "category": "Linux man page",
+      "summary": "Linux manual-page reference for file_setattr (section 2).",
       "source": "Linux man-pages project",
       "sourceUrl": "https://man7.org/linux/man-pages/",
       "verification": "source-backed"
