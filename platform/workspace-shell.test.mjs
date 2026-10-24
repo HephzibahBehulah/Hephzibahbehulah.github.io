@@ -40,6 +40,12 @@ test("the academy sidebar includes the Electrical Building destination", () => {
   assert.ok(academy.includes("VoltPro Electrical Building"));
 });
 
+test("Electrical Building opens the integrated ElectCAD editor with its machine-control starter", () => {
+  assert.ok(shell.includes('path: "/electrical", title: "VoltPro Electrical Building", src: "/voltpro-electcad/?vp_embed=1&profile=machine-control"'));
+  assert.ok(read("apps/voltpro-electcad/App.tsx").includes("get('profile')==='machine-control'"));
+  assert.match(read("apps/voltpro-engineering-source/src/ui/account.js"), /schemaVersion===2\|\|item\.data\?\.schemaVersion===3/);
+});
+
 test("the public /engineering alias keeps tool iframe URLs at the domain root", () => {
   assert.ok(shell.includes("rootPrefix = location.hostname.startsWith"));
 });

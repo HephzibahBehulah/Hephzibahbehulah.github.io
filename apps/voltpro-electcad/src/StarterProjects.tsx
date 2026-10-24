@@ -1,5 +1,6 @@
 import { componentById } from './component-library';
 import { connectablePins, decodeDocument, type ComponentKind, type Document, type Component, type Wire } from './editor-model';
+import { buildIndustrialMachineProject } from './machine-control-project.mjs';
 
 type Starter = {
   id: string;
@@ -34,27 +35,17 @@ function buildStarter(starter: Starter): Document {
     counts.set(prefix, count);
     return { id: `starter-${starter.id}-p${index + 1}`, type: node.type, x: 160 + index * 180, y: 200, ref: `${prefix}${count}`, value: node.value };
   });
-  const ground: Component = { id: `starter-${starter.id}-gnd`, type: 'ground', x: 122, y: 290, ref: 'GND1', value: '0' };
   const wires: Wire[] = [];
   const pins = parts.map(connectablePins);
-  const route = (a: { x: number; y: number }, b: { x: number; y: number }, id: string): Wire => ({ id, x1: a.x, y1: a.y, x2: b.x, y2: b.y });
-  if (pins.length > 1 && pins[0].length >= 2 && pins[1].length >= 2) wires.push(route(pins[0][1], pins[1][0], `starter-${starter.id}-w1`));
+  const route = (from: number, fromPin: number, to: number, toPin: number, id: string): Wire => ({ id, x1: pins[from][fromPin].x, y1: pins[from][fromPin].y, x2: pins[to][toPin].x, y2: pins[to][toPin].y, startTerminalId: `pin:${parts[from].id}:${fromPin}`, endTerminalId: `pin:${parts[to].id}:${toPin}` });
+  if (pins.length > 1 && pins[0].length >= 2 && pins[1].length >= 2) wires.push(route(0, 1, 1, 0, `starter-${starter.id}-w1`));
   for (let index = 1; index < pins.length - 1; index++) {
-    const previous = pins[index];
-    const next = pins[index + 1];
-    if (previous.length >= 2 && next.length >= 2) wires.push(route(previous[1], next[0], `starter-${starter.id}-w${wires.length + 1}`));
+    if (pins[index].length >= 2 && pins[index + 1].length >= 2) wires.push(route(index, 1, index + 1, 0, `starter-${starter.id}-w${wires.length + 1}`));
   }
-  if (pins.length > 1 && pins[pins.length - 1].length >= 2 && pins[0].length >= 2) {
-    const returnY = 360;
-    const lastReturn = pins[pins.length - 1][1];
-    const sourceReturn = pins[0][0];
-    wires.push(route(lastReturn, { x: lastReturn.x, y: returnY }, `starter-${starter.id}-w${wires.length + 1}`));
-    wires.push(route({ x: lastReturn.x, y: returnY }, { x: sourceReturn.x, y: returnY }, `starter-${starter.id}-w${wires.length + 1}`));
-    wires.push(route(sourceReturn, { x: sourceReturn.x, y: returnY }, `starter-${starter.id}-w${wires.length + 1}`));
-  }
-  const sheet = { id: 'sheet-1', name: '01 — ' + starter.title, parts: [...parts, ground], wires };
+  if (pins.length > 1 && pins[pins.length - 1].length >= 2 && pins[0].length >= 2) wires.push(route(pins.length - 1, 1, 0, 0, `starter-${starter.id}-w${wires.length + 1}`));
+  const sheet = { id: 'sheet-1', name: '01 — ' + starter.title, parts, wires };
   return decodeDocument({
-    schemaVersion: 2,
+    schemaVersion: 3,
     projectName: starter.title,
     activeSheetId: sheet.id,
     metadata: { projectNumber: `VP-${starter.id.toUpperCase()}`, organisation: '', client: '', engineer: '', revision: 'A', standard: '', description: starter.description },
@@ -73,7 +64,9 @@ export default function StarterProjects({ locale, onClose, onSelect }: Props) {
         : { title: 'Your ideas. A real schematic.', intro: 'Choose an editable starter or begin with an empty sheet.', blank: 'Start blank', note: 'These are editable concepts. Verify component models and engineering values before use.' };
   return <div className="starter-overlay" role="presentation"><section className="starter-picker" role="dialog" aria-modal="true" aria-label="Starter schematics">
     <div className="starter-picker-head"><div><span>VOLTPRO ELECTCAD · STARTER LIBRARY</span><h2>{copy.title}</h2><p>{copy.intro}</p></div><button className="tiny-btn" aria-label="Close starter library" onClick={onClose}>×</button></div>
-    <div className="starter-grid">{starters.map((starter, index) => <button className="starter-card" key={starter.id} onClick={() => onSelect(buildStarter(starter))}>
+    <div className="starter-grid"><button className="starter-card starter-card-featured" onClick={() => onSelect(decodeDocument(buildIndustrialMachineProject()))}>
+      <span className="starter-card-number">DE</span><strong>Industrial machine motor control</strong><span>Three-sheet 3-phase power, 24 V control concept and PLC feedback schematic. Every drawn conductor has explicit terminal references.</span><small>Germany / EU target · editable · ratings and standards need engineering verification</small>
+    </button>{starters.map((starter, index) => <button className="starter-card" key={starter.id} onClick={() => onSelect(buildStarter(starter))}>
       <span className="starter-card-number">{String(index + 1).padStart(2, '0')}</span><strong>{starter.title}</strong><span>{starter.description}</span><small>{starter.scope} · {starter.devices.length + 2} symbols</small>
     </button>)}</div>
     <div className="starter-picker-foot"><span>{copy.note}</span><button className="outline-btn" onClick={onClose}>{copy.blank}</button></div>
