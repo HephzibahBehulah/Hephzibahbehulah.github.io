@@ -50,6 +50,6 @@ test('engineering chat streams chunks through Workers AI',async()=>{
 test('engineering chat falls back to non-streaming when stream setup fails',async()=>{
  let calls=0;
  const origin='https://engineering.hephzibahbehulah.com';
- const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'breadboard',stream:true,messages:[{role:'user',content:'Map a breadboard prototype'}]})}),{AI:{run:async(_model,opts)=>{calls++;if(opts.stream)throw Error('stream unavailable');return {response:'Fallback answer'};}}});
+ const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'breadboard',stream:true,messages:[{role:'user',content:'Map a breadboard prototype'}]})}),{AI:{run:async(_model,opts)=>{calls++;if(opts.stream)throw Error('stream unavailable');return {response:'Fallback answer'};}},API_LIMITER:{limit:async()=>({success:true})}});
  const body=await result.text();assert.equal(calls,2);assert.match(body,/"type":"reset"/);assert.match(body,/"text":"Fallback answer"/);assert.match(body,/"type":"done"/);
 });
