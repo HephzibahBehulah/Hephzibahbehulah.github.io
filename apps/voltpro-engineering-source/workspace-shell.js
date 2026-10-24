@@ -13,8 +13,12 @@
   const panels = new Map();
 
   function canonicalPath(path) {
-    const local = path.startsWith(rootPrefix) ? path.slice(rootPrefix.length) : path;
-    return local.replace(/\/$/, "") || "/";
+    let local = path.startsWith(rootPrefix) ? path.slice(rootPrefix.length) : path;
+    local = local.replace(/\/$/, "") || "/";
+    if (local === "/engineering") return "/tools";
+    if (local === "/voltpro-plc") return "/plc";
+    if (local.toLowerCase() === "/voltpro-electcad") return "/electcad";
+    return local;
   }
   function ensurePanel(tool) {
     if (panels.has(tool.path)) return panels.get(tool.path);
