@@ -34,7 +34,8 @@ export function resolveRoute(url){
   if(prefix&&path===prefix)return {kind:'redirect',privateHost,location:prefix+'/'};
   const relative=path.slice(prefix.length)||'/';
   const embedded=url.searchParams.get('vp_embed')==='1';
-  if(app==='engineering'&&!embedded&&['/simulator','/plc','/electcad','/tools','/breadboard','/electrical'].includes(relative))return {kind:'app',privateHost,app,prefix,base:prefix+'/',path:'/_apps/engineering/workspace-shell.html'};
+  const workspaceAliases=['/simulator','/plc','/electcad','/tools','/engineering','/breadboard','/electrical','/voltpro-plc','/voltpro-plc/','/voltpro-electcad','/voltpro-electcad/'];
+  if(app==='engineering'&&!embedded&&workspaceAliases.includes(relative.toLowerCase()))return {kind:'app',privateHost,app,prefix,base:prefix+'/',path:'/_apps/engineering/workspace-shell.html'};
   if(app==='engineering'&&/^\/voltpro-electcad(?:\/|$)/i.test(relative)){
     const suffix=relative.slice('/voltPro-ElectCAD'.length);
     if(!suffix)return {kind:'redirect',privateHost,location:prefix+'/voltPro-ElectCAD/'};
