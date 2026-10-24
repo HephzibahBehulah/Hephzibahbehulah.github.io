@@ -5,17 +5,17 @@ import vm from 'node:vm';
 
 const source=fs.readFileSync(new URL('../js/language-system.js',import.meta.url),'utf8');
 
-function browser({host='cyber.hephzibahbehulah.com',cookie='',saved='en',readyState='complete',translations={}}={}){
-  const store=new Map([['hb_language',saved]]), assigned=[],observers=[];
+function browser({host='cyber.hephzibahbehulah.com',cookie='',saved='en',readyState='complete',translations={},scriptSrc=null}={}){
+  const store=new Map([['hb_language',saved]]), assigned=[],observers=[],fetched=[];
   const location={hostname:host,protocol:'https:',origin:'https://'+host,href:'https://'+host+'/',search:'',assign:url=>assigned.push(url)};
   const makeElement=tag=>({nodeType:1,tagName:tag.toUpperCase(),id:'',className:'',value:'',textContent:'',children:[],childNodes:[],attrs:{},listeners:{},appendChild(child){child.parent=this;this.childNodes.push(child);if(child.nodeType===1)this.children.push(child);return child;},append(...children){children.forEach(child=>this.appendChild(child));},setAttribute(key,value){this.attrs[key]=String(value);},getAttribute(key){return this.attrs[key]??null;},hasAttribute(key){return Object.hasOwn(this.attrs,key);},addEventListener(key,fn){this.listeners[key]=fn;},closest(selector){for(let node=this;node;node=node.parent){if(selector==='[translate="no"]'&&node.hasAttribute?.('translate')&&node.getAttribute('translate')==='no')return node;}return null;},querySelectorAll(){const all=[];const visit=node=>node.children.forEach(child=>{all.push(child);visit(child);});visit(this);return all;}});
   const body=makeElement('body');
   const find=(el,id)=>el.id===id?el:el.children.map(child=>find(child,id)).find(Boolean);
-  const document={scripts:[],readyState,documentElement:{},body,createElement:makeElement,getElementById:id=>find(body,id),querySelectorAll:selector=>selector==='body *'?body.querySelectorAll('*'):[],addEventListener(){},_cookie:cookie};
+  const document={scripts:scriptSrc?[{src:scriptSrc}]:[],readyState,documentElement:{},body,createElement:makeElement,getElementById:id=>find(body,id),querySelectorAll:selector=>selector==='body *'?body.querySelectorAll('*'):[],addEventListener(){},_cookie:cookie};
   Object.defineProperty(document,'cookie',{get(){return this._cookie;},set(value){this._cookie=value;}});
-  const context={URL,URLSearchParams,location,document,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,String(value))},window:{},fetch:async()=>({ok:true,json:async()=>translations}),MutationObserver:class{constructor(callback){this.callback=callback;observers.push(this);}observe(){}},requestAnimationFrame:fn=>fn(),console};
+  const context={URL,URLSearchParams,location,document,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,String(value))},window:{},fetch:async url=>{fetched.push(String(url));return {ok:true,json:async()=>translations};},MutationObserver:class{constructor(callback){this.callback=callback;observers.push(this);}observe(){}},requestAnimationFrame:fn=>fn(),console};
   vm.runInNewContext(source,context);
-  return {context,store,location,document,assigned,observers};
+  return {context,store,location,document,assigned,observers,fetched};
 }
 
 test('shared language cookie takes precedence over stale subdomain storage',async()=>{
@@ -87,4 +87,11 @@ test('dynamic engineering controls and React text updates translate after the pa
   label.nodeValue='Stop simulation';
   observer.callback([{target:label,addedNodes:[]}]);
   assert.equal(label.nodeValue,'Simulation stoppen');
+});
+
+test('shared engineering script loads its dictionary from the public shared-asset route',async()=>{
+  const app=browser({host:'engineering.hephzibahbehulah.com',saved:'de',scriptSrc:'https://engineering.hephzibahbehulah.com/_hb/language-system.js?v=20261024-1'});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.deepEqual(app.fetched,['https://engineering.hephzibahbehulah.com/_hb/data/translations/de.json']);
+  assert.equal(app.context.window.HBLanguage.get(),'de');
 });
