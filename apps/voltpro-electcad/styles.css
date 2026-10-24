@@ -452,3 +452,31 @@ html.vp-electcad-embed .wire-hint span{line-height:1.4}
 html.vp-electcad-embed .wire-hint button{flex:0 0 auto;margin-left:auto;padding:4px 7px;border:1px solid #604624;border-radius:3px;color:#edc991;font-size:9px}
 html.vp-electcad-embed .wire-hint button:hover{background:#382713;color:#ffd39a}
 @media(max-width:1050px){html.vp-electcad-embed .menu-toolbar-row{overflow:visible!important}html.vp-electcad-embed .menubar{overflow:visible!important}}
+
+/* Right-side inspector and engineering results dock. The drawing now reaches the tool switcher. */
+html.vp-electcad-embed .app-shell.right-collapsed{grid-template-columns:50px minmax(0,1fr) 28px}
+html.vp-electcad-embed .right-sidebar{display:flex;flex-direction:column;overflow:hidden;min-height:0}
+html.vp-electcad-embed .right-dock-heading{height:36px;min-height:36px;flex:0 0 36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;border-bottom:1px solid #343a3e;color:#9ca8ae;font:700 9px 'DM Mono',monospace;letter-spacing:.08em}
+html.vp-electcad-embed .right-panel-tabs{height:36px;min-height:36px;flex:0 0 36px;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #343a3e;background:#17191b}
+html.vp-electcad-embed .right-panel-tab{display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;border-bottom:2px solid transparent;color:#99a7ad;font-size:10px}
+html.vp-electcad-embed .right-panel-tab:hover{color:#ffad60;background:#211b15}
+html.vp-electcad-embed .right-panel-tab.active{border-bottom-color:#ef8e3d;color:#ffad60;background:#211b15}
+html.vp-electcad-embed .properties-view,html.vp-electcad-embed .results-pane{display:flex;flex:1 1 auto;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+html.vp-electcad-embed .properties-view>.inspector{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain}
+html.vp-electcad-embed .properties-view>.no-selection{flex:1 1 auto;overflow:auto}
+html.vp-electcad-embed .properties-view>.inspector-bottom{flex:0 0 auto;margin-top:0;padding:9px 10px}
+html.vp-electcad-embed .results-view{display:flex;flex:1 1 auto;flex-direction:column;width:100%;min-width:0;min-height:0;height:auto;max-height:none;overflow:hidden}
+html.vp-electcad-embed .results-view .dock-tabs{height:auto;min-height:32px;flex:0 0 auto;display:flex;overflow-x:auto;padding:0 5px;border-bottom:1px solid #343a3e}
+html.vp-electcad-embed .results-view .dock-tabs button{flex:0 0 auto;min-height:31px;padding:0 7px;white-space:nowrap;font-size:9px}
+html.vp-electcad-embed .results-view .diagnostic-content{display:flex;flex:1 1 auto;min-width:0;min-height:0;align-items:flex-start;overflow:auto;padding:8px;overscroll-behavior:contain}
+html.vp-electcad-embed .results-view .dock-detail{display:flex;flex:1 1 auto;flex-direction:column;min-width:0;min-height:0;max-height:none;overflow:auto}
+html.vp-electcad-embed .results-view .report-list,html.vp-electcad-embed .results-view .report-actions{display:flex;flex-wrap:wrap;gap:6px}
+html.vp-electcad-embed .results-view .report-list span{max-width:100%;overflow-wrap:anywhere}
+html.vp-electcad-embed .results-view .simulation-results{max-width:100%;overflow:auto}
+html.vp-electcad-embed .edge-reveal.edge-right{display:flex!important;grid-column:3;grid-row:2;align-self:center;justify-self:stretch;width:28px;height:44px;min-width:0;flex:none;align-items:center;justify-content:center;padding:0;border:1px solid #454b4f;border-right:0;border-radius:5px 0 0 5px;background:#1d2022;color:#ffad60;box-shadow:-4px 2px 12px #0006;z-index:6}
+html.vp-electcad-embed .edge-reveal.edge-right:hover{background:#332619;color:#ffd09f}
+html.vp-electcad-embed .canvas-rulers{inset:0 0 0 0}
+html.vp-electcad-embed .paper-title-block{bottom:22px}
+html.vp-electcad-embed .canvas-coordinates{bottom:8px}
+@media(max-width:1050px){html.vp-electcad-embed .app-shell.right-collapsed{grid-template-columns:44px minmax(0,1fr) 28px}html.vp-electcad-embed .edge-reveal.edge-right{grid-column:3}}
+@media(max-width:760px){html.vp-electcad-embed .app-shell.right-collapsed{grid-template-columns:40px minmax(0,1fr) 28px}html.vp-electcad-embed .right-sidebar{display:flex;position:absolute;z-index:20;top:50px;right:0;bottom:40px;width:min(300px,88vw);max-width:88vw;box-shadow:-8px 0 28px #0009}html.vp-electcad-embed .app-shell:not(.right-collapsed) .canvas-area{grid-column:2}html.vp-electcad-embed .app-shell:not(.right-collapsed){grid-template-columns:40px minmax(0,1fr) 0}}

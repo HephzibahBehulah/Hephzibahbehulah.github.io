@@ -65,8 +65,18 @@ test("ElectCAD uses a professional three-column scrollable CAD workspace", () =>
   assert.match(appCss, /html\.vp-electcad-embed \.canvas-rulers\{position:absolute;z-index:4;inset:0 0 109px 0/);
   assert.match(appCss, /\.menu-pop\{top:39px;left:0;min-width:205px;max-height:75vh;overflow:auto\}/);
   assert.match(appCss, /html\.vp-electcad-embed \.menu-pop\{z-index:9999\}/);
-  assert.match(app, /id="app-container" className="app-shell"/);
+  assert.match(app, /id="app-container" className=\{`app-shell \$\{rightOpen\?\'\'\:\'right-collapsed\'\}`\}/);
   assert.match(app, /className="icon-rail" aria-label="Workspace panels"/);
+  assert.match(app, /className="right-panel-tabs" role="tablist" aria-label="Right workspace panels"/);
+  assert.match(app, /rightPanel==='properties'/);
+  assert.match(app, /rightPanel==='results'/);
+  assert.match(app, /className="results-view"/);
+  assert.doesNotMatch(app, /className="bottom-dock"/);
+  assert.match(app, /setRightPanel\('results'\)/);
+  assert.match(app, /className="edge-reveal edge-right"/);
+  assert.match(appCss, /\.app-shell\.right-collapsed\{grid-template-columns:50px minmax\(0,1fr\) 28px\}/);
+  assert.match(appCss, /\.edge-reveal\.edge-right\{display:flex!important/);
+  assert.match(appCss, /\.canvas-rulers\{inset:0 0 0 0\}/);
   assert.match(app, /className="global-bottom-bar" aria-label="VoltPro tool navigation"/);
   assert.match(app, /title="Component Library" aria-label="Component Library"/);
   assert.match(app, /className="paper-ruler paper-ruler-top"/);
@@ -147,9 +157,9 @@ test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying 
 
 test("ElectCAD places parts in the inspector and wires to terminals or free canvas points", () => {
   const app = read("apps/voltpro-electcad/App.tsx");
-  assert.match(app, /setParts\(prev=>\[\.\.\.prev,part\]\);setSelected\(part\.id\)/);
+  assert.match(app, /setParts\(prev=>\[\.\.\.prev,part\]\);selectForInspector\(part\.id\)/);
   assert.ok(app.includes("onTerminalClick(index)"));
-  assert.ok(app.includes("onTerminalClick={index=>tool==='wire'?handleTerminalClick(p,index):setSelected(p.id)}"));
+  assert.ok(app.includes("onTerminalClick={index=>tool==='wire'?handleTerminalClick(p,index):selectForInspector(p.id)}"));
   assert.match(app, /r="26" fill="transparent" stroke="none" pointerEvents="all"/);
   assert.match(app, /onPointerDown=\{e=>\{if\(!onTerminalClick\)return;e\.preventDefault\(\);e\.stopPropagation\(\);onTerminalClick\(index\)\}\}/);
   assert.match(app, /WIRE MODE/);
