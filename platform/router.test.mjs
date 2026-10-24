@@ -9,8 +9,8 @@ for(const [host,app]of [['engineering','engineering'],['cyber','cyber']]){
  test(host+' cannot reach admin APIs',()=>assert.equal(resolveRoute(new URL('https://'+host+'.'+root+'/api/admin/agent')).status,404));
  test(host+' cannot reach internal assets',()=>assert.equal(resolveRoute(new URL('https://'+host+'.'+root+'/_apps/engineering/index.html')).status,404));
 }
-test('private app routes preserve mount prefixes',()=>{const route=resolveRoute(new URL('https://admin.'+root+'/engineering/simulator'));assert.equal(route.path,'/_apps/engineering/simulator.html');assert.equal(route.privateHost,true);assert.equal(route.base,'/engineering/');});
-test('PLC nested assets keep the correct base',()=>assert.equal(resolveRoute(new URL('https://admin.'+root+'/engineering/voltpro-plc/')).base,'/engineering/voltpro-plc/'));
+test('private app routes preserve mount prefixes through the SPA shell',()=>{const route=resolveRoute(new URL('https://admin.'+root+'/engineering/simulator'));assert.equal(route.path,'/_apps/engineering/workspace-shell.html');assert.equal(route.privateHost,true);assert.equal(route.base,'/engineering/');});
+test('PLC route uses the shell while embedded PLC keeps its nested base',()=>{const shell=resolveRoute(new URL('https://admin.'+root+'/engineering/voltpro-plc/'));assert.equal(shell.path,'/_apps/engineering/workspace-shell.html');const frame=resolveRoute(new URL('https://admin.'+root+'/engineering/voltpro-plc/?vp_embed=1'));assert.equal(frame.path,'/_apps/engineering/voltpro-plc/index.html');assert.equal(frame.base,'/engineering/voltpro-plc/');});
 test('old account links lead to the central account page and preserve their intended destination',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/account.html?next=simulator.html'));assert.equal(r.status,302);const target=new URL(r.headers.get('location'));assert.equal(target.origin,'https://'+root);assert.equal(target.pathname,'/account');assert.equal(target.searchParams.get('next'),'https://engineering.'+root+'/simulator.html');});
 test('unknown host cannot obtain any application',()=>assert.equal(resolveRoute(new URL('https://example.com/')).status,404));
 test('encoded path traversal is rejected',()=>assert.equal(resolveRoute(new URL('https://cyber.'+root+'/%2e%2e%2fadmin.html')).status,404));
@@ -49,26 +49,32 @@ test('private service workers retire only after authorization',async()=>{
  const result=await worker.fetch(request,{});assert.equal(result.status,200);assert.match(await result.text(),/registration\.unregister/);assert.equal(result.headers.get('cache-control'),'private, no-store');
 });
 
-test('ElectCAD route maps the app root and keeps the canonical base path',()=>{
+test('ElectCAD route enters the SPA shell while its embedded app keeps the canonical base',()=>{
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/'));
- assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/voltPro-ElectCAD/');
+ assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');assert.equal(route.base,'/');
+ const frame=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/?vp_embed=1'));
+ assert.equal(frame.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(frame.base,'/voltPro-ElectCAD/');
 });
-test('ElectCAD route without a slash redirects to the canonical path',()=>{
+test('ElectCAD route without a slash opens the persistent shell',()=>{
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD'));
- assert.equal(route.kind,'redirect');assert.equal(route.location,'/voltPro-ElectCAD/');
+ assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');
 });
 test('ElectCAD assets resolve beneath the application directory',()=>{
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/assets/index.js'));
  assert.equal(route.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(route.base,'/voltPro-ElectCAD/');
 });
-test('ElectCAD route is also mounted under the authenticated admin engineering prefix',()=>{
- const route=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/'));
- assert.equal(route.privateHost,true);assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/engineering/voltPro-ElectCAD/');
+test('ElectCAD SPA route retains authenticated admin prefix for its embedded app',()=>{
+ const shell=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/'));
+ assert.equal(shell.privateHost,true);assert.equal(shell.path,'/_apps/engineering/workspace-shell.html');assert.equal(shell.base,'/engineering/');
+ const frame=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/?vp_embed=1'));
+ assert.equal(frame.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(frame.base,'/engineering/voltPro-ElectCAD/');
 });
 
-test('ElectCAD route normalizes lowercase aliases without changing asset paths',()=>{
+test('lowercase ElectCAD alias enters the shell and keeps embedded assets direct',()=>{
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/'));
- assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(route.base,'/voltPro-ElectCAD/');
+ assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');
+ const asset=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/assets/index.js?vp_embed=1'));
+ assert.equal(asset.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(asset.base,'/voltpro-electcad/');
 });
 
 test('the workers.dev origin canonicalizes to the main domain',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://hephzibahbehulah-github-io.hephzibah-behulah.workers.dev/?from=worker'),{});assert.equal(r.status,308);assert.equal(r.headers.get('location'),'https://'+root+'/?from=worker');});
