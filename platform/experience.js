@@ -77,7 +77,7 @@ function loadScript(src){if([...document.scripts].some(s=>new URL(s.src,location
 function init(){const sheet=document.querySelector('link[href="/_hb/experience.css"]');if(sheet)document.head.append(sheet);document.body.classList.add('hb-unified');applyTheme();reconcile();
  const observer=new MutationObserver(records=>{if(queued||!records.some(r=>r.addedNodes.length))return;queued=true;requestAnimationFrame(reconcile);});observer.observe(document.body,{childList:true,subtree:true});
  if(privatePage&&location.hash==='#users-signins')document.querySelector('[data-hb-monitor]')?.click();
- if(!window.HBLanguage)loadScript('/js/language-system.js?v=20261024-1');
+ if(!window.HBLanguage)loadScript('/_hb/language-system.js?v=20261024-1');
  if(!document.querySelector('#hbBotLauncher')){const css=el('link');css.rel='stylesheet';css.href='/css/hb-bot-chat.css';document.head.append(css);loadScript('/js/hb-bot-chat.js');}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
