@@ -402,6 +402,24 @@ html.vp-electcad-embed .menu-wrap>button{white-space:nowrap}
 html.vp-electcad-embed .toolbar{flex:0 0 auto;min-width:0;border-left:1px solid #343a3e}
 html.vp-electcad-embed .toolbar .toolgroup button{width:32px;min-width:32px;padding:0;justify-content:center}
 html.vp-electcad-embed .toolbar .toolgroup button span:not(.mini-resistor),html.vp-electcad-embed .toolbar .zoom-control,html.vp-electcad-embed .toolbar .toolbar-spacer,html.vp-electcad-embed .toolbar .primary-btn span{display:none}
+
+/* Scrollable model space: the viewport fills the whole center column while the drawing plane can move under fixed rulers. */
+html.vp-electcad-embed .canvas-area{position:relative;min-width:0;min-height:0;overflow:hidden}
+html.vp-electcad-embed .canvas-wrap{position:relative;display:block;flex:1 1 0;min-width:0;min-height:0;overflow:auto;padding:0;background:#121212;overscroll-behavior:contain;scrollbar-color:#47525a #17191b;scrollbar-width:thin;container-type:normal}
+html.vp-electcad-embed .paper-frame{position:relative;display:block;flex:none;min-width:0;min-height:0;max-width:none;max-height:none;aspect-ratio:auto;overflow:visible;border:0;background:transparent;box-shadow:none}
+html.vp-electcad-embed .schematic-canvas{position:relative;inset:auto;display:block;width:auto;height:auto;min-width:0;min-height:0;max-width:none;transform:none;transform-origin:0 0;flex:none}
+html.vp-electcad-embed .canvas-rulers{position:absolute;z-index:4;inset:0 0 109px 0;pointer-events:none}
+html.vp-electcad-embed .canvas-rulers .paper-ruler{position:absolute;display:flex;align-items:center;justify-content:space-around;overflow:hidden;color:#9ca8ae;background:#17191ae8;font:8px 'DM Mono',monospace}
+html.vp-electcad-embed .canvas-rulers .paper-ruler-top{left:26px;right:0;top:0;height:21px;border-bottom:1px solid #596168}
+html.vp-electcad-embed .canvas-rulers .paper-ruler-bottom{left:26px;right:0;bottom:0;height:21px;border-top:1px solid #596168}
+html.vp-electcad-embed .canvas-rulers .paper-ruler-left{left:0;top:21px;bottom:21px;width:26px;flex-direction:column;border-right:1px solid #596168}
+html.vp-electcad-embed .canvas-rulers .paper-ruler-right{right:0;top:21px;bottom:21px;width:26px;flex-direction:column;border-left:1px solid #596168}
+html.vp-electcad-embed .canvas-rulers .paper-ruler span{flex:1 1 0;min-width:18px;text-align:center}
+html.vp-electcad-embed .paper-title-block{position:absolute;z-index:5;right:28px;bottom:calc(109px + 22px);width:min(250px,46%);pointer-events:none}
+html.vp-electcad-embed .canvas-badge{position:absolute;z-index:5;top:28px;left:34px;pointer-events:none}
+html.vp-electcad-embed .canvas-coordinates{position:absolute;z-index:5;left:32px;bottom:calc(109px + 8px);pointer-events:none}
+html.vp-electcad-embed .wire-hint{z-index:7}
+html.vp-electcad-embed .empty-hint{z-index:5}
 html.vp-electcad-embed .top-actions{position:relative;max-width:245px;gap:3px;flex:0 0 auto}
 html.vp-electcad-embed .account-popover{position:absolute;z-index:10001;right:0;top:calc(100% + 6px);width:210px;display:grid;gap:8px;padding:12px;border:1px solid #3b464c;border-radius:6px;background:#181b1d;color:#d8e1e5;box-shadow:0 10px 24px #0009}
 html.vp-electcad-embed .account-popover strong{overflow:hidden;font-size:11px;text-overflow:ellipsis;white-space:nowrap}

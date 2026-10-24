@@ -35,7 +35,7 @@ test("workspace switches reuse hidden tool iframes and update history client-sid
   for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
 });
 
-test("ElectCAD uses the professional two-row, three-column A3 paper workspace", () => {
+test("ElectCAD uses a professional three-column scrollable CAD workspace", () => {
   const app = read("apps/voltpro-electcad/App.tsx");
   const appCss = read("apps/voltpro-electcad/styles.css");
   const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
@@ -61,7 +61,8 @@ test("ElectCAD uses the professional two-row, three-column A3 paper workspace", 
   assert.match(appCss, /html\.vp-electcad-embed \.workspace\{display:contents/);
   assert.match(appCss, /html\.vp-electcad-embed \.canvas-area\{grid-column:2;grid-row:2/);
   assert.match(appCss, /html\.vp-electcad-embed \.right-sidebar\{grid-column:3;grid-row:2;width:280px/);
-  assert.match(appCss, /\.paper-frame\{position:relative;width:min\(100cqw,141\.414cqh\);height:min\(100cqh,70\.71cqw\);aspect-ratio:420\/297/);
+  assert.match(appCss, /html\.vp-electcad-embed \.canvas-wrap\{position:relative;display:block;flex:1 1 0;min-width:0;min-height:0;overflow:auto/);
+  assert.match(appCss, /html\.vp-electcad-embed \.canvas-rulers\{position:absolute;z-index:4;inset:0 0 109px 0/);
   assert.match(appCss, /\.menu-pop\{top:39px;left:0;min-width:205px;max-height:75vh;overflow:auto\}/);
   assert.match(appCss, /html\.vp-electcad-embed \.menu-pop\{z-index:9999\}/);
   assert.match(app, /id="app-container" className="app-shell"/);
@@ -72,6 +73,11 @@ test("ElectCAD uses the professional two-row, three-column A3 paper workspace", 
   assert.match(app, /className="paper-ruler paper-ruler-bottom"/);
   assert.match(app, /className="paper-ruler paper-ruler-left"/);
   assert.match(app, /className="paper-ruler paper-ruler-right"/);
+  assert.match(app, /const worldWidth=Math\.max\(Math\.ceil\(viewportSize\.width\*3\)/);
+  assert.match(app, /scrollLeft=p\.scrollLeft-\(e\.clientX-p\.clientX\)/);
+  assert.match(app, /setCanvasScroll\(\{x:e\.currentTarget\.scrollLeft,y:e\.currentTarget\.scrollTop\}\)/);
+  assert.match(app, /spreadsheetRowLabel\(firstRow\+i\)/);
+  assert.match(app, /e\.ctrlKey\|\|e\.metaKey\).*changeCanvasZoom/);
   assert.match(app, /className="sheet-tabs" role="tablist"/);
   assert.match(app, /onDoubleClick=.*renameSheetById/);
   assert.match(app, /onContextMenu=.*duplicateSheetById/);
