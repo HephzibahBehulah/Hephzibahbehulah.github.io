@@ -418,3 +418,19 @@ html.vp-electcad-embed .diagnostic-content{min-height:0;flex:1;align-items:flex-
 html.vp-electcad-embed .dock-detail{min-height:0;max-height:66px;overflow:auto}
 @media(max-width:1450px){html.vp-electcad-embed .topbar{grid-template-columns:minmax(185px,255px) minmax(0,1fr) auto}html.vp-electcad-embed .topbar-left{max-width:255px}html.vp-electcad-embed .hb-brand{display:none}html.vp-electcad-embed .top-actions{max-width:190px}html.vp-electcad-embed .top-actions>a{display:none}}
 @media(max-width:1050px){html.vp-electcad-embed .menu-toolbar-row{overflow:hidden}html.vp-electcad-embed .menubar{flex:1 1 0}html.vp-electcad-embed .toolbar .toolgroup button{width:28px;min-width:28px}}
+
+/* Keep CAD dropdowns above the drawing: horizontal scrolling on the menu row clipped them. */
+html.vp-electcad-embed .topbar{isolation:isolate;z-index:10000;overflow:visible}
+html.vp-electcad-embed .menu-toolbar-row{position:relative;z-index:10001;overflow:visible!important}
+html.vp-electcad-embed .menubar{position:relative;z-index:10002;overflow:visible!important}
+html.vp-electcad-embed .menu-wrap{position:relative;z-index:10003}
+html.vp-electcad-embed .menu-pop{position:absolute;z-index:10004;top:calc(100% - 1px);max-height:min(75vh,620px);overflow-y:auto;overflow-x:hidden}
+html.vp-electcad-embed .canvas-area{position:relative;z-index:0}
+html.vp-electcad-embed .schematic-canvas circle[role=button]{touch-action:none;outline:none}
+html.vp-electcad-embed .schematic-canvas circle[role=button]:hover,html.vp-electcad-embed .schematic-canvas circle[role=button]:focus-visible{fill:#ffad6030;stroke:#ffad60;stroke-width:2;stroke-opacity:.8}
+html.vp-electcad-embed .wire-hint{position:absolute;z-index:6;top:32px;left:32px;max-width:min(460px,calc(100% - 64px));display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid #735323;border-radius:5px;background:#18140fef;color:#e5d2ab;box-shadow:0 4px 14px #0008;font-size:10px;pointer-events:auto}
+html.vp-electcad-embed .wire-hint strong{flex:0 0 auto;color:#ffbd69;font:700 9px 'DM Mono',monospace;letter-spacing:.06em}
+html.vp-electcad-embed .wire-hint span{line-height:1.4}
+html.vp-electcad-embed .wire-hint button{flex:0 0 auto;margin-left:auto;padding:4px 7px;border:1px solid #604624;border-radius:3px;color:#edc991;font-size:9px}
+html.vp-electcad-embed .wire-hint button:hover{background:#382713;color:#ffd39a}
+@media(max-width:1050px){html.vp-electcad-embed .menu-toolbar-row{overflow:visible!important}html.vp-electcad-embed .menubar{overflow:visible!important}}

@@ -142,9 +142,11 @@ test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying 
 test("ElectCAD places new parts into the inspector and wires through exact terminal hit targets", () => {
   const app = read("apps/voltpro-electcad/App.tsx");
   assert.match(app, /setParts\(prev=>\[\.\.\.prev,part\]\);setSelected\(part\.id\)/);
-  assert.match(app, /onTerminalClick\?\.\(index\)/);
-  assert.match(app, /onTerminalClick=\{index=>handleTerminalClick\(p,index\)\}/);
-  assert.match(app, /r="12" fill="transparent" stroke="none" pointerEvents="all"/);
+  assert.ok(app.includes("onTerminalClick(index)"));
+  assert.ok(app.includes("onTerminalClick={index=>tool==='wire'?handleTerminalClick(p,index):setSelected(p.id)}"));
+  assert.match(app, /r="26" fill="transparent" stroke="none" pointerEvents="all"/);
+  assert.match(app, /onPointerDown=\{e=>\{if\(!onTerminalClick\)return;e\.preventDefault\(\);e\.stopPropagation\(\);onTerminalClick\(index\)\}\}/);
+  assert.match(app, /WIRE MODE/);
 });
 
 test("ElectCAD rail buttons open distinct panels and close the flyout when the pointer leaves", () => {
@@ -159,6 +161,13 @@ test("ElectCAD rail buttons open distinct panels and close the flyout when the p
 test("ElectCAD account controls stay inside the CAD header instead of floating over the inspector", () => {
   assert.match(read("platform/member.js"), /voltpro-electcad/);
   assert.match(read("apps/voltpro-electcad/App.tsx"), /className="account-popover"/);
+});
+
+test("ElectCAD File to Help dropdowns escape horizontal menu clipping and stack above the canvas", () => {
+  const css = read("apps/voltpro-electcad/styles.css");
+  assert.match(css, /menubar\{position:relative;z-index:10002;overflow:visible!important\}/);
+  assert.match(css, /menu-pop\{position:absolute;z-index:10004/);
+  assert.match(css, /canvas-area\{position:relative;z-index:0\}/);
 });
 
 test("Breadboard command menu proxies only to implemented native controls", () => {
