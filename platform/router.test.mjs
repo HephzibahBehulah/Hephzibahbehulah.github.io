@@ -100,3 +100,7 @@ test('embedded tool pages bypass SPA shell routing without remounting the shell'
  assert.equal(resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/?vp_embed=1')).path,'/_apps/engineering/voltpro-electcad/index.html');
  assert.equal(resolveRoute(new URL('https://engineering.'+root+'/electrical-canvas.html?vp_embed=1')).path,'/_apps/engineering/electrical-canvas.html');
 });
+
+for(const path of ['/engineering','/voltpro-plc','/voltpro-plc/','/voltpro-electcad','/voltpro-electcad/']){
+ test('legacy workspace route '+path+' enters the SPA shell',()=>assert.equal(resolveRoute(new URL('https://engineering.'+root+path)).path,'/_apps/engineering/workspace-shell.html'));
+}
