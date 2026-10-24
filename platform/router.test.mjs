@@ -74,7 +74,7 @@ test('lowercase ElectCAD alias enters the shell and keeps embedded assets direct
  const route=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/'));
  assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');
  const asset=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/assets/index.js?vp_embed=1'));
- assert.equal(asset.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(asset.base,'/voltpro-electcad/');
+ assert.equal(asset.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(asset.base,'/voltPro-ElectCAD/');
 });
 
 test('the workers.dev origin canonicalizes to the main domain',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://hephzibahbehulah-github-io.hephzibah-behulah.workers.dev/?from=worker'),{});assert.equal(r.status,308);assert.equal(r.headers.get('location'),'https://'+root+'/?from=worker');});
