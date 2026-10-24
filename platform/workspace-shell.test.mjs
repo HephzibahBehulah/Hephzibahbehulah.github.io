@@ -8,6 +8,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = file => fs.readFileSync(path.join(root, file), "utf8");
 const nav = read("apps/voltpro-engineering-source/src/ui/site-shell.js");
 const shell = read("apps/voltpro-engineering-source/workspace-shell.js");
+const shellHtml = read("apps/voltpro-engineering-source/workspace-shell.html");
+const assistantTheme = read("apps/voltpro-engineering-source/voltpro-hb-theme.css");
 const canvas = read("apps/voltpro-engineering-source/electrical-canvas.html");
 const ai = read("apps/voltpro-engineering-source/voltpro-assistant.js");
 const academy = read("apps/voltpro-engineering-source/index.html");
@@ -40,6 +42,17 @@ test("the academy sidebar includes the Electrical Building destination", () => {
 
 test("the public /engineering alias keeps tool iframe URLs at the domain root", () => {
   assert.ok(shell.includes("rootPrefix = location.hostname.startsWith"));
+});
+
+
+test("persistent workspace shell loads the engineering assistant styles", () => {
+  assert.ok(shellHtml.includes("voltpro-hb-theme.css?v="));
+  assert.ok(assistantTheme.includes("display:none;flex-direction:column"));
+});
+
+test("assistant launcher and chat panel clear the fixed bottom workspace navigation", () => {
+  assert.ok(assistantTheme.includes("bottom:calc(82px + env(safe-area-inset-bottom))"));
+  assert.ok(assistantTheme.includes("bottom:calc(154px + env(safe-area-inset-bottom))"));
 });
 
 test("BuildingCAD includes measured grid, rulers, title block and editable properties", () => {

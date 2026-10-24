@@ -70,10 +70,10 @@
 .vp-ecosystem-links a {display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid transparent;border-radius:8px;color:var(--vp-hb-muted);font:10px/1.5 "JetBrains Mono",monospace;letter-spacing:.06em;text-decoration:none;overflow-wrap:anywhere}
 .vp-ecosystem-links a:hover {color:var(--vp-hb-cyan);border-color:rgba(86,207,225,.2);background:rgba(86,207,225,.04)}
 /* ADIGUN-inspired VoltPRo assistant */
-.vp-bot-launcher {position:fixed;right:22px;bottom:22px;z-index:100000;width:58px;height:58px;border:1px solid rgba(86,207,225,.62);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(86,207,225,.23),rgba(7,12,18,.98) 70%);color:var(--vp-hb-cyan);box-shadow:0 0 28px rgba(86,207,225,.16),inset 0 0 18px rgba(86,207,225,.06);cursor:pointer;display:grid;place-items:center;font:700 17px/1 "JetBrains Mono",monospace;transition:transform .2s,border-color .2s,box-shadow .2s}
+.vp-bot-launcher {position:fixed;right:22px;bottom:calc(82px + env(safe-area-inset-bottom));z-index:100000;width:58px;height:58px;border:1px solid rgba(86,207,225,.62);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(86,207,225,.23),rgba(7,12,18,.98) 70%);color:var(--vp-hb-cyan);box-shadow:0 0 28px rgba(86,207,225,.16),inset 0 0 18px rgba(86,207,225,.06);cursor:pointer;display:grid;place-items:center;font:700 17px/1 "JetBrains Mono",monospace;transition:transform .2s,border-color .2s,box-shadow .2s}
 .vp-bot-launcher:hover {transform:translateY(-3px);border-color:var(--vp-hb-cyan);box-shadow:0 0 36px rgba(86,207,225,.25)}
 .vp-bot-dot {position:absolute;right:4px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--vp-hb-green);box-shadow:0 0 10px var(--vp-hb-green)}
-.vp-bot-window {position:fixed;right:22px;bottom:92px;z-index:99999;width:min(410px,calc(100vw - 28px));height:min(620px,calc(100dvh - 120px));display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(86,207,225,.3);border-radius:14px;background:rgba(5,9,15,.98);box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 40px rgba(86,207,225,.08);backdrop-filter:blur(16px)}
+.vp-bot-window {position:fixed;right:22px;bottom:calc(154px + env(safe-area-inset-bottom));z-index:99999;width:min(410px,calc(100vw - 28px));height:min(620px,calc(100dvh - 230px));display:none;flex-direction:column;overflow:hidden;border:1px solid rgba(86,207,225,.3);border-radius:14px;background:rgba(5,9,15,.98);box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 40px rgba(86,207,225,.08);backdrop-filter:blur(16px)}
 .vp-bot-window.open {display:flex;animation:vpBotIn .18s ease-out}
 @keyframes vpBotIn {from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
 .vp-bot-head {display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-bottom:1px solid rgba(86,207,225,.14);background:linear-gradient(90deg,rgba(86,207,225,.07),rgba(167,139,250,.045))}
@@ -133,8 +133,8 @@
  .engineering-page .grid {grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:420px) {
- .vp-bot-launcher {right:14px;bottom:14px;width:54px;height:54px}
- .vp-bot-window {right:8px;bottom:76px;width:calc(100vw - 16px);height:min(72dvh,620px);max-height:calc(100dvh - 90px)}
+ .vp-bot-launcher {right:14px;bottom:calc(78px + env(safe-area-inset-bottom));width:54px;height:54px}
+ .vp-bot-window {right:8px;bottom:calc(144px + env(safe-area-inset-bottom));width:calc(100vw - 16px);height:min(72dvh,620px);max-height:calc(100dvh - 220px - env(safe-area-inset-bottom))}
  .vp-bot-head {padding:10px}
  .vp-bot-messages {padding:10px}
  .vp-bot-msg {max-width:96%;font-size:10px}
