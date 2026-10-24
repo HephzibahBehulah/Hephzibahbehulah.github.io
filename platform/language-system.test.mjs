@@ -5,17 +5,17 @@ import vm from 'node:vm';
 
 const source=fs.readFileSync(new URL('../js/language-system.js',import.meta.url),'utf8');
 
-function browser({host='cyber.hephzibahbehulah.com',cookie='',saved='en',readyState='complete'}={}){
-  const store=new Map([['hb_language',saved]]), assigned=[];
+function browser({host='cyber.hephzibahbehulah.com',cookie='',saved='en',readyState='complete',translations={}}={}){
+  const store=new Map([['hb_language',saved]]), assigned=[],observers=[];
   const location={hostname:host,protocol:'https:',origin:'https://'+host,href:'https://'+host+'/',search:'',assign:url=>assigned.push(url)};
-  const makeElement=tag=>({nodeType:1,tagName:tag.toUpperCase(),id:'',className:'',value:'',textContent:'',children:[],attrs:{},listeners:{},appendChild(child){this.children.push(child);return child;},append(...children){this.children.push(...children);},setAttribute(key,value){this.attrs[key]=String(value);},getAttribute(key){return this.attrs[key]??null;},hasAttribute(key){return Object.hasOwn(this.attrs,key);},addEventListener(key,fn){this.listeners[key]=fn;},closest(){return null;}});
+  const makeElement=tag=>({nodeType:1,tagName:tag.toUpperCase(),id:'',className:'',value:'',textContent:'',children:[],childNodes:[],attrs:{},listeners:{},appendChild(child){child.parent=this;this.childNodes.push(child);if(child.nodeType===1)this.children.push(child);return child;},append(...children){children.forEach(child=>this.appendChild(child));},setAttribute(key,value){this.attrs[key]=String(value);},getAttribute(key){return this.attrs[key]??null;},hasAttribute(key){return Object.hasOwn(this.attrs,key);},addEventListener(key,fn){this.listeners[key]=fn;},closest(selector){for(let node=this;node;node=node.parent){if(selector==='[translate="no"]'&&node.hasAttribute?.('translate')&&node.getAttribute('translate')==='no')return node;}return null;},querySelectorAll(){const all=[];const visit=node=>node.children.forEach(child=>{all.push(child);visit(child);});visit(this);return all;}});
   const body=makeElement('body');
   const find=(el,id)=>el.id===id?el:el.children.map(child=>find(child,id)).find(Boolean);
-  const document={scripts:[],readyState,documentElement:{},body,createElement:makeElement,getElementById:id=>find(body,id),querySelectorAll:()=>[],addEventListener(){},_cookie:cookie};
+  const document={scripts:[],readyState,documentElement:{},body,createElement:makeElement,getElementById:id=>find(body,id),querySelectorAll:selector=>selector==='body *'?body.querySelectorAll('*'):[],addEventListener(){},_cookie:cookie};
   Object.defineProperty(document,'cookie',{get(){return this._cookie;},set(value){this._cookie=value;}});
-  const context={URL,URLSearchParams,location,document,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,String(value))},window:{},fetch:async()=>({ok:true,json:async()=>({})}),MutationObserver:class{observe(){}},requestAnimationFrame:fn=>fn(),console};
+  const context={URL,URLSearchParams,location,document,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,String(value))},window:{},fetch:async()=>({ok:true,json:async()=>translations}),MutationObserver:class{constructor(callback){this.callback=callback;observers.push(this);}observe(){}},requestAnimationFrame:fn=>fn(),console};
   vm.runInNewContext(source,context);
-  return {context,store,location,document,assigned};
+  return {context,store,location,document,assigned,observers};
 }
 
 test('shared language cookie takes precedence over stale subdomain storage',async()=>{
@@ -56,4 +56,35 @@ test('language selector offers all four languages and safely initializes once',a
   assert.match(app.assigned[0],/[?&]lang=pid/);
   vm.runInNewContext(source,app.context);
   assert.equal(app.document.body.children.filter(child=>child.id==='hbLanguageControl').length,1);
+});
+
+test('dynamic engineering controls and React text updates translate after the page loads',async()=>{
+  const app=browser({saved:'de',translations:{'run simulation':'Simulation starten','stop simulation':'Simulation stoppen','search':'Suchen'}});
+  await new Promise(resolve=>setImmediate(resolve));
+  const button=app.document.createElement('button');
+  button.textContent='Run simulation';
+  app.document.body.appendChild(button);
+  const observer=app.observers.at(-1);
+  observer.callback([{target:app.document.body,addedNodes:[button]}]);
+  assert.equal(button.textContent,'Simulation starten');
+  button.textContent='Stop simulation';
+  observer.callback([{target:button,addedNodes:[]}]);
+  assert.equal(button.textContent,'Simulation stoppen');
+
+  const input=app.document.createElement('input');
+  input.setAttribute('placeholder','Search');
+  app.document.body.appendChild(input);
+  observer.callback([{target:app.document.body,addedNodes:[input]}]);
+  assert.equal(input.getAttribute('placeholder'),'Suchen');
+
+  const iconButton=app.document.createElement('button');
+  const icon=app.document.createElement('svg');
+  const label={nodeType:3,nodeValue:'Run simulation'};
+  iconButton.append(icon,label);
+  app.document.body.appendChild(iconButton);
+  observer.callback([{target:iconButton,addedNodes:[label]}]);
+  assert.equal(label.nodeValue,'Simulation starten');
+  label.nodeValue='Stop simulation';
+  observer.callback([{target:label,addedNodes:[]}]);
+  assert.equal(label.nodeValue,'Simulation stoppen');
 });

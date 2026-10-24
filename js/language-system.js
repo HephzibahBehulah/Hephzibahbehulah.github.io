@@ -18,6 +18,7 @@
   let current = 'en';
   let dict = {};
   const originals = new WeakMap();
+  const textOriginals = new WeakMap();
 
   function clean(value){
     return String(value || '')
@@ -95,7 +96,6 @@
 
     // Word fallback makes labels and navigation translate even when they contain
     // punctuation, numbering or mixed technical terms.
-    const words = Object.keys(dict).filter(k => /^\p{L}[\p{L}\p{N} &'’.-]*$/u.test(k) && !k.includes(' '));
     let changed = false;
     const out = String(value).replace(/\p{L}[\p{L}\p{N}’'-]*/gu, token=>{
       const translated = dict[token.toLowerCase()];
@@ -105,8 +105,17 @@
     return changed ? out : null;
   }
 
+  function translateText(value){
+    if(current==='en') return value;
+    const leading=(String(value).match(/^\s*/) || [''])[0];
+    const trailing=(String(value).match(/\s*$/) || [''])[0];
+    const core=String(value).slice(leading.length, String(value).length-trailing.length || undefined);
+    const translated=lookup(core);
+    return translated ? leading+translated+trailing : value;
+  }
+
   function translateElement(el){
-    if(el.nodeType !== 1 || el.id === 'hbLanguageControl' || el.closest('[translate="no"],[role="status"]')) return;
+    if(el.nodeType !== 1 || el.id === 'hbLanguageControl' || el.closest('[translate="no"]') || ['SCRIPT','STYLE','CODE','PRE','TEXTAREA'].includes(el.tagName) || el.isContentEditable) return;
 
     const original = rememberOriginal(el);
 
@@ -117,6 +126,12 @@
     } else if(el.children.length === 0 && !['SCRIPT','STYLE','CODE','PRE'].includes(el.tagName)){
       const translated = current === 'en' ? original.text : lookup(original.text);
       if(translated && el.textContent !== translated) el.textContent = translated;
+    } else {
+      Array.from(el.childNodes||[]).filter(node=>node.nodeType===3).forEach(node=>{
+        if(!textOriginals.has(node)) textOriginals.set(node,node.nodeValue);
+        const translated=translateText(textOriginals.get(node));
+        if(node.nodeValue!==translated) node.nodeValue=translated;
+      });
     }
 
     [
@@ -200,17 +215,56 @@
     buildControl();
     translateAll();
 
-    const observer = new MutationObserver(records=>{
-      let added=false;
+    let queued=false;
+    const pending=new Set();
+    const pendingText=new Set();
+    const observeChanges = records=>{
       for(const record of records){
-        for(const node of record.addedNodes){
-          if(node.nodeType===1 && node.id!=='hbLanguageControl'){ added=true; break; }
+        if(record.target.nodeType===1 && record.target.id!=='hbLanguageControl') pending.add(record.target);
+        else if(record.target.nodeType===3) pendingText.add(record.target);
+        for(const node of record.addedNodes||[]){
+          if(node.nodeType===3){pendingText.add(node);continue;}
+          if(node.nodeType!==1 || node.id==='hbLanguageControl') continue;
+          pending.add(node);
+          node.querySelectorAll?.('*').forEach(child=>pending.add(child));
         }
-        if(added) break;
       }
-      if(added) requestAnimationFrame(translateAll);
-    });
-    observer.observe(document.body,{childList:true,subtree:true});
+      if(queued || (!pending.size && !pendingText.size)) return;
+      queued=true;
+      requestAnimationFrame(()=>{
+        queued=false;
+        const changed=[...pending];
+        pending.clear();
+        const changedText=[...pendingText];
+        pendingText.clear();
+        changed.forEach(el=>{
+          if(el.nodeType!==1 || el.closest?.('[translate="no"]')) return;
+          const original=originals.get(el);
+          if(original && el.children.length===0 && !el.hasAttribute('data-i18n')){
+            const live=el.textContent;
+            const localized=current==='en' ? original.text : lookup(original.text);
+            if(live && live!==original.text && live!==localized) original.text=live;
+          }
+          if(original){
+            for(const [attribute,key] of [['placeholder','placeholder'],['aria-label','aria'],['title','title']]){
+              const live=el.getAttribute(attribute), prior=original[key];
+              const localized=current==='en' ? prior : lookup(prior||'');
+              if(live && live!==prior && live!==localized) original[key]=live;
+            }
+          }
+          translateElement(el);
+        });
+        changedText.forEach(node=>{
+          if(!textOriginals.has(node)) textOriginals.set(node,node.nodeValue);
+          const live=node.nodeValue, original=textOriginals.get(node), localized=translateText(original);
+          if(live!==original && live!==localized) textOriginals.set(node,live);
+          const translated=translateText(textOriginals.get(node));
+          if(live!==translated) node.nodeValue=translated;
+        });
+      });
+    };
+    const observer = new MutationObserver(observeChanges);
+    observer.observe(document.body,{childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','aria-label','title'],subtree:true});
   }
 
   window.HBLanguage = {

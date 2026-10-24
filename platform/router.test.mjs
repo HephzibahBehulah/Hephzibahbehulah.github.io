@@ -85,7 +85,7 @@ test('public engineering and legacy HTML receive the global language system',asy
   for(const url of ['https://engineering.'+root+'/simulator','https://'+root+'/ai.html']){
    const r=await worker.fetch(new Request(url),{ASSETS:{fetch:async()=>new Response('<html><head></head><body></body></html>',{headers:{'content-type':'text/html'}})}});
    assert.equal(r.status,200);
-   assert.ok((await r.text()).includes('<script src="/js/language-system.js" defer></script>'));
+   assert.ok((await r.text()).includes('<script src="/js/language-system.js?v=20261024-1" defer></script>'));
   }
  }finally{if(original===undefined)delete globalThis.HTMLRewriter;else globalThis.HTMLRewriter=original;}
 });
