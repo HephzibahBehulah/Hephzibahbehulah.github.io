@@ -11,6 +11,9 @@ test('release keeps Simulator, Breadboard and PLC UI available to translation',(
   assert.match(build,/voltpro-plc/);
   assert.match(build,/simulator\.html/);
   assert.match(build,/breadboard\.html/);
+  assert.match(build,/shared,'language-system\.js'/);
+  assert.match(build,/shared,'data\/translations'/);
+  assert.match(read('platform/router.mjs'),/\/_hb\/language-system\.js/);
 });
 
 test('all supported language dictionaries cover common and engineering UI terms',()=>{
