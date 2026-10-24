@@ -1,79 +1,51 @@
-/* HB sitewide charcoal OSINT theme — shared across every production HTML entry point. */
-:root{
-  color-scheme:dark;
-  --bg:#0b0d10;--background:#0b0d10;--page-bg:#0b0d10;
-  --panel:#11151a;--panel2:#0d1115;--surface:#11151a;--surface-2:#151a20;
-  --line:#26303a;--border:#26303a;--border-color:#26303a;
-  --text:#e6edf3;--foreground:#e6edf3;--muted:#8b98a5;--text-muted:#8b98a5;
-  --accent:#ff8a3d;--accent-color:#ff8a3d;--primary:#ff8a3d;--primary-color:#ff8a3d;
-  --cyan:#ff9a55;--teal:#ff8a3d;--mint:#ff9a55;--highlight:#ff8a3d;
-  --blue:#ff8a3d;--purple:#ff9a55;--violet:#ff9a55;
-  --green:#63d297;--success:#63d297;--yellow:#f2c94c;--warning:#f2c94c;--red:#ff6b6b;--danger:#ff6b6b;
-  --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+/* HB sitewide OSINT theme. This fixed brand theme overrides page-level light-mode preferences. */
+:root,html[data-hb-theme],html[data-hb-theme="light"]{
+ color-scheme:dark!important;
+ --bg:#0b0d10!important;--background:#0b0d10!important;--page-bg:#0b0d10!important;
+ --panel:#11151a!important;--panel2:#0d1115!important;--surface:#11151a!important;--surface-2:#151a20!important;
+ --line:#26303a!important;--border:#26303a!important;--border-color:#26303a!important;
+ --text:#e6edf3!important;--foreground:#e6edf3!important;--muted:#8b98a5!important;--text-muted:#8b98a5!important;
+ --accent:#ff8a3d!important;--accent-color:#ff8a3d!important;--primary:#ff8a3d!important;--primary-color:#ff8a3d!important;
+ --cyan:#ff9a55!important;--teal:#ff8a3d!important;--mint:#ff9a55!important;--highlight:#ff8a3d!important;
+ --blue:#ff8a3d!important;--purple:#ff9a55!important;--violet:#ff9a55!important;
+ --green:#63d297!important;--success:#63d297!important;--yellow:#f2c94c!important;--warning:#f2c94c!important;--red:#ff6b6b!important;--danger:#ff6b6b!important;
+ --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
-html{background:var(--bg)!important;scrollbar-color:#39434d var(--bg)}
-body{background-color:var(--bg)!important;color:var(--text)!important;font-family:var(--sans)!important}
-#app,#root,.app,.app-shell,.app-container,.workspace,.workspace-shell,.workspace-main,.studio-app,.layout-shell,main{
-  color:var(--text);
+html,body{background:#0b0d10!important;color:#e6edf3!important}
+body{font-family:var(--sans)!important}
+#app,#root,.app,.app-shell,.app-container,.workspace,.workspace-shell,.workspace-main,.studio-app,.layout-shell,main{color:#e6edf3}
+.app-shell,.app-container,.workspace-shell,.studio-app,.layout-shell,.topbar,.top-bar,.navbar,.nav-bar,.sidebar,.side-nav,.toolbar,.tool-bar,.panel,.card,.modal,.dialog,.dropdown,.menu,.popover,.drawer,.statusbar,.status-bar,.footer,.bottom-nav,.bottom-navigation{
+ border-color:#26303a!important;background-color:#11151a!important;color:#e6edf3!important
 }
-:where(.app,.app-shell,.app-container,.workspace,.workspace-shell,.studio-app,.layout-shell,.topbar,.top-bar,.navbar,.nav-bar,.sidebar,.side-nav,.toolbar,.tool-bar,.panel,.card,.modal,.dialog,.dropdown,.menu,.popover,.drawer,.statusbar,.status-bar,.footer,.bottom-nav,.bottom-navigation){
-  border-color:var(--line)!important;
-}
-:where(.app-shell,.app-container,.workspace-shell,.studio-app,.layout-shell,.topbar,.top-bar,.navbar,.nav-bar,.sidebar,.side-nav,.toolbar,.tool-bar,.panel,.card,.modal,.dialog,.dropdown,.menu,.popover,.drawer,.statusbar,.status-bar,.footer,.bottom-nav,.bottom-navigation){
-  background-color:var(--panel)!important;color:var(--text)!important;
-}
-:where(.panel,.card,.modal,.dialog,.dropdown,.menu,.popover,.drawer,.toolbar,.tool-bar,.sidebar,.side-nav){
-  box-shadow:0 8px 26px rgba(0,0,0,.2);
-}
-a{color:var(--accent)}
+.panel,.card,.modal,.dialog,.dropdown,.menu,.popover,.drawer,.toolbar,.tool-bar,.sidebar,.side-nav{box-shadow:0 8px 26px rgba(0,0,0,.2)}
+a{color:#ff8a3d}
 a:hover,a:focus-visible{color:#ffb27d}
-:where(nav a,.nav-item,.nav-link,.menu-item,.sidebar a,.side-nav a,.bottom-nav a,.bottom-navigation a,[role="menuitem"]){
-  color:var(--muted)!important;transition:color .18s ease,border-color .18s ease,background-color .18s ease,transform .18s ease,box-shadow .18s ease;
+nav a,.nav-item,.nav-link,.menu-item,.sidebar a,.side-nav a,.bottom-nav a,.bottom-navigation a,[role="menuitem"]{
+ color:#8b98a5!important;transition:color .18s ease,border-color .18s ease,background-color .18s ease,transform .18s ease,box-shadow .18s ease
 }
-:where(nav a,.nav-item,.nav-link,.menu-item,.sidebar a,.side-nav a,.bottom-nav a,.bottom-navigation a,[role="menuitem"]):hover,
-:where(nav a,.nav-item,.nav-link,.menu-item,.sidebar a,.side-nav a,.bottom-nav a,.bottom-navigation a,[role="menuitem"])[aria-current="page"],
-:where(nav a,.nav-item,.nav-link,.menu-item,.sidebar a,.side-nav a,.bottom-nav a,.bottom-navigation a,[role="menuitem"]).active{
-  color:var(--accent)!important;border-color:var(--accent)!important;background-color:rgba(255,138,61,.09)!important;
+nav a:hover,.nav-item:hover,.nav-link:hover,.menu-item:hover,.sidebar a:hover,.side-nav a:hover,.bottom-nav a:hover,.bottom-navigation a:hover,[role="menuitem"]:hover,
+[aria-current="page"],.nav-item.active,.nav-link.active,.menu-item.active{
+ color:#ff8a3d!important;border-color:#ff8a3d!important;background-color:rgba(255,138,61,.09)!important
 }
-:where(button,.button,.btn,[role="button"],input[type="button"],input[type="submit"]){
-  border-color:var(--line)!important;background-color:var(--panel2)!important;color:var(--text)!important;
-  font-family:var(--sans);transition:color .18s ease,border-color .18s ease,background-color .18s ease,transform .18s ease,box-shadow .18s ease;
+button,.button,.btn,[role="button"],input[type="button"],input[type="submit"]{
+ border-color:#26303a!important;background:#0d1115!important;color:#e6edf3!important;font-family:var(--sans);
+ transition:color .18s ease,border-color .18s ease,background-color .18s ease,transform .18s ease,box-shadow .18s ease
 }
-:where(button,.button,.btn,[role="button"],input[type="button"],input[type="submit"]):hover{
-  border-color:var(--accent)!important;color:var(--accent)!important;box-shadow:0 0 0 1px rgba(255,138,61,.12),0 7px 20px rgba(0,0,0,.18);
+button:hover,.button:hover,.btn:hover,[role="button"]:hover,input[type="button"]:hover,input[type="submit"]:hover{
+ border-color:#ff8a3d!important;color:#ff8a3d!important;box-shadow:0 0 0 1px rgba(255,138,61,.12),0 7px 20px rgba(0,0,0,.18)
 }
-:where(button,.button,.btn,[role="button"],input[type="button"],input[type="submit"]).primary,
-:where(button,.button,.btn,[role="button"],input[type="button"],input[type="submit"])[data-variant="primary],
-:where(.btn-primary,.button-primary,.primary-button,.os-btn.primary,.vp-primary){
-  background:var(--accent)!important;border-color:var(--accent)!important;color:#17100b!important;font-weight:700;
+button.primary,.button.primary,.btn.primary,.btn-primary,.button-primary,.primary-button,.os-btn.primary,.vp-primary,[data-variant="primary"]{
+ background:#ff8a3d!important;border-color:#ff8a3d!important;color:#17100b!important;font-weight:700
 }
-:where(button,.button,.btn,[role="button"],input[type="button"],input[type="submit"]).primary:hover,
-:where(button,.button,.btn,[role="button"],input[type="button"],input[type="submit"])[data-variant="primary"]:hover,
-:where(.btn-primary,.button-primary,.primary-button,.os-btn.primary,.vp-primary):hover{
-  background:#ff9d5c!important;border-color:#ffb27d!important;color:#17100b!important;
-}
-:where(input,textarea,select,[contenteditable="true"]){
-  color:var(--text)!important;background-color:#0d1115!important;border-color:var(--line)!important;
-  accent-color:var(--accent);
-}
-:where(input,textarea,select,[contenteditable="true"]):focus{
-  outline-color:var(--accent)!important;border-color:var(--accent)!important;box-shadow:0 0 0 2px rgba(255,138,61,.14)!important;
-}
-:where(h1,h2,h3,h4,h5,h6,strong,b,legend,label){color:var(--text)}
-:where(small,.muted,.text-muted,.hint,.caption,.eyebrow,.label-secondary){color:var(--muted)}
-:where(code,kbd,pre,.mono,.monospace){font-family:var(--mono)!important}
-:where(hr,table,th,td){border-color:var(--line)!important}
+input,textarea,select,[contenteditable="true"]{color:#e6edf3!important;background:#0d1115!important;border-color:#26303a!important;accent-color:#ff8a3d}
+input:focus,textarea:focus,select:focus,[contenteditable="true"]:focus{outline-color:#ff8a3d!important;border-color:#ff8a3d!important;box-shadow:0 0 0 2px rgba(255,138,61,.14)!important}
+h1,h2,h3,h4,h5,h6,strong,b,legend,label{color:#e6edf3}
+small,.muted,.text-muted,.hint,.caption,.eyebrow,.label-secondary{color:#8b98a5}
+code,kbd,pre,.mono,.monospace{font-family:var(--mono)!important}
+hr,table,th,td{border-color:#26303a!important}
 ::selection{background:rgba(255,138,61,.32);color:#fff}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-/* Engineering work surfaces retain their own drawing grids and semantic signal colors. */
-:where(canvas,svg,.react-flow,.react-flow__pane,.drawing-surface,.plan-surface,.canvas-stage,.viewport,.editor-surface){
-  color:var(--text);
-}
-:where(.react-flow__node,.node-card,.component-card,.library-item,.symbol-card){
-  background-color:var(--panel)!important;border-color:var(--line)!important;color:var(--text)!important;
-}
-:where(.react-flow__node.selected,.node-card.selected,.component-card.selected,.library-item:hover,.symbol-card:hover){
-  border-color:var(--accent)!important;box-shadow:0 0 0 1px rgba(255,138,61,.22)!important;
-}
+:focus-visible{outline:2px solid #ff8a3d;outline-offset:2px}
+.react-flow__node,.node-card,.component-card,.library-item,.symbol-card{background:#11151a!important;border-color:#26303a!important;color:#e6edf3!important}
+.react-flow__node.selected,.node-card.selected,.component-card.selected,.library-item:hover,.symbol-card:hover{border-color:#ff8a3d!important;box-shadow:0 0 0 1px rgba(255,138,61,.22)!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
