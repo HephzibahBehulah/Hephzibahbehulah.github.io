@@ -45,6 +45,9 @@ test("ElectCAD uses the professional two-row, three-column A3 paper workspace", 
   assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{display:none!important\}/);
   assert.match(siteCss, /vp-electcad-maximized #vpBottomNavigation\{position:relative;inset:auto;order:3;flex:0 0 50px/);
   assert.match(siteCss, /vp-bottom-dev-note/);
+  assert.match(siteCss, /vp-electcad-maximized body>\.hb-platform-footer\{display:none!important\}/);
+  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace \.vp-workspace-panel\[data-active=true\]\{position:absolute;inset:0;width:100%;height:100%!important/);
+  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace \.vp-workspace-frame\{width:100%;height:100%!important;min-height:0;max-height:none/);
   for (const [selector, height] of [[".topbar", "45px"], [".menu-toolbar-row", "40px"]]) {
     assert.ok(appCss.includes(`html.vp-electcad-embed ${selector}{height:${height}`), `${selector} must use the requested height`);
   }
