@@ -17,8 +17,8 @@ export function injectSitewideTheme(root) {
   for (const file of pages) {
     const html = fs.readFileSync(file, 'utf8');
     if (html.includes('data-hb-sitewide-theme')) continue;
-    if (!/<head(?:\\s[^>]*)?>/i.test(html) || !/<\\/head\\s*>/i.test(html)) continue;
-    const updated = html.replace(/<\\/head\\s*>/i, LINK + '</head>');
+    if (!/<head(?:\s[^>]*)?>/i.test(html) || !/<\/head\s*>/i.test(html)) continue;
+    const updated = html.replace(/<\/head\s*>/i, LINK + '</head>');
     if (updated === html) throw new Error('Could not apply the global theme to ' + path.relative(root, file));
     fs.writeFileSync(file, updated);
     injected++;
