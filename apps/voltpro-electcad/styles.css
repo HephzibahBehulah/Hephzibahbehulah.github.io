@@ -389,3 +389,32 @@ html.vp-electcad-embed .topbar,html.vp-electcad-embed .topbar-left,html.vp-elect
 @media(max-width:1450px){html.vp-electcad-embed .topbar{gap:3px;padding:0 4px}html.vp-electcad-embed .hb-brand strong{display:none}html.vp-electcad-embed .menu-wrap>button{padding:0 4px;font-size:8px}html.vp-electcad-embed .toolbar{gap:1px}html.vp-electcad-embed .toolbar .toolgroup button{width:25px}}
 @media(max-width:1050px){html.vp-electcad-embed .brand strong span{display:none}html.vp-electcad-embed .top-actions .icon-btn:nth-of-type(2),html.vp-electcad-embed .top-actions .icon-btn:nth-of-type(3){display:none}html.vp-electcad-embed .right-sidebar{width:230px;max-width:230px;grid-column:3}html.vp-electcad-embed .app-shell{grid-template-columns:44px minmax(0,1fr) 230px}html.vp-electcad-embed .left-sidebar{left:44px}}
 @media(max-width:760px){html.vp-electcad-embed .app-shell{grid-template-rows:50px minmax(0,1fr) 40px;grid-template-columns:40px minmax(0,1fr)}html.vp-electcad-embed .right-sidebar{display:none}html.vp-electcad-embed .icon-rail{grid-column:1}html.vp-electcad-embed .canvas-area{grid-column:2}html.vp-electcad-embed .menubar .menu-wrap:nth-child(n+6){display:none}html.vp-electcad-embed .top-actions .header-dropdown,html.vp-electcad-embed .top-actions>a{display:none}html.vp-electcad-embed .bottom-dev-note{display:none}html.vp-electcad-embed .global-bottom-bar{overflow-x:auto}html.vp-electcad-embed .global-bottom-bar>a{padding:0 6px}}
+
+/* Workspace usability fixes: compact command regions and distinct rail panels. */
+html.vp-electcad-embed .topbar{display:grid;grid-template-columns:minmax(250px,360px) minmax(0,1fr) auto;gap:6px;justify-content:initial}
+html.vp-electcad-embed .topbar-left{width:100%;max-width:360px;flex:initial;overflow:hidden;gap:6px}
+html.vp-electcad-embed .project-dropdown{min-width:0;max-width:148px}
+html.vp-electcad-embed .menu-toolbar-row{display:flex;align-items:center;min-width:0;width:100%;height:50px;overflow:visible}
+html.vp-electcad-embed .menubar{display:flex;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+html.vp-electcad-embed .menubar::-webkit-scrollbar{display:none}
+html.vp-electcad-embed .menu-wrap{flex:0 0 auto}
+html.vp-electcad-embed .menu-wrap>button{white-space:nowrap}
+html.vp-electcad-embed .toolbar{flex:0 0 auto;min-width:0;border-left:1px solid #343a3e}
+html.vp-electcad-embed .toolbar .toolgroup button{width:32px;min-width:32px;padding:0;justify-content:center}
+html.vp-electcad-embed .toolbar .toolgroup button span:not(.mini-resistor),html.vp-electcad-embed .toolbar .zoom-control,html.vp-electcad-embed .toolbar .toolbar-spacer,html.vp-electcad-embed .toolbar .primary-btn span{display:none}
+html.vp-electcad-embed .top-actions{position:relative;max-width:245px;gap:3px;flex:0 0 auto}
+html.vp-electcad-embed .account-popover{position:absolute;z-index:10001;right:0;top:calc(100% + 6px);width:210px;display:grid;gap:8px;padding:12px;border:1px solid #3b464c;border-radius:6px;background:#181b1d;color:#d8e1e5;box-shadow:0 10px 24px #0009}
+html.vp-electcad-embed .account-popover strong{overflow:hidden;font-size:11px;text-overflow:ellipsis;white-space:nowrap}
+html.vp-electcad-embed .account-popover a,html.vp-electcad-embed .account-popover button{padding:7px;border:1px solid #30383d;border-radius:4px;background:#111416;color:#d8e1e5;text-align:left;text-decoration:none;font:inherit;font-size:10px;cursor:pointer}
+html.vp-electcad-embed .account-popover a:hover,html.vp-electcad-embed .account-popover button:hover{border-color:#ffad60;color:#ffbd80}
+html.vp-electcad-embed .left-sidebar.panel-pages .library-head,html.vp-electcad-embed .left-sidebar.panel-pages .search-box,html.vp-electcad-embed .left-sidebar.panel-pages .catalog-controls,html.vp-electcad-embed .left-sidebar.panel-pages .palette-scroll,html.vp-electcad-embed .left-sidebar.panel-pages .variant-browser,html.vp-electcad-embed .left-sidebar.panel-pages .library-footer{display:none}
+html.vp-electcad-embed .left-sidebar.panel-components .pages-heading,html.vp-electcad-embed .left-sidebar.panel-components .project-tree{display:none}
+html.vp-electcad-embed .left-sidebar.panel-search .project-tree,html.vp-electcad-embed .left-sidebar.panel-search .catalog-controls,html.vp-electcad-embed .left-sidebar.panel-search .palette-scroll,html.vp-electcad-embed .left-sidebar.panel-search .variant-browser,html.vp-electcad-embed .left-sidebar.panel-search .library-footer{display:none}
+html.vp-electcad-embed .left-sidebar.panel-search .library-head{display:none}
+html.vp-electcad-embed .left-sidebar{display:flex;flex-direction:column;overflow-y:auto}
+html.vp-electcad-embed .left-sidebar .project-tree,html.vp-electcad-embed .left-sidebar .palette-scroll{min-height:0;flex:1 1 auto}
+html.vp-electcad-embed .bottom-dock{height:112px;min-height:112px;max-height:112px;flex:0 0 112px;overflow:hidden}
+html.vp-electcad-embed .diagnostic-content{min-height:0;flex:1;align-items:flex-start;padding:7px 10px;overflow:hidden}
+html.vp-electcad-embed .dock-detail{min-height:0;max-height:66px;overflow:auto}
+@media(max-width:1450px){html.vp-electcad-embed .topbar{grid-template-columns:minmax(185px,255px) minmax(0,1fr) auto}html.vp-electcad-embed .topbar-left{max-width:255px}html.vp-electcad-embed .hb-brand{display:none}html.vp-electcad-embed .top-actions{max-width:190px}html.vp-electcad-embed .top-actions>a{display:none}}
+@media(max-width:1050px){html.vp-electcad-embed .menu-toolbar-row{overflow:hidden}html.vp-electcad-embed .menubar{flex:1 1 0}html.vp-electcad-embed .toolbar .toolgroup button{width:28px;min-width:28px}}

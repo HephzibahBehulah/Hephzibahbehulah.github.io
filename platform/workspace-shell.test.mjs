@@ -139,6 +139,28 @@ test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying 
   assert.match(app, /installation-specific DIN VDE checks are not assessed/);
 });
 
+test("ElectCAD places new parts into the inspector and wires through exact terminal hit targets", () => {
+  const app = read("apps/voltpro-electcad/App.tsx");
+  assert.match(app, /setParts\(prev=>\[\.\.\.prev,part\]\);setSelected\(part\.id\)/);
+  assert.match(app, /onTerminalClick\?\.\(index\)/);
+  assert.match(app, /onTerminalClick=\{index=>handleTerminalClick\(p,index\)\}/);
+  assert.match(app, /r="12" fill="transparent" stroke="none" pointerEvents="all"/);
+});
+
+test("ElectCAD rail buttons open distinct panels and close the flyout when the pointer leaves", () => {
+  const app = read("apps/voltpro-electcad/App.tsx");
+  const css = read("apps/voltpro-electcad/styles.css");
+  for (const panel of ["pages", "components", "search"]) assert.ok(app.includes(`setLeftPanel('${panel}')`));
+  assert.match(app, /icon-rail[^\n]*onMouseLeave=\{\(\)=>\{panelCloseTimer\.current=window\.setTimeout\(\(\)=>setLeftOpen\(false\),180\)\}\}/);
+  assert.match(css, /left-sidebar\.panel-pages .*library-head/);
+  assert.match(css, /left-sidebar\.panel-components .*pages-heading/);
+});
+
+test("ElectCAD account controls stay inside the CAD header instead of floating over the inspector", () => {
+  assert.match(read("platform/member.js"), /voltpro-electcad/);
+  assert.match(read("apps/voltpro-electcad/App.tsx"), /className="account-popover"/);
+});
+
 test("Breadboard command menu proxies only to implemented native controls", () => {
   const html = read("apps/voltpro-engineering-source/breadboard.html");
   const proxies = [...html.matchAll(/data-proxy=(?:"([^"]+)"|'([^']+)')/g)].map(match => match[1] || match[2]);
