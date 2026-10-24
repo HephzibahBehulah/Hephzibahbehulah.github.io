@@ -480,3 +480,76 @@ html.vp-electcad-embed .paper-title-block{bottom:22px}
 html.vp-electcad-embed .canvas-coordinates{bottom:8px}
 @media(max-width:1050px){html.vp-electcad-embed .app-shell.right-collapsed{grid-template-columns:44px minmax(0,1fr) 28px}html.vp-electcad-embed .edge-reveal.edge-right{grid-column:3}}
 @media(max-width:760px){html.vp-electcad-embed .app-shell.right-collapsed{grid-template-columns:40px minmax(0,1fr) 28px}html.vp-electcad-embed .right-sidebar{display:flex;position:absolute;z-index:20;top:50px;right:0;bottom:40px;width:min(300px,88vw);max-width:88vw;box-shadow:-8px 0 28px #0009}html.vp-electcad-embed .app-shell:not(.right-collapsed) .canvas-area{grid-column:2}html.vp-electcad-embed .app-shell:not(.right-collapsed){grid-template-columns:40px minmax(0,1fr) 0}}
+
+/* Keep the corporate and product wordmarks together in the single CAD header row. */
+html.vp-electcad-embed .topbar{grid-template-columns:minmax(520px,560px) minmax(720px,1fr) auto;gap:7px;overflow-x:auto;overflow-y:visible;scrollbar-width:thin}
+html.vp-electcad-embed .topbar-left{width:100%;max-width:none;min-width:520px;flex:initial;gap:7px;overflow:visible}
+html.vp-electcad-embed .electcad-main-site,html.vp-electcad-embed .hb-brand,html.vp-electcad-embed .brand{flex:0 0 auto;white-space:nowrap}
+html.vp-electcad-embed .hb-brand{display:inline-flex!important;gap:6px}
+html.vp-electcad-embed .hb-brand strong{display:inline!important;font-size:10px}
+html.vp-electcad-embed .hb-brand img{width:24px;height:24px}
+html.vp-electcad-embed .project-dropdown{flex:0 1 148px;max-width:148px}
+html.vp-electcad-embed .menu-toolbar-row{min-width:720px}
+html.vp-electcad-embed .simulation-controls{display:flex;flex:0 0 auto;align-items:center;gap:4px}
+html.vp-electcad-embed .simulation-state{height:27px;display:flex;align-items:center;gap:5px;padding:0 7px;border:1px solid #3c4449;border-radius:4px;background:#1a1d1f;color:#c4cbd0;font:700 9px 'DM Mono',monospace;letter-spacing:.04em;white-space:nowrap}
+html.vp-electcad-embed .simulation-state-icon{display:grid;place-items:center}
+html.vp-electcad-embed .simulation-state.state-stopped .simulation-state-icon{color:#9ba5aa}
+html.vp-electcad-embed .simulation-state.state-running{border-color:#28664c;background:#10271b;color:#88e0a3}
+html.vp-electcad-embed .simulation-state.state-running .simulation-state-icon{color:#62da88;animation:vp-sim-pulse 1s ease-in-out infinite}
+html.vp-electcad-embed .simulation-state.state-error{border-color:#713a3a;background:#2b1717;color:#ff9a91}
+html.vp-electcad-embed .simulation-state.state-error .simulation-state-icon{color:#ff776e}
+html.vp-electcad-embed .execution-button{height:27px;min-width:53px;display:flex;align-items:center;justify-content:center;gap:4px;padding:0 7px;border:1px solid;border-radius:4px;font-size:9px;font-weight:700;white-space:nowrap}
+html.vp-electcad-embed .execution-start{border-color:#2b7146;background:#16442a;color:#a6efb7}
+html.vp-electcad-embed .execution-start:hover:not(:disabled){background:#1d6038;color:#e0ffe6}
+html.vp-electcad-embed .execution-stop{border-color:#773b39;background:#361c1a;color:#ffaaa1}
+html.vp-electcad-embed .execution-stop:hover:not(:disabled){background:#642b27;color:#ffe1dc}
+html.vp-electcad-embed .execution-button:disabled{opacity:.42;cursor:not-allowed}
+@keyframes vp-sim-pulse{50%{opacity:.45}}
+@media(max-width:1450px){html.vp-electcad-embed .topbar{grid-template-columns:minmax(520px,560px) minmax(720px,1fr) auto}html.vp-electcad-embed .hb-brand{display:inline-flex!important}html.vp-electcad-embed .hb-brand strong{display:inline!important}}
+@media(max-width:850px){html.vp-electcad-embed .simulation-state{padding:0 5px}}
+@media(max-width:850px){html.vp-electcad-embed .topbar{overflow-x:auto}html.vp-electcad-embed .topbar-left{min-width:520px}html.vp-electcad-embed .menu-toolbar-row{min-width:720px}}
+@media(prefers-reduced-motion:reduce){html.vp-electcad-embed .simulation-state.state-running .simulation-state-icon{animation:none}}
+
+/* Simulation execution controls sit beside the Electrical tool link, never in the header. */
+html.vp-electcad-embed .global-bottom-bar{overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:thin}
+html.vp-electcad-embed .global-nav-separator{height:22px;flex:0 0 1px;margin:0 8px;background:#394146}
+html.vp-electcad-embed .global-simulation-controls{flex:0 0 auto;gap:5px}
+html.vp-electcad-embed .global-simulation-controls .simulation-state{height:26px}
+html.vp-electcad-embed .global-simulation-controls .execution-button{height:26px;min-width:56px}
+html.vp-electcad-embed .bottom-dev-note{flex:0 0 auto;margin-left:auto}
+@media(max-width:850px){html.vp-electcad-embed .global-bottom-bar{gap:4px}html.vp-electcad-embed .global-bottom-bar>a{padding:0 7px}html.vp-electcad-embed .bottom-dev-note{display:none}}
+
+/* Company mark is repeated on every drawing title block and print sheet. */
+html.vp-electcad-embed .paper-title-block{width:min(310px,54%);min-height:122px}
+html.vp-electcad-embed .paper-title-heading{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:7px;min-width:0;padding-bottom:4px;border-bottom:1px solid #596168;color:#ffad60;font:700 7px 'DM Mono',monospace;letter-spacing:.05em}
+html.vp-electcad-embed .title-company-mark{display:flex;align-items:center;gap:4px;min-width:0;color:#e3e8eb;font-size:7px;white-space:nowrap}
+html.vp-electcad-embed .title-company-mark img{width:16px;height:16px;flex:0 0 16px;object-fit:contain}
+html.vp-electcad-embed .title-drawing-label{overflow:hidden;text-align:right;text-overflow:ellipsis;white-space:nowrap}
+html.vp-electcad-embed .paper-title-block .title-copyright{grid-column:1/-1;align-self:end;padding-top:2px;color:#8e9aa0;font:6px 'DM Mono',monospace;letter-spacing:0;white-space:nowrap}
+
+/* Print the complete project as a paginated A3 landscape document, one drawing sheet per page. */
+html.vp-electcad-embed .print-document{display:none}
+@page{size:A3 landscape;margin:8mm}
+@media print{
+  html.vp-electcad-embed,html.vp-electcad-embed body,html.vp-electcad-embed #root{width:auto!important;height:auto!important;min-height:0!important;margin:0!important;overflow:visible!important;background:#fff!important}
+  html.vp-electcad-embed #app-container{display:block!important;width:auto!important;height:auto!important;min-height:0!important;overflow:visible!important;background:#fff!important}
+  html.vp-electcad-embed #app-container>*:not(.print-document){display:none!important}
+  html.vp-electcad-embed .print-document{display:block!important;background:#fff!important;color:#171c1f!important}
+  html.vp-electcad-embed .print-sheet{width:100%;height:279mm;display:grid;grid-template-rows:10mm minmax(0,1fr) 26mm;gap:3mm;padding:4mm;border:1px solid #343a3e;background:#fff;break-after:page;page-break-after:always;overflow:hidden}
+  html.vp-electcad-embed .print-sheet:last-child{break-after:auto;page-break-after:auto}
+  html.vp-electcad-embed .print-sheet-header{display:flex;align-items:center;gap:3mm;border-bottom:1px solid #263238;font:700 10pt Inter,Arial,sans-serif}
+  html.vp-electcad-embed .print-sheet-header img{width:8mm;height:8mm;object-fit:contain}
+  html.vp-electcad-embed .print-sheet-header span{margin-left:auto;color:#48545a;font-size:8pt}
+  html.vp-electcad-embed .print-schematic{width:100%;height:100%;min-height:0;border:1px solid #808a8e;background:#fff}
+  html.vp-electcad-embed .print-schematic path,html.vp-electcad-embed .print-schematic polyline,html.vp-electcad-embed .print-schematic line,html.vp-electcad-embed .print-schematic rect,html.vp-electcad-embed .print-schematic circle,html.vp-electcad-embed .print-schematic polygon{stroke:#263238!important}
+  html.vp-electcad-embed .print-schematic text{fill:#263238!important;font-family:Arial,sans-serif}
+  html.vp-electcad-embed .print-schematic g>rect,html.vp-electcad-embed .print-schematic g>circle{fill:#fff!important}
+  html.vp-electcad-embed .print-sheet-title{display:grid;grid-template-columns:2fr 1.3fr 1.3fr 1.2fr;grid-template-rows:repeat(2,1fr);border:1px solid #263238;font:7pt Arial,sans-serif}
+  html.vp-electcad-embed .print-sheet-title>div{display:flex;flex-direction:column;justify-content:center;gap:1mm;min-width:0;padding:1mm 2mm;border-right:1px solid #879196;border-bottom:1px solid #879196}
+  html.vp-electcad-embed .print-sheet-title small{color:#5a666b;font-size:6pt;text-transform:uppercase}
+  html.vp-electcad-embed .print-sheet-title strong{overflow:hidden;color:#171c1f;font-size:8pt;text-overflow:ellipsis;white-space:nowrap}
+  html.vp-electcad-embed .print-title-company{grid-row:1/3}
+  html.vp-electcad-embed .print-title-company strong{font-size:10pt}
+  html.vp-electcad-embed .print-title-company span{font-size:6pt;color:#58646a}
+  html.vp-electcad-embed .print-title-reference{grid-column:4;grid-row:1/3}
+}
