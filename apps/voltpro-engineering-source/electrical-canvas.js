@@ -28,10 +28,10 @@ function typeOf(type) { return TYPES.find(item => item.type === type) || TYPES[0
 function id() { return "B" + Math.random().toString(36).slice(2, 8).toUpperCase(); }
 function setStatus(message) { status.textContent = message; }
 function renderRulers() {
-  $("topRuler").replaceChildren(...Array.from({ length: PLAN_COLUMNS }, (_, i) => {
+  $("topRulerTicks").replaceChildren(...Array.from({ length: PLAN_COLUMNS }, (_, i) => {
     const label = document.createElement("span"); label.textContent = String(i + 1); return label;
   }));
-  $("leftRuler").replaceChildren(...Array.from({ length: PLAN_ROWS }, (_, i) => {
+  $("leftRulerTicks").replaceChildren(...Array.from({ length: PLAN_ROWS }, (_, i) => {
     const label = document.createElement("span"); label.textContent = columnLabel(i + 1); return label;
   }));
 }
@@ -73,6 +73,8 @@ function renderNodes() {
     button.addEventListener("click", event => { event.stopPropagation(); selectNode(node.id); });
     button.addEventListener("pointerdown", event => {
       if (event.button !== 0 || $("wireMode").getAttribute("aria-pressed") === "true") return;
+      selected = node.id; showProperties(node);
+      nodeLayer.querySelectorAll(".cad-node").forEach(item => item.setAttribute("aria-pressed", String(item.dataset.id === node.id)));
       dragState = { id: node.id, x: event.clientX, y: event.clientY, nodeX: node.x, nodeY: node.y };
       button.setPointerCapture(event.pointerId);
     });
@@ -86,7 +88,13 @@ function renderNodes() {
       button.style.top = (node.y * GRID_PX) + "px";
       renderWires(); save();
     });
-    button.addEventListener("pointerup", () => { dragState = null; renderNodes(); renderWires(); });
+    button.addEventListener("pointerup", event => {
+      if (!dragState || dragState.id !== node.id) return;
+      const moved = Math.hypot(event.clientX - dragState.x, event.clientY - dragState.y) >= 4;
+      dragState = null; renderNodes(); renderWires();
+      if (!moved) selectNode(node.id);
+    });
+    button.addEventListener("pointercancel", () => { dragState = null; renderNodes(); renderWires(); });
     nodeLayer.append(button);
   }
 }
@@ -103,6 +111,10 @@ function renderWires() {
     line.setAttribute("class", "wire"); line.setAttribute("points", points); wireLayer.append(line);
   }
 }
+function showProperties(node) {
+  $("emptyProperties").hidden = true; propForm.hidden = false;
+  $("componentId").value = node.id; $("componentName").value = node.name; $("componentRoom").value = node.room; $("componentVoltage").value = node.voltage;
+}
 function selectNode(nodeId) {
   if ($("wireMode").getAttribute("aria-pressed") === "true") {
     if (!wireStart) { wireStart = nodeId; setStatus("Start selected. Choose the cable destination."); return; }
@@ -111,8 +123,7 @@ function selectNode(nodeId) {
   }
   selected = nodeId;
   const node = state.nodes.find(item => item.id === selected);
-  $("emptyProperties").hidden = true; propForm.hidden = false;
-  $("componentId").value = node.id; $("componentName").value = node.name; $("componentRoom").value = node.room; $("componentVoltage").value = node.voltage;
+  showProperties(node);
   renderNodes();
 }
 function placeNode(point) {
@@ -123,6 +134,10 @@ function placeNode(point) {
 }
 document.getElementById("componentLibrary").replaceChildren(...TYPES.map(partButton));
 renderRulers();
+$("planScroll").addEventListener("scroll", () => {
+  $("topRulerTicks").style.transform = "translateX(-" + $("planScroll").scrollLeft + "px)";
+  $("leftRulerTicks").style.transform = "translateY(-" + $("planScroll").scrollTop + "px)";
+});
 $("projectName").value = state.metadata.name; $("projectDate").value = state.metadata.date; $("titleScale").value = state.metadata.scale; $("drafter").value = state.metadata.drafter; $("drawingScale").value = state.metadata.scale;
 surface.addEventListener("click", event => { if (event.target === surface) placeNode(pointFromEvent(event)); });
 surface.addEventListener("dragover", event => { if (event.dataTransfer.types.includes("text/voltpro-building-component")) { event.preventDefault(); event.dataTransfer.dropEffect = "copy"; } });
