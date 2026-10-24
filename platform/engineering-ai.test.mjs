@@ -29,6 +29,7 @@ test('engineering chat applies domain-specific system contracts for all four too
   assert.equal(result.status,200);
   assert.equal((await result.json()).answer,'Reviewed proposal');
   assert.match(captured.messages[0].content,new RegExp(expected));
+  if(tool==='breadboard'){assert.match(captured.messages[0].content,/PCB/);assert.doesNotMatch(captured.messages[0].content,/Do not claim PCB fabrication view\/export exists/);}
   assert.match(captured.messages[1].content,/Supported project contract/);
  }
 });
