@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#141414">
+  <meta name="description" content="VoltPro build status, production readiness, and formal engineering gap register.">
+  <title>VoltPro Status</title>
+  <link rel="stylesheet" href="status.css">
+  <script src="status.js" defer></script>
+</head>
+<body>
+  <header class="status-header">
+    <a href="/">← VoltPro Engineering</a>
+    <a href="https://hephzibahbehulah.com/">Hephzibah Behulah</a>
+  </header>
+  <main>
+    <p class="eyebrow">VOLTPRO · TRANSPARENT DEVELOPMENT STATUS</p>
+    <h1>System status</h1>
+    <p class="readiness">Production Readiness: <strong>NOT READY</strong></p>
+    <p class="notice">VoltPro is in active development. DRC rules and symbol libraries are pending verified standards ingestion and licensed catalog integration. Do not use for final production documentation.</p>
+    <section class="build-card" aria-labelledby="build-heading">
+      <h2 id="build-heading">Current deployment</h2>
+      <dl>
+        <div><dt>Build version</dt><dd id="buildVersion">Loading…</dd></div>
+        <div><dt>Commit</dt><dd id="commitHash">Loading…</dd></div>
+        <div><dt>Deployment timestamp (UTC)</dt><dd id="deploymentTimestamp">Loading…</dd></div>
+      </dl>
+      <p id="buildError" role="status" hidden></p>
+    </section>
+    <section aria-labelledby="gaps-heading">
+      <div class="gap-heading"><div><p class="eyebrow">FORMAL GAP REGISTER</p><h2 id="gaps-heading">Open acceptance gaps</h2></div><span id="gapCount">Loading…</span></div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Gap ID</th><th scope="col">Tool</th><th scope="col">Capability</th><th scope="col">Current status</th><th scope="col">Blocker type</th><th scope="col">Owner action required</th><th scope="col">Acceptance test name</th></tr></thead>
+          <tbody id="gapRows"><tr><td colspan="7">Loading register from gaps.json…</td></tr></tbody>
+        </table>
+      </div>
+      <p class="source-note">The table is loaded from the repository’s gaps.json, generated from STATUS.txt. A passing named acceptance test is required before a capability can be marked Complete.</p>
+    </section>
+  </main>
+  <footer><span>Educational design aid · no standards conformity is implied</span><a href="/status">Refresh status</a></footer>
+</body>
+</html>

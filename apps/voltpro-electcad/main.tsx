@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles.css';
+import '../voltpro-engineering-source/workspace-engineering-theme.css';
 
 class EditorErrorBoundary extends React.Component<{children:React.ReactNode},{error:string|null}>{
   state={error:null as string|null};

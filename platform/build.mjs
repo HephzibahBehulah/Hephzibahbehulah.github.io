@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {verifyMainAssets} from './preflight.mjs';
 import {publishArchives} from './app-archives.mjs';
@@ -8,6 +9,7 @@ import {copySharedAssets} from './release-assets.mjs';
 import {generateSeo} from './seo.mjs';
 import {injectSitewideTheme} from './sitewide-theme.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+execFileSync(process.execPath,['platform/generate-gaps.mjs','--check'],{cwd:root,stdio:'inherit'});
 const engineering=path.resolve(process.argv[2]||'../engineering-source');
 const cyber=path.resolve(process.argv[3]||'../cyber/build-app/web');
 const destination=path.resolve(root,'dist-platform');
@@ -31,6 +33,11 @@ function copy(from,to,{main=false,cyber=false}={}){
 copy(root,destination,{main:true});
 copySharedAssets(root,destination);
 copy(engineering,path.join(destination,'_apps/engineering'));
+fs.copyFileSync(path.join(root,'gaps.json'),path.join(destination,'_apps/engineering/gaps.json'));
+const repositoryPackage=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
+let commitHash=process.env.GITHUB_SHA||'';
+if(!/^[a-f0-9]{40}$/i.test(commitHash))try{commitHash=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();}catch{commitHash='Unknown';}
+fs.writeFileSync(path.join(destination,'_apps/engineering/status-build.json'),JSON.stringify({version:repositoryPackage.version||'Unknown',commitHash,buildTimestamp:new Date().toISOString()},null,2)+'\n');
 
 
 for(const name of ['LICENSE','THIRD_PARTY_LICENSES.md','ASSET_ATTRIBUTIONS.md'])if(fs.existsSync(path.join(engineering,name)))fs.copyFileSync(path.join(engineering,name),path.join(destination,'_apps/engineering',name));

@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "source": "STATUS.txt",
+  "updatedAt": "2026-10-24",
+  "gaps": [
+    {
+      "gapId": "PLC-DRC",
+      "tool": "PLC",
+      "capability": "DRC",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Standards text needed",
+        "Test not written"
+      ],
+      "ownerActionRequired": "You supply verified IEC 61131-3 data; Codex implements checks",
+      "acceptanceTestName": "accept.plc.drc.iec61131-profile"
+    },
+    {
+      "gapId": "PLC-WN",
+      "tool": "PLC",
+      "capability": "Wire Numbering",
+      "currentStatus": "Not Started",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex implements automatic I/O addresses and cross-references",
+      "acceptanceTestName": "accept.plc.io-addresses.cross-reference"
+    },
+    {
+      "gapId": "PLC-BOM",
+      "tool": "PLC",
+      "capability": "BOM",
+      "currentStatus": "Not Started",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex implements controller and module configuration BOM",
+      "acceptanceTestName": "accept.plc.hardware-bom.complete"
+    },
+    {
+      "gapId": "PLC-MS",
+      "tool": "PLC",
+      "capability": "Multi-Sheet",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds Main/Subroutine/Interrupt program blocks and references",
+      "acceptanceTestName": "accept.plc.program-blocks.cross-reference"
+    },
+    {
+      "gapId": "PLC-HIST",
+      "tool": "PLC",
+      "capability": "History",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds persistent logic-edit audit history",
+      "acceptanceTestName": "accept.plc.history.audit-trail"
+    },
+    {
+      "gapId": "PLC-SW",
+      "tool": "PLC",
+      "capability": "Smart Wire",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds series-coil and rung-termination checks",
+      "acceptanceTestName": "accept.plc.wiring.coil-and-rung-rules"
+    },
+    {
+      "gapId": "SIM-DRC",
+      "tool": "Simulator",
+      "capability": "DRC",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Standards text needed",
+        "Test not written"
+      ],
+      "ownerActionRequired": "You supply verified component-limit sources; Codex implements complete checks",
+      "acceptanceTestName": "accept.sim.drc.topology-and-ratings"
+    },
+    {
+      "gapId": "SIM-WN",
+      "tool": "Simulator",
+      "capability": "Wire Numbering",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex completes stable net labels and net-based coloring",
+      "acceptanceTestName": "accept.sim.nets.labels-colors-roundtrip"
+    },
+    {
+      "gapId": "SIM-BOM",
+      "tool": "Simulator",
+      "capability": "BOM",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex reports per-instance tolerances and model parameters",
+      "acceptanceTestName": "accept.sim.bom.model-parameters"
+    },
+    {
+      "gapId": "SIM-MS",
+      "tool": "Simulator",
+      "capability": "Multi-Sheet",
+      "currentStatus": "Not Started",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex implements hierarchical blocks and typed ports",
+      "acceptanceTestName": "accept.sim.hierarchy.typed-ports"
+    },
+    {
+      "gapId": "SIM-HIST",
+      "tool": "Simulator",
+      "capability": "History",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds persistent parameter-change history",
+      "acceptanceTestName": "accept.sim.history.parameter-audit"
+    },
+    {
+      "gapId": "SIM-SW",
+      "tool": "Simulator",
+      "capability": "Smart Wire",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex enforces domains and shows simulation current flow",
+      "acceptanceTestName": "accept.sim.wiring.domains-and-current-flow"
+    },
+    {
+      "gapId": "ECAD-DRC",
+      "tool": "ElectCAD",
+      "capability": "DRC",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Standards text needed",
+        "Licensed symbol catalog needed",
+        "Test not written"
+      ],
+      "ownerActionRequired": "You supply verified standards and licensed catalog; Codex implements checks",
+      "acceptanceTestName": "accept.electcad.drc.verified-profile"
+    },
+    {
+      "gapId": "ECAD-WN",
+      "tool": "ElectCAD",
+      "capability": "Wire Numbering",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex enforces prefixes and off-page cross-references",
+      "acceptanceTestName": "accept.electcad.wire-numbers.off-page-links"
+    },
+    {
+      "gapId": "ECAD-BOM",
+      "tool": "ElectCAD",
+      "capability": "BOM",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds verified parts and route-derived wire lengths",
+      "acceptanceTestName": "accept.electcad.bom.manufacturing-and-lengths"
+    },
+    {
+      "gapId": "ECAD-MS",
+      "tool": "ElectCAD",
+      "capability": "Multi-Sheet",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex enforces linked multi-sheet project structure",
+      "acceptanceTestName": "accept.electcad.sheets.cross-link-integrity"
+    },
+    {
+      "gapId": "ECAD-HIST",
+      "tool": "ElectCAD",
+      "capability": "History",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds exportable documentation audit history",
+      "acceptanceTestName": "accept.electcad.history.document-audit"
+    },
+    {
+      "gapId": "ECAD-SW",
+      "tool": "ElectCAD",
+      "capability": "Smart Wire",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Standards text needed",
+        "Test not written"
+      ],
+      "ownerActionRequired": "You supply verified DIN EN 60445 data; Codex completes routing behavior",
+      "acceptanceTestName": "accept.electcad.wiring.routing-colors-crossings"
+    },
+    {
+      "gapId": "BB-DRC",
+      "tool": "Breadboard",
+      "capability": "DRC",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex completes overlap, hole, footprint and ground checks",
+      "acceptanceTestName": "accept.breadboard.drc.placement-and-ground"
+    },
+    {
+      "gapId": "BB-WN",
+      "tool": "Breadboard",
+      "capability": "Wire Numbering",
+      "currentStatus": "Not Started",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex implements the color and endpoint wiring checklist",
+      "acceptanceTestName": "accept.breadboard.wiring-checklist.endpoints"
+    },
+    {
+      "gapId": "BB-BOM",
+      "tool": "Breadboard",
+      "capability": "BOM",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds replication values, LED colors and jumper lengths",
+      "acceptanceTestName": "accept.breadboard.bom.replication-details"
+    },
+    {
+      "gapId": "BB-MS",
+      "tool": "Breadboard",
+      "capability": "Multi-Sheet",
+      "currentStatus": "Not Started",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex implements named independent board pages",
+      "acceptanceTestName": "accept.breadboard.pages.independent-projects"
+    },
+    {
+      "gapId": "BB-HIST",
+      "tool": "Breadboard",
+      "capability": "History",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds durable component and wire action history",
+      "acceptanceTestName": "accept.breadboard.history.placement-and-wire-moves"
+    },
+    {
+      "gapId": "BB-SW",
+      "tool": "Breadboard",
+      "capability": "Smart Wire",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex enforces power/data endpoint compatibility",
+      "acceptanceTestName": "accept.breadboard.wiring.net-compatibility"
+    },
+    {
+      "gapId": "BUILD-DRC",
+      "tool": "Building",
+      "capability": "DRC",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Standards text needed",
+        "Test not written"
+      ],
+      "ownerActionRequired": "You supply applicable DIN VDE 0100 profiles; Codex implements scoped checks",
+      "acceptanceTestName": "accept.building.drc.profile-protection-and-pe"
+    },
+    {
+      "gapId": "BUILD-WN",
+      "tool": "Building",
+      "capability": "Wire Numbering",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds circuit/cable tags and board cross-references",
+      "acceptanceTestName": "accept.building.circuits.cable-tags-and-board-links"
+    },
+    {
+      "gapId": "BUILD-BOM",
+      "tool": "Building",
+      "capability": "BOM",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds material counts and route-derived cable lengths",
+      "acceptanceTestName": "accept.building.bom.materials-and-route-lengths"
+    },
+    {
+      "gapId": "BUILD-MS",
+      "tool": "Building",
+      "capability": "Multi-Sheet",
+      "currentStatus": "Not Started",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex implements floor/room hierarchy and sheets",
+      "acceptanceTestName": "accept.building.floors.rooms.sheet-navigation"
+    },
+    {
+      "gapId": "BUILD-HIST",
+      "tool": "Building",
+      "capability": "History",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex adds visible persistent drawing audit history",
+      "acceptanceTestName": "accept.building.history.drawing-audit"
+    },
+    {
+      "gapId": "BUILD-SW",
+      "tool": "Building",
+      "capability": "Smart Wire",
+      "currentStatus": "Partial",
+      "blockerType": [
+        "Logic not implemented",
+        "Test not written"
+      ],
+      "ownerActionRequired": "Codex constrains routes to walls and checks room requirements",
+      "acceptanceTestName": "accept.building.wiring.wall-routes.room-requirements"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+VoltPro Formal Gap Register
+Revision: 1
+Status definitions: Complete requires its named acceptance test to exist and pass. Partial means some underlying behavior exists, but acceptance remains open. Not Started means the requested workflow is absent.
+
+| Gap ID | Tool | Capability | Current status | Blocker type | Owner action required | Acceptance test name |
+|---|---|---|---|---|---|---|
+| PLC-DRC | PLC | DRC | Partial | Logic not implemented; Standards text needed; Test not written | You supply verified IEC 61131-3 data; Codex implements checks | accept.plc.drc.iec61131-profile |
+| PLC-WN | PLC | Wire Numbering | Not Started | Logic not implemented; Test not written | Codex implements automatic I/O addresses and cross-references | accept.plc.io-addresses.cross-reference |
+| PLC-BOM | PLC | BOM | Not Started | Logic not implemented; Test not written | Codex implements controller and module configuration BOM | accept.plc.hardware-bom.complete |
+| PLC-MS | PLC | Multi-Sheet | Partial | Logic not implemented; Test not written | Codex adds Main/Subroutine/Interrupt program blocks and references | accept.plc.program-blocks.cross-reference |
+| PLC-HIST | PLC | History | Partial | Logic not implemented; Test not written | Codex adds persistent logic-edit audit history | accept.plc.history.audit-trail |
+| PLC-SW | PLC | Smart Wire | Partial | Logic not implemented; Test not written | Codex adds series-coil and rung-termination checks | accept.plc.wiring.coil-and-rung-rules |
+| SIM-DRC | Simulator | DRC | Partial | Logic not implemented; Standards text needed; Test not written | You supply verified component-limit sources; Codex implements complete checks | accept.sim.drc.topology-and-ratings |
+| SIM-WN | Simulator | Wire Numbering | Partial | Logic not implemented; Test not written | Codex completes stable net labels and net-based coloring | accept.sim.nets.labels-colors-roundtrip |
+| SIM-BOM | Simulator | BOM | Partial | Logic not implemented; Test not written | Codex reports per-instance tolerances and model parameters | accept.sim.bom.model-parameters |
+| SIM-MS | Simulator | Multi-Sheet | Not Started | Logic not implemented; Test not written | Codex implements hierarchical blocks and typed ports | accept.sim.hierarchy.typed-ports |
+| SIM-HIST | Simulator | History | Partial | Logic not implemented; Test not written | Codex adds persistent parameter-change history | accept.sim.history.parameter-audit |
+| SIM-SW | Simulator | Smart Wire | Partial | Logic not implemented; Test not written | Codex enforces domains and shows simulation current flow | accept.sim.wiring.domains-and-current-flow |
+| ECAD-DRC | ElectCAD | DRC | Partial | Logic not implemented; Standards text needed; Licensed symbol catalog needed; Test not written | You supply verified standards and licensed catalog; Codex implements checks | accept.electcad.drc.verified-profile |
+| ECAD-WN | ElectCAD | Wire Numbering | Partial | Logic not implemented; Test not written | Codex enforces prefixes and off-page cross-references | accept.electcad.wire-numbers.off-page-links |
+| ECAD-BOM | ElectCAD | BOM | Partial | Logic not implemented; Test not written | Codex adds verified parts and route-derived wire lengths | accept.electcad.bom.manufacturing-and-lengths |
+| ECAD-MS | ElectCAD | Multi-Sheet | Partial | Logic not implemented; Test not written | Codex enforces linked multi-sheet project structure | accept.electcad.sheets.cross-link-integrity |
+| ECAD-HIST | ElectCAD | History | Partial | Logic not implemented; Test not written | Codex adds exportable documentation audit history | accept.electcad.history.document-audit |
+| ECAD-SW | ElectCAD | Smart Wire | Partial | Logic not implemented; Standards text needed; Test not written | You supply verified DIN EN 60445 data; Codex completes routing behavior | accept.electcad.wiring.routing-colors-crossings |
+| BB-DRC | Breadboard | DRC | Partial | Logic not implemented; Test not written | Codex completes overlap, hole, footprint and ground checks | accept.breadboard.drc.placement-and-ground |
+| BB-WN | Breadboard | Wire Numbering | Not Started | Logic not implemented; Test not written | Codex implements the color and endpoint wiring checklist | accept.breadboard.wiring-checklist.endpoints |
+| BB-BOM | Breadboard | BOM | Partial | Logic not implemented; Test not written | Codex adds replication values, LED colors and jumper lengths | accept.breadboard.bom.replication-details |
+| BB-MS | Breadboard | Multi-Sheet | Not Started | Logic not implemented; Test not written | Codex implements named independent board pages | accept.breadboard.pages.independent-projects |
+| BB-HIST | Breadboard | History | Partial | Logic not implemented; Test not written | Codex adds durable component and wire action history | accept.breadboard.history.placement-and-wire-moves |
+| BB-SW | Breadboard | Smart Wire | Partial | Logic not implemented; Test not written | Codex enforces power/data endpoint compatibility | accept.breadboard.wiring.net-compatibility |
+| BUILD-DRC | Building | DRC | Partial | Logic not implemented; Standards text needed; Test not written | You supply applicable DIN VDE 0100 profiles; Codex implements scoped checks | accept.building.drc.profile-protection-and-pe |
+| BUILD-WN | Building | Wire Numbering | Partial | Logic not implemented; Test not written | Codex adds circuit/cable tags and board cross-references | accept.building.circuits.cable-tags-and-board-links |
+| BUILD-BOM | Building | BOM | Partial | Logic not implemented; Test not written | Codex adds material counts and route-derived cable lengths | accept.building.bom.materials-and-route-lengths |
+| BUILD-MS | Building | Multi-Sheet | Not Started | Logic not implemented; Test not written | Codex implements floor/room hierarchy and sheets | accept.building.floors.rooms.sheet-navigation |
+| BUILD-HIST | Building | History | Partial | Logic not implemented; Test not written | Codex adds visible persistent drawing audit history | accept.building.history.drawing-audit |
+| BUILD-SW | Building | Smart Wire | Partial | Logic not implemented; Test not written | Codex constrains routes to walls and checks room requirements | accept.building.wiring.wall-routes.room-requirements |

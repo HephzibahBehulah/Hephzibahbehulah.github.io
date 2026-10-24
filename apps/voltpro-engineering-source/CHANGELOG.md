@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-24 — Public engineering status and development notice
+- Added the live `/status` page with build metadata and the JSON-backed 30-row gap register generated from the repository `STATUS.txt`.
+- Added a session-dismissable development banner, tool-context About/readiness panel and visible suite footer notice.
+- VoltPro is in active development. DRC rules and symbol libraries are pending verified standards ingestion and licensed catalog integration. Do not use for final production documentation.
+- Added 30 pending capability acceptance tests. These remain open until their individual checks are implemented and pass.
+
 ## 2026-10-18 — Live Workbench studies
 - Added 10,000 wired healthy/fault comparisons: 25 fault patterns with 400 physical parameter sets, shared circuit solving, live voltage/current paths, terminal probes, controls and editable simulator export. Industrial equivalents and thermal assumptions are explicitly labeled.
 - Expanded the linked index to 10,000 entries: 401 existing references plus 9,599 worked parameter studies, with relevant reading and practical circuit links. Checked the protected admin library and incorporated its engineering documentation sources.

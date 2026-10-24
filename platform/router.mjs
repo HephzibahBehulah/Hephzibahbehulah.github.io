@@ -21,6 +21,7 @@ export function resolveRoute(url){
   if(!privateHost&&['/account','/account/','/account.html'].includes(path))return {kind:'account',privateHost:false};
   if(!privateHost&&decoded==='/_hb/admin-accounts-ui.js')return {kind:'reject',status:404};
   if(path.startsWith('/_hb/'))return {kind:'shared',privateHost,path};
+  if(host==='engineering.'+ROOT&&path==='/api/status')return {kind:'status',privateHost:false};
   if(path==='/api/engineering/chat'||path==='/api/engineering/health')return {kind:'engineering-ai',privateHost};
   if(path==='/api/cyber/chat')return {kind:'cyber-ai',privateHost};
   if(privateHost&&['/api/admin/accounts','/api/admin/accounts/events','/api/admin/accounts/operations'].includes(path))return {kind:'admin-accounts',privateHost:true};
@@ -54,6 +55,13 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
   return {async fetch(request,env,ctx){
     const url=new URL(request.url),route=resolveRoute(url);
     if(route.kind==='reject')return reply(route.status,'Not found');
+    if(route.kind==='status'){
+      if(!['GET','HEAD'].includes(request.method))return reply(405,'Method not allowed');
+      let build={};
+      try{const response=await env.ASSETS.fetch(new Request(new URL('/_apps/engineering/status-build.json',url.origin)));if(response.ok)build=await response.json();}catch{}
+      const body=JSON.stringify({version:build.version||'Unknown',commitHash:build.commitHash||'Unknown',buildTimestamp:build.buildTimestamp||null,deploymentTimestamp:env.DEPLOYMENT_TIMESTAMP||null});
+      return new Response(request.method==='HEAD'?null:body,{headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
+    }
     if(!route.privateHost&&['GET','HEAD'].includes(request.method)&&/\/(?:sw|service-worker|serviceworker)\.js$/.test(url.pathname))return new Response(request.method==='HEAD'?null:publicServiceWorker,{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'no-store'}});
     if(route.kind==='member')return memberAuth.endpoint(request,env);
     if(route.kind==='account'){
@@ -69,7 +77,8 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
     if(route.kind==='redirect'){const next=new URL(route.location,url);next.search=url.search;return Response.redirect(next.toString(),308);}
     let visit;
     const isPage=route.kind==='app'&&route.path.endsWith('.html')||route.kind==='legacy'&&!/\.[a-z0-9]+$/i.test(url.pathname)||route.kind==='legacy'&&url.pathname.endsWith('.html');
-    if(!route.privateHost&&(isPage||url.pathname.startsWith('/api/'))){
+    const publicStatusPage=url.hostname==='engineering.'+ROOT&&url.pathname==='/status';
+    if(!route.privateHost&&!publicStatusPage&&(isPage||url.pathname.startsWith('/api/'))){
       try{visit=await memberAuth.gate(request,env);}catch{return reply(503,'Public account sessions are temporarily unavailable. Please retry.');}
       if(!visit.allowed){if(url.pathname.startsWith('/api/'))return Response.json({error:'Sign in to continue',account:'https://'+ROOT+'/account'},{status:401,headers:{'cache-control':'no-store'}});const target=new URL('https://'+ROOT+'/account');target.searchParams.set('next',url.href);return Response.redirect(target,302);}
     }
@@ -98,7 +107,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
       if(headers.get('content-type')?.includes('text/html')){headers.delete('etag');headers.delete('last-modified');headers.delete('content-length');}
       let result=new Response(response.body,{status:response.status,headers});
       const legacyBase=route.privateHost&&/^\/(?:admin\/)?cyber-os(?:\/|$)/.test(url.pathname)?'/cyber-os/':'/';
-      if(response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined')result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+legacyBase+'"><link rel="stylesheet" href="/_hb/platform.css"><link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':''),{html:true});}}).transform(result);
+      if(response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined')result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+legacyBase+'"><link rel="stylesheet" href="/_hb/platform.css"><link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost&&!publicStatusPage?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':''),{html:true});}}).transform(result);
       return result;
     }
     if(!['GET','HEAD'].includes(request.method))return reply(405,'Method not allowed');
@@ -111,7 +120,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
     let result=new Response(response.body,{status:response.status,headers});
     if(route.kind==='app'&&response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined'){
       const base=route.base,embedded=url.searchParams.get('vp_embed')==='1';
-      const globalScripts=embedded?'':'<link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':'');
+      const globalScripts=embedded?'':'<link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost&&!publicStatusPage?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':'');
       result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+base+'"><link rel="stylesheet" href="/_hb/platform.css">'+globalScripts,{html:true});}}).transform(result);
     }
     return result;

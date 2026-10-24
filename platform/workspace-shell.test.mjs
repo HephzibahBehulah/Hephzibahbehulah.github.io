@@ -40,9 +40,10 @@ test("the academy sidebar includes the Electrical Building destination", () => {
   assert.ok(academy.includes("VoltPro Electrical Building"));
 });
 
-test("Electrical Building opens the integrated ElectCAD editor with its machine-control starter", () => {
-  assert.ok(shell.includes('path: "/electrical", title: "VoltPro Electrical Building", src: "/voltpro-electcad/?vp_embed=1&profile=machine-control"'));
-  assert.ok(read("apps/voltpro-electcad/App.tsx").includes("get('profile')==='machine-control'"));
+test("Electrical Building uses its dedicated architectural plan editor", () => {
+  assert.ok(shell.includes('path: "/electrical", title: "VoltPro Electrical Building", src: "/electrical-canvas.html?vp_embed=1"'));
+  assert.match(canvas, /BuildingCAD/);
+  assert.match(read("apps/voltpro-engineering-source/electrical-canvas.js"), /validateBuildingDocument/);
   assert.match(read("apps/voltpro-engineering-source/src/ui/account.js"), /schemaVersion===2\|\|item\.data\?\.schemaVersion===3/);
 });
 
@@ -62,8 +63,54 @@ test("assistant launcher and chat panel clear the fixed bottom workspace navigat
 });
 
 test("BuildingCAD includes measured grid, rulers, title block and editable properties", () => {
-  for (const id of ["topRulerTicks", "leftRulerTicks", "planSurface", "componentLibrary", "title-block", "propertiesForm", "projectName", "projectDate", "titleScale", "drafter", "componentRoom", "componentVoltage"]) assert.ok(canvas.includes(id));
+  for (const id of ["topRulerTicks", "leftRulerTicks", "planSurface", "componentLibrary", "title-block", "propertiesForm", "projectName", "documentNumber", "revision", "projectDate", "titleScale", "drafter", "componentTag", "componentRoom", "componentVoltage"]) assert.ok(canvas.includes(id));
   assert.match(canvas, /200 mm \/ square/);
+});
+
+test("BuildingCAD menus have live document, edit, draw, validation and layer commands", () => {
+  for (const action of ["new", "open", "save", "export", "print", "undo", "redo", "delete", "select", "room", "wire", "validate", "references", "schedule", "fit"]) assert.ok(canvas.includes(`data-command="${action}"`));
+  const source = read("apps/voltpro-engineering-source/electrical-canvas.js");
+  for (const handler of ["function validate()", "function openProject(", "function undo()", "function redo()", "function addRoom(", "function showSchedule()"]) assert.ok(source.includes(handler));
+});
+
+test("PLC command menus are wired to project, editing, draw, validation, simulation, and view handlers", () => {
+  const menu = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/CommandMenus.tsx");
+  const app = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/App.tsx");
+  for (const item of ["File", "Edit", "Draw", "Tools", "View", "New control project", "Open project JSON", "Validate program", "On-delay timer"]) assert.ok(menu.includes(item));
+  for (const prop of ["onNew=", "onOpen=", "onSave=", "onExport=", "onUndo=", "onRedo=", "onDraw=", "onValidate=", "onRun=", "onGrid=", "onFit="]) assert.ok(app.includes(prop));
+});
+
+test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying symbol provenance audit", () => {
+  const app = read("apps/voltpro-electcad/App.tsx");
+  assert.ok(app.includes("['Run connectivity diagnostics',runDiagnostics]"));
+  assert.ok(app.includes("['Wire numbering',autoNumberWires]"));
+  assert.ok(app.includes("['Audit symbol source IDs',reviewStandardsProvenance]"));
+  assert.match(app, /installation-specific DIN VDE checks are not assessed/);
+});
+
+test("Breadboard command menu proxies only to implemented native controls", () => {
+  const html = read("apps/voltpro-engineering-source/breadboard.html");
+  const proxies = [...html.matchAll(/data-proxy=(?:"([^"]+)"|'([^']+)')/g)].map(match => match[1] || match[2]);
+  assert.ok(proxies.length >= 15);
+  for (const target of proxies) {
+    if (target === "print") continue;
+    if (target === "#bbUndo" || target === "#bbRedo") {
+      const studio = read("apps/voltpro-engineering-source/src/ui/breadboard-studio.js");
+      assert.ok(studio.includes(`id="${target.slice(1)}"`), `Missing dynamic ${target}`);
+      continue;
+    }
+    if (target.startsWith("#")) assert.ok(html.includes(`id="${target.slice(1)}"`), `Missing ${target}`);
+    else assert.ok(html.includes(target.replaceAll('\\"', '"')), `Missing ${target}`);
+  }
+  assert.match(html, /\.breadboard-menubar \[data-proxy\].*?\.click\(\)/s);
+});
+
+test("all five editor entry points load the shared charcoal and orange finish", () => {
+  const shared = read("apps/voltpro-engineering-source/workspace-engineering-theme.css");
+  assert.match(shared, /--vp-workspace-accent:#ff8a24/);
+  for (const file of ["apps/voltpro-engineering-source/simulator.html", "apps/voltpro-engineering-source/breadboard.html", "apps/voltpro-engineering-source/electrical-canvas.html"]) assert.ok(read(file).includes("workspace-engineering-theme.css"));
+  assert.ok(read("apps/voltpro-engineering-source/apps/voltpro-plc/src/main.tsx").includes("workspace-engineering-theme.css"));
+  assert.ok(read("apps/voltpro-electcad/main.tsx").includes("workspace-engineering-theme.css"));
 });
 
 test("Adigun switches into architectural wiring context on the electrical route", () => {
