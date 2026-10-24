@@ -25,6 +25,10 @@ The `main` branch may move forward only through small, reviewable changes. Do no
 6. Only then promote a verified commit to the known-good snapshot.
 7. Keep the previous known-good source snapshot intact until the new version has been verified.
 
+## Manual production deployment
+
+After adding the repository Actions secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, open Actions → Integrated platform validation → Run workflow, select `main`, and run it. The validation/build must pass before the Cloudflare deployment steps execute. The existing `deploy-*` tag path remains available.
+
 ## Rollback discipline
 
 If a release regresses production:
