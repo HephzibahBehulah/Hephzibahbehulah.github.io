@@ -28,6 +28,10 @@ jobs:
           node --check platform/studio-plc-bridge.js
           node --check platform/build.mjs
           node --check platform/engineering-ai.mjs
+          node --check platform/router.mjs
+          node --check apps/voltpro-engineering-source/workspace-shell.js
+          node --check apps/voltpro-engineering-source/electrical-canvas.js
+          node --check apps/voltpro-engineering-source/electrical-engine.mjs
           node --check platform/cyber-ai.mjs
           node --check platform/admin-accounts-ui.js
           node --check js/language-system.js
