@@ -39,7 +39,7 @@ test("the academy sidebar includes the Electrical Building destination", () => {
 });
 
 test("the public /engineering alias keeps tool iframe URLs at the domain root", () => {
-  assert.match(shell, /rootPrefix = location\\.hostname\\.startsWith/);
+  assert.ok(shell.includes("rootPrefix = location.hostname.startsWith"));
 });
 
 test("BuildingCAD includes measured grid, rulers, title block and editable properties", () => {
