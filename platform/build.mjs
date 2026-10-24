@@ -6,6 +6,7 @@ import {verifyMainAssets} from './preflight.mjs';
 import {publishArchives} from './app-archives.mjs';
 import {copySharedAssets} from './release-assets.mjs';
 import {generateSeo} from './seo.mjs';
+import {injectSitewideTheme} from './sitewide-theme.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const engineering=path.resolve(process.argv[2]||'../engineering-source');
 const cyber=path.resolve(process.argv[3]||'../cyber/build-app/web');
@@ -42,6 +43,7 @@ if(!preferenceSource.includes("new URL('/api/engineering/chat'"))fs.writeFileSyn
 const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 for(const file of ['platform.css','platform.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
+fs.copyFileSync(path.join(root,'css/sitewide-osint-theme.css'),path.join(shared,'sitewide-osint-theme.css'));
 for(const file of ['account-config.js','account-client.js','cloud-projects.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'js/language-system.js'),path.join(shared,'language-system.js'));
 fs.cpSync(path.join(root,'data/translations'),path.join(shared,'data/translations'),{recursive:true});
@@ -75,10 +77,11 @@ if(!plcBundle)throw Error('PLC production JavaScript bundle is missing.');
 const plcModule=path.join(plcAssets,plcBundle);const plcCode=fs.readFileSync(plcModule,'utf8');
 if(!plcCode.includes('HBPLCStudioRuntime'))throw Error('PLC editor runtime bridge is missing; refusing to ship imports without native validation.');
 const integratedPLC=plcCode+'\n'+fs.readFileSync(path.join(root,'platform/studio-plc-bridge.js'),'utf8');const plcName='index-studio-'+crypto.createHash('sha256').update(integratedPLC).digest('hex').slice(0,12)+'.js';fs.writeFileSync(path.join(path.dirname(plcModule),plcName),integratedPLC);const plcHTML=path.join(destination,'_apps/engineering/voltpro-plc/index.html');const html=fs.readFileSync(plcHTML,'utf8'),updated=html.replace(/(src=["'][^"']*\/assets\/)index-[^"']+\.js(["'])/,`$1${plcName}$2`);if(updated===html)throw Error('Could not point the PLC entry page at its integrated bridge bundle.');fs.writeFileSync(plcHTML,updated);
+const themeCoverage=injectSitewideTheme(destination);
 generateSeo(destination);
 for(const file of ['robots.txt','sitemap.xml','_apps/engineering/robots.txt','_apps/engineering/sitemap.xml','_apps/cyber/robots.txt','_apps/cyber/sitemap.xml'])if(!fs.existsSync(path.join(destination,file)))throw Error('Required SEO release asset is missing: '+file);
 for(const file of ['sitemap.xml','_apps/engineering/sitemap.xml','_apps/cyber/sitemap.xml'])if(!/<loc>https:\/\//.test(fs.readFileSync(path.join(destination,file),'utf8')))throw Error('Generated sitemap has no public routes: '+file);
 
 function inventory(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())inventory(file);else manifest.assets[path.relative(destination,file).replaceAll('\\','/')]=crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');}}
 inventory(destination);fs.writeFileSync(path.join(destination,'release-manifest.json'),JSON.stringify(manifest,null,2));
-console.log(JSON.stringify({destination,files:Object.keys(manifest.assets).length,applications:lock},null,2));
+console.log(JSON.stringify({destination,files:Object.keys(manifest.assets).length,applications:lock,themeCoverage},null,2));
