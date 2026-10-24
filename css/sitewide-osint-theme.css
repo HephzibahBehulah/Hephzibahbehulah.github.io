@@ -50,3 +50,5 @@ hr,table,th,td{border-color:#26303a!important}
 .react-flow__node,.node-card,.component-card,.library-item,.symbol-card{background:#11151a!important;border-color:#26303a!important;color:#e6edf3!important}
 .react-flow__node.selected,.node-card.selected,.component-card.selected,.library-item:hover,.symbol-card:hover{border-color:#ff8a3d!important;box-shadow:0 0 0 1px rgba(255,138,61,.22)!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+html[data-hb-theme] body button[type="submit"]{background-color:#ff8a3d!important;background-image:none!important;border-color:#ff8a3d!important;color:#17100b!important}
