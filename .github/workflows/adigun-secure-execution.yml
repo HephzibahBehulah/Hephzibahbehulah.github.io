@@ -75,7 +75,7 @@ jobs:
           } > execution-receipt.txt
 
       - name: Upload receipt
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: adigun-execution-receipt-${{ github.run_id }}
           path: execution-receipt.txt
