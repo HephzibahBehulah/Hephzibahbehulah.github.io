@@ -13,7 +13,7 @@
 
   const scriptEl = Array.from(document.scripts).find(s => /language-system\.js(?:\?|$)/.test(s.src));
   const scriptUrl = scriptEl ? new URL(scriptEl.src, location.href) : new URL('/js/language-system.js', location.origin);
-  const translationBase = new URL('../data/translations/', scriptUrl).href;
+  const translationBase = new URL(scriptUrl.pathname.startsWith('/_hb/') ? 'data/translations/' : '../data/translations/', scriptUrl).href;
 
   let current = 'en';
   let dict = {};
