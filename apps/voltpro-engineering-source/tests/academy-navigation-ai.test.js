@@ -40,7 +40,7 @@ test("AI Tutor knows the canonical ownership map and offers external public look
   assert.match(assistant, /vpBotExternal/);
   assert.match(assistant, /CURRENT WORKSPACE/);
   assert.match(assistant, /loadInternalKnowledge/);
-  assert.match(assistant, /responseMode = "ai"/);
+  assert.match(assistant, /responseMode\s*=\s*"ai"/);
   assert.match(assistant, /mode: responseMode/);
   assert.match(assistant, /Offline fallback/);
   assert.match(assistant, /data\/electrical-tool-index\.json/);
