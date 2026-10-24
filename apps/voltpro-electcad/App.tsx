@@ -121,7 +121,7 @@ export default function App() {
   const [tool,setTool] = useState<Tool>('select');
   const [history,setHistory]=useState<{parts:Part[];wires:Wire[]}[]>([]);
   const [future,setFuture]=useState<{parts:Part[];wires:Wire[]}[]>([]);
-  const [wireStart,setWireStart]=useState<{x:number;y:number;terminalId:string}|null>(null);
+  const [wireStart,setWireStart]=useState<{x:number;y:number;terminalId?:string}|null>(null);
   const [cursor,setCursor]=useState<{x:number;y:number}|null>(null);
   const [sheets,setSheets]=useState<Sheet[]>([]);
   const [activeSheetId,setActiveSheetId]=useState('sheet-1');
@@ -181,7 +181,7 @@ export default function App() {
   useEffect(()=>{const beforeUnload=(event:BeforeUnloadEvent)=>{if(!isDirty)return;event.preventDefault();event.returnValue=''};window.addEventListener('beforeunload',beforeUnload);return()=>window.removeEventListener('beforeunload',beforeUnload)},[isDirty]);
   useEffect(()=>{const account=window.VoltProAccount;if(!account){setAccountStatus('unavailable');return;}let active=true;const update=(user:{email?:string}|null)=>{if(!active)return;setAccountEmail(user?.email||null);setAccountStatus(user?.email?'signed-in':'signed-out')};const unsubscribe=account.onChange(update);account.user().then(update).catch(()=>update(null));return()=>{active=false;unsubscribe()}},[]);
   useEffect(()=>{const theme=themeLight?'light':'dark';document.documentElement.dataset.vpTheme=theme;try{localStorage.setItem('vp-theme',theme);window.parent.document.documentElement.dataset.vpTheme=theme}catch{}},[themeLight]);
-  useEffect(()=>{const listener=(e:KeyboardEvent)=>{const mod=e.ctrlKey||e.metaKey;if(mod&&e.key.toLowerCase()==='c'&&!(e.target instanceof HTMLInputElement||e.target instanceof HTMLTextAreaElement)){e.preventDefault();copySelected()}else if(mod&&e.key.toLowerCase()==='v'&&!(e.target instanceof HTMLInputElement||e.target instanceof HTMLTextAreaElement)){e.preventDefault();pasteComponent()}else if(mod&&e.key.toLowerCase()==='z'){e.preventDefault();if(e.shiftKey)redo();else undo()}else if(mod&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}else if(mod&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject()}else if(e.key==='Escape'){setTool('select');setWireStart(null);setSelected(null)}else if((e.key==='Delete'||e.key==='Backspace')&&!(e.target instanceof HTMLInputElement)){deleteSelected()}};window.addEventListener('keydown',listener);return()=>window.removeEventListener('keydown',listener)});
+  useEffect(()=>{const listener=(e:KeyboardEvent)=>{const mod=e.ctrlKey||e.metaKey;const typing=e.target instanceof HTMLInputElement||e.target instanceof HTMLTextAreaElement;if(mod&&e.key.toLowerCase()==='c'&&!typing){e.preventDefault();copySelected()}else if(mod&&e.key.toLowerCase()==='v'&&!typing){e.preventDefault();pasteComponent()}else if(mod&&e.key.toLowerCase()==='z'){e.preventDefault();if(e.shiftKey)redo();else undo()}else if(mod&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}else if(mod&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject()}else if(e.key==='Enter'&&tool==='wire'&&wireStart&&!typing){e.preventDefault();setWireStart(null);setStatus('Wire path finished · Wire tool remains active')}else if(e.key==='Escape'){setTool('select');setWireStart(null);setSelected(null)}else if((e.key==='Delete'||e.key==='Backspace')&&!typing){deleteSelected()}};window.addEventListener('keydown',listener);return()=>window.removeEventListener('keydown',listener)});
   const [query,setQuery] = useState('');
   const [libraryCategory,setLibraryCategory] = useState('All');
   const [libraryPage,setLibraryPage] = useState(0);
@@ -229,13 +229,17 @@ export default function App() {
     remember();setParts(prev=>[...prev,part]);setSelected(part.id);setNextComponentValue(null);
     setTool('select'); setStatus('Component placed');
   };
+  const placeWireSegment=(start:{x:number;y:number;terminalId?:string},end:{x:number;y:number;terminalId?:string})=>{
+    if(start.x===end.x&&start.y===end.y){setStatus('Wire point unchanged · choose a different canvas point or terminal');return false;}
+    remember();setWires(ws=>[...ws,{id:uid(),x1:start.x,y1:start.y,x2:end.x,y2:end.y,...(start.terminalId?{startTerminalId:start.terminalId}:{}),...(end.terminalId?{endTerminalId:end.terminalId}:{})}]);return true;
+  };
   const handleTerminalClick=(part:Part,index:number)=>{
     const pin=connectablePins(part)[index];
     if(!pin){setStatus('This item has no electrical terminal at that position');return;}
     const endpoint={x:pin.x,y:pin.y,terminalId:terminalId(part.id,index)};
     if(!wireStart){setWireStart(endpoint);setStatus('Wire start '+part.ref+' · '+terminalLabel(part.type,index));return;}
-    if(wireStart.terminalId===endpoint.terminalId){setWireStart(null);setStatus('Wire cancelled; choose a different terminal');return;}
-    remember();setWires(ws=>[...ws,{id:uid(),x1:wireStart.x,y1:wireStart.y,x2:endpoint.x,y2:endpoint.y,startTerminalId:wireStart.terminalId,endTerminalId:endpoint.terminalId}]);setWireStart(null);setStatus('Wire connected between explicit component terminals');
+    if(wireStart.terminalId===endpoint.terminalId){setWireStart(null);setStatus('Wire path cancelled at its starting terminal');return;}
+    if(placeWireSegment(wireStart,endpoint)){setWireStart(null);setStatus('Wire connected to '+part.ref+' · '+terminalLabel(part.type,index)+'; Wire tool remains active');}
   };
   const point = (e:React.MouseEvent<SVGSVGElement>) => {
     const svg=svgRef.current!; const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const transform=svg.getScreenCTM();if(!transform)return {x:0,y:0};const pos=pt.matrixTransform(transform.inverse());const x=pos.x,y=pos.y;
@@ -247,7 +251,10 @@ export default function App() {
     if(e.target!==svgRef.current && !(e.target as Element).classList.contains('canvas-bg')) return;
     const {x,y}=point(e);
     if(componentLibrary.some(item=>item.id===tool)) addPart(tool as Part['type'],x,y);
-    else if(tool==='wire')setStatus('Choose a visible component terminal to start or finish a wire.');
+    else if(tool==='wire'){
+      if(!wireStart){setWireStart({x,y});setStatus(`Free wire start set at (${Math.round(x)}, ${Math.round(y)})`);return;}
+      if(placeWireSegment(wireStart,{x,y})){setWireStart({x,y});setStatus(`Wire point placed at (${Math.round(x)}, ${Math.round(y)}) · continue drawing or press Enter to finish`);}
+    }
     else if(tool==='select') setSelected(null);
   };
   const runSimulation=()=>{setSimulationBusy(true);try{const result=runDcOperatingPoint(stashSheet());setSimulationResult(result);setTab('Simulation');setStatus('DC operating point completed with '+result.componentResults.length+' modeled component(s)')}catch(error){setSimulationResult(null);setTab('Simulation');setStatus(error instanceof Error?error.message:'Simulation failed')}finally{setSimulationBusy(false)}};
@@ -502,7 +509,7 @@ export default function App() {
             <div className="paper-ruler paper-ruler-bottom" aria-hidden="true">{Array.from({length:10},(_,i)=><span key={i}>{i+1}</span>)}</div>
             <div className="paper-ruler paper-ruler-left" aria-hidden="true">{Array.from({length:7},(_,i)=><span key={i}>{String.fromCharCode(65+i)}</span>)}</div>
             <div className="paper-ruler paper-ruler-right" aria-hidden="true">{Array.from({length:7},(_,i)=><span key={i}>{String.fromCharCode(65+i)}</span>)}</div>
-          <svg ref={svgRef} className="schematic-canvas" viewBox="0 0 1100 778" onMouseMove={e=>setCursor(point(e))} onPointerDown={e=>{if(tool==='pan'){panStart.current={clientX:e.clientX,clientY:e.clientY,x:pan.x,y:pan.y};e.currentTarget.setPointerCapture(e.pointerId)}}} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onClick={onCanvasClick} style={{transform:`translate(${pan.x}px, ${pan.y}px) scale(${zoom/100})`,cursor:tool==='pan'?(panStart.current?'grabbing':'grab'):'crosshair'}}>
+          <svg ref={svgRef} className="schematic-canvas" viewBox="0 0 1100 778" onMouseMove={e=>setCursor(point(e))} onPointerDown={e=>{if(tool==='pan'){panStart.current={clientX:e.clientX,clientY:e.clientY,x:pan.x,y:pan.y};e.currentTarget.setPointerCapture(e.pointerId)}}} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onContextMenu={e=>{if(tool==='wire'){e.preventDefault();setWireStart(null);setStatus('Wire path finished · Wire tool remains active')}}} onClick={onCanvasClick} style={{transform:`translate(${pan.x}px, ${pan.y}px) scale(${zoom/100})`,cursor:tool==='pan'?(panStart.current?'grabbing':'grab'):'crosshair'}}>
             <rect className="canvas-bg" x="0" y="0" width="1100" height="778" fill="#121212"/>
             {grid&&<defs><pattern id="smallGrid" width={gridSpacing} height={gridSpacing} patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="rgba(255,255,255,.05)"/></pattern><pattern id="bigGrid" width={gridSpacing*10} height={gridSpacing*10} patternUnits="userSpaceOnUse"><rect width={gridSpacing*10} height={gridSpacing*10} fill="url(#smallGrid)"/><path d={`M ${gridSpacing*10} 0 L 0 0 0 ${gridSpacing*10}`} fill="none" stroke="rgba(255,255,255,.13)" strokeWidth="1"/></pattern></defs>}
             {grid&&<rect className="canvas-bg" x="0" y="0" width="1100" height="778" fill="url(#bigGrid)"/>}
@@ -512,7 +519,7 @@ export default function App() {
             {parts.map(p=><g key={p.id} onPointerDown={e=>{if(tool!=='select')return;setSelected(p.id);const pt=point(e as unknown as React.MouseEvent<SVGSVGElement>);drag.current={id:p.id,startX:pt.x,startY:pt.y,originalX:p.x,originalY:p.y,moved:false};e.currentTarget.setPointerCapture(e.pointerId)}} onClick={e=>{e.stopPropagation();if(tool!=='wire')setSelected(p.id)}} style={{cursor:'pointer'}}><rect x={p.x-48} y={p.y-42} width="96" height="100" fill={selected===p.id?'#58d9c211':'transparent'} stroke={selected===p.id?'#58d9c2':'transparent'} strokeDasharray="4 4"/><SymbolShape part={p} selected={selected===p.id} showPins={tool==='wire'||selected===p.id} crossReference={crossReferenceFor(p)} onTerminalClick={index=>tool==='wire'?handleTerminalClick(p,index):setSelected(p.id)}/></g>)}
 
           </svg>
-          {tool==='wire'&&<div className="wire-hint" role="status"><strong>WIRE MODE</strong><span>{wireStart?`Start set at terminal ${wireStart.terminalId.split(':').at(-1)} · choose another highlighted terminal to connect`:'Click a highlighted terminal, then click a second terminal'}</span><button onClick={()=>{setWireStart(null);setTool('select')}} title="Cancel wire tool">Cancel</button></div>}
+          {tool==='wire'&&<div className="wire-hint" role="status"><strong>WIRE MODE</strong><span>{wireStart?wireStart.terminalId?`From terminal ${wireStart.terminalId.split(':').at(-1)} · click the canvas to add bends or free endpoints, click another terminal to connect, or press Enter to finish`:`From free point (${Math.round(wireStart.x)}, ${Math.round(wireStart.y)}) · keep clicking to draw orthogonal segments; press Enter to finish`:'Click any terminal or any point on the canvas to start a wire'}</span><button onClick={()=>{setWireStart(null);setStatus('Wire path finished · Wire tool remains active')}} title="Finish this wire path">Finish path</button><button onClick={()=>{setWireStart(null);setTool('select')}} title="Cancel wire tool">Cancel tool</button></div>}
           <div className="paper-title-block" aria-label="Editable drawing title block">
             <strong className="paper-title-heading">DRAWING IDENTIFICATION</strong>
             <div className="title-project"><small>PROJECT NAME</small><span title={projectName}>{projectName||'—'}</span></div>

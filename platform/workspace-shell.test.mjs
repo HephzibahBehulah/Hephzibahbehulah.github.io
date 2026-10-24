@@ -139,7 +139,7 @@ test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying 
   assert.match(app, /installation-specific DIN VDE checks are not assessed/);
 });
 
-test("ElectCAD places new parts into the inspector and wires through exact terminal hit targets", () => {
+test("ElectCAD places parts in the inspector and wires to terminals or free canvas points", () => {
   const app = read("apps/voltpro-electcad/App.tsx");
   assert.match(app, /setParts\(prev=>\[\.\.\.prev,part\]\);setSelected\(part\.id\)/);
   assert.ok(app.includes("onTerminalClick(index)"));
@@ -147,6 +147,10 @@ test("ElectCAD places new parts into the inspector and wires through exact termi
   assert.match(app, /r="26" fill="transparent" stroke="none" pointerEvents="all"/);
   assert.match(app, /onPointerDown=\{e=>\{if\(!onTerminalClick\)return;e\.preventDefault\(\);e\.stopPropagation\(\);onTerminalClick\(index\)\}\}/);
   assert.match(app, /WIRE MODE/);
+  assert.match(app, /if\(!wireStart\)\{setWireStart\(\{x,y\}\)/);
+  assert.ok(app.includes("placeWireSegment(wireStart,{x,y})"));
+  assert.match(app, /e\.key==='Enter'&&tool==='wire'&&wireStart/);
+  assert.ok(app.includes('Wire path finished · Wire tool remains active'));
 });
 
 test("ElectCAD rail buttons open distinct panels and close the flyout when the pointer leaves", () => {

@@ -53,6 +53,13 @@ test('document decoder accepts stable terminal references and rejects a referenc
     assert.equal(project.schemaVersion, 3);
     assert.equal(decodeDocument({ schemaVersion: 2, projectName: 'Legacy', activeSheetId: 'old', sheets: [{ id: 'old', name: 'Old sheet', parts: [], wires: [] }] }).schemaVersion, 3);
     assert.ok(netGroups(project.sheets[0]).length > 0);
+    const freePointRoute = decodeDocument({ schemaVersion: 3, projectName: 'Free-point wire route', activeSheetId: 's1', sheets: [{
+      id: 's1', name: 'Route', parts: [{ id: 'r1', type: 'resistor', x: 100, y: 100, ref: 'R1', value: '1 kΩ' }], wires: [
+        { id: 'w1', x1: 62, y1: 100, x2: 100, y2: 140, startTerminalId: 'pin:r1:0' },
+        { id: 'w2', x1: 100, y1: 140, x2: 138, y2: 100, endTerminalId: 'pin:r1:1' }
+      ]
+    }] });
+    assert.ok(netGroups(freePointRoute.sheets[0]).some(group => group.includes('pin:r1:0') && group.includes('pin:r1:1')), 'free route vertices must preserve connectivity between wire segments');
     const linked = decodeDocument({ schemaVersion: 3, projectName: 'Cross reference', activeSheetId: 's1', sheets: [
       { id: 's1', name: 'Power', parts: [{ id: 'x1', type: 'off-page-connector', x: 40, y: 60, ref: 'X1', value: 'Off-page connector', targetSheetId: 's2' }], wires: [] },
       { id: 's2', name: 'Control', parts: [], wires: [] }
