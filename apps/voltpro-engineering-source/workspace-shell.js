@@ -52,6 +52,28 @@
       history.pushState({ voltproWorkspace: tool.path }, "", rootPrefix + tool.path);
     }
     document.documentElement.dataset.vpWorkspace = tool.path.slice(1);
+    document.documentElement.classList.toggle("vp-electcad-maximized", tool.path === "/electcad");
+    const electCadNotice = document.querySelector("#vpDevelopmentBanner .vp-production-notice");
+    const electCadStatus = document.querySelector("#vpDevelopmentBanner .vp-banner-status-link");
+    const bannerCopy = document.querySelector("#vpDevelopmentBanner .vp-development-banner-copy");
+    if (tool.path === "/electcad" && bannerCopy) {
+      if (!electCadNotice) {
+        const notice = document.createElement("span");
+        notice.className = "vp-production-notice";
+        notice.textContent = "VoltPro is in active development. DRC rules and symbol libraries are pending verified standards ingestion and licensed catalog integration. Do not use for final production documentation.";
+        bannerCopy.append(notice);
+      }
+      if (!electCadStatus) {
+        const status = document.createElement("a");
+        status.className = "vp-banner-status-link";
+        status.href = rootPrefix + "/status";
+        status.textContent = "Suite status ↗";
+        bannerCopy.append(status);
+      }
+    } else {
+      electCadNotice?.remove();
+      electCadStatus?.remove();
+    }
     document.dispatchEvent(new CustomEvent("voltpro:workspace-change", { detail: { path: tool.path, title: tool.title } }));
     document.querySelectorAll("#vpBottomNavigation a[data-vp-route]").forEach(link => {
       if (canonicalPath(new URL(link.href).pathname) === tool.path) link.setAttribute("aria-current", "page");

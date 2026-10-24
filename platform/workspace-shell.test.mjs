@@ -34,6 +34,26 @@ test("workspace switches reuse hidden tool iframes and update history client-sid
   for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
 });
 
+test("ElectCAD uses a viewport-filling CAD layout with the site masthead removed", () => {
+  const app = read("apps/voltpro-electcad/App.tsx");
+  const appCss = read("apps/voltpro-electcad/styles.css");
+  const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
+  assert.match(shell, /classList\.toggle\("vp-electcad-maximized", tool\.path === "\/electcad"\)/);
+  assert.match(nav, /if\(isElectCADRoute\)document\.documentElement\.classList\.add\('vp-electcad-maximized'\)/);
+  assert.match(siteCss, /vp-electcad-maximized #vpSiteHeader\{display:none!important\}/);
+  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace\{order:1;flex:1 1 auto/);
+  assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{position:relative;inset:auto;order:2;flex:0 0 30px/);
+  assert.match(siteCss, /vp-electcad-maximized #vpBottomNavigation\{position:relative;inset:auto;order:3;flex:0 0 50px/);
+  for (const [selector, height] of [[".topbar", "50px"], [".menubar", "35px"], [".toolbar", "45px"]]) {
+    assert.ok(appCss.includes(`html.vp-electcad-embed ${selector}{height:${height}`), `${selector} must use the requested height`);
+  }
+  assert.match(appCss, /html\.vp-electcad-embed \.workspace\{position:relative;flex:1 1 auto;min-height:0;overflow:hidden\}/);
+  assert.match(app, /className="electcad-main-site" href="https:\/\/hephzibahbehulah\.com\/" target="_top"/);
+  assert.match(app, /className="icon-btn theme-toggle"/);
+  assert.match(app, /About &amp; readiness/);
+  for (const movedLink of ["Learning sites / Academy", "Open Workbench", "PLC studies"]) assert.ok(app.includes(movedLink));
+});
+
 
 test("the academy sidebar includes the Electrical Building destination", () => {
   assert.ok(academy.includes('href="/electrical"'));

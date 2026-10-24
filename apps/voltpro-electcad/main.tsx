@@ -4,6 +4,8 @@ import App from './App';
 import './styles.css';
 import '../voltpro-engineering-source/workspace-engineering-theme.css';
 
+if(new URLSearchParams(window.location.search).has('vp_embed'))document.documentElement.classList.add('vp-electcad-embed');
+
 class EditorErrorBoundary extends React.Component<{children:React.ReactNode},{error:string|null}>{
   state={error:null as string|null};
   static getDerivedStateFromError(error:Error){return {error:error.message||'Unexpected application error'};}

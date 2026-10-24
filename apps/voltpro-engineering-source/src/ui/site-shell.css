@@ -22,4 +22,21 @@
 .vp-unified-site #vpWorkspace{height:calc(100dvh - var(--vp-header-height) - 72px - var(--vp-development-banner-height) - var(--vp-development-footer-height));min-height:240px}
 .vp-unified-site .plc-app,.vp-unified-site .sim-app{height:calc(100dvh - var(--vp-header-height) - var(--vp-development-banner-height) - var(--vp-development-footer-height))}
 html[data-vp-theme=light] #vpDevelopmentFooter{background:#fff5d7;color:#604600}html[data-vp-theme=light] #vpReadinessDialog{background:#fffaf0;color:#292317}
+
+/* ElectCAD uses its own compact CAD header; keep the outer suite shell to the canvas, notice and tool dock. */
+html.vp-electcad-maximized,html.vp-electcad-maximized body{height:100dvh;min-height:0;overflow:hidden}
+html.vp-electcad-maximized.vp-unified-site body{display:flex;flex-direction:column;padding:0!important;padding-top:0!important;padding-bottom:0!important}
+html.vp-electcad-maximized #vpSiteHeader{display:none!important}
+html.vp-electcad-maximized #vpWorkspace{order:1;flex:1 1 auto;width:100%;height:auto!important;min-height:0!important;padding:0!important;overflow:hidden}
+html.vp-electcad-maximized #vpDevelopmentBanner{position:relative;inset:auto;order:2;flex:0 0 30px;height:30px;min-height:30px;justify-content:space-between;gap:8px;padding:0 8px;overflow:hidden;border:0;border-top:1px solid #ad7b10;border-bottom:1px solid #ad7b10;font-size:9px;line-height:1;white-space:nowrap}
+html.vp-electcad-maximized .vp-development-banner-copy{display:flex;align-items:center;gap:14px;min-width:0;overflow-x:auto;scrollbar-width:thin;white-space:nowrap}
+html.vp-electcad-maximized .vp-production-notice{font-size:9px;font-weight:600}
+html.vp-electcad-maximized .vp-banner-status-link{flex:0 0 auto;color:#382600;text-decoration:underline;font-weight:800}
+html.vp-electcad-maximized #vpDevelopmentBanner button{padding:3px 7px;font-size:9px}
+html.vp-electcad-maximized #vpDevelopmentFooter{display:none!important}
+html.vp-electcad-maximized #vpBottomNavigation{position:relative;inset:auto;order:3;flex:0 0 50px;height:50px;min-height:50px;justify-content:stretch;gap:3px;padding:0 8px;overflow-x:auto}
+html.vp-electcad-maximized #vpBottomNavigation a{flex:1 1 0;max-width:none;min-width:0;gap:6px;padding:4px 5px;font-size:10px}
+html.vp-electcad-maximized #vpBottomNavigation a>span{font-size:15px}
+html.vp-electcad-maximized #vpBottomNavigation a small{font-size:9px}
+@media(max-width:760px){html.vp-electcad-maximized #vpBottomNavigation{justify-content:flex-start}html.vp-electcad-maximized #vpBottomNavigation a{flex:0 0 118px}html.vp-electcad-maximized #vpDevelopmentBanner{font-size:8px;gap:4px;padding:0 5px}html.vp-electcad-maximized .vp-development-banner-copy{gap:9px}html.vp-electcad-maximized .vp-production-notice{font-size:8px}}
 @media(max-width:650px){#vpDevelopmentBanner{justify-content:space-between;text-align:left;font-size:10px;gap:5px;padding:4px 7px}#vpDevelopmentBanner button{font-size:10px}#vpDevelopmentFooter{justify-content:space-between;font-size:8px;gap:5px;padding:4px 6px}#vpAboutReadiness{padding:6px 5px;font-size:10px}.vp-unified-site #vpWorkspace{min-height:180px}}
