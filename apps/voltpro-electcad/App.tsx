@@ -12,7 +12,7 @@ import ProjectSaveDialog, { type ProjectSaveForm } from './src/ProjectSaveDialog
 import {createSchematic3DPackage} from './src/schematic-3d.mjs';
 const API_BASE=(import.meta.env.VITE_API_BASE_URL||'').replace(/\/$/,'');
 import {
-  Activity, AlignLeft, ArrowDownRight, ArrowLeft, ArrowLeftRight, ArrowUpRight, BatteryCharging,
+  Activity, AlignLeft, ArrowDownRight, ArrowLeft, ArrowLeftRight, ArrowUpRight, BatteryCharging, House,
   BookOpen, Box, Cable, Check, ChevronDown, CircleHelp, CircuitBoard, ClipboardList, Cloud,
   Code2, Copy, Download, FilePlus2, FileText, Folder, FolderOpen, Gauge, Grid2X2,
   Github, Globe2, Hand, Info, Layers, Lightbulb, Linkedin, Magnet, Minus, MousePointer2, PanelLeft, PanelLeftClose, PanelRight, PanelRightClose, Plus,
@@ -117,6 +117,7 @@ function SymbolShape({part, selected=false, showPins=false, crossReference}:{par
   </g>;
 }
 export default function App() {
+  const embedMode=new URLSearchParams(window.location.search).has('vp_embed');
   const [tool,setTool] = useState<Tool>('select');
   const [history,setHistory]=useState<{parts:Part[];wires:Wire[]}[]>([]);
   const [future,setFuture]=useState<{parts:Part[];wires:Wire[]}[]>([]);
@@ -146,7 +147,7 @@ export default function App() {
   const [help,setHelp]=useState(false);
   const [aboutOpen,setAboutOpen]=useState(false);
   const [themeLight,setThemeLight]=useState(()=>{try{return localStorage.getItem('vp-theme')==='light'}catch{return false}});
-  const [starterOpen,setStarterOpen]=useState(true);
+  const [starterOpen,setStarterOpen]=useState(()=>!embedMode);
   const [saveDialogOpen,setSaveDialogOpen]=useState(false);
   const [saveDialogStatus,setSaveDialogStatus]=useState('');
   const [newProjectDialogOpen,setNewProjectDialogOpen]=useState(false);
@@ -195,8 +196,8 @@ export default function App() {
   const [schematic3DPackage,setSchematic3DPackage]=useState<any|null>(null);
   const [proposal,setProposal] = useState<DesignProposal|null>(null);
   const [listening,setListening] = useState(false);
-  const [leftOpen,setLeftOpen] = useState(()=>{try{return localStorage.getItem('voltpro-left-open')!=='false'}catch{return true}});
-  const [rightOpen,setRightOpen] = useState(()=>{try{return localStorage.getItem('voltpro-right-open')!=='false'}catch{return true}});
+  const [leftOpen,setLeftOpen] = useState(()=>{if(embedMode)return false;try{return localStorage.getItem('voltpro-left-open')!=='false'}catch{return true}});
+  const [rightOpen,setRightOpen] = useState(()=>{if(embedMode)return true;try{return localStorage.getItem('voltpro-right-open')!=='false'}catch{return true}});
   const [grid,setGrid] = useState(true);
   const [snap,setSnap] = useState(true);
   const [zoom,setZoom] = useState(100);
@@ -429,7 +430,7 @@ export default function App() {
       default: return [['Keyboard shortcuts and help',()=>setHelp(true)],['Workspace settings',()=>setSettingsOpen(true)],['About VoltPro ElectCAD',()=>setStatus('VoltPro ElectCAD · open electrical design workspace')]];
     }
   };
-  return <div className="app-shell">
+  return <div id="app-container" className="app-shell">
     <header className="topbar">
       <div className="topbar-left">
         <a className="electcad-main-site" href="https://hephzibahbehulah.com/" target="_top" aria-label="Return to the main Hephzibah Behulah site"><ArrowLeft size={14}/><span>Main Site</span></a>
@@ -442,16 +443,6 @@ export default function App() {
           {(headerMenu==='project'||projectActionsOpen)&&<div className="project-actions-pop">{[['Rename project',()=>{const next=window.prompt('Project name',projectName);if(next?.trim()){setProjectName(next.trim());setStatus('Project renamed')}}],['Open project JSON',()=>fileInput.current?.click()],['Save / export project JSON',saveProject],['Open from VoltPro cloud',openCloudBrowser],['Save to VoltPro cloud',saveToCloud],['Export CAD exchange (DXF)',exportDxf],['Export native DWG (LibreDWG server)',exportDwg],['Export 3D BIM exchange (IFC4)',exportIfc]].map(([label,fn]:any)=><button key={label} onClick={()=>{fn();setProjectActionsOpen(false);setHeaderMenu(null)}}>{localizeMenuOption(label)}</button>)}</div>}
         </div>
       </div>
-      <div className="top-actions">
-        <div className="header-dropdown" onMouseEnter={()=>setHeaderMenu('examples')} onMouseLeave={()=>setHeaderMenu(null)}><button className="icon-btn" title="Portfolio and examples" aria-label="Portfolio and examples" aria-expanded={headerMenu==='examples'} onClick={()=>setHeaderMenu(v=>v==='examples'?null:'examples')}><BookOpen size={16}/></button>{headerMenu==='examples'&&<div className="header-pop"><a href="https://engineering.hephzibahbehulah.com/" target="_top">Engineering Systems Lab</a><a href="https://engineering.hephzibahbehulah.com/academy-workbench.html#demos" target="_top">Circuit Examples</a><a href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer">GitHub Repositories</a></div>}</div>
-        <a className="icon-btn" href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><Github size={16}/></a>
-        <a className="icon-btn" href="https://www.linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><Linkedin size={16}/></a>
-        <label className="language-switch" title="Language"><Globe2 size={14}/><select aria-label="Interface language" value={locale} onChange={e=>setLocale(e.target.value as 'en'|'de'|'yo'|'pcm')}><option value="en">EN</option><option value="de">DE</option><option value="yo">YO</option><option value="pcm">PCM</option></select></label>
-        <button className="icon-btn theme-toggle" title={themeLight?'Switch to dark theme':'Switch to light theme'} aria-label={themeLight?'Switch to dark theme':'Switch to light theme'} onClick={()=>setThemeLight(v=>!v)}>{themeLight?<Moon size={16}/>:<Sun size={16}/>}</button>
-        <button className="icon-btn" title="About and readiness" aria-label="About and readiness" onClick={()=>setAboutOpen(true)}><Info size={16}/></button>
-        <button className="avatar" title={accountEmail?'VoltPro account: '+accountEmail:accountStatus==='checking'?'Checking VoltPro account…':'Sign in to your VoltPro account'} aria-label="VoltPro account" onClick={()=>{if(accountStatus!=='signed-in')window.location.assign('/workspace');else setStatus('Signed in as '+accountEmail+' · private cloud projects are available from File or Project actions')}}>VP</button>
-      </div>
-    </header>
     <div className="menu-toolbar-row">
     <nav className="menubar">{['File','Edit','View','Insert','Project','Electrical','Simulation','Reports','Tools','Window','Help'].map(m=><div className="menu-wrap" key={m} onMouseEnter={()=>setMenu(m)} onMouseLeave={()=>setMenu(null)}><button className={menu===m?'menu-active':''} onFocus={()=>setMenu(m)} onClick={()=>{setProjectActionsOpen(false);setMenu(menu===m?null:m)}}>{menuTitles[m]||m}</button>{menu===m&&<div className="menu-pop">{menuOptions(m).map(([label,fn])=><button key={label} onClick={()=>{fn();setMenu(null)}}>{localizeMenuOption(label)}</button>)}</div>}</div>)}</nav>
     <div className="toolbar">
@@ -462,6 +453,24 @@ export default function App() {
       <div className="toolgroup"><button className={grid?'tool-active':''} onClick={()=>setGrid(!grid)} title="Grid" aria-label="Grid"><Grid2X2 size={16}/><span>{tr('grid')}</span></button><button className={snap?'tool-active':''} onClick={()=>setSnap(!snap)} title="Snap to Grid" aria-label="Snap to Grid"><Magnet size={16}/><span>{tr('snap')}</span></button></div>
       <div className="toolbar-spacer"/><div className="zoom-control"><button onClick={fitView} title="Zoom to fit"><span>Fit</span></button><button onClick={()=>setZoom(Math.max(25,zoom-10))} title="Zoom out" aria-label="Zoom out"><Minus size={14}/></button><span>{zoom}%</span><button onClick={()=>setZoom(Math.min(150,zoom+10))} title="Zoom in" aria-label="Zoom in"><Plus size={14}/></button></div><button className="primary-btn" onClick={saveProject} title="Save project" aria-label="Save project"><Save size={15}/><span>{tr('save')}</span></button>
     </div></div>
+      <div className="top-actions">
+        <div className="header-dropdown" onMouseEnter={()=>setHeaderMenu('examples')} onMouseLeave={()=>setHeaderMenu(null)}><button className="icon-btn" title="Portfolio and examples" aria-label="Portfolio and examples" aria-expanded={headerMenu==='examples'} onClick={()=>setHeaderMenu(v=>v==='examples'?null:'examples')}><BookOpen size={16}/></button>{headerMenu==='examples'&&<div className="header-pop"><a href="https://engineering.hephzibahbehulah.com/" target="_top">Engineering Systems Lab</a><a href="https://engineering.hephzibahbehulah.com/academy-workbench.html#demos" target="_top">Circuit Examples</a><a href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer">GitHub Repositories</a></div>}</div>
+        <a className="icon-btn" href="https://github.com/HephzibahBehulah" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><Github size={16}/></a>
+        <a className="icon-btn" href="https://www.linkedin.com/in/isaacoluwoleadigun" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><Linkedin size={16}/></a>
+        <label className="language-switch" title="Language"><Globe2 size={14}/><select aria-label="Interface language" value={locale} onChange={e=>setLocale(e.target.value as 'en'|'de'|'yo'|'pcm')}><option value="en">EN</option><option value="de">DE</option><option value="yo">YO</option><option value="pcm">PCM</option></select></label>
+        <button className="icon-btn theme-toggle" title={themeLight?'Switch to dark theme':'Switch to light theme'} aria-label={themeLight?'Switch to dark theme':'Switch to light theme'} onClick={()=>setThemeLight(v=>!v)}>{themeLight?<Moon size={16}/>:<Sun size={16}/>}</button>
+        <button className="icon-btn" title="About and readiness" aria-label="About and readiness" onClick={()=>setAboutOpen(true)}><Info size={16}/></button>
+        <button className="avatar" title={accountEmail?'VoltPro account: '+accountEmail:accountStatus==='checking'?'Checking VoltPro account…':'Sign in to your VoltPro account'} aria-label="VoltPro account" onClick={()=>{if(accountStatus!=='signed-in')window.location.assign('/workspace');else setStatus('Signed in as '+accountEmail+' · private cloud projects are available from File or Project actions')}}>VP</button>
+      </div>
+    </header>
+    <nav className="icon-rail" aria-label="Workspace panels">
+      <button title="Home / starter projects" aria-label="Home / starter projects" onClick={()=>setStarterOpen(true)}><House size={17}/></button>
+      <button title="Pages" aria-label="Pages" aria-pressed={leftOpen} onClick={()=>setLeftOpen(v=>!v)}><FileText size={17}/></button>
+      <button title="Components" aria-label="Components" aria-pressed={leftOpen} onClick={()=>{setLeftOpen(true);setQuery('')}}><CircuitBoard size={17}/></button>
+      <button title="Search components" aria-label="Search components" onClick={()=>{setLeftOpen(true);window.setTimeout(()=>document.querySelector<HTMLInputElement>('.search-box input')?.focus(),0)}}><Search size={17}/></button>
+      <button title="Workspace settings" aria-label="Workspace settings" onClick={()=>setSettingsOpen(true)}><Settings2 size={17}/></button>
+      <button title="About and readiness" aria-label="About and readiness" onClick={()=>setAboutOpen(true)}><Info size={17}/></button>
+    </nav>
     <main className="workspace">
       {!leftOpen&&<button className="edge-reveal edge-left" title={tr('showLeft')} aria-label={tr('showLeft')} onClick={()=>setLeftOpen(true)}><PanelLeft size={17}/></button>}
       {leftOpen&&<aside className="left-sidebar">
@@ -545,6 +554,15 @@ export default function App() {
       {proposal&&<div className="proposal-box"><strong>{proposal.summary}</strong><div className="proposal-list">{proposal.parts.map(p=><span key={p.id}>{p.ref} · {p.type} · {p.value}</span>)}{proposal.wires.map(w=><span key={w.id}>Wire ({w.x1},{w.y1}) → ({w.x2},{w.y2})</span>)}</div><ul>{proposal.notes.map(n=><li key={n}>{n}</li>)}</ul><div className="ai-actions"><button className="outline-btn" onClick={()=>setProposal(null)}>Discard</button><button className="primary-btn" onClick={applyProposal}><Check size={14}/> Apply to schematic</button></div></div>}
       <div className="ai-examples"><span>Try:</span><button onClick={()=>setAiCommand('Add 3 resistors')}>Add 3 resistors</button><button onClick={()=>setAiCommand('Create a 24 V circuit with a switch and lamp, connected in series')}>24 V lamp circuit</button><button onClick={()=>setAiCommand('Design a complete 12,000 m² industrial manufacturing facility power distribution system at 11 kV with a 415 V main board, generator, UPS, cable schedules, protection and earthing package')}>Industrial power package</button><button onClick={()=>setAiCommand('Create a 132/33/11 kV smart substation with solar farm integration, BESS, SCADA and IEC 61850 architecture')}>Smart substation</button></div>
     </div>}
-    {saveDialogOpen&&<ProjectSaveDialog name={projectName} metadata={metadata} busy={cloudBusy} status={saveDialogStatus} onCancel={()=>{setSaveDialogOpen(false);setPendingNewProject(false);setSaveDialogStatus('')}} onSaveLocal={saveLocally} onSaveCloud={saveToCloudNow}/>}{newProjectDialogOpen&&<div className="modal-scrim" role="presentation"><section className="settings-modal" role="dialog" aria-modal="true" aria-label="Start a new project"><div className="modal-heading"><div><strong>Start a new project?</strong></div><button className="tiny-btn" aria-label="Cancel new project" onClick={()=>setNewProjectDialogOpen(false)}>×</button></div><p>Your current schematic has unsaved changes. Save it, discard it, or return to editing.</p><div className="engineering-actions"><button className="outline-btn" onClick={()=>{setPendingNewProject(true);setNewProjectDialogOpen(false);openSaveDialog()}}>Save before starting new</button><button className="danger-btn" onClick={()=>{setNewProjectDialogOpen(false);createBlankProject()}}>Discard and start blank</button><button className="primary-btn" onClick={()=>setNewProjectDialogOpen(false)}>Cancel</button></div></section></div>}<input ref={fileInput} type="file" accept=".json,.vpcad" style={{display:'none'}} onChange={async e=>{const f=e.target.files?.[0];if(!f)return;try{loadData(decodeDocument(JSON.parse(await f.text())))}catch(error){window.alert(error instanceof Error?error.message:'Unable to open project')}e.target.value=''}}/>{help&&<div style={{position:'fixed',zIndex:30,right:24,top:64,background:'#182934',color:'#dbe6ef',padding:18,border:'1px solid #49788a',borderRadius:8,width:310}}><button onClick={()=>setHelp(false)} style={{float:'right'}}>×</button><strong>VoltPro ElectCAD · editor help</strong><p>Select a symbol in the library, then click on the drawing to place it. Select and edit properties on the right. Wire tool: click two endpoints to connect. Ctrl+Z / Ctrl+Y for undo and redo. Ctrl+S opens the save dialog. File → Open restores an exported project. Unsaved work is cleared when you leave.</p><p>Not for safety-critical engineering approval. The DC operating-point solver supports only listed ideal sources, linear resistors, ground and simple contacts; unsupported models are warned about, and transient/AC simulation is not included.</p></div>}<footer className="statusbar"><div><span className="status-light"/>{isDirty?'Unsaved changes · ':''}{status}</div><div className="status-right"><span><Check size={12}/> Ready</span><span>{units.toUpperCase()}</span><span>GRID: {grid?'ON':'OFF'}</span><span>SNAP: {snap?'ON':'OFF'}</span><span>V0.2.0</span></div></footer>
+    {saveDialogOpen&&<ProjectSaveDialog name={projectName} metadata={metadata} busy={cloudBusy} status={saveDialogStatus} onCancel={()=>{setSaveDialogOpen(false);setPendingNewProject(false);setSaveDialogStatus('')}} onSaveLocal={saveLocally} onSaveCloud={saveToCloudNow}/>}{newProjectDialogOpen&&<div className="modal-scrim" role="presentation"><section className="settings-modal" role="dialog" aria-modal="true" aria-label="Start a new project"><div className="modal-heading"><div><strong>Start a new project?</strong></div><button className="tiny-btn" aria-label="Cancel new project" onClick={()=>setNewProjectDialogOpen(false)}>×</button></div><p>Your current schematic has unsaved changes. Save it, discard it, or return to editing.</p><div className="engineering-actions"><button className="outline-btn" onClick={()=>{setPendingNewProject(true);setNewProjectDialogOpen(false);openSaveDialog()}}>Save before starting new</button><button className="danger-btn" onClick={()=>{setNewProjectDialogOpen(false);createBlankProject()}}>Discard and start blank</button><button className="primary-btn" onClick={()=>setNewProjectDialogOpen(false)}>Cancel</button></div></section></div>}<input ref={fileInput} type="file" accept=".json,.vpcad" style={{display:'none'}} onChange={async e=>{const f=e.target.files?.[0];if(!f)return;try{loadData(decodeDocument(JSON.parse(await f.text())))}catch(error){window.alert(error instanceof Error?error.message:'Unable to open project')}e.target.value=''}}/>{help&&<div style={{position:'fixed',zIndex:30,right:24,top:64,background:'#182934',color:'#dbe6ef',padding:18,border:'1px solid #49788a',borderRadius:8,width:310}}><button onClick={()=>setHelp(false)} style={{float:'right'}}>×</button><strong>VoltPro ElectCAD · editor help</strong><p>Select a symbol in the library, then click on the drawing to place it. Select and edit properties on the right. Wire tool: click two endpoints to connect. Ctrl+Z / Ctrl+Y for undo and redo. Ctrl+S opens the save dialog. File → Open restores an exported project. Unsaved work is cleared when you leave.</p><p>Not for safety-critical engineering approval. The DC operating-point solver supports only listed ideal sources, linear resistors, ground and simple contacts; unsupported models are warned about, and transient/AC simulation is not included.</p></div>}
+    <footer className="global-bottom-bar" aria-label="VoltPro tool navigation">
+      <a href="https://engineering.hephzibahbehulah.com/simulator" target="_top"><span>⚡</span>Simulator</a>
+      <a href="https://engineering.hephzibahbehulah.com/plc" target="_top"><span>⌘</span>PLC</a>
+      <a href="https://engineering.hephzibahbehulah.com/electcad" target="_top" aria-current="page"><span>⌁</span>ElectCAD</a>
+      <a href="https://engineering.hephzibahbehulah.com/tools" target="_top"><span>▦</span>Engineering Tools</a>
+      <a href="https://engineering.hephzibahbehulah.com/breadboard" target="_top"><span>∑</span>Breadboard</a>
+      <a href="https://engineering.hephzibahbehulah.com/electrical" target="_top"><span>🏢</span>Electrical</a>
+      <span className="bottom-dev-note" title="VoltPro is in active development. DRC rules and symbol libraries are pending verified standards ingestion and licensed catalog integration. Do not use for final production documentation.">⚠ Development build · Not for production documentation</span>
+    </footer>
   </div>;
 }

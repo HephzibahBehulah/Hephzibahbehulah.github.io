@@ -52,3 +52,10 @@ html.vp-electcad-maximized body>.hb-platform-footer{display:none!important}
 html.vp-electcad-maximized #vpWorkspace{position:relative}
 html.vp-electcad-maximized #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute;inset:0;width:100%;height:100%!important;min-height:0;display:block}
 html.vp-electcad-maximized #vpWorkspace .vp-workspace-frame{width:100%;height:100%!important;min-height:0;max-height:none;display:block}
+
+/* The embedded ElectCAD application owns its complete viewport grid and tool switcher. */
+html.vp-electcad-maximized,html.vp-electcad-maximized body{width:100vw;height:100dvh;min-height:0;margin:0!important;overflow:hidden!important;padding:0!important}
+html.vp-electcad-maximized body{display:block!important}
+html.vp-electcad-maximized #vpWorkspace{position:fixed!important;inset:0!important;display:block!important;width:100vw!important;height:100dvh!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+html.vp-electcad-maximized #vpWorkspace .vp-workspace-panel,html.vp-electcad-maximized #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
+html.vp-electcad-maximized #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}
