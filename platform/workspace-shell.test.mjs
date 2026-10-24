@@ -13,7 +13,7 @@ const ai = read("apps/voltpro-engineering-source/voltpro-assistant.js");
 
 test("global bottom navigation keeps the required workspace order", () => {
   const block = nav.match(/for\(const \[icon,label,path\]of \[(.*?)\]\)\{const a=link/s)?.[1] || "";
-  const labels = [...block.matchAll(/'([^']+)'/g)].map(match => match[1]).filter(label => !label.startsWith("/"));
+  const labels = [...block.matchAll(/\['[^']*','([^']+)','[^']+'\]/g)].map(match => match[1]);
   assert.deepEqual(labels, ["VoltPro Simulator", "VoltPro PLC", "VoltPro ElectCAD", "Engineering Tools", "VoltPro Breadboard", "VoltPro Electrical Building"]);
 });
 
