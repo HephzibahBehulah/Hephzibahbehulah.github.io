@@ -36,7 +36,7 @@ button,.button,.btn,[role="button"],input[type="button"],input[type="submit"]{
 button:hover,.button:hover,.btn:hover,[role="button"]:hover,input[type="button"]:hover,input[type="submit"]:hover{
  border-color:#ff8a3d!important;color:#ff8a3d!important;box-shadow:0 0 0 1px rgba(255,138,61,.12),0 7px 20px rgba(0,0,0,.18)
 }
-button.primary,.button.primary,.btn.primary,.btn-primary,.button-primary,.primary-button,.os-btn.primary,.vp-primary,[data-variant="primary"]{
+button.primary,button[type="submit"],.button.primary,.btn.primary,.btn-primary,.button-primary,.primary-button,.os-btn.primary,.vp-primary,[data-variant="primary"]{
  background:#ff8a3d!important;border-color:#ff8a3d!important;color:#17100b!important;font-weight:700
 }
 input,textarea,select,[contenteditable="true"]{color:#e6edf3!important;background:#0d1115!important;border-color:#26303a!important;accent-color:#ff8a3d}
