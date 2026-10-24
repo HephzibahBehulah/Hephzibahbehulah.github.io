@@ -27,22 +27,22 @@
     <main class="cad-editor">
       <div class="cad-workarea" id="workarea" aria-label="Building plan with coordinate rulers">
         <div class="ruler-corner" aria-hidden="true">m</div>
-        <div class="top-ruler" id="topRuler" aria-hidden="true"></div>
-        <div class="left-ruler" id="leftRuler" aria-hidden="true"></div>
+        <div class="top-ruler" aria-hidden="true"><div id="topRulerTicks"></div></div>
+        <div class="left-ruler" aria-hidden="true"><div id="leftRulerTicks"></div></div>
         <div class="plan-scroll" id="planScroll">
           <div class="plan-surface" id="planSurface" aria-label="Electrical building plan, 20 centimetre grid">
             <svg class="wire-layer" id="wireLayer" role="img" aria-label="Orthogonal electrical cable routes"></svg>
             <div class="node-layer" id="nodeLayer"></div>
-            <section class="title-block" aria-label="Editable drawing title block">
-              <b>DRAWING INFORMATION</b>
-              <label>Project <input id="projectName" value="Residential electrical plan" maxlength="80"></label>
-              <label>Date <input id="projectDate" type="date"></label>
-              <label>Scale <input id="titleScale" value="1:50" maxlength="12"></label>
-              <label>Drafter <input id="drafter" value="VoltPro user" maxlength="60"></label>
-            </section>
           </div>
         </div>
       </div>
+      <section class="title-block" aria-label="Editable drawing title block">
+        <b>DRAWING INFORMATION</b>
+        <label>Project <input id="projectName" value="Residential electrical plan" maxlength="80"></label>
+        <label>Date <input id="projectDate" type="date"></label>
+        <label>Scale <input id="titleScale" value="1:50" maxlength="12"></label>
+        <label>Drafter <input id="drafter" value="VoltPro user" maxlength="60"></label>
+      </section>
       <p class="cad-status" id="status" role="status">Select a component. One grid square represents 200 mm in the model.</p>
     </main>
     <aside class="cad-properties" aria-label="Selected component properties">
