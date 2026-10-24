@@ -89,3 +89,14 @@ test('public engineering and legacy HTML receive the global language system',asy
   }
  }finally{if(original===undefined)delete globalThis.HTMLRewriter;else globalThis.HTMLRewriter=original;}
 });
+
+for(const path of ['/simulator','/plc','/electcad','/tools','/breadboard','/electrical']){
+ test('workspace '+path+' is served by the persistent shell',()=>{const route=resolveRoute(new URL('https://engineering.'+root+path));assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');});
+}
+test('private BuildingCAD workspace preserves its Cloudflare Access mount',()=>{const route=resolveRoute(new URL('https://admin.'+root+'/engineering/electrical'));assert.equal(route.path,'/_apps/engineering/workspace-shell.html');assert.equal(route.base,'/engineering/');assert.equal(route.privateHost,true);});
+test('embedded tool pages bypass SPA shell routing without remounting the shell',()=>{
+ assert.equal(resolveRoute(new URL('https://engineering.'+root+'/simulator.html?vp_embed=1')).path,'/_apps/engineering/simulator.html');
+ assert.equal(resolveRoute(new URL('https://engineering.'+root+'/voltpro-plc/?vp_embed=1')).path,'/_apps/engineering/voltpro-plc/index.html');
+ assert.equal(resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/?vp_embed=1')).path,'/_apps/engineering/voltpro-electcad/index.html');
+ assert.equal(resolveRoute(new URL('https://engineering.'+root+'/electrical-canvas.html?vp_embed=1')).path,'/_apps/engineering/electrical-canvas.html');
+});
