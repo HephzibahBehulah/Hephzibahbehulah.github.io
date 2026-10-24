@@ -34,7 +34,7 @@ test("workspace switches reuse hidden tool iframes and update history client-sid
   for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
 });
 
-test("ElectCAD uses a viewport-filling CAD layout with the site masthead removed", () => {
+test("ElectCAD uses the professional two-row, three-column A3 paper workspace", () => {
   const app = read("apps/voltpro-electcad/App.tsx");
   const appCss = read("apps/voltpro-electcad/styles.css");
   const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
@@ -42,15 +42,32 @@ test("ElectCAD uses a viewport-filling CAD layout with the site masthead removed
   assert.match(nav, /if\(isElectCADRoute\)document\.documentElement\.classList\.add\('vp-electcad-maximized'\)/);
   assert.match(siteCss, /vp-electcad-maximized #vpSiteHeader\{display:none!important\}/);
   assert.match(siteCss, /vp-electcad-maximized #vpWorkspace\{order:1;flex:1 1 auto/);
-  assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{position:relative;inset:auto;order:2;flex:0 0 30px/);
+  assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{display:none!important\}/);
   assert.match(siteCss, /vp-electcad-maximized #vpBottomNavigation\{position:relative;inset:auto;order:3;flex:0 0 50px/);
-  for (const [selector, height] of [[".topbar", "50px"], [".menubar", "35px"], [".toolbar", "45px"]]) {
+  assert.match(siteCss, /vp-bottom-dev-note/);
+  for (const [selector, height] of [[".topbar", "45px"], [".menu-toolbar-row", "40px"]]) {
     assert.ok(appCss.includes(`html.vp-electcad-embed ${selector}{height:${height}`), `${selector} must use the requested height`);
   }
-  assert.match(appCss, /html\.vp-electcad-embed \.workspace\{position:relative;flex:1 1 auto;min-height:0;overflow:hidden\}/);
+  assert.match(appCss, /html\.vp-electcad-embed \.left-sidebar\{width:250px;min-width:250px/);
+  assert.match(appCss, /html\.vp-electcad-embed \.right-sidebar\{width:280px;min-width:280px/);
+  assert.match(appCss, /html\.vp-electcad-embed \.workspace\{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;display:flex/);
+  assert.match(appCss, /\.paper-frame\{position:relative;width:min\(100cqw,141\.414cqh\);height:min\(100cqh,70\.71cqw\);aspect-ratio:420\/297/);
+  assert.match(appCss, /\.menu-pop\{top:39px;left:0;min-width:205px;max-height:75vh;overflow:auto\}/);
+  assert.match(appCss, /html\.vp-electcad-embed \.menu-pop\{z-index:9999\}/);
+  assert.match(app, /className="paper-ruler paper-ruler-top"/);
+  assert.match(app, /className="paper-ruler paper-ruler-bottom"/);
+  assert.match(app, /className="paper-ruler paper-ruler-left"/);
+  assert.match(app, /className="paper-ruler paper-ruler-right"/);
+  assert.match(app, /className="sheet-tabs" role="tablist"/);
+  assert.match(app, /onDoubleClick=.*renameSheetById/);
+  assert.match(app, /onContextMenu=.*duplicateSheetById/);
+  assert.match(app, /targetSheetId/);
+  assert.match(app, /wireCrossings\(wires\)/);
+  assert.match(app, /kind==='junction'/);
   assert.match(app, /className="electcad-main-site" href="https:\/\/hephzibahbehulah\.com\/" target="_top"/);
   assert.match(app, /className="icon-btn theme-toggle"/);
   assert.match(app, /About &amp; readiness/);
+  for (const label of ["Engineering Systems Lab", "Circuit Examples", "GitHub Repositories"]) assert.ok(app.includes(label));
   for (const movedLink of ["Learning sites / Academy", "Open Workbench", "PLC studies"]) assert.ok(app.includes(movedLink));
 });
 

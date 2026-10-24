@@ -48,11 +48,27 @@ test('document decoder accepts stable terminal references and rejects a referenc
   const tempFile = path.join(dir, `.editor-model-test-${process.pid}-${Date.now()}.mjs`);
   fs.writeFileSync(tempFile, js);
   try {
-    const { decodeDocument, netGroups } = await import(pathToFileURL(tempFile).href);
+    const { decodeDocument, netGroups, wireCrossings } = await import(pathToFileURL(tempFile).href);
     const project = decodeDocument(buildIndustrialMachineProject());
     assert.equal(project.schemaVersion, 3);
     assert.equal(decodeDocument({ schemaVersion: 2, projectName: 'Legacy', activeSheetId: 'old', sheets: [{ id: 'old', name: 'Old sheet', parts: [], wires: [] }] }).schemaVersion, 3);
     assert.ok(netGroups(project.sheets[0]).length > 0);
+    const linked = decodeDocument({ schemaVersion: 3, projectName: 'Cross reference', activeSheetId: 's1', sheets: [
+      { id: 's1', name: 'Power', parts: [{ id: 'x1', type: 'off-page-connector', x: 40, y: 60, ref: 'X1', value: 'Off-page connector', targetSheetId: 's2' }], wires: [] },
+      { id: 's2', name: 'Control', parts: [], wires: [] }
+    ] });
+    assert.equal(linked.sheets[0].parts[0].targetSheetId, 's2');
+    const brokenCrossReference = structuredClone(linked);
+    brokenCrossReference.sheets[0].parts[0].targetSheetId = 'missing-sheet';
+    assert.throws(() => decodeDocument(brokenCrossReference), /Invalid component/);
+    assert.deepEqual(wireCrossings([
+      { id: 'horizontal', x1: 0, y1: 10, x2: 20, y2: 10 },
+      { id: 'vertical', x1: 10, y1: 0, x2: 10, y2: 20 }
+    ]), [{ x: 10, y: 10, kind: 'bridge' }]);
+    assert.deepEqual(wireCrossings([
+      { id: 'branch', x1: 10, y1: 0, x2: 10, y2: 10 },
+      { id: 'horizontal', x1: 0, y1: 10, x2: 20, y2: 10 }
+    ]), [{ x: 10, y: 10, kind: 'junction' }]);
     const broken = structuredClone(project);
     broken.sheets[0].wires[0].startTerminalId = 'pin:missing:99';
     assert.throws(() => decodeDocument(broken), /Invalid wire or terminal connection/);
