@@ -34,6 +34,6 @@ test('shared theme defines consistent OSINT charcoal surfaces and orange navigat
   assert.match(css, /--accent:#ff8a3d!important/);
   assert.match(css, /\.nav-item/);
   assert.match(css, /:focus-visible/);
-  assert.match(css, /html\\[data-hb-theme\\]/);
+  assert.ok(css.includes('html[data-hb-theme]'));
   assert.match(css, /color-scheme:dark!important/);
 });
