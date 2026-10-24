@@ -93,7 +93,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
       if(headers.get('content-type')?.includes('text/html')){headers.delete('etag');headers.delete('last-modified');headers.delete('content-length');}
       let result=new Response(response.body,{status:response.status,headers});
       const legacyBase=route.privateHost&&/^\/(?:admin\/)?cyber-os(?:\/|$)/.test(url.pathname)?'/cyber-os/':'/';
-      if(response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined')result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+legacyBase+'"><link rel="stylesheet" href="/_hb/platform.css"><link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/js/language-system.js" defer></script>':''),{html:true});}}).transform(result);
+      if(response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined')result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+legacyBase+'"><link rel="stylesheet" href="/_hb/platform.css"><link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':''),{html:true});}}).transform(result);
       return result;
     }
     if(!['GET','HEAD'].includes(request.method))return reply(405,'Method not allowed');
@@ -106,7 +106,7 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
     let result=new Response(response.body,{status:response.status,headers});
     if(route.kind==='app'&&response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined'){
       const base=route.base;
-      result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+base+'"><link rel="stylesheet" href="/_hb/platform.css"><link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/js/language-system.js" defer></script>':''),{html:true});}}).transform(result);
+      result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+base+'"><link rel="stylesheet" href="/_hb/platform.css"><link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':''),{html:true});}}).transform(result);
     }
     return result;
   }};
