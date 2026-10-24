@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a1420">
+  <title>VoltPro BuildingCAD</title>
+  <link rel="stylesheet" href="electrical-canvas.css">
+  <script type="module" src="electrical-canvas.js"></script>
+</head>
+<body class="building-cad">
+  <header class="cad-toolbar">
+    <div><strong>VoltPro BuildingCAD</strong><small>Architectural installation plan · educational workspace</small></div>
+    <div class="cad-toolbar-actions">
+      <span class="scale-label">Grid: 200 mm / square</span>
+      <label>Drawing scale <select id="drawingScale"><option>1:50</option><option>1:100</option><option>1:200</option></select></label>
+      <button id="wireMode" type="button" aria-pressed="false">Wire</button>
+      <button id="exportPlan" type="button">Export JSON</button>
+    </div>
+  </header>
+  <div class="cad-layout">
+    <aside class="cad-library" aria-label="Building installation components">
+      <h2>Library</h2><p>Drag a symbol onto the plan or select it, then click the grid.</p>
+      <div id="componentLibrary"></div>
+      <p class="cad-hint">Symbols follow IEC/DIN-inspired conventions. Verify project symbols and rules for your jurisdiction.</p>
+    </aside>
+    <main class="cad-editor">
+      <div class="cad-workarea" id="workarea" aria-label="Building plan with coordinate rulers">
+        <div class="ruler-corner" aria-hidden="true">m</div>
+        <div class="top-ruler" aria-hidden="true"><div id="topRulerTicks"></div></div>
+        <div class="left-ruler" aria-hidden="true"><div id="leftRulerTicks"></div></div>
+        <div class="plan-scroll" id="planScroll">
+          <div class="plan-surface" id="planSurface" aria-label="Electrical building plan, 20 centimetre grid">
+            <svg class="wire-layer" id="wireLayer" role="img" aria-label="Orthogonal electrical cable routes"></svg>
+            <div class="node-layer" id="nodeLayer"></div>
+          </div>
+        </div>
+      </div>
+      <section class="title-block" aria-label="Editable drawing title block">
+        <b>DRAWING INFORMATION</b>
+        <label>Project <input id="projectName" value="Residential electrical plan" maxlength="80"></label>
+        <label>Date <input id="projectDate" type="date"></label>
+        <label>Scale <input id="titleScale" value="1:50" maxlength="12"></label>
+        <label>Drafter <input id="drafter" value="VoltPro user" maxlength="60"></label>
+      </section>
+      <p class="cad-status" id="status" role="status">Select a component. One grid square represents 200 mm in the model.</p>
+    </main>
+    <aside class="cad-properties" aria-label="Selected component properties">
+      <h2>Properties</h2>
+      <p id="emptyProperties">Select a component to edit its name, room, and voltage.</p>
+      <form id="propertiesForm" hidden>
+        <label>Component ID <input id="componentId" readonly></label>
+        <label>Name <input id="componentName" maxlength="60"></label>
+        <label>Room <input id="componentRoom" maxlength="60" placeholder="e.g. Kitchen"></label>
+        <label>Voltage <select id="componentVoltage"><option>0 V</option><option>24 V</option><option>230 V</option><option>400 V</option></select></label>
+        <button id="deleteComponent" type="button">Remove component</button>
+      </form>
+    </aside>
+  </div>
+</body>
+</html>

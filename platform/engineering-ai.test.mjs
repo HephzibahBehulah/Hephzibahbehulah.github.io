@@ -14,12 +14,13 @@ test('engineering health returns JSON and reflects the deployed AI binding',asyn
  }
 });
 
-test('engineering chat applies domain-specific system contracts for all four tools',async()=>{
+test('engineering chat applies domain-specific system contracts for all tools',async()=>{
  const cases=[
   ['simulator','VoltPRo Simulator AI'],
   ['plc','VoltPRo PLC AI'],
   ['electcad','VoltPRo ElectCAD AI'],
-  ['breadboard','VoltPRo Breadboard AI']
+  ['breadboard','VoltPRo Breadboard AI'],
+  ['building-electrical','VoltPro BuildingCAD AI']
  ];
  for(const [tool,expected] of cases){
   let captured;
@@ -30,6 +31,7 @@ test('engineering chat applies domain-specific system contracts for all four too
   assert.equal((await result.json()).answer,'Reviewed proposal');
   assert.match(captured.messages[0].content,new RegExp(expected));
   if(tool==='breadboard'){assert.match(captured.messages[0].content,/PCB/);assert.doesNotMatch(captured.messages[0].content,/Do not claim PCB fabrication view\/export exists/);}
+  if(tool==='building-electrical'){assert.match(captured.messages[0].content,/orthogonal/);assert.match(captured.messages[0].content,/educational draft/);}
   assert.match(captured.messages[1].content,/Supported project contract/);
  }
 });
@@ -48,6 +50,6 @@ test('engineering chat streams chunks through Workers AI',async()=>{
 test('engineering chat falls back to non-streaming when stream setup fails',async()=>{
  let calls=0;
  const origin='https://engineering.hephzibahbehulah.com';
- const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'breadboard',stream:true,messages:[{role:'user',content:'Map a breadboard prototype'}]})}),{AI:{run:async(_model,opts)=>{calls++;if(opts.stream)throw Error('stream unavailable');return {response:'Fallback answer'};}}});
+ const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'breadboard',stream:true,messages:[{role:'user',content:'Map a breadboard prototype'}]})}),{AI:{run:async(_model,opts)=>{calls++;if(opts.stream)throw Error('stream unavailable');return {response:'Fallback answer'};}},API_LIMITER:{limit:async()=>({success:true})}});
  const body=await result.text();assert.equal(calls,2);assert.match(body,/"type":"reset"/);assert.match(body,/"text":"Fallback answer"/);assert.match(body,/"type":"done"/);
 });

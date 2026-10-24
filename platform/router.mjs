@@ -33,6 +33,9 @@ export function resolveRoute(url){
   }
   if(prefix&&path===prefix)return {kind:'redirect',privateHost,location:prefix+'/'};
   const relative=path.slice(prefix.length)||'/';
+  const embedded=url.searchParams.get('vp_embed')==='1';
+  const workspaceAliases=['/simulator','/plc','/electcad','/tools','/engineering','/breadboard','/electrical','/voltpro-plc','/voltpro-plc/','/voltpro-electcad','/voltpro-electcad/'];
+  if(app==='engineering'&&!embedded&&workspaceAliases.includes(relative.toLowerCase()))return {kind:'app',privateHost,app,prefix,base:prefix+'/',path:'/_apps/engineering/workspace-shell.html'};
   if(app==='engineering'&&/^\/voltpro-electcad(?:\/|$)/i.test(relative)){
     const suffix=relative.slice('/voltPro-ElectCAD'.length);
     if(!suffix)return {kind:'redirect',privateHost,location:prefix+'/voltPro-ElectCAD/'};
@@ -40,7 +43,7 @@ export function resolveRoute(url){
     return {kind:'app',privateHost,app,prefix,base:prefix+'/voltPro-ElectCAD/',path:'/_apps/engineering/voltpro-electcad'+assetSuffix};
   }
   if(app==='engineering'&&relative==='/voltpro-plc')return {kind:'redirect',privateHost,location:prefix+'/voltpro-plc/'};
-  if(relative.endsWith('.html'))return {kind:'redirect',privateHost,location:(prefix+relative.replace(/\/index\.html$/,'/').replace(/\.html$/,''))||'/'};
+  if(relative.endsWith('.html')&&!embedded)return {kind:'redirect',privateHost,location:(prefix+relative.replace(/\/index\.html$/,'/').replace(/\.html$/,''))||'/'};
   const asset=app==='engineering'&&relative==='/workspace'?'/account.html':relative.endsWith('/')?relative+'index.html':/\.[^/]+$/.test(relative)?relative:relative+'.html';
   return {kind:'app',privateHost,app,prefix,base:prefix+asset.slice(0,asset.lastIndexOf('/')+1),path:'/_apps/'+app+asset};
 }
@@ -105,8 +108,9 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
     if(route.privateHost){headers.set('cache-control','private, no-store');headers.set('x-robots-tag','noindex, nofollow, noarchive');}
     let result=new Response(response.body,{status:response.status,headers});
     if(route.kind==='app'&&response.ok&&headers.get('content-type')?.includes('text/html')&&typeof HTMLRewriter!=='undefined'){
-      const base=route.base;
-      result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+base+'"><link rel="stylesheet" href="/_hb/platform.css"><link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':''),{html:true});}}).transform(result);
+      const base=route.base,embedded=url.searchParams.get('vp_embed')==='1';
+      const globalScripts=embedded?'':'<link rel="stylesheet" href="/_hb/member.css">'+(!route.privateHost?'<script src="/_hb/member.js" defer></script>':'')+'<script src="/_hb/platform.js" defer></script><link rel="stylesheet" href="/_hb/experience.css"><script src="/_hb/experience.js" defer></script>'+(!route.privateHost?'<script src="/_hb/language-system.js?v=20261024-1" defer></script>':'');
+      result=new HTMLRewriter().on('head',{element(el){el.prepend('<base href="'+base+'"><link rel="stylesheet" href="/_hb/platform.css">'+globalScripts,{html:true});}}).transform(result);
     }
     return result;
   }};
