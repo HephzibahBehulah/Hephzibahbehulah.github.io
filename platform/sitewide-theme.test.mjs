@@ -29,9 +29,11 @@ test('the charcoal and orange theme is injected into nested pages once', () => {
 
 test('shared theme defines consistent OSINT charcoal surfaces and orange navigation states', () => {
   const css = fs.readFileSync(path.join(root, 'css/sitewide-osint-theme.css'), 'utf8');
-  assert.match(css, /--bg:#0b0d10/);
-  assert.match(css, /--panel:#11151a/);
-  assert.match(css, /--accent:#ff8a3d/);
+  assert.match(css, /--bg:#0b0d10!important/);
+  assert.match(css, /--panel:#11151a!important/);
+  assert.match(css, /--accent:#ff8a3d!important/);
   assert.match(css, /\.nav-item/);
   assert.match(css, /:focus-visible/);
+  assert.ok(css.includes('html[data-hb-theme]'));
+  assert.match(css, /color-scheme:dark!important/);
 });
