@@ -38,8 +38,8 @@ function renderRulers() {
 function pointFromEvent(event) {
   const rect = surface.getBoundingClientRect();
   return {
-    x: Math.max(1, Math.min(PLAN_COLUMNS, snapGrid(event.clientX - rect.left) + 1)),
-    y: Math.max(0, Math.min(PLAN_ROWS - 1, snapGrid(event.clientY - rect.top)))
+    x: Math.max(1, Math.min(PLAN_COLUMNS, snapGrid(event.clientX - rect.left - GRID_PX / 2) + 1)),
+    y: Math.max(0, Math.min(PLAN_ROWS - 1, snapGrid(event.clientY - rect.top - GRID_PX / 2)))
   };
 }
 function partButton(item) {
@@ -84,8 +84,8 @@ function renderNodes() {
       if (Math.hypot(dx, dy) < 4) return;
       node.x = Math.max(1, Math.min(PLAN_COLUMNS, dragState.nodeX + snapGrid(dx)));
       node.y = Math.max(0, Math.min(PLAN_ROWS - 1, dragState.nodeY + snapGrid(dy)));
-      button.style.left = ((node.x - 1) * GRID_PX) + "px";
-      button.style.top = (node.y * GRID_PX) + "px";
+      button.style.left = ((node.x - 0.5) * GRID_PX) + "px";
+      button.style.top = ((node.y + 0.5) * GRID_PX) + "px";
       renderWires(); save();
     });
     button.addEventListener("pointerup", event => {
@@ -106,7 +106,7 @@ function renderWires() {
   for (const wire of state.wires) {
     const from = state.nodes.find(node => node.id === wire.from), to = state.nodes.find(node => node.id === wire.to);
     if (!from || !to) continue;
-    const points = routeOrthogonal(from, to).map(point => ((point.x - 1) * GRID_PX) + "," + (point.y * GRID_PX)).join(" ");
+    const points = routeOrthogonal(from, to).map(point => ((point.x - 0.5) * GRID_PX) + "," + ((point.y + 0.5) * GRID_PX)).join(" ");
     const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     line.setAttribute("class", "wire"); line.setAttribute("points", points); wireLayer.append(line);
   }
