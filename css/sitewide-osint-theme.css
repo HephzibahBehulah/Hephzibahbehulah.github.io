@@ -52,3 +52,5 @@ hr,table,th,td{border-color:#26303a!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 html[data-hb-theme] body button[type="submit"]{background-color:#ff8a3d!important;background-image:none!important;border-color:#ff8a3d!important;color:#17100b!important}
+
+html[data-hb-theme] body.hb-unified button[type="submit"]{background-color:#ff8a3d!important;background-image:none!important;border-color:#ff8a3d!important;color:#17100b!important}

@@ -37,7 +37,7 @@ test('shared theme defines consistent OSINT charcoal surfaces and orange navigat
   assert.ok(css.includes('html[data-hb-theme]'));
   assert.ok(css.includes('body.hb-unified'));
   assert.ok(css.includes('button[type="submit"]'));
-  assert.ok(css.includes('html[data-hb-theme] body button[type="submit"]'));
+  assert.ok(css.includes('html[data-hb-theme] body.hb-unified button[type="submit"]'));
   assert.match(css, /--hb-text:#e6edf3!important/);
   assert.match(css, /color-scheme:dark!important/);
 });
