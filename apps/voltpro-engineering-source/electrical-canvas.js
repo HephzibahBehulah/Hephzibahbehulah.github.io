@@ -73,20 +73,20 @@ function renderNodes() {
     button.addEventListener("click", event => { event.stopPropagation(); selectNode(node.id); });
     button.addEventListener("pointerdown", event => {
       if (event.button !== 0 || $("wireMode").getAttribute("aria-pressed") === "true") return;
-      dragState = { id: node.id, x: event.clientX, y: event.clientY, moved: false };
+      dragState = { id: node.id, x: event.clientX, y: event.clientY, nodeX: node.x, nodeY: node.y };
       button.setPointerCapture(event.pointerId);
     });
     button.addEventListener("pointermove", event => {
       if (!dragState || dragState.id !== node.id || !(event.buttons & 1)) return;
       const dx = event.clientX - dragState.x, dy = event.clientY - dragState.y;
       if (Math.hypot(dx, dy) < 4) return;
-      dragState.moved = true;
-      node.x = Math.max(1, Math.min(PLAN_COLUMNS, node.x + snapGrid(dx)));
-      node.y = Math.max(0, Math.min(PLAN_ROWS - 1, node.y + snapGrid(dy)));
-      dragState.x = event.clientX; dragState.y = event.clientY;
-      renderNodes(); renderWires(); save();
+      node.x = Math.max(1, Math.min(PLAN_COLUMNS, dragState.nodeX + snapGrid(dx)));
+      node.y = Math.max(0, Math.min(PLAN_ROWS - 1, dragState.nodeY + snapGrid(dy)));
+      button.style.left = ((node.x - 1) * GRID_PX) + "px";
+      button.style.top = (node.y * GRID_PX) + "px";
+      renderWires(); save();
     });
-    button.addEventListener("pointerup", () => { dragState = null; });
+    button.addEventListener("pointerup", () => { dragState = null; renderNodes(); renderWires(); });
     nodeLayer.append(button);
   }
 }
