@@ -206,6 +206,7 @@ test("ElectCAD File to Help dropdowns escape horizontal menu clipping and stack 
   assert.match(css, /menubar\{position:relative;z-index:10002;overflow:visible!important\}/);
   assert.match(css, /menu-pop\{position:absolute;z-index:10004/);
   assert.match(css, /canvas-area\{position:relative;z-index:0\}/);
+  assert.match(css, /Dropdowns must escape the header[\\s\\S]*?\\.topbar\\{overflow:visible!important\\}/);
 });
 
 test("Breadboard command menu proxies only to implemented native controls", () => {
