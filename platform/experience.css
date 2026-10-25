@@ -117,3 +117,10 @@ html.vp-unified-site{height:auto!important;min-height:100%;overflow:auto!importa
   .hb-engineering #vpSiteHeader .vp-site-navigation nav,
   .hb-engineering #vpSiteHeader .vp-site-navigation[open] nav{position:fixed!important;inset:60px auto auto 8px!important}
 }
+
+/* Reserve space for the fixed global header and readiness notice. */
+html.vp-unified-site body.hb-engineering{
+  --vp-header-height:60px!important;
+  padding-top:calc(var(--vp-header-height) + var(--vp-development-banner-height))!important
+}
+.hb-engineering #vpDevelopmentBanner{top:var(--vp-header-height)!important}
