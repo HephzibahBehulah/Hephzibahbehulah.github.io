@@ -303,7 +303,6 @@
     frame.title = tool.title;
     frame.loading = "lazy";
     frame.referrerPolicy = "same-origin";
-    frame.src = rootPrefix + tool.src;
     panel.append(frame);
     root.replaceChildren(...[...root.children].filter(node => !node.classList.contains("vp-workspace-loading")), panel);
     panels.set(tool.path, panel);
@@ -314,6 +313,7 @@
         if (tool.path === "/plc" && document.documentElement.dataset.vpWorkspace === "plc") integratePLC(panel);
       } catch {}
     });
+    frame.src = rootPrefix + tool.src;
     return panel;
   }
   function activate(path, push = true) {
