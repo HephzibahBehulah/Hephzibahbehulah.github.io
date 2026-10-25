@@ -59,3 +59,5 @@ html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{display:none!impor
 /* The PLC editor owns its complete single-row bottom bar. */
 html.vp-plc-template #vpBottomNavigation{display:none!important}
 html.vp-plc-template #vpWorkspace{inset:0!important}
+html.vp-plc-template #vpBotLauncher{display:none!important}
+
