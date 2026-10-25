@@ -3,69 +3,56 @@ VoltPro Engineering Tools — ElectCAD Reference
 ==============================================
 
 PURPOSE
-This document preserves the current VoltPro ElectCAD interface as the reference design for the other engineering tools. Use the same recognizable product shell and interaction patterns while adapting each tool’s work area to its purpose. ElectCAD remains the visual reference; do not redesign or disrupt its existing behavior as part of applying this format elsewhere.
+ElectCAD is the visual reference for the VoltPro engineering workspace. The other tools should share its recognizable shell and interaction patterns while keeping their own real canvas, commands, components, and engineering rules. This is a reusable product standard, not a request to copy ElectCAD’s schematic canvas into every tool.
 
 REFERENCE IMPLEMENTATION
 Live reference: https://engineering.hephzibahbehulah.com/electcad
-Current source: apps/voltpro-electcad/App.tsx and apps/voltpro-electcad/styles.css
+Source: apps/voltpro-electcad/App.tsx and apps/voltpro-electcad/styles.css
+Shared routes and shell: apps/voltpro-engineering-source/workspace-shell.html, workspace-shell.js, workspace-shell.css
 
-1. PRODUCT SHELL AND PAGE HIERARCHY
-- Fill the available application viewport with a compact, dark engineering workspace.
-- Keep one top command bar. Product identity, project control, application menus, canvas tools, zoom controls, and utility controls belong in this same top row. Never add a second top toolbar.
-- Below the header, organize the work area as a narrow left icon rail, the main work surface, and a right workspace dock.
-- Keep the cross-tool navigation in the bottom bar. It links to Simulator, PLC, ElectCAD, Engineering Tools, Breadboard, and Electrical. Highlight the current tool.
-- Preserve the existing page hierarchy and make the work surface the largest area.
+1. SHARED WORKSPACE SHELL
+- Use one shared top command bar, a narrow left tool/panel rail, the largest possible central canvas, a right workspace dock, and one bottom cross-tool navigation bar.
+- Keep the top command bar to one row. Put project identity/actions, the tool’s menus and editing controls, zoom controls where relevant, and shared workspace utilities in that row. Do not stack duplicate application headers or create a second top toolbar.
+- Keep shared utilities in familiar positions: My workspace, language, theme, About/readiness, and account. Preserve their current working behavior.
+- Bottom navigation links to Simulator, PLC, ElectCAD, Engineering Tools, Breadboard, and Electrical, with the current tool marked active.
+- Each tool keeps its own menu contents and editing actions. Common shell placement stays consistent.
+- At narrow widths, compact optional branding and spacing first. If necessary, scroll the single toolbar intentionally. Never clip or silently hide essential controls.
 
-2. TOP COMMAND BAR
-The single header combines:
-- Site navigation and Hephzibah Behulah / VoltPro ElectCAD identity.
-- Current project name and its project actions.
-- The application menu row: File, Edit, View, Insert, Project, Electrical, Simulation, Reports, Tools, Window, and Help.
-- The tool group for selection, wiring, panning, component placement, rotate, grid, and snap.
-- Fit, zoom out, current zoom percentage, and zoom in.
-- The My workspace control (book icon), language selector (globe and language code), theme control (sun or moon), About and readiness (info icon), and account control (VP).
+2. ELECTCAD VISUAL REFERENCE
+- Dark charcoal workspace, fine grid, subtle borders, cool light text, and warm VoltPro orange highlights.
+- Compact engineering controls with restrained rounding and clear hover, focus, selected, pressed, and disabled states.
+- Technical labels may use monospaced type; normal interface text remains readable.
+- Preserve dark/light themes and ensure symbols, text, menus, wires, and selection states remain legible in both.
+- Reuse the VoltPro and Hephzibah Behulah identity consistently. Do not add a duplicate brand header.
 
-Keep every essential control visible and usable. At narrower widths, compact spacing and nonessential branding first; allow a deliberate horizontal scroll when needed. Do not silently hide the language, theme, About, workspace, account, or zoom controls. Menus must open above the canvas without being clipped by header overflow.
+3. SHARED LAYOUT BEHAVIOR
+- Left rail buttons open clear contextual panels for tools, pages, search, or component libraries. Panels may overlay part of the canvas; they should not permanently steal its working area.
+- The right dock holds the selected object’s properties and tool-specific results, diagnostics, or simulation output. Provide a clear collapse/reveal control and usable scrolling.
+- Keep the canvas central. Preserve editor state and project data when panels open, close, or the route changes.
+- Use descriptive accessible names for icon-only controls, keyboard-visible focus, and accurate expanded/pressed states. Menus and popovers must remain above the canvas and not be clipped.
 
-3. LEFT NAVIGATION AND CONTEXT PANEL
-- Use a slim vertical icon rail for Home / starter projects, Pages, Components, Search, Workspace settings, and About/readiness.
-- Opening a rail item reveals its contextual panel beside the rail. The panel can overlay part of the canvas; it must not permanently squeeze the work surface.
-- Keep panel headings, close controls, scroll behavior, and selected states clear.
-- The component panel is a searchable, categorized library with visible component counts and symbol previews. Do not move these primary canvas tools back into a crowded top row.
+4. TOOL-SPECIFIC CANVASES
+Keep the shared shell, but use the correct work surface for each job:
+- ElectCAD: electrical schematic drawing with real symbols, terminals, wires, sheets, and engineering properties.
+- PLC: Ladder/control and Function Block programming canvases with PLC devices, terminal or logic connections, tags, and live simulation state.
+- Simulator: electronics schematic and measurement workspace with modeled parts, probes, instruments, and simulation results.
+- Breadboard: physical-style breadboard canvas with correctly connected hole strips and power rails, board-specific component placement, pin-accurate wiring, and clear labels. Support compatible Breadboard, Schematic, PCB, and Code views when the project contains the required data.
+- Electrical: building and industrial installation workspace with measured plans, rooms, distribution/protection equipment, switches, outlets, lights, motors, cables/routes, circuits, and editable device properties.
 
-4. MAIN WORK SURFACE
-- Treat the canvas as the central focus: dark grid background, fine grid lines, rulers/coordinates, and clear schematic symbols, labels, and wires.
-- Keep sheet tabs and the compact lower results/diagnostics area attached to the work surface where appropriate.
-- Canvas zoom changes the viewport scale. It must remain distinct from changing a component’s own size.
-- Maintain visible selection, hover, focus, active-tool, and wire feedback. Keep drawing controls and project state attached to the existing editor behavior.
+The supplied motor-control drawing is an industrial power/control wiring schematic: three-phase supply, QF1 protection, KM1 contactor, FR1 overload, stop/start devices, indicator lamps, and motor. It is useful for Electrical and for linking a PLC program to its controlled equipment. It is not itself a Ladder or Function Block program. Keep the electrical drawing and PLC logic as distinct, linkable views.
 
-5. RIGHT WORKSPACE DOCK
-- Use a fixed-width desktop dock titled WORKSPACE DOCK with two primary tabs: Properties and Results.
-- Properties shows the selected item’s editable inspector or a useful no-selection message.
-- Results holds diagnostics, simulation output, and other tool results. Preserve their own tabs and scrolling where needed.
-- Include a clear collapse/reveal affordance. On small screens the dock may overlay the canvas, but its controls must remain reachable.
+5. PROJECT PORTABILITY AND MULTI-VIEW WORKFLOW
+- Keep a project’s engineering meaning in a structured project model. Canvas views are representations of that model, not screenshots used as the source of truth.
+- Offer explicit Open in / Convert to actions for compatible project types. A compatible electronics project may connect schematic, breadboard, PCB, simulation, and code views.
+- Use stable component identities, terminal/pin maps, wires/nets, board footprints, simulation models, and target pin mappings where available.
+- Preserve the original project and view-specific placement when converting. Do not guess missing mappings or silently discard unsupported parts; show a reviewable mapping or warning and let the user decide.
+- Building installation plans, electronics circuits, and PLC logic have different domain data. Connect them intentionally through declared devices, tags, terminals, and I/O mappings; do not pretend every object converts directly to every canvas.
 
-6. VISUAL LANGUAGE
-- Default to the current dark appearance: charcoal/near-black surfaces, subtle gray borders, cool light text, and warm orange VoltPro highlights. Use the existing theme implementation and tokens/styles rather than introducing a competing palette.
-- Keep controls compact and squared with restrained corner rounding, thin borders, and clear hover/active states.
-- Use the established engineering typography: readable interface text with monospaced labels for technical headings and status details.
-- Preserve the light/dark theme switch. Both themes must keep text, symbols, borders, selected states, and menus legible.
-- Use the existing VoltPro and Hephzibah Behulah identity consistently. Do not add a second brand header.
+6. SAFE IMPLEMENTATION RULES
+- Keep existing controls and editor behavior functional. Do not replace working actions with decorative controls or placeholders.
+- Reuse shared shell components and style tokens where practical. Keep tool-specific editor logic isolated.
+- Avoid unrelated model changes, data migrations, or route changes when making a layout update.
+- Verify desktop and narrow layouts, menu opening, panel open/close, selection, save/import/export, simulation entry points, and route navigation before considering a tool aligned.
+- Treat warnings and readiness disclosures as visible product information; do not imply standards or safety validation that the tool has not performed.
 
-7. BEHAVIOR AND ACCESSIBILITY
-- Keep existing controls functional when restyling or reusing the shell. Do not replace working actions with decorative controls or placeholders.
-- Use descriptive accessible names for icon-only buttons, visible keyboard focus, and accurate expanded/pressed states.
-- Keep menus, popovers, and panels above the canvas and usable by mouse and keyboard.
-- Preserve project data, editor state, undo/save behavior, and existing navigation when changing layout.
-- Avoid changing shared editor logic merely to make another tool look similar. Reuse the shell and visual patterns; keep tool-specific behavior isolated.
-
-8. RESPONSIVE RULE
-At wide desktop sizes, match ElectCAD’s full three-part workspace: left rail, canvas, and right dock. As space narrows, reduce gaps and optional brand text before reducing tool access. Keep the top command bar as one row; if all controls cannot fit, use intentional horizontal scrolling rather than clipping or silently removing essential controls. Keep the bottom cross-tool navigation available with horizontal scrolling where necessary. On mobile, panels may overlay the work surface and docks may collapse, but each remains discoverable and operable.
-
-9. APPLYING THIS FORMAT TO ANOTHER TOOL
-- Start from the ElectCAD shell: one header, left icon rail, large central workspace, right contextual dock, and bottom tool navigation.
-- Keep the common VoltPro controls and navigation in familiar positions.
-- Adapt only the central work surface, its tool-specific panels, and its relevant inspector/results content.
-- Compare the finished tool against the live ElectCAD reference at desktop and narrow widths. Confirm that essential controls are visible, panel open/close works, menus are not clipped, and the existing tool actions still work before considering the interface complete.
-
-This document describes the current ElectCAD interface standard for reuse. It is not a claim that every future tool feature already exists in ElectCAD.
+This format preserves ElectCAD as the reference shell while allowing each VoltPro tool to keep a domain-correct canvas and commands. It describes intended reuse; it does not claim that every cross-tool conversion or view already exists.
