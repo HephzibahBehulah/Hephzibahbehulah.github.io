@@ -4,6 +4,7 @@ import type { Kind } from './model';
 type CommandMenusProps = {
   projectMenuRef: RefObject<HTMLDetailsElement | null>;
   starterControls: ReactNode;
+  onStep: () => void;
   onHelp: () => void;
   onAbout: () => void;
   onResults: () => void;
@@ -53,7 +54,7 @@ export function PLCCommandMenus(p: CommandMenusProps) {
     <Menu label="Insert"><Item onClick={() => p.onDraw('no')}>Normally open contact</Item><Item onClick={() => p.onDraw('nc')}>Normally closed contact</Item><Item onClick={() => p.onDraw('coil')}>Output coil</Item><Item onClick={() => p.onDraw('TON')}>On-delay timer</Item><Item onClick={() => p.onDraw('AND')}>AND function block</Item></Menu>
     <Menu label="Project" menuRef={p.projectMenuRef}>{p.starterControls}<div className="projectbar plc-system-project-slot"/><label className="plc-menu-field">Drawing sheet<select aria-label="Drawing sheet" value={p.sheet} onChange={event => p.onSheet(event.target.value)}>{p.sheets.map(sheet => <option key={sheet.id} value={sheet.id}>{sheet.name}</option>)}</select></label><Item onClick={p.onNewSheet}>Add drawing sheet</Item><Item onClick={p.onLoadExample}>Load example project</Item><Item onClick={p.onArduino}>Export Arduino sketch</Item></Menu>
     <Menu label="Electrical"><Item onClick={p.onValidate}>Validate control wiring</Item><Item onClick={p.onArduino}>Export Arduino sketch</Item></Menu>
-    <Menu label="Simulation"><Item disabled={p.running} onClick={p.onReset}>Reset scan memory</Item></Menu>
+    <Menu label="Simulation"><Item disabled={p.running} onClick={p.onStep}>Single scan · 20 ms</Item><Item disabled={p.running} onClick={p.onReset}>Reset scan memory</Item></Menu>
     <Menu label="Reports"><Item onClick={p.onResults}>Simulation results and transitions</Item><Item onClick={p.onExport}>Export PLC project JSON</Item></Menu>
     <Menu label="Tools"><Item onClick={p.onValidate}>Validate program</Item></Menu>
 

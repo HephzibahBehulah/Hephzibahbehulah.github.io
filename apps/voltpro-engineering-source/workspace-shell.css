@@ -55,3 +55,7 @@ html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner button{display:non
 /* PLC keeps the readiness notice once, in the existing bottom navigation. */
 html.vp-plc-template #vpDevelopmentBanner{display:none!important}
 html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{display:none!important}
+
+/* The PLC editor owns its complete single-row bottom bar. */
+html.vp-plc-template #vpBottomNavigation{display:none!important}
+html.vp-plc-template #vpWorkspace{inset:0!important}

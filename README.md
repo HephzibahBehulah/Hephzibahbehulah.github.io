@@ -48,6 +48,12 @@ Zoom buttons, Ctrl+wheel and touch pinch scale the drawing around the fixed canv
 
 Validation: production build, 26 PLC engine/geometry tests, workspace integration checks and browser origin-position measurements. Touch gesture handling shares the tested origin calculation; physical touch-device verification is pending.
 
+### PLC single-row bottom bar
+
+The PLC footer now matches the supplied reference: six workspace links on the left (PLC highlighted), a single Stopped/Running indicator with separate Start and Stop buttons, and one readiness notice on the right. The outer duplicate navigation row is hidden for PLC, and its editor fills the released viewport space. Scan counts, device/wire counts and diagnostics remain anchored inside the canvas; Single scan remains available in Simulation. Navigation preserves the suite’s cached workspaces. ElectCAD and the top toolbar layout are unchanged.
+
+Validation for the bottom-bar update: production build, 26 PLC tests, 27 workspace integration tests and 67 original browser-script checks passed. Browser checks confirmed six workspace links, one readiness notice, a 52 px single row, Start/Stop state changes and advancing scan count.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
