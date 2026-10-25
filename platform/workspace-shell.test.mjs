@@ -18,7 +18,7 @@ const academy = read("apps/voltpro-engineering-source/index.html");
 test("global bottom navigation keeps the required workspace order", () => {
   const block = nav.match(/for\(const \[icon,label,path\]of \[(.*?)\]\)\{const a=link/s)?.[1] || "";
   const labels = [...block.matchAll(/\['[^']*','([^']+)','[^']+'\]/g)].map(match => match[1]);
-  assert.deepEqual(labels, ["VoltPro Simulator", "VoltPro PLC", "VoltPro ElectCAD", "Engineering Tools", "VoltPro Breadboard", "VoltPro Electrical Building"]);
+  assert.deepEqual(labels, ["Simulator", "PLC", "ElectCAD", "Engineering Tools", "Breadboard", "Electrical"]);
 });
 
 test("main portfolio return link is same-tab and part of the persistent shared header", () => {
