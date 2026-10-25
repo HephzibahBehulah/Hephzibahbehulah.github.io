@@ -15,8 +15,17 @@ html.vp-simulator-template.vp-unified-site body{width:100%;height:100dvh;min-hei
 html.vp-simulator-template #vpSiteHeader,
 html.vp-simulator-template #vpDevelopmentBanner,
 html.vp-simulator-template #vpDevelopmentFooter{display:none!important}
-html.vp-simulator-template #vpWorkspace{position:fixed!important;inset:0 0 64px!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+html.vp-simulator-template #vpWorkspace{position:fixed!important;inset:0 0 52px!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
 html.vp-simulator-template #vpWorkspace .vp-workspace-panel,
 html.vp-simulator-template #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
 html.vp-simulator-template #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}
-html.vp-simulator-template #vpBottomNavigation{height:64px;min-height:64px;max-height:64px}
+html.vp-simulator-template #vpBottomNavigation{height:52px;min-height:52px;max-height:52px}
+.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{display:flex;align-items:center;gap:4px;flex:0 0 auto;margin-left:4px;padding-left:6px;border-left:1px solid #35414a}
+.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{height:31px;padding:0 9px;border:1px solid #33414d;border-radius:6px;background:#171f27;color:#dce8ef;cursor:pointer}
+.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls #runBtn{background:#13b9a0;color:#041b19;font-weight:800}
+.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls #simStatus{font:700 8px ui-monospace,monospace;color:#77e7c7;white-space:nowrap}
+.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner{position:static!important;display:flex!important;flex:0 1 auto;min-width:0;width:auto;height:30px;min-height:30px;max-height:30px;overflow:hidden;padding:0 6px;border:1px solid #9c7413;border-radius:5px;font-size:9px;line-height:1.15;text-align:left}
+.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy>span:not(:first-child),.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner button{display:none}
+@media(max-width:760px){.vp-simulator-template #vpBottomNavigation{gap:2px;padding-inline:3px}.vp-simulator-template #vpBottomNavigation a{padding-inline:2px}.vp-simulator-template #vpBottomNavigation a small{display:none}.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{gap:2px;margin-left:1px;padding-left:3px}.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{padding-inline:5px}.vp-simulator-template #vpBottomNavigation #simStatus{display:none}}
+@media(max-width:470px){.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button:not(#runBtn){display:none}}
