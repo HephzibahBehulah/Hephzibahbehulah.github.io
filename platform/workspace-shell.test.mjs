@@ -295,3 +295,11 @@ test("embedded ElectCAD keeps zoom and all five requested top controls reachable
   assert.match(css, /\.toolbar \.zoom-control,html\.vp-electcad-embed \.toolbar \.toolbar-spacer,html\.vp-electcad-embed \.toolbar \.primary-btn\{display:flex!important\}/);
   assert.match(css, /grid-template-rows:46px 48px/);
 });
+
+test("engineering workspace header stays one row and keeps workspace menus out of layout flow",()=>{
+  const experience=read("platform/experience.css");
+  assert.match(experience,/\.hb-engineering #vpSiteHeader\{[\s\S]*?display:flex!important;flex-flow:row nowrap!important/);
+  assert.match(experience,/\.hb-engineering #vpSiteHeader \.hb-utilities\{display:none!important\}/);
+  assert.match(experience,/\.hb-engineering #vpSiteHeader \.vp-site-navigation nav,[\s\S]*?position:absolute!important/);
+  assert.match(experience,/\.hb-engineering #vpSiteHeader \.hb-member-actions\{flex-flow:row nowrap!important/);
+});
