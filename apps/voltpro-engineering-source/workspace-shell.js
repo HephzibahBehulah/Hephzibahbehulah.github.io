@@ -116,7 +116,7 @@
     const themeControl = sharedHeader.querySelector("#vpThemeToggle");
     if (themeControl) themeControl.title = "Switch light or dark theme";
     sharedHeader.querySelectorAll("details[open]").forEach(menu => { menu.open = false; });
-    doc.__vpShellParts = { integrated: true, header: sharedHeader, banner, dialog, brand, zoom, zoomParent, primary, menus, project, status, toolbar, language };
+    doc.__vpShellParts = { integrated: true, header: sharedHeader, banner: null, dialog, brand, zoom, zoomParent, primary, menus, project, status, toolbar, language };
     const app = doc.querySelector(".sim-app");
     if (toolbar.parentElement !== top) top.append(toolbar);
     if (app && (sharedHeader.ownerDocument !== doc || sharedHeader.parentElement !== app)) app.prepend(doc.adoptNode(sharedHeader));
@@ -153,20 +153,7 @@
     sharedHeader.append(utilities);
     sharedHeader.classList.add("vp-simulator-one-row");
     if (toolbar.parentElement === top) toolbar.remove();
-    const simControls = doc.createElement("div");
-    simControls.className = "vp-sim-bottom-controls";
-    for (const id of ["runBtn", "stepBtn", "stopBtn"]) {
-      const control = doc.getElementById(id);
-      if (control) simControls.append(control);
-    }
-    if (status) simControls.append(status);
-    const controls = simControls;
-    if (bottom && controls.parentElement !== bottom) bottom.append(controls);
-    doc.__vpShellParts.bottomControls = controls;
-    if (banner && bottom && banner.parentElement !== bottom) {
-      banner.classList.add("vp-sim-bottom-warning");
-      bottom.append(banner);
-    }
+    if (banner) banner.remove();
     if (dialog && dialog.ownerDocument !== doc) doc.body.append(doc.adoptNode(dialog));
     const workspace = doc.querySelector(".workspace");
     if (workspace) {
