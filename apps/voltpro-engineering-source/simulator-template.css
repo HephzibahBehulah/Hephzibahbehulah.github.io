@@ -298,3 +298,9 @@ body.simulator-page.vp-template-simulator #inspectorPanel .vp-dock-heading,body.
 body.simulator-page.vp-template-simulator #inspectorPanel .vp-dock-panel[data-dock-panel="properties"]{display:flex;flex:1 1 auto;flex-direction:column;min-height:0;overflow:auto}
 body.simulator-page.vp-template-simulator #inspectorPanel #inspectorBody{flex:1 1 auto;min-height:0;overflow:auto}
 body.simulator-page.vp-template-simulator #inspectorPanel .vp-document-settings{flex:0 0 auto}
+
+/* Keep the AI launcher clear of the active document settings. */
+body.simulator-page.vp-template-simulator #inspectorPanel>#vpCircuitDesigner{right:12px!important;bottom:10px!important;width:44px!important;height:44px!important}
+body.simulator-page.vp-template-simulator #inspectorPanel>#vpCircuitDesigner .vp-cd-launch{width:44px!important;height:44px!important;font-size:14px!important}
+body.simulator-page.vp-template-simulator #inspectorPanel>#vpCircuitDesigner .vp-cd-launch::after{top:2px!important;right:2px!important;width:8px!important;height:8px!important;box-shadow:-8px 8px 0 -2px #58cb9c!important}
+body.simulator-page.vp-template-simulator #inspectorPanel .vp-document-settings{margin-bottom:54px}
