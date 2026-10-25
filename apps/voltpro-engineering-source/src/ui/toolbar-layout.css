@@ -94,3 +94,11 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus detail
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{gap:3px!important}
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:10px!important}
 }
+
+/* The shared footer proxies the simulator run controls; keep the originals hidden to avoid duplicates. */
+body.simulator-page.vp-template-simulator .toolbar #runBtn,
+body.simulator-page.vp-template-simulator .toolbar #stopBtn,
+body.simulator-page.vp-template-simulator .toolbar #simStatus{display:none!important}
+#vpBottomNavigation .vp-bottom-sim-state::before{content:"◉";font-size:13px;color:#9aa6ad}
+#vpBottomNavigation .vp-bottom-sim-controls button:disabled{opacity:.42;cursor:not-allowed}
+#vpBottomNavigation .vp-bottom-sim-controls button:disabled:hover{border-color:#303b47;background:#11171e}
