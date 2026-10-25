@@ -9,6 +9,10 @@ test('embedded Simulator follows the compact one-row workspace shell',()=>{
  const layout=read('src/ui/toolbar-layout.js');
  assert.match(css,/\.sim-app\{height:100%;min-height:0;display:grid;grid-template-rows:48px minmax\(0,1fr\)/);
  assert.match(css,/#vpSiteHeader\{position:relative!important[^}]*height:48px/);
+ assert.match(css,/#vpSiteHeader\{grid-row:1;flex-wrap:nowrap/);
+ assert.match(css,/\.sim-top\{display:none!important\}/);
+ assert.match(css,/\.workspace\{grid-row:2/);
+ assert.match(css,/#palette\.open\{transform:translateX\(0\)!important\}/);
  assert.match(css,/\.vp-toolbar-dropdown\{position:absolute[^}]*z-index:1000/);
  assert.match(layout,/pointerenter/);
  assert.match(layout,/makeMenu\('More'\)/);
@@ -35,4 +39,14 @@ test('component rail, inspector tabs, and bottom simulation actions retain live 
  assert.match(shell,/data-dock-tab="results"/);
  assert.match(shell,/\["runBtn", "stepBtn", "stopBtn"\]/);
  assert.match(shell,/restoreSimulatorChrome\(\)/);
+ assert.match(shell,/app\.prepend\(doc\.adoptNode\(sharedHeader\)\)/);
+ assert.match(shell,/sharedHeader\.querySelectorAll\("details\[open\]"\)/);
+ assert.match(shell,/syncResponsivePanels/);
+});
+
+test('Simulator opens on an unobstructed canvas and keeps examples optional',()=>{
+ const analysis=read('src/ui/analysis-studio.js');
+ assert.match(analysis,/welcome\.hidden=true/);
+ assert.match(analysis,/welcome\.hidden=!welcomeOpen\|\|S\.components\.length>0/);
+ assert.match(analysis,/welcomeOpen=!welcomeOpen/);
 });
