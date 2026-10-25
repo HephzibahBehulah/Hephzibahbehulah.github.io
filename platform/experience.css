@@ -75,3 +75,45 @@ html.vp-unified-site body.hb-engineering.simulator-page .sim-app{grid-template-r
 html.vp-unified-site{height:auto!important;min-height:100%;overflow:auto!important}
 .hb-engineering header:not(#vpSiteHeader) img[src*="hb-logo"]{display:none!important}.hb-engineering .aw-header{position:relative!important;top:auto!important;height:auto!important;flex-wrap:wrap;gap:12px;padding:14px!important}.hb-engineering .aw-header nav{display:flex;flex-wrap:wrap;gap:8px}
 .hb-engineering #hbBotLauncher{width:auto!important;padding:8px 12px!important;border-radius:8px!important}.hb-engineering #vpBotLauncher:before,.hb-engineering #vpBotLauncher:after{content:none!important;display:none!important}
+
+/* Engineering workspaces use one measured command row. The workspace and
+   learning menus open as overlays so they never create extra header rows. */
+.hb-engineering #vpSiteHeader{
+  position:fixed!important;inset:0 0 auto!important;height:60px!important;min-height:60px!important;
+  display:flex!important;flex-flow:row nowrap!important;align-items:center!important;justify-content:flex-start!important;
+  grid-template-columns:none!important;gap:8px!important;padding:0 12px!important;overflow:visible!important;
+}
+.hb-engineering #vpSiteHeader .vp-site-brand-group{flex:0 0 auto!important;width:auto!important;min-width:0}
+.hb-engineering #vpSiteHeader .vp-site-brand{flex:0 0 auto!important;width:auto!important}
+.hb-engineering #vpSiteHeader .vp-site-navigation{position:relative!important;inset:auto!important;order:0!important;grid-column:auto!important;flex:0 0 auto!important;width:auto!important;margin:0!important;padding:0!important;border:0!important}
+.hb-engineering #vpSiteHeader .vp-site-navigation>summary{display:flex!important;align-items:center!important;min-height:36px!important;width:auto!important;white-space:nowrap!important}
+.hb-engineering #vpSiteHeader .vp-site-navigation nav,
+.hb-engineering #vpSiteHeader .vp-site-navigation[open] nav{
+  position:absolute!important;inset:calc(100% + 6px) auto auto 0!important;display:grid!important;grid-template-columns:1fr!important;
+  gap:2px!important;min-width:230px!important;max-width:min(360px,calc(100vw - 24px))!important;max-height:calc(100dvh - 84px)!important;
+  overflow:auto!important;flex-wrap:nowrap!important;padding:7px!important;border:1px solid var(--hb-border)!important;
+  border-radius:8px!important;background:var(--hb-surface)!important;box-shadow:0 12px 30px #0009!important;z-index:20002!important
+}
+.hb-engineering #vpSiteHeader .vp-site-navigation:not([open]) nav{display:none!important}
+.hb-engineering #vpSiteHeader .vp-site-navigation nav :is(a,button){min-height:36px!important;white-space:nowrap!important}
+.hb-engineering #vpSiteHeader .vp-shell-controls{display:flex!important;align-items:center!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;gap:6px!important;margin:0!important}
+.hb-engineering #vpSiteHeader .hb-vp-tools{display:flex!important;align-items:center!important;justify-content:flex-end!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;flex-flow:row nowrap!important;gap:6px!important;margin:0 0 0 auto!important}
+.hb-engineering #vpSiteHeader .hb-utilities{display:none!important}
+.hb-engineering #vpSiteHeader .hb-learning-nav{flex:0 0 auto!important}
+.hb-engineering #vpSiteHeader .hb-member-actions{flex-flow:row nowrap!important;flex:0 0 auto!important;gap:6px!important;margin:0!important}
+.hb-engineering #vpSiteHeader .hb-member-actions :is(a,button){min-height:36px!important;padding:7px 9px!important;white-space:nowrap!important}
+.hb-engineering #vpSiteHeader .vp-bot-launcher{flex:0 0 auto!important;min-height:36px!important;height:36px!important;padding:7px 10px!important}
+@media(max-width:1100px){
+  .hb-engineering #vpSiteHeader{overflow-x:auto!important;overflow-y:hidden!important}
+  .hb-engineering #vpSiteHeader .vp-site-navigation nav,
+  .hb-engineering #vpSiteHeader .vp-site-navigation[open] nav{position:fixed!important;inset:60px auto auto 8px!important}
+}
+@media(max-width:900px){
+  .hb-engineering #vpSiteHeader{gap:5px!important;padding-inline:8px!important}
+  .hb-engineering #vpSiteHeader .vp-shell-controls{gap:4px!important}
+  .hb-engineering #vpSiteHeader .vp-main-site-link{padding-inline:6px!important}
+}
+@media(max-width:600px){
+  .hb-engineering #vpSiteHeader .vp-site-navigation nav,
+  .hb-engineering #vpSiteHeader .vp-site-navigation[open] nav{position:fixed!important;inset:60px auto auto 8px!important}
+}
