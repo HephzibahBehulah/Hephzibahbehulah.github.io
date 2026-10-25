@@ -70,7 +70,7 @@ test("cache and deployment version invalidates stale simulator shell and precach
  assert.ok(html.includes('updateViaCache:"none"'));
  assert.ok(html.includes('platform/toolbar-menus.js?v=20261017f'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
- assert.ok(html.includes('simulator.js?v=20261024a'));
+ assert.ok(html.includes('simulator.js?v=20261025b'));
  assert.ok(css.includes(".vp-toolbar-popover"));
 });
 

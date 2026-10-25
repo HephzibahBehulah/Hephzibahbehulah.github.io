@@ -1,95 +1,159 @@
-/* Simulator-only adaptation of the shared ElectCAD workspace frame. */
-html.vp-template-simulator,
-body.vp-template-simulator,
-body.simulator-page.vp-template-simulator {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  margin: 0;
-  overflow: hidden;
+/* Simulator workspace: the ElectCAD shell proportions, scoped to this tool only. */
+html.vp-template-simulator,html.vp-template-simulator body,
+body.simulator-page.vp-template-simulator{width:100%;height:100%;min-height:0;margin:0;overflow:hidden}
+body.simulator-page.vp-template-simulator .sim-app{height:100%;min-height:0;display:grid;grid-template-rows:48px minmax(0,1fr);overflow:hidden}
+body.simulator-page.vp-template-simulator .sim-top{display:contents!important}
+body.simulator-page.vp-template-simulator>.sim-app>.toolbar{display:none!important}
+
+/* One fixed top row: identity, icon menus and the shared site controls. */
+body.simulator-page.vp-template-simulator #vpSiteHeader{position:relative!important;inset:auto!important;z-index:100!important;display:flex!important;width:100%;height:48px;min-height:48px;max-height:48px;gap:6px;padding:0 8px;overflow:visible;background:#101419!important;border-bottom:1px solid #29333e!important;box-sizing:border-box}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group{order:0;gap:6px;flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-main-site-link{font-size:0;padding:7px 9px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-main-site-link::before{content:'↩';font-size:16px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand{display:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{order:1;flex:0 1 155px;min-width:92px;gap:6px;overflow:hidden}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand img{width:28px;height:auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-brand-divider{display:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-brand-product b{font-size:13px}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-brand-product small{font-size:7px;letter-spacing:.08em}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation{order:2;margin:0;flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation>summary{font-size:0;padding:7px 9px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation>summary::before{content:'▣';font-size:15px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav{top:calc(100% + 5px);left:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls{order:8;gap:4px;margin-left:auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls>*{width:34px;height:32px;min-width:34px;padding:0;display:grid;place-items:center;overflow:hidden;white-space:nowrap;font-size:0!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader #vpAboutReadiness::before{content:'ⓘ';font-size:17px}
+body.simulator-page.vp-template-simulator #vpSiteHeader #vpShellLanguage{font-size:10px!important;width:43px;min-width:43px;padding:0 3px}
+body.simulator-page.vp-template-simulator #vpSiteHeader #vpThemeToggle::before{content:'☼';font-size:17px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity{order:9;margin:0;flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity>a,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity summary{width:34px;height:32px;box-sizing:border-box;display:grid;place-items:center;padding:0;font-size:0;overflow:hidden}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity>a::before{content:'♙';font-size:17px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity summary>*:not(.vp-avatar){display:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity .vp-avatar{width:25px;height:25px}
+
+/* Existing project actions retain their event handlers as they move into the header. */
+body.simulator-page.vp-template-simulator #vpSiteHeader .toolbar{display:flex!important;align-items:center;gap:5px;min-width:0;flex:0 1 auto;margin:0;padding:0;border:0;background:transparent;overflow:visible}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{display:flex;align-items:center;gap:4px;flex:0 0 auto;margin:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{order:3}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary button{height:32px;min-width:32px;padding:0 8px;border-radius:6px;font-size:0;white-space:nowrap}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #runBtn{font-size:11px;min-width:58px;padding:0 9px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #simStatus{font-size:8px;margin:0;padding:0 5px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #saveBtn::before{content:'▣';font-size:15px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #undoBtn::before{content:'↶';font-size:18px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #redoBtn::before{content:'↷';font-size:18px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #fitBtn::before{content:'⛶';font-size:16px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #vpProjectName{display:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary .zoom{position:static;right:auto;bottom:auto;z-index:auto;height:32px;margin:0;display:flex;align-items:center;border:1px solid #303b47;border-radius:6px;background:#171d24}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary .zoom button,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary .zoom span{height:30px;padding:0 6px;display:grid;place-items:center;color:#e3edf4;font-size:11px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary .zoom span{min-width:39px;font:10px ui-monospace,monospace}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{display:flex;align-items:center;gap:3px;flex:0 1 auto;min-width:0;margin:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{order:4}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details{position:relative;flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details[open]{z-index:1200}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{display:grid;place-items:center;width:32px;height:32px;box-sizing:border-box;padding:0;border:1px solid #303b47;border-radius:6px;background:#171d24;color:#d6e5f0;font-size:0;cursor:pointer;list-style:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary::-webkit-details-marker{display:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary::before{content:attr(data-icon);font-size:16px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown{position:absolute;top:calc(100% + 5px);left:0;right:auto;z-index:1000;width:min(300px,calc(100vw - 20px));max-height:min(70vh,620px);overflow:auto;padding:8px;background:#111a23;border:1px solid #354654;border-radius:8px;box-shadow:0 14px 36px #000b}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details[data-menu=more]>.vp-toolbar-dropdown{left:auto;right:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown details[data-menu]>summary{display:flex!important;justify-content:flex-start!important;width:auto;height:auto;min-height:34px;padding:5px 8px!important;gap:8px;font-size:12px!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown details[data-menu]>summary::before{font-size:15px!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown details[data-menu]>.vp-toolbar-dropdown{position:static;display:grid;width:auto;max-height:none;overflow:visible;padding:6px 3px;background:#0d141b;border:0;box-shadow:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown .mode-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown .vp-view-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:6px 0;background:transparent;border:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown button,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown a{max-width:100%;white-space:normal;text-align:left}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown label{display:flex;align-items:center;justify-content:space-between;gap:8px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown input{max-width:94px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary .wire-tool{display:none}
+body.simulator-page.vp-template-simulator #vpSiteHeader .top-actions{display:none!important}
+
+/* One bottom row carries navigation, live state, run controls and the warning. */
+html.vp-simulator-template #vpBottomNavigation{position:fixed!important;inset:auto 0 0!important;z-index:200!important;height:52px;min-height:52px;max-height:52px;display:flex;align-items:center;justify-content:stretch;gap:3px;padding:4px 8px calc(4px + env(safe-area-inset-bottom));overflow:hidden;background:#101419!important;border-top:1px solid #303a44!important;box-sizing:border-box}
+html.vp-simulator-template #vpBottomNavigation a{flex:1 1 0;min-width:0;max-width:none;height:36px;gap:5px;padding:3px 5px;font-size:10px}
+html.vp-simulator-template #vpBottomNavigation a>span{font-size:15px}
+html.vp-simulator-template #vpBottomNavigation a small{font-size:9px;overflow:hidden;text-overflow:ellipsis}
+html.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{display:flex;align-items:center;gap:4px;flex:0 0 auto;margin-left:4px;padding-left:6px;border-left:1px solid #35414a}
+html.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{height:31px;padding:0 9px;border:1px solid #33414d;border-radius:6px;background:#171f27;color:#dce8ef;cursor:pointer}
+html.vp-simulator-template #vpBottomNavigation #runBtn{background:#13b9a0;color:#041b19;font-weight:800}
+html.vp-simulator-template #vpBottomNavigation #simStatus{font:700 8px ui-monospace,monospace;color:#77e7c7;white-space:nowrap}
+html.vp-simulator-template #vpBottomNavigation .vp-bottom-dev-note{display:inline-flex;align-items:center;justify-content:center;flex:0 1 auto;max-width:245px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:5px;padding:5px 8px;border:1px solid #a77b15;border-radius:5px;background:#ffdf75;color:#382600;font:700 9px system-ui}
+html.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner{position:static!important;display:flex!important;flex:0 1 auto;min-width:0;width:auto;height:30px;min-height:30px;max-height:30px;overflow:hidden;padding:0 6px;border:1px solid #9c7413;border-radius:5px;font-size:9px;line-height:1.15;text-align:left}
+html.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+html.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy>span:not(:first-child),
+html.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner button{display:none}
+html.vp-simulator-template #vpBottomNavigation .vp-bottom-dev-note{display:none}
+
+/* Four-zone workstation: compact icon rail, parts, drawing and inspector dock. */
+body.simulator-page.vp-template-simulator .workspace{min-width:0;min-height:0;grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) minmax(265px,310px);overflow:hidden}
+body.simulator-page.vp-template-simulator .vp-sim-rail{grid-column:1;grid-row:1;z-index:4;display:flex;flex-direction:column;align-items:center;gap:7px;padding:8px 4px;background:#11171d;border-right:1px solid #29333e}
+body.simulator-page.vp-template-simulator .vp-sim-rail button{width:32px;height:32px;display:grid;place-items:center;border:1px solid #303b46;border-radius:6px;background:#171e25;color:#dbe7ef;font-size:16px;cursor:pointer}
+body.simulator-page.vp-template-simulator .vp-sim-rail button:hover,body.simulator-page.vp-template-simulator .vp-sim-rail button:focus-visible{border-color:#ff9637;color:#ffb36b;outline-offset:2px}
+body.simulator-page.vp-template-simulator #palette{grid-column:2;grid-row:1;width:auto;max-width:none;min-width:0;padding:10px;overflow:auto}
+body.simulator-page.vp-template-simulator #canvasWrap{grid-column:3;grid-row:1;min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-color:#586d7d #121920;scrollbar-width:thin}
+body.simulator-page.vp-template-simulator #canvas{width:max(100%,1800px);height:max(100%,1200px);min-width:1800px;min-height:1200px;max-width:none;max-height:none}
+body.simulator-page.vp-template-simulator #inspectorPanel{grid-column:4;grid-row:1;min-width:0;max-width:none;padding:0;overflow:auto;background:#171b1f;border-left:1px solid #303a43}
+body.simulator-page.vp-template-simulator .vp-dock-heading{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid #303a43;color:#a9c5d7;font:700 10px ui-monospace,monospace;letter-spacing:.12em}
+body.simulator-page.vp-template-simulator .vp-dock-tabs{height:44px;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #303a43;background:#0f1419}
+body.simulator-page.vp-template-simulator .vp-dock-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;color:#c8d8e2;font:600 12px system-ui;cursor:pointer}
+body.simulator-page.vp-template-simulator .vp-dock-tabs button[aria-selected=true]{border-bottom-color:#54d6c2;color:#fff;background:#172027}
+body.simulator-page.vp-template-simulator .vp-dock-panel{padding:12px}
+body.simulator-page.vp-template-simulator .vp-dock-panel[hidden]{display:none!important}
+body.simulator-page.vp-template-simulator .vp-dock-panel>.panel-title:first-child{display:none}
+
+/* CAD drawing sheet: scrollable grid, coordinate rails and an unobtrusive title block. */
+body.simulator-page.vp-template-simulator .vp-sheet-top{position:absolute;top:0;left:0;z-index:8;height:25px;width:max(100%,1800px);display:grid;grid-template-columns:repeat(10,180px);align-items:center;padding-left:26px;box-sizing:border-box;border-bottom:1px solid #53616b;background:#151a1f;color:#b9c5cd;font:10px ui-monospace,monospace;pointer-events:none}
+body.simulator-page.vp-template-simulator .vp-sheet-left{position:absolute;top:25px;left:0;z-index:7;width:26px;height:calc(100% - 25px);display:grid;grid-template-rows:repeat(12,100px);align-items:center;justify-items:center;background:#151a1f;color:#b9c5cd;border-right:1px solid #53616b;font:10px ui-monospace,monospace;pointer-events:none}
+body.simulator-page.vp-template-simulator .vp-title-block{position:absolute;right:14px;bottom:14px;z-index:5;width:300px;max-width:calc(100% - 52px);padding:9px 11px;background:#161a1ddd;border:1px solid #77828a;color:#dce3e8;box-shadow:0 4px 15px #0007;font:9px/1.35 ui-monospace,monospace;pointer-events:none}
+body.simulator-page.vp-template-simulator .vp-title-block strong{display:block;padding-bottom:4px;border-bottom:1px solid #46515a;letter-spacing:.08em}
+body.simulator-page.vp-template-simulator .vp-title-block span{display:block;color:#aab5bd;margin-top:4px}
+body.simulator-page.vp-template-simulator .sim-footer{display:none!important}
+body.simulator-page.vp-template-simulator .canvas-help{position:absolute;z-index:9;left:38px;top:33px;margin:0;width:max-content;max-width:calc(100% - 60px)}
+body.simulator-page.vp-template-simulator .zoom{position:absolute;right:10px;bottom:10px;z-index:9;margin:0}
+body.simulator-page.vp-template-simulator .vp-panel-rail{left:40px!important;right:10px!important}
+body.simulator-page.vp-template-simulator #vpCircuitDesigner{right:326px;bottom:140px;z-index:20}
+body.simulator-page.vp-template-simulator #canvasWrap:has(.vp-panel-view:not([hidden])) .vp-sheet-top,
+body.simulator-page.vp-template-simulator #canvasWrap:has(.vp-panel-view:not([hidden])) .vp-sheet-left,
+body.simulator-page.vp-template-simulator #canvasWrap:has(.vp-panel-view:not([hidden])) .vp-title-block{display:none}
+
+@media(max-width:1400px){
+ body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{flex-basis:115px}
+ body.simulator-page.vp-template-simulator .workspace{grid-template-columns:40px minmax(190px,220px) minmax(0,1fr) minmax(245px,275px)}
+}
+@media(max-width:1100px){
+ body.simulator-page.vp-template-simulator #vpSiteHeader{gap:3px;padding:0 4px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{flex-basis:88px}
+ body.simulator-page.vp-template-simulator .workspace{grid-template-columns:40px minmax(0,1fr) minmax(240px,280px)}
+ body.simulator-page.vp-template-simulator #palette{position:fixed;z-index:30;left:40px;top:48px;bottom:52px;width:min(280px,80vw);transform:translateX(-125%);box-shadow:12px 0 30px #000a}
+ body.simulator-page.vp-template-simulator #palette.open{transform:none}
+ body.simulator-page.vp-template-simulator #canvasWrap{grid-column:2;grid-row:1}
+ body.simulator-page.vp-template-simulator #inspectorPanel{grid-column:3;grid-row:1}
+}
+@media(max-width:760px){
+ body.simulator-page.vp-template-simulator .workspace{grid-template-columns:38px minmax(0,1fr)}
+ body.simulator-page.vp-template-simulator #inspectorPanel{position:fixed;z-index:31;right:0;top:48px;bottom:52px;width:min(310px,88vw);transform:translateX(105%);box-shadow:-12px 0 30px #000a}
+ body.simulator-page.vp-template-simulator .workspace:not(.inspector-hidden) #inspectorPanel{transform:none}
+ body.simulator-page.vp-template-simulator #canvasWrap{grid-column:2;grid-row:1}
+ body.simulator-page.vp-template-simulator #vpCircuitDesigner{right:12px;bottom:66px}
+ html.vp-simulator-template #vpBottomNavigation{gap:2px;padding-inline:3px}
+ html.vp-simulator-template #vpBottomNavigation a{padding-inline:2px}
+ html.vp-simulator-template #vpBottomNavigation a small{display:none}
+ html.vp-simulator-template #vpBottomNavigation .vp-bottom-dev-note{display:none}
+ html.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{gap:2px;margin-left:1px;padding-left:3px}
+ html.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{padding-inline:5px}
+ html.vp-simulator-template #vpBottomNavigation #simStatus{display:none}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown{position:fixed;top:53px;left:6px;right:6px;width:auto;max-height:calc(100dvh - 116px)}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details[data-menu=more]>.vp-toolbar-dropdown{left:6px;right:6px}
+}
+@media(max-width:470px){
+ body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{display:none}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #simStatus{display:none}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls{gap:2px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls>*{width:29px;min-width:29px}
 }
 
-body.simulator-page.vp-template-simulator .sim-app {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  grid-template-rows: 58px minmax(0, 1fr);
-  overflow: hidden;
-}
-
-body.simulator-page.vp-template-simulator .sim-top {
-  min-width: 0;
-  min-height: 58px;
-  height: 58px;
-  gap: 7px;
-  padding: 0 8px;
-  overflow-x: auto;
-  overflow-y: visible;
-  white-space: nowrap;
-  scrollbar-width: thin;
-}
-
-body.simulator-page.vp-template-simulator .sim-top > .brand,
-body.simulator-page.vp-template-simulator .sim-top > .mode-tabs,
-body.simulator-page.vp-template-simulator .sim-top > .toolbar-group,
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group,
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation,
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls,
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity {
-  flex: 0 0 auto;
-}
-
-body.simulator-page.vp-template-simulator .sim-top > .brand { order: 1; min-width: 170px; }
-body.simulator-page.vp-template-simulator .sim-top > .mode-tabs { order: 2; }
-body.simulator-page.vp-template-simulator .sim-top > .vp-view-tabs {
-  order: 3;
-  flex: 0 0 auto;
-  gap: 3px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-}
-body.simulator-page.vp-template-simulator .vp-view-tabs button,
-body.simulator-page.vp-template-simulator .vp-view-tabs a { padding: 6px 8px; font-size: 10px; }
-body.simulator-page.vp-template-simulator #vpSiteHeader { display: contents !important; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group { order: 3; margin: 0; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand { display: none; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-main-site-link { padding: 7px 8px; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation { order: 4; margin: 0; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls { order: 5; margin: 0; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity { order: 6; margin: 0; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav { z-index: 30; }
-
-body.simulator-page.vp-template-simulator .top-actions { display: none !important; }
-body.simulator-page.vp-template-simulator .toolbar,
-body.simulator-page.vp-template-simulator .toolbar.vp-clean-toolbar { display: contents !important; }
-body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-primary,
-body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-menus {
-  flex: 0 0 auto;
-  flex-wrap: nowrap !important;
-  gap: 4px;
-  margin: 0;
-}
-body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-primary { order: 7; }
-body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-menus { order: 8; }
-body.simulator-page.vp-template-simulator .toolbar-group button { padding: 6px 8px; }
-body.simulator-page.vp-template-simulator .toolbar-group label { white-space: nowrap; }
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group { order: 0; }
-
-body.simulator-page.vp-template-simulator .workspace {
-  min-height: 0;
-  grid-template-columns: minmax(205px, 250px) minmax(0, 1fr) minmax(250px, 290px);
-}
-
-body.simulator-page.vp-template-simulator .sim-footer { display: none !important; }
-
-@media (max-width: 1000px) {
-  body.simulator-page.vp-template-simulator .workspace { grid-template-columns: minmax(190px, 220px) minmax(0, 1fr); }
-}
-
-@media (max-width: 650px) {
-  body.simulator-page.vp-template-simulator .sim-top { min-height: 54px; height: 54px; }
-  body.simulator-page.vp-template-simulator .sim-app { grid-template-rows: 54px minmax(0, 1fr); }
-  body.simulator-page.vp-template-simulator .workspace { grid-template-columns: minmax(0, 1fr); }
-  body.simulator-page.vp-template-simulator .palette { top: 54px; bottom: 0; }
-}
+/* Keep component names, values, and pins readable over the schematic grid. */
+body.simulator-page.vp-template-simulator .component-label{font-size:12px;font-weight:850;paint-order:stroke;stroke:#07111d;stroke-width:3px;stroke-linejoin:round}
+body.simulator-page.vp-template-simulator .component-value{font-size:11px;font-weight:750;paint-order:stroke;stroke:#07111d;stroke-width:2.5px;stroke-linejoin:round}
+body.simulator-page.vp-template-simulator.light .component-label,body.simulator-page.vp-template-simulator.light .component-value{stroke:#f4f7f8}
