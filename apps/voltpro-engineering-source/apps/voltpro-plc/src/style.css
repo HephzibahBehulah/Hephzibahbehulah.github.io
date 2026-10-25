@@ -222,3 +222,26 @@
 @media(max-width:760px){.plc-unified-bottom>nav>a>span:last-child{display:none}.plc-unified-bottom>nav>a{padding:0 5px}.plc-unified-bottom .plc-run-controls{gap:4px;padding-left:5px}.plc-unified-bottom .plc-run-controls button,.plc-unified-bottom .plc-bottom-state{padding:0 6px;font-size:10px}}
 
 .plc-app .plc-ai{bottom:64px}
+/* Match the reference drawing viewport, ruler density and fixed title block. */
+.plc-app .canvas.dock-visible{right:280px}
+.plc-app .properties{width:280px}
+.plc-app .canvas{background:#121212!important;background-image:none!important}
+.plc-app .react-flow{background:#121212}
+.plc-app .plc-scroll-viewport{inset:21px 26px 22px 26px}
+.plc-dynamic-rulers .plc-ruler{background:#17191aeb;color:#9ca8ae;font:8px ui-monospace,monospace}
+.plc-dynamic-rulers .plc-ruler-top,.plc-dynamic-rulers .plc-ruler-bottom{left:26px;right:26px;height:21px}
+.plc-dynamic-rulers .plc-ruler-left,.plc-dynamic-rulers .plc-ruler-right{top:21px;bottom:22px;width:26px}
+.plc-dynamic-rulers .plc-ruler span{border-color:#343a3e}
+.plc-app .canvas .canvas-caption{left:34px;top:28px;padding:5px 8px;font-size:9px}
+.plc-app .canvas .plc-title-block{right:28px!important;bottom:23px;width:min(310px,54%);max-width:calc(100% - 60px);min-height:122px;padding:8px 9px 4px;background:#171a1bf0;font-size:8px}
+.plc-app .canvas .plc-title-block>strong,.plc-app .canvas .plc-title-block>b{margin-bottom:4px;font-size:9px}
+.plc-app .canvas .plc-title-block>label,.plc-app .canvas .plc-title-grid label{font-size:6px;gap:2px}
+.plc-app .canvas .plc-title-block input{font-size:8px;padding:1px 0}
+.plc-app .canvas .plc-title-grid{gap:4px 9px;padding:4px 0}
+.plc-app .canvas .plc-title-block>small{font-size:6px;padding-top:3px}
+.plc-canvas-coordinates{position:absolute;z-index:7;bottom:24px;left:32px;display:flex;gap:8px;color:#91a0a8;font:8px ui-monospace,monospace;pointer-events:none}
+.plc-app .canvas .plc-canvas-status{bottom:42px;font-size:9px}
+.plc-app .react-flow__background pattern circle{fill:rgba(255,255,255,.05)!important}
+@media(max-width:760px){.plc-app .canvas.dock-visible{right:0}.plc-app .properties{width:min(280px,88vw)}}
+
+.plc-empty-canvas{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:12px;max-width:80%;color:#8098a5;text-align:center;pointer-events:none;font-size:11px}.plc-empty-canvas svg{color:#58d9c2}.plc-empty-canvas strong{color:#dce6ee;font-size:14px}

@@ -38,7 +38,7 @@ Validation: PLC TypeScript/production build, 21 engine tests and 27 workspace in
 
 ### PLC expanding canvas
 
-The PLC drawing camera fills the canvas and supports native horizontal/vertical scrollbars, wheel/trackpad panning, drag panning, Ctrl+wheel/pinch zoom and existing grid snapping. Model space grows in either direction as its edges are approached, without an A3 page boundary. Numbered and lettered rulers follow camera translation and zoom, with columns 0–10,000 and rows A–ZZ. The complete range is reachable with the scrollbars. Editable title fields and canvas status remain fixed to the canvas viewport, including when panels open or close. Starter projects, all ten library examples and the blank-project action live inside Project (between Insert and Electrical). No startup panel takes space above the canvas. Blank projects reset the camera to the origin. Toolbar layout is unchanged.
+The PLC drawing camera fills the canvas and supports native horizontal/vertical scrollbars, wheel/trackpad panning, drag panning, Ctrl+wheel/pinch zoom and existing grid snapping. The labelled worksheet spans 0–10,000 by A–ZZ without an A3 page boundary; the camera stays inside that labelled area so zooming out cannot expose an unlabelled viewport. Numbered and lettered rulers follow camera translation and zoom, with columns 0–10,000 and rows A–ZZ. The complete range is reachable with the scrollbars. Editable title fields and canvas status remain fixed to the canvas viewport, including when panels open or close. Starter projects, all ten library examples and the blank-project action live inside Project (between Insert and Electrical). No startup panel takes space above the canvas. Blank projects reset the camera to the origin. Toolbar layout is unchanged.
 
 Validation: PLC build, 25 engine/canvas geometry tests, 27 workspace integration checks and browser checks for two-axis scrolling, zoom and fixed overlay positions.
 
@@ -63,6 +63,12 @@ The canvas fills the space between the toolbar and bottom navigation. A 200 mm m
 Existing room, device, orthogonal connection, validation, reference assignment, schedule, save/open, undo/redo and export actions are retained. Loading a project applies its title fields before saving, preventing the previous project's metadata from replacing imported metadata. No project schema change is required.
 
 Validation: 12 targeted document, routing and viewport tests; browser checks for ruler endpoints, zoomed placement, two-axis pan, room drawing, orthogonal connections, anchored title position, saved project recovery, readiness dialog and shared-header restoration. Physical touch-device and print-output verification remain pending. PLC source files are unchanged.
+
+### PLC canvas reference alignment
+
+PLC uses the supplied ElectCAD images as its canvas reference only. Rulers now use the same 100-unit divisions, with fixed-size text: a 950-unit-wide view shows 0–9 at 100% and 0–37 at 25%. The model grid combines subtle 20-unit dots with major lines every ten grid intervals. Camera bounds keep labels visible at worksheet edges across zoom levels. The inspector reserves its own 280 px column, and a compact editable title block stays inside the visible drawing viewport. The unused minimap is removed. Coordinates and zoom appear at the lower-left; diagnostics remain visible when needed. Completed top and bottom bars and ElectCAD files are unchanged.
+
+Validation: production build, 27 PLC engine/geometry tests and 27 workspace integration tests passed. Browser comparison at 100% and 25% confirmed increased ruler coverage, readable labels and identical origin/title-block positions.
 
 ### Documentation maintenance
 
