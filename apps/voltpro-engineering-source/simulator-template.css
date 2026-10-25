@@ -366,3 +366,7 @@ body.simulator-page.vp-template-simulator .vp-title-block footer{padding-top:6px
 }
 body.simulator-page.vp-template-simulator .vp-title-block input{background:transparent!important;border:0!important;border-bottom:1px solid #39434b!important;box-shadow:none!important}
 body.simulator-page.vp-template-simulator .vp-title-block input:focus{background:transparent!important;border-bottom-color:#59d8c4!important}
+
+/* Keep the drawing identification block inside columns 24–36 and rows N–S. */
+body.simulator-page.vp-template-simulator .vp-title-block{right:38px!important;bottom:38px!important;width:calc(var(--vp-col-pitch,36px)*13)!important;height:calc(var(--vp-row-pitch,38px)*6)!important;max-width:none!important;box-sizing:border-box!important;overflow:hidden!important}
+@media(max-width:760px){body.simulator-page.vp-template-simulator .vp-title-block{right:32px!important;bottom:32px!important;width:calc(var(--vp-col-pitch,28px)*13)!important;height:calc(var(--vp-row-pitch,32px)*6)!important}}

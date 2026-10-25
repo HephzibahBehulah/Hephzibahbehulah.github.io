@@ -323,6 +323,8 @@
           const availableHeight = Math.max(0, canvasFrame.clientHeight - 50);
           const columnPitch = (availableWidth / 37) * (zoom / .25);
           const rowPitch = (availableHeight / 19) * (zoom / .25);
+          titleBlock.style.setProperty('--vp-col-pitch', columnPitch + 'px');
+          titleBlock.style.setProperty('--vp-row-pitch', rowPitch + 'px');
           const pan = state.pan || {};
           const xOffset = canvasWrap.scrollLeft - (Number(pan.x) || 0);
           const yOffset = canvasWrap.scrollTop - (Number(pan.y) || 0);
