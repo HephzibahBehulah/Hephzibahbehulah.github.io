@@ -96,8 +96,8 @@ html.vp-unified-site{height:auto!important;min-height:100%;overflow:auto!importa
 }
 .hb-engineering #vpSiteHeader .vp-site-navigation:not([open]) nav{display:none!important}
 .hb-engineering #vpSiteHeader .vp-site-navigation nav :is(a,button){min-height:36px!important;white-space:nowrap!important}
-.hb-engineering #vpSiteHeader .vp-shell-controls{display:flex!important;align-items:center!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;gap:6px!important;margin:0 0 0 auto!important}
-.hb-engineering #vpSiteHeader .hb-vp-tools{display:flex!important;align-items:center!important;justify-content:flex-end!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;flex-flow:row nowrap!important;gap:6px!important;margin:0!important}
+.hb-engineering #vpSiteHeader .vp-shell-controls{display:flex!important;align-items:center!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;gap:6px!important;margin:0!important}
+.hb-engineering #vpSiteHeader .hb-vp-tools{display:flex!important;align-items:center!important;justify-content:flex-end!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;flex-flow:row nowrap!important;gap:6px!important;margin:0 0 0 auto!important}
 .hb-engineering #vpSiteHeader .hb-utilities{display:none!important}
 .hb-engineering #vpSiteHeader .hb-learning-nav{flex:0 0 auto!important}
 .hb-engineering #vpSiteHeader .hb-member-actions{flex-flow:row nowrap!important;flex:0 0 auto!important;gap:6px!important;margin:0!important}
