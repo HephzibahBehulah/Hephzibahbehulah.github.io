@@ -39,6 +39,28 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity .vp-av
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity details:not([open]) .vp-account-menu{display:none!important}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity .vp-account-menu{position:absolute;top:calc(100% + 5px);right:8px;z-index:1800;display:grid;gap:7px;width:max-content;min-width:190px;max-width:min(330px,calc(100vw - 16px));max-height:calc(100dvh - 64px);overflow:auto;padding:10px;background:#111a23;border:1px solid #354654;border-radius:8px;box-shadow:0 14px 36px #000b}
 
+/* Match the ElectCAD toolbar: one fixed row with labeled menus and the compact simulator identity. */
+body.simulator-page.vp-template-simulator #vpSiteHeader{flex-wrap:nowrap!important;white-space:nowrap}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{flex:0 0 auto;max-width:178px;gap:6px}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-brand-product{display:flex;align-items:baseline;gap:4px;min-width:0;white-space:nowrap}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-brand-product b{font-size:13px}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-brand-product small{font:600 12px/1.2 system-ui,sans-serif;letter-spacing:0;color:#ff9637}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-product-mark{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #9b5b1d;border-radius:6px;background:#302014;color:#ff9637;font-size:18px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #vpProjectName{display:block;width:160px;max-width:13vw;min-width:112px;height:32px;box-sizing:border-box;padding:0 9px;border:1px solid #303b47;border-radius:6px;background:#11171e;color:#e3edf4;font-size:11px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-project{order:3;display:flex;align-items:center;min-width:0;flex:0 1 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-project #vpProjectName{display:block;width:160px;max-width:13vw;min-width:112px;height:32px;box-sizing:border-box;padding:0 9px;border:1px solid #303b47;border-radius:6px;background:#11171e;color:#e3edf4;font-size:11px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-project #vpProjectName::placeholder{color:#9dafbd}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{order:5}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{order:4}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation{order:7}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #saveBtn{background:#ff922e;color:#111;border-color:#ff922e}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #saveBtn::before{content:'▣';font-size:15px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{flex:1 1 auto;justify-content:center;gap:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details{flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{display:block;width:auto;height:32px;padding:0 5px;border:0;background:transparent;color:#e4edf4;font:11px/32px system-ui,sans-serif}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary::before{content:none!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary::after{content:none}
+
 /* Existing project actions retain their event handlers as they move into the header. */
 body.simulator-page.vp-template-simulator #vpSiteHeader .toolbar{display:flex!important;align-items:center;gap:5px;min-width:0;flex:0 1 auto;margin:0;padding:0;border:0;background:transparent;overflow:visible}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{display:flex;align-items:center;gap:4px;flex:0 0 auto;margin:0}

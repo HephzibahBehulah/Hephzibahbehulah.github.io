@@ -30,6 +30,7 @@
     if (toolbar) {
       if (parts.primary) toolbar.append(parts.primary);
       if (parts.menus) toolbar.append(parts.menus);
+      if (parts.project) toolbar.append(parts.project);
       if (parts.bottomControls) {
         const controls = doc.createElement("div"); controls.className = "toolbar-group"; controls.setAttribute("role", "group"); controls.setAttribute("aria-label", "Simulation controls");
         for (const id of ["runBtn", "stepBtn", "stopBtn"]) { const node = doc.getElementById(id); if (node) controls.append(node); }
@@ -82,9 +83,24 @@
     const banner = document.getElementById("vpDevelopmentBanner");
     const dialog = document.getElementById("vpReadinessDialog");
     const brand = top.querySelector(":scope > .brand");
+    if (brand) {
+      const title = brand.querySelector(".vp-brand-product b");
+      const subtitle = brand.querySelector(".vp-brand-product small");
+      if (title) title.textContent = "VoltPro";
+      if (subtitle) subtitle.textContent = "Simulator";
+      if (!brand.querySelector(".vp-product-mark")) {
+        const mark = doc.createElement("span");
+        mark.className = "vp-product-mark";
+        mark.setAttribute("aria-hidden", "true");
+        mark.textContent = "⚡";
+        const product = brand.querySelector(".vp-brand-product");
+        if (product) brand.insertBefore(mark, product);
+      }
+    }
     const zoom = doc.querySelector(".zoom");
     const zoomParent = zoom?.parentElement;
     const primary = toolbar.querySelector(".vp-toolbar-primary");
+    const project = toolbar.querySelector(".vp-toolbar-project");
     const menus = toolbar.querySelector(".vp-toolbar-menus");
     const status = toolbar.querySelector("#simStatus");
     const language = sharedHeader.querySelector("#vpShellLanguage");
@@ -97,7 +113,7 @@
     const themeControl = sharedHeader.querySelector("#vpThemeToggle");
     if (themeControl) themeControl.title = "Switch light or dark theme";
     sharedHeader.querySelectorAll("details[open]").forEach(menu => { menu.open = false; });
-    doc.__vpShellParts = { integrated: true, header: sharedHeader, banner, dialog, brand, zoom, zoomParent, primary, menus, status, toolbar, language };
+    doc.__vpShellParts = { integrated: true, header: sharedHeader, banner, dialog, brand, zoom, zoomParent, primary, menus, project, status, toolbar, language };
     const app = doc.querySelector(".sim-app");
     if (toolbar.parentElement !== top) top.append(toolbar);
     if (app && (sharedHeader.ownerDocument !== doc || sharedHeader.parentElement !== app)) app.prepend(doc.adoptNode(sharedHeader));
@@ -107,8 +123,9 @@
       language.setAttribute("aria-label", "Language selector");
       language.querySelectorAll("option").forEach(option => { option.dataset.fullLabel ||= option.textContent; option.textContent = option.value.toUpperCase(); });
     }
-    if (primary) sharedHeader.append(primary);
+    if (project) sharedHeader.append(project);
     if (menus) sharedHeader.append(menus);
+    if (primary) sharedHeader.append(primary);
     if (toolbar.parentElement === top) toolbar.remove();
     const simControls = doc.createElement("div");
     simControls.className = "vp-sim-bottom-controls";
