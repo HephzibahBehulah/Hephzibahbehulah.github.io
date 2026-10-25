@@ -51,3 +51,7 @@ html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-ba
 html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner button{display:none}
 @media(max-width:1100px){html.vp-plc-template #vpBottomNavigation>a small{display:none}html.vp-plc-template #vpBottomNavigation>a{padding-inline:3px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status{gap:4px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status>span:nth-of-type(n+2){display:none}html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{flex-basis:150px}}
 @media(max-width:760px){html.vp-plc-template #vpBottomNavigation{gap:1px;padding-inline:2px}html.vp-plc-template #vpBottomNavigation>a{padding-inline:2px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status{padding-left:4px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status button{padding-inline:5px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status output,html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{display:none!important}}
+
+/* PLC keeps the readiness notice once, in the existing bottom navigation. */
+html.vp-plc-template #vpDevelopmentBanner{display:none!important}
+html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{display:none!important}
