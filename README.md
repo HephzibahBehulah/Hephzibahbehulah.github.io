@@ -54,6 +54,16 @@ The PLC footer now matches the supplied reference: six workspace links on the le
 
 Validation for the bottom-bar update: production build, 26 PLC tests, 27 workspace integration tests and 67 original browser-script checks passed. Browser checks confirmed six workspace links, one readiness notice, a 52 px single row, Start/Stop state changes and advancing scan count.
 
+### Electrical building-plan workspace
+
+The `/electrical` route uses its dedicated BuildingCAD editor. Its single 50 px toolbar contains File, Edit, View, Insert, Project and Electrical menus plus grid, zoom, save/export and Workspace controls. Blank-project and open-project actions live inside Project; Electrical has no fabricated set of ten starter examples. Shared account, language, theme and readiness controls remain available in Workspace, with the shared header restored when switching away.
+
+The canvas fills the space between the toolbar and bottom navigation. A 200 mm model grid uses virtual rulers spanning 0–10,000 horizontally and A–ZZ vertically. The scrollable model accommodates existing objects beyond the former 80 × 42 boundary. Scrollbars, background/Space/middle-button drag panning, zoom buttons, Ctrl+wheel and pinch use the same camera coordinates. Placement and device dragging retain integer grid snapping; the drawing title block and status remain anchored while the drawing moves. The library and inspector overlay the canvas, close when the pointer leaves and remain available from the panel rail. The inspector stops above the title block so its fields remain editable.
+
+Existing room, device, orthogonal connection, validation, reference assignment, schedule, save/open, undo/redo and export actions are retained. Loading a project applies its title fields before saving, preventing the previous project's metadata from replacing imported metadata. No project schema change is required.
+
+Validation: 12 targeted document, routing and viewport tests; browser checks for ruler endpoints, zoomed placement, two-axis pan, room drawing, orthogonal connections, anchored title position, saved project recovery, readiness dialog and shared-header restoration. Physical touch-device and print-output verification remain pending. PLC source files are unchanged.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.

@@ -5,46 +5,43 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#151515">
   <title>VoltPro BuildingCAD</title>
+  <link rel="stylesheet" href="src/ui/site-shell.css">
   <link rel="stylesheet" href="electrical-canvas.css">
   <link rel="stylesheet" href="workspace-engineering-theme.css">
   <script type="module" src="electrical-canvas.js"></script>
 </head>
 <body class="building-cad">
   <header class="cad-toolbar">
-    <div class="cad-brand"><a href="https://hephzibahbehulah.com/" target="_top" rel="noopener">← Main Site</a><strong>VoltPro <span>Electrical Building</span></strong><small>Architectural installation plan · design aid</small></div>
-    <div class="cad-toolbar-actions">
-      <span class="scale-label">Grid: 200 mm / square</span>
-      <label>Title block scale <select id="drawingScale"><option>1:50</option><option>1:100</option><option>1:200</option></select></label>
-      <button id="savePlan" type="button">Save</button>
-      <button id="exportPlan" type="button">Export JSON</button>
-    </div>
+    <div class="cad-brand"><a href="https://hephzibahbehulah.com/" target="_top">← Main Site</a><a class="cad-company" href="https://hephzibahbehulah.com/" target="_top" aria-label="Hephzibah Behulah"><img src="/_hb/hb-logo.svg" alt="HB"></a><strong>⚡ VoltPro <span>Electrical</span></strong></div>
+    <nav class="cad-menubar" aria-label="Drawing commands">
+      <details><summary>File</summary><div class="cad-menu"><button data-command="new">New project</button><button data-command="open">Open project JSON…</button><button data-command="save">Save project</button><button data-command="export">Export project JSON</button><button data-command="print">Print drawing…</button></div></details>
+      <details><summary>Edit</summary><div class="cad-menu"><button data-command="undo">Undo</button><button data-command="redo">Redo</button><button data-command="delete">Delete selected object</button></div></details>
+      <details><summary>View</summary><div class="cad-menu"><button data-command="zoom-in">Zoom in</button><button data-command="zoom-out">Zoom out</button><button data-command="fit">Fit drawing</button><button data-command="origin">Show plan origin</button><button data-panel="library">Installation objects</button><button data-panel="properties">Properties</button><label><input type="checkbox" data-layer="architecture" checked> Architecture</label><label><input type="checkbox" data-layer="power" checked> Power devices</label><label><input type="checkbox" data-layer="data" checked> Data devices</label></div></details>
+      <details><summary>Insert</summary><div class="cad-menu"><button data-command="select">Select / move</button><button data-command="pan">Pan drawing</button><button data-command="room">Room boundary</button><button data-command="wire">Orthogonal connection</button></div></details>
+      <details><summary>Project</summary><div class="cad-menu"><button data-command="new">Start with a blank project</button><button data-command="open">Open project JSON…</button><label>Title block scale <select id="drawingScale"><option>1:50</option><option>1:100</option><option>1:200</option></select></label></div></details>
+      <details><summary>Electrical</summary><div class="cad-menu"><button data-command="validate">Validate drawing</button><button data-command="references">Assign missing references</button><button data-command="schedule">Device schedule</button></div></details>
+    </nav>
+    <div class="cad-toolbar-actions"><button data-command="pan" aria-label="Pan drawing">✥</button><button data-command="grid" aria-label="Toggle drawing grid" aria-pressed="true">Grid</button><span class="cad-snap" data-grid-description="200 mm / square" title="Device and room placement snap to the 200 mm model grid">Snap: 200 mm</span><button data-command="zoom-out" aria-label="Zoom out">−</button><button id="zoomLevel" data-command="fit" aria-label="Fit drawing">100%</button><button data-command="zoom-in" aria-label="Zoom in">+</button><button id="savePlan" type="button">Save</button><button id="exportPlan" type="button">Export</button><details class="cad-workspace-menu"><summary>Workspace</summary><div id="electricalShellControls" class="cad-menu"><a href="/workspace" target="_top">My workspace</a><a href="/status" target="_top">About &amp; readiness</a></div></details></div>
   </header>
-  <nav class="cad-menubar" aria-label="Drawing commands">
-    <details><summary>File</summary><div class="cad-menu"><button data-command="new">New project</button><button data-command="open">Open project JSON…</button><button data-command="save">Save project</button><button data-command="export">Export project JSON</button><button data-command="print">Print drawing…</button></div></details>
-    <details><summary>Edit</summary><div class="cad-menu"><button data-command="undo">Undo</button><button data-command="redo">Redo</button><button data-command="delete">Delete selected object</button></div></details>
-    <details><summary>Draw</summary><div class="cad-menu"><button data-command="select">Select / move</button><button data-command="room">Room boundary</button><button data-command="wire">Orthogonal connection</button></div></details>
-    <details><summary>Tools</summary><div class="cad-menu"><button data-command="validate">Validate drawing</button><button data-command="references">Assign missing references</button><button data-command="schedule">Device schedule</button></div></details>
-    <details><summary>View</summary><div class="cad-menu"><label><input type="checkbox" data-layer="architecture" checked> Architecture</label><label><input type="checkbox" data-layer="power" checked> Power devices</label><label><input type="checkbox" data-layer="data" checked> Data devices</label><button data-command="fit">Show plan origin</button></div></details>
-    <span id="commandStatus" role="status">Ready · local project</span>
-  </nav>
   <input id="projectFile" type="file" accept="application/json,.json" hidden>
   <div class="cad-layout">
+    <nav class="cad-rail" aria-label="Electrical panels"><button data-panel="library" aria-label="Installation objects" aria-expanded="false">▦</button><button data-panel="properties" aria-label="Properties" aria-expanded="false">⚙</button></nav>
     <aside class="cad-library" aria-label="Building installation components">
-      <h2>Installation Objects</h2><p>Drag a typed electrical device onto the measured plan or select it, then click the grid.</p>
+      <div class="cad-panel-heading"><h2>Installation Objects</h2><button data-close-panel="library" aria-label="Close installation objects">×</button></div><p>Drag a typed electrical device onto the measured plan or select it, then click the grid.</p>
       <div id="componentLibrary"></div>
       <p class="cad-hint">Plan object markers are not licensed IEC 60617 symbols. Select and verify a project symbol set before issuing a formal drawing.</p>
     </aside>
     <main class="cad-editor">
       <div class="cad-workarea" id="workarea" aria-label="Building plan with coordinate rulers">
-        <div class="ruler-corner" aria-hidden="true">m</div>
+        <div class="ruler-corner" aria-hidden="true">200 mm</div>
         <div class="top-ruler" aria-hidden="true"><div id="topRulerTicks"></div></div>
         <div class="left-ruler" aria-hidden="true"><div id="leftRulerTicks"></div></div>
         <div class="plan-scroll" id="planScroll">
-          <div class="plan-surface" id="planSurface" aria-label="Electrical building plan, 20 centimetre grid">
+          <div id="planExtent" class="plan-extent"><div class="plan-surface" id="planSurface" aria-label="Electrical building plan, 20 centimetre grid">
             <svg class="wire-layer" id="wireLayer" role="img" aria-label="Orthogonal electrical cable routes"></svg>
             <div class="room-layer" id="roomLayer" aria-label="Room boundaries"></div>
             <div class="node-layer" id="nodeLayer"></div>
-          </div>
+          </div></div>
         </div>
       </div>
       <section class="title-block" aria-label="Editable drawing title block">
@@ -56,10 +53,11 @@
         <label>Scale <input id="titleScale" value="1:50" maxlength="12"></label>
         <label>Drafter <input id="drafter" value="VoltPro user" maxlength="60"></label>
       </section>
+      <span id="commandStatus" role="status">Ready · local project</span>
       <p class="cad-status" id="status" role="status">Select a component. One grid square represents 200 mm in the model.</p>
     </main>
     <aside class="cad-properties" aria-label="Selected component properties">
-      <h2>Properties</h2>
+      <div class="cad-panel-heading"><h2>Properties</h2><button data-close-panel="properties" aria-label="Close properties">×</button></div>
       <p id="emptyProperties">Select a component to edit its name, room, and voltage.</p>
       <form id="roomPropertiesForm" hidden>
         <label>Room object ID <input id="roomId" readonly></label>
@@ -80,6 +78,6 @@
       </form>
     </aside>
   </div>
-  <footer class="cad-footer"><span>Plan model units: millimetres · Grid is a drafting aid</span><span id="validationState">Not checked against an installation profile</span><span>Educational use · qualified design and verification required</span></footer>
+  <footer class="cad-footer"><span>Plan model units: millimetres · Grid is a drafting aid</span><span id="validationState">Not checked against an installation profile</span><span>Development · Not for production documentation · <a href="/status" target="_top">readiness &amp; limitations</a></span></footer>
 </body>
 </html>
