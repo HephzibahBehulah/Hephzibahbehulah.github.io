@@ -1,3 +1,4 @@
+import { CanvasRulers } from './CanvasViewport';
 import { useRef, useState } from 'react';
 import { useReactFlow, useViewport } from '@xyflow/react';
 import { ArrowLeft, ArrowLeftRight, BookOpen, ChevronDown, CircuitBoard, Folder, FolderOpen, Globe2, Grid2X2, Info, Magnet, Minus, Moon, Plus, Save, Sun, Zap, PanelRightClose, Play, Search, Settings, SlidersHorizontal, Square, StepForward } from 'lucide-react';
@@ -148,10 +149,7 @@ export function WorkspaceLayout(p: Props) {
 
       <section className={'canvas canvas-view-' + s.view + (s.right ? ' dock-visible' : '')}>
         {s.view === 'plc' ? <PLCIOView project={s.project}/> : <Canvas add={draw}/>}
-        <div className="plc-ruler plc-ruler-top" aria-label="PLC drawing columns">{Array.from({ length: 10 }, (_, i) => <span key={i}>{i}</span>)}</div>
-        <div className="plc-ruler plc-ruler-bottom" aria-hidden="true">{Array.from({ length: 10 }, (_, i) => <span key={i}>{i}</span>)}</div>
-        <div className="plc-ruler plc-ruler-left" aria-label="PLC drawing rows">{Array.from({ length: 6 }, (_, i) => <span key={i}>{String.fromCharCode(65 + i)}</span>)}</div>
-        <div className="plc-ruler plc-ruler-right" aria-hidden="true">{Array.from({ length: 6 }, (_, i) => <span key={i}>{String.fromCharCode(65 + i)}</span>)}</div>
+        <CanvasRulers/>
         <div className="canvas-caption">PLC logic workspace · drag to pan · Ctrl+wheel to zoom<span>{s.view === 'ladder' ? 'LADDER' : s.view === 'fbd' ? 'FUNCTION BLOCK DIAGRAM' : 'PLC I/O'}</span></div>
         <div className={'plc-canvas-status ' + (s.running ? 'running' : '')} role="status">{s.running ? 'RUNNING · 20 ms PLC scan' : 'STOPPED · Run to monitor PLC logic'}</div>
         <section className="plc-title-block" aria-label="PLC program identification"><strong>HEPHZIBAH BEHULAH</strong><b>PLC PROGRAM IDENTIFICATION</b><label>PROJECT NAME<input value={s.project.name} maxLength={100} onChange={e => usePLC.setState({ project: { ...s.project, name: e.target.value } })}/></label><div className="plc-title-grid"><label>DRAFTER<input value={title.drafter} maxLength={80} onChange={e => p.onUpdateTitle({ drafter: e.target.value })}/></label><label>DATE<input type="date" value={title.date} onChange={e => p.onUpdateTitle({ date: e.target.value })}/></label><label>SCALE<input value={title.scale} maxLength={20} onChange={e => p.onUpdateTitle({ scale: e.target.value })}/></label><label>SHEET NUMBER<input value={title.sheetNumber} maxLength={20} onChange={e => p.onUpdateTitle({ sheetNumber: e.target.value })}/></label></div><small>© Hephzibah Behulah · All rights reserved</small></section>
