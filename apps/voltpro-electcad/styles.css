@@ -559,3 +559,15 @@ html.vp-electcad-embed .topbar{overflow:visible!important}
 .symbol-preview{width:30px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;color:#ff933b;font-family:inherit}
 .symbol-preview svg{width:30px;height:32px;overflow:visible}
 .symbol-preview svg text{display:none}
+
+/* Left drawing controls; event handlers remain on the original React controls. */
+.side-tool-dock{flex:0 0 auto;padding:9px 9px 10px;border-bottom:1px solid #263541;background:#101a22}
+.side-tool-label{margin:0 2px 7px;color:#8297a5;font:700 9px 'DM Mono',monospace;letter-spacing:1px}
+.side-tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.side-tool-button{display:flex;align-items:center;justify-content:flex-start;gap:7px;min-width:0;min-height:35px;padding:7px 8px;border:1px solid #2a3a46;border-radius:5px;background:#15212b;color:#aebdc7;cursor:pointer}
+.side-tool-button:hover{border-color:#49766f;background:#1b2c35;color:#edf5f8}
+.side-tool-button.tool-active{border-color:#4da99a;background:#1b4545;color:#8be6d8}
+.side-tool-button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+.side-tool-button svg{flex:0 0 auto}
+html.vp-electcad-embed .side-tool-dock{padding:8px;background:#17191b}
+@media(max-width:520px){.side-tool-dock{padding:7px}.side-tool-button{min-height:34px;padding:6px}}
