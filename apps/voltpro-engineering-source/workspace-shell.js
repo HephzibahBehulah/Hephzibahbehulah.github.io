@@ -15,6 +15,33 @@
   const headerPlaceholder = sharedHeader ? document.createComment("VoltPro shared header position") : null;
   if (sharedHeader) sharedHeader.before(headerPlaceholder);
 
+  // Electrical integration is scoped to /electrical; other workspace layouts are unchanged.
+  function restoreElectricalChrome() {
+    const doc = panels.get("/electrical")?.querySelector("iframe")?.contentDocument;
+    if (!doc?.__vpElectricalHeader) return;
+    const header = doc.__vpElectricalHeader;
+    document.body.insertBefore(document.adoptNode(header), headerPlaceholder?.nextSibling || document.body.firstChild);
+    delete doc.__vpElectricalHeader;
+  }
+  function integrateElectrical(panel) {
+    const doc = panel.querySelector("iframe")?.contentDocument;
+    const host = doc?.getElementById("electricalShellControls");
+    if (!host || !sharedHeader || doc.__vpElectricalHeader) return;
+    host.replaceChildren(doc.adoptNode(sharedHeader));
+    doc.__vpElectricalHeader = sharedHeader;
+    if (!doc.__vpElectricalNavigationBound) {
+      doc.__vpElectricalNavigationBound = true;
+      doc.addEventListener("click", event => {
+        const link = event.target.closest?.("a[data-vp-route]");
+        if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const path = canonicalPath(new URL(link.href).pathname);
+        if (!tools.some(tool => tool.path === path)) return;
+        event.preventDefault(); activate(path);
+      });
+    }
+    doc.querySelectorAll("#vpSiteHeader a").forEach(link=>{link.target="_top";});
+  }
+
   function simulatorDocument() {
     return panels.get("/simulator")?.querySelector("iframe")?.contentDocument || null;
   }
@@ -508,12 +535,14 @@
         frame.contentDocument.documentElement.dataset.vpTheme = document.documentElement.dataset.vpTheme || "dark";
         if (tool.path === "/simulator" && document.documentElement.dataset.vpWorkspace === "simulator") integrateSimulator(panel);
         if (tool.path === "/plc" && document.documentElement.dataset.vpWorkspace === "plc") integratePLC(panel);
+        if (tool.path === "/electrical" && document.documentElement.dataset.vpWorkspace === "electrical") integrateElectrical(panel);
       } catch {}
     });
     frame.src = rootPrefix + tool.src;
     return panel;
   }
   function activate(path, push = true) {
+    restoreElectricalChrome();
     const key = canonicalPath(path);
     const tool = tools.find(item => item.path === key) || tools[0];
     if (tool.path !== "/simulator") restoreSharedHeader();
@@ -530,6 +559,8 @@
     document.documentElement.classList.toggle("vp-electcad-maximized", tool.path === "/electcad");
     document.documentElement.classList.toggle("vp-simulator-template", tool.path === "/simulator");
     document.documentElement.classList.toggle("vp-plc-template", tool.path === "/plc");
+    document.documentElement.classList.toggle("vp-electrical-template", tool.path === "/electrical");
+    if (tool.path === "/electrical") integrateElectrical(panel);
     if (tool.path === "/simulator") integrateSimulator(panel);
     if (tool.path === "/plc") integratePLC(panel);
     const electCadNotice = document.querySelector("#vpDevelopmentBanner .vp-production-notice");
