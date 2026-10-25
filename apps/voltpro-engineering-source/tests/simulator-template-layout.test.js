@@ -13,6 +13,9 @@ test('embedded Simulator follows the compact one-row workspace shell',()=>{
  assert.match(css,/\.sim-top\{display:none!important\}/);
  assert.match(css,/\.workspace\{grid-row:2/);
  assert.match(css,/#palette\.open\{transform:translateX\(0\)!important\}/);
+ assert.match(css,/\.canvas-help\{[^}]*top:33px;right:auto;bottom:auto;height:auto/);
+ assert.match(css,/\.sim-top \.top-actions,[\s\S]*?#themeBtn\{display:none!important\}/);
+ assert.match(css,/\.vp-site-navigation\[open\] nav\{display:grid\}/);
  assert.match(css,/\.vp-toolbar-dropdown\{position:absolute[^}]*z-index:1000/);
  assert.match(layout,/pointerenter/);
  assert.match(layout,/makeMenu\('More'\)/);
@@ -42,6 +45,16 @@ test('component rail, inspector tabs, and bottom simulation actions retain live 
  assert.match(shell,/app\.prepend\(doc\.adoptNode\(sharedHeader\)\)/);
  assert.match(shell,/sharedHeader\.querySelectorAll\("details\[open\]"\)/);
  assert.match(shell,/syncResponsivePanels/);
+ assert.match(shell,/VoltProWorkspaceControls\.setPanel\("left", true\)/);
+ assert.match(shell,/VoltProWorkspaceControls\.setPanel\("right", true\)/);
+});
+
+test('saved panel states keep the Simulator rail narrow and never stretch the canvas hint',()=>{
+ const css=read('simulator-template.css');
+ assert.match(css,/\.workspace\.vp-managed-panels\{grid-template-columns:42px minmax\(205px,245px\) minmax\(0,1fr\) minmax\(265px,310px\)!important\}/);
+ assert.match(css,/grid-template-columns:42px minmax\(0,1fr\) minmax\(265px,310px\)!important/);
+ assert.match(css,/grid-template-columns:42px minmax\(0,1fr\)!important/);
+ assert.match(css,/\.canvas-help\{[^}]*bottom:auto;height:auto/);
 });
 
 test('Simulator opens on an unobstructed canvas and keeps examples optional',()=>{
