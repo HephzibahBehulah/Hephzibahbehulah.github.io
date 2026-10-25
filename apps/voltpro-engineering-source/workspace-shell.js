@@ -11,9 +11,20 @@
   const rootPrefix = location.hostname.startsWith("admin.") && /^\/engineering(?:\/|$)/.test(location.pathname) ? "/engineering" : "";
   const root = document.getElementById("vpWorkspace");
   const panels = new Map();
-  const sharedHeader = document.getElementById("vpSiteHeader");
-  const headerPlaceholder = sharedHeader ? document.createComment("VoltPro shared header position") : null;
+  let sharedHeader = document.getElementById("vpSiteHeader");
+  let headerPlaceholder = sharedHeader ? document.createComment("VoltPro shared header position") : null;
   if (sharedHeader) sharedHeader.before(headerPlaceholder);
+
+  function ensureSharedHeader() {
+    if (!sharedHeader) {
+      sharedHeader = document.getElementById("vpSiteHeader");
+      if (sharedHeader) {
+        headerPlaceholder = document.createComment("VoltPro shared header position");
+        sharedHeader.before(headerPlaceholder);
+      }
+    }
+    return sharedHeader;
+  }
 
   function simulatorDocument() {
     return panels.get("/simulator")?.querySelector("iframe")?.contentDocument || null;
@@ -67,7 +78,7 @@
   function restoreSharedHeader() {
     restoreSimulatorChrome();
     restorePLCChrome();
-    if (!sharedHeader) return;
+    if (!ensureSharedHeader()) return;
     if (sharedHeader.parentElement === document.body) return;
     const banner = document.getElementById("vpDevelopmentBanner");
     document.body.insertBefore(sharedHeader, banner || headerPlaceholder?.nextSibling || document.body.firstChild);
@@ -90,7 +101,7 @@
   }
 
   function integratePLC(panel) {
-    if (!sharedHeader || !panel) return;
+    if (!panel || !ensureSharedHeader()) return;
     const frame = panel.querySelector("iframe");
     const doc = frame?.contentDocument;
     const app = doc?.querySelector(".plc-app");
