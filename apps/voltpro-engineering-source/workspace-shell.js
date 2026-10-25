@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const tools = [
-    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261025r" },
+    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261025s" },
     { path: "/plc", title: "VoltPro PLC", src: "/voltpro-plc/?vp_embed=1" },
     { path: "/electcad", title: "VoltPro ElectCAD", src: "/voltpro-electcad/?vp_embed=1" },
     { path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" },
