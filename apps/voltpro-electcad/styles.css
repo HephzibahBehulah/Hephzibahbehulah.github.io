@@ -571,3 +571,20 @@ html.vp-electcad-embed .topbar{overflow:visible!important}
 .side-tool-button svg{flex:0 0 auto}
 html.vp-electcad-embed .side-tool-dock{padding:8px;background:#17191b}
 @media(max-width:520px){.side-tool-dock{padding:7px}.side-tool-button{min-height:34px;padding:6px}}
+
+/* Keep the requested canvas controls visible beside the compact top navigation. */
+html.vp-electcad-embed .toolbar .zoom-control{display:flex}
+@media (min-width:1151px) and (max-width:1450px){
+  html.vp-electcad-embed .topbar{grid-template-columns:minmax(0,430px) minmax(0,1fr) max-content;overflow:visible}
+  html.vp-electcad-embed .topbar-left{width:100%;max-width:430px;min-width:0;flex:initial;gap:5px}
+  html.vp-electcad-embed .hb-brand strong{display:none!important}
+  html.vp-electcad-embed .project-dropdown{flex:0 1 120px;max-width:120px}
+  html.vp-electcad-embed .menu-toolbar-row{width:100%;min-width:0;overflow:visible}
+  html.vp-electcad-embed .menubar{flex:1 1 auto;min-width:0;overflow-x:auto}
+  html.vp-electcad-embed .menu-wrap>button{padding:0 3px;font-size:8px}
+  html.vp-electcad-embed .toolbar{flex:0 0 auto;min-width:0;gap:2px;padding:0 3px}
+  html.vp-electcad-embed .toolbar .toolbar-spacer{display:none}
+  html.vp-electcad-embed .toolbar .zoom-control{display:flex;gap:2px;padding:2px}
+  html.vp-electcad-embed .toolbar .zoom-control button{padding:2px}
+  html.vp-electcad-embed .top-actions{width:max-content;min-width:max-content;max-width:none;flex:0 0 auto;gap:3px}
+}
