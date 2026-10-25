@@ -370,3 +370,11 @@ body.simulator-page.vp-template-simulator .vp-title-block input:focus{background
 /* Keep the drawing identification block inside columns 7–9.5 and rows D–E.5. */
 body.simulator-page.vp-template-simulator .vp-title-block{left:calc(26px + var(--vp-col-pitch,36px)*7)!important;top:calc(25px + var(--vp-row-pitch,38px)*3)!important;right:auto!important;bottom:auto!important;width:calc(var(--vp-col-pitch,36px)*2.5)!important;height:calc(var(--vp-row-pitch,38px)*1.5)!important;max-width:none!important;box-sizing:border-box!important;overflow:hidden!important}
 @media(max-width:760px){body.simulator-page.vp-template-simulator .vp-title-block{left:calc(26px + var(--vp-col-pitch,36px)*7)!important;top:calc(25px + var(--vp-row-pitch,38px)*3)!important;right:auto!important;bottom:auto!important;width:calc(var(--vp-col-pitch,36px)*2.5)!important;height:calc(var(--vp-row-pitch,38px)*1.5)!important}}
+
+
+/* Keep the title and editable values clear of their separator lines. */
+body.simulator-page.vp-template-simulator .vp-title-heading{box-sizing:border-box;min-width:0;padding:2px 0 4px;border-bottom:1px solid #46515a;font-size:9px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.simulator-page.vp-template-simulator .vp-title-grid>label{display:flex;flex-direction:column;justify-content:center;min-width:0;overflow:hidden;padding-bottom:3px;border-bottom:1px solid #46515a;line-height:1.1}
+body.simulator-page.vp-template-simulator .vp-title-grid input{height:15px;box-sizing:border-box;margin-top:2px;padding:1px 0;line-height:1.1}
+body.simulator-page.vp-template-simulator .vp-title-grid{border-bottom:0}
+body.simulator-page.vp-template-simulator .vp-title-block footer{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-top:1px solid #46515a;padding-top:4px}
