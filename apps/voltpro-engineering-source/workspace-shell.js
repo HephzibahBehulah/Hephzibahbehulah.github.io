@@ -290,6 +290,9 @@
         dock.querySelectorAll("[data-dock-panel]").forEach(section => section.hidden = section.dataset.dockPanel !== key);
       });
     }
+    const aiDesigner = doc.getElementById("vpCircuitDesigner");
+    const dockPanel = doc.getElementById("inspectorPanel");
+    if (aiDesigner && dockPanel) dockPanel.append(aiDesigner);
     if (bottom) {
       bottom.querySelectorAll("a[data-vp-route]").forEach(link => { link.title = link.getAttribute("aria-label") || link.textContent.trim(); });
     }

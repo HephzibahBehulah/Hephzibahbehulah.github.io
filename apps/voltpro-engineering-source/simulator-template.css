@@ -251,3 +251,13 @@ body.simulator-page.vp-template-simulator #inspectorPanel .vp-dock-toggle{
 body.simulator-page.vp-template-simulator #inspectorPanel .vp-dock-toggle:hover{
   border-color:#4b7286;background:#18222a
 }
+
+
+/* Anchor the AI bubble to the right dock, not the drawing canvas. */
+body.simulator-page.vp-template-simulator #inspectorPanel{position:relative!important}
+body.simulator-page.vp-template-simulator #inspectorPanel>#vpCircuitDesigner{
+  position:absolute!important;right:12px!important;bottom:64px!important;z-index:1200!important
+}
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel>#vpCircuitDesigner{
+  display:none!important
+}
