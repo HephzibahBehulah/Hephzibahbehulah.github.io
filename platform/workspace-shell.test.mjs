@@ -246,3 +246,52 @@ test("Adigun switches into architectural wiring context on the electrical route"
   assert.match(ai, /building-electrical/);
   assert.match(ai, /Architectural\/Building Wiring/);
 });
+
+test("shared engineering design system reaches main, admin, embedded and standalone tool routes", () => {
+  const theme = read("apps/voltpro-engineering-source/workspace-engineering-theme.css");
+  const shellCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
+  const appRoutes = ["index.html", "academy-workbench.html", "engineering.html", "simulator.html", "breadboard.html", "electrical-canvas.html"]
+    .map(file => read("apps/voltpro-engineering-source/" + file));
+  const plcEntry = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/main.tsx");
+  assert.match(theme, /font-family:Inter,"Segoe UI",system-ui,sans-serif/);
+  assert.match(theme, /--vp-workspace-accent:#ff8a24/);
+  assert.match(theme, /\.vp-site-navigation>summary:hover/);
+  assert.match(shellCss, /vp-site-navigation/);
+  for (const html of appRoutes) assert.match(html, /workspace-engineering-theme\.css/);
+  assert.match(plcEntry, /workspace-engineering-theme\.css/);
+  assert.match(shell, /hostname\.startsWith\("admin\."\)/);
+  assert.match(shell, /frame\.src = rootPrefix \+ tool\.src/);
+});
+
+test("PLC project view switching keeps the same editable project and scan mode", () => {
+  const app = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/App.tsx");
+  const store = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/store.ts");
+  const io = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/PLCIOView.tsx");
+  assert.match(app, /aria-label="Project views"/);
+  assert.match(app, /onClick=\{\(\)=>s\.setView\('ladder'\)\}/);
+  assert.match(app, /onClick=\{\(\)=>s\.setView\('fbd'\)\}/);
+  assert.match(app, /onClick=\{\(\)=>s\.setView\('plc'\)\}/);
+  assert.doesNotMatch(app, /onClick=\{\(\)=>\{if\(s\.project\.mode!==['"](?:ladder|fbd)['"]\)replace\(/);
+  assert.match(store, /view:'ladder'\|'fbd'\|'plc';setView/);
+  assert.match(app, /s\.view==='plc'\?<PLCIOView project=\{s\.project\}/);
+  assert.match(io, /same device tags, terminals, wires and scan results/);
+});
+
+test("shared assistant voice input fills the prompt without sending it automatically", () => {
+  const assistant = read("apps/voltpro-engineering-source/voltpro-assistant.js");
+  assert.match(assistant, /id="vpBotVoice" type="button"/);
+  assert.match(assistant, /recognition\.onresult = event => \{ input\.value/);
+  assert.match(assistant, /recognition\.onend = \(\) => \{ voice\.disabled = false/);
+  assert.match(assistant, /Voice input is not available in this browser/);
+});
+
+test("embedded ElectCAD keeps zoom and all five requested top controls reachable", () => {
+  const app = read("apps/voltpro-electcad/App.tsx");
+  const css = read("apps/voltpro-electcad/styles.css");
+  for (const phrase of ["Zoom out", "Zoom in", "My workspace and examples", "Interface language", "About and readiness", "VoltPro account"]) assert.ok(app.includes(phrase));
+  assert.match(app, /\{zoom\}%/);
+  assert.match(css, /\.menubar \.menu-wrap:nth-child\(n\+6\)\{display:flex!important\}/);
+  assert.match(css, /\.top-actions \.header-dropdown\{display:flex!important\}/);
+  assert.match(css, /\.toolbar \.zoom-control,html\.vp-electcad-embed \.toolbar \.toolbar-spacer,html\.vp-electcad-embed \.toolbar \.primary-btn\{display:flex!important\}/);
+  assert.match(css, /grid-template-rows:46px 48px/);
+});

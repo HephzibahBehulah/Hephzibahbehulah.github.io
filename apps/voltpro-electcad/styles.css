@@ -588,3 +588,34 @@ html.vp-electcad-embed .toolbar .zoom-control{display:flex}
   html.vp-electcad-embed .toolbar .zoom-control button{padding:2px}
   html.vp-electcad-embed .top-actions{width:max-content;min-width:max-content;max-width:none;flex:0 0 auto;gap:3px}
 }
+
+/* Compact responsive CAD header: keep all project commands and the six requested controls reachable. */
+@media(max-width:850px){
+ html.vp-electcad-embed .app-shell{grid-template-rows:94px minmax(0,1fr) 40px}
+ html.vp-electcad-embed .topbar{height:94px;min-height:94px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:46px 48px;align-content:stretch;gap:0;padding:0 6px;overflow:visible}
+ html.vp-electcad-embed .topbar-left{grid-column:1;grid-row:1;width:100%;max-width:none;min-width:0;overflow:hidden;gap:5px}
+ html.vp-electcad-embed .electcad-main-site{padding:4px}
+ html.vp-electcad-embed .electcad-main-site span,html.vp-electcad-embed .hb-brand{display:none!important}
+ html.vp-electcad-embed .project-dropdown{flex:1 1 100px;max-width:140px}
+ html.vp-electcad-embed .top-actions{grid-column:2;grid-row:1;max-width:none;min-width:0;gap:2px;justify-content:flex-end}
+ html.vp-electcad-embed .top-actions .header-dropdown{display:flex!important}
+ html.vp-electcad-embed .top-actions .header-dropdown .icon-btn{display:grid!important}
+ html.vp-electcad-embed .menu-toolbar-row{grid-column:1/-1;grid-row:2;width:100%;min-width:0;height:48px;display:flex;align-items:center;overflow-x:auto;overflow-y:visible;scrollbar-width:thin}
+ html.vp-electcad-embed .menubar{height:46px;min-height:46px;flex:0 0 auto;width:max-content;min-width:max-content;overflow:visible}
+ html.vp-electcad-embed .menubar .menu-wrap:nth-child(n+6){display:flex!important}
+ html.vp-electcad-embed .menu-wrap>button{height:46px;padding:0 5px;font-size:8px}
+ html.vp-electcad-embed .toolbar{height:46px;min-height:46px;min-width:max-content;flex:0 0 auto;overflow:visible;padding:0 4px}
+ html.vp-electcad-embed .toolbar .zoom-control,html.vp-electcad-embed .toolbar .toolbar-spacer,html.vp-electcad-embed .toolbar .primary-btn{display:flex!important}
+ html.vp-electcad-embed .toolbar .zoom-control{gap:2px;padding:2px;font-size:8px}
+ html.vp-electcad-embed .toolbar .zoom-control button{min-width:22px}
+ html.vp-electcad-embed .toolbar .primary-btn{height:28px}
+ html.vp-electcad-embed .app-shell .icon-rail,html.vp-electcad-embed .app-shell .canvas-area{grid-row:2}
+}
+@media(max-width:430px){
+ html.vp-electcad-embed .topbar{grid-template-columns:minmax(0,1fr) auto;padding:0 3px}
+ html.vp-electcad-embed .brand strong{font-size:9px}
+ html.vp-electcad-embed .topbar-left .top-divider{display:none}
+ html.vp-electcad-embed .top-actions{gap:1px}
+ html.vp-electcad-embed .top-actions .icon-btn,html.vp-electcad-embed .top-actions .avatar{width:24px;flex-basis:24px}
+ html.vp-electcad-embed .language-switch select{max-width:38px}
+}

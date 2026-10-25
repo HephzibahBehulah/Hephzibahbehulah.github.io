@@ -165,7 +165,7 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
         <div class="vp-bot-messages" id="vpBotMessages" aria-live="polite" aria-relevant="additions text"></div>
         <div class="vp-bot-suggestions" id="vpBotSuggestions"><button type="button">Draw a 3-way switch circuit</button><button type="button">Calculate current at 24 V through 120 ohm</button><button type="button">Search external sources for voltage drop</button></div>
         <label class="vp-bot-external"><input id="vpBotExternal" type="checkbox"> Search public external references</label>
-        <form class="vp-bot-composer" id="vpBotForm"><textarea id="vpBotInput" rows="1" maxlength="12000" placeholder="Ask about VoltPRo or electrical engineering…" autocomplete="off" aria-label="Ask VoltPRo"></textarea><button class="vp-bot-send" id="vpBotSend" type="submit" aria-label="Send message">→</button></form>
+        <form class="vp-bot-composer" id="vpBotForm"><textarea id="vpBotInput" rows="1" maxlength="12000" placeholder="Ask about VoltPRo or electrical engineering…" autocomplete="off" aria-label="Ask VoltPRo"></textarea><button class="vp-bot-voice" id="vpBotVoice" type="button" aria-label="Speak your request" title="Voice input">🎙</button><button class="vp-bot-send" id="vpBotSend" type="submit" aria-label="Send message">→</button></form>
         <footer class="vp-bot-footer"><span>EDUCATIONAL USE ONLY · VERIFY SAFETY-CRITICAL WORK</span><span>VOLTPRO / HB</span></footer>
       </section>`;
     document.body.appendChild(root);
@@ -175,6 +175,24 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
     const input = root.querySelector("#vpBotInput");
     const form = root.querySelector("#vpBotForm");
     const send = root.querySelector("#vpBotSend");
+    const voice = root.querySelector("#vpBotVoice");
+    let recognition = null;
+    voice.addEventListener("click", () => {
+      const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!Speech) { add("Voice input is not available in this browser. Type your request instead.", "system"); return; }
+      try {
+        recognition?.abort?.();
+        recognition = new Speech();
+        recognition.lang = (window.HBLanguage?.get?.() || localStorage.getItem("hb_language") || "en") === "de" ? "de-DE" : "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.onstart = () => { voice.disabled = true; voice.textContent = "…"; };
+        recognition.onresult = event => { input.value = event.results?.[0]?.[0]?.transcript || input.value; input.focus(); };
+        recognition.onerror = () => add("Voice recognition ended. You can type the request instead.", "system");
+        recognition.onend = () => { voice.disabled = false; voice.textContent = "🎙"; };
+        recognition.start();
+      } catch (_) { voice.disabled = false; voice.textContent = "🎙"; add("Voice input could not start. Type your request instead.", "system"); }
+    });
     const historyEl = [];
     const add = (text, role = "bot") => {
       const el = document.createElement("div");
