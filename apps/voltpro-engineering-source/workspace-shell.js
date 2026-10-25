@@ -312,8 +312,8 @@
         syncTitleBlock();
         canvasFrame.append(topRuler, bottomRuler, leftRuler, rightRuler, titleBlock);
         const excelRow = value => {
-          let n = Math.max(1, Math.floor(value)), label = "";
-          while (n) { const digit = (n - 1) % 26; label = String.fromCharCode(65 + digit) + label; n = Math.floor((n - 1) / 26); }
+          let n = Math.max(0, Math.floor(value)), label = "";
+          while (n >= 0) { const digit = n % 26; label = String.fromCharCode(65 + digit) + label; n = Math.floor(n / 26) - 1; }
           return label;
         };
         const renderRulers = () => {
@@ -322,18 +322,20 @@
           const availableWidth = Math.max(0, canvasFrame.clientWidth - 52);
           const availableHeight = Math.max(0, canvasFrame.clientHeight - 50);
           const columnPitch = (availableWidth / 37) * (zoom / .25);
+          const titleColumnPitch = (availableWidth / 37) * 4;
           const rowPitch = (availableHeight / 19) * (zoom / .25);
-          titleBlock.style.setProperty('--vp-col-pitch', columnPitch + 'px');
-          titleBlock.style.setProperty('--vp-row-pitch', rowPitch + 'px');
+          const titleRowPitch = (availableHeight / 19) * 4;
+          titleBlock.style.setProperty('--vp-col-pitch', titleColumnPitch + 'px');
+          titleBlock.style.setProperty('--vp-row-pitch', titleRowPitch + 'px');
           const pan = state.pan || {};
           const xOffset = canvasWrap.scrollLeft - (Number(pan.x) || 0);
           const yOffset = canvasWrap.scrollTop - (Number(pan.y) || 0);
           const phaseX = ((xOffset % columnPitch) + columnPitch) % columnPitch;
           const phaseY = ((yOffset % rowPitch) + rowPitch) % rowPitch;
-          const firstColumn = Math.max(1, Math.floor(xOffset / columnPitch) + 1);
-          const firstRow = Math.max(1, Math.floor(yOffset / rowPitch) + 1);
-          const columns = Math.max(1, Math.floor(availableWidth / columnPitch + 1e-6));
-          const rows = Math.max(1, Math.floor(availableHeight / rowPitch + 1e-6));
+          const firstColumn = Math.max(0, Math.floor(xOffset / columnPitch));
+          const firstRow = Math.max(0, Math.floor(yOffset / rowPitch));
+          const columns = Math.max(1, Math.ceil((availableWidth + phaseX) / columnPitch - 1e-6));
+          const rows = Math.max(1, Math.ceil((availableHeight + phaseY) / rowPitch - 1e-6));
           const horizontal = Array.from({length: columns}, (_, i) => '<span style="flex:0 0 ' + columnPitch + 'px;' + (i === 0 ? 'margin-left:-' + phaseX + 'px;' : '') + '">' + (firstColumn + i) + '</span>').join("");
           const vertical = Array.from({length: rows}, (_, i) => '<span style="flex:0 0 ' + rowPitch + 'px;' + (i === 0 ? 'margin-top:-' + phaseY + 'px;' : '') + '">' + excelRow(firstRow + i) + '</span>').join("");
           topRuler.innerHTML = horizontal;
