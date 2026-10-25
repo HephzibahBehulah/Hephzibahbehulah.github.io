@@ -283,7 +283,33 @@
         const titleBlock = doc.createElement("div");
         titleBlock.className = "vp-title-block";
         titleBlock.setAttribute("aria-label", "Drawing identification");
-        titleBlock.innerHTML = '<strong>HEPHZIBAH BEHULAH · VOLTPRO</strong><span>DRAWING IDENTIFICATION</span><span>Project: <b>Active design</b></span><span>Scale: 1:1 · Sheet: 1 / 1</span>';
+        titleBlock.innerHTML = '<div class="vp-title-brand">HEPHZIBAH BEHULAH</div><div class="vp-title-heading">SIMULATION DRAWING</div><label class="vp-title-project">PROJECT NAME<input type="text" data-drawing-field="projectName" aria-label="Project name"></label><div class="vp-title-grid"><label>DRAFTER<input type="text" data-drawing-field="drafter" aria-label="Drafter"></label><label>DATE<input type="date" data-drawing-field="date" aria-label="Drawing date"></label><label>SCALE<input type="text" data-drawing-field="scale" aria-label="Drawing scale"></label><label>SHEET NUMBER<input type="text" data-drawing-field="sheetNumber" aria-label="Sheet number"></label></div><footer>© Hephzibah Behulah · All rights reserved</footer>';
+        const localDate = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+        const syncTitleBlock = () => {
+          const state = doc.defaultView.S;
+          const metadata = state?.projectMetadata || (state ? (state.projectMetadata = {}) : {});
+          const saved = metadata?.drawingIdentification || {};
+          const defaults = {
+            projectName: document.querySelector("#vpProjectName")?.value || metadata?.name || "Untitled project",
+            drafter: "—", date: localDate(), scale: "1:1", sheetNumber: "1 / 1"
+          };
+          const values = Object.fromEntries(Object.entries(defaults).map(([key, value]) => [key, saved[key] ?? value]));
+          if (state && !metadata.drawingIdentification) metadata.drawingIdentification = { ...values };
+          Object.entries(values).forEach(([key, value]) => {
+            const input = titleBlock.querySelector('[data-drawing-field="' + key + '"]');
+            if (input) input.value = String(value);
+          });
+        };
+        titleBlock.addEventListener("input", event => {
+          const field = event.target.closest("[data-drawing-field]");
+          const state = doc.defaultView.S;
+          if (!field || !state) return;
+          state.projectMetadata ||= {};
+          state.projectMetadata.drawingIdentification ||= {};
+          state.projectMetadata.drawingIdentification[field.dataset.drawingField] = field.value;
+        });
+        doc.addEventListener("voltpro-project-metadata-change", syncTitleBlock);
+        syncTitleBlock();
         canvasFrame.append(topRuler, bottomRuler, leftRuler, rightRuler, titleBlock);
         const excelRow = value => {
           let n = Math.max(1, Math.floor(value)), label = "";

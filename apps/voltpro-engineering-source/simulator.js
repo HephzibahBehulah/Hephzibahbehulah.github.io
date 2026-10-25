@@ -382,7 +382,7 @@ async function loadProject(data){
  const components=Array.isArray(x.components)?x.components:[];
  const ids=new Set();
  for(const c of components){if(!c.id||ids.has(String(c.id)))throw Error("Project contains a missing or duplicate component ID: "+String(c.id||"(empty)"));ids.add(String(c.id))}
- S.projectMetadata=structuredClone(x.metadata||{});applyDocumentSettings({gridSpacing:x.settings?.grid??x.workspace?.grid??20,units:x.settings?.units==="SI"?"mm":(x.settings?.units||"mm"),snapToGrid:x.settings?.snapToGrid??true,showGrid:x.settings?.showGrid??true});
+ S.projectMetadata=structuredClone(x.metadata||{});document.dispatchEvent(new CustomEvent('voltpro-project-metadata-change'));applyDocumentSettings({gridSpacing:x.settings?.grid??x.workspace?.grid??20,units:x.settings?.units==="SI"?"mm":(x.settings?.units||"mm"),snapToGrid:x.settings?.snapToGrid??true,showGrid:x.settings?.showGrid??true});
  S.components=components.map(c=>({...c,x:Number(c.x??c.position?.x??0),y:Number(c.y??c.position?.y??0),rotation:Number(c.rotation||0),props:structuredClone(c.props||c.parameters||{}),pins:Array.isArray(c.pins)?c.pins:[]}));
  S.wires=Array.isArray(x.wires)?x.wires.map((w,i)=>window.VoltProWiring?window.VoltProWiring.normalizeWire(w,i):w):[];
  if(x.wireStyle&&typeof x.wireStyle==="object"){
