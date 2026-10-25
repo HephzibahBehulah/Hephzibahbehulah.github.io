@@ -318,7 +318,7 @@
         };
         const renderRulers = () => {
           const state = doc.defaultView.S || {};
-          const zoom = Math.max(.25, Math.min(2.5, Number(state.zoom) || .25));
+          const zoom = Math.max(.25, Math.min(2.5, Number(state.zoom) || 1));
           const availableWidth = Math.max(0, canvasFrame.clientWidth - 52);
           const availableHeight = Math.max(0, canvasFrame.clientHeight - 50);
           const columnPitch = (availableWidth / 37) * (zoom / .25);
