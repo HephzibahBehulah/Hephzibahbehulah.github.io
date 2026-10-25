@@ -99,6 +99,7 @@
     const bottom = document.getElementById("vpBottomNavigation");
     const banner = document.getElementById("vpDevelopmentBanner");
     if (!doc || !app || !slot || !statusbar || !bottom) return;
+    if (app.querySelector("[data-plc-unified-bottom]")) return;
     if (doc.__vpPLCShellParts?.integrated) return;
     const assistant = document.getElementById("vpBotLauncher");
     const assistantParent = assistant?.parentElement || null;
@@ -572,6 +573,11 @@
       const frame = panels.get("/simulator")?.querySelector("iframe");
       try { frame?.contentDocument?.body?.classList.toggle("light", document.documentElement.dataset.vpTheme === "light"); } catch {}
     });
+  });
+  window.addEventListener("vp-plc-navigate", event => {
+    if (document.documentElement.dataset.vpWorkspace !== "plc") return;
+    if (!tools.some(tool => tool.path === event.detail)) return;
+    activate(event.detail);
   });
   window.addEventListener("popstate", () => activate(location.pathname, false));
   activate(location.pathname, false);

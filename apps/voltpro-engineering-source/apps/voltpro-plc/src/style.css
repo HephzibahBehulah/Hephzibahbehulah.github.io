@@ -207,3 +207,18 @@
 .plc-dynamic-rulers .plc-ruler-top span,.plc-dynamic-rulers .plc-ruler-bottom span{justify-items:start;padding-left:4px}
 .plc-dynamic-rulers .plc-ruler-left span,.plc-dynamic-rulers .plc-ruler-right span{align-items:start;padding-top:4px}
 .plc-scroll-viewport{touch-action:none}
+
+/* One PLC bottom row: navigation, native simulation controls, one readiness notice. */
+.plc-app>.statusbar.plc-unified-bottom{height:52px;min-height:52px;flex:0 0 52px;display:flex;flex-wrap:nowrap;align-items:center;gap:8px;padding:0 8px;overflow-x:auto;overflow-y:hidden;background:#111315;color:#cbd5dc;white-space:nowrap;scrollbar-width:thin}
+.plc-unified-bottom>nav{display:flex;align-items:center;gap:3px;flex:none;height:100%}
+.plc-unified-bottom>nav>a{display:flex;align-items:center;gap:7px;height:40px;padding:0 10px;border-radius:5px;color:inherit;text-decoration:none;font:12px Inter,Segoe UI,sans-serif}
+.plc-unified-bottom>nav>a>span:first-child{font-size:19px;color:#ff8b22}
+.plc-unified-bottom>nav>a[aria-current=page],.plc-unified-bottom>nav>a:hover{background:#302116;color:#ff9b45}
+.plc-unified-bottom .plc-run-controls{height:34px;padding-left:9px;border-left:1px solid #34414a;gap:7px}
+.plc-unified-bottom .plc-bottom-state,.plc-unified-bottom .plc-run-controls button{display:flex;align-items:center;gap:6px;height:34px;padding:0 10px;border:1px solid #303a42;border-radius:5px;background:#0d1217;color:#dce6ee;font:600 11px Inter,Segoe UI,sans-serif}
+.plc-unified-bottom .plc-run-controls button:disabled{opacity:.35}
+.plc-unified-bottom>.plc-bottom-readiness{margin-left:auto;padding-left:12px;color:#e9b955;text-decoration:none;font:10px Inter,Segoe UI,sans-serif;flex:none}
+@media(max-width:1150px){.plc-unified-bottom>nav>a{padding:0 6px;font-size:10px}.plc-unified-bottom>nav>a>span:first-child{font-size:16px}.plc-unified-bottom>.plc-bottom-readiness{font-size:9px}}
+@media(max-width:760px){.plc-unified-bottom>nav>a>span:last-child{display:none}.plc-unified-bottom>nav>a{padding:0 5px}.plc-unified-bottom .plc-run-controls{gap:4px;padding-left:5px}.plc-unified-bottom .plc-run-controls button,.plc-unified-bottom .plc-bottom-state{padding:0 6px;font-size:10px}}
+
+.plc-app .plc-ai{bottom:64px}
