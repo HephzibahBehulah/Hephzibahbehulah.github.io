@@ -47,3 +47,104 @@
 .plc-io-view tbody tr:hover,.plc-io-view tbody tr.selected{background:#302318;color:#fff}
 .plc-io-view tbody tr:last-child td{border-bottom:0}
 @media(max-width:900px){.plc-io-rack{grid-template-columns:1fr}.plc-io-rack-label{min-height:110px}}
+
+/* PLC workspace chrome follows the engineering template while keeping every PLC action available. */
+.vp-template-plc,.vp-template-plc body,.vp-template-plc #root{height:100dvh;min-height:0;overflow:hidden}
+.plc-app{height:100dvh;min-height:0;overflow:hidden;background:#111;color:#e2e8ec}
+.plc-app>.topbar{height:56px;min-height:56px;flex:0 0 56px;display:flex;flex-wrap:nowrap;gap:5px;padding:0 8px;overflow:visible;border-bottom:1px solid #3c3c3c;background:#111;z-index:30}
+.plc-shell-slot{display:contents}
+.plc-app>.topbar>.brand{order:1;min-width:128px;flex:0 0 auto;gap:7px}
+.plc-app>.topbar>.brand>b{width:29px;height:32px;font-size:20px}
+.plc-app>.topbar>.brand span{font-size:15px;font-weight:700;white-space:nowrap}
+.plc-app>.topbar>.brand small{font-size:7px;letter-spacing:1.2px}
+.plc-app>.topbar>.project-name{order:2;width:145px;min-width:90px;max-width:180px;flex:0 1 160px;padding:8px 10px;border:1px solid #303a40;border-radius:6px;background:#0d151a;color:#e9edf0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plc-command-menus{order:3;display:flex;align-items:center;justify-content:center;gap:1px;min-width:0;flex:1 1 auto;white-space:nowrap}
+.plc-command-menu{position:relative;flex:0 0 auto}
+.plc-command-menu>summary{list-style:none;padding:9px 5px;border:0;background:transparent;color:#e4e8eb;font-size:12px;cursor:pointer}
+.plc-command-menu>summary::-webkit-details-marker{display:none}
+.plc-command-menu>summary:hover,.plc-command-menu[open]>summary{color:#ff9a3c}
+.plc-command-pop{position:absolute;z-index:20010;top:calc(100% + 6px);left:0;display:grid;gap:3px;min-width:205px;max-height:min(70vh,520px);overflow:auto;padding:7px;border:1px solid #3a4145;border-radius:8px;background:#171b1e;box-shadow:0 14px 35px #000b}
+.plc-command-pop button,.plc-command-pop select{justify-content:flex-start;width:100%;min-height:32px;padding:7px 9px;border:0;border-radius:4px;background:transparent;color:#e5e9eb;text-align:left;font-size:12px}
+.plc-command-pop button:hover,.plc-command-pop select:hover{background:#2c3032;color:#ffad61}
+.plc-command-pop button:disabled{opacity:.4}
+.plc-menu-field{display:grid;gap:5px;padding:5px;color:#aeb8be;font-size:10px}
+.plc-menu-field select{background:#111!important;border:1px solid #3b4145!important}
+.zoom-controls{order:4;display:flex;align-items:center;flex:0 0 auto;gap:2px;padding:3px;border:1px solid #303a40;border-radius:7px;background:#0d151a}
+.zoom-controls button{width:30px;height:29px;padding:4px;border:0;background:transparent}
+.zoom-controls span{min-width:42px;text-align:center;font:11px ui-monospace,monospace}
+.vp-template-plc .vp-site-brand-group{order:0;display:flex;align-items:center;flex:0 0 auto;gap:2px;min-width:0;margin:0}
+.vp-template-plc .vp-site-brand{padding:5px!important;font-size:9px;letter-spacing:.4px}
+.vp-template-plc .vp-main-site-link{padding:7px 8px!important;border:1px solid #7d4c1c;border-radius:6px;background:#261b12;color:#ffd09c!important;font-size:11px;white-space:nowrap}
+.vp-template-plc #vpSiteHeader{display:contents!important}
+.vp-template-plc #vpSiteHeader .vp-site-navigation{order:5;position:relative;flex:0 0 auto;margin:0}
+.vp-template-plc #vpSiteHeader .vp-site-navigation>summary{padding:7px 8px;border:1px solid #303a40;border-radius:5px;background:#111a20;font-size:10px}
+.vp-template-plc #vpSiteHeader .vp-site-navigation nav,.vp-template-plc #vpSiteHeader .vp-site-navigation:not([open]) nav{display:none!important}
+.vp-template-plc #vpSiteHeader .vp-site-navigation[open] nav{position:absolute;z-index:20020;top:calc(100% + 6px);left:auto;right:0;display:grid!important;min-width:225px;padding:8px;background:#182126;border:1px solid #42505a;border-radius:8px;box-shadow:0 14px 35px #000b}
+.vp-template-plc #vpSiteHeader .vp-shell-controls{order:6;display:flex;align-items:center;flex:0 0 auto;gap:3px;margin:0}
+.vp-template-plc #vpSiteHeader .vp-shell-controls>*{height:32px;min-width:32px;padding:5px 7px;font-size:10px}
+.vp-template-plc #vpSiteHeader #vpShellLanguage{width:46px;min-width:46px}
+.vp-template-plc #vpSiteHeader .vp-site-identity{order:7;flex:0 0 auto;margin:0;font-size:10px}
+.vp-template-plc #vpSiteHeader .vp-site-identity>a{padding:6px;font-size:10px}
+.vp-template-plc #vpSiteHeader #vpBotLauncher{position:static!important}
+.plc-app>.workspace{position:relative;display:block;flex:1 1 auto;min-height:0;overflow:hidden;background:#111}
+.plc-app .canvas{position:absolute;inset:0 0 0 46px;min-width:0;min-height:0;margin:0;overflow:hidden;background:#111;color:#d9e1e5}
+.plc-app .react-flow{background:#111}
+.plc-app .react-flow__background pattern circle{fill:#24282a}
+.plc-app .react-flow__minimap{background:#191d1f!important}
+.plc-app .device{background:#15191b;color:#cbd5da}
+.plc-app .device-tag{background:#111d;color:#e1e6e8}
+.plc-app .device-label{color:#9daab0}
+.plc-app .device .react-flow__handle{background:#191d1f;border-color:#8ca0a9}
+.plc-rail{position:absolute;z-index:28;inset:0 auto 0 0;width:46px;display:flex;flex-direction:column;gap:5px;padding:7px 5px;border-right:1px solid #343a3d;background:#15191c}
+.plc-rail button{width:35px;height:38px;padding:6px;border-color:#343d42;border-radius:6px;background:#101518;color:#d5dce0}
+.plc-rail button:hover,.plc-rail button[aria-expanded=true]{border-color:#bc6b25;color:#ffad61;background:#241b14}
+.plc-app .palette{position:absolute;z-index:27;inset:0 auto 0 46px;width:min(310px,calc(100vw - 58px));max-width:none;transform:none;border:1px solid #3a4145;background:#1b1e20;box-shadow:10px 0 28px #0009}
+.plc-app .properties{position:absolute;z-index:26;inset:0 0 0 auto;width:min(370px,calc(100vw - 60px));max-width:none;display:flex;flex-direction:column;gap:0;overflow:hidden;padding:0;border-left:1px solid #41474b;background:#1b1d1f;box-shadow:-8px 0 24px #0006}
+.plc-app .properties>header{height:46px;min-height:46px;padding:0 12px;border-bottom:1px solid #333a3e;font:11px ui-monospace,monospace;letter-spacing:.08em}
+.plc-dock-tabs{display:flex;flex:0 0 44px;align-items:stretch;border-bottom:1px solid #3a4247;background:#101518}
+.plc-dock-tabs button{flex:1;gap:5px;padding:5px;border:0;border-radius:0;background:transparent;font-size:11px}
+.plc-dock-tabs button[aria-selected=true]{border-bottom:2px solid #54cfc4;color:#eaf2f3}
+.plc-dock-content{flex:1 1 auto;min-height:0;overflow:auto;padding:16px}
+.plc-dock-content h2{font-size:17px}
+.plc-document-settings{flex:0 0 auto;max-height:42%;overflow:auto;padding:12px 16px 68px;border-top:1px solid #3c4246;background:#181a1c}
+.plc-document-settings h3{margin:0 0 8px;color:#90a7b4;font:700 10px ui-monospace,monospace;letter-spacing:.12em}
+.plc-document-settings>label{display:flex;min-height:36px;align-items:center;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #343a3e;color:#aab6bc;font-size:11px}
+.plc-document-settings select{border:0;background:transparent;color:#f1f4f5;text-align:right}
+.plc-setting-toggle input{accent-color:#54cf9a}
+.plc-more-settings{width:100%;margin-top:8px;padding:7px;border-color:#343d42;background:#101518;font-size:11px}
+.plc-advanced-settings{padding:5px 2px;color:#9caab0;font-size:10px;line-height:1.6}
+.plc-ruler{position:absolute;z-index:6;display:flex;pointer-events:none;color:#a9b3b8;background:#181c1e;font:10px ui-monospace,monospace}
+.plc-ruler span{display:grid;place-items:center;flex:1;min-width:0;border-right:1px solid #2b3033}
+.plc-ruler-top{top:0;left:0;right:18px;height:24px;border-bottom:1px solid #454b4e}
+.plc-ruler-bottom{bottom:0;left:0;right:18px;height:22px;border-top:1px solid #454b4e}
+.plc-ruler-left,.plc-ruler-right{top:24px;bottom:22px;width:22px;flex-direction:column}
+.plc-ruler-left{left:0;border-right:1px solid #454b4e}
+.plc-ruler-right{right:0;border-left:1px solid #454b4e}
+.plc-ruler-left span,.plc-ruler-right span{border-right:0;border-bottom:1px solid #2b3033}
+.canvas-caption{top:32px;bottom:auto;left:34px;z-index:7;padding:5px 8px;border:1px solid #333b3f;border-radius:6px;background:#141a1dcc;color:#94a3aa;font-size:10px}
+.canvas-caption span{color:#76cbbb}
+.plc-canvas-status{position:absolute;z-index:7;left:32px;bottom:30px;max-width:calc(100% - 64px);padding:8px 11px;border:1px solid #326450;border-radius:6px;background:#0b291f;color:#a9e5cb;font:11px ui-monospace,monospace;pointer-events:none}
+.plc-canvas-status.running{border-color:#a34348;background:#2b1416;color:#ffb8b1}
+.plc-title-block{position:absolute;z-index:8;right:18px;bottom:30px;width:clamp(280px,34vw,420px);padding:12px 14px 8px;border:1px solid #75838a;background:#171a1bcc;color:#d9e0e4;font:11px ui-monospace,monospace;box-shadow:0 4px 20px #0006}
+.plc-title-block>strong,.plc-title-block>b{display:block;margin-bottom:6px}
+.plc-title-block>b{padding-bottom:6px;border-bottom:1px solid #465057;font-size:12px}
+.plc-title-block>label,.plc-title-grid label{display:grid;gap:3px;color:#91a0a7;font-size:9px}
+.plc-title-block>label{padding:5px 0;border-bottom:1px solid #354047}
+.plc-title-block input{width:100%;min-width:0;padding:1px 0;border:0;background:transparent;color:#e1e6e9;font:600 11px ui-monospace,monospace}
+.plc-title-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;padding:6px 0;border-bottom:1px solid #354047}
+.plc-title-block>small{display:block;padding-top:5px;color:#8b989e;font-size:8px}
+.canvas.dock-visible .plc-title-block{right:calc(min(370px, 50vw - 40px) + 14px)}
+.plc-app>.statusbar{height:42px;min-height:42px;flex:0 0 42px;gap:12px;padding:4px 10px;background:#121618;color:#b8c1c5;font:10px ui-monospace,monospace}
+.plc-run-controls{display:flex;align-items:center;gap:5px;flex:0 0 auto}
+.plc-run-controls .run{min-width:68px;padding:5px 8px;background:#f28a1d;border-color:#ff9c36;color:#171717;font-weight:700}
+.plc-run-controls .stop{background:#302222;border-color:#754448;color:#ffb9b0}
+.plc-run-controls button:not(.run){padding:5px 8px;background:#171d20}
+.plc-app>.statusbar output{max-width:35%;color:#e4bd70}
+.plc-ai{right:18px;bottom:22px;z-index:60}
+.plc-ai-launch{width:56px;height:56px;padding:0;border-radius:50%;background:#11191e;border-color:#35434a;box-shadow:0 6px 20px #0008;font:700 16px ui-monospace,monospace}
+.plc-ai-panel{bottom:72px}
+.plc-library{max-height:none;overflow:auto;background:transparent}
+.plc-library button{display:inline-flex;margin:4px}
+@media(max-width:1100px){.plc-app>.topbar{gap:3px;padding-inline:5px}.plc-app>.topbar>.brand{min-width:112px}.plc-app>.topbar>.brand span{font-size:13px}.plc-app>.topbar>.project-name{width:120px;flex-basis:120px}.plc-command-menu>summary{padding-inline:3px;font-size:10px}.vp-template-plc .vp-site-brand{display:none}.vp-template-plc .vp-main-site-link{font-size:0}.vp-template-plc .vp-main-site-link:before{content:'← Main';font-size:10px}.vp-template-plc #vpSiteHeader .vp-shell-controls>*{min-width:28px;padding-inline:4px;font-size:9px}.plc-title-block{width:300px}.plc-app>.statusbar{gap:6px}.plc-app>.statusbar output{max-width:24%}}
+@media(max-width:760px){.plc-app>.topbar{height:50px;min-height:50px;flex-basis:50px}.plc-app>.topbar>.brand{min-width:100px}.plc-app>.topbar>.brand small{display:none}.plc-app>.topbar>.project-name{width:100px;flex-basis:100px;font-size:10px}.plc-command-menu>summary{font-size:9px;padding-inline:2px}.plc-command-menu:nth-child(n+5){display:none}.zoom-controls{gap:0}.zoom-controls button{width:23px}.zoom-controls span{min-width:34px;font-size:9px}.vp-template-plc #vpSiteHeader .vp-site-navigation>summary{font-size:0;padding:7px}.vp-template-plc #vpSiteHeader .vp-site-navigation>summary:before{content:'▣';font-size:14px}.vp-template-plc #vpSiteHeader #vpShellLanguage{width:37px;min-width:37px}.vp-template-plc #vpSiteHeader #vpThemeToggle{font-size:0;width:30px;min-width:30px}.vp-template-plc #vpSiteHeader #vpThemeToggle:before{content:'☼';font-size:14px}.plc-app .properties{width:min(340px,88vw)}.plc-app .palette{width:min(300px,86vw)}.plc-title-block{width:260px;padding:8px;right:8px!important;bottom:28px;font-size:9px}.plc-title-block input{font-size:9px}.plc-canvas-status{left:27px;bottom:28px;max-width:calc(100% - 54px);font-size:9px}.plc-app>.statusbar{height:40px;min-height:40px;flex-basis:40px;gap:4px;font-size:8px}.plc-app>.statusbar output{display:none}}
+@media(max-width:760px){.plc-command-menu:nth-child(n+5){display:block}.canvas.dock-visible .plc-title-block{display:none}}
