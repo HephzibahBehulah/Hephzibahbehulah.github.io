@@ -71,3 +71,20 @@ html.vp-electcad-maximized #vpWorkspace .vp-workspace-frame{display:block!import
 #vpSiteHeader .vp-site-identity{flex:0 0 auto;margin-left:0}
 @media(max-width:720px){#vpSiteHeader{gap:6px;padding-inline:8px}#vpSiteHeader .vp-site-brand-group{min-width:0}#vpSiteHeader .vp-site-brand{overflow:hidden;text-overflow:ellipsis}#vpSiteHeader .vp-main-site-link{padding-inline:6px}#vpSiteHeader .vp-site-navigation>summary{padding:7px 8px}#vpSiteHeader .vp-shell-controls{gap:3px}#vpSiteHeader .vp-shell-controls #vpAboutReadiness{max-width:38px;overflow:hidden;text-overflow:clip;font-size:0}#vpSiteHeader .vp-shell-controls #vpAboutReadiness::before{content:'ⓘ';font-size:15px}#vpSiteHeader #vpShellLanguage,#vpSiteHeader #vpThemeToggle{padding:6px}#vpSiteHeader .vp-site-identity>a{display:block;max-width:75px;overflow:hidden;text-overflow:ellipsis}}
 @media(max-width:430px){#vpSiteHeader .vp-site-brand{display:none}#vpSiteHeader .vp-main-site-link{font-size:0}#vpSiteHeader .vp-main-site-link::before{content:'←';font-size:14px}#vpSiteHeader .vp-site-navigation>summary{font-size:0}#vpSiteHeader .vp-site-navigation>summary::before{content:'▣';font-size:16px}#vpSiteHeader .vp-shell-controls{gap:2px}#vpSiteHeader #vpShellLanguage{max-width:54px}}
+
+/* Single-row workspace footer matching the reference bar. */
+#vpBottomNavigation{justify-content:flex-start;gap:8px;overflow:hidden;background:#111517;color:#e4edf4;border-color:#32383d;padding:6px 10px calc(6px + env(safe-area-inset-bottom))}
+#vpBottomNavigation a{flex:0 0 auto;max-width:none;min-width:0;padding:7px 8px;border-radius:5px;font-size:12px}
+#vpBottomNavigation a>span{color:#ff9b1b}
+#vpBottomNavigation .vp-bottom-separator{width:1px;height:32px;flex:0 0 1px;background:#343b40;margin:0 6px}
+#vpBottomNavigation .vp-bottom-sim-controls{display:flex;flex:0 0 auto;align-items:center;gap:8px}
+#vpBottomNavigation .vp-bottom-sim-state,#vpBottomNavigation .vp-bottom-sim-controls button{height:34px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;border:1px solid #303b47;border-radius:6px;background:#11171e;color:#e4edf4;font:600 12px system-ui,sans-serif;white-space:nowrap}
+#vpBottomNavigation .vp-bottom-sim-state{color:#c8d0d6}
+#vpBottomNavigation .vp-bottom-sim-state[data-state=running]{color:#6fe0a7}
+#vpBottomNavigation .vp-bottom-sim-controls button{cursor:pointer}
+#vpBottomNavigation .vp-bottom-sim-controls button[aria-label="Start simulation"]::before{content:"▶"}
+#vpBottomNavigation .vp-bottom-sim-controls button[aria-label="Stop simulation"]::before{content:"■";font-size:10px}
+#vpBottomNavigation .vp-bottom-sim-controls button:hover{border-color:#f28a25;background:#242a2e}
+#vpBottomNavigation .vp-bottom-dev-note{margin-left:auto;flex:0 0 auto;color:#ffb04c;font-size:12px;white-space:nowrap}
+@media(max-width:1100px){#vpBottomNavigation{gap:3px;padding-inline:5px}#vpBottomNavigation a{padding-inline:5px;font-size:10px}#vpBottomNavigation .vp-bottom-sim-controls{gap:3px}#vpBottomNavigation .vp-bottom-sim-state,#vpBottomNavigation .vp-bottom-sim-controls button{height:30px;padding-inline:6px;font-size:10px}#vpBottomNavigation .vp-bottom-dev-note{font-size:10px}}
+@media(max-width:760px){#vpBottomNavigation{overflow-x:auto}#vpBottomNavigation .vp-bottom-dev-note{display:none}}
