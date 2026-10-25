@@ -30,6 +30,8 @@ test("main portfolio return link is same-tab and part of the persistent shared h
 test("workspace switches reuse hidden tool iframes and update history client-side", () => {
   assert.match(shell, /const panels = new Map\(\)/);
   assert.match(shell, /frame\.src = rootPrefix \+ tool\.src/);
+  const frameSetup = shell.slice(shell.indexOf("function ensurePanel"), shell.indexOf("function activate"));
+  assert.ok(frameSetup.indexOf('frame.addEventListener("load"') < frameSetup.indexOf("frame.src = rootPrefix + tool.src"));
   assert.match(shell, /history\.pushState/);
   assert.match(shell, /element\.dataset\.active = String\(active\)/);
   for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
