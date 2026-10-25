@@ -305,3 +305,9 @@ test("engineering workspace header stays one row and keeps workspace menus out o
   assert.match(experience,/\.hb-engineering #vpSiteHeader \.hb-vp-tools\{[\s\S]*?margin:0 0 0 auto!important/);
   assert.match(experience,/\.hb-engineering #vpSiteHeader \.hb-member-actions\{flex-flow:row nowrap!important/);
 });
+
+test("fixed engineering header and readiness banner reserve their viewport space",()=>{
+  const experience=read("platform/experience.css");
+  assert.match(experience,/html\.vp-unified-site body\.hb-engineering\{[\s\S]*?--vp-header-height:60px!important;[\s\S]*?padding-top:calc\(var\(--vp-header-height\) \+ var\(--vp-development-banner-height\)\)!important/);
+  assert.match(experience,/\.hb-engineering #vpDevelopmentBanner\{top:var\(--vp-header-height\)!important\}/);
+});
