@@ -87,6 +87,9 @@
       const title = brand.querySelector(".vp-brand-product b");
       const subtitle = brand.querySelector(".vp-brand-product small");
       if (title) title.textContent = "VoltPro";
+      brand.setAttribute("aria-label", "VoltPro Simulator");
+      brand.querySelector("img")?.remove();
+      brand.querySelector(".vp-brand-divider")?.remove();
       if (subtitle) subtitle.textContent = "Simulator";
       if (!brand.querySelector(".vp-product-mark")) {
         const mark = doc.createElement("span");
@@ -126,6 +129,29 @@
     if (project) sharedHeader.append(project);
     if (menus) sharedHeader.append(menus);
     if (primary) sharedHeader.append(primary);
+    const account = sharedHeader.querySelector(".vp-site-identity");
+    const utilities = doc.createElement("div");
+    utilities.className = "vp-sim-header-utilities";
+    if (language) {
+      const languageControl = doc.createElement("label");
+      languageControl.className = "vp-sim-language-control";
+      const globe = doc.createElement("span");
+      globe.setAttribute("aria-hidden", "true");
+      globe.textContent = "🌐";
+      languageControl.append(globe, language);
+      utilities.append(languageControl);
+    }
+    if (themeControl) utilities.append(themeControl);
+    if (about) utilities.append(about);
+    if (account) utilities.append(account);
+    sharedHeader.replaceChildren();
+    if (mainSite) sharedHeader.append(mainSite);
+    if (brand) sharedHeader.append(brand);
+    if (project) sharedHeader.append(project);
+    if (menus) sharedHeader.append(menus);
+    if (primary) sharedHeader.append(primary);
+    sharedHeader.append(utilities);
+    sharedHeader.classList.add("vp-simulator-one-row");
     if (toolbar.parentElement === top) toolbar.remove();
     const simControls = doc.createElement("div");
     simControls.className = "vp-sim-bottom-controls";

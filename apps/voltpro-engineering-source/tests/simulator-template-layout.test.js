@@ -18,7 +18,9 @@ test('embedded Simulator follows the compact one-row workspace shell',()=>{
  assert.match(css,/\.vp-site-navigation\[open\] nav\{display:grid\}/);
  assert.match(css,/\.vp-toolbar-dropdown\{position:absolute[^}]*z-index:1000/);
  assert.match(layout,/pointerenter/);
- assert.match(layout,/makeMenu\('More'\)/);
+ assert.doesNotMatch(layout,/makeMenu\('More'\)/);
+ assert.match(layout,/const categories=\['File','Edit','View','Insert','Project','Electrical','Simulation','Reports','Tools','Window','Help'\]/);
+ assert.match(layout,/vp-toolbar-quick/);
  assert.match(layout,/MutationObserver\(moveNavigation\)/);
 });
 
@@ -44,6 +46,8 @@ test('component rail, inspector tabs, and bottom simulation actions retain live 
  assert.match(shell,/restoreSimulatorChrome\(\)/);
  assert.match(shell,/app\.prepend\(doc\.adoptNode\(sharedHeader\)\)/);
  assert.match(shell,/sharedHeader\.querySelectorAll\("details\[open\]"\)/);
+ assert.match(shell,/sharedHeader\.replaceChildren\(\)/);
+ assert.match(shell,/vp-sim-header-utilities/);
  assert.match(shell,/syncResponsivePanels/);
  assert.match(shell,/VoltProWorkspaceControls\.setPanel\("left", true\)/);
  assert.match(shell,/VoltProWorkspaceControls\.setPanel\("right", true\)/);
