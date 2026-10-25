@@ -22,6 +22,7 @@ const definitions={
  arduino:{name:'Arduino Uno footprint',label:'UNO',className:'',value:'Footprint only · no firmware execution',group:'REFERENCE'}
 };
 for(const r of window.VoltProComponents.search().filter(r=>r.package?.kind==='PDIP'))definitions[r.id]={name:r.name,label:r.name.split(' ·')[0],className:'',value:r.status==='educational'?'Powered logic model':'Reference pin map only',group:'PACKAGED ICs',contract:r};
+for(const r of window.VoltProComponents.search().filter(r=>r.package?.kind==='board'&&['mcu_board','arduino_uno_r3'].includes(r.model)))definitions[r.id]={name:r.name,label:r.name.split(' ·')[0],className:'',value:(r.terminals?.length||0)+' mapped pins · '+(r.props?.logicVoltage||3.3)+' V GPIO',group:'MICROCONTROLLER BOARDS',contract:r};
 Object.assign(ui.partDefs,definitions);
 $('#simulationReport').textContent='DC and transient models: R, L, C, diodes, LEDs, DC/AC sources and switches. Choose a wired example or build a circuit. Five board targets support interpreted GPIO sketches and live network scans; the legacy Arduino part remains a reference footprint.';
 $('#canvasViewNote').textContent='Wheel: zoom · Drag empty bench: pan · Select a part to edit or move it · Probe measures against source negative';
@@ -34,7 +35,7 @@ const search=document.createElement('input');search.className='bb-search';search
 for(const group of [...new Set(Object.values(definitions).map(d=>d.group))]){
  const heading=document.createElement('div');heading.className='bb-group';heading.textContent=group;palette.append(heading);
  for(const [type,d] of Object.entries(definitions).filter(([,d])=>d.group===group)){
-  const b=document.createElement('button');b.className='part';b.dataset.part=type;b.innerHTML='<span class="glyph">'+esc(({resistor:'R',led:'LED',capacitor:'C',inductor:'L',battery:'DC',acsource:'∿',switch:'SW',potentiometer:'↗R',potentiometer3:'POT',spdt3:'SPDT',photoresistor:'☀R',diode:'D',jumper:'⌁',arduino:'UNO'})[type]||d.label)+'</span><span>'+esc(d.name)+'<small>'+esc(d.value)+'</small></span>';b.onclick=()=>choosePart(type);palette.append(b);
+  const b=document.createElement('button');b.className='part';b.dataset.part=type;b.innerHTML='<span class="glyph">'+esc(({resistor:'R',led:'LED',capacitor:'C',inductor:'L',battery:'DC',acsource:'∿',switch:'SW',potentiometer:'↗R',potentiometer3:'POT',spdt3:'SPDT',photoresistor:'☀R',diode:'D',jumper:'⌁',arduino:'UNO','arduino-uno-r3-header':'UNO','arduino-nano-classic':'NANO','raspberry-pi-pico':'PICO','raspberry-pi-pico2':'PICO 2','esp32-devkitc-v4':'ESP32'})[type]||d.label)+'</span><span>'+esc(d.name)+'<small>'+esc(d.value)+'</small></span>';b.onclick=()=>choosePart(type);palette.append(b);
  }
 }
 search.oninput=()=>{const q=search.value.trim().toLowerCase();palette.querySelectorAll('[data-part]').forEach(b=>b.hidden=!b.textContent.toLowerCase().includes(q));palette.querySelectorAll('.bb-group').forEach(h=>h.hidden=Boolean(q))};

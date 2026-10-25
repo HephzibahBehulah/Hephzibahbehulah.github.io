@@ -9,8 +9,7 @@ component models and assets were not copied.
 
 - Physical 830-point board with split power rails, five-hole strips and a center trench.
 - Canvas zoom/pan, minimap, placement previews, part dragging and wire selection.
-- Searchable palette with resistors, LEDs, capacitors, inductors, diodes, DC battery,
-  sine generator, toggle switch, variable resistor, adjustable photoresistor and links.
+- Searchable palette with real R/L/C/diode/source/switch parts and executable Arduino Uno R3, classic Nano, Raspberry Pi Pico/Pico 2, and ESP32 DevKitC board targets. Each board uses its registered terminal map; Raspberry Pi 5 remains reference-only and is not offered as an executable target.
 - Select / Wire / Probe tools. Hole probes use actual connected strips, with source
   negative as the voltage reference. The alternate Grid view provides accessible hole buttons.
 - Editable electrical values, engineering-prefix parsing, resistor sliders, generator
@@ -39,9 +38,7 @@ Errors clear stale traces instead of substituting decorative data.
 
 ## Model limits and the next stages
 
-- Arduino currently remains a reference footprint. This page does not execute Arduino,
-  ESP32 or Pico firmware. VoltPRo's separate limited GPIO interpreter is available in
-  the schematic simulator's MCU workspace; it is not full processor emulation.
+- Breadboard board targets run a bounded GPIO teaching sketch through the interpreter and electrical network solver. The Uno R3, classic Nano, Pico, Pico 2 and ESP32 DevKitC expose their registered physical terminals, voltage levels and pin directions; they do not emulate native CPU instructions, interrupts, Wi-Fi/Bluetooth, USB or vendor SDKs. Raspberry Pi 5 is a Linux computer and remains reference-only, so it is not exposed as an executable breadboard part.
 - No Wi-Fi, Bluetooth, Zigbee, Matter, USB device emulation, serial terminal, MicroPython
   runtime, peripheral bus models, display-driver emulation or cloud project syncing.
 - One fixed 830-point board; no freely movable/multiple boards or arbitrary external
@@ -53,10 +50,7 @@ Errors clear stale traces instead of substituting decorative data.
 - Old capacitor footprints without declared terminal holes require re-placement before
   analysis. Future project versions are rejected rather than destructively downgraded.
 
-The recommended next implementation order is: external-device terminal IDs and multiple
-boards; one complete Arduino Uno execution path; serial and GPIO timing instruments;
-one tested sensor/display bus; then Pico/ESP32 runtimes and networking. Each device needs
-behavioral tests, not just a palette thumbnail.
+The recommended next implementation order is: external connector and multi-board topology with explicit off-board terminals; broader peripheral buses and timing models; then additional, independently tested sensor/display integrations. Native CPU, Wi-Fi and vendor SDK emulation require separate runtime designs. Each addition needs behavioral tests, not just a palette thumbnail.
 
 ## Verification
 
