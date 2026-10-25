@@ -56,7 +56,7 @@
   moveNavigation();new MutationObserver(moveNavigation).observe(document.body,{childList:true,subtree:true});
   const adaptMenus=()=>{
    const width=window.innerWidth,ordered=menuEntries;
-   const visibleCount=width<600?2:width<850?4:ordered.length;
+  const visibleCount=width<600?2:width<850?3:width<1200?4:width<1500?6:ordered.length;
    ordered.forEach((menu,index)=>{if(index<visibleCount){if(menu.parentElement!==menus)menus.insertBefore(menu,more.details);}else if(menu.parentElement!==moreBox)moreBox.append(menu);});
    if(zoom){const destination=width<600?bins.View:primary;if(zoom.parentElement!==destination)destination.append(zoom);}
    more.details.hidden=moreBox.childElementCount===0;

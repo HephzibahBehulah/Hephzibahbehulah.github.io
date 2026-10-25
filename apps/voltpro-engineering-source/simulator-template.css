@@ -2,7 +2,7 @@
 html.vp-template-simulator,html.vp-template-simulator body,
 body.simulator-page.vp-template-simulator{width:100%;height:100%;min-height:0;margin:0;overflow:hidden}
 body.simulator-page.vp-template-simulator .sim-app{height:100%;min-height:0;display:grid;grid-template-rows:48px minmax(0,1fr);overflow:hidden}
-body.simulator-page.vp-template-simulator .sim-top{display:contents!important}
+body.simulator-page.vp-template-simulator .sim-top{display:none!important}
 body.simulator-page.vp-template-simulator>.sim-app>.toolbar{display:none!important}
 
 /* One fixed top row: identity, icon menus and the shared site controls. */
@@ -67,7 +67,6 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown a{m
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown label{display:flex;align-items:center;justify-content:space-between;gap:8px}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown input{max-width:94px}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary .wire-tool{display:none}
-body.simulator-page.vp-template-simulator #vpSiteHeader .top-actions{display:none!important}
 
 /* One bottom row carries navigation, live state, run controls and the warning. */
 html.vp-simulator-template #vpBottomNavigation{position:fixed!important;inset:auto 0 0!important;z-index:200!important;height:52px;min-height:52px;max-height:52px;display:flex;align-items:center;justify-content:stretch;gap:3px;padding:4px 8px calc(4px + env(safe-area-inset-bottom));overflow:hidden;background:#101419!important;border-top:1px solid #303a44!important;box-sizing:border-box}
@@ -117,43 +116,57 @@ body.simulator-page.vp-template-simulator #canvasWrap:has(.vp-panel-view:not([hi
 body.simulator-page.vp-template-simulator #canvasWrap:has(.vp-panel-view:not([hidden])) .vp-sheet-left,
 body.simulator-page.vp-template-simulator #canvasWrap:has(.vp-panel-view:not([hidden])) .vp-title-block{display:none}
 
+/* Keep component names, values, and pins readable over the schematic grid. */
+body.simulator-page.vp-template-simulator .component-label{font-size:12px;font-weight:850;paint-order:stroke;stroke:#07111d;stroke-width:3px;stroke-linejoin:round}
+body.simulator-page.vp-template-simulator .component-value{font-size:11px;font-weight:750;paint-order:stroke;stroke:#07111d;stroke-width:2.5px;stroke-linejoin:round}
+body.simulator-page.vp-template-simulator.light .component-label,body.simulator-page.vp-template-simulator.light .component-value{stroke:#f4f7f8}
+
+/* Keep the shared header as the only top row and the work area below it. */
+body.simulator-page.vp-template-simulator .sim-app{position:relative;grid-template-rows:48px minmax(0,1fr);overflow:visible}
+body.simulator-page.vp-template-simulator #vpSiteHeader{grid-row:1;flex-wrap:nowrap;justify-content:flex-start;gap:5px;overflow:visible;z-index:1500}
+body.simulator-page.vp-template-simulator .workspace{grid-row:2;min-width:0;min-height:0;overflow:hidden}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group{order:0;flex:0 0 auto;margin:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{order:1;flex:0 1 132px;min-width:74px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation{order:2;margin:0;flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{order:3;flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{order:4;flex:0 1 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls{order:8;flex:0 0 auto;margin-left:auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity{order:9;flex:0 0 auto;margin:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-account-menu{top:calc(100% + 5px);right:8px;width:max-content;min-width:190px;max-width:min(330px,calc(100vw - 16px));max-height:calc(100dvh - 64px);overflow:auto;z-index:1800}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav{top:calc(100% + 5px);z-index:1800}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown{z-index:1800}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details[open]{z-index:1801}
+body.simulator-page.vp-template-simulator .workspace{grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) minmax(265px,310px)}
+
 @media(max-width:1400px){
- body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{flex-basis:115px}
- body.simulator-page.vp-template-simulator .workspace{grid-template-columns:40px minmax(190px,220px) minmax(0,1fr) minmax(245px,275px)}
+ body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{flex-basis:112px}
 }
-@media(max-width:1100px){
- body.simulator-page.vp-template-simulator #vpSiteHeader{gap:3px;padding:0 4px}
- body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{flex-basis:88px}
+@media(max-width:1000px){
  body.simulator-page.vp-template-simulator .workspace{grid-template-columns:40px minmax(0,1fr) minmax(240px,280px)}
- body.simulator-page.vp-template-simulator #palette{position:fixed;z-index:30;left:40px;top:48px;bottom:52px;width:min(280px,80vw);transform:translateX(-125%);box-shadow:12px 0 30px #000a}
- body.simulator-page.vp-template-simulator #palette.open{transform:none}
+ body.simulator-page.vp-template-simulator #palette{position:fixed!important;z-index:1600!important;left:40px!important;top:48px!important;bottom:52px!important;width:min(280px,calc(100vw - 52px))!important;max-width:none!important;transform:translateX(calc(-100% - 44px))!important;box-shadow:12px 0 30px #000a}
+ body.simulator-page.vp-template-simulator #palette.open{transform:translateX(0)!important}
  body.simulator-page.vp-template-simulator #canvasWrap{grid-column:2;grid-row:1}
  body.simulator-page.vp-template-simulator #inspectorPanel{grid-column:3;grid-row:1}
 }
 @media(max-width:760px){
  body.simulator-page.vp-template-simulator .workspace{grid-template-columns:38px minmax(0,1fr)}
- body.simulator-page.vp-template-simulator #inspectorPanel{position:fixed;z-index:31;right:0;top:48px;bottom:52px;width:min(310px,88vw);transform:translateX(105%);box-shadow:-12px 0 30px #000a}
- body.simulator-page.vp-template-simulator .workspace:not(.inspector-hidden) #inspectorPanel{transform:none}
+ body.simulator-page.vp-template-simulator #inspectorPanel{position:fixed!important;z-index:1601!important;right:0;top:48px;bottom:52px;width:min(310px,88vw);transform:translateX(105%);box-shadow:-12px 0 30px #000a}
+ body.simulator-page.vp-template-simulator .workspace:not(.inspector-hidden) #inspectorPanel{transform:translateX(0)}
+ body.simulator-page.vp-template-simulator .workspace.inspector-hidden #inspectorPanel{transform:translateX(105%)}
  body.simulator-page.vp-template-simulator #canvasWrap{grid-column:2;grid-row:1}
  body.simulator-page.vp-template-simulator #vpCircuitDesigner{right:12px;bottom:66px}
- html.vp-simulator-template #vpBottomNavigation{gap:2px;padding-inline:3px}
- html.vp-simulator-template #vpBottomNavigation a{padding-inline:2px}
- html.vp-simulator-template #vpBottomNavigation a small{display:none}
- html.vp-simulator-template #vpBottomNavigation .vp-bottom-dev-note{display:none}
- html.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{gap:2px;margin-left:1px;padding-left:3px}
- html.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{padding-inline:5px}
- html.vp-simulator-template #vpBottomNavigation #simStatus{display:none}
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown{position:fixed;top:53px;left:6px;right:6px;width:auto;max-height:calc(100dvh - 116px)}
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details[data-menu=more]>.vp-toolbar-dropdown{left:6px;right:6px}
 }
-@media(max-width:470px){
+@media(max-width:600px){
+ body.simulator-page.vp-template-simulator #vpSiteHeader{gap:3px;padding-inline:4px}
  body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{display:none}
- body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #simStatus{display:none}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group{min-width:0}
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls{gap:2px}
- body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls>*{width:29px;min-width:29px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls>*{width:28px;min-width:28px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader #vpShellLanguage{width:38px;min-width:38px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{gap:2px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary button{min-width:28px;padding-inline:4px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #runBtn{min-width:44px;padding-inline:5px}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #simStatus{display:none}
 }
-
-/* Keep component names, values, and pins readable over the schematic grid. */
-body.simulator-page.vp-template-simulator .component-label{font-size:12px;font-weight:850;paint-order:stroke;stroke:#07111d;stroke-width:3px;stroke-linejoin:round}
-body.simulator-page.vp-template-simulator .component-value{font-size:11px;font-weight:750;paint-order:stroke;stroke:#07111d;stroke-width:2.5px;stroke-linejoin:round}
-body.simulator-page.vp-template-simulator.light .component-label,body.simulator-page.vp-template-simulator.light .component-value{stroke:#f4f7f8}

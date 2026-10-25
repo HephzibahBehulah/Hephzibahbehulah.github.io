@@ -25,6 +25,7 @@
     if (!parts) return;
     const toolbar = parts.toolbar || doc.querySelector(".sim-app > .toolbar");
     const top = doc.querySelector(".sim-top");
+    const app = doc.querySelector(".sim-app");
     const bottom = document.getElementById("vpBottomNavigation");
     if (toolbar) {
       if (parts.primary) toolbar.append(parts.primary);
@@ -36,7 +37,7 @@
         toolbar.prepend(controls);
       }
       if (parts.zoom && parts.zoomParent && parts.zoom.parentElement !== parts.zoomParent) parts.zoomParent.append(parts.zoom);
-      if (top && toolbar.parentElement !== doc.querySelector(".sim-app")) top.after(toolbar);
+      if (top && toolbar.parentElement !== app) top.after(toolbar);
     }
     if (parts.brand && top && parts.brand.parentElement !== top) top.prepend(parts.brand);
     if (parts.language) parts.language.querySelectorAll("option").forEach(option => { if (option.dataset.fullLabel) option.textContent = option.dataset.fullLabel; });
@@ -95,9 +96,11 @@
     if (about) about.title = "About VoltPro and production readiness";
     const themeControl = sharedHeader.querySelector("#vpThemeToggle");
     if (themeControl) themeControl.title = "Switch light or dark theme";
+    sharedHeader.querySelectorAll("details[open]").forEach(menu => { menu.open = false; });
     doc.__vpShellParts = { integrated: true, header: sharedHeader, banner, dialog, brand, zoom, zoomParent, primary, menus, status, toolbar, language };
+    const app = doc.querySelector(".sim-app");
     if (toolbar.parentElement !== top) top.append(toolbar);
-    if (sharedHeader.ownerDocument !== doc || sharedHeader.parentElement !== top) top.append(doc.adoptNode(sharedHeader));
+    if (app && (sharedHeader.ownerDocument !== doc || sharedHeader.parentElement !== app)) app.prepend(doc.adoptNode(sharedHeader));
     if (brand && brand.parentElement !== sharedHeader) sharedHeader.insertBefore(brand, sharedHeader.querySelector(".vp-site-navigation"));
     if (language) {
       language.title = "Language";
@@ -123,6 +126,21 @@
     }
     if (dialog && dialog.ownerDocument !== doc) doc.body.append(doc.adoptNode(dialog));
     const workspace = doc.querySelector(".workspace");
+    if (workspace) {
+      const syncResponsivePanels = () => {
+        const narrow = doc.defaultView.matchMedia("(max-width: 1000px)").matches;
+        const compact = doc.defaultView.matchMedia("(max-width: 760px)").matches;
+        if (narrow) doc.getElementById("palette")?.classList.remove("open", "collapsed");
+        workspace.classList.toggle("inspector-hidden", compact);
+        doc.getElementById("paletteBtn")?.setAttribute("aria-expanded", String(!narrow));
+        doc.getElementById("inspectorBtn")?.setAttribute("aria-expanded", String(!compact));
+      };
+      syncResponsivePanels();
+      if (!doc.__vpResponsivePanelResizeBound) {
+        doc.__vpResponsivePanelResizeBound = true;
+        doc.defaultView.addEventListener("resize", syncResponsivePanels, { passive: true });
+      }
+    }
     if (workspace && !workspace.querySelector(".vp-sim-rail")) {
       const rail = doc.createElement("nav");
       rail.className = "vp-sim-rail";
