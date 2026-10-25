@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const tools = [
-    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261025o" },
+    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261025p" },
     { path: "/plc", title: "VoltPro PLC", src: "/voltpro-plc/?vp_embed=1" },
     { path: "/electcad", title: "VoltPro ElectCAD", src: "/voltpro-electcad/?vp_embed=1" },
     { path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" },
@@ -280,9 +280,22 @@
       const results = doc.createElement("section"); results.className = "vp-dock-panel"; results.dataset.dockPanel = "results"; results.hidden = true;
       const ids = new Set(["inspectorBody"]);
       for (const node of existing) (ids.has(node.id) ? properties : results).append(node);
+      const settings=doc.createElement("section");settings.className="vp-document-settings";
+      settings.innerHTML='<div class="vp-document-settings-title">DOCUMENT SETTINGS</div><label class="vp-document-grid-row"><span>Grid spacing</span><span><input id="vpDocumentGridSpacing" type="number" min="5" max="80" value="20"><span id="vpDocumentGridUnits">mm</span></span></label><button id="vpSnapToGrid" class="vp-document-toggle" type="button" role="switch" aria-checked="true"><span>Snap to grid</span><i></i></button><button id="vpShowDrawingGrid" class="vp-document-toggle" type="button" role="switch" aria-checked="true"><span>Show drawing grid</span><i></i></button><button id="vpMoreDocumentSettings" class="vp-document-more" type="button">☷　More settings</button>';
+      properties.append(settings);
+      const settingsDialog=doc.createElement("dialog");settingsDialog.className="vp-document-settings-dialog";settingsDialog.setAttribute("aria-label","More document settings");settingsDialog.innerHTML='<form method="dialog"><strong>MORE SETTINGS</strong><label>Document units<select id="vpDocumentUnits"><option value="mm">Millimetres (mm)</option><option value="mil">Mils</option><option value="unit">Logical units</option></select></label><p>Settings apply to this active project. Unit changes do not convert existing coordinates.</p><div><button value="cancel">Cancel</button><button id="vpApplyDocumentSettings" value="apply">Apply settings</button></div></form>';doc.body.append(settingsDialog);
+      const getSettings=()=>doc.defaultView.VoltProSimulator?.state?.documentSettings||{gridSpacing:20,units:"mm",snapToGrid:true,showGrid:true};
+      const paintSettings=()=>{const s=getSettings();const input=doc.getElementById("vpDocumentGridSpacing"),units=doc.getElementById("vpDocumentGridUnits"),select=doc.getElementById("vpDocumentUnits");if(input)input.value=String(s.gridSpacing||20);if(units)units.textContent=s.units||"mm";if(select)select.value=s.units||"mm";for(const [id,on]of[["vpSnapToGrid",s.snapToGrid!==false],["vpShowDrawingGrid",s.showGrid!==false]]){const b=doc.getElementById(id);if(b){b.setAttribute("aria-checked",String(on));b.classList.toggle("is-on",on)}}};
+      const setSettings=patch=>doc.defaultView.VoltProSimulator?.setDocumentSettings?.(patch);
+      settings.querySelector("#vpDocumentGridSpacing").onchange=e=>setSettings({gridSpacing:Number(e.target.value)||20});
+      settings.querySelector("#vpSnapToGrid").onclick=()=>setSettings({snapToGrid:getSettings().snapToGrid===false});
+      settings.querySelector("#vpShowDrawingGrid").onclick=()=>setSettings({showGrid:getSettings().showGrid===false});
+      settings.querySelector("#vpMoreDocumentSettings").onclick=()=>{paintSettings();settingsDialog.showModal()};
+      doc.getElementById("vpApplyDocumentSettings").onclick=()=>setSettings({units:doc.getElementById("vpDocumentUnits").value});
+      doc.addEventListener("voltpro-document-settings-change",paintSettings);doc.addEventListener("voltpro-project-loaded",paintSettings);paintSettings();
       const liveOptions = doc.querySelector(".live-view-options");
       if (liveOptions) results.append(liveOptions);
-      dock.append(heading, tabs, properties, results); inspector.append(dock);
+      dock.append(heading, tabs, properties, results); inspector.append(dock);paintSettings();
       tabs.addEventListener("click", event => {
         const key = event.target.closest("[data-dock-tab]")?.dataset.dockTab;
         if (!key) return;
