@@ -1,0 +1,71 @@
+INTERFACE DESIGN FORMAT
+VoltPro Engineering Tools — ElectCAD Reference
+==============================================
+
+PURPOSE
+This document preserves the current VoltPro ElectCAD interface as the reference design for the other engineering tools. Use the same recognizable product shell and interaction patterns while adapting each tool’s work area to its purpose. ElectCAD remains the visual reference; do not redesign or disrupt its existing behavior as part of applying this format elsewhere.
+
+REFERENCE IMPLEMENTATION
+Live reference: https://engineering.hephzibahbehulah.com/electcad
+Current source: apps/voltpro-electcad/App.tsx and apps/voltpro-electcad/styles.css
+
+1. PRODUCT SHELL AND PAGE HIERARCHY
+- Fill the available application viewport with a compact, dark engineering workspace.
+- Keep one top command bar. Product identity, project control, application menus, canvas tools, zoom controls, and utility controls belong in this same top row. Never add a second top toolbar.
+- Below the header, organize the work area as a narrow left icon rail, the main work surface, and a right workspace dock.
+- Keep the cross-tool navigation in the bottom bar. It links to Simulator, PLC, ElectCAD, Engineering Tools, Breadboard, and Electrical. Highlight the current tool.
+- Preserve the existing page hierarchy and make the work surface the largest area.
+
+2. TOP COMMAND BAR
+The single header combines:
+- Site navigation and Hephzibah Behulah / VoltPro ElectCAD identity.
+- Current project name and its project actions.
+- The application menu row: File, Edit, View, Insert, Project, Electrical, Simulation, Reports, Tools, Window, and Help.
+- The tool group for selection, wiring, panning, component placement, rotate, grid, and snap.
+- Fit, zoom out, current zoom percentage, and zoom in.
+- The My workspace control (book icon), language selector (globe and language code), theme control (sun or moon), About and readiness (info icon), and account control (VP).
+
+Keep every essential control visible and usable. At narrower widths, compact spacing and nonessential branding first; allow a deliberate horizontal scroll when needed. Do not silently hide the language, theme, About, workspace, account, or zoom controls. Menus must open above the canvas without being clipped by header overflow.
+
+3. LEFT NAVIGATION AND CONTEXT PANEL
+- Use a slim vertical icon rail for Home / starter projects, Pages, Components, Search, Workspace settings, and About/readiness.
+- Opening a rail item reveals its contextual panel beside the rail. The panel can overlay part of the canvas; it must not permanently squeeze the work surface.
+- Keep panel headings, close controls, scroll behavior, and selected states clear.
+- The component panel is a searchable, categorized library with visible component counts and symbol previews. Do not move these primary canvas tools back into a crowded top row.
+
+4. MAIN WORK SURFACE
+- Treat the canvas as the central focus: dark grid background, fine grid lines, rulers/coordinates, and clear schematic symbols, labels, and wires.
+- Keep sheet tabs and the compact lower results/diagnostics area attached to the work surface where appropriate.
+- Canvas zoom changes the viewport scale. It must remain distinct from changing a component’s own size.
+- Maintain visible selection, hover, focus, active-tool, and wire feedback. Keep drawing controls and project state attached to the existing editor behavior.
+
+5. RIGHT WORKSPACE DOCK
+- Use a fixed-width desktop dock titled WORKSPACE DOCK with two primary tabs: Properties and Results.
+- Properties shows the selected item’s editable inspector or a useful no-selection message.
+- Results holds diagnostics, simulation output, and other tool results. Preserve their own tabs and scrolling where needed.
+- Include a clear collapse/reveal affordance. On small screens the dock may overlay the canvas, but its controls must remain reachable.
+
+6. VISUAL LANGUAGE
+- Default to the current dark appearance: charcoal/near-black surfaces, subtle gray borders, cool light text, and warm orange VoltPro highlights. Use the existing theme implementation and tokens/styles rather than introducing a competing palette.
+- Keep controls compact and squared with restrained corner rounding, thin borders, and clear hover/active states.
+- Use the established engineering typography: readable interface text with monospaced labels for technical headings and status details.
+- Preserve the light/dark theme switch. Both themes must keep text, symbols, borders, selected states, and menus legible.
+- Use the existing VoltPro and Hephzibah Behulah identity consistently. Do not add a second brand header.
+
+7. BEHAVIOR AND ACCESSIBILITY
+- Keep existing controls functional when restyling or reusing the shell. Do not replace working actions with decorative controls or placeholders.
+- Use descriptive accessible names for icon-only buttons, visible keyboard focus, and accurate expanded/pressed states.
+- Keep menus, popovers, and panels above the canvas and usable by mouse and keyboard.
+- Preserve project data, editor state, undo/save behavior, and existing navigation when changing layout.
+- Avoid changing shared editor logic merely to make another tool look similar. Reuse the shell and visual patterns; keep tool-specific behavior isolated.
+
+8. RESPONSIVE RULE
+At wide desktop sizes, match ElectCAD’s full three-part workspace: left rail, canvas, and right dock. As space narrows, reduce gaps and optional brand text before reducing tool access. Keep the top command bar as one row; if all controls cannot fit, use intentional horizontal scrolling rather than clipping or silently removing essential controls. Keep the bottom cross-tool navigation available with horizontal scrolling where necessary. On mobile, panels may overlay the work surface and docks may collapse, but each remains discoverable and operable.
+
+9. APPLYING THIS FORMAT TO ANOTHER TOOL
+- Start from the ElectCAD shell: one header, left icon rail, large central workspace, right contextual dock, and bottom tool navigation.
+- Keep the common VoltPro controls and navigation in familiar positions.
+- Adapt only the central work surface, its tool-specific panels, and its relevant inspector/results content.
+- Compare the finished tool against the live ElectCAD reference at desktop and narrow widths. Confirm that essential controls are visible, panel open/close works, menus are not clipped, and the existing tool actions still work before considering the interface complete.
+
+This document describes the current ElectCAD interface standard for reuse. It is not a claim that every future tool feature already exists in ElectCAD.
