@@ -378,3 +378,17 @@ body.simulator-page.vp-template-simulator .vp-title-grid>label{display:flex;flex
 body.simulator-page.vp-template-simulator .vp-title-grid input{height:15px;box-sizing:border-box;margin-top:2px;padding:1px 0;line-height:1.1}
 body.simulator-page.vp-template-simulator .vp-title-grid{border-bottom:0}
 body.simulator-page.vp-template-simulator .vp-title-block footer{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-top:1px solid #46515a;padding-top:4px}
+
+
+/* Keep the left library as an overlay; opening it must never reflow the canvas or dock. */
+@media(min-width:761px){
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.palette-hidden{grid-template-columns:42px minmax(0,1fr) minmax(265px,310px)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.inspector-hidden,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-dock-collapsed{grid-template-columns:42px minmax(0,1fr) 42px!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels .vp-canvas-frame{grid-column:2!important;grid-row:1!important;min-width:0!important;width:auto!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #inspectorPanel{grid-column:3!important;grid-row:1!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #palette{position:absolute!important;left:42px!important;right:auto!important;top:0!important;bottom:0!important;z-index:30!important;width:min(245px,calc(100vw - 54px))!important}
+}
