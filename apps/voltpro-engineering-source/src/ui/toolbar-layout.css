@@ -112,7 +112,8 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summar
 @media(max-width:780px){body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:9px!important}}
 @media(max-width:520px){body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:8px!important}}
 @media(min-width:1101px) and (max-width:1400px){
- body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-brand-lockup{max-width:162px!important}
- body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{gap:4px!important}
+ body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-brand-lockup{max-width:170px!important}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-brand-product small{font-size:11px!important}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{gap:3px!important}
  body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:10px!important}
 }
