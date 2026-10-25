@@ -104,10 +104,15 @@ body.simulator-page.vp-template-simulator .toolbar #simStatus{display:none!impor
 #vpBottomNavigation .vp-bottom-sim-controls button:disabled:hover{border-color:#303b47;background:#11171e}
 
 
-/* Slightly reduce top-bar label sizes to keep the Simulator name fully visible. */
+/* Compact top-bar labels and reserve enough width for the full Simulator name. */
 body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:11px!important}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:11px!important}
 @media(max-width:1500px){body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:10px!important}}
 @media(max-width:1200px){body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:9px!important}}
 @media(max-width:780px){body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:9px!important}}
 @media(max-width:520px){body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:8px!important}}
+@media(min-width:1101px) and (max-width:1400px){
+ body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-brand-lockup{max-width:162px!important}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{gap:4px!important}
+ body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:10px!important}
+}
