@@ -130,10 +130,17 @@
       const syncResponsivePanels = () => {
         const narrow = doc.defaultView.matchMedia("(max-width: 1000px)").matches;
         const compact = doc.defaultView.matchMedia("(max-width: 760px)").matches;
+        const panelControls = doc.defaultView.VoltProWorkspaceControls;
+        if (narrow && !doc.__vpResponsivePanelsInitialized) {
+          panelControls?.setPanel("left", false);
+          panelControls?.setPanel("right", false);
+          doc.__vpResponsivePanelsInitialized = true;
+        }
         if (narrow) doc.getElementById("palette")?.classList.remove("open", "collapsed");
-        workspace.classList.toggle("inspector-hidden", compact);
-        doc.getElementById("paletteBtn")?.setAttribute("aria-expanded", String(!narrow));
-        doc.getElementById("inspectorBtn")?.setAttribute("aria-expanded", String(!compact));
+        workspace.classList.remove("inspector-hidden");
+        const state = panelControls?.layout?.();
+        doc.getElementById("paletteBtn")?.setAttribute("aria-expanded", String(state?.left ?? !narrow));
+        doc.getElementById("inspectorBtn")?.setAttribute("aria-expanded", String(state?.right ?? !compact));
       };
       syncResponsivePanels();
       if (!doc.__vpResponsivePanelResizeBound) {
@@ -150,12 +157,19 @@
       rail.addEventListener("click", event => {
         const action = event.target.closest("[data-rail]")?.dataset.rail;
         if (!action) return;
-        if (action === "parts") doc.getElementById("paletteBtn")?.click();
+        if (action === "parts") {
+          if (doc.defaultView.VoltProWorkspaceControls) doc.defaultView.VoltProWorkspaceControls.setPanel("left", true);
+          else doc.getElementById("paletteBtn")?.click();
+        }
         if (action === "wire") doc.getElementById("wireBtn")?.click();
-        if (action === "search") { doc.getElementById("palette")?.classList.add("open"); doc.getElementById("componentSearch")?.focus(); }
+        if (action === "search") {
+          if (doc.defaultView.VoltProWorkspaceControls) doc.defaultView.VoltProWorkspaceControls.setPanel("left", true);
+          else doc.getElementById("palette")?.classList.add("open");
+          doc.getElementById("componentSearch")?.focus();
+        }
         if (action === "properties") {
-          const inspectorToggle = doc.getElementById("inspectorBtn");
-          if (doc.querySelector(".workspace.inspector-hidden")) inspectorToggle?.click();
+          if (doc.defaultView.VoltProWorkspaceControls) doc.defaultView.VoltProWorkspaceControls.setPanel("right", true);
+          else workspace.classList.remove("inspector-hidden");
           doc.querySelector('[data-dock-tab="properties"]')?.click();
         }
         if (action === "fit") doc.getElementById("fitBtn")?.click();

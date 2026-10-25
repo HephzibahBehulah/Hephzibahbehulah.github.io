@@ -3,6 +3,8 @@ html.vp-template-simulator,html.vp-template-simulator body,
 body.simulator-page.vp-template-simulator{width:100%;height:100%;min-height:0;margin:0;overflow:hidden}
 body.simulator-page.vp-template-simulator .sim-app{height:100%;min-height:0;display:grid;grid-template-rows:48px minmax(0,1fr);overflow:hidden}
 body.simulator-page.vp-template-simulator .sim-top{display:none!important}
+body.simulator-page.vp-template-simulator .sim-top .top-actions,
+body.simulator-page.vp-template-simulator #themeBtn{display:none!important}
 body.simulator-page.vp-template-simulator>.sim-app>.toolbar{display:none!important}
 
 /* One fixed top row: identity, icon menus and the shared site controls. */
@@ -19,7 +21,10 @@ body.simulator-page.vp-template-simulator #vpSiteHeader>.brand .vp-brand-product
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation{order:2;margin:0;flex:0 0 auto}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation>summary{font-size:0;padding:7px 9px}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation>summary::before{content:'▣';font-size:15px}
-body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav{top:calc(100% + 5px);left:0}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation{position:relative;flex:0 0 auto}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav{position:absolute;top:calc(100% + 5px);left:0;z-index:1800;display:none;min-width:220px;max-height:min(70vh,520px);overflow:auto;padding:7px;gap:2px;border:1px solid #354654;border-radius:8px;background:#111a23;box-shadow:0 14px 36px #000b}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation[open] nav{display:grid}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav a{display:block;padding:8px 10px;white-space:nowrap}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls{order:8;gap:4px;margin-left:auto}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls>*{width:34px;height:32px;min-width:34px;padding:0;display:grid;place-items:center;overflow:hidden;white-space:nowrap;font-size:0!important}
 body.simulator-page.vp-template-simulator #vpSiteHeader #vpAboutReadiness::before{content:'ⓘ';font-size:17px}
@@ -31,6 +36,8 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity summar
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity>a::before{content:'♙';font-size:17px}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity summary>*:not(.vp-avatar){display:none}
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity .vp-avatar{width:25px;height:25px}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity details:not([open]) .vp-account-menu{display:none!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity .vp-account-menu{position:absolute;top:calc(100% + 5px);right:8px;z-index:1800;display:grid;gap:7px;width:max-content;min-width:190px;max-width:min(330px,calc(100vw - 16px));max-height:calc(100dvh - 64px);overflow:auto;padding:10px;background:#111a23;border:1px solid #354654;border-radius:8px;box-shadow:0 14px 36px #000b}
 
 /* Existing project actions retain their event handlers as they move into the header. */
 body.simulator-page.vp-template-simulator #vpSiteHeader .toolbar{display:flex!important;align-items:center;gap:5px;min-width:0;flex:0 1 auto;margin:0;padding:0;border:0;background:transparent;overflow:visible}
@@ -108,7 +115,7 @@ body.simulator-page.vp-template-simulator .vp-title-block{position:absolute;righ
 body.simulator-page.vp-template-simulator .vp-title-block strong{display:block;padding-bottom:4px;border-bottom:1px solid #46515a;letter-spacing:.08em}
 body.simulator-page.vp-template-simulator .vp-title-block span{display:block;color:#aab5bd;margin-top:4px}
 body.simulator-page.vp-template-simulator .sim-footer{display:none!important}
-body.simulator-page.vp-template-simulator .canvas-help{position:absolute;z-index:9;left:38px;top:33px;margin:0;width:max-content;max-width:calc(100% - 60px)}
+body.simulator-page.vp-template-simulator .canvas-help{position:absolute;z-index:9;left:38px;top:33px;right:auto;bottom:auto;height:auto;min-height:0;max-height:none;margin:0;width:max-content;max-width:calc(100% - 60px)}
 body.simulator-page.vp-template-simulator .zoom{position:absolute;right:10px;bottom:10px;z-index:9;margin:0}
 body.simulator-page.vp-template-simulator .vp-panel-rail{left:40px!important;right:10px!important}
 body.simulator-page.vp-template-simulator #vpCircuitDesigner{right:326px;bottom:140px;z-index:20}
@@ -138,21 +145,50 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown{z-i
 body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details[open]{z-index:1801}
 body.simulator-page.vp-template-simulator .workspace{grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) minmax(265px,310px)}
 
+/* Workspace Controls adds .vp-managed-panels with its own grid rules. Keep its
+   saved open/closed states aligned with the rail, palette, canvas and dock. */
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) minmax(265px,310px)!important}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.palette-hidden{grid-template-columns:42px minmax(0,1fr) minmax(265px,310px)!important}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.inspector-hidden{grid-template-columns:42px minmax(205px,245px) minmax(0,1fr)!important}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.palette-hidden.inspector-hidden{grid-template-columns:42px minmax(0,1fr)!important}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed #canvasWrap,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.palette-hidden #canvasWrap{grid-column:2}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed #inspectorPanel,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.palette-hidden #inspectorPanel{grid-column:3}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed #canvasWrap,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.inspector-hidden #canvasWrap{grid-column:3}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed #canvasWrap,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.palette-hidden.inspector-hidden #canvasWrap{grid-column:2}
+
 @media(max-width:1400px){
  body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{flex-basis:112px}
 }
 @media(max-width:1000px){
- body.simulator-page.vp-template-simulator .workspace{grid-template-columns:40px minmax(0,1fr) minmax(240px,280px)}
+ body.simulator-page.vp-template-simulator .workspace,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{grid-template-columns:40px minmax(0,1fr) minmax(240px,280px)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed{grid-template-columns:40px minmax(0,1fr)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed #canvasWrap,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed #canvasWrap{grid-column:2}
  body.simulator-page.vp-template-simulator #palette{position:fixed!important;z-index:1600!important;left:40px!important;top:48px!important;bottom:52px!important;width:min(280px,calc(100vw - 52px))!important;max-width:none!important;transform:translateX(calc(-100% - 44px))!important;box-shadow:12px 0 30px #000a}
  body.simulator-page.vp-template-simulator #palette.open{transform:translateX(0)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed) #palette{display:block!important;transform:translateX(0)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed #palette{display:block!important;transform:translateX(calc(-100% - 44px))!important}
  body.simulator-page.vp-template-simulator #canvasWrap{grid-column:2;grid-row:1}
  body.simulator-page.vp-template-simulator #inspectorPanel{grid-column:3;grid-row:1}
 }
 @media(max-width:760px){
- body.simulator-page.vp-template-simulator .workspace{grid-template-columns:38px minmax(0,1fr)}
- body.simulator-page.vp-template-simulator #inspectorPanel{position:fixed!important;z-index:1601!important;right:0;top:48px;bottom:52px;width:min(310px,88vw);transform:translateX(105%);box-shadow:-12px 0 30px #000a}
- body.simulator-page.vp-template-simulator .workspace:not(.inspector-hidden) #inspectorPanel{transform:translateX(0)}
- body.simulator-page.vp-template-simulator .workspace.inspector-hidden #inspectorPanel{transform:translateX(105%)}
+ body.simulator-page.vp-template-simulator .workspace,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed{grid-template-columns:38px minmax(0,1fr)!important}
+ body.simulator-page.vp-template-simulator #inspectorPanel{position:fixed!important;z-index:1601!important;right:0;top:48px;bottom:52px;width:min(310px,88vw);display:block!important;transform:translateX(105%);box-shadow:-12px 0 30px #000a}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-right-closed) #inspectorPanel{transform:translateX(0)}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed #inspectorPanel{transform:translateX(105%)}
  body.simulator-page.vp-template-simulator #canvasWrap{grid-column:2;grid-row:1}
  body.simulator-page.vp-template-simulator #vpCircuitDesigner{right:12px;bottom:66px}
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown{position:fixed;top:53px;left:6px;right:6px;width:auto;max-height:calc(100dvh - 116px)}
