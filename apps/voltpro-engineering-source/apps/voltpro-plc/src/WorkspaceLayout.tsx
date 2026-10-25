@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useReactFlow, useViewport } from '@xyflow/react';
-import { CircuitBoard, FolderOpen, Info, PanelRightClose, Play, Search, Settings, SlidersHorizontal, Square, StepForward, ZoomIn, ZoomOut } from 'lucide-react';
+import { ArrowLeft, ArrowLeftRight, BookOpen, ChevronDown, CircuitBoard, Folder, FolderOpen, Globe2, Grid2X2, Info, Magnet, Minus, Moon, Plus, Save, Sun, Zap, PanelRightClose, Play, Search, Settings, SlidersHorizontal, Square, StepForward } from 'lucide-react';
 import { usePLC } from './store';
 import { catalog, validate, type Kind, type Project } from './model';
 import { plant, reversing } from './examples';
@@ -34,6 +34,9 @@ export function WorkspaceLayout(p: Props) {
   const s = usePLC(), selected = s.project.nodes.find(n => n.id === s.selected);
   const [dockTab, setDockTab] = useState<'properties' | 'results' | 'commissioning'>('properties');
   const [libraryOpen, setLibraryOpen] = useState(false), [exampleNumber, setExampleNumber] = useState('1'), [moreSettings, setMoreSettings] = useState(false);
+  const [headerDialog, setHeaderDialog] = useState<'help' | 'about' | null>(null);
+  const [themeLight, setThemeLight] = useState(() => localStorage.getItem('vp-theme') === 'light');
+  const [locale, setLocale] = useState(() => localStorage.getItem('hb_language') || 'en');
   const file = useRef<HTMLInputElement>(null);
   const { fitView, zoomTo, screenToFlowPosition } = useReactFlow(), viewport = useViewport();
   const zoomLevels = [.25,.35,.45,.55,.65,.75,.85,1,...Array.from({ length: 15 }, (_, index) => (index + 11) / 10)];
@@ -80,12 +83,22 @@ export function WorkspaceLayout(p: Props) {
   const loadLibrary = (project: Project) => p.onReplace(project);
 
   return <div className="plc-app">
-    <header className="topbar">
-      <div className="vp-shell-slot" />
-      <a className="brand" href="../index.html"><b>V</b><span>VoltPro<strong>PLC</strong><small>INDUSTRIAL CONTROL LAB</small></span></a>
-      <input className="project-name" aria-label="Project name" value={s.project.name} maxLength={100} onChange={e => usePLC.setState({ project: { ...s.project, name: e.target.value } })} />
+    <header className="topbar plc-reference-header" onKeyDown={event => { if (event.key === 'Escape') event.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu => {menu.open=false;}); }} onClick={event => { const target=event.target as HTMLElement; if(target.closest('.plc-command-pop button, .plc-command-pop a')) target.closest('details')?.removeAttribute('open'); }}>
+      <div className="plc-shell-slot" hidden />
+      <div className="plc-header-identity">
+        <a className="plc-main-site" href="https://hephzibahbehulah.com/" target="_top"><ArrowLeft size={14}/><span>Main Site</span></a>
+        <a className="plc-company-logo" href="https://hephzibahbehulah.com/" target="_top" aria-label="Hephzibah Behulah main site"><img src="/assets/hb-logo.svg" alt="HB"/></a>
+        <span className="plc-header-divider"/>
+        <div className="plc-header-brand"><span className="plc-brand-mark"><Zap size={17} fill="currentColor"/></span><strong>VoltPro<span>PLC</span></strong></div>
+        <span className="plc-header-divider"/>
+        <details className="plc-project-dropdown"><summary aria-label="Project menu"><Folder size={15}/><span>{s.project.name}</span><ChevronDown size={14}/></summary><div className="plc-command-pop">
+          <label className="plc-menu-field">Project name<input aria-label="Project name" value={s.project.name} maxLength={100} onChange={e => usePLC.setState({ project: { ...s.project, name: e.target.value } })}/></label>
+          <button onClick={p.onNew}>New control project</button><button onClick={() => file.current?.click()}>Open project JSON</button><button onClick={p.onSave}>Save on this device</button><button onClick={p.onCloudSave}>Save to VoltPro cloud</button><button onClick={exportProject}>Export PLC project JSON</button>
+        </div></details>
+      </div>
+      <div className="plc-header-center">
       <PLCCommandMenus
-        onNew={p.onNew} onOpen={() => file.current?.click()} onSave={p.onSave} onCloudSave={p.onCloudSave} onExport={exportProject}
+        onHelp={() => setHeaderDialog('help')} onAbout={() => setHeaderDialog('about')} onResults={() => { setDockTab('results'); usePLC.setState({right:true}); }} onNew={p.onNew} onOpen={() => file.current?.click()} onSave={p.onSave} onCloudSave={p.onCloudSave} onExport={exportProject}
         onUndo={s.undo} onRedo={s.redo} onDelete={remove} onDuplicate={duplicate} onDraw={draw}
         onValidate={p.onValidate} onFit={() => fitView({ padding: .15 })} sheet={s.sheet} sheets={sheetList}
         onSheet={id => usePLC.setState({ sheet: id, selected: null })} onNewSheet={p.onNewSheet}
@@ -95,7 +108,21 @@ export function WorkspaceLayout(p: Props) {
         onToggleInteractive={() => usePLC.setState({ interactive: !s.interactive })} interactive={s.interactive}
         canUndo={!!s.past.length} canRedo={!!s.future.length} canDelete={!!selected} canDuplicate={!!selected} running={s.running}
       />
-      <div className="zoom-controls" aria-label="Canvas zoom controls"><button title="Zoom out" aria-label="Zoom out" onClick={() => stepZoom(-1)}><ZoomOut size={16}/></button><span>{Math.round(viewport.zoom * 100)}%</span><button title="Zoom in" aria-label="Zoom in" onClick={() => stepZoom(1)}><ZoomIn size={16}/></button></div>
+      <div className="plc-header-tools" aria-label="Canvas tools">
+        <button aria-label="Switch ladder and function block view" title="Switch ladder and function block view" onClick={() => setView(s.view === 'ladder' ? 'fbd' : 'ladder')}><ArrowLeftRight size={17}/></button>
+        <span className="plc-header-divider"/>
+        <button className={s.grid ? 'active' : ''} aria-label="Grid" aria-pressed={s.grid} onClick={() => updateSettings({showGrid:!s.grid})}><Grid2X2 size={16}/></button>
+        <button className={s.snapToGrid ? 'active' : ''} aria-label="Snap to Grid" aria-pressed={s.snapToGrid} onClick={() => updateSettings({snapToGrid:!s.snapToGrid})}><Magnet size={16}/></button>
+        <div className="zoom-controls" aria-label="Canvas zoom controls"><button aria-label="Zoom out" onClick={() => stepZoom(-1)}><Minus size={14}/></button><button className="plc-fit-zoom" aria-label="Zoom to fit" onClick={() => fitView({padding:.15})}>{Math.round(viewport.zoom*100)}%</button><button aria-label="Zoom in" onClick={() => stepZoom(1)}><Plus size={14}/></button></div>
+        <button className="plc-header-save" aria-label="Save project" title="Save project" onClick={p.onSave}><Save size={17}/></button>
+      </div></div>
+      <div className="plc-header-actions">
+        <details className="plc-project-dropdown plc-workspace-menu"><summary aria-label="My workspace and examples"><BookOpen size={16}/></summary><div className="plc-command-pop"><a href="/workspace" target="_top">My workspace</a><button onClick={() => p.setStartupOpen(true)}>Starter projects</button><button onClick={() => {setLibraryOpen(true);usePLC.setState({left:true});}}>PLC project library</button></div></details>
+        <label className="plc-header-language"><Globe2 size={14}/><select aria-label="Interface language" value={locale} onChange={e => {const code=e.target.value;setLocale(code);localStorage.setItem('hb_language',code);const host=window.parent as Window & {HBLanguage?:{set:(code:string)=>void}};host.HBLanguage?.set(code);}}><option value="en">EN</option><option value="de">DE</option><option value="yo">YO</option><option value="pcm">PCM</option></select></label>
+        <button aria-label={themeLight?'Switch to dark theme':'Switch to light theme'} onClick={() => {const light=!themeLight;setThemeLight(light);const theme=light?'light':'dark';localStorage.setItem('vp-theme',theme);document.documentElement.dataset.vpTheme=theme;window.parent.document.documentElement.dataset.vpTheme=theme;}}>{themeLight?<Moon size={16}/>:<Sun size={16}/>}</button>
+        <button aria-label="About and readiness" onClick={() => setHeaderDialog('about')}><Info size={16}/></button>
+        <a className="plc-header-account" aria-label="VoltPro account" href="/workspace" target="_top">VP</a>
+      </div>
       <input type="file" accept=".json" ref={file} hidden onChange={async e => {
         const f = e.target.files?.[0]; if (!f) return;
         try { if (f.size > 1500000) throw Error('Project exceeds 1.5 MB.'); const project = JSON.parse(await f.text()) as Project; const errors = validate(project); if (errors.length) throw Error(errors.join(' ')); p.onReplace(project); }
@@ -104,6 +131,7 @@ export function WorkspaceLayout(p: Props) {
       }}/>
     </header>
 
+    {headerDialog && <div className="plc-header-dialog-backdrop" onClick={e => {if(e.target===e.currentTarget)setHeaderDialog(null);}}><section role="dialog" aria-modal="true" aria-label={headerDialog==='help'?'PLC editor help':'About VoltProPLC'}><button aria-label="Close dialog" onClick={() => setHeaderDialog(null)}>×</button><h2>{headerDialog==='help'?'VoltProPLC · Editor help':'VoltProPLC · About & readiness'}</h2><p>{headerDialog==='help'?'Choose a device, connect its terminals, then use Run or Single scan. File opens and saves PLC projects. View switches between ladder, function block and PLC I/O. Grid, snapping and zoom controls act on the drawing canvas.':'Development build — not for production documentation. Standards and catalogs are pending verified integration.'}</p>{headerDialog==='about'&&<a href="/status" target="_top">View live gap register</a>}</section></div>}
     {p.startupOpen && <section className="plc-starter-overlay" role="dialog" aria-modal="true" aria-label="Starter projects"><button className="plc-starter-close" onClick={() => p.setStartupOpen(false)} aria-label="Close starter projects">×</button><small>VOLTPro PLC · START A PROJECT</small><h2>Choose a control project</h2><p>Load an executable library example or close this panel to build a blank project.</p><div>{Array.from({ length: 10 }, (_, i) => i + 1).map(id => <button key={id} onClick={() => { try { const project = window.VoltProPLCLibrary?.get(id); if (!project) throw Error('Project library did not load.'); const errors = validate(project); if (errors.length) throw Error(errors.join(' ')); usePLC.getState().setProject(project, false); usePLC.getState().setView(project.mode); usePLC.setState({ inputs: {}, result: null, trace: [], selected: null }); p.setStartupOpen(false); setTimeout(() => fitView({ padding: .18 }), 100); } catch (error) { usePLC.setState({ error: (error as Error).message }); } }}>Library example {id}</button>)}</div><button className="plc-blank" onClick={() => p.setStartupOpen(false)}>Start with a blank project</button></section>}
 
     <main className="workspace">

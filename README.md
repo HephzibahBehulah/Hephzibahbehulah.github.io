@@ -30,6 +30,12 @@ These checks do not certify physical hardware, every transient response or every
 
 Implementation: [PR #37](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/pull/37), [PR #38](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/pull/38). Published Worker version: `09289d49-1c09-4c73-b913-49def9dfb8a8`.
 
+### PLC header reference update
+
+The PLC top bar follows the ElectCAD reference: Main Site and company logo, orange lightning brand labelled VoltProPLC, project dropdown, File/Edit/View/Insert/Project/Electrical/Simulation/Reports/Tools/Window/Help menus, grid/snap/zoom/save controls, workspace, language, theme, readiness and account controls. Existing PLC actions remain connected. Narrow screens keep a single horizontally scrollable row. The shared shell header mounts in a hidden slot to avoid duplicate controls while preserving bottom navigation integration.
+
+Validation: PLC TypeScript/production build, 21 engine tests and 27 workspace integration tests passed locally. File dropdown, grid toggle and zoom were checked in a browser. Production deployment remains unverified.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
