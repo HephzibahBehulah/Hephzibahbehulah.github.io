@@ -301,5 +301,7 @@ test("engineering workspace header stays one row and keeps workspace menus out o
   assert.match(experience,/\.hb-engineering #vpSiteHeader\{[\s\S]*?display:flex!important;flex-flow:row nowrap!important/);
   assert.match(experience,/\.hb-engineering #vpSiteHeader \.hb-utilities\{display:none!important\}/);
   assert.match(experience,/\.hb-engineering #vpSiteHeader \.vp-site-navigation nav,[\s\S]*?position:absolute!important/);
+  assert.match(experience,/\.hb-engineering #vpSiteHeader \.vp-shell-controls\{[\s\S]*?margin:0!important/);
+  assert.match(experience,/\.hb-engineering #vpSiteHeader \.hb-vp-tools\{[\s\S]*?margin:0 0 0 auto!important/);
   assert.match(experience,/\.hb-engineering #vpSiteHeader \.hb-member-actions\{flex-flow:row nowrap!important/);
 });
