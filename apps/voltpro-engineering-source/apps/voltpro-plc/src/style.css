@@ -191,3 +191,14 @@
 .plc-app .canvas .plc-canvas-status{left:32px;bottom:40px;max-width:calc(100% - 70px)}
 .plc-app .canvas .canvas-caption{top:32px;left:32px}
 .plc-app .plc-flow-viewport .react-flow__minimap{top:8px;bottom:auto;right:8px}
+
+/* Starter projects live exclusively inside the existing Project dropdown. */
+.plc-project-starters{position:relative;padding:8px;border-bottom:1px solid #343a3e;min-width:260px}
+.plc-project-starters>small{display:block;padding-right:26px;color:#ffad60;font-size:9px}
+.plc-project-starters h2{font-size:14px;margin:9px 0}.plc-project-starters p{font-size:11px;line-height:1.5;color:#aebbc3}
+.plc-project-starters .plc-starter-close{position:absolute;top:2px;right:0;width:26px;min-height:26px;padding:2px;text-align:center;justify-content:center}
+.plc-project-starters>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+.plc-project-starters>div>button{font-size:11px;white-space:nowrap}.plc-project-starters>.plc-blank{margin-top:6px;color:#ffad60}
+
+.plc-reference-header .plc-command-pop:has(.plc-project-starters){width:310px;max-width:calc(100vw - 16px);overflow-x:hidden}
+.plc-project-starters{min-width:0}.plc-project-starters p{white-space:normal}

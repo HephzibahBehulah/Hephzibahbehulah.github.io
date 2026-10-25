@@ -1,5 +1,5 @@
 import { CanvasRulers } from './CanvasViewport';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useReactFlow, useViewport } from '@xyflow/react';
 import { ArrowLeft, ArrowLeftRight, BookOpen, ChevronDown, CircuitBoard, Folder, FolderOpen, Globe2, Grid2X2, Info, Magnet, Minus, Moon, Plus, Save, Sun, Zap, PanelRightClose, Play, Search, Settings, SlidersHorizontal, Square, StepForward } from 'lucide-react';
 import { usePLC } from './store';
@@ -39,6 +39,8 @@ export function WorkspaceLayout(p: Props) {
   const [themeLight, setThemeLight] = useState(() => localStorage.getItem('vp-theme') === 'light');
   const [locale, setLocale] = useState(() => localStorage.getItem('hb_language') || 'en');
   const file = useRef<HTMLInputElement>(null);
+  const projectMenu = useRef<HTMLDetailsElement>(null);
+  useEffect(() => { if (p.startupOpen) { if (projectMenu.current) projectMenu.current.open = true; p.setStartupOpen(false); } }, [p.startupOpen, p.setStartupOpen]);
   const { fitView, zoomTo, screenToFlowPosition } = useReactFlow(), viewport = useViewport();
   const zoomLevels = [.25,.35,.45,.55,.65,.75,.85,1,...Array.from({ length: 15 }, (_, index) => (index + 11) / 10)];
   const stepZoom = (direction: -1 | 1) => {
@@ -99,6 +101,8 @@ export function WorkspaceLayout(p: Props) {
       </div>
       <div className="plc-header-center">
       <PLCCommandMenus
+        projectMenuRef={projectMenu}
+        starterControls={<section className="plc-project-starters" aria-label="Starter projects"><button className="plc-starter-close" onClick={() => { if(projectMenu.current) projectMenu.current.open=false; }} aria-label="Close starter projects">×</button><small>VOLTPro PLC · START A PROJECT</small><h2>Choose a control project</h2><p>Load an executable library example or start with a blank project.</p><div>{Array.from({ length: 10 }, (_, i) => i + 1).map(id => <button key={id} onClick={() => { try { const project = window.VoltProPLCLibrary?.get(id); if (!project) throw Error('Project library did not load.'); const errors = validate(project); if (errors.length) throw Error(errors.join(' ')); usePLC.getState().setProject(project, false); usePLC.getState().setView(project.mode); usePLC.setState({ inputs: {}, result: null, trace: [], selected: null }); p.setStartupOpen(false); setTimeout(() => fitView({ padding: .18 }), 100); } catch (error) { usePLC.setState({ error: (error as Error).message }); } }}>Library example {id}</button>)}</div><button className="plc-blank" onClick={p.onNew}>Start with a blank project</button></section>}
         onHelp={() => setHeaderDialog('help')} onAbout={() => setHeaderDialog('about')} onResults={() => { setDockTab('results'); usePLC.setState({right:true}); }} onNew={p.onNew} onOpen={() => file.current?.click()} onSave={p.onSave} onCloudSave={p.onCloudSave} onExport={exportProject}
         onUndo={s.undo} onRedo={s.redo} onDelete={remove} onDuplicate={duplicate} onDraw={draw}
         onValidate={p.onValidate} onFit={() => fitView({ padding: .15 })} sheet={s.sheet} sheets={sheetList}
@@ -133,7 +137,7 @@ export function WorkspaceLayout(p: Props) {
     </header>
 
     {headerDialog && <div className="plc-header-dialog-backdrop" onClick={e => {if(e.target===e.currentTarget)setHeaderDialog(null);}}><section role="dialog" aria-modal="true" aria-label={headerDialog==='help'?'PLC editor help':'About VoltProPLC'}><button aria-label="Close dialog" onClick={() => setHeaderDialog(null)}>×</button><h2>{headerDialog==='help'?'VoltProPLC · Editor help':'VoltProPLC · About & readiness'}</h2><p>{headerDialog==='help'?'Choose a device, connect its terminals, then use Run or Single scan. File opens and saves PLC projects. View switches between ladder, function block and PLC I/O. Grid, snapping and zoom controls act on the drawing canvas.':'Development build — not for production documentation. Standards and catalogs are pending verified integration.'}</p>{headerDialog==='about'&&<a href="/status" target="_top">View live gap register</a>}</section></div>}
-    {p.startupOpen && <section className="plc-starter-overlay" role="dialog" aria-modal="true" aria-label="Starter projects"><button className="plc-starter-close" onClick={() => p.setStartupOpen(false)} aria-label="Close starter projects">×</button><small>VOLTPro PLC · START A PROJECT</small><h2>Choose a control project</h2><p>Load an executable library example or close this panel to build a blank project.</p><div>{Array.from({ length: 10 }, (_, i) => i + 1).map(id => <button key={id} onClick={() => { try { const project = window.VoltProPLCLibrary?.get(id); if (!project) throw Error('Project library did not load.'); const errors = validate(project); if (errors.length) throw Error(errors.join(' ')); usePLC.getState().setProject(project, false); usePLC.getState().setView(project.mode); usePLC.setState({ inputs: {}, result: null, trace: [], selected: null }); p.setStartupOpen(false); setTimeout(() => fitView({ padding: .18 }), 100); } catch (error) { usePLC.setState({ error: (error as Error).message }); } }}>Library example {id}</button>)}</div><button className="plc-blank" onClick={() => p.setStartupOpen(false)}>Start with a blank project</button></section>}
+
 
     <main className="workspace">
       <nav className="plc-rail" aria-label="PLC workspace panels">
