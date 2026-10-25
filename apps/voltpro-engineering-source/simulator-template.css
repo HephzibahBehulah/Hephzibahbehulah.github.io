@@ -228,3 +228,26 @@ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.palette-h
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #runBtn{min-width:44px;padding-inline:5px}
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary #simStatus{display:none}
 }
+
+
+/* Match the reference dock toggle: keep a narrow right edge tab when collapsed. */
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed{
+  grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) 42px!important
+}
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel{
+  grid-column:4!important;min-width:42px!important;max-width:42px!important;width:42px!important;
+  padding:0!important;overflow:hidden!important
+}
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel .vp-dock-heading{
+  height:42px!important;justify-content:center!important;padding:0!important
+}
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel .vp-dock-heading>span:first-child,
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel .vp-dock-tabs,
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel .vp-dock-panel{display:none!important}
+body.simulator-page.vp-template-simulator #inspectorPanel .vp-dock-toggle{
+  width:34px;height:34px;display:grid;place-items:center;padding:0;border:1px solid #27343e;
+  border-radius:7px;background:#10161c;color:#dce8ef;font:16px/1 system-ui,sans-serif;cursor:pointer
+}
+body.simulator-page.vp-template-simulator #inspectorPanel .vp-dock-toggle:hover{
+  border-color:#4b7286;background:#18222a
+}

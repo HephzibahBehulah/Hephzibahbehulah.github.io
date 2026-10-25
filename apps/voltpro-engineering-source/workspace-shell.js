@@ -54,6 +54,7 @@
     parts.bottomControls?.remove();
     parts.devNote?.remove();
     doc.querySelector(".vp-sim-rail")?.remove();
+    doc.querySelector(".workspace")?.classList.remove("vp-dock-collapsed");
     const dock = doc.querySelector("#inspectorPanel .vp-dock-shell");
     if (dock) {
       const inspector = doc.getElementById("inspectorPanel");
@@ -260,7 +261,19 @@
     if (inspector && !inspector.querySelector(".vp-dock-shell")) {
       const existing = [...inspector.children];
       const dock = doc.createElement("div"); dock.className = "vp-dock-shell";
-      const heading = doc.createElement("div"); heading.className = "vp-dock-heading"; heading.innerHTML = '<span>WORKSPACE DOCK</span><span aria-hidden="true">◧</span>';
+      const heading = doc.createElement("div"); heading.className = "vp-dock-heading";
+      const headingLabel = doc.createElement("span"); headingLabel.textContent = "WORKSPACE DOCK";
+      const dockToggle = doc.createElement("button"); dockToggle.type = "button"; dockToggle.className = "vp-dock-toggle";
+      dockToggle.textContent = "◧"; dockToggle.title = "Collapse workspace dock"; dockToggle.setAttribute("aria-label", "Collapse workspace dock"); dockToggle.setAttribute("aria-expanded", "true");
+      dockToggle.addEventListener("click", () => {
+        const workspaceRoot = doc.querySelector(".workspace");
+        const collapsed = !!workspaceRoot?.classList.toggle("vp-dock-collapsed");
+        dockToggle.textContent = collapsed ? "◨" : "◧";
+        dockToggle.title = collapsed ? "Expand workspace dock" : "Collapse workspace dock";
+        dockToggle.setAttribute("aria-label", dockToggle.title);
+        dockToggle.setAttribute("aria-expanded", String(!collapsed));
+      });
+      heading.append(headingLabel, dockToggle);
       const tabs = doc.createElement("div"); tabs.className = "vp-dock-tabs"; tabs.setAttribute("role", "tablist");
       tabs.innerHTML = '<button type="button" role="tab" aria-selected="true" data-dock-tab="properties">☷ Properties</button><button type="button" role="tab" aria-selected="false" data-dock-tab="results">∿ Results</button>';
       const properties = doc.createElement("section"); properties.className = "vp-dock-panel"; properties.dataset.dockPanel = "properties";
