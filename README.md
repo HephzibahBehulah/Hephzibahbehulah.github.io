@@ -42,6 +42,12 @@ The PLC drawing camera fills the canvas and supports native horizontal/vertical 
 
 Validation: PLC build, 25 engine/canvas geometry tests, 27 workspace integration checks and browser checks for two-axis scrolling, zoom and fixed overlay positions.
 
+### PLC zoom anchoring and duplicate notices
+
+Zoom buttons, Ctrl+wheel and touch pinch scale the drawing around the fixed canvas origin. Ruler labels align with grid lines so 0 and A remain stationary during zoom. Panning and scrolling still move the drawing normally; Fit remains an explicit reframing action. The canvas keeps the RUNNING/STOPPED indicator once, and the bottom bar retains Run/Stop, Single scan, scan count and device/wire counts. The PLC readiness warning appears once in the existing bottom navigation instead of repeating above the canvas. Workspace navigation links are preserved.
+
+Validation: production build, 26 PLC engine/geometry tests, workspace integration checks and browser origin-position measurements. Touch gesture handling shares the tested origin calculation; physical touch-device verification is pending.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.

@@ -22,3 +22,7 @@ export function rulerCells(offset: number, zoom: number, size: number, letters =
     return { index, position: index * step * zoom + offset, size: step * zoom, label: letters ? rowLabel(index) : String(index) };
   }).filter(cell => cell.index >= 0 && cell.index <= (letters ? 701 : 10000));
 }
+
+export function zoomAtOrigin(viewport: {x:number;y:number;zoom:number}, zoom: number) {
+  return {x:viewport.x,y:viewport.y,zoom:Math.max(.25,Math.min(2.5,zoom))};
+}

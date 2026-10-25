@@ -202,3 +202,8 @@
 
 .plc-reference-header .plc-command-pop:has(.plc-project-starters){width:310px;max-width:calc(100vw - 16px);overflow-x:hidden}
 .plc-project-starters{min-width:0}.plc-project-starters p{white-space:normal}
+
+/* Origin labels align with grid lines instead of drifting at cell centers on zoom. */
+.plc-dynamic-rulers .plc-ruler-top span,.plc-dynamic-rulers .plc-ruler-bottom span{justify-items:start;padding-left:4px}
+.plc-dynamic-rulers .plc-ruler-left span,.plc-dynamic-rulers .plc-ruler-right span{align-items:start;padding-top:4px}
+.plc-scroll-viewport{touch-action:none}

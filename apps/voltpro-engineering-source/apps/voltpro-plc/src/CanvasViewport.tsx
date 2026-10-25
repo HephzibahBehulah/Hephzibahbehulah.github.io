@@ -1,12 +1,23 @@
-import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useReactFlow, useViewport } from '@xyflow/react';
-import { expandBounds, initialBounds, rulerCells } from './canvas-geometry';
+import { expandBounds, initialBounds, rulerCells, zoomAtOrigin } from './canvas-geometry';
 
 /** Native two-axis scrolling and React Flow share one camera in world coordinates. */
 export function CanvasViewport({ children }: { children: ReactNode }) {
-  const scroll = useRef<HTMLDivElement>(null), viewport = useViewport(), { setViewport } = useReactFlow();
+  const scroll = useRef<HTMLDivElement>(null), viewport = useViewport(), { getViewport, setViewport } = useReactFlow();
   const [bounds, setBounds] = useState(initialBounds);
   const [size, setSize] = useState({ width: 1, height: 1 });
+  useEffect(() => {
+    const element=scroll.current!;
+    let pinchDistance=0, pinchZoom=1;
+    const wheel=(event:WheelEvent)=>{if(!event.ctrlKey)return;event.preventDefault();event.stopImmediatePropagation();const camera=getViewport();const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?element.clientHeight:1);void setViewport(zoomAtOrigin(camera,camera.zoom*Math.exp(-delta*.002)));};
+    const distance=(event:TouchEvent)=>Math.hypot(event.touches[0].clientX-event.touches[1].clientX,event.touches[0].clientY-event.touches[1].clientY);
+    const start=(event:TouchEvent)=>{if(event.touches.length!==2)return;pinchDistance=distance(event);pinchZoom=getViewport().zoom;event.preventDefault();event.stopImmediatePropagation();};
+    const move=(event:TouchEvent)=>{if(event.touches.length!==2||!pinchDistance)return;event.preventDefault();event.stopImmediatePropagation();void setViewport(zoomAtOrigin(getViewport(),pinchZoom*distance(event)/pinchDistance));};
+    const end=()=>{pinchDistance=0;};
+    element.addEventListener('wheel',wheel,{capture:true,passive:false});element.addEventListener('touchstart',start,{capture:true,passive:false});element.addEventListener('touchmove',move,{capture:true,passive:false});element.addEventListener('touchend',end);element.addEventListener('touchcancel',end);
+    return()=>{element.removeEventListener('wheel',wheel,true);element.removeEventListener('touchstart',start,true);element.removeEventListener('touchmove',move,true);element.removeEventListener('touchend',end);element.removeEventListener('touchcancel',end);};
+  },[getViewport,setViewport]);
   const synced = useRef({ x: -1, y: -1 });
   useLayoutEffect(() => {
     const element = scroll.current!;
