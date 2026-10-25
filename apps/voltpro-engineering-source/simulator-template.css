@@ -367,9 +367,9 @@ body.simulator-page.vp-template-simulator .vp-title-block footer{padding-top:3px
 body.simulator-page.vp-template-simulator .vp-title-block input{background:transparent!important;border:0!important;border-bottom:1px solid #39434b!important;box-shadow:none!important}
 body.simulator-page.vp-template-simulator .vp-title-block input:focus{background:transparent!important;border-bottom-color:#59d8c4!important}
 
-/* Keep the drawing identification block inside columns 7–9.5 and rows D–E.5. */
-body.simulator-page.vp-template-simulator .vp-title-block{left:calc(26px + var(--vp-col-pitch,36px)*7)!important;top:calc(25px + var(--vp-row-pitch,38px)*3)!important;right:auto!important;bottom:auto!important;width:calc(var(--vp-col-pitch,36px)*2.5)!important;height:calc(var(--vp-row-pitch,38px)*1.5)!important;max-width:none!important;box-sizing:border-box!important;overflow:hidden!important}
-@media(max-width:760px){body.simulator-page.vp-template-simulator .vp-title-block{left:calc(26px + var(--vp-col-pitch,36px)*7)!important;top:calc(25px + var(--vp-row-pitch,38px)*3)!important;right:auto!important;bottom:auto!important;width:calc(var(--vp-col-pitch,36px)*2.5)!important;height:calc(var(--vp-row-pitch,38px)*1.5)!important}}
+/* Keep the complete drawing identification block inside the visible canvas corner. */
+body.simulator-page.vp-template-simulator .vp-title-block{left:auto!important;top:auto!important;right:38px!important;bottom:38px!important;width:min(calc(var(--vp-col-pitch,36px)*2.5),calc(100% - 76px))!important;height:min(calc(var(--vp-row-pitch,38px)*1.5),calc(100% - 76px))!important;max-width:none!important;box-sizing:border-box!important;overflow:hidden!important}
+@media(max-width:760px){body.simulator-page.vp-template-simulator .vp-title-block{left:auto!important;top:auto!important;right:32px!important;bottom:32px!important;width:min(calc(var(--vp-col-pitch,36px)*2.5),calc(100% - 64px))!important;height:min(calc(var(--vp-row-pitch,38px)*1.5),calc(100% - 64px))!important}}
 
 
 /* Keep the title and editable values clear of their separator lines. */
