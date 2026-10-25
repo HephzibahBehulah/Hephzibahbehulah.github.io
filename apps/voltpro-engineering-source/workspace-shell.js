@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const tools = [
-    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261025q" },
+    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261025r" },
     { path: "/plc", title: "VoltPro PLC", src: "/voltpro-plc/?vp_embed=1" },
     { path: "/electcad", title: "VoltPro ElectCAD", src: "/voltpro-electcad/?vp_embed=1" },
     { path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" },
@@ -248,14 +248,78 @@
       });
     }
     const canvasWrap = doc.getElementById("canvasWrap");
-    if (canvasWrap && !canvasWrap.querySelector(".vp-sheet-top")) {
-      const topRuler = doc.createElement("div"); topRuler.className = "vp-sheet-top"; topRuler.setAttribute("aria-label", "Drawing columns");
-      topRuler.innerHTML = Array.from({length:10}, (_, i) => `<span>${i + 1}</span>`).join("");
-      const leftRuler = doc.createElement("div"); leftRuler.className = "vp-sheet-left"; leftRuler.setAttribute("aria-label", "Drawing rows");
-      leftRuler.innerHTML = Array.from({length:12}, (_, i) => `<span>${String.fromCharCode(65 + i)}</span>`).join("");
-      const titleBlock = doc.createElement("div"); titleBlock.className = "vp-title-block"; titleBlock.setAttribute("aria-label", "Drawing identification");
-      titleBlock.innerHTML = '<strong>HEPHZIBAH BEHULAH · VOLTPRO</strong><span>DRAWING IDENTIFICATION</span><span>Project: <b>Active design</b></span><span>Scale: 1:1 · Sheet: 1 / 1</span>';
-      canvasWrap.append(topRuler, leftRuler, titleBlock);
+    if (canvasWrap) {
+      const workspace = doc.querySelector(".workspace");
+      const panelControls = doc.defaultView.VoltProWorkspaceControls;
+      if (workspace && !workspace.__vpPaletteAutoHideBound) {
+        workspace.__vpPaletteAutoHideBound = true;
+        doc.addEventListener("pointermove", event => {
+          if (workspace.classList.contains("vp-left-closed")) return;
+          const palette = doc.getElementById("palette");
+          const rail = workspace.querySelector(".vp-sim-rail");
+          if (palette?.contains(event.target) || rail?.contains(event.target)) return;
+          panelControls?.setPanel("left", false);
+        }, { passive: true });
+      }
+      let canvasFrame = canvasWrap.parentElement?.classList.contains("vp-canvas-frame") ? canvasWrap.parentElement : null;
+      if (!canvasFrame) {
+        canvasFrame = doc.createElement("div");
+        canvasFrame.className = "vp-canvas-frame";
+        canvasWrap.before(canvasFrame);
+        canvasFrame.append(canvasWrap);
+      }
+      canvasWrap.querySelectorAll(":scope > .vp-sheet-top, :scope > .vp-sheet-bottom, :scope > .vp-sheet-left, :scope > .vp-sheet-right, :scope > .vp-title-block").forEach(node => node.remove());
+      if (!canvasFrame.dataset.axesReady) {
+        const makeRuler = (className, label) => {
+          const node = doc.createElement("div");
+          node.className = className;
+          node.setAttribute("aria-label", label);
+          return node;
+        };
+        const topRuler = makeRuler("vp-sheet-top", "Drawing columns");
+        const bottomRuler = makeRuler("vp-sheet-bottom", "Drawing columns");
+        const leftRuler = makeRuler("vp-sheet-left", "Drawing rows");
+        const rightRuler = makeRuler("vp-sheet-right", "Drawing rows");
+        const titleBlock = doc.createElement("div");
+        titleBlock.className = "vp-title-block";
+        titleBlock.setAttribute("aria-label", "Drawing identification");
+        titleBlock.innerHTML = '<strong>HEPHZIBAH BEHULAH · VOLTPRO</strong><span>DRAWING IDENTIFICATION</span><span>Project: <b>Active design</b></span><span>Scale: 1:1 · Sheet: 1 / 1</span>';
+        canvasFrame.append(topRuler, bottomRuler, leftRuler, rightRuler, titleBlock);
+        const excelRow = value => {
+          let n = Math.max(1, Math.floor(value)), label = "";
+          while (n) { const digit = (n - 1) % 26; label = String.fromCharCode(65 + digit) + label; n = Math.floor((n - 1) / 26); }
+          return label;
+        };
+        const renderRulers = () => {
+          const state = doc.defaultView.S || {};
+          const zoom = Math.max(.35, Math.min(2.5, Number(state.zoom) || 1));
+          const pitch = 100 * zoom;
+          const pan = state.pan || {};
+          const xOffset = canvasWrap.scrollLeft - (Number(pan.x) || 0);
+          const yOffset = canvasWrap.scrollTop - (Number(pan.y) || 0);
+          const phaseX = ((xOffset % pitch) + pitch) % pitch;
+          const phaseY = ((yOffset % pitch) + pitch) % pitch;
+          const firstColumn = Math.max(1, Math.floor(xOffset / pitch) + 1);
+          const firstRow = Math.max(1, Math.floor(yOffset / pitch) + 1);
+          const columns = Math.ceil(Math.max(0, canvasFrame.clientWidth - 52) / pitch) + 2;
+          const rows = Math.ceil(Math.max(0, canvasFrame.clientHeight - 50) / pitch) + 2;
+          const horizontal = Array.from({length: columns}, (_, i) => '<span style="flex:0 0 ' + pitch + 'px;' + (i === 0 ? 'margin-left:-' + phaseX + 'px;' : '') + '">' + (firstColumn + i) + '</span>').join("");
+          const vertical = Array.from({length: rows}, (_, i) => '<span style="flex:0 0 ' + pitch + 'px;' + (i === 0 ? 'margin-top:-' + phaseY + 'px;' : '') + '">' + excelRow(firstRow + i) + '</span>').join("");
+          topRuler.innerHTML = horizontal;
+          bottomRuler.innerHTML = horizontal;
+          leftRuler.innerHTML = vertical;
+          rightRuler.innerHTML = vertical;
+        };
+        canvasFrame.dataset.axesReady = "true";
+        canvasWrap.addEventListener("scroll", renderRulers, { passive: true });
+        doc.defaultView.addEventListener("resize", renderRulers, { passive: true });
+        const grid = doc.getElementById("gridRect");
+        if (grid && doc.defaultView.MutationObserver) {
+          const observer = new doc.defaultView.MutationObserver(renderRulers);
+          observer.observe(grid, { attributes: true, attributeFilter: ["transform"] });
+        }
+        renderRulers();
+      }
     }
     const inspector = doc.getElementById("inspectorPanel");
     if (inspector && !inspector.querySelector(".vp-dock-shell")) {
