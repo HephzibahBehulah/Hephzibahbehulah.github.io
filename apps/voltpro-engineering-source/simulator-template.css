@@ -364,3 +364,5 @@ body.simulator-page.vp-template-simulator .vp-title-block footer{padding-top:6px
 @media(max-width:760px){
  body.simulator-page.vp-template-simulator .vp-title-block{width:min(340px,calc(100% - 64px));right:32px;bottom:32px}
 }
+body.simulator-page.vp-template-simulator .vp-title-block input{background:transparent!important;border:0!important;border-bottom:1px solid #39434b!important;box-shadow:none!important}
+body.simulator-page.vp-template-simulator .vp-title-block input:focus{background:transparent!important;border-bottom-color:#59d8c4!important}
