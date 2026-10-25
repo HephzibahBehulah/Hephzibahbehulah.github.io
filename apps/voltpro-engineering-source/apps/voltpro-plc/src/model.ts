@@ -5,7 +5,7 @@ export type Kind='supply'|'neutral'|'earth'|'threephase'|'breaker'|'breaker3'|'n
 export type DeviceData={kind:Kind;tag:string;label:string;preset:number;pin:number;active?:boolean;input?:boolean;elapsed?:number;[key:string]:unknown};
 export type Device=Node<DeviceData,'device'>;
 export type Wire=Edge<{active?:boolean}>;
-export interface Project {version:1;name:string;mode:'ladder'|'fbd';nodes:Device[];edges:Wire[];sheets?:{id:string;name:string}[];faults?:Faults;hmi?:{id:string;type:'button'|'lamp'|'motor';tag:string;label:string}[]}
+export interface Project {version:1;name:string;mode:'ladder'|'fbd';nodes:Device[];edges:Wire[];sheets?:{id:string;name:string}[];faults?:Faults;hmi?:{id:string;type:'button'|'lamp'|'motor';tag:string;label:string}[];settings?:{gridSpacing:number;snapToGrid:boolean;showGrid:boolean};titleBlock?:{drafter:string;date:string;scale:string;sheetNumber:string}}
 export interface Result {active:Record<string,boolean>;tags:Record<string,boolean>;elapsed:Record<string,number>;wires:Record<string,boolean>;warnings:string[];scan:number;machine?:MachineState}
 export interface EngineMemory {tags:Record<string,boolean>;timers:Record<string,BlockState>;scan:number;machine?:MachineState}
 export const emptyMemory=():EngineMemory=>({tags:{},timers:{},scan:0});

@@ -29,3 +29,25 @@ html.vp-simulator-template #vpBottomNavigation{height:52px;min-height:52px;max-h
 .vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy>span:not(:first-child),.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner button{display:none}
 @media(max-width:760px){.vp-simulator-template #vpBottomNavigation{gap:2px;padding-inline:3px}.vp-simulator-template #vpBottomNavigation a{padding-inline:2px}.vp-simulator-template #vpBottomNavigation a small{display:none}.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{gap:2px;margin-left:1px;padding-left:3px}.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{padding-inline:5px}.vp-simulator-template #vpBottomNavigation #simStatus{display:none}}
 @media(max-width:470px){.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button:not(#runBtn){display:none}}
+
+/* PLC uses the shared site controls in one editor row and the module dock as its bottom bar. */
+html.vp-plc-template,html.vp-plc-template body{width:100%;height:100dvh;min-height:0;margin:0!important;overflow:hidden!important;padding:0!important}
+html.vp-plc-template #vpSiteHeader,html.vp-plc-template #vpDevelopmentFooter{display:none!important}
+html.vp-plc-template #vpWorkspace{position:fixed!important;inset:0 0 52px!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+html.vp-plc-template #vpWorkspace .vp-workspace-panel,html.vp-plc-template #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
+html.vp-plc-template #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}
+html.vp-plc-template #vpBottomNavigation{height:52px;min-height:52px;max-height:52px;gap:3px;padding:0 6px;overflow:hidden}
+html.vp-plc-template #vpBottomNavigation>a{flex:0 1 auto;min-width:0;max-width:none;gap:5px;padding:4px 5px;font-size:10px;white-space:nowrap}
+html.vp-plc-template #vpBottomNavigation>a>span{font-size:15px}
+html.vp-plc-template #vpBottomNavigation>a small{font-size:9px}
+html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status{display:flex;align-items:center;gap:7px;flex:1 1 auto;min-width:0;margin:0;padding:0 7px;border-left:1px solid #35414a;background:transparent;color:#c8d0d4;font:9px ui-monospace,monospace;white-space:nowrap}
+html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status .plc-run-controls{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status button{height:30px;min-width:0;padding:0 8px;border:1px solid #34414a;border-radius:6px;background:#171e22;color:#e4ebee;font-size:10px}
+html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status .run{background:#f28a1d;border-color:#ff9d3c;color:#161616;font-weight:750}
+html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status .stop{background:#302222;border-color:#754448;color:#ffb9b0}
+html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status output{flex:1 1 auto;min-width:0;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e3bd73;font-size:8px}
+html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{position:static!important;display:flex!important;flex:0 1 260px;min-width:90px;width:auto;height:30px;min-height:30px;max-height:30px;overflow:hidden;margin:0;padding:0 5px;border:1px solid #9c7413;border-radius:5px;font-size:8px;line-height:1.1;text-align:left}
+html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner button{display:none}
+@media(max-width:1100px){html.vp-plc-template #vpBottomNavigation>a small{display:none}html.vp-plc-template #vpBottomNavigation>a{padding-inline:3px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status{gap:4px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status>span:nth-of-type(n+2){display:none}html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{flex-basis:150px}}
+@media(max-width:760px){html.vp-plc-template #vpBottomNavigation{gap:1px;padding-inline:2px}html.vp-plc-template #vpBottomNavigation>a{padding-inline:2px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status{padding-left:4px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status button{padding-inline:5px}html.vp-plc-template #vpBottomNavigation .vp-plc-bottom-status output,html.vp-plc-template #vpBottomNavigation #vpDevelopmentBanner{display:none!important}}

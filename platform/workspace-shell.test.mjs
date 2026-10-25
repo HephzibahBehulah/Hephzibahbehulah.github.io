@@ -160,9 +160,10 @@ test("BuildingCAD menus have live document, edit, draw, validation and layer com
 
 test("PLC command menus are wired to project, editing, draw, validation, simulation, and view handlers", () => {
   const menu = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/CommandMenus.tsx");
-  const app = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/App.tsx");
-  for (const item of ["File", "Edit", "Draw", "Tools", "View", "New control project", "Open project JSON", "Validate program", "On-delay timer"]) assert.ok(menu.includes(item));
-  for (const prop of ["onNew=", "onOpen=", "onSave=", "onExport=", "onUndo=", "onRedo=", "onDraw=", "onValidate=", "onRun=", "onGrid=", "onFit="]) assert.ok(app.includes(prop));
+  const layout = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/WorkspaceLayout.tsx");
+  for (const item of ["File", "Edit", "Draw", "Project", "Simulation", "Tools", "View", "New control project", "Open / import project JSON", "Validate program", "On-delay timer", "Reset scan memory"]) assert.ok(menu.includes(item));
+  for (const prop of ["onNew=", "onOpen=", "onSave=", "onCloudSave=", "onExport=", "onUndo=", "onRedo=", "onDraw=", "onValidate=", "onReset=", "onFit=", "onView="]) assert.ok(layout.includes(prop));
+  for (const feature of ["plc-run-controls", "Single scan", "onArduino", "onNewSheet", "plc-system-project-slot"]) assert.ok(layout.includes(feature) || menu.includes(feature));
 });
 
 test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying symbol provenance audit", () => {
@@ -265,15 +266,17 @@ test("shared engineering design system reaches main, admin, embedded and standal
 
 test("PLC project view switching keeps the same editable project and scan mode", () => {
   const app = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/App.tsx");
+  const layout = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/WorkspaceLayout.tsx");
+  const menu = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/CommandMenus.tsx");
   const store = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/store.ts");
   const io = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/PLCIOView.tsx");
-  assert.match(app, /aria-label="Project views"/);
-  assert.match(app, /onClick=\{\(\)=>s\.setView\('ladder'\)\}/);
-  assert.match(app, /onClick=\{\(\)=>s\.setView\('fbd'\)\}/);
-  assert.match(app, /onClick=\{\(\)=>s\.setView\('plc'\)\}/);
-  assert.doesNotMatch(app, /onClick=\{\(\)=>\{if\(s\.project\.mode!==['"](?:ladder|fbd)['"]\)replace\(/);
+  assert.match(menu, /p\.onView\('ladder'\)/);
+  assert.match(menu, /p\.onView\('fbd'\)/);
+  assert.match(menu, /p\.onView\('plc'\)/);
+  assert.match(layout, /const setView = \(view: 'ladder' \| 'fbd' \| 'plc'\)/);
+  assert.match(layout, /project: \{ \.\.\.s\.project, mode: view \}/);
   assert.match(store, /view:'ladder'\|'fbd'\|'plc';setView/);
-  assert.match(app, /s\.view==='plc'\?<PLCIOView project=\{s\.project\}/);
+  assert.match(layout, /s\.view === 'plc' \? <PLCIOView project=\{s\.project\}/);
   assert.match(io, /same device tags, terminals, wires and scan results/);
 });
 
