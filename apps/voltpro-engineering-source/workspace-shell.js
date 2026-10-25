@@ -33,8 +33,9 @@
       if (parts.project) toolbar.append(parts.project);
       if (parts.bottomControls) {
         const controls = doc.createElement("div"); controls.className = "toolbar-group"; controls.setAttribute("role", "group"); controls.setAttribute("aria-label", "Simulation controls");
-        for (const id of ["runBtn", "stepBtn", "stopBtn"]) { const node = doc.getElementById(id); if (node) controls.append(node); }
-        if (parts.status) controls.append(parts.status);
+        for (const id of ["runBtn", "stopBtn"]) { const node = parts.bottomControls.querySelector("#" + id) || doc.getElementById(id); if (node) controls.append(doc.adoptNode(node)); }
+        const status = parts.bottomControls.querySelector("#simStatus") || parts.status;
+        if (status) controls.append(doc.adoptNode(status));
         toolbar.prepend(controls);
       }
       if (parts.zoom && parts.zoomParent && parts.zoom.parentElement !== parts.zoomParent) parts.zoomParent.append(parts.zoom);
@@ -51,6 +52,7 @@
       document.body.insertBefore(parts.banner, parts.header?.nextSibling || headerPlaceholder?.nextSibling || null);
     }
     parts.bottomControls?.remove();
+    parts.devNote?.remove();
     doc.querySelector(".vp-sim-rail")?.remove();
     const dock = doc.querySelector("#inspectorPanel .vp-dock-shell");
     if (dock) {
@@ -153,7 +155,45 @@
     sharedHeader.append(utilities);
     sharedHeader.classList.add("vp-simulator-one-row");
     if (toolbar.parentElement === top) toolbar.remove();
+    const simControls = doc.createElement("div");
+    simControls.className = "vp-sim-bottom-controls";
+    simControls.setAttribute("role", "group");
+    simControls.setAttribute("aria-label", "Simulation controls");
+    if (status) simControls.append(status);
+    const runControl = doc.getElementById("runBtn");
+    const stopControl = doc.getElementById("stopBtn");
+    if (runControl) {
+      runControl.textContent = "Start";
+      runControl.setAttribute("aria-label", "Start simulation");
+      simControls.append(runControl);
+    }
+    if (stopControl) {
+      stopControl.textContent = "Stop";
+      stopControl.setAttribute("aria-label", "Stop simulation");
+      simControls.append(stopControl);
+    }
+    const stepControl = doc.getElementById("stepBtn");
+    if (stepControl) stepControl.style.setProperty("display", "none", "important");
+    const syncSimulationControls = () => {
+      const state = status?.dataset.state || "stopped";
+      const label = status?.querySelector(".status-label");
+      const title = state === "running" ? "Running" : state === "error" ? "Error" : "Stopped";
+      if (label && label.textContent !== title) label.textContent = title;
+      if (runControl) runControl.disabled = state === "running";
+      if (stopControl) stopControl.disabled = state !== "running";
+    };
+    syncSimulationControls();
+    if (status) new MutationObserver(syncSimulationControls).observe(status, { attributes: true, childList: true, subtree: true });
+    if (bottom) bottom.append(simControls);
+    doc.__vpShellParts.bottomControls = simControls;
     if (banner) banner.remove();
+    const devNote = document.createElement("span");
+    devNote.className = "vp-bottom-dev-note";
+    devNote.textContent = "⚠ Development build · Not for production documentation";
+    devNote.title = "VoltPro is in active development. Do not use for production documentation.";
+    bottom?.append(devNote);
+    doc.__vpShellParts.devNote = devNote;
+
     if (dialog && dialog.ownerDocument !== doc) doc.body.append(doc.adoptNode(dialog));
     const workspace = doc.querySelector(".workspace");
     if (workspace) {

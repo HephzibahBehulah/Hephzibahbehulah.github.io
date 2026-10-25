@@ -77,14 +77,24 @@ html.vp-electcad-maximized #vpWorkspace .vp-workspace-frame{display:block!import
 #vpBottomNavigation a{flex:0 0 auto;max-width:none;min-width:0;padding:7px 8px;border-radius:5px;font-size:12px}
 #vpBottomNavigation a>span{color:#ff9b1b}
 #vpBottomNavigation .vp-bottom-separator{width:1px;height:32px;flex:0 0 1px;background:#343b40;margin:0 6px}
-#vpBottomNavigation .vp-bottom-sim-controls{display:flex;flex:0 0 auto;align-items:center;gap:8px}
-#vpBottomNavigation .vp-bottom-sim-state,#vpBottomNavigation .vp-bottom-sim-controls button{height:34px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;border:1px solid #303b47;border-radius:6px;background:#11171e;color:#e4edf4;font:600 12px system-ui,sans-serif;white-space:nowrap}
+#vpBottomNavigation .vp-sim-bottom-controls{display:flex;flex:0 0 auto;align-items:center;gap:8px}
+#vpBottomNavigation .vp-bottom-sim-state,#vpBottomNavigation .vp-sim-bottom-controls button{height:34px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;border:1px solid #303b47;border-radius:6px;background:#11171e;color:#e4edf4;font:600 12px system-ui,sans-serif;white-space:nowrap}
 #vpBottomNavigation .vp-bottom-sim-state{color:#c8d0d6}
 #vpBottomNavigation .vp-bottom-sim-state[data-state=running]{color:#6fe0a7}
-#vpBottomNavigation .vp-bottom-sim-controls button{cursor:pointer}
-#vpBottomNavigation .vp-bottom-sim-controls button[aria-label="Start simulation"]::before{content:"▶"}
-#vpBottomNavigation .vp-bottom-sim-controls button[aria-label="Stop simulation"]::before{content:"■";font-size:10px}
-#vpBottomNavigation .vp-bottom-sim-controls button:hover{border-color:#f28a25;background:#242a2e}
+#vpBottomNavigation .vp-sim-bottom-controls button{cursor:pointer}
+#vpBottomNavigation .vp-sim-bottom-controls button[aria-label="Start simulation"]::before{content:"▶"}
+#vpBottomNavigation .vp-sim-bottom-controls button[aria-label="Stop simulation"]::before{content:"■";font-size:10px}
+#vpBottomNavigation .vp-sim-bottom-controls button:hover{border-color:#f28a25;background:#242a2e}
 #vpBottomNavigation .vp-bottom-dev-note{margin-left:auto;flex:0 0 auto;color:#ffb04c;font-size:12px;white-space:nowrap}
-@media(max-width:1100px){#vpBottomNavigation{gap:3px;padding-inline:5px}#vpBottomNavigation a{padding-inline:5px;font-size:10px}#vpBottomNavigation .vp-bottom-sim-controls{gap:3px}#vpBottomNavigation .vp-bottom-sim-state,#vpBottomNavigation .vp-bottom-sim-controls button{height:30px;padding-inline:6px;font-size:10px}#vpBottomNavigation .vp-bottom-dev-note{font-size:10px}}
+@media(max-width:1100px){#vpBottomNavigation{gap:3px;padding-inline:5px}#vpBottomNavigation a{padding-inline:5px;font-size:10px}#vpBottomNavigation .vp-sim-bottom-controls{gap:3px}#vpBottomNavigation .vp-bottom-sim-state,#vpBottomNavigation .vp-sim-bottom-controls button{height:30px;padding-inline:6px;font-size:10px}#vpBottomNavigation .vp-bottom-dev-note{font-size:10px}}
 @media(max-width:760px){#vpBottomNavigation{overflow-x:auto}#vpBottomNavigation .vp-bottom-dev-note{display:none}}
+
+#vpBottomNavigation .vp-sim-bottom-controls{display:flex;flex:0 0 auto;align-items:center;gap:8px}
+#vpBottomNavigation .vp-sim-bottom-controls #runBtn,#vpBottomNavigation .vp-sim-bottom-controls #stopBtn{height:34px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;border:1px solid #303b47;border-radius:6px;background:#11171e;color:#e4edf4;font:600 12px system-ui,sans-serif;white-space:nowrap;cursor:pointer}
+#vpBottomNavigation .vp-sim-bottom-controls #runBtn::before{content:'▶';font-size:12px}
+#vpBottomNavigation .vp-sim-bottom-controls #stopBtn::before{content:'■';font-size:10px}
+#vpBottomNavigation .vp-sim-bottom-controls #runBtn:disabled,#vpBottomNavigation .vp-sim-bottom-controls #stopBtn:disabled{opacity:.42;cursor:not-allowed}
+#vpBottomNavigation .vp-sim-bottom-controls #simStatus{height:34px;display:inline-flex;align-items:center;gap:7px;padding:0 12px;border:1px solid #303b47;border-radius:6px;background:#11171e;color:#c8d0d6;font:600 12px system-ui,sans-serif;white-space:nowrap}
+#vpBottomNavigation .vp-sim-bottom-controls #simStatus .status-dot{width:9px;height:9px;border:2px solid #9aa6ad;border-radius:50%;box-sizing:border-box}
+#vpBottomNavigation .vp-sim-bottom-controls #simStatus[data-state=running] .status-dot{border-color:#6fe0a7;background:#6fe0a7}
+#vpBottomNavigation .vp-sim-bottom-controls #simStatus .status-label{text-transform:none}
