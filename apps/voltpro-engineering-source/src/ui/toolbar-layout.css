@@ -68,3 +68,29 @@ body.simulator-page.vp-template-simulator{overflow-x:hidden!important}
 @media(max-width:1100px){body.simulator-page.vp-template-simulator #vpSiteHeader{gap:1px!important;padding-inline:3px!important}.vp-toolbar-menus summary{padding-inline:2px;font-size:9px!important}body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-brand-lockup{min-width:100px;max-width:120px}.vp-toolbar-project{flex-basis:100px}.vp-toolbar-quick{gap:2px}.vp-toolbar-quick>button,.vp-toolbar-quick .wire-tool>button,.vp-toolbar-quick label[data-toolbar-icon]{width:28px;min-width:28px;height:30px}}
 @media(max-width:780px){body.simulator-page.vp-template-simulator #vpSiteHeader{font-size:8px}.vp-toolbar-menus summary{padding-inline:1px;font-size:7px!important}body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-brand-lockup{min-width:80px;max-width:96px}body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{padding-inline:3px;font-size:9px}.vp-toolbar-project{flex-basis:80px}.vp-toolbar-quick .zoom{gap:0}.vp-toolbar-quick .zoom button{width:18px;min-width:18px}.vp-toolbar-quick .zoom span{min-width:30px;font-size:9px}.vp-sim-header-utilities{gap:2px}}
 @media(max-width:520px){body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-brand-lockup .vp-brand-product small{display:none}.vp-toolbar-menus summary{font-size:6px!important;padding-inline:0}.vp-toolbar-quick #saveBtn,.vp-toolbar-help{width:25px;min-width:25px}.vp-sim-language-control>span{font-size:12px}#vpSiteHeader #vpThemeToggle,#vpSiteHeader #vpAboutReadiness{width:26px;min-width:26px;height:28px}}
+
+/* Final menu fit: plain text labels with intrinsic width and clear spacing. */
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{
+  flex:0 0 auto!important;gap:8px!important;min-width:max-content!important;overflow:visible!important
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details{
+  flex:0 0 auto!important;min-width:max-content!important
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{
+  display:block!important;width:auto!important;min-width:max-content!important;height:auto!important;
+  overflow:visible!important;padding:0!important;border:0!important;border-radius:0!important;
+  background:transparent!important;color:#e4edf4!important;font:12px/1.2 system-ui,sans-serif!important;
+  white-space:nowrap!important
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary:hover,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus details[open]>summary{
+  background:transparent!important;color:#fff!important
+}
+@media(max-width:1500px){
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{gap:5px!important}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:11px!important}
+}
+@media(max-width:1200px){
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{gap:3px!important}
+ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:10px!important}
+}
