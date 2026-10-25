@@ -36,6 +36,12 @@ The PLC top bar follows the ElectCAD reference: Main Site and company logo, oran
 
 Validation: PLC TypeScript/production build, 21 engine tests and 27 workspace integration tests passed locally. File dropdown, grid toggle and zoom were checked in a browser. Production deployment remains unverified.
 
+### PLC expanding canvas
+
+The PLC drawing camera fills the canvas and supports native horizontal/vertical scrollbars, wheel/trackpad panning, drag panning, Ctrl+wheel/pinch zoom and existing grid snapping. Model space grows in either direction as its edges are approached, without an A3 page boundary. Numbered and lettered rulers follow camera translation and zoom, with columns 0–10,000 and rows A–ZZ. The complete range is reachable with the scrollbars. Editable title fields and canvas status remain fixed to the canvas viewport, including when panels open or close. Starter projects, all ten library examples and the blank-project action live inside Project (between Insert and Electrical). No startup panel takes space above the canvas. Blank projects reset the camera to the origin. Toolbar layout is unchanged.
+
+Validation: PLC build, 25 engine/canvas geometry tests, 27 workspace integration checks and browser checks for two-axis scrolling, zoom and fixed overlay positions.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.

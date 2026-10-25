@@ -175,3 +175,30 @@
 .plc-header-dialog-backdrop{position:fixed;inset:0;z-index:20000;display:grid;place-items:center;background:#0008}.plc-header-dialog-backdrop>section{width:min(440px,90vw);padding:20px;background:#171b1e;color:#e2e8ec;border:1px solid #46545d;border-radius:8px}.plc-header-dialog-backdrop>section>button{float:right}.plc-header-dialog-backdrop p{line-height:1.6}.plc-header-dialog-backdrop a{color:#ffad60}
 @media(min-width:1451px){.plc-app>.topbar.plc-reference-header{grid-template-columns:minmax(430px,560px) minmax(0,1fr) max-content;padding:0 8px;gap:8px}.plc-reference-header .plc-command-menu>summary{padding:0 4px;font-size:9px}.plc-header-tools>button{width:32px;height:32px}}
 @media(max-width:1150px){.plc-app>.topbar.plc-reference-header{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}.plc-header-identity{flex:none;width:390px}.plc-header-center{flex:none;min-width:max-content}.plc-header-actions{flex:none}.plc-reference-header .plc-command-menus{flex:none}.plc-reference-header .plc-command-pop{position:fixed;top:50px;left:8px;right:auto;max-width:calc(100vw - 16px)}.plc-reference-header .plc-workspace-menu .plc-command-pop{left:auto;right:8px}}
+
+/* PLC camera: unbounded model space beneath fixed canvas-view overlays. */
+.plc-app .plc-scroll-viewport{position:absolute;inset:24px 22px 22px 22px;overflow:scroll;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#55636c #171b1e;direction:ltr}
+.plc-scroll-plane{position:relative;min-width:100%;min-height:100%}
+.plc-flow-viewport{position:sticky;top:0;left:0;overflow:hidden}
+.plc-dynamic-rulers{position:absolute;inset:0;pointer-events:none;z-index:6;overflow:hidden}
+.plc-dynamic-rulers .plc-ruler{display:block;overflow:hidden}
+.plc-dynamic-rulers .plc-ruler-top,.plc-dynamic-rulers .plc-ruler-bottom{left:22px;right:36px}
+.plc-dynamic-rulers .plc-ruler-left,.plc-dynamic-rulers .plc-ruler-right{top:24px;bottom:36px}
+.plc-dynamic-rulers .plc-ruler span{position:absolute;min-width:0;flex:none;display:grid;place-items:center}
+.plc-dynamic-rulers .plc-ruler-top span,.plc-dynamic-rulers .plc-ruler-bottom span{top:0;bottom:0}
+.plc-dynamic-rulers .plc-ruler-left span,.plc-dynamic-rulers .plc-ruler-right span{left:0;right:0}
+.plc-app .canvas .plc-title-block{right:38px!important;bottom:40px;max-width:calc(100% - 76px)}
+.plc-app .canvas .plc-canvas-status{left:32px;bottom:40px;max-width:calc(100% - 70px)}
+.plc-app .canvas .canvas-caption{top:32px;left:32px}
+.plc-app .plc-flow-viewport .react-flow__minimap{top:8px;bottom:auto;right:8px}
+
+/* Starter projects live exclusively inside the existing Project dropdown. */
+.plc-project-starters{position:relative;padding:8px;border-bottom:1px solid #343a3e;min-width:260px}
+.plc-project-starters>small{display:block;padding-right:26px;color:#ffad60;font-size:9px}
+.plc-project-starters h2{font-size:14px;margin:9px 0}.plc-project-starters p{font-size:11px;line-height:1.5;color:#aebbc3}
+.plc-project-starters .plc-starter-close{position:absolute;top:2px;right:0;width:26px;min-height:26px;padding:2px;text-align:center;justify-content:center}
+.plc-project-starters>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}
+.plc-project-starters>div>button{font-size:11px;white-space:nowrap}.plc-project-starters>.plc-blank{margin-top:6px;color:#ffad60}
+
+.plc-reference-header .plc-command-pop:has(.plc-project-starters){width:310px;max-width:calc(100vw - 16px);overflow-x:hidden}
+.plc-project-starters{min-width:0}.plc-project-starters p{white-space:normal}
