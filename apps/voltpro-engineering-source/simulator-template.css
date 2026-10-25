@@ -258,6 +258,16 @@ body.simulator-page.vp-template-simulator #inspectorPanel{position:relative!impo
 body.simulator-page.vp-template-simulator #inspectorPanel>#vpCircuitDesigner{
   position:absolute!important;right:12px!important;bottom:64px!important;z-index:1200!important
 }
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel{
+  overflow:visible!important;z-index:1200!important
+}
 body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel>#vpCircuitDesigner{
-  display:none!important
+  right:4px!important;bottom:64px!important;width:34px!important;height:34px!important
+}
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel>#vpCircuitDesigner .vp-cd-launch{
+  width:34px!important;height:34px!important;font-size:15px!important
+}
+body.simulator-page.vp-template-simulator .workspace.vp-dock-collapsed #inspectorPanel>#vpCircuitDesigner .vp-cd-launch::after{
+  top:1px!important;right:1px!important;width:7px!important;height:7px!important;
+  box-shadow:-9px 9px 0 -2px #58cb9c!important
 }
