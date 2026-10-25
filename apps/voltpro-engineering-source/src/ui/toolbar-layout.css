@@ -102,3 +102,12 @@ body.simulator-page.vp-template-simulator .toolbar #simStatus{display:none!impor
 #vpBottomNavigation .vp-bottom-sim-state::before{content:"◉";font-size:13px;color:#9aa6ad}
 #vpBottomNavigation .vp-bottom-sim-controls button:disabled{opacity:.42;cursor:not-allowed}
 #vpBottomNavigation .vp-bottom-sim-controls button:disabled:hover{border-color:#303b47;background:#11171e}
+
+
+/* Slightly reduce top-bar label sizes to keep the Simulator name fully visible. */
+body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:11px!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:11px!important}
+@media(max-width:1500px){body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:10px!important}}
+@media(max-width:1200px){body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summary{font-size:9px!important}}
+@media(max-width:780px){body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:9px!important}}
+@media(max-width:520px){body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:8px!important}}
