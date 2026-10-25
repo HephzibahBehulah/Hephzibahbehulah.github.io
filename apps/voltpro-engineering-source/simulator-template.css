@@ -392,3 +392,8 @@ body.simulator-page.vp-template-simulator .vp-title-block footer{min-width:0;ove
  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #inspectorPanel{grid-column:3!important;grid-row:1!important}
  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #palette{position:absolute!important;left:42px!important;right:auto!important;top:0!important;bottom:0!important;z-index:30!important;width:min(245px,calc(100vw - 54px))!important}
 }
+
+
+/* Keep the live simulation notice fixed to the canvas viewport while the drawing pans, scrolls, or zooms. */
+body.simulator-page.vp-template-simulator .live-flow-status{position:fixed!important;left:84px!important;bottom:80px!important;z-index:1000!important;max-width:calc(100vw - 120px)!important}
+@media(max-width:760px){body.simulator-page.vp-template-simulator .live-flow-status{left:80px!important;bottom:80px!important;max-width:calc(100vw - 116px)!important}}
