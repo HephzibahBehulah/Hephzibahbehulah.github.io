@@ -152,3 +152,8 @@ body.simulator-page.vp-template-simulator #canvasWrap:has(.vp-panel-view:not([hi
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls{gap:2px}
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls>*{width:29px;min-width:29px}
 }
+
+/* Keep component names, values, and pins readable over the schematic grid. */
+body.simulator-page.vp-template-simulator .component-label{font-size:12px;font-weight:850;paint-order:stroke;stroke:#07111d;stroke-width:3px;stroke-linejoin:round}
+body.simulator-page.vp-template-simulator .component-value{font-size:11px;font-weight:750;paint-order:stroke;stroke:#07111d;stroke-width:2.5px;stroke-linejoin:round}
+body.simulator-page.vp-template-simulator.light .component-label,body.simulator-page.vp-template-simulator.light .component-value{stroke:#f4f7f8}
