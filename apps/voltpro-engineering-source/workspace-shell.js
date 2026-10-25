@@ -11,6 +11,44 @@
   const rootPrefix = location.hostname.startsWith("admin.") && /^\/engineering(?:\/|$)/.test(location.pathname) ? "/engineering" : "";
   const root = document.getElementById("vpWorkspace");
   const panels = new Map();
+  const sharedHeader = document.getElementById("vpSiteHeader");
+  const headerPlaceholder = sharedHeader ? document.createComment("VoltPro shared header position") : null;
+  if (sharedHeader) sharedHeader.before(headerPlaceholder);
+
+  function restoreSharedHeader() {
+    if (!sharedHeader || sharedHeader.parentElement === document.body) return;
+    const banner = document.getElementById("vpDevelopmentBanner");
+    document.body.insertBefore(sharedHeader, banner || headerPlaceholder?.nextSibling || document.body.firstChild);
+    headerPlaceholder?.remove();
+  }
+
+  function integrateSimulator(panel) {
+    if (!sharedHeader || !panel) return;
+    const frame = panel.querySelector("iframe");
+    const doc = frame?.contentDocument;
+    const top = doc?.querySelector(".sim-top");
+    const toolbar = doc?.querySelector(".sim-app > .toolbar");
+    if (!top || !toolbar) return;
+    doc.documentElement.classList.add("vp-template-simulator");
+    doc.body.classList.add("vp-template-simulator");
+    if (toolbar.parentElement !== top) top.append(toolbar);
+    if (sharedHeader.ownerDocument !== doc || sharedHeader.parentElement !== top) top.append(doc.adoptNode(sharedHeader));
+    doc.querySelectorAll("#vpSiteHeader a").forEach(link => { link.target = "_top"; });
+    if (!doc.__vpWorkspaceNavigationBound) {
+      doc.__vpWorkspaceNavigationBound = true;
+      doc.addEventListener("click", event => {
+        const link = event.target.closest?.("#vpSiteHeader a[data-vp-route], .vp-view-tabs a[data-view='breadboard']");
+        if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const target = link.matches(".vp-view-tabs a[data-view='breadboard']") ? "/breadboard" : canonicalPath(new URL(link.href).pathname);
+        if (!tools.some(tool => tool.path === target)) return;
+        event.preventDefault();
+        activate(target);
+      });
+    }
+    const theme = document.documentElement.dataset.vpTheme || "dark";
+    doc.documentElement.dataset.vpTheme = theme;
+    doc.body.classList.toggle("light", theme === "light");
+  }
 
   function canonicalPath(path) {
     let local = path.startsWith(rootPrefix) ? path.slice(rootPrefix.length) : path;
@@ -35,13 +73,17 @@
     root.replaceChildren(...[...root.children].filter(node => !node.classList.contains("vp-workspace-loading")), panel);
     panels.set(tool.path, panel);
     frame.addEventListener("load", () => {
-      try { frame.contentDocument.documentElement.dataset.vpTheme = document.documentElement.dataset.vpTheme || "dark"; } catch {}
+      try {
+        frame.contentDocument.documentElement.dataset.vpTheme = document.documentElement.dataset.vpTheme || "dark";
+        if (tool.path === "/simulator" && document.documentElement.dataset.vpWorkspace === "simulator") integrateSimulator(panel);
+      } catch {}
     });
     return panel;
   }
   function activate(path, push = true) {
     const key = canonicalPath(path);
     const tool = tools.find(item => item.path === key) || tools[0];
+    if (tool.path !== "/simulator") restoreSharedHeader();
     const panel = ensurePanel(tool);
     for (const [route, element] of panels) {
       const active = route === tool.path;
@@ -53,6 +95,8 @@
     }
     document.documentElement.dataset.vpWorkspace = tool.path.slice(1);
     document.documentElement.classList.toggle("vp-electcad-maximized", tool.path === "/electcad");
+    document.documentElement.classList.toggle("vp-simulator-template", tool.path === "/simulator");
+    if (tool.path === "/simulator") integrateSimulator(panel);
     const electCadNotice = document.querySelector("#vpDevelopmentBanner .vp-production-notice");
     const electCadStatus = document.querySelector("#vpDevelopmentBanner .vp-banner-status-link");
     const bannerCopy = document.querySelector("#vpDevelopmentBanner .vp-development-banner-copy");
@@ -88,6 +132,12 @@
     if (!tools.some(tool => tool.path === target)) return;
     event.preventDefault();
     activate(target);
+  });
+  document.getElementById("vpThemeToggle")?.addEventListener("click", () => {
+    queueMicrotask(() => {
+      const frame = panels.get("/simulator")?.querySelector("iframe");
+      try { frame?.contentDocument?.body?.classList.toggle("light", document.documentElement.dataset.vpTheme === "light"); } catch {}
+    });
   });
   window.addEventListener("popstate", () => activate(location.pathname, false));
   activate(location.pathname, false);

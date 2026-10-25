@@ -1,0 +1,95 @@
+/* Simulator-only adaptation of the shared ElectCAD workspace frame. */
+html.vp-template-simulator,
+body.vp-template-simulator,
+body.simulator-page.vp-template-simulator {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+body.simulator-page.vp-template-simulator .sim-app {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: 58px minmax(0, 1fr);
+  overflow: hidden;
+}
+
+body.simulator-page.vp-template-simulator .sim-top {
+  min-width: 0;
+  min-height: 58px;
+  height: 58px;
+  gap: 7px;
+  padding: 0 8px;
+  overflow-x: auto;
+  overflow-y: visible;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+body.simulator-page.vp-template-simulator .sim-top > .brand,
+body.simulator-page.vp-template-simulator .sim-top > .mode-tabs,
+body.simulator-page.vp-template-simulator .sim-top > .toolbar-group,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity {
+  flex: 0 0 auto;
+}
+
+body.simulator-page.vp-template-simulator .sim-top > .brand { order: 1; min-width: 170px; }
+body.simulator-page.vp-template-simulator .sim-top > .mode-tabs { order: 2; }
+body.simulator-page.vp-template-simulator .sim-top > .vp-view-tabs {
+  order: 3;
+  flex: 0 0 auto;
+  gap: 3px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+body.simulator-page.vp-template-simulator .vp-view-tabs button,
+body.simulator-page.vp-template-simulator .vp-view-tabs a { padding: 6px 8px; font-size: 10px; }
+body.simulator-page.vp-template-simulator #vpSiteHeader { display: contents !important; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group { order: 3; margin: 0; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand { display: none; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-main-site-link { padding: 7px 8px; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation { order: 4; margin: 0; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-shell-controls { order: 5; margin: 0; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-identity { order: 6; margin: 0; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav { z-index: 30; }
+
+body.simulator-page.vp-template-simulator .top-actions { display: none !important; }
+body.simulator-page.vp-template-simulator .toolbar,
+body.simulator-page.vp-template-simulator .toolbar.vp-clean-toolbar { display: contents !important; }
+body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-primary,
+body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-menus {
+  flex: 0 0 auto;
+  flex-wrap: nowrap !important;
+  gap: 4px;
+  margin: 0;
+}
+body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-primary { order: 7; }
+body.simulator-page.vp-template-simulator .sim-top .vp-toolbar-menus { order: 8; }
+body.simulator-page.vp-template-simulator .toolbar-group button { padding: 6px 8px; }
+body.simulator-page.vp-template-simulator .toolbar-group label { white-space: nowrap; }
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group { order: 0; }
+
+body.simulator-page.vp-template-simulator .workspace {
+  min-height: 0;
+  grid-template-columns: minmax(205px, 250px) minmax(0, 1fr) minmax(250px, 290px);
+}
+
+body.simulator-page.vp-template-simulator .sim-footer { display: none !important; }
+
+@media (max-width: 1000px) {
+  body.simulator-page.vp-template-simulator .workspace { grid-template-columns: minmax(190px, 220px) minmax(0, 1fr); }
+}
+
+@media (max-width: 650px) {
+  body.simulator-page.vp-template-simulator .sim-top { min-height: 54px; height: 54px; }
+  body.simulator-page.vp-template-simulator .sim-app { grid-template-rows: 54px minmax(0, 1fr); }
+  body.simulator-page.vp-template-simulator .workspace { grid-template-columns: minmax(0, 1fr); }
+  body.simulator-page.vp-template-simulator .palette { top: 54px; bottom: 0; }
+}

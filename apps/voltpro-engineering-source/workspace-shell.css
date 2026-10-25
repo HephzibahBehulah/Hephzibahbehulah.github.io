@@ -7,3 +7,16 @@ html[data-vp-theme=light]{--vp-shell-bg:#f0f2f4;--vp-shell-panel:#fff;--vp-shell
 .vp-workspace-panel[data-active=true]{display:block}
 .vp-workspace-frame{display:block;width:100%;height:100%;border:0;background:var(--vp-shell-bg)}
 @media(max-width:700px){#vpWorkspace{height:calc(100dvh - var(--vp-header-height,60px) - 74px);padding:0}.vp-workspace-panel{border-radius:0}}
+
+/* The Simulator adopts the shared shell controls into its one-row CAD toolbar. */
+html.vp-simulator-template,
+html.vp-simulator-template body,
+html.vp-simulator-template.vp-unified-site body{width:100%;height:100dvh;min-height:0;margin:0!important;overflow:hidden!important;padding:0!important}
+html.vp-simulator-template #vpSiteHeader,
+html.vp-simulator-template #vpDevelopmentBanner,
+html.vp-simulator-template #vpDevelopmentFooter{display:none!important}
+html.vp-simulator-template #vpWorkspace{position:fixed!important;inset:0 0 64px!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+html.vp-simulator-template #vpWorkspace .vp-workspace-panel,
+html.vp-simulator-template #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
+html.vp-simulator-template #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}
+html.vp-simulator-template #vpBottomNavigation{height:64px;min-height:64px;max-height:64px}
