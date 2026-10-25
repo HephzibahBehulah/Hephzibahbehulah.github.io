@@ -319,8 +319,10 @@
         const renderRulers = () => {
           const state = doc.defaultView.S || {};
           const zoom = Math.max(.25, Math.min(2.5, Number(state.zoom) || .25));
-          const columnPitch = 100 * zoom;
-          const rowPitch = 150 * zoom;
+          const availableWidth = Math.max(0, canvasFrame.clientWidth - 52);
+          const availableHeight = Math.max(0, canvasFrame.clientHeight - 50);
+          const columnPitch = (availableWidth / 37) * (zoom / .25);
+          const rowPitch = (availableHeight / 19) * (zoom / .25);
           const pan = state.pan || {};
           const xOffset = canvasWrap.scrollLeft - (Number(pan.x) || 0);
           const yOffset = canvasWrap.scrollTop - (Number(pan.y) || 0);
@@ -328,8 +330,8 @@
           const phaseY = ((yOffset % rowPitch) + rowPitch) % rowPitch;
           const firstColumn = Math.max(1, Math.floor(xOffset / columnPitch) + 1);
           const firstRow = Math.max(1, Math.floor(yOffset / rowPitch) + 1);
-          const columns = Math.ceil(Math.max(0, canvasFrame.clientWidth - 52) / columnPitch) + 2;
-          const rows = Math.ceil(Math.max(0, canvasFrame.clientHeight - 50) / rowPitch) + 2;
+          const columns = Math.max(1, Math.floor(availableWidth / columnPitch + 1e-6));
+          const rows = Math.max(1, Math.floor(availableHeight / rowPitch + 1e-6));
           const horizontal = Array.from({length: columns}, (_, i) => '<span style="flex:0 0 ' + columnPitch + 'px;' + (i === 0 ? 'margin-left:-' + phaseX + 'px;' : '') + '">' + (firstColumn + i) + '</span>').join("");
           const vertical = Array.from({length: rows}, (_, i) => '<span style="flex:0 0 ' + rowPitch + 'px;' + (i === 0 ? 'margin-top:-' + phaseY + 'px;' : '') + '">' + excelRow(firstRow + i) + '</span>').join("");
           topRuler.innerHTML = horizontal;
