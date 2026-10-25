@@ -177,3 +177,5 @@
 .vp-bot-sources{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px}
 .vp-bot-sources a{display:inline-block;border:1px solid rgba(86,207,225,.22);border-radius:8px;padding:6px 8px;color:var(--vp-hb-cyan,#35d5ff);font-size:11px;text-decoration:none}
 .vp-bot-sources a:hover{border-color:var(--vp-hb-cyan,#35d5ff)}
+
+.vp-bot-voice{flex:0 0 38px;width:38px;border:1px solid rgba(255,138,36,.35);border-radius:7px;background:#302318;color:#ffb568;cursor:pointer;font:14px system-ui,sans-serif}.vp-bot-voice:disabled{opacity:.55;cursor:wait}

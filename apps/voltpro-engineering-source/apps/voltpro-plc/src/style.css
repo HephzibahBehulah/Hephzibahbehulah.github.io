@@ -10,3 +10,40 @@
 @media(max-width:700px){.plc-app>.topbar{height:auto;gap:8px;padding:8px}.plc-app>.topbar .brand{min-width:140px;flex:1}.plc-app>.topbar .file-tools{margin-left:auto;gap:4px}.plc-app>.topbar .file-tools button{padding:7px}.plc-app>.topbar .toolbar{display:flex;overflow-x:auto;max-width:100%;flex-wrap:nowrap;white-space:nowrap;padding-bottom:5px;flex-shrink:0}.plc-app>.topbar .toolbar button{flex-shrink:0}.plc-app>.projectbar{max-height:112px;overflow:auto;align-content:start}.plc-app>.workspace{position:relative}.plc-app>.workspace>.palette,.plc-app>.workspace>.properties{top:0;bottom:0;width:min(290px,85vw);z-index:25}.plc-app>.workspace>.palette{left:0}.plc-app>.workspace>.properties{right:0}.plc-app .statusbar{min-height:34px;flex-wrap:wrap;font-size:9px;gap:4px 8px}}
 
 .plc-ai{position:fixed;right:18px;bottom:62px;z-index:50;font:inherit}.plc-ai-launch,.plc-ai-panel button{border:1px solid #557b89;border-radius:8px;background:#102a35;color:#eaf7fa;padding:9px 13px;cursor:pointer}.plc-ai-panel{position:absolute;right:0;bottom:48px;width:min(420px,calc(100vw - 28px));max-height:75vh;overflow:auto;padding:16px;border:1px solid #416270;border-radius:12px;background:#0d1b23;color:#eaf7fa;box-shadow:0 18px 55px #0009}.plc-ai-panel header{display:flex;justify-content:space-between;align-items:center}.plc-ai-panel p{color:#b3c5cc}.plc-ai-panel label{display:block;margin:12px 0 6px}.plc-ai-panel textarea{box-sizing:border-box;width:100%;resize:vertical;border:1px solid #49626d;border-radius:8px;background:#111f27;color:#fff;padding:10px}.plc-ai-panel>button{margin-top:9px}.plc-ai-answer{white-space:pre-wrap;max-height:32vh;overflow:auto;font:inherit;background:#10232b;padding:10px;border-radius:8px}
+
+/* Shared PLC project views use the same source project and workspace palette. */
+.plc-view-switcher{flex-wrap:wrap}
+.plc-view-switcher button[aria-pressed=true]{background:#362519;border-color:#945519;color:#ffb568}
+.device-view-fbd .device-symbol{filter:drop-shadow(0 2px 3px #0002)}
+.device-view-fbd .device-label{font-weight:700;color:#e3e3e3!important}
+.device-view-fbd .pin-label{color:#ddd!important}
+.plc-io-view{height:100%;min-height:0;overflow:auto;padding:clamp(16px,3vw,34px);background:#151515;color:#eee}
+.plc-io-view>header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.plc-io-view>header small{color:#ffad62;font:700 10px monospace;letter-spacing:.12em}
+.plc-io-view h2{margin:7px 0;font-size:clamp(18px,2vw,26px)}
+.plc-io-view p{margin:5px 0;color:#bdbdbd;line-height:1.6}
+.plc-io-view>header>span{padding:6px 9px;border:1px solid #6a451f;border-radius:5px;color:#ffbd7d;font:9px monospace}
+.plc-io-notice{margin:14px 0;padding:10px 12px;border-left:3px solid #ff8a24;background:#211b15;color:#e5d0b7;font-size:11px;line-height:1.5}
+.plc-io-rack{display:grid;grid-template-columns:minmax(150px,.6fr) repeat(2,minmax(220px,1fr));gap:10px;align-items:stretch;padding:12px;border:1px solid #414141;border-radius:8px;background:#1b1b1b}
+.plc-io-rack-label,.plc-io-module{min-width:0;padding:13px;border:1px solid #454545;border-radius:6px;background:#111}
+.plc-io-rack-label{display:flex;flex-direction:column;justify-content:center;gap:9px;border-color:#774619}
+.plc-io-rack-label b{color:#ffad62;font:700 15px monospace}
+.plc-io-rack-label span,.plc-io-rack-label small{color:#ccc;font-size:11px}
+.plc-io-module>b{display:block;padding-bottom:10px;color:#e8e8e8;font:700 11px monospace}
+.plc-io-module>div{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:7px}
+.plc-io-module button{display:grid;grid-template-columns:22px 1fr;grid-template-rows:auto auto;gap:3px 7px;min-width:0;padding:8px;border:1px solid #3e3e3e;border-radius:5px;background:#202020;color:#eee;text-align:left}
+.plc-io-module button:hover,.plc-io-module button.selected{border-color:#ff8a24;background:#2b2117}
+.plc-io-module button small{grid-row:1/3;color:#ffad62;font:700 10px monospace}
+.plc-io-module button strong{font:700 11px monospace}
+.plc-io-module button span,.plc-io-module button em{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}
+.plc-io-module button em{grid-column:2;color:#aaa;font-style:normal}
+.plc-io-registers{margin-top:18px;padding:14px;border:1px solid #3d3d3d;border-radius:8px;background:#1b1b1b}
+.plc-io-registers h3{margin:0 0 6px;color:#ffad62;font:700 12px monospace}
+.plc-io-table-wrap{margin-top:12px;overflow:auto;border:1px solid #3d3d3d;border-radius:6px}
+.plc-io-view table{width:100%;border-collapse:collapse;min-width:640px;font-size:11px}
+.plc-io-view th,.plc-io-view td{padding:9px 11px;border-bottom:1px solid #373737;text-align:left}
+.plc-io-view th{position:sticky;top:0;background:#242424;color:#ffbd7d;font:700 9px monospace;text-transform:uppercase}
+.plc-io-view tbody tr{cursor:pointer;color:#ddd}
+.plc-io-view tbody tr:hover,.plc-io-view tbody tr.selected{background:#302318;color:#fff}
+.plc-io-view tbody tr:last-child td{border-bottom:0}
+@media(max-width:900px){.plc-io-rack{grid-template-columns:1fr}.plc-io-rack-label{min-height:110px}}

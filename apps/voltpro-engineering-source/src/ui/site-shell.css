@@ -59,3 +59,15 @@ html.vp-electcad-maximized body{display:block!important}
 html.vp-electcad-maximized #vpWorkspace{position:fixed!important;inset:0!important;display:block!important;width:100vw!important;height:100dvh!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
 html.vp-electcad-maximized #vpWorkspace .vp-workspace-panel,html.vp-electcad-maximized #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
 html.vp-electcad-maximized #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}
+
+/* Keep the shared shell controls visible by putting workspace switching in one compact menu. */
+#vpSiteHeader .vp-site-navigation{position:relative;flex:0 0 auto;margin-left:auto}
+#vpSiteHeader .vp-site-navigation>summary{display:block;list-style:none;padding:8px 10px;border:1px solid #365d71;border-radius:5px;background:#102b39;color:inherit;cursor:pointer;white-space:nowrap}
+#vpSiteHeader .vp-site-navigation>summary::-webkit-details-marker{display:none}
+#vpSiteHeader .vp-site-navigation>summary:hover,#vpSiteHeader .vp-site-navigation[open]>summary{background:#19404c;color:#7be3cf}
+#vpSiteHeader .vp-site-navigation nav,#vpSiteHeader .vp-site-navigation[open] nav{position:absolute;z-index:20002;top:calc(100% + 6px);left:0;display:grid;gap:2px;min-width:230px;max-height:min(70vh,520px);overflow:auto;padding:7px;border:1px solid #416578;border-radius:8px;background:#122c3a;box-shadow:0 12px 30px #0009}
+#vpSiteHeader .vp-site-navigation nav a{display:block;padding:9px 10px;white-space:nowrap}
+#vpSiteHeader .vp-shell-controls{flex:0 0 auto;margin-left:0}
+#vpSiteHeader .vp-site-identity{flex:0 0 auto;margin-left:0}
+@media(max-width:720px){#vpSiteHeader{gap:6px;padding-inline:8px}#vpSiteHeader .vp-site-brand-group{min-width:0}#vpSiteHeader .vp-site-brand{overflow:hidden;text-overflow:ellipsis}#vpSiteHeader .vp-main-site-link{padding-inline:6px}#vpSiteHeader .vp-site-navigation>summary{padding:7px 8px}#vpSiteHeader .vp-shell-controls{gap:3px}#vpSiteHeader .vp-shell-controls #vpAboutReadiness{max-width:38px;overflow:hidden;text-overflow:clip;font-size:0}#vpSiteHeader .vp-shell-controls #vpAboutReadiness::before{content:'ⓘ';font-size:15px}#vpSiteHeader #vpShellLanguage,#vpSiteHeader #vpThemeToggle{padding:6px}#vpSiteHeader .vp-site-identity>a{display:block;max-width:75px;overflow:hidden;text-overflow:ellipsis}}
+@media(max-width:430px){#vpSiteHeader .vp-site-brand{display:none}#vpSiteHeader .vp-main-site-link{font-size:0}#vpSiteHeader .vp-main-site-link::before{content:'←';font-size:14px}#vpSiteHeader .vp-site-navigation>summary{font-size:0}#vpSiteHeader .vp-site-navigation>summary::before{content:'▣';font-size:16px}#vpSiteHeader .vp-shell-controls{gap:2px}#vpSiteHeader #vpShellLanguage{max-width:54px}}
