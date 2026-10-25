@@ -1,4 +1,4 @@
-import { zoomAtOrigin } from './canvas-geometry';
+import { boundsForNodes, zoomAtOrigin } from './canvas-geometry';
 import { CanvasRulers } from './CanvasViewport';
 import { useEffect, useRef, useState } from 'react';
 import { useReactFlow, useViewport } from '@xyflow/react';
@@ -43,10 +43,11 @@ export function WorkspaceLayout(p: Props) {
   const projectMenu = useRef<HTMLDetailsElement>(null);
   useEffect(() => { if (p.startupOpen) { if (projectMenu.current) projectMenu.current.open = true; p.setStartupOpen(false); } }, [p.startupOpen, p.setStartupOpen]);
   const { fitView, setViewport, screenToFlowPosition } = useReactFlow(), viewport = useViewport();
+  const worksheetBounds=boundsForNodes(s.project.nodes);
   const zoomLevels = [.25,.35,.45,.55,.65,.75,.85,1,...Array.from({ length: 15 }, (_, index) => (index + 11) / 10)];
   const stepZoom = (direction: -1 | 1) => {
     const current = zoomLevels.reduce((best, level, index) => Math.abs(level - viewport.zoom) < Math.abs(zoomLevels[best] - viewport.zoom) ? index : best, 0);
-    void setViewport(zoomAtOrigin(viewport,zoomLevels[Math.max(0, Math.min(zoomLevels.length - 1, current + direction))]));
+    void setViewport(zoomAtOrigin(viewport,zoomLevels[Math.max(0, Math.min(zoomLevels.length - 1, current + direction))],worksheetBounds));
   };
   const title = s.project.titleBlock || { drafter: '—', date: new Date().toISOString().slice(0, 10), scale: '1:1', sheetNumber: '1 / 1' };
   const setView = (view: 'ladder' | 'fbd' | 'plc') => {
@@ -156,8 +157,10 @@ export function WorkspaceLayout(p: Props) {
       <section className={'canvas canvas-view-' + s.view + (s.right ? ' dock-visible' : '')}>
         {s.view === 'plc' ? <PLCIOView project={s.project}/> : <Canvas add={draw}/>}
         <CanvasRulers/>
-        <div className="canvas-caption">PLC logic workspace · drag to pan · Ctrl+wheel to zoom<span>{s.view === 'ladder' ? 'LADDER' : s.view === 'fbd' ? 'FUNCTION BLOCK DIAGRAM' : 'PLC I/O'}</span></div>
-        <div className="plc-canvas-status" role="status">{s.error || s.result?.warnings.join(' ') || `Scan ${s.result?.scan || 0} · ${s.project.nodes.length} devices · ${s.project.edges.length} wires`}</div>
+        {!s.project.nodes.some(node=>(node.data.sheet||'main')===s.sheet)&&<div className="plc-empty-canvas"><CircuitBoard size={25}/><strong>Start your control project</strong><span>Choose a device from the library to begin.</span></div>}
+        <div className="canvas-caption">PLC workspace · scroll or Pan · Ctrl+wheel zoom<span>{s.view === 'ladder' ? 'LADDER' : s.view === 'fbd' ? 'FUNCTION BLOCK DIAGRAM' : 'PLC I/O'}</span></div>
+        <div className="plc-canvas-coordinates" title={`Scan ${s.result?.scan||0} · ${s.project.nodes.length} devices · ${s.project.edges.length} wires`}>X: {Math.round(-viewport.x/viewport.zoom)} <span>Y: {Math.round(-viewport.y/viewport.zoom)}</span> <span>GRID {s.gridSpacing} mm</span> <span>{Math.round(viewport.zoom*100)}%</span></div>
+        {(s.error||s.result?.warnings.length)?<div className="plc-canvas-status" role="status">{s.error||s.result?.warnings.join(' ')}</div>:null}
         <section className="plc-title-block" aria-label="PLC program identification"><strong>HEPHZIBAH BEHULAH</strong><b>PLC PROGRAM IDENTIFICATION</b><label>PROJECT NAME<input value={s.project.name} maxLength={100} onChange={e => usePLC.setState({ project: { ...s.project, name: e.target.value } })}/></label><div className="plc-title-grid"><label>DRAFTER<input value={title.drafter} maxLength={80} onChange={e => p.onUpdateTitle({ drafter: e.target.value })}/></label><label>DATE<input type="date" value={title.date} onChange={e => p.onUpdateTitle({ date: e.target.value })}/></label><label>SCALE<input value={title.scale} maxLength={20} onChange={e => p.onUpdateTitle({ scale: e.target.value })}/></label><label>SHEET NUMBER<input value={title.sheetNumber} maxLength={20} onChange={e => p.onUpdateTitle({ sheetNumber: e.target.value })}/></label></div><small>© Hephzibah Behulah · All rights reserved</small></section>
       </section>
 
