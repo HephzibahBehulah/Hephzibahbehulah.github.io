@@ -1,3 +1,6 @@
+import {circuitAssessment} from './building-circuits.mjs';
+import { addHouseArchitecture } from './building-house-architecture.mjs';
+import { architectureErrors, routeGeometryErrors, routeWireOnArchitecture } from './building-architecture.mjs';
 import {createBuildingDocument,recoverBuildingDocument,validateBuildingDocument} from './building-document.mjs';
 import {catalogItem} from './building-catalog.mjs';
 import {materialSchedule,reviewInstallation} from './building-tools.mjs';
@@ -47,22 +50,28 @@ export function houseDraft(){
  const towel=node('heated-towel-rail','Bathroom heated towel rail',bath,20,33,{tag:'HTR1',circuit:'F2',boardId:board.id,protectiveDeviceId:rcdBath.id});route(breakers.get('F2'),towel,'cable-NYM-J-3-2.5','F2',breakers.get('F2'),2.5);
  const bottom=node('two-way-switch','Stair lighting switch · bottom landing',utility,40,34,{tag:'S-STAIR-BOTTOM',circuit:'F9',boardId:board.id,protectiveDeviceId:rcdGeneral.id});
  const top=d.nodes.find(n=>n.room==='Hallway'&&n.type==='two-way-switch');route(bottom,top,'cable-NYM-J-5-2.5','F9',breakers.get('F9'),2.5);
- d.nodes.forEach(item=>{if(!item.tag)item.tag=item.id;});return d;
+ d.nodes.forEach(item=>{if(!item.tag)item.tag=item.id;});return addHouseArchitecture(d);
 }
 export function checkBuildingProposal(raw){
- if(!raw||JSON.stringify(raw).length>1000000||raw.nodes?.length>500||raw.wires?.length>2000||raw.rooms?.length>300)throw Error('Building proposal exceeds the supported size.');
+ if(!raw||JSON.stringify(raw).length>1000000||raw.nodes?.length>500||raw.wires?.length>2000||raw.rooms?.length>300||raw.walls?.length>3000||raw.openings?.length>1000||raw.dimensions?.length>1000)throw Error('Building proposal exceeds the supported size.');
  const d=recoverBuildingDocument(raw);const report=validateBuildingDocument(d);if(report.errors.length)throw Error(report.errors.join(' '));
  for(const room of d.rooms)if(room.x<1||room.y<0||(room.floor||1)>d.metadata.floors)throw Error('Room coordinates/floor are invalid.');
  for(const node of d.nodes)if(!catalogItem(node.type,d.catalog)||(node.floor||1)<1||(node.floor||1)>d.metadata.floors||node.x>10001||node.y>702)throw Error('Unknown component or floor.');
- for(const wire of d.wires){if(wire.cableId&&catalogItem(wire.cableId,d.catalog)?.kind!=='route')throw Error('Unknown cable specification.');if(wire.routePoints){const first=wire.routePoints[0],last=wire.routePoints.at(-1),from=d.nodes.find(n=>n.id===wire.from),to=d.nodes.find(n=>n.id===wire.to);if(first?.x!==from.x||first?.y!==from.y||last?.x!==to.x||last?.y!==to.y)throw Error('Route geometry does not meet its equipment endpoints.');if(!Array.isArray(wire.routePoints)||wire.routePoints.length>100)throw Error('Invalid orthogonal route.');for(let i=0;i<wire.routePoints.length;i++){const p=wire.routePoints[i],previous=wire.routePoints[i-1];if(!Number.isFinite(p.x)||!Number.isFinite(p.y)||p.x<1||p.y<0||(previous&&previous.x!==p.x&&previous.y!==p.y))throw Error('Route is not valid orthogonal geometry.');}}}
+ for(const wire of d.wires){if(wire.cableId&&catalogItem(wire.cableId,d.catalog)?.kind!=='route')throw Error('Unknown cable specification.');const errors=routeGeometryErrors(d,wire);if(errors.length)throw Error(errors.join(' '));}
+ if(d.nodes.length&&(!Array.isArray(raw.walls)||raw.walls.length===0))throw Error('Building AI proposals must include measured wall geometry.');
+ if(d.nodes.some(n=>n.circuit)&&d.circuits.length===0)throw Error('Include explicit circuit records for assigned equipment.');
+ for(const wire of d.wires)if(wire.routeMode==='wall'&&!wire.internalBoardId)routeWireOnArchitecture(d,wire);
+ if(d.walls.length>3000||d.openings.length>1000)throw Error('Architectural proposal is too large.');
+
  d.designNotes=Array.isArray(raw.designNotes)?raw.designNotes.filter(s=>typeof s==='string').slice(0,40):[];return d;
 }
-export function houseReport(doc){const structure=validateBuildingDocument(doc),review=reviewInstallation(doc),rows=materialSchedule(doc);return [
+export function houseReport(doc){const structure=validateBuildingDocument(doc),review=reviewInstallation(doc),rows=materialSchedule(doc),circuits=circuitAssessment(doc);review.issues.push(...circuits.flatMap(c=>c.issues.map(i=>({...i,code:'circuit',object:c.id}))));return [
  'EDITABLE TWO-STOREY HOUSE DRAFT · not an approved/compliant installation',
- '1. Spatial layout: '+doc.rooms.map(r=>`${r.name}: ${(r.width*r.height*.04).toFixed(1)} m² (Floor ${r.floor})`).join('; '),
- '2. Circuit/board schedule: '+doc.nodes.filter(n=>/^F\d+$/.test(n.tag)).map(n=>n.name).join('; '),
- '3. Design basis: '+(doc.designNotes||[]).join('\n'),
- '4. BOM (measured plan portions; unresolved vertical routes excluded from totals):\n'+rows.map(r=>`Floor ${r.floor}: ${r.name} — ${r.unmeasured?'UNRESOLVED VERTICAL LENGTH':r.quantity.toFixed(2)+' '+r.unit}`).join('\n'),
- '5. DRC log: '+structure.errors.length+' structural errors; '+review.issues.filter(i=>i.level==='error').length+' design-data errors; '+review.issues.filter(i=>i.level==='review').length+' unresolved reviews.\n'+review.issues.map(i=>`${i.level.toUpperCase()} ${i.code} ${i.object}: ${i.message}`).join('\n'),
+ '1. Spatial layout: '+doc.rooms.map(r=>`${r.name}: ${(r.width*r.height*doc.gridMillimetres**2/1e6).toFixed(1)} m² (Floor ${r.floor})`).join('; '),
+ '2. Architecture: '+doc.walls.length+' connected wall segments; '+doc.openings.filter(o=>o.type==='door').length+' doors with swing arcs; '+doc.openings.filter(o=>o.type==='window').length+' windows; '+doc.stairs.length+' floor stair references. Wall thickness, clear areas and opening positions remain editable assumptions.',
+ '3. Circuit/board schedule: '+circuits.map(c=>`${c.id} - ${c.label}: ${c.knownConnectedW} W known, ${c.unresolvedLoads} unresolved loads, design current ${c.designCurrentA===null?'UNRESOLVED':c.designCurrentA.toFixed(2)+' A'}`).join('; '),
+ '4. Design basis: '+(doc.designNotes||[]).join('\n'),
+ '5. BOM (plan routes plus declared mounting-height tails; unresolved inter-floor rises excluded from totals; panel-internal wiring excluded):\n'+rows.map(r=>`Floor ${r.floor}: ${r.name} — ${r.unmeasured?'UNRESOLVED VERTICAL LENGTH':r.quantity.toFixed(2)+' '+r.unit}`).join('\n'),
+ '6. DRC log: '+structure.errors.length+' structural errors; '+review.issues.filter(i=>i.level==='error').length+' design-data errors; '+review.issues.filter(i=>i.level==='review').length+' unresolved reviews.\n'+review.issues.map(i=>`${i.level.toUpperCase()} ${i.code} ${i.object}: ${i.message}`).join('\n'),
  'No certificate is issued. Zero structural errors does not establish DIN VDE 0100 compliance. Import the draft using the action below, then inspect each floor and resolve all open inputs.'
  ].join('\n\n');}

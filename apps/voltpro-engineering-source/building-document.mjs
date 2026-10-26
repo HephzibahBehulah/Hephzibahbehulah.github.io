@@ -1,3 +1,4 @@
+import { architectureErrors, wallsFromRooms, routeGeometryErrors } from './building-architecture.mjs';
 import { CATALOG, catalogItem, PROFILES, importManufacturerCatalog } from "./building-catalog.mjs";
 export const BUILDING_TYPES = Object.freeze(Object.fromEntries(CATALOG.filter(item=>item.kind==='device').map(item=>[item.id,item])));
 
@@ -19,6 +20,8 @@ export function createBuildingDocument(metadata = {}) {
       activeFloor: Number.isInteger(metadata.activeFloor) && metadata.activeFloor >= 1 ? metadata.activeFloor : 1
     },
     layers: { architecture: true, power: true, data: true },
+    architectureVersion: 1,
+    walls: [], openings: [], dimensions: [], risers: [], spaces: [], stairs: [], floorOutlines: [], circuits: [],
     designNotes: [],
     catalog: [],
     rooms: [],
@@ -38,6 +41,8 @@ export function recoverBuildingDocument(raw) {
   if(doc.catalog.length>5000||new Set(doc.catalog.map(item=>item.id)).size!==doc.catalog.length)throw new RangeError('Project catalogue contains too many or duplicate records.');
   doc.designNotes=Array.isArray(raw.designNotes)?raw.designNotes.filter(note=>typeof note==='string').slice(0,40):[];
   doc.rooms = Array.isArray(raw.rooms) ? raw.rooms.map(room=>({...room,floor:Number.isInteger(room.floor)?room.floor:1})) : [];
+  for(const key of ['walls','openings','dimensions','risers','spaces','stairs','floorOutlines','circuits']){if(raw[key]!==undefined&&!Array.isArray(raw[key]))throw new TypeError(key+' must be an array.');doc[key]=raw[key]||[];}
+  if(raw.walls===undefined&&doc.rooms.length){doc.walls=wallsFromRooms(doc.rooms);doc.designNotes.push('Walls inferred from legacy room reference rectangles at an assumed 200 mm thickness. Verify construction and room clear dimensions.');}
   doc.nodes = raw.nodes.map((node, i) => ({
     ...node,
     id: String(node.id || `B${i + 1}`),
@@ -54,7 +59,7 @@ export function recoverBuildingDocument(raw) {
   }));
   doc.wires = raw.wires.map((wire, i) => ({ ...wire, id: String(wire.id || `W${i + 1}`) }));
   doc.layers = { ...doc.layers, ...(raw.layers || {}) };
-  if (raw.version === 1 && Number.isFinite(raw.gridMillimetres)) doc.gridMillimetres = raw.gridMillimetres;
+  if (Number.isFinite(raw.gridMillimetres)) doc.gridMillimetres = raw.gridMillimetres;
   return doc;
 }
 
@@ -85,7 +90,7 @@ export function validateBuildingDocument(doc) {
     if (!item || item.kind === "route") errors.push(`${node.id}: unknown device type.`);
     if (!node.id || ids.has(node.id)) errors.push(`${node.id || "Device"}: missing or duplicate object ID.`);
     ids.add(node.id);
-    if (!Number.isInteger(node.x) || !Number.isInteger(node.y) || node.x < 1 || node.y < 0) errors.push(`${node.id}: position must be on the metric plan grid.`);
+    if (!Number.isFinite(node.x) || !Number.isFinite(node.y) || node.x < 1 || node.y < 0) errors.push(`${node.id}: position must be on the metric plan grid.`);
     if (!node.name?.trim()) errors.push(`${node.id}: device name is empty.`);
     if (!(allowedVoltages[node.type] || [item?.defaultVoltage,"120 V AC","230 V AC","240 V AC","277 V AC","400 V AC","415 V AC","480 V AC","24 V DC","SELV / data","Protective conductor","Not energised"]).includes(node.voltage)) errors.push(`${node.id}: voltage is incompatible with ${node.type}.`);
     if (!Number.isFinite(node.mountingHeight) || node.mountingHeight < 0 || node.mountingHeight > 6000) errors.push(`${node.id}: mounting height must be 0–6000 mm.`);
@@ -102,11 +107,15 @@ export function validateBuildingDocument(doc) {
     if (!from || !to) { errors.push(`${wire.id}: connection endpoint does not exist.`); continue; }
     if (catalogItem(from.type,doc.catalog)?.system !== catalogItem(to.type,doc.catalog)?.system) errors.push(`${wire.id}: power and data systems cannot share a connection.`);
   }
+  const circuits=new Set();for(const circuit of doc.circuits||[]){if(!circuit.id||circuits.has(circuit.id))errors.push('Missing/duplicate circuit identity.');circuits.add(circuit.id);for(const key of ['voltage','powerFactor','demandFactor','verifiedAmpacityA','faultKA','minimumSectionMM2','reactanceOhmPerKm','maxVoltageDropPercent'])if(circuit[key]!==undefined&&circuit[key]!==null&&(!Number.isFinite(circuit[key])||circuit[key]<0))errors.push(`${circuit.id}: invalid ${key}.`);if(circuit.powerFactor>1||circuit.demandFactor>1)errors.push(`${circuit.id}: factors must not exceed 1.`);}
+  if(circuits.size)for(const object of [...doc.nodes,...doc.wires])if(object.circuit&&!circuits.has(object.circuit))errors.push(`${object.id}: circuit ${object.circuit} does not exist.`);
+  errors.push(...architectureErrors(doc));
+  for(const wire of doc.wires||[])errors.push(...routeGeometryErrors(doc,wire).map(message=>`${wire.id}: ${message}`));
   return { ok: errors.length === 0, errors, warnings, assessed: ["document-structure", "unique-ids", "reference-uniqueness", "system-separation", "basic-title-block-fields"], notAssessed: ["DIN EN 61082-1 clause-level document conformity", "IEC 60617 licensed symbol identity", "DIN EN IEC 81346 reference-designation profile", "DIN VDE 0100 installation design", "protective-device coordination", "voltage-drop limits"] };
 }
 
 export function routeBuildingConnection(start, end) {
-  if (![start?.x, start?.y, end?.x, end?.y].every(Number.isInteger)) throw new TypeError("Connection endpoints must be integer grid positions.");
+  if (![start?.x, start?.y, end?.x, end?.y].every(Number.isFinite)) throw new TypeError("Connection endpoints must be finite grid positions.");
   if (start.x === end.x || start.y === end.y) return [start, end];
   const bendX = Math.round((start.x + end.x) / 2);
   return [start, { x: bendX, y: start.y }, { x: bendX, y: end.y }, end];
