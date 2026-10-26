@@ -73,7 +73,13 @@ html.vp-electrical-template body>.hb-platform-bar,html.vp-electrical-template bo
 
 /* Breadboard supplies its own complete PLC-reference frame. */
 html[data-vp-workspace="breadboard"],html[data-vp-workspace="breadboard"] body{width:100%;height:100dvh;min-height:0;margin:0!important;padding:0!important;overflow:hidden!important}
-html[data-vp-workspace="breadboard"] #vpSiteHeader,html[data-vp-workspace="breadboard"] #vpBottomNavigation,html[data-vp-workspace="breadboard"] #vpDevelopmentBanner,html[data-vp-workspace="breadboard"] #vpDevelopmentFooter,html[data-vp-workspace="breadboard"] #vpBotLauncher{display:none!important}
+html[data-vp-workspace="breadboard"] #vpSiteHeader,html[data-vp-workspace="breadboard"] #vpBottomNavigation,html[data-vp-workspace="breadboard"] #vpDevelopmentBanner,html[data-vp-workspace="breadboard"] #vpDevelopmentFooter{display:none!important}
 html[data-vp-workspace="breadboard"] #vpWorkspace{position:fixed!important;inset:0!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
 html[data-vp-workspace="breadboard"] #vpWorkspace .vp-workspace-panel,html[data-vp-workspace="breadboard"] #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
 html[data-vp-workspace="breadboard"] #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}
+
+/* Outrank the production-wide experience shell on Breadboard only. */
+html[data-vp-workspace="breadboard"] body.hb-unified #vpSiteHeader,html[data-vp-workspace="breadboard"] body.hb-unified #vpBottomNavigation,html[data-vp-workspace="breadboard"] body.hb-unified .hb-platform-bar,html[data-vp-workspace="breadboard"] #hbBotLauncher{display:none!important}
+html[data-vp-workspace="breadboard"] body.hb-unified #vpBotLauncher{display:grid!important;position:fixed!important;inset:auto 22px calc(82px + env(safe-area-inset-bottom)) auto!important;width:58px!important;height:58px!important;padding:0!important;border-radius:50%!important;font:700 17px monospace!important;z-index:100000!important}
+html[data-vp-workspace="breadboard"] #vpBotWindow{position:fixed!important;right:22px!important;bottom:calc(154px + env(safe-area-inset-bottom))!important;z-index:100001!important}
+@media(max-width:760px){html[data-vp-workspace="breadboard"] body.hb-unified #vpBotLauncher{right:14px!important;bottom:calc(78px + env(safe-area-inset-bottom))!important;width:54px!important;height:54px!important}}
