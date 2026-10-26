@@ -70,3 +70,10 @@ html.vp-electrical-template #vpBottomNavigation{position:fixed!important;inset:a
 html.vp-electrical-template #vpBottomNavigation .vp-bottom-dev-note{display:none!important}
 
 html.vp-electrical-template body>.hb-platform-bar,html.vp-electrical-template body>.hb-platform-footer{display:none!important}
+
+/* Breadboard supplies its own complete PLC-reference frame. */
+html[data-vp-workspace="breadboard"],html[data-vp-workspace="breadboard"] body{width:100%;height:100dvh;min-height:0;margin:0!important;padding:0!important;overflow:hidden!important}
+html[data-vp-workspace="breadboard"] #vpSiteHeader,html[data-vp-workspace="breadboard"] #vpBottomNavigation,html[data-vp-workspace="breadboard"] #vpDevelopmentBanner,html[data-vp-workspace="breadboard"] #vpDevelopmentFooter,html[data-vp-workspace="breadboard"] #vpBotLauncher{display:none!important}
+html[data-vp-workspace="breadboard"] #vpWorkspace{position:fixed!important;inset:0!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+html[data-vp-workspace="breadboard"] #vpWorkspace .vp-workspace-panel,html[data-vp-workspace="breadboard"] #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
+html[data-vp-workspace="breadboard"] #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}

@@ -76,6 +76,13 @@ Properties now owns a permanently reserved right-hand column. Its header and sho
 
 Validation for the Properties fix: production build and 54 tests passed. Browser measurements at both 100% and 25% confirmed identical canvas bounds, ruler coverage, camera translation, title-block bounds and toggle position before hiding, while hidden and after reopening.
 
+### Breadboard workspace follows the completed PLC reference
+Breadboard now owns a single top menu row, a single bottom navigation/simulation row, a left tool rail and a permanently reserved Properties column. The library overlays the canvas; hiding Properties leaves its header toggle accessible and does not change the canvas dimensions. Examples and blank-project actions live inside Project. Existing breadboard components, tie-point snapping, wiring, probe, firmware, serial, PCB, scope and solver handlers are retained; scope lives inside Properties.
+
+The canvas uses the available viewport with independent horizontal/vertical scrolling and panning, 0–10000 / A–ZZ rulers, and zoom from 25% to 800%. Ruler text stays readable while divisions follow the workspace scale. Title fields and status stay anchored to the viewport; title metadata is included in project exports. The default view shows the physical board at 100%. PLC and ElectCAD source are unchanged.
+
+Validation: 51 Breadboard tests and 27 workspace integration tests passed. Browser checks confirmed Project examples run a wired LED circuit and that Properties toggling preserves canvas/title/ruler geometry at 100% and 25%.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
