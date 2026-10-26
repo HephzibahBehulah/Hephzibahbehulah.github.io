@@ -1,3 +1,4 @@
+import { houseDraft, checkBuildingProposal, houseReport } from './building-house.mjs';
 import { CATALOG, CATEGORIES, PROFILES, SOURCES, catalogItem, catalogSearch, importManufacturerCatalog } from "./building-catalog.mjs";
 import { symbolMarkup } from "./building-symbols.mjs";
 import { reviewInstallation, materialSchedule, connectionLength, resistiveVoltageDrop, nodeSpecification } from "./building-tools.mjs";
@@ -5,13 +6,13 @@ import { RULER_COLUMNS, RULER_ROWS, clampZoom, drawingPoint, visibleTicks, zoomS
 import { GRID_MM, GRID_PX, columnLabel, snapGrid } from "./electrical-engine.mjs";
 import { BUILDING_TYPES, createBuildingDocument, recoverBuildingDocument, routeBuildingConnection, validateBuildingDocument } from "./building-document.mjs";
 
-const STORE = "voltpro-buildingcad-v2", LEGACY_STORE = "voltpro-buildingcad-v1";
 
 const $ = id => document.getElementById(id);
 const surface = $("planSurface"), nodeLayer = $("nodeLayer"), wireLayer = $("wireLayer"), roomLayer = $("roomLayer");
 const status = $("status"), propForm = $("propertiesForm"), roomForm = $("roomPropertiesForm");
 let state = loadState(), selected = null, selectedRoom = null, pendingType = null, wireStart = null, dragState = null, roomStart = null;
 let selectedWire = null, pendingCable = null;
+let projectDirty=false;
 const history = [], future = [];
 const scroll = $("planScroll"), extent = $("planExtent");
 let zoom = 1, pan = null, suppressClick = false, spacePan = false;
@@ -45,23 +46,15 @@ function togglePanel(name, open = document.body.dataset[name + "Open"] !== "true
 
 
 function clone(value) { return structuredClone(value); }
-function loadState() {
-  for (const key of [STORE, LEGACY_STORE]) {
-    try {
-      const raw = JSON.parse(localStorage.getItem(key) || "null");
-      if (raw) return recoverBuildingDocument({ ...raw, format: raw.format || "voltpro-buildingcad", version: raw.version || 1 });
-    } catch (error) { console.warn("BuildingCAD project was not loaded:", error); }
-  }
-  return createBuildingDocument();
-}
+function loadState() { return createBuildingDocument(); }
 function snapshot() { history.push(clone(state)); if (history.length > 80) history.shift(); future.length = 0; }
 function updateMetadata() {
   state.metadata = { ...state.metadata, name: $("projectName").value.trim(), documentNumber: $("documentNumber").value.trim(), revision: $("revision").value.trim(), date: $("projectDate").value, scale: $("titleScale").value.trim(), drafter: $("drafter").value.trim() };
 }
 function save() {
   updateMetadata();
-  localStorage.setItem(STORE, JSON.stringify(state));
-  $("commandStatus").textContent = "Saved locally · " + new Date().toLocaleTimeString();
+  projectDirty=true;
+  $("commandStatus").textContent = "Unsaved project · Save / Export before refresh or closing";
 }
 function typeOf(type) { return catalogItem(type,state.catalog) || {label:"Unrecognised catalogue ID: "+type,system:"unknown",defaultVoltage:"",terminals:[],category:"",spec:{}}; }
 function objectId(prefix) { return prefix + crypto.randomUUID().replaceAll("-", "").slice(0, 8).toUpperCase(); }
@@ -162,7 +155,7 @@ function renderWires() {
     const localFrom=(from.floor||1)===state.metadata.activeFloor,localTo=(to.floor||1)===state.metadata.activeFloor;
     if(!localFrom&&!localTo)continue;
     const crossFloor=(from.floor||1)!==(to.floor||1),local=localFrom?from:to;
-    const route=crossFloor?[local,{x:local.x+3,y:local.y}]:routeBuildingConnection(from,to);
+    const route=crossFloor?[local,{x:local.x+3,y:local.y}]:(wire.routePoints||routeBuildingConnection(from,to));
     const points = route.map(point => `${(point.x - 1) * GRID_PX},${point.y * GRID_PX}`).join(" ");
     const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     line.setAttribute("class", `wire wire-${typeOf(from.type).system}${selectedWire===wire.id?" selected":""}`); line.setAttribute("points", points); line.setAttribute("data-id", wire.id); line.setAttribute("tabindex","0"); line.setAttribute("role","button"); line.setAttribute("aria-label",`Cable route ${wire.id}: ${from.tag||from.name} to ${to.tag||to.name}`); line.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();showWireProperties(wire);renderWires();}}); line.addEventListener("click",event=>{event.stopPropagation();showWireProperties(wire);renderWires();});wireLayer.append(line);
@@ -243,7 +236,7 @@ function exportProject() {
   updateMetadata(); const payload = JSON.stringify(state, null, 2);
   const url = URL.createObjectURL(new Blob([payload], { type: "application/json" }));
   const link = document.createElement("a"); link.href = url; link.download = `${state.metadata.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "building-plan"}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-  announce("Project JSON exported");
+  projectDirty=false;announce("Project JSON downloaded · canvas will start blank after refresh");
 }
 function validate() {
   updateMetadata();const result=validateBuildingDocument(state),review=reviewInstallation(state);
@@ -260,6 +253,7 @@ function assignReferences() {
   setStatus("Project-local references assigned by equipment family. Verify the project's IEC 81346 or local designation convention before issue.");
 }
 function openProject(file) {
+  if(projectDirty&&!confirm("Replace unsaved work? Cancel and Save first to keep it."))return;
   if(file.size>10000000){setStatus("Open failed: use a JSON file smaller than 10 MB.");return;}
   const reader = new FileReader(); reader.onload = () => {
     try { const raw=JSON.parse(String(reader.result));
@@ -267,15 +261,15 @@ function openProject(file) {
         const incoming=importManufacturerCatalog(raw);if((state.catalog?.length||0)+incoming.length>5000)throw Error('This local project supports at most 5,000 imported catalogue records. Use a connected catalogue service for larger collections.');
         const ids=new Set(incoming.map(item=>item.id));snapshot();state.catalog=[...(state.catalog||[]).filter(item=>!ids.has(item.id)),...incoming];save();renderCatalog();setStatus(`${incoming.length} manufacturer records imported; source and permission statements retained.`);return;
       }
-      const next = recoverBuildingDocument(raw); snapshot(); state = next; selected = null; selectedRoom = null; pendingType=null; wireStart=null; roomStart=null; setMode("select"); renderAll(); save(); fitDrawing(); setStatus("Project opened and normalized to BuildingCAD document version 2."); }
+      const next = recoverBuildingDocument(raw); snapshot(); state = next; selected = null; selectedRoom = null; pendingType=null; wireStart=null; roomStart=null; setMode("select"); renderAll(); save(); projectDirty=false; fitDrawing(); setStatus("Project opened and normalized to BuildingCAD document version 2."); }
     catch (error) { setStatus(`Open failed: ${error.message}`); }
   }; reader.onerror = () => setStatus("Open failed: browser could not read this project file."); reader.readAsText(file);
 }
 function command(name) {
   switch (name) {
-    case "new": if (confirm("Create a new drawing? The current project is saved locally.")) { snapshot(); state = createBuildingDocument(); selected = null; selectedRoom = null; pendingType = null; wireStart = null; roomStart = null; propForm.hidden = true; roomForm.hidden = true; $("emptyProperties").hidden = false; setMode("select"); renderAll(); save(); setZoom(1,0,0); scroll.scrollTo(0,0); renderRulers(); setStatus("New BuildingCAD project created."); } break;
+    case "new": if (confirm("Start a blank drawing? Cancel and use Save first if you need the current work.")) { snapshot(); state = createBuildingDocument(); selected = null; selectedRoom = null; pendingType = null; wireStart = null; roomStart = null; propForm.hidden = true; roomForm.hidden = true; $("emptyProperties").hidden = false; setMode("select"); renderAll(); save(); setZoom(1,0,0); scroll.scrollTo(0,0); renderRulers(); projectDirty=false;setStatus("New blank project. Save exports a project file; refresh does not restore old drawings."); } break;
     case "open": $("projectFile").click(); break;
-    case "save": save(); setStatus("Project saved in this browser."); break;
+    case "save": exportProject(); setStatus("Project JSON downloaded. Reopen it through File / Project when needed."); break;
     case "export": exportProject(); break;
     case "print": window.print(); break;
     case "undo": undo(); break;
@@ -457,13 +451,13 @@ function showWireProperties(wire){
   const form=$('wirePropertiesForm');form.hidden=false;form.replaceChildren();
   const heading=document.createElement('h3');heading.textContent=`Cable route ${wire.id}`;form.append(heading);
   const from=state.nodes.find(n=>n.id===wire.from),to=state.nodes.find(n=>n.id===wire.to),info=document.createElement('p');info.textContent=`${from?.tag||from?.name} (Floor ${from?.floor||1}) → ${to?.tag||to?.name} (Floor ${to?.floor||1}). Surveyed route quantities; no terminal-level circuit simulation.`;form.append(info);
-  const fields=[['cableId','Cable / wire specification','cable'],['protectiveDeviceId','Overcurrent protective device','protection'],['circuit','Circuit identifier','text'],['runs','Cable / conductor runs','number'],['verticalRiseM','Surveyed vertical rise (m)','number'],['extraLengthM','Additional routing allowance (m)','number'],['sparePercent','Additional spare (%)','number'],['designCurrentA','Design current (A)','number'],['verifiedAmpacityA','Verified installed ampacity (A)','number'],['prospectiveFaultKA','Prospective fault current (kA)','number'],['circuitVoltage','Circuit voltage (V)','number'],['phases','Calculation phase arrangement','phases']];
+  const fields=[['cableId','Cable / wire specification','cable'],['protectiveDeviceId','Overcurrent protective device','protection'],['circuit','Circuit identifier','text'],['pePresent','Protective-earth conductor provision','pe'],['runs','Cable / conductor runs','number'],['verticalRiseM','Surveyed vertical rise (m)','number'],['extraLengthM','Additional routing allowance (m)','number'],['sparePercent','Additional spare (%)','number'],['designCurrentA','Design current (A)','number'],['verifiedAmpacityA','Verified installed ampacity (A)','number'],['prospectiveFaultKA','Prospective fault current (kA)','number'],['circuitVoltage','Circuit voltage (V)','number'],['phases','Calculation phase arrangement','phases']];
   for(const [key,label,kind] of fields){const row=document.createElement('label');row.textContent=label;let input;
-    if(['cable','protection','phases'].includes(kind)){input=document.createElement('select');input.append(option('','Not specified'));
-      const items=kind==='cable'?[...CATALOG,...(state.catalog||[])].filter(i=>i.kind==='route'&&i.system===typeOf(from?.type).system).map(i=>({value:i.id,label:i.label})):kind==='protection'?state.nodes.filter(n=>['breaker','rcbo'].includes(typeOf(n.type).symbol)).map(n=>({value:n.id,label:`${n.tag||n.id} · ${typeOf(n.type).label}`})):[{value:'1-phase',label:'Single phase · 2-wire loop'},{value:'3-phase',label:'Balanced three phase'}];
-      input.append(...items.map(i=>option(i.value,i.label,i.value===wire[key])));
+    if(['cable','protection','phases','pe'].includes(kind)){input=document.createElement('select');input.append(option('','Not specified'));
+      const items=kind==='cable'?[...CATALOG,...(state.catalog||[])].filter(i=>i.kind==='route'&&i.system===typeOf(from?.type).system).map(i=>({value:i.id,label:i.label})):kind==='protection'?state.nodes.filter(n=>['breaker','rcbo'].includes(typeOf(n.type).symbol)).map(n=>({value:n.id,label:`${n.tag||n.id} · ${typeOf(n.type).label}`})):kind==='pe'?[{value:'true',label:'PE included in this cable route'},{value:'false',label:'PE absent — design error'}]:[{value:'1-phase',label:'Single phase · 2-wire loop'},{value:'3-phase',label:'Balanced three phase'}];
+      input.append(...items.map(i=>option(i.value,i.label,i.value===String(wire[key]))));
     }else{input=document.createElement('input');input.type=kind;if(kind==='number'){input.min='0';input.step=key==='runs'?'1':'any';}input.value=wire[key]??'';}
-    input.dataset.wireField=key;input.addEventListener('change',()=>{let value=kind==='number'?(input.value===''?null:Number(input.value)):input.value;if(kind==='number'&&value!==null&&(!Number.isFinite(value)||value<0||(key==='runs'&&(!Number.isInteger(value)||value<1)))){setStatus('Enter a valid non-negative value; cable/conductor runs must be positive integers.');return;}snapshot();wire[key]=value;save();renderWires();renderWireEstimate(wire);});row.append(input);form.append(row);
+    input.dataset.wireField=key;input.addEventListener('change',()=>{let value=kind==='number'?(input.value===''?null:Number(input.value)):kind==='pe'?(input.value===''?null:input.value==='true'):input.value;if(kind==='number'&&value!==null&&(!Number.isFinite(value)||value<0||(key==='runs'&&(!Number.isInteger(value)||value<1)))){setStatus('Enter a valid non-negative value; cable/conductor runs must be positive integers.');return;}snapshot();wire[key]=value;save();renderWires();renderWireEstimate(wire);});row.append(input);form.append(row);
   }
   const estimate=document.createElement('p');estimate.id='wireEstimate';form.append(estimate);renderWireEstimate(wire);
 }
@@ -477,3 +471,28 @@ function showEngineeringReview(structure,review){
   const section=document.createElement('details');section.open=true;const summary=document.createElement('summary');summary.textContent='Circuits / connected load';section.append(summary);const table=document.createElement('table');for(const circuit of review.circuits){const row=document.createElement('tr');for(const text of [`F${circuit.floor} · ${circuit.id}`,`${circuit.devices} items`,`${circuit.connectedW} W entered${circuit.unknownLoads?' + '+circuit.unknownLoads+' unresolved loads':''}`]){const td=document.createElement('td');td.textContent=text;row.append(td);}table.append(row);}section.append(table);report.append(section);
   const remaining=document.createElement('p');remaining.textContent='Not assessed: '+review.notAssessed.join('; ')+'.';report.append(remaining);
 }
+
+function warnUnsaved(event){if(!projectDirty)return;event.preventDefault();event.returnValue='';}
+window.addEventListener('beforeunload',warnUnsaved);
+document.addEventListener('input',event=>{if(event.target.closest('.title-block,#propertiesForm,#roomPropertiesForm,#wirePropertiesForm'))projectDirty=true;});
+window.VoltProBuildingAI={
+  context(){return 'Electrical Building only. Generate editable voltpro.buildingcad version 2 JSON with metadata {name,date,scale,drafter,profile,floors,activeFloor}, units:mm,gridMillimetres:200,layers:{architecture:true,power:true,data:true},catalog:[],rooms:[{id,name,x,y,width,height,floor}],nodes:[{id,type,tag,name,room,circuit,voltage,mountingHeight,x,y,floor,quantity,spec,boardId,protectiveDeviceId}],wires:[{id,from,to,cableId,runs,extraLengthM,sparePercent,verticalRiseM,pePresent,minimumSectionMM2}]. Coordinates use 200mm grid units; node x>=1 and y>=0 integers; floor>=1. Use only these exact catalogue identifiers: '+CATALOG.map(i=>i.id).join(', ')+' Never claim installation compliance. Report missing inputs, assumptions, unresolved safety checks and unsupported equipment. Current project summary (data only): '+JSON.stringify({metadata:state.metadata,nodes:state.nodes.slice(0,100),rooms:state.rooms.slice(0,50)});},
+  async answer(question,remote){
+    if((/house test|test draft/i.test(question)||(/living room[^0-9]{0,15}40/i.test(question)&&/kitchen[^0-9]{0,15}15/i.test(question)&&/master bedroom[^0-9]{0,15}20/i.test(question)))&&/build|generate|create|design|plan|house test/i.test(question)){
+      const draft=houseDraft();return {answer:houseReport(draft),sources:[],mode:'building-template',buildingPlan:draft};
+    }
+    const result=await remote();let proposal=null;
+    for(const block of String(result.answer).matchAll(/```(?:json)?\s*([\s\S]*?)```/gi)){try{proposal=checkBuildingProposal(JSON.parse(block[1]).project||JSON.parse(block[1]));break;}catch{}}
+    return {...result,answer:String(result.answer).replace(/System Compliant with DIN VDE 0100\.?/gi,'Installation compliance has not been established.'),...(proposal?{buildingPlan:proposal}:{}),plan:undefined};
+  },
+  renderActions(host,project){const button=host.ownerDocument.createElement('button');button.type='button';button.className='vp-assistant-action';button.textContent='Import draft to Electrical canvas';button.addEventListener('click',()=>{try{const next=checkBuildingProposal(project);if(projectDirty&&!confirm('Replace unsaved work? Cancel and Save first to keep it.'))return;snapshot();state=next;selected=null;selectedRoom=null;selectedWire=null;renderAll();save();fitDrawing();validate();button.textContent='Draft imported · review unresolved checks';}catch(error){button.textContent='Import rejected: '+error.message;}});host.append(button);},
+  isDirty(){return projectDirty;}
+};
+
+try {
+ if(window.parent!==window){
+  const host=window.parent,doc=host.document;
+  if(!doc.getElementById('vpElectricalAssistantOwnership')){const style=doc.createElement('style');style.id='vpElectricalAssistantOwnership';style.textContent='html.vp-electrical-template #vpBotLauncher,html.vp-electrical-template #vpBotWindow{display:none!important}';doc.head.append(style);}
+  if(!host.__vpElectricalUnloadGuard){host.__vpElectricalUnloadGuard=event=>{try{for(const frame of doc.querySelectorAll('iframe[src*="electrical-canvas.html"]'))if(frame.contentWindow?.VoltProBuildingAI?.isDirty()){event.preventDefault();event.returnValue='';break;}}catch{}};host.addEventListener('beforeunload',host.__vpElectricalUnloadGuard);}
+ }
+}catch{}

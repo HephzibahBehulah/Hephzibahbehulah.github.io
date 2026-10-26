@@ -74,6 +74,8 @@ for(const [partNumber,cores,sectionMM2] of [['16000003',3,1.5],['16000023',5,1.5
  const base=records.find(r=>r.id===`cable-NYM-J-${cores}-${sectionMM2}`);
  add(`lapp-${partNumber}`,`LAPP NYM-J ${cores}G${String(sectionMM2).replace('.',',')} · ${partNumber}`,'cables','cable',{...base,id:`lapp-${partNumber}`,type:`lapp-${partNumber}`,label:`LAPP NYM-J ${cores}G${String(sectionMM2).replace('.',',')} · ${partNumber}`,manufacturer:'LAPP',partNumber,sourceUrl:SOURCES.lapp.url,sourceKeys:['lapp'],provenance:'Manufacturer-referenced · identity, cores and cross-section checked 2026-10-25; site suitability unverified'});
 }
+family('loads','load','heated-towel-rail','Electric heated towel rail · bathroom fixed connection',{reference:'HTR',spec:{loadW:null},terminals:['L','N','PE']});
+family('distribution','board','meter-cabinet','Zählerschrank · meter cabinet assembly · utility specification required',{reference:'ZK',spec:{ratingA:null},defaultVoltage:'400 V AC',terminals:['L1','L2','L3','N','PE']});
 export const CATALOG = Object.freeze(records);
 const byId=new Map(CATALOG.map(item=>[item.id,item]));
 export function catalogItem(id,custom=[]) {return byId.get(id)||custom.find(item=>item.id===id)||null;}

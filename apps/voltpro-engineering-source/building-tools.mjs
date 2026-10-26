@@ -5,7 +5,8 @@ export function connectionLength(doc,wire) {
  if(!from||!to)return null;
  const crossFloor=(from.floor||1)!==(to.floor||1);
  if(crossFloor&&!(Number.isFinite(wire.verticalRiseM)&&wire.verticalRiseM>0))return null;
- const plan=(Math.abs(from.x-to.x)+Math.abs(from.y-to.y))*doc.gridMillimetres/1000;
+ const points=wire.routePoints||[from,to];
+ const plan=points.slice(1).reduce((length,p,i)=>length+Math.abs(p.x-points[i].x)+Math.abs(p.y-points[i].y),0)*doc.gridMillimetres/1000;
  return (plan+(crossFloor?wire.verticalRiseM:0)+(Number(wire.extraLengthM)||0))*(1+(Number(wire.sparePercent)||0)/100);
 }
 export function materialSchedule(doc) {
@@ -36,7 +37,7 @@ export function reviewInstallation(doc) {
   if(node.boardId){const board=doc.nodes.find(n=>n.id===node.boardId);if(!board||catalogItem(board.type,doc.catalog)?.category!=='distribution'||board.id===node.id)issue('board',node.id,'Board assignment does not identify a separate distribution board.','error');}
   const protection=doc.nodes.find(n=>n.id===node.protectiveDeviceId),ps=protection?nodeSpecification(protection,doc):{};
   if(node.protectiveDeviceId&&(!protection||catalogItem(protection.type,doc.catalog)?.category!=='protection'||protection.id===node.id))issue('protection',node.id,'Protective-device assignment is invalid.','error');
-  if(doc.metadata.profile==='DE'&&(item.category==='sockets'||item.category==='lighting')){
+  if(doc.metadata.profile==='DE'&&(item.category==='sockets'||item.category==='lighting'||(/bathroom|badezimmer/i.test(node.room||'')&&['loads','ventilation'].includes(item.category)))){
     if(!protection||!(ps.residualMA>0&&ps.residualMA<=30))issue('DE-RCD',node.id,'German residential/general-use screening: document upstream ≤30 mA RCD protection. Scope and exceptions require DIN VDE 0100-410 review.');
   }
   if(item.category==='distribution'&&item.spec.modules){const allocated=doc.nodes.filter(n=>n.boardId===node.id).reduce((sum,n)=>sum+(Number(n.spec?.modulesUsed)||0),0);if(allocated>item.spec.modules)issue('board-capacity',node.id,`Entered module allocation ${allocated} exceeds ${item.spec.modules} modules.`,'error');}
@@ -51,6 +52,8 @@ export function reviewInstallation(doc) {
   const protection=doc.nodes.find(n=>n.id===wire.protectiveDeviceId),ps=protection?nodeSpecification(protection,doc):{};
   if(wire.protectiveDeviceId&&(!protection||!['breaker','rcbo'].includes(catalogItem(protection.type,doc.catalog)?.symbol)))issue('route-protection',wire.id,'Route protective device is missing or invalid.','error');
   if(cable?.system==='power'){
+   if(wire.pePresent!==true)issue('missing-PE',wire.id,'Protective-earth conductor is missing or not documented.','error');
+   if(wire.minimumSectionMM2>0&&cable.spec.sectionMM2<wire.minimumSectionMM2)issue('section-constraint',wire.id,'Cable cross-section is below the explicit project design requirement; thermal sizing is still required.','error');
    if(!(wire.verifiedAmpacityA>0))issue('ampacity',wire.id,'Enter ampacity verified for installation method, temperature, grouping and terminations. Cross-section alone does not establish ampacity.');
    if(protection&&catalogItem(protection.type,doc.catalog)?.symbol==='rcd')issue('RCCB-overcurrent',wire.id,'An RCCB does not provide overcurrent protection. Assign an MCB, MCCB, ACB or RCBO.','error');
    if(wire.verifiedAmpacityA>0&&ps.ratingA>wire.verifiedAmpacityA)issue('overcurrent',wire.id,'Selected protective-device rating exceeds the entered verified cable ampacity.','error');
