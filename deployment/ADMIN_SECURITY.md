@@ -19,7 +19,7 @@ The new report endpoint requires the configured owner and the dedicated monitori
 
 The report compares the deployed commit with GitHub main and the latest 20 production workflow runs. A deployment without a matching successful run is reported as unverified/in progress rather than malicious. Branch protection is reported separately.
 
-Nine native engineering assets are hashed against GitHub source at the deployed commit and the deployment manifest. Built PLC and ElectCAD bundles are checked against the deployment manifest, which is not an independent forensic baseline. Checks have bounded response sizes and timeouts. A mismatch is a review signal and can also result from a release race or valid rollback.
+Native engineering, main-site and shared-interface assets are hashed against GitHub source at the deployed commit and the deployment manifest. Built PLC, ElectCAD and Cyber application bundles are checked against the deployment manifest, which is not an independent forensic baseline. On-demand checks read the deployed asset binding; Cloudflare does not reliably support requesting a Worker’s own public routes from that Worker. External GitHub checks verify public HTTP delivery. Checks have bounded response sizes and timeouts. A mismatch is a review signal and can also result from a release race or valid rollback.
 
 GitHub production workflows generate a JSON report checking the expected commit, seven shell routes, seven embedded applications, linked resources, selected public code hashes, unauthenticated admin boundaries and public isolation. Reports are uploaded as `production-security-report` artifacts with a requested 90-day retention. Repository/provider retention limits apply. Reports contain no customer data or authentication tokens.
 

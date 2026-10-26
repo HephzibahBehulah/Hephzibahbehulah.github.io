@@ -32,14 +32,14 @@ export function openSecurity(){
  const controls=make('p');controls.append(refresh,document.createTextNode(' '),download,document.createTextNode(' '),signInLink('Sign out / reauthenticate'));
  const body=make('section');dialog.append(header,status,controls,body);
  async function load(){
-  if(busy)return;busy=true;refresh.disabled=true;status.textContent='Checking source, deployments, and selected public assets…';
+  if(busy)return;busy=true;refresh.disabled=true;status.textContent='Checking source, deployments, and deployed code…';
   try{const data=await get('');if(!dialog.isConnected)return;report=data;body.replaceChildren();download.disabled=false;
    body.append(make('h3','Verified session'),make('p',data.session.email+' · '+data.session.role+' · '+data.session.provider),make('p','Expires: '+(data.session.expiresAt?new Date(data.session.expiresAt).toLocaleString():'Unavailable')),make('p',data.session.mfa));
    body.append(make('h3','Current release'),make('p','Deployed commit: '+(data.build?.commitHash||'Unavailable')),make('p','Main branch: '+(data.source?.mainCommit||'Unverified')),make('p',data.verification||'Deployment verification unavailable'));
    body.append(make('h3','Review signals'));
    if(!data.signals.length)body.append(make('p','No issues found in these checks. This is not a guarantee that the website is uncompromised.'));
    const list=make('ul');for(const item of data.signals)list.append(make('li',item.level.toUpperCase()+': '+item.message));body.append(list);
-   body.append(make('h3','Selected asset integrity'),table(['Public asset','Result','Expected SHA-256'],data.integrity.map(x=>[x.path,x.status,x.expected||x.reason])));
+   body.append(make('h3','Deployed code integrity'),make('p','These on-demand hashes inspect the current asset binding. The external upgrade report verifies public HTTP delivery.'),table(['Asset address','Result','Expected SHA-256'],data.integrity.map(x=>[x.publicUrl||x.path,x.status,x.expected||x.reason])));
    body.append(make('h3','Deployment history & upgrade reports'),make('p','Open a run to review its production-security-report artifact. Older runs may predate this report. Failed or in-progress runs are not proof of malicious activity.'));
    body.append(table(['Created','Commit','Actor','Result','Evidence'],data.releases.map(r=>{const a=make('a','Open workflow / reports');a.href=r.url;a.target='_blank';a.rel='noopener noreferrer';return [r.createdAt,r.commit,r.actor,r.result||r.status,a];})));
    body.append(make('h3','Monitoring coverage'));const coverage=make('ul');for(const line of data.coverage)coverage.append(make('li',line));body.append(coverage);

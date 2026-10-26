@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 import {pathToFileURL} from 'node:url';
 import {verifyDeployment} from './verify-deployment.mjs';
-import {INTEGRITY_ASSETS} from './admin-security.mjs';
+import {INTEGRITY_ASSETS,EXTRA_ASSET_TARGETS} from './admin-security.mjs';
 export async function verifyAdminDeployment({commit=process.env.GITHUB_SHA,fetcher=fetch,assetDirectory='dist-platform'}={}){
  const report={schemaVersion:1,commit,observedAt:new Date().toISOString(),workflowRun:process.env.GITHUB_RUN_ID||null,actor:process.env.GITHUB_ACTOR||null,checks:[],coverage:'Public routes, selected code hashes, and unauthenticated admin boundaries. Authenticated provider policies and private account records are not inspected by this job.'};
  const check=async(name,fn)=>{try{await fn();report.checks.push({name,result:'passed'});}catch(e){report.checks.push({name,result:'failed',message:String(e.message).slice(0,600)});}};
@@ -16,7 +16,7 @@ export async function verifyAdminDeployment({commit=process.env.GITHUB_SHA,fetch
  });
  for(const host of ['engineering.','cyber.',''])for(const path of ['/api/admin/security','/_hb/admin-security-ui.js'])await check('Public isolation '+host+path,async()=>{const r=await fetcher('https://'+host+'hephzibahbehulah.com'+path,{redirect:'manual',signal:AbortSignal.timeout(15000)});assert.equal(r.status,404);});
  let manifest;await check('Built release manifest available',async()=>{manifest=JSON.parse(fs.readFileSync(assetDirectory+'/release-manifest.json','utf8'));assert.ok(Object.keys(manifest.assets).length>0);});
- if(manifest)await Promise.all(INTEGRITY_ASSETS.map(path=>check('Public code hash '+path,async()=>{const expected=manifest.assets['_apps/engineering/'+path];assert.match(expected||'',/^[a-f0-9]{64}$/);const r=await fetcher('https://engineering.hephzibahbehulah.com/'+path,{cache:'no-store',redirect:'manual',signal:AbortSignal.timeout(15000)});assert.equal(r.status,200);assert.equal(crypto.createHash('sha256').update(Buffer.from(await r.arrayBuffer())).digest('hex'),expected,'Public code differs from the built release');})));
+ if(manifest)await Promise.all(INTEGRITY_ASSETS.map(path=>({path,key:'_apps/engineering/'+path,publicUrl:'https://engineering.hephzibahbehulah.com/'+path})).concat(EXTRA_ASSET_TARGETS).map(target=>check('Public code hash '+target.path,async()=>{const expected=manifest.assets[target.key];assert.match(expected||'',/^[a-f0-9]{64}$/);const r=await fetcher(target.publicUrl,{cache:'no-store',redirect:'manual',signal:AbortSignal.timeout(15000)});assert.equal(r.status,200);assert.equal(crypto.createHash('sha256').update(Buffer.from(await r.arrayBuffer())).digest('hex'),expected,'Public code differs from the built release');})));
  report.result=report.checks.every(c=>c.result==='passed')?'passed':'failed';return report;
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
