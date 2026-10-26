@@ -1,5 +1,5 @@
 export const RULER_COLUMNS = 10001, RULER_ROWS = 702;
-export const clampZoom = value => Math.max(.25, Math.min(2.5, value));
+export const clampZoom = value => Math.max(.1, Math.min(2.5, value));
 export function drawingPoint(clientX, clientY, rect, zoom, cell = 24) {
   return { x: Math.max(1, Math.round((clientX - rect.left) / (cell * zoom)) + 1), y: Math.max(0, Math.round((clientY - rect.top) / (cell * zoom))) };
 }

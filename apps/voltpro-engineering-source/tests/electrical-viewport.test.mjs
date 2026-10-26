@@ -15,7 +15,7 @@ test('virtual rulers reach 10000 and ZZ without allocating the entire ruler',()=
 test('zoom preserves the model point under the gesture anchor and respects limits',()=>{
   const s=zoomScroll(400,300,1,2,200,100);
   assert.equal((s.left+200)/2,600);assert.equal((s.top+100)/2,400);
-  assert.equal(clampZoom(.01),.25);assert.equal(clampZoom(20),2.5);
+  assert.equal(clampZoom(.01),.1);assert.equal(clampZoom(20),2.5);
 });
 test('expanded drawing preserves imported projects beyond the former 80 by 42 boundary',()=>{
   const doc=createBuildingDocument({name:'Imported title',documentNumber:'D-42',drafter:'Tester'});

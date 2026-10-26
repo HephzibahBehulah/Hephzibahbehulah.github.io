@@ -39,6 +39,8 @@ export function recoverBuildingDocument(raw) {
   if(raw.catalog!==undefined&&!Array.isArray(raw.catalog))throw new TypeError('Project catalogue must be an array.');
   doc.catalog = (raw.catalog||[]).map(item=>importManufacturerCatalog({format:'voltpro.manufacturer-catalog',version:1,rights:item.rights||'Embedded project catalogue; permission statement must be verified',items:[{...item,familyId:item.familyId}]} )[0]);
   if(doc.catalog.length>5000||new Set(doc.catalog.map(item=>item.id)).size!==doc.catalog.length)throw new RangeError('Project catalogue contains too many or duplicate records.');
+  if(raw.example!==undefined){if(!raw.example||typeof raw.example!=='object'||Array.isArray(raw.example)||JSON.stringify(raw.example).length>50000)throw new TypeError('Invalid example provenance.');doc.example=structuredClone(raw.example);}
+  if(typeof raw.metadata?.exampleId==='string')doc.metadata.exampleId=raw.metadata.exampleId.slice(0,200);
   doc.designNotes=Array.isArray(raw.designNotes)?raw.designNotes.filter(note=>typeof note==='string').slice(0,40):[];
   doc.rooms = Array.isArray(raw.rooms) ? raw.rooms.map(room=>({...room,floor:Number.isInteger(room.floor)?room.floor:1})) : [];
   for(const key of ['walls','openings','dimensions','risers','spaces','stairs','floorOutlines','circuits']){if(raw[key]!==undefined&&!Array.isArray(raw[key]))throw new TypeError(key+' must be an array.');doc[key]=raw[key]||[];}
@@ -75,9 +77,9 @@ export function validateBuildingDocument(doc) {
   const ids = new Set(), tags = new Set();
   const allowedVoltages = {
     "distribution-board": ["230 V AC", "400 V AC"],
-    "wall-switch": ["230 V AC", "24 V DC"],
+    "wall-switch": ["120 V AC", "230 V AC", "24 V DC"],
     "schuko-socket": ["230 V AC"],
-    "ceiling-light": ["230 V AC", "24 V DC"],
+    "ceiling-light": ["120 V AC", "230 V AC", "24 V DC"],
     "data-point": ["SELV / data"]
   };
   for (const room of doc?.rooms || []) {
