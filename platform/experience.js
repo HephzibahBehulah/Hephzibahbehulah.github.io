@@ -46,7 +46,7 @@ function reconcile(){
 }
 function repairEngineering(){
  // Breadboard already owns its full frame; keep the existing assistant outside the hidden global header.
- if(document.documentElement.dataset.vpWorkspace==='breadboard'||document.querySelector('.bb-workspace')){
+ if(['breadboard','oscilloscope'].includes(document.documentElement.dataset.vpWorkspace)||document.querySelector('.bb-workspace,#scopeApp')){
   const bot=document.getElementById('vpBotLauncher');if(bot){if(bot.parentElement!==document.body)document.body.append(bot);if(bot.textContent.trim()!=='AI')bot.innerHTML='<span>AI</span><i class="vp-bot-dot" aria-hidden="true"></i>';bot.setAttribute('aria-label','Open engineering circuit assistant');}
   return;
  }

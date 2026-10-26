@@ -6,6 +6,7 @@
     { path: "/electcad", title: "VoltPro ElectCAD", src: "/voltpro-electcad/?vp_embed=1" },
     { path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" },
     { path: "/breadboard", title: "VoltPro Breadboard", src: "/breadboard.html?vp_embed=1" },
+    { path: "/oscilloscope", title: "VoltPro Oscilloscope", src: "/oscilloscope.html?vp_embed=1" },
     { path: "/electrical", title: "VoltPro Electrical Building", src: "/electrical-canvas.html?vp_embed=1" }
   ];
   const rootPrefix = location.hostname.startsWith("admin.") && /^\/engineering(?:\/|$)/.test(location.pathname) ? "/engineering" : "";

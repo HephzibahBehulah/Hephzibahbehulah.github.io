@@ -89,6 +89,11 @@ The production experience layer now leaves Breadboard’s existing frame intact.
 ### Breadboard component library and search
 The left rail now exposes a labelled Components button. The library open state overrides its hidden positioning, so Components and Search both reveal the actual palette. Search expands matching categories and reports matches or an empty result. During component dragging the flyout stays open until drag-end; existing physical tie-point drop handlers are retained.
 
+### VoltPro Oscilloscope
+The engineering suite now includes `/oscilloscope`: a two-channel sampled-data instrument with simulated sources, CSV import, Auto/Normal/Single triggering, independent vertical controls, shared timebase, cursors, measured readouts, PNG/CSV export and saved settings. The default scene is 50 Hz sine/square at 100 kSa/s with 5,000 samples. Hardware requires a separately supported adapter; the browser does not directly measure external voltages. See `apps/voltpro-engineering-source/oscilloscope/README.md` for model limits and input formats.
+
+The engineering root has seven project links in the requested order. All tool bottom bars add **Oscilloscope**, without a VoltPro prefix. Existing PLC and Breadboard changes are limited to this navigation link.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.

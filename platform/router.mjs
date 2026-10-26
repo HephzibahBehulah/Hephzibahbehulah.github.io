@@ -40,7 +40,7 @@ export function resolveRoute(url){
   // Retire the old mixed-case standalone ElectCAD URL; one canonical route avoids portfolio chrome
   // being injected by older shared-header code on that alias.
   if(app==='engineering'&&!embedded&&/^\/voltpro-electcad\/?$/i.test(relative))return {kind:'redirect',privateHost,location:prefix+'/electcad'};
-  const workspaceAliases=['/simulator','/plc','/electcad','/tools','/engineering','/breadboard','/electrical','/voltpro-plc','/voltpro-plc/'];
+  const workspaceAliases=['/simulator','/plc','/electcad','/tools','/engineering','/breadboard','/oscilloscope','/electrical','/voltpro-plc','/voltpro-plc/'];
   if(app==='engineering'&&!embedded&&workspaceAliases.includes(relative.toLowerCase()))return {kind:'app',privateHost,app,prefix,base:prefix+'/',path:'/_apps/engineering/workspace-shell.html'};
   if(app==='engineering'&&/^\/voltpro-electcad(?:\/|$)/i.test(relative)){
     const suffix=relative.slice('/voltPro-ElectCAD'.length);
