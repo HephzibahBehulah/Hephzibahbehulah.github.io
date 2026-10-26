@@ -135,7 +135,8 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
         }),
         signal: AbortSignal.timeout(Math.max(8000,Math.min(120000,Number(preferences.aiTimeoutMs)||60000)))
       });
-      if (response.ok && response.body) {
+      if(response.ok&&String(response.headers?.get('content-type')||'').includes('application/json')){const result=await response.json();answer=String(result.answer||'');if(answer.trim())responseMode='ai';}
+      else if (response.ok && response.body) {
         const reader=response.body.getReader(),decoder=new TextDecoder();let buffer="";
         const handle=line=>{if(!line.startsWith("data:"))return;let event;try{event=JSON.parse(line.slice(5).trim());}catch{return;}if(event.type==="reset"){answer="";options.onChunk?.("",{reset:true});}else if(event.type==="delta"){answer+=String(event.text||"");options.onChunk?.(answer);}else if(event.type==="error")throw Error(event.error||"AI service unavailable");};
         while(true){const part=await reader.read();if(part.done)break;buffer+=decoder.decode(part.value,{stream:true});const lines=buffer.split(/\r?\n/);buffer=lines.pop()||"";for(const line of lines)handle(line);}
