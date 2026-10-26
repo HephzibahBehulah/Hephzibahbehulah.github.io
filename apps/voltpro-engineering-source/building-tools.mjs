@@ -2,12 +2,14 @@ import { catalogItem, PROFILES, CATALOG, CATEGORIES } from './building-catalog.m
 export function nodeSpecification(node,doc) {return {...catalogItem(node.type,doc.catalog)?.spec,...node.spec};}
 export function connectionLength(doc,wire) {
  const from=doc.nodes.find(n=>n.id===wire.from),to=doc.nodes.find(n=>n.id===wire.to);
- if(!from||!to)return null;
+ if(!from||!to||wire.internalBoardId)return null;
  const crossFloor=(from.floor||1)!==(to.floor||1);
  if(crossFloor&&!(Number.isFinite(wire.verticalRiseM)&&wire.verticalRiseM>0))return null;
- const points=wire.routePoints||[from,to];
- const plan=points.slice(1).reduce((length,p,i)=>length+Math.abs(p.x-points[i].x)+Math.abs(p.y-points[i].y),0)*doc.gridMillimetres/1000;
- return (plan+(crossFloor?wire.verticalRiseM:0)+(Number(wire.extraLengthM)||0))*(1+(Number(wire.sparePercent)||0)/100);
+ const segments=wire.segments||[{points:wire.routePoints||[from,to]}];
+ const plan=segments.reduce((sum,segment)=>sum+segment.points.slice(1).reduce((length,p,i)=>length+Math.abs(p.x-segment.points[i].x)+Math.abs(p.y-segment.points[i].y),0),0)*doc.gridMillimetres/1000;
+ const height=n=>n.inBoard?doc.nodes.find(b=>b.id===n.boardId)?.mountingHeight:n.mountingHeight;
+ const tails=Number.isFinite(wire.routingHeightMM)&&[height(from),height(to)].every(Number.isFinite)?(Math.abs(wire.routingHeightMM-height(from))+Math.abs(wire.routingHeightMM-height(to)))/1000:0;
+ return (plan+tails+(crossFloor?wire.verticalRiseM:0)+(Number(wire.extraLengthM)||0))*(1+(Number(wire.sparePercent)||0)/100);
 }
 export function materialSchedule(doc) {
  const rows=new Map();
@@ -15,8 +17,8 @@ export function materialSchedule(doc) {
  for(const node of doc.nodes){const item=catalogItem(node.type,doc.catalog);if(!item)continue;const floor=node.floor||1;
   collect(`${floor}:${node.type}:${JSON.stringify(node.spec||{})}`,{floor,category:CATEGORIES.find(c=>c.id===item.category)?.label||item.category,name:item.label,unit:item.unit,manufacturer:item.manufacturer||'',partNumber:item.partNumber||'',source:item.sourceUrl||'',spec:JSON.stringify(nodeSpecification(node,doc)),basis:'Placed quantity',unmeasured:false},node.quantity||1);
  }
- for(const wire of doc.wires){const cable=catalogItem(wire.cableId,doc.catalog),length=connectionLength(doc,wire),from=doc.nodes.find(n=>n.id===wire.from),floor=from?.floor||1;
-  collect(`${floor}:${wire.cableId||'unassigned'}:route:${length===null}`,{floor,category:'Cable routes',name:cable?.label||'Cable selection missing',unit:'m',manufacturer:cable?.manufacturer||'',partNumber:cable?.partNumber||'',source:cable?.sourceUrl||'',spec:JSON.stringify(cable?.spec||{}),basis:length===null?'Vertical length unresolved':'Orthogonal route + entered rise/extra + spare',unmeasured:length===null},length===null?0:length*(wire.runs||1));
+ for(const wire of doc.wires){if(wire.internalBoardId)continue;const cable=catalogItem(wire.cableId,doc.catalog),length=connectionLength(doc,wire),from=doc.nodes.find(n=>n.id===wire.from),floor=from?.floor||1;
+  collect(`${floor}:${wire.cableId||'unassigned'}:route:${length===null}`,{floor,category:'Cable routes',name:cable?.label||'Cable selection missing',unit:'m',manufacturer:cable?.manufacturer||'',partNumber:cable?.partNumber||'',source:cable?.sourceUrl||'',spec:JSON.stringify(cable?.spec||{}),basis:length===null?'Vertical length unresolved':'Orthogonal plan + declared height tails + entered rise/extra + spare',unmeasured:length===null},length===null?0:length*(wire.runs||1));
  }
  return [...rows.values()].sort((a,b)=>a.floor-b.floor||a.category.localeCompare(b.category)||a.name.localeCompare(b.name));
 }
@@ -33,6 +35,7 @@ export function reviewInstallation(doc) {
   if(item.kind==='device'&&item.category!=='earthing'&&item.category!=='containment'&&!node.circuit)issue('circuit',node.id,'Assign a circuit identifier.');
   if(node.circuit){const key=`${node.floor||1}:${node.circuit}`;const c=circuits.get(key)||{floor:node.floor||1,id:node.circuit,devices:0,connectedW:0,unknownLoads:0};c.devices++;if(['lighting','ventilation','loads','energy'].includes(item.category)){if(Number.isFinite(spec.loadW)&&spec.loadW>=0)c.connectedW+=spec.loadW*(node.quantity||1);else c.unknownLoads++;}circuits.set(key,c);}
   if(item.kind==='device'&&['lighting','ventilation','loads','energy'].includes(item.category)&&!(Number.isFinite(spec.loadW)&&spec.loadW>=0))issue('load',node.id,'Enter the equipment nameplate input power (W); no assumed load is used.');
+  if(node.wallId){const opening=(doc.openings||[]).find(o=>o.wallId===node.wallId&&node.wallOffsetMM>=o.offsetMM&&node.wallOffsetMM<=o.offsetMM+o.widthMM&&node.mountingHeight>=o.sillMM&&node.mountingHeight<=o.sillMM+o.heightMM);if(opening)issue('opening-clearance',node.id,'Mounted equipment overlaps a door/window opening at the entered mounting height.','error');}
   if(!item.manufacturer)issue('part',node.id,'Design specification: select a manufacturer part and verify its datasheet before procurement.','info');
   if(node.boardId){const board=doc.nodes.find(n=>n.id===node.boardId);if(!board||catalogItem(board.type,doc.catalog)?.category!=='distribution'||board.id===node.id)issue('board',node.id,'Board assignment does not identify a separate distribution board.','error');}
   const protection=doc.nodes.find(n=>n.id===node.protectiveDeviceId),ps=protection?nodeSpecification(protection,doc):{};
@@ -43,9 +46,12 @@ export function reviewInstallation(doc) {
   if(item.category==='distribution'&&item.spec.modules){const allocated=doc.nodes.filter(n=>n.boardId===node.id).reduce((sum,n)=>sum+(Number(n.spec?.modulesUsed)||0),0);if(allocated>item.spec.modules)issue('board-capacity',node.id,`Entered module allocation ${allocated} exceeds ${item.spec.modules} modules.`,'error');}
  }
  for(const wire of doc.wires){
+  if(wire.internalBoardId)continue;
   const cable=catalogItem(wire.cableId,doc.catalog),from=doc.nodes.find(n=>n.id===wire.from),to=doc.nodes.find(n=>n.id===wire.to),length=connectionLength(doc,wire);
   if(!cable||cable.kind!=='route')issue('cable',wire.id,'Select a named wire/cable specification for this route.');
   if(cable&&from&&cable.system!==catalogItem(from.type,doc.catalog)?.system)issue('cable-system',wire.id,'Selected cable belongs to a different power/data system.','error');
+  if(wire.routeMode==='wall'&&!Number.isFinite(wire.routingHeightMM))issue('routing-height',wire.id,'Enter the routing height before checking door/window penetrations.');
+  if(wire.routingError)issue('route-error',wire.id,wire.routingError,'error');
   if(length===null)issue('vertical-length',wire.id,'Cross-floor route: enter surveyed vertical rise; no assumed storey height is used.');
   if(!(wire.runs>=1&&Number.isInteger(wire.runs)))issue('runs',wire.id,'Parallel cable/conductor count must be a positive integer.','error');
   if([wire.extraLengthM,wire.sparePercent].some(v=>v!==undefined&&(!Number.isFinite(v)||v<0)))issue('length',wire.id,'Extra route length and spare percentage must be non-negative finite values.','error');
