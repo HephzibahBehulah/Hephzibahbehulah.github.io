@@ -62,7 +62,7 @@ jobs:
 
       - name: Deploy integrated Worker and assets to Cloudflare
         if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
-        run: npx wrangler deploy --var "DEPLOYMENT_TIMESTAMP:${DEPLOYMENT_TIMESTAMP}" --var "HB_RELEASE_COMMIT:${GITHUB_SHA}"
+        run: npx wrangler deploy --var "DEPLOYMENT_TIMESTAMP:${DEPLOYMENT_TIMESTAMP}"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

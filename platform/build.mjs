@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {verifyMainAssets} from './preflight.mjs';
 import {publishArchives} from './app-archives.mjs';
 import {copySharedAssets} from './release-assets.mjs';
+import {stampRelease} from './release-stamp.mjs';
 import {generateSeo} from './seo.mjs';
 import {injectSitewideTheme} from './sitewide-theme.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -88,6 +89,8 @@ const themeCoverage=injectSitewideTheme(destination);
 generateSeo(destination);
 for(const file of ['robots.txt','sitemap.xml','_apps/engineering/robots.txt','_apps/engineering/sitemap.xml','_apps/cyber/robots.txt','_apps/cyber/sitemap.xml'])if(!fs.existsSync(path.join(destination,file)))throw Error('Required SEO release asset is missing: '+file);
 for(const file of ['sitemap.xml','_apps/engineering/sitemap.xml','_apps/cyber/sitemap.xml'])if(!/<loc>https:\/\//.test(fs.readFileSync(path.join(destination,file),'utf8')))throw Error('Generated sitemap has no public routes: '+file);
+
+stampRelease(destination,commitHash);
 
 function inventory(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory())inventory(file);else manifest.assets[path.relative(destination,file).replaceAll('\\','/')]=crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');}}
 inventory(destination);fs.writeFileSync(path.join(destination,'release-manifest.json'),JSON.stringify(manifest,null,2));
