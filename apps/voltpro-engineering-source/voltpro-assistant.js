@@ -106,7 +106,7 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
   let externalMode = false;
   const answer = async function respond(question, options = {}) {
     const building=window.VoltProBuildingAI;
-    if(building&&!options.skipBuilding)return building.answer(question,()=>respond(question,{...options,skipBuilding:true,forceRemote:true,buildingContext:building.context()}));
+    if(building&&!options.skipBuilding)return building.answer(question,(repair)=>respond(repair?question+'\n\nCORRECTIVE GENERATION REQUEST: '+repair:question,{...options,skipBuilding:true,forceRemote:true,buildingContext:building.context()}));
     const history = options.history || [];
     const q = String(question || "").trim();
     if (!q) return { answer: "", sources: [] };
