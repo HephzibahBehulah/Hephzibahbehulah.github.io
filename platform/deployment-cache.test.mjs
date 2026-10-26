@@ -48,3 +48,19 @@ test('activation cleans owned legacy caches and leaves unrelated origin caches i
 test('worker waits by default and activates only after the update action',async()=>{
  const h=harness();assert.equal(h.events.install,undefined);let done;h.events.message({data:{type:'HB_ACTIVATE_UPDATE'},waitUntil:p=>done=p});await done;assert.deepEqual(h.calls,['skip']);
 });
+import {verifyDeployment} from './verify-deployment.mjs';
+test('production verifier checks embedded bases and hashed bundle URLs as well as shell routes',async()=>{
+ const calls=[],commit='c'.repeat(40);
+ const fetcher=async input=>{
+  const url=new URL(input);calls.push(url.pathname);
+  if(url.pathname==='/_hb/release.json')return Response.json({commitHash:commit});
+  if(url.pathname==='/__hb_missing_release_asset__.js')return new Response(null,{status:404});
+  if(['/sw.js','/service-worker.js'].includes(url.pathname))return new Response('HB_ACTIVATE_UPDATE',{headers:{'cache-control':'no-store'}});
+  if(/\.(?:js|css)$/.test(url.pathname))return new Response('asset',{headers:{'cache-control':'no-cache','content-type':'text/javascript'}});
+  return new Response(`<head><base href="/voltPro-ElectCAD/"><meta name="hb-release" content="${commit}"><script src="/_hb/release-update.js"></script><script src="assets/index-contenthash.js"></script></head>`,{headers:{'cache-control':'private, no-store','content-type':'text/html'}});
+ };
+ await verifyDeployment({commit,fetcher});assert.ok(calls.includes('/voltPro-ElectCAD/assets/index-contenthash.js'));assert.ok(calls.includes('/electrical-canvas.html'));assert.ok(calls.includes('/voltpro-plc/'));
+});
+test('production verifier fails a deployment whose live commit does not match',async()=>{
+ await assert.rejects(verifyDeployment({commit:'b'.repeat(40),fetcher:async()=>Response.json({commitHash:'a'.repeat(40)})}),/Production release must match/);
+});
