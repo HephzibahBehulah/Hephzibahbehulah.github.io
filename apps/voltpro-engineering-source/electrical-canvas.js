@@ -1,3 +1,4 @@
+import {parseBuildingBrief,generateBuildingBrief} from './building-generator.mjs';
 import { installArchitectureUI } from './building-architecture-ui.mjs';
 import { nearestWall,mountOnWall,rebuildRoomWalls,refreshAttachedGeometry,refreshWireRoutes,routeWireOnArchitecture,routeGeometryErrors,architectureErrors } from './building-architecture.mjs';
 import { circuitAssessment } from './building-circuits.mjs';
@@ -502,6 +503,7 @@ window.VoltProBuildingAI={
     if((/house test|test draft/i.test(question)||(/living room[^0-9]{0,15}40/i.test(question)&&/kitchen[^0-9]{0,15}15/i.test(question)&&/master bedroom[^0-9]{0,15}20/i.test(question)))&&/build|generate|create|design|plan|house test/i.test(question)){
       const draft=houseDraft();return {answer:houseReport(draft),sources:[],mode:'building-template',buildingPlan:draft};
     }
+    const brief=parseBuildingBrief(question);if(brief){const draft=checkBuildingProposal(generateBuildingBrief(brief));return{answer:houseReport(draft),sources:[],mode:'building-brief',buildingPlan:draft};}
     let result=await remote(),proposal=null,proposalError="";
     function parse(value){let error="";for(const block of String(value.answer).matchAll(/```(?:json)?\s*([\s\S]*?)```/gi)){try{return{proposal:checkBuildingProposal(JSON.parse(block[1]).project||JSON.parse(block[1])),error:""};}catch(cause){if(/voltpro[.]buildingcad/.test(block[1]))error=cause.message;}}return{proposal:null,error};}
     let parsed=parse(result);proposal=parsed.proposal;proposalError=parsed.error;

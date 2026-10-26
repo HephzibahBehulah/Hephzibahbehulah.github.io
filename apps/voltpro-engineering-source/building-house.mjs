@@ -71,7 +71,7 @@ export function checkBuildingProposal(raw){
  d.designNotes=Array.isArray(raw.designNotes)?raw.designNotes.filter(s=>typeof s==='string').slice(0,40):[];return d;
 }
 export function houseReport(doc){const structure=validateBuildingDocument(doc),review=reviewInstallation(doc),rows=materialSchedule(doc),circuits=circuitAssessment(doc);review.issues.push(...circuits.flatMap(c=>c.issues.map(i=>({...i,code:'circuit',object:c.id}))));return [
- 'EDITABLE TWO-STOREY HOUSE DRAFT · not an approved/compliant installation',
+ 'EDITABLE BUILDING DRAFT · '+doc.metadata.name+' · not an approved/compliant installation',
  '1. Spatial layout: '+doc.rooms.map(r=>`${r.name}: ${(r.width*r.height*doc.gridMillimetres**2/1e6).toFixed(1)} m² (Floor ${r.floor})`).join('; '),
  '2. Architecture: '+doc.walls.length+' connected wall segments; '+doc.openings.filter(o=>o.type==='door').length+' doors with swing arcs; '+doc.openings.filter(o=>o.type==='window').length+' windows; '+doc.stairs.length+' floor stair references. Wall thickness, clear areas and opening positions remain editable assumptions.',
  '3. Circuit/board schedule: '+circuits.map(c=>`${c.id} - ${c.label}: ${c.knownConnectedW} W known, ${c.unresolvedLoads} unresolved loads, design current ${c.designCurrentA===null?'UNRESOLVED':c.designCurrentA.toFixed(2)+' A'}`).join('; '),
