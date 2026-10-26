@@ -5,6 +5,9 @@ on:
   push:
     branches: ["main", "codex/**"]
     tags: ["deploy-*"]
+concurrency:
+  group: integrated-platform-${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/deploy-')) && 'production' || github.ref }}
+  cancel-in-progress: false
 permissions:
   contents: read
 jobs:
@@ -39,7 +42,7 @@ jobs:
           node --check platform/admin-accounts-ui.js
           node --check js/language-system.js
       - name: Verify authorization, routing and tutor boundaries
-        run: node --test apps/voltpro-engineering-source/tests/electrical-engine.test.mjs platform/workspace-shell.test.mjs platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/engineering-capability-matrix.test.mjs platform/status-page.test.mjs platform/acceptance/gaps/*.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs platform/sitewide-theme.test.mjs
+        run: node --test apps/voltpro-engineering-source/tests/electrical-engine.test.mjs platform/workspace-shell.test.mjs platform/access.test.mjs platform/router.test.mjs platform/deployment-cache.test.mjs platform/release-update.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/engineering-capability-matrix.test.mjs platform/status-page.test.mjs platform/acceptance/gaps/*.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs platform/sitewide-theme.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
       - name: Check every original browser script
@@ -59,10 +62,14 @@ jobs:
 
       - name: Deploy integrated Worker and assets to Cloudflare
         if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
-        run: npx wrangler deploy --var "DEPLOYMENT_TIMESTAMP:${DEPLOYMENT_TIMESTAMP}"
+        run: npx wrangler deploy --var "DEPLOYMENT_TIMESTAMP:${DEPLOYMENT_TIMESTAMP}" --var "HB_RELEASE_COMMIT:${GITHUB_SHA}"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Verify production release and freshness on all engineering tool routes
+        if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
+        run: node platform/verify-deployment.mjs
 
       - name: Deploy dedicated VoltPro engineering AI Worker
         if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
