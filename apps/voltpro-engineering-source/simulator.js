@@ -281,6 +281,7 @@ window.VoltProSimulator.step=()=>{stop();solveSimulationTick(false);};
 function solverProject(){return {components:S.components.map(c=>({...c,pins:Array.from({length:compDef(c.type).pins},(_,i)=>c.id+":"+i)})),wires:electricalWires()}}
 let simulationInterval=null;
 function solveSimulationTick(continuous=false){
+ if(!continuous){S.lastAnalysis=null;S.lastSolverProject=null}
  const visualSignature=()=>JSON.stringify(S.components.map(c=>({id:c.id,energized:c.state?.energized,tripped:c.state?.tripped,transferSource:c.state?.transferSource,Q0:c.state?.Q0,Q1:c.state?.Q1,Q2:c.state?.Q2,Q3:c.state?.Q3,pins:Object.fromEntries(Object.entries(c.state?.pins||{}).filter(([,p])=>p.mode==="OUTPUT").map(([k,p])=>[k,p.voltage]))}))),visualBefore=visualSignature();
  const legacyProject=solverProject();
  let project=legacyProject;
@@ -327,6 +328,7 @@ function solveSimulationTick(continuous=false){
  if(!dc.ok){S.running=false;if(simulationInterval){clearInterval(simulationInterval);simulationInterval=null}S.lastAnalysis=null;S.lastAnalysisSignature="";$("#meterReadout").textContent="--";$("#console").textContent="RUN ERROR\n"+(dc.error||"Unable to solve circuit.");$("#calcPanel").textContent="Check source, connections and component values.";renderCanvas();syncRunControls("error");return}
  for(const [id,deviceState] of Object.entries(dc.deviceStates||{})){const component=S.components.find(c=>c.id===id);if(component){const patch=deviceState&&typeof deviceState==="object"?deviceState:{energized:Boolean(deviceState)};component.state={...(component.state||{}),...patch}}}
  S.lastAnalysis={...dc,topologyMode};
+ S.lastSolverProject=JSON.parse(JSON.stringify(project));
  window.dispatchEvent(new CustomEvent("voltpro-analysis",{detail:{project,result:S.lastAnalysis}}));S.lastAnalysisSignature=JSON.stringify({project:solverProject(),topologyMode});
  const amps=Number(dc.totalCurrent)||0;
  $("#meterReadout").textContent=amps.toFixed(4)+" A";
@@ -335,9 +337,34 @@ function solveSimulationTick(continuous=false){
  $("#calcPanel").innerHTML="<b>DC operating point</b><br>Current: "+amps.toFixed(4)+" A<br>Power: "+(Number(dc.totalPower)||0).toFixed(4)+" W<br><small>MNA v4 · educational analysis</small>";
  if(!continuous||visualBefore!==visualSignature())renderCanvas();syncRunControls();if(!continuous)log("MNA operating point complete.");
 }
+let simulatorScopeBridgePromise=null;
+function simulatorScopeStatus(message,{error=false,waiting=false}={}){
+ const panel=$("#simScopePanel"),status=$("#simScopeStatus"),fallback=$("#simScopeFallback"),frame=$("#simulatorScopeFrame");
+ if(!panel||!status||!fallback||!frame)return;
+ panel.hidden=false;if(waiting){panel.classList.remove("collapsed");const toggle=$("#simScopeToggle");if(toggle){toggle.textContent="Minimize";toggle.setAttribute("aria-expanded","true")}}status.textContent=message;status.dataset.state=error?"error":waiting?"waiting":"ready";
+ fallback.hidden=!error;fallback.textContent=error?message:"";frame.hidden=error||waiting;
+}
+async function captureSimulatorScope(project){
+ simulatorScopeStatus("Sampling circuit transient response…",{waiting:true});
+ try{
+  if(!window.VoltProEngine?.transient)throw new Error("Transient analysis is unavailable in this Simulator build.");
+  const result=window.VoltProEngine.transient(project,{duration:0.05,steps:400});
+  if(!result?.ok)throw new Error(result?.error||"Transient analysis could not produce a waveform.");
+  simulatorScopeBridgePromise ||= import("/oscilloscope/simulator-bridge.mjs");
+  const {createSimulatorScopeCapture}=await simulatorScopeBridgePromise;
+  const capture=createSimulatorScopeCapture(project,result);
+  simulatorScopeStatus("Captured "+capture.times.length+" samples · "+capture.signals.length+" voltage signals · "+capture.analysis);
+  const frame=$("#simulatorScopeFrame");
+  const deliver=()=>{try{frame.contentWindow.postMessage(capture,location.origin)}catch(error){simulatorScopeStatus("The embedded oscilloscope could not receive the Simulator capture: "+error.message,{error:true})}};
+  if(frame.contentDocument?.readyState==="complete")deliver();else frame.addEventListener("load",deliver,{once:true});
+ }catch(error){console.error("Simulator oscilloscope capture failed",error);simulatorScopeStatus("Waveform capture failed: "+(error.message||"unknown analysis error"),{error:true})}
+}
+$("#simScopeToggle")?.addEventListener("click",event=>{const panel=$("#simScopePanel"),button=event.currentTarget;if(!panel)return;const collapsed=panel.classList.toggle("collapsed");button.textContent=collapsed?"Expand":"Minimize";button.setAttribute("aria-expanded",String(!collapsed))});
 function run(){
  if(!S.running){S.running=true;syncRunControls()}
  solveSimulationTick(false);
+ const scopeProject=S.lastAnalysis?.ok&&S.lastSolverProject?JSON.parse(JSON.stringify(S.lastSolverProject)):null;
+ if(scopeProject)captureSimulatorScope(scopeProject);else simulatorScopeStatus("Run a valid circuit to capture its voltage waveforms.",{error:true});
  if(S.running&&!simulationInterval)simulationInterval=setInterval(()=>{if(S.running)solveSimulationTick(true);else{clearInterval(simulationInterval);simulationInterval=null}},250);
 }
 function stop(){S.running=false;if(simulationInterval){clearInterval(simulationInterval);simulationInterval=null}renderCanvas();syncRunControls()}
