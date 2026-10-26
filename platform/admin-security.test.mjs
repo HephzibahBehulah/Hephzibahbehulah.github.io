@@ -31,7 +31,7 @@ test('security reporting is read-only, identity-bound, and rate limited',async()
 async function report({mismatch=false,githubFailed=false}={}){
  const bytes=new TextEncoder().encode('trusted code'),hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join(''),commit='a'.repeat(40),manifest={assets:Object.fromEntries(INTEGRITY_ASSETS.map(p=>['_apps/engineering/'+p,hash]))};
  for(const target of EXTRA_ASSET_TARGETS)manifest.assets[target.key]=hash;
- const env={GITHUB_TOKEN:'test-secret',ADMIN_AI_LIMITER:gate,ASSETS:{fetch:async req=>new URL(req.url).pathname==='/release-manifest.json'?Response.json(manifest):Response.json({commitHash:commit})}};
+ const env={GITHUB_TOKEN:'test-secret',ADMIN_AI_LIMITER:gate,ASSETS:{fetch:async req=>{const path=new URL(req.url).pathname;if(path==='/release-manifest.json')return Response.json(manifest);if(manifest.assets[path.slice(1)])return new Response(mismatch?'modified code':bytes,{headers:{'content-type':'text/javascript'}});return Response.json({commitHash:commit});}}};
  const fetcher=async(url,options)=>{
   assert.equal(options.redirect,'manual');
   if(url.startsWith('https://api.github.com')){assert.equal(options.headers.authorization,'Bearer test-secret');if(githubFailed)return new Response(null,{status:503});if(url.endsWith('/branches/main'))return Response.json({protected:true,commit:{sha:commit}});return Response.json({workflow_runs:[{id:1,head_sha:commit,status:'completed',conclusion:'success',event:'push'}]});}
