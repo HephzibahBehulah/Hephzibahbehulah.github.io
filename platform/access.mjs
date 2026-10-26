@@ -13,7 +13,7 @@ export async function verifyCloudflareAccessJwt(request,env,{fetcher=fetch,now=(
     const parts=token.split('.');if(parts.length!==3||parts.some(x=>!x))return {ok:false,code:'invalid_assertion_format'};
     const header=JSON.parse(new TextDecoder().decode(decode(parts[0]))),claims=JSON.parse(new TextDecoder().decode(decode(parts[1])));
     const seconds=now()/1000,aud=Array.isArray(claims.aud)?claims.aud:[claims.aud];
-    if(header.alg!=='RS256'||typeof header.kid!=='string'||claims.iss!==issuer||!aud.includes(audience)||typeof claims.exp!=='number'||!Number.isFinite(claims.exp)||claims.exp<seconds-60||claims.nbf!==undefined&&(typeof claims.nbf!=='number'||!Number.isFinite(claims.nbf)||claims.nbf>seconds+60)||String(claims.email||'').toLowerCase()!==email)return {ok:false,code:'assertion_claims_rejected'};
+    if(header.alg!=='RS256'||typeof header.kid!=='string'||claims.iss!==issuer||!aud.includes(audience)||typeof claims.exp!=='number'||!Number.isFinite(claims.exp)||claims.exp<=seconds||claims.nbf!==undefined&&(typeof claims.nbf!=='number'||!Number.isFinite(claims.nbf)||claims.nbf>seconds+60)||String(claims.email||'').toLowerCase()!==email)return {ok:false,code:'assertion_claims_rejected'};
     const keyId=issuer+'#'+header.kid;let cached=keys.get(keyId);
     if(!cached||cached.expires<now()){
       stage='signing_keys_fetch';

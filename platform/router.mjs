@@ -1,6 +1,7 @@
 import {publicAuth} from './public-auth.mjs';
 import {publicServiceWorker} from './public-sw.mjs';
 import {assetCacheHeaders} from './cache-policy.mjs';
+import {adminSecurity,privateHeaders} from './admin-security.mjs';
 const ROOT='hephzibahbehulah.com';
 const ADMIN='admin.'+ROOT;
 const PUBLIC=new Map([['engineering.'+ROOT,'engineering'],['cyber.'+ROOT,'cyber']]);
@@ -20,11 +21,12 @@ export function resolveRoute(url){
   if(!privateHost&&(decoded.startsWith('/api/admin/')||['/admin','/admin/','/admin.html','/admin-tools.html','/api/automation/demo'].includes(decoded)))return {kind:'reject',status:404};
   if(!privateHost&&path.startsWith('/api/member/'))return {kind:'member',privateHost:false};
   if(!privateHost&&['/account','/account/','/account.html'].includes(path))return {kind:'account',privateHost:false};
-  if(!privateHost&&decoded==='/_hb/admin-accounts-ui.js')return {kind:'reject',status:404};
+  if(!privateHost&&['/_hb/admin-accounts-ui.js','/_hb/admin-security-ui.js'].includes(decoded))return {kind:'reject',status:404};
   if(path.startsWith('/_hb/')&&path!=='/_hb/release.json')return {kind:'shared',privateHost,path};
   if(!privateHost&&(path==='/_hb/release.json'||host==='engineering.'+ROOT&&path==='/api/status'))return {kind:'status',privateHost:false};
   if(path==='/api/engineering/chat'||path==='/api/engineering/health')return {kind:'engineering-ai',privateHost};
   if(path==='/api/cyber/chat')return {kind:'cyber-ai',privateHost};
+  if(privateHost&&['/api/admin/security','/api/admin/security/session'].includes(path))return {kind:'admin-security',privateHost:true};
   if(privateHost&&['/api/admin/accounts','/api/admin/accounts/events','/api/admin/accounts/operations'].includes(path))return {kind:'admin-accounts',privateHost:true};
   if(!privateHost&&path.startsWith('/api/')&&!MAIN.has(host))return {kind:'reject',status:404};
   if(MAIN.has(host))return {kind:'legacy',privateHost:false};
@@ -56,7 +58,7 @@ export function resolveRoute(url){
 }
 
 export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,accountAdmin,memberAuth=publicAuth}){
-  return {async fetch(request,env,ctx){
+  const handler={async fetch(request,env,ctx){
     const url=new URL(request.url),route=resolveRoute(url);
     const releaseMeta=!route.privateHost?'<script src="/_hb/release-update.js" defer></script>':'';
     if(route.kind==='reject')return reply(route.status,'Not found');
@@ -75,6 +77,8 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
     }
     if(route.privateHost){
       const verified=await verifyAdmin(request,env);
+      if(verified.ok&&!['GET','HEAD','OPTIONS'].includes(request.method)&&(request.headers.get('origin')!==url.origin||request.headers.get('sec-fetch-site')==='cross-site'))return reply(403,'Same-origin administrator request required');
+      if(verified.ok&&route.kind==='admin-security')return adminSecurity(request,env,verified);
       if(!verified.ok){console.warn('HB_PRIVATE_ACCESS_DENIED',verified.code||'configuration_or_identity_rejected');return reply(verified.status||401,'Private workspace. Sign in through Cloudflare Access.');}
     }
     if(['GET','HEAD'].includes(request.method)&&(route.privateHost||route.kind==='app'&&route.path.endsWith('.html'))){const headers=new Headers(request.headers);headers.delete('if-none-match');headers.delete('if-modified-since');request=new Request(request,{headers});}
@@ -129,5 +133,11 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
       result=new HTMLRewriter().on('head',{element(el){el.prepend(releaseMeta+'<base href="'+base+'"><link rel="stylesheet" href="/_hb/platform.css">'+globalScripts,{html:true});}}).transform(result);
     }
     return result;
+  }};
+  return {async fetch(request,env,ctx){
+    const privateHost=new URL(request.url).hostname===ADMIN;
+    const id=privateHost?crypto.randomUUID():null;
+    try{const response=await handler.fetch(request,env,ctx);return privateHost?privateHeaders(response,id):response;}
+    catch(error){if(!privateHost)throw error;console.error('HB_ADMIN_REQUEST_FAILED',{requestId:id});return privateHeaders(reply(503,'Private service unavailable. Reference '+id),id);}
   }};
 }

@@ -12,6 +12,7 @@ permissions:
   contents: read
 jobs:
   validate:
+    name: Platform release validation
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -40,9 +41,11 @@ jobs:
           node --check apps/voltpro-engineering-source/status.js
           node --check platform/cyber-ai.mjs
           node --check platform/admin-accounts-ui.js
+          node --check platform/admin-security-ui.js
+          node --check platform/admin-security.mjs
           node --check js/language-system.js
       - name: Verify authorization, routing and tutor boundaries
-        run: node --test apps/voltpro-engineering-source/tests/electrical-engine.test.mjs platform/workspace-shell.test.mjs platform/access.test.mjs platform/router.test.mjs platform/deployment-cache.test.mjs platform/release-update.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/engineering-capability-matrix.test.mjs platform/status-page.test.mjs platform/acceptance/gaps/*.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs platform/sitewide-theme.test.mjs
+        run: node --test apps/voltpro-engineering-source/tests/electrical-engine.test.mjs platform/workspace-shell.test.mjs platform/access.test.mjs platform/router.test.mjs platform/deployment-cache.test.mjs platform/release-update.test.mjs platform/admin-security.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/engineering-capability-matrix.test.mjs platform/status-page.test.mjs platform/acceptance/gaps/*.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs platform/sitewide-theme.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
       - name: Check every original browser script
@@ -69,7 +72,7 @@ jobs:
 
       - name: Verify production release and freshness on all engineering tool routes
         if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
-        run: node platform/verify-deployment.mjs
+        run: node platform/verify-admin-deployment.mjs
 
       - name: Deploy dedicated VoltPro engineering AI Worker
         if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
@@ -77,6 +80,15 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Preserve the production security and upgrade report
+        if: ${{ always() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/deploy-')) }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: production-security-report
+          path: work/production-security-report.json
+          if-no-files-found: warn
+          retention-days: 90
 
       - name: Preserve verified platform catalogues for reproducible builds
         uses: actions/upload-artifact@v7
