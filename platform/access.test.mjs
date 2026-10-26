@@ -22,3 +22,5 @@ test('a redirected signing-key endpoint fails closed',async()=>{
  const result=await verify(await request({iss:issuer}),{...env,ADIGUN_ACCESS_TEAM_DOMAIN:issuer},{fetcher:async()=>new Response(null,{status:302,headers:{location:'https://example.com/keys'}})});
  assert.equal(result.ok,false);assert.equal(result.code,'signing_keys_unavailable');
 });
+
+test('a token that expired one second ago is rejected without an expired-session grace window',async()=>assert.equal((await verify(await request({exp:Date.now()/1000-1}),env,options)).ok,false));

@@ -12,6 +12,7 @@ function reconcile(){
  if(side){
   if(privatePage&&!side.querySelector('[data-hb-monitor]')){const nav=side.querySelector('[data-nav-group="private-control"] nav')||side.querySelector('.os-nav');if(nav){const a=el('a','','◈ USERS & SIGN-INS');a.href='/admin#users-signins';a.dataset.hbMonitor='true';a.setAttribute('translate','no');a.onclick=async e=>{e.preventDefault();try{const module=await import('/_hb/admin-accounts-ui.js');module.openAccounts();}catch{alert('The private monitor could not load. Refresh the page and retry.');}};nav.append(a);}}
 
+  if(privatePage&&!side.querySelector('[data-hb-security]')){const nav=side.querySelector('[data-nav-group="private-control"] nav')||side.querySelector('.os-nav');if(nav){const a=el('a','','◈ SECURITY & RELEASES');a.href='/admin#security-releases';a.dataset.hbSecurity='true';a.onclick=async e=>{e.preventDefault();try{const module=await import('/_hb/admin-security-ui.js');module.openSecurity();}catch{alert('Security panel unavailable. Refresh your private sign-in.');}};nav.append(a);}}
   if(/^\/(?:admin\/)?(?:tools|cyber-os)(?:\/|$)/.test(location.pathname))side.querySelectorAll('.hb-platform-apps').forEach(n=>n.remove());
   for(const a of side.querySelectorAll('a')){
    const name=clean(a.textContent),replacement=sectionNames.get(name);
