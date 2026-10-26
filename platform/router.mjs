@@ -58,7 +58,7 @@ export function resolveRoute(url){
 export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,accountAdmin,memberAuth=publicAuth}){
   return {async fetch(request,env,ctx){
     const url=new URL(request.url),route=resolveRoute(url);
-    const releaseMeta='<meta name="hb-release" content="'+(/^[a-f0-9]{40}$/i.test(env?.HB_RELEASE_COMMIT||'')?env.HB_RELEASE_COMMIT:'Unknown')+'">'+(!route.privateHost?'<script src="/_hb/release-update.js" defer></script>':'');
+    const releaseMeta=!route.privateHost?'<script src="/_hb/release-update.js" defer></script>':'';
     if(route.kind==='reject')return reply(route.status,'Not found');
     if(route.kind==='status'){
       if(!['GET','HEAD'].includes(request.method))return reply(405,'Method not allowed');

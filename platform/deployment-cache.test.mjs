@@ -64,3 +64,16 @@ test('production verifier checks embedded bases and hashed bundle URLs as well a
 test('production verifier fails a deployment whose live commit does not match',async()=>{
  await assert.rejects(verifyDeployment({commit:'b'.repeat(40),fetcher:async()=>Response.json({commitHash:'a'.repeat(40)})}),/Production release must match/);
 });
+import {stampRelease} from './release-stamp.mjs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+test('release identity is embedded in every HTML build without depending on deploy-time variables',()=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'hb-stamp-'));
+ try{
+  fs.mkdirSync(path.join(dir,'embedded'));fs.writeFileSync(path.join(dir,'index.html'),'<html><head></head><body>Main</body></html>');fs.writeFileSync(path.join(dir,'embedded','tool.html'),'<head><meta name="hb-release" content="old"></head>');
+  const commit='d'.repeat(40);assert.equal(stampRelease(dir,commit),2);
+  for(const file of ['index.html','embedded/tool.html']){const html=fs.readFileSync(path.join(dir,file),'utf8');assert.ok(html.includes('name="hb-release" content="'+commit+'"'));assert.equal((html.match(/name="hb-release"/g)||[]).length,1);}
+  assert.equal(stampRelease(dir,commit),2);assert.throws(()=>stampRelease(dir,'Unknown'),/valid Git commit/);
+ }finally{fs.rmSync(dir,{recursive:true,force:true});}
+});

@@ -20,7 +20,7 @@ Confirmed defects in the previous worker were immediate activation, origin-wide 
 
 ## Safe updates
 
-HTML includes the running Git commit via the HB_RELEASE_COMMIT deployment variable. `/_hb/release.json` reports the latest deployed build on each public host. The browser compares that with the HTML stamp, never with a baseline first learned after loading. It checks at startup, on reconnect, on return to a visible tab (throttled), and every five minutes while visible.
+The build stamps every HTML entry point with its Git commit before generating the release inventory. Identity travels with the static assets and does not depend on deployment-time variables. This also covers Cloudflare Git builds outside the GitHub Actions deployment. `/_hb/release.json` reports the latest deployed build on each public host. The browser compares that with the HTML stamp, never with a baseline first learned after loading. It checks at startup, on reconnect, on return to a visible tab (throttled), and every five minutes while visible.
 
 An update offers Reload website and Later. The reload action reminds users to save/export their work. No automatic reload occurs; other tabs keep their work. Existing service workers are checked for updates without creating a new registration or changing a scope. A waiting worker activates after the update action. The controlling tab reloads at most once. First installation does not produce an update notice.
 
@@ -36,3 +36,7 @@ A first migration cannot replace JavaScript already executing in an old page. Ex
 
 Do not rely on repeated Purge Everything, random asset query strings, or clearing all browser storage. If custom Cloudflare zone rules override these headers, inspect and remove those overrides; this source change does not edit account-level dashboard rules. Keep the previous verified Worker version available for rollback.
 
+
+## Independent deployment entry points
+
+During rollout, production briefly reported the new build with no workflow deployment timestamp while the GitHub Actions container upload had failed. A subsequent successful workflow deployment restored its timestamp. This indicates a separate deployment entry point and is why build identity must be embedded in the release rather than supplied only by GitHub Actions. Dashboard-level build triggers were not edited.
