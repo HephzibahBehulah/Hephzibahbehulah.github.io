@@ -245,3 +245,14 @@
 @media(max-width:760px){.plc-app .canvas.dock-visible{right:0}.plc-app .properties{width:min(280px,88vw)}}
 
 .plc-empty-canvas{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:12px;max-width:80%;color:#8098a5;text-align:center;pointer-events:none;font-size:11px}.plc-empty-canvas svg{color:#58d9c2}.plc-empty-canvas strong{color:#dce6ee;font-size:14px}
+
+/* Properties owns a permanent column; its fixed header toggle never disappears. */
+.plc-app>.workspace{--plc-properties-width:280px}
+.plc-app .canvas,.plc-app .canvas.dock-visible{right:var(--plc-properties-width)}
+.plc-app .properties{width:var(--plc-properties-width);box-shadow:none}
+.plc-properties-body{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:hidden}
+.plc-properties-body[hidden]{display:none}
+.plc-app .properties>header button{flex:none;width:30px;height:30px;border:1px solid #343d42;background:#101518;color:#d5dce0}
+.plc-app .properties>header button:hover{color:#ffad61;border-color:#bc6b25}
+.plc-app .canvas .plc-title-block{display:block}
+@media(max-width:760px){.plc-app>.workspace{--plc-properties-width:clamp(120px,32vw,280px)}.plc-app .properties>header{padding:0 5px;font-size:8px;gap:3px}.plc-dock-tabs{overflow-x:auto;flex-shrink:0}.plc-dock-tabs button{flex-shrink:0}}

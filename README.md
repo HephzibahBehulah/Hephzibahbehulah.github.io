@@ -70,6 +70,12 @@ PLC uses the supplied ElectCAD images as its canvas reference only. Rulers now u
 
 Validation: production build, 27 PLC engine/geometry tests and 27 workspace integration tests passed. Browser comparison at 100% and 25% confirmed increased ruler coverage, readable labels and identical origin/title-block positions.
 
+### PLC Properties toggle and fixed canvas dimensions
+
+Properties now owns a permanently reserved right-hand column. Its header and show/hide button remain visible in the same position when the panel content is collapsed. Opening or hiding Properties does not resize or shift the canvas, rulers, camera or title block at 100% or 25%. The header stays accessible when moving the pointer away collapses the panel content. Existing left-rail shortcuts still open the relevant dock tab. The top and bottom bars and ElectCAD source are unchanged.
+
+Validation for the Properties fix: production build and 54 tests passed. Browser measurements at both 100% and 25% confirmed identical canvas bounds, ruler coverage, camera translation, title-block bounds and toggle position before hiding, while hidden and after reopening.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
