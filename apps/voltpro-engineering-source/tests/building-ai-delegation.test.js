@@ -1,0 +1,7 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+test('Electrical AI delegates a general prompt to remote generation without shadowing its response function',async()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../voltpro-assistant.js'),'utf8'),start=source.indexOf('  const answer = async'),end=source.indexOf('  const ask =',start);let calls=0,request;
+ const c={TextDecoder,AbortSignal,console,location:{pathname:'/electrical'},externalMode:false,wantsExternal:()=>false,loadInternalKnowledge:async()=>[],PROJECT_CONTEXT:'',API_URL:'https://example.test/chat',getSession:()=>'',localAnswer:()=>null};c.window={VoltProBuildingAI:{context:()=> 'Electrical building contract',answer:(question,remote)=>remote()}};
+ c.fetch=async(url,options)=>{calls++;request=JSON.parse(options.body);let done=false;return{ok:true,body:{getReader:()=>({read:async()=>{if(done)return{done:true};done=true;return{done:false,value:new TextEncoder().encode('data: {"type":"reset"}\n\ndata: {"type":"delta","text":"office project response"}\n\n')};}})}};};
+ vm.createContext(c);vm.runInContext(source.slice(start,end)+';globalThis.pending=answer("Generate an office project");',c);const result=await c.pending;assert.equal(result.answer,'office project response');assert.equal(result.mode,'ai');assert.equal(calls,1);assert.equal(request.tool,'building-electrical');assert.match(request.siteContext,/Electrical building contract/);
+});

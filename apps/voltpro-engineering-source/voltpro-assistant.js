@@ -104,9 +104,9 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
   };
   const history = [];
   let externalMode = false;
-  const answer = async (question, options = {}) => {
+  const answer = async function respond(question, options = {}) {
     const building=window.VoltProBuildingAI;
-    if(building&&!options.skipBuilding)return building.answer(question,()=>answer(question,{...options,skipBuilding:true,forceRemote:true,buildingContext:building.context()}));
+    if(building&&!options.skipBuilding)return building.answer(question,()=>respond(question,{...options,skipBuilding:true,forceRemote:true,buildingContext:building.context()}));
     const history = options.history || [];
     const q = String(question || "").trim();
     if (!q) return { answer: "", sources: [] };
