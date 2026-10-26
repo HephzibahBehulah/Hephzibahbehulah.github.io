@@ -18,7 +18,7 @@ const academy = read("apps/voltpro-engineering-source/index.html");
 test("global bottom navigation keeps the required workspace order", () => {
   const block = nav.match(/for\(const \[icon,label,path\]of \[(.*?)\]\)\{const a=link/s)?.[1] || "";
   const labels = [...block.matchAll(/\['[^']*','([^']+)','[^']+'\]/g)].map(match => match[1]);
-  assert.deepEqual(labels, ["Simulator", "PLC", "ElectCAD", "Engineering Tools", "Breadboard", "Electrical"]);
+  assert.deepEqual(labels, ["Simulator", "PLC", "ElectCAD", "Engineering Tools", "Breadboard", "Oscilloscope", "Electrical"]);
 });
 
 test("main portfolio return link is same-tab and part of the persistent shared header", () => {
@@ -315,4 +315,11 @@ test("fixed engineering header and readiness banner reserve their viewport space
   const experience=read("platform/experience.css");
   assert.match(experience,/html\.vp-unified-site body\.hb-engineering\{[\s\S]*?--vp-header-height:60px!important;[\s\S]*?padding-top:calc\(var\(--vp-header-height\) \+ var\(--vp-development-banner-height\)\)!important/);
   assert.match(experience,/\.hb-engineering #vpDevelopmentBanner\{top:var\(--vp-header-height\)!important\}/);
+});
+
+
+test("Oscilloscope root project navigation contains exactly seven tools in the requested order",()=>{
+ const section=academy.split('Design &amp; simulation</summary>')[1].split('</div></details>')[0];
+ assert.deepEqual([...section.matchAll(/href="([^"]+)"/g)].map(m=>m[1]),['/simulator','/plc','/electcad','/breadboard','/oscilloscope','/electrical','/tools']);
+ assert.match(shell,/path: "\/oscilloscope".*oscilloscope\.html/);
 });
