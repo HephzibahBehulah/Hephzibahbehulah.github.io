@@ -13,3 +13,9 @@ test('Electrical gateway uses a building contract on its real origin and retains
  await worker.fetch(request('simulator'),env);assert.match(input.messages[0].content,/zero-based terminal/);assert.equal(input.max_tokens,7000);
  const denied=await worker.fetch(new Request('https://example.test/chat',{method:'POST',headers:{origin:'https://untrusted.example'}}),env);assert.equal(denied.status,403);
 });
+
+test('Electrical adapter automatically retries a rejected project once and exposes only validated imports',async()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../electrical-canvas.js'),'utf8'),start=source.indexOf('window.VoltProBuildingAI={'),end=source.indexOf('\n};',start)+3;
+ const {checkBuildingProposal,houseDraft}=await import('../building-house.mjs'),valid=houseDraft(),bad=structuredClone(valid);bad.circuits[0].overcurrentDeviceId='not-a-placed-device';const context={window:{},checkBuildingProposal};vm.createContext(context);vm.runInContext(source.slice(start,end),context);let calls=0,repair='';const response=await context.window.VoltProBuildingAI.answer('Generate an office project',async correction=>{calls++;repair=correction||'';return{answer:'```json\n'+JSON.stringify(correction?valid:bad)+'\n```',sources:[],mode:'ai'};});assert.equal(calls,2);assert.match(repair,/placed equipment instance/);assert.ok(response.buildingPlan);assert.doesNotMatch(response.answer,/PROJECT IMPORT REJECTED/);
+ calls=0;const rejected=await context.window.VoltProBuildingAI.answer('Generate an office project',async()=>{calls++;return{answer:'```json\n'+JSON.stringify(bad)+'\n```',sources:[],mode:'ai'};});assert.equal(calls,2);assert.equal(rejected.buildingPlan,undefined);assert.match(rejected.answer,/PROJECT IMPORT REJECTED/);
+});

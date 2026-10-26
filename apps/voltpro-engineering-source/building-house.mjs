@@ -52,8 +52,13 @@ export function houseDraft(){
  const top=d.nodes.find(n=>n.room==='Hallway'&&n.type==='two-way-switch');route(bottom,top,'cable-NYM-J-5-2.5','F9',breakers.get('F9'),2.5);
  d.nodes.forEach(item=>{if(!item.tag)item.tag=item.id;});return addHouseArchitecture(d);
 }
+export function normalizeBuildingProposal(raw){
+ const d=structuredClone(raw);if(d.coordinateUnits==='mm'){const g=d.gridMillimetres||200,point=p=>{if(p){p.x=1+p.x/g;p.y=p.y/g;}};for(const key of ['rooms','spaces','floorOutlines','stairs'])for(const r of d[key]||[]){point(r);for(const k of ['width','height','length'])if(Number.isFinite(r[k]))r[k]/=g;}for(const key of ['nodes','risers'])for(const n of d[key]||[])point(n);for(const key of ['walls','dimensions'])for(const w of d[key]||[]){point(w.a);point(w.b);}for(const w of d.wires||[]){for(const p of w.routePoints||[])point(p);for(const s of w.segments||[])for(const p of s.points||[])point(p);}delete d.coordinateUnits;d.designNotes=[...(d.designNotes||[]),'AI supplied explicit millimetre coordinates; converted to the model grid without changing physical dimensions.'];}
+ for(const n of d.nodes||[])if(typeof n.voltage==='number'&&[120,230,240,277,400,415,480].includes(n.voltage))n.voltage=n.voltage+' V AC';return d;
+}
 export function checkBuildingProposal(raw){
  if(!raw||JSON.stringify(raw).length>1000000||raw.nodes?.length>500||raw.wires?.length>2000||raw.rooms?.length>300||raw.walls?.length>3000||raw.openings?.length>1000||raw.dimensions?.length>1000)throw Error('Building proposal exceeds the supported size.');
+ raw=normalizeBuildingProposal(raw);for(const n of raw.nodes||[])if(n.spec!=null&&(typeof n.spec!=='object'||Array.isArray(n.spec)))throw Error(n.id+': spec must be a parameter object, not a catalogue identifier.');
  const d=recoverBuildingDocument(raw);const report=validateBuildingDocument(d);if(report.errors.length)throw Error(report.errors.join(' '));
  for(const room of d.rooms)if(room.x<1||room.y<0||(room.floor||1)>d.metadata.floors)throw Error('Room coordinates/floor are invalid.');
  for(const node of d.nodes)if(!catalogItem(node.type,d.catalog)||(node.floor||1)<1||(node.floor||1)>d.metadata.floors||node.x>10001||node.y>702)throw Error('Unknown component or floor.');
