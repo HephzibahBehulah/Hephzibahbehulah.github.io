@@ -11,7 +11,7 @@ The administrator remains the configured Cloudflare Access owner. This release d
 
 ## Enforcement
 
-Every private request still validates the signed Access JWT, including its issuer, audience, owner identity and expiry. Expired tokens have no post-expiry acceptance window. State-changing private requests additionally require the exact admin Origin; cross-site requests are refused. Private responses, including errors and account responses, use no-store, same-origin frame protection, no-referrer, a restrictive embedding/object/base policy, and an opaque request correlation ID. Unexpected private errors return a sanitized message.
+Every private request still validates the signed Access JWT, including its issuer, audience, owner identity and expiry. Expired tokens have no post-expiry acceptance window. State-changing private requests additionally require the exact admin Origin; cross-site requests are refused. Private responses, including errors and account responses, use no-store, HTTPS-only browser transport enforcement (HSTS for the admin host without extending to subdomains), same-origin frame protection, no-referrer, a restrictive embedding/object/base policy, and an opaque request correlation ID. Unexpected private errors return a sanitized message.
 
 The new report endpoint requires the configured owner and the dedicated monitoring rate-limit key. No GitHub token, Access assertion, Supabase secret, password, or email code is returned. UI output uses text nodes. Identity and report fetches do not trust a successful HTML login page as JSON. A stale or expired session disables private monitoring and offers reauthentication; the server remains the security boundary.
 
