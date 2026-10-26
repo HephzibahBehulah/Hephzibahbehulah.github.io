@@ -16,7 +16,7 @@ export function zoomScroll(left, top, oldZoom, nextZoom, anchorX = 0, anchorY = 
   return { left: Math.max(0, (left + anchorX) * nextZoom / oldZoom - anchorX), top: Math.max(0, (top + anchorY) * nextZoom / oldZoom - anchorY) };
 }
 export function drawingExtent(document, cell = 24) {
-  const xs = [RULER_COLUMNS, ...document.nodes.map(n => n.x + 12), ...document.rooms.map(r => r.x + r.width + 12)];
-  const ys = [RULER_ROWS, ...document.nodes.map(n => n.y + 12), ...document.rooms.map(r => r.y + r.height + 12)];
+  const xs = [RULER_COLUMNS,...(document.walls||[]).flatMap(w=>[w.a.x+12,w.b.x+12]), ...document.nodes.map(n => n.x + 12), ...document.rooms.map(r => r.x + r.width + 12)];
+  const ys = [RULER_ROWS,...(document.walls||[]).flatMap(w=>[w.a.y+12,w.b.y+12]), ...document.nodes.map(n => n.y + 12), ...document.rooms.map(r => r.y + r.height + 12)];
   return { width: Math.max(...xs.filter(Number.isFinite)) * cell, height: Math.max(...ys.filter(Number.isFinite)) * cell };
 }
