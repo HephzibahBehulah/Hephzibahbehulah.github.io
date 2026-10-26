@@ -1,10 +1,5 @@
-export const BUILDING_TYPES = Object.freeze({
-  "distribution-board": { label: "Distribution board", system: "power", defaultVoltage: "230 V AC" },
-  "wall-switch": { label: "Wall switch", system: "power", defaultVoltage: "230 V AC" },
-  "schuko-socket": { label: "Socket outlet", system: "power", defaultVoltage: "230 V AC" },
-  "ceiling-light": { label: "Luminaire outlet", system: "power", defaultVoltage: "230 V AC" },
-  "data-point": { label: "Data outlet", system: "data", defaultVoltage: "SELV / data" }
-});
+import { CATALOG, catalogItem, PROFILES, importManufacturerCatalog } from "./building-catalog.mjs";
+export const BUILDING_TYPES = Object.freeze(Object.fromEntries(CATALOG.filter(item=>item.kind==='device').map(item=>[item.id,item])));
 
 export function createBuildingDocument(metadata = {}) {
   return {
@@ -18,9 +13,13 @@ export function createBuildingDocument(metadata = {}) {
       scale: metadata.scale || "1:50",
       drafter: metadata.drafter || "",
       documentNumber: metadata.documentNumber || "",
-      revision: metadata.revision || "A"
+      revision: metadata.revision || "A",
+      profile: PROFILES[metadata.profile] ? metadata.profile : "DE",
+      floors: Number.isInteger(metadata.floors) && metadata.floors >= 1 && metadata.floors <= 300 ? metadata.floors : 1,
+      activeFloor: Number.isInteger(metadata.activeFloor) && metadata.activeFloor >= 1 ? metadata.activeFloor : 1
     },
     layers: { architecture: true, power: true, data: true },
+    catalog: [],
     rooms: [],
     nodes: [],
     wires: []
@@ -33,13 +32,19 @@ export function recoverBuildingDocument(raw) {
   if (!Number.isInteger(raw.version) || raw.version > 2 || raw.version < 1) throw new RangeError("Unsupported BuildingCAD project version.");
   if (!Array.isArray(raw.nodes) || !Array.isArray(raw.wires)) throw new TypeError("Project is missing its device or connection list.");
   const doc = createBuildingDocument(raw.metadata || {});
-  doc.rooms = Array.isArray(raw.rooms) ? raw.rooms : [];
+  if(raw.catalog!==undefined&&!Array.isArray(raw.catalog))throw new TypeError('Project catalogue must be an array.');
+  doc.catalog = (raw.catalog||[]).map(item=>importManufacturerCatalog({format:'voltpro.manufacturer-catalog',version:1,rights:item.rights||'Embedded project catalogue; permission statement must be verified',items:[{...item,familyId:item.familyId}]} )[0]);
+  if(doc.catalog.length>5000||new Set(doc.catalog.map(item=>item.id)).size!==doc.catalog.length)throw new RangeError('Project catalogue contains too many or duplicate records.');
+  doc.rooms = Array.isArray(raw.rooms) ? raw.rooms.map(room=>({...room,floor:Number.isInteger(room.floor)?room.floor:1})) : [];
   doc.nodes = raw.nodes.map((node, i) => ({
     ...node,
     id: String(node.id || `B${i + 1}`),
     tag: String(node.tag || ""),
     room: String(node.room || ""),
-    voltage: String(node.voltage || BUILDING_TYPES[node.type]?.defaultVoltage || ""),
+    voltage: String(node.voltage || catalogItem(node.type,doc.catalog)?.defaultVoltage || ""),
+    floor: Number.isInteger(node.floor) ? node.floor : 1,
+    quantity: Number.isFinite(node.quantity) && node.quantity > 0 ? node.quantity : 1,
+    spec: node.spec && typeof node.spec === "object" ? node.spec : {},
     circuit: String(node.circuit || ""),
     mountingHeight: Number.isFinite(Number(node.mountingHeight)) ? Number(node.mountingHeight) : 0,
     x: Number(node.x),
@@ -74,12 +79,13 @@ export function validateBuildingDocument(doc) {
     if (!room.name?.trim() || ![room.x, room.y, room.width, room.height].every(Number.isInteger) || room.width < 1 || room.height < 1) errors.push(`${room.id}: invalid room boundary geometry.`);
   }
   for (const node of doc?.nodes || []) {
-    if (!BUILDING_TYPES[node.type]) errors.push(`${node.id}: unknown device type.`);
+    const item = catalogItem(node.type,doc.catalog);
+    if (!item || item.kind === "route") errors.push(`${node.id}: unknown device type.`);
     if (!node.id || ids.has(node.id)) errors.push(`${node.id || "Device"}: missing or duplicate object ID.`);
     ids.add(node.id);
     if (!Number.isInteger(node.x) || !Number.isInteger(node.y) || node.x < 1 || node.y < 0) errors.push(`${node.id}: position must be on the metric plan grid.`);
     if (!node.name?.trim()) errors.push(`${node.id}: device name is empty.`);
-    if (!allowedVoltages[node.type]?.includes(node.voltage)) errors.push(`${node.id}: voltage is incompatible with ${node.type}.`);
+    if (!(allowedVoltages[node.type] || [item?.defaultVoltage,"120 V AC","230 V AC","240 V AC","277 V AC","400 V AC","415 V AC","480 V AC","24 V DC","SELV / data","Protective conductor","Not energised"]).includes(node.voltage)) errors.push(`${node.id}: voltage is incompatible with ${node.type}.`);
     if (!Number.isFinite(node.mountingHeight) || node.mountingHeight < 0 || node.mountingHeight > 6000) errors.push(`${node.id}: mounting height must be 0–6000 mm.`);
     if (!node.room?.trim()) warnings.push(`${node.id}: assign a room before issuing the drawing.`);
     if (!node.tag?.trim()) warnings.push(`${node.id}: reference designation is not assigned.`);
@@ -92,7 +98,7 @@ export function validateBuildingDocument(doc) {
     wireIds.add(wire.id);
     const from = doc.nodes.find(node => node.id === wire.from), to = doc.nodes.find(node => node.id === wire.to);
     if (!from || !to) { errors.push(`${wire.id}: connection endpoint does not exist.`); continue; }
-    if (BUILDING_TYPES[from.type].system !== BUILDING_TYPES[to.type].system) errors.push(`${wire.id}: power and data systems cannot share a connection.`);
+    if (catalogItem(from.type,doc.catalog)?.system !== catalogItem(to.type,doc.catalog)?.system) errors.push(`${wire.id}: power and data systems cannot share a connection.`);
   }
   return { ok: errors.length === 0, errors, warnings, assessed: ["document-structure", "unique-ids", "reference-uniqueness", "system-separation", "basic-title-block-fields"], notAssessed: ["DIN EN 61082-1 clause-level document conformity", "IEC 60617 licensed symbol identity", "DIN EN IEC 81346 reference-designation profile", "DIN VDE 0100 installation design", "protective-device coordination", "voltage-drop limits"] };
 }

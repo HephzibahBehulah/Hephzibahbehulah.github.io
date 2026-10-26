@@ -70,6 +70,14 @@ PLC uses the supplied ElectCAD images as its canvas reference only. Rulers now u
 
 Validation: production build, 27 PLC engine/geometry tests and 27 workspace integration tests passed. Browser comparison at 100% and 25% confirmed increased ruler coverage, readable labels and identical origin/title-block positions.
 
+### Electrical installation catalogue and engineering data tools
+
+Electrical now provides 608 named specification records in 13 categories, with original explanatory drawing graphics. Three LAPP cable identities are manufacturer-referenced; the other records are equipment/material specifications, not verified manufacturer products. Search, category and jurisdiction filters use bounded result pages. Project contains Germany, USA, Nigeria and Dubai reference profiles and 1–300-storey project settings. Existing library, menu and toolbar actions are reused.
+
+Equipment and materials retain floor, circuit, quantity, board and protective-device assignments. Cable routes store cable designation, cross-section, entered ampacity, design current, fault-current input and surveyed length allowances; cross-floor routes require an entered vertical rise. The existing Electrical review action shows data checks and unresolved engineering requirements. The existing schedule action exports grouped material and cable quantities. Resistance-only voltage-drop estimates identify their assumptions and do not size cables or certify installations. Manufacturer catalogue JSON import requires source and permitted-use information, is limited to 5,000 records per local project and does not independently verify supplier declarations. This is not a ten-million-manufacturer-part database.
+
+Validation: 18 targeted tests passed; browser checks confirmed component search and the new catalogue rendering. Full UI regression, physical installation validation and approval remain pending. PLC files are unchanged.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
