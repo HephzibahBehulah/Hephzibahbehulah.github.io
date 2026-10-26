@@ -20,6 +20,7 @@ export function privateHeaders(response,requestId){
  const headers=new Headers(response.headers);
  headers.set('cache-control','private, no-store');headers.set('cloudflare-cdn-cache-control','no-store');
  headers.set('x-content-type-options','nosniff');headers.set('x-frame-options','SAMEORIGIN');headers.set('referrer-policy','no-referrer');
+ headers.set('strict-transport-security','max-age=31536000');
  headers.set('x-robots-tag','noindex, nofollow, noarchive');headers.set('x-request-id',requestId);
  headers.append('content-security-policy',"frame-ancestors 'self'; object-src 'none'; base-uri 'self'");
  return new Response(response.body,{status:response.status,headers});

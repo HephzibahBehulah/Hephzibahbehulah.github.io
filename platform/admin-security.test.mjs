@@ -10,7 +10,7 @@ test('all public hosts reject private security APIs and scripts',()=>{
  for(const host of ['engineering.','cyber.',''])for(const path of ['/api/admin/security','/api/admin/security/session','/_hb/admin-security-ui.js'])assert.equal(resolveRoute(new URL('https://'+host+'hephzibahbehulah.com'+path)).status,404);
 });
 test('security endpoints authenticate before accessing assets or upstream services',async()=>{
- let called=false;const worker=createPlatform({verifyAdmin:async()=>({ok:false})});const r=await worker.fetch(new Request(origin+'/api/admin/security'),{ASSETS:{fetch:async()=>{called=true;}}});assert.equal(r.status,401);assert.equal(called,false);assert.equal(r.headers.get('cache-control'),'private, no-store');assert.match(r.headers.get('content-security-policy'),/frame-ancestors 'self'/);assert.ok(r.headers.get('x-request-id'));
+ let called=false;const worker=createPlatform({verifyAdmin:async()=>({ok:false})});const r=await worker.fetch(new Request(origin+'/api/admin/security'),{ASSETS:{fetch:async()=>{called=true;}}});assert.equal(r.status,401);assert.equal(called,false);assert.equal(r.headers.get('cache-control'),'private, no-store');assert.equal(r.headers.get('strict-transport-security'),'max-age=31536000');assert.match(r.headers.get('content-security-policy'),/frame-ancestors 'self'/);assert.ok(r.headers.get('x-request-id'));
 });
 test('private legacy errors are sanitized and carry correlation IDs',async()=>{
  const worker=createPlatform({verifyAdmin:async()=>identity,legacy:{fetch:async()=>{throw Error('secret-token-never-expose');}}});const r=await worker.fetch(new Request(origin+'/'),{});assert.equal(r.status,503);assert.doesNotMatch(await r.text(),/secret-token/);assert.equal(r.headers.get('referrer-policy'),'no-referrer');
