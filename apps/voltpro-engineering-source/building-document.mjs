@@ -19,6 +19,7 @@ export function createBuildingDocument(metadata = {}) {
       activeFloor: Number.isInteger(metadata.activeFloor) && metadata.activeFloor >= 1 ? metadata.activeFloor : 1
     },
     layers: { architecture: true, power: true, data: true },
+    designNotes: [],
     catalog: [],
     rooms: [],
     nodes: [],
@@ -35,6 +36,7 @@ export function recoverBuildingDocument(raw) {
   if(raw.catalog!==undefined&&!Array.isArray(raw.catalog))throw new TypeError('Project catalogue must be an array.');
   doc.catalog = (raw.catalog||[]).map(item=>importManufacturerCatalog({format:'voltpro.manufacturer-catalog',version:1,rights:item.rights||'Embedded project catalogue; permission statement must be verified',items:[{...item,familyId:item.familyId}]} )[0]);
   if(doc.catalog.length>5000||new Set(doc.catalog.map(item=>item.id)).size!==doc.catalog.length)throw new RangeError('Project catalogue contains too many or duplicate records.');
+  doc.designNotes=Array.isArray(raw.designNotes)?raw.designNotes.filter(note=>typeof note==='string').slice(0,40):[];
   doc.rooms = Array.isArray(raw.rooms) ? raw.rooms.map(room=>({...room,floor:Number.isInteger(room.floor)?room.floor:1})) : [];
   doc.nodes = raw.nodes.map((node, i) => ({
     ...node,
@@ -76,7 +78,7 @@ export function validateBuildingDocument(doc) {
   for (const room of doc?.rooms || []) {
     if (!room.id || ids.has(room.id)) errors.push(`${room.id || "Room"}: missing or duplicate object ID.`);
     ids.add(room.id);
-    if (!room.name?.trim() || ![room.x, room.y, room.width, room.height].every(Number.isInteger) || room.width < 1 || room.height < 1) errors.push(`${room.id}: invalid room boundary geometry.`);
+    if (!room.name?.trim() || ![room.x, room.y, room.width, room.height].every(Number.isFinite) || room.width < 1 || room.height < 1) errors.push(`${room.id}: invalid room boundary geometry.`);
   }
   for (const node of doc?.nodes || []) {
     const item = catalogItem(node.type,doc.catalog);
