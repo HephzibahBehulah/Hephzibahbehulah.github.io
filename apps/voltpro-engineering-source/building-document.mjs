@@ -94,7 +94,7 @@ export function validateBuildingDocument(doc) {
     ids.add(node.id);
     if (!Number.isFinite(node.x) || !Number.isFinite(node.y) || node.x < 1 || node.y < 0) errors.push(`${node.id}: position must be on the metric plan grid.`);
     if (!node.name?.trim()) errors.push(`${node.id}: device name is empty.`);
-    if (!(allowedVoltages[node.type] || [item?.defaultVoltage,"120 V AC","230 V AC","240 V AC","277 V AC","400 V AC","415 V AC","480 V AC","24 V DC","SELV / data","Protective conductor","Not energised"]).includes(node.voltage)) errors.push(`${node.id}: voltage is incompatible with ${node.type}.`);
+    if (!(allowedVoltages[node.type] || [item?.defaultVoltage,"120 V AC","208 V AC","230 V AC","240 V AC","277 V AC","400 V AC","415 V AC","480 V AC","24 V DC","SELV / data","Protective conductor","Not energised"]).includes(node.voltage)) errors.push(`${node.id}: voltage is incompatible with ${node.type}.`);
     if (!Number.isFinite(node.mountingHeight) || node.mountingHeight < 0 || node.mountingHeight > 6000) errors.push(`${node.id}: mounting height must be 0–6000 mm.`);
     if (!node.room?.trim()) warnings.push(`${node.id}: assign a room before issuing the drawing.`);
     if (!node.tag?.trim()) warnings.push(`${node.id}: reference designation is not assigned.`);
