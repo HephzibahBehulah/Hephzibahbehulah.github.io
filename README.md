@@ -83,6 +83,9 @@ The canvas uses the available viewport with independent horizontal/vertical scro
 
 Validation: 51 Breadboard tests and 27 workspace integration tests passed. Browser checks confirmed Project examples run a wired LED circuit and that Properties toggling preserves canvas/title/ruler geometry at 100% and 25%.
 
+### Breadboard production shell cleanup
+The production experience layer now leaves Breadboard’s existing frame intact. Its extra global header and lowest navigation row are hidden, while the original engineering AI launcher remains floating at the same lower-right offset as ElectCAD. The native Breadboard menus, bottom simulation controls, canvas and Properties layout are retained. The legacy studio decorator skips the completed Breadboard shell.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.

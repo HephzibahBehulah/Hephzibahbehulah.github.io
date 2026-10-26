@@ -17,3 +17,7 @@ body:has(.bb-workspace){margin:0!important;padding:0!important;height:100dvh!imp
 .bb-workspace .bb-properties-body .bb-scope{position:static;inset:auto;height:260px;margin:10px 0}.bb-workspace .bb-properties-body .bb-scope-head{flex-wrap:wrap}.bb-workspace .board-area:not(.canvas-mode) .board-shell{display:block!important;position:absolute;inset:28px 25px 40px 30px;width:auto;overflow:auto}.bb-workspace .board-area:not(.canvas-mode){overflow:auto}.bb-light .bb-properties-panel{background:#e8ecee!important}.bb-light .bb-properties-body{color:#233441}
 
 .bb-bolt{display:grid;place-items:center;width:36px;height:38px;padding:5px}.bb-bolt svg{width:25px;height:29px;fill:currentColor;stroke-width:1}.bb-shell-button svg{flex-shrink:0}.bb-shell-rail .bb-shell-button svg{width:22px;height:22px}
+
+/* Production decorations may load after the tool stylesheet. */
+html:has(.bb-workspace) body.hb-unified #vpSiteHeader,html:has(.bb-workspace) body.hb-unified #vpBottomNavigation,html:has(.bb-workspace) body.hb-unified .hb-platform-bar,html:has(.bb-workspace) #hbBotLauncher{display:none!important}
+html:has(.bb-workspace) body.hb-unified #vpBotLauncher{position:fixed!important;inset:auto 22px 82px auto!important;display:grid!important;width:58px!important;height:58px!important;border-radius:50%!important;padding:0!important;font-size:17px!important;z-index:100000!important}
