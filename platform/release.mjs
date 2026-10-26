@@ -12,7 +12,7 @@ const plc=path.join(engineering,'apps/voltpro-plc');
 const cyber=path.join(root,'apps/pentest-source');
 node('platform/check-browser-scripts.mjs');
 node('--test','apps/voltpro-engineering-source/tests/oscilloscope.test.mjs');
-node('--test','platform/access.test.mjs','platform/router.test.mjs','platform/engineering-ai.test.mjs','platform/app-archives.test.mjs','platform/admin-accounts.test.mjs','platform/admin-agent-safety.test.mjs','platform/sandbox-limits.test.mjs','platform/sandbox-sdk-migration.test.mjs','platform/plc-build-hygiene.test.mjs','platform/engineering-capability-matrix.test.mjs','platform/status-page.test.mjs',...gapAcceptanceTests,'platform/seo.test.mjs','platform/public-auth.test.mjs','platform/studio-bank.test.mjs','platform/release-assets.test.mjs','platform/about-contact.test.mjs','platform/public-language.test.mjs','platform/public-ai.test.mjs');
+node('--test','platform/access.test.mjs','platform/router.test.mjs','platform/deployment-cache.test.mjs','platform/release-update.test.mjs','platform/engineering-ai.test.mjs','platform/app-archives.test.mjs','platform/admin-accounts.test.mjs','platform/admin-agent-safety.test.mjs','platform/sandbox-limits.test.mjs','platform/sandbox-sdk-migration.test.mjs','platform/plc-build-hygiene.test.mjs','platform/engineering-capability-matrix.test.mjs','platform/status-page.test.mjs',...gapAcceptanceTests,'platform/seo.test.mjs','platform/public-auth.test.mjs','platform/studio-bank.test.mjs','platform/release-assets.test.mjs','platform/about-contact.test.mjs','platform/public-language.test.mjs','platform/public-ai.test.mjs');
 node('platform/fetch-apps.mjs');
 run('npm',['ci','--no-audit','--no-fund'],plc);
 run('npm',['test'],plc);
