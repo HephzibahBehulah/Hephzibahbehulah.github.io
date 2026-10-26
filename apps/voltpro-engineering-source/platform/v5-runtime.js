@@ -7,7 +7,7 @@ function adapt(legacy){
   const registered=meta?.terminals?.length?meta.terminals:null;
   const specs=graph?.terminals?.length?graph.terminals:(registered||null);
   const terminals=specs?specs.map(t=>({id:String(t.id),label:t.label||t.id,type:t.type||'electrical',number:t.number??null,domain:t.domain||'dc',position:t.position||undefined,direction:t.direction||undefined,phase:t.phase??null,polarity:t.polarity??null})):Array.from({length:Number(window.defs?.[c.type]?.pins||c.pins?.length||2)},(_,i)=>({id:String(i),label:String(i+1),type:'electrical',domain:'dc'}));
-  return {id:c.id,type:c.type,ref:c.ref||c.id,position:{x:c.x||0,y:c.y||0},rotation:c.rotation||0,terminals,parameters:structuredClone(c.props||c.parameters||{}),state:structuredClone(c.state||{}),model:c.model||meta?.electricalModel?.type||null};
+  return {id:c.id,type:c.type,ref:c.ref||c.id,position:{x:c.x||0,y:c.y||0},rotation:c.rotation||0,terminals,parameters:structuredClone(c.props||c.parameters||{}),state:structuredClone(c.state||{}),model:c.model||meta?.electricalModel?.type||null,pcb:structuredClone(c.pcb||{})};
  });
  const terminalIndex=new Map(devices.map(d=>[d.id,d.terminals.map(t=>String(t.id))]));
  const terminalDomains=new Map(devices.flatMap(d=>d.terminals.map(t=>[d.id+":"+String(t.id),String(t.domain||"dc")])));
