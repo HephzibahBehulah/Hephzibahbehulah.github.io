@@ -45,6 +45,12 @@ function reconcile(){
  if(document.querySelector('#vpSiteHeader')&&!document.querySelector('script[src="/_hb/studio.js"]'))loadScript('/_hb/studio.js');
 }
 function repairEngineering(){
+ // Breadboard already owns its full frame; keep the existing assistant outside the hidden global header.
+ if(['breadboard','oscilloscope'].includes(document.documentElement.dataset.vpWorkspace)||document.querySelector('.bb-workspace,#scopeApp')){
+  const bot=document.getElementById('vpBotLauncher');if(bot){if(bot.parentElement!==document.body)document.body.append(bot);if(bot.textContent.trim()!=='AI')bot.innerHTML='<span>AI</span><i class="vp-bot-dot" aria-hidden="true"></i>';bot.setAttribute('aria-label','Open engineering circuit assistant');}
+  return;
+ }
+
  const header=document.querySelector('#vpSiteHeader');if(!header)return;if(document.body.classList.contains('hb-studio'))return;
  document.body.classList.add('hb-engineering');
  let tools=header.querySelector('.hb-vp-tools');if(!tools){tools=el('div','hb-vp-tools');header.append(tools);}

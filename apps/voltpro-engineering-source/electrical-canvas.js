@@ -165,7 +165,7 @@ function renderWires() {
     const route=crossFloor?[local,{x:local.x+3,y:local.y}]:routeBuildingConnection(from,to);
     const points = route.map(point => `${(point.x - 1) * GRID_PX},${point.y * GRID_PX}`).join(" ");
     const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-    line.setAttribute("class", `wire wire-${typeOf(from.type).system}${selectedWire===wire.id?" selected":""}`); line.setAttribute("points", points); line.setAttribute("data-id", wire.id); line.addEventListener("click",event=>{event.stopPropagation();showWireProperties(wire);renderWires();});wireLayer.append(line);
+    line.setAttribute("class", `wire wire-${typeOf(from.type).system}${selectedWire===wire.id?" selected":""}`); line.setAttribute("points", points); line.setAttribute("data-id", wire.id); line.setAttribute("tabindex","0"); line.setAttribute("role","button"); line.setAttribute("aria-label",`Cable route ${wire.id}: ${from.tag||from.name} to ${to.tag||to.name}`); line.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();showWireProperties(wire);renderWires();}}); line.addEventListener("click",event=>{event.stopPropagation();showWireProperties(wire);renderWires();});wireLayer.append(line);
     const text=document.createElementNS("http://www.w3.org/2000/svg","text");text.setAttribute("x",String((local.x-1)*GRID_PX+10));text.setAttribute("y",String(local.y*GRID_PX-10));
     const length=connectionLength(state,wire);text.textContent=crossFloor?`↕ Floor ${localFrom?to.floor||1:from.floor||1} · ${length===null?'rise needed':length.toFixed(1)+' m'}`:(wire.cableId?`${length===null?'?':length.toFixed(1)} m`:'Cable unspecified');wireLayer.append(text);
   }

@@ -70,13 +70,37 @@ PLC uses the supplied ElectCAD images as its canvas reference only. Rulers now u
 
 Validation: production build, 27 PLC engine/geometry tests and 27 workspace integration tests passed. Browser comparison at 100% and 25% confirmed increased ruler coverage, readable labels and identical origin/title-block positions.
 
+### PLC Properties toggle and fixed canvas dimensions
+
+Properties now owns a permanently reserved right-hand column. Its header and show/hide button remain visible in the same position when the panel content is collapsed. Opening or hiding Properties does not resize or shift the canvas, rulers, camera or title block at 100% or 25%. The header stays accessible when moving the pointer away collapses the panel content. Existing left-rail shortcuts still open the relevant dock tab. The top and bottom bars and ElectCAD source are unchanged.
+
+Validation for the Properties fix: production build and 54 tests passed. Browser measurements at both 100% and 25% confirmed identical canvas bounds, ruler coverage, camera translation, title-block bounds and toggle position before hiding, while hidden and after reopening.
+
+### Breadboard workspace follows the completed PLC reference
+Breadboard now owns a single top menu row, a single bottom navigation/simulation row, a left tool rail and a permanently reserved Properties column. The library overlays the canvas; hiding Properties leaves its header toggle accessible and does not change the canvas dimensions. Examples and blank-project actions live inside Project. Existing breadboard components, tie-point snapping, wiring, probe, firmware, serial, PCB, scope and solver handlers are retained; scope lives inside Properties.
+
+The canvas uses the available viewport with independent horizontal/vertical scrolling and panning, 0–10000 / A–ZZ rulers, and zoom from 25% to 800%. Ruler text stays readable while divisions follow the workspace scale. Title fields and status stay anchored to the viewport; title metadata is included in project exports. The default view shows the physical board at 100%. PLC and ElectCAD source are unchanged.
+
+Validation: 51 Breadboard tests and 27 workspace integration tests passed. Browser checks confirmed Project examples run a wired LED circuit and that Properties toggling preserves canvas/title/ruler geometry at 100% and 25%.
+
+### Breadboard production shell cleanup
+The production experience layer now leaves Breadboard’s existing frame intact. Its extra global header and lowest navigation row are hidden, while the original engineering AI launcher remains floating at the same lower-right offset as ElectCAD. The native Breadboard menus, bottom simulation controls, canvas and Properties layout are retained. The legacy studio decorator skips the completed Breadboard shell.
+
+### Breadboard component library and search
+The left rail now exposes a labelled Components button. The library open state overrides its hidden positioning, so Components and Search both reveal the actual palette. Search expands matching categories and reports matches or an empty result. During component dragging the flyout stays open until drag-end; existing physical tie-point drop handlers are retained.
+
+### VoltPro Oscilloscope
+The engineering suite now includes `/oscilloscope`: a two-channel sampled-data instrument with simulated sources, CSV import, Auto/Normal/Single triggering, independent vertical controls, shared timebase, cursors, measured readouts, PNG/CSV export and saved settings. The default scene is 50 Hz sine/square at 100 kSa/s with 5,000 samples. Hardware requires a separately supported adapter; the browser does not directly measure external voltages. See `apps/voltpro-engineering-source/oscilloscope/README.md` for model limits and input formats.
+
+The engineering root has seven project links in the requested order. All tool bottom bars add **Oscilloscope**, without a VoltPro prefix. Existing PLC and Breadboard changes are limited to this navigation link.
+
 ### Electrical installation catalogue and engineering data tools
 
 Electrical now provides 608 named specification records in 13 categories, with original explanatory drawing graphics. Three LAPP cable identities are manufacturer-referenced; the other records are equipment/material specifications, not verified manufacturer products. Search, category and jurisdiction filters use bounded result pages. Project contains Germany, USA, Nigeria and Dubai reference profiles and 1–300-storey project settings. Existing library, menu and toolbar actions are reused.
 
 Equipment and materials retain floor, circuit, quantity, board and protective-device assignments. Cable routes store cable designation, cross-section, entered ampacity, design current, fault-current input and surveyed length allowances; cross-floor routes require an entered vertical rise. The existing Electrical review action shows data checks and unresolved engineering requirements. The existing schedule action exports grouped material and cable quantities. Resistance-only voltage-drop estimates identify their assumptions and do not size cables or certify installations. Manufacturer catalogue JSON import requires source and permitted-use information, is limited to 5,000 records per local project and does not independently verify supplier declarations. This is not a ten-million-manufacturer-part database.
 
-Validation: 18 targeted tests passed; browser checks confirmed component search and the new catalogue rendering. Full UI regression, physical installation validation and approval remain pending. PLC files are unchanged.
+Validation: 19 targeted tests passed; browser checks confirmed search, symbol placement, technical properties, cable editing and the 30-storey design review. Full UI regression, physical installation validation and approval remain pending. PLC files are unchanged.
 
 ### Documentation maintenance
 
