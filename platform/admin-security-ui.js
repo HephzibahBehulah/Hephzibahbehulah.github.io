@@ -39,7 +39,7 @@ export function openSecurity(){
    body.append(make('h3','Review signals'));
    if(!data.signals.length)body.append(make('p','No issues found in these checks. This is not a guarantee that the website is uncompromised.'));
    const list=make('ul');for(const item of data.signals)list.append(make('li',item.level.toUpperCase()+': '+item.message));body.append(list);
-   body.append(make('h3','Selected asset integrity'),table(['Public asset','Result','Expected SHA-256'],data.integrity.map(x=>[x.path,x.status,x.expected||x.reason])));
+   body.append(make('h3','Selected asset integrity'),table(['Public asset','Result','Expected SHA-256'],data.integrity.map(x=>[x.publicUrl||x.path,x.status,x.expected||x.reason])));
    body.append(make('h3','Deployment history & upgrade reports'),make('p','Open a run to review its production-security-report artifact. Older runs may predate this report. Failed or in-progress runs are not proof of malicious activity.'));
    body.append(table(['Created','Commit','Actor','Result','Evidence'],data.releases.map(r=>{const a=make('a','Open workflow / reports');a.href=r.url;a.target='_blank';a.rel='noopener noreferrer';return [r.createdAt,r.commit,r.actor,r.result||r.status,a];})));
    body.append(make('h3','Monitoring coverage'));const coverage=make('ul');for(const line of data.coverage)coverage.append(make('li',line));body.append(coverage);
