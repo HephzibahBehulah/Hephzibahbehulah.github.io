@@ -14,22 +14,25 @@
   <header class="cad-toolbar">
     <div class="cad-brand"><a href="https://hephzibahbehulah.com/" target="_top">← Main Site</a><a class="cad-company" href="https://hephzibahbehulah.com/" target="_top" aria-label="Hephzibah Behulah"><img src="/_hb/hb-logo.svg" alt="HB"></a><strong>⚡ VoltPro <span>Electrical</span></strong></div>
     <nav class="cad-menubar" aria-label="Drawing commands">
-      <details><summary>File</summary><div class="cad-menu"><button data-command="new">New project</button><button data-command="open">Open project JSON…</button><button data-command="save">Save project</button><button data-command="export">Export project JSON</button><button data-command="print">Print drawing…</button></div></details>
+      <details><summary>File</summary><div class="cad-menu"><button data-command="new">New project</button><button data-command="open">Open project / manufacturer catalogue JSON…</button><button data-command="save">Save project</button><button data-command="export">Export project JSON</button><button data-command="print">Print drawing…</button></div></details>
       <details><summary>Edit</summary><div class="cad-menu"><button data-command="undo">Undo</button><button data-command="redo">Redo</button><button data-command="delete">Delete selected object</button></div></details>
       <details><summary>View</summary><div class="cad-menu"><button data-command="zoom-in">Zoom in</button><button data-command="zoom-out">Zoom out</button><button data-command="fit">Fit drawing</button><button data-command="origin">Show plan origin</button><button data-panel="library">Installation objects</button><button data-panel="properties">Properties</button><label><input type="checkbox" data-layer="architecture" checked> Architecture</label><label><input type="checkbox" data-layer="power" checked> Power devices</label><label><input type="checkbox" data-layer="data" checked> Data devices</label></div></details>
       <details><summary>Insert</summary><div class="cad-menu"><button data-command="select">Select / move</button><button data-command="pan">Pan drawing</button><button data-command="room">Room boundary</button><button data-command="wire">Orthogonal connection</button></div></details>
-      <details><summary>Project</summary><div class="cad-menu"><button data-command="new">Start with a blank project</button><button data-command="open">Open project JSON…</button><label>Title block scale <select id="drawingScale"><option>1:50</option><option>1:100</option><option>1:200</option></select></label></div></details>
-      <details><summary>Electrical</summary><div class="cad-menu"><button data-command="validate">Validate drawing</button><button data-command="references">Assign missing references</button><button data-command="schedule">Device schedule</button></div></details>
+      <details><summary>Project</summary><div class="cad-menu"><button data-command="new">Start with a blank project</button><button data-command="open">Open project / manufacturer catalogue JSON…</button><label>Jurisdiction <select id="buildingProfile"></select></label><label>Storeys <input id="buildingFloors" type="number" min="1" max="300" value="1"></label><label>Title block scale <select id="drawingScale"><option>1:50</option><option>1:100</option><option>1:200</option></select></label></div></details>
+      <details><summary>Electrical</summary><div class="cad-menu"><button data-command="validate">Review design &amp; installation data</button><button data-command="references">Assign missing references</button><button data-command="schedule">Materials &amp; cable schedule</button></div></details>
     </nav>
-    <div class="cad-toolbar-actions"><button data-command="pan" aria-label="Pan drawing">✥</button><button data-command="grid" aria-label="Toggle drawing grid" aria-pressed="true">Grid</button><span class="cad-snap" data-grid-description="200 mm / square" title="Device and room placement snap to the 200 mm model grid">Snap: 200 mm</span><button data-command="zoom-out" aria-label="Zoom out">−</button><button id="zoomLevel" data-command="fit" aria-label="Fit drawing">100%</button><button data-command="zoom-in" aria-label="Zoom in">+</button><button id="savePlan" type="button">Save</button><button id="exportPlan" type="button">Export</button><details class="cad-workspace-menu"><summary>Workspace</summary><div id="electricalShellControls" class="cad-menu"><a href="/workspace" target="_top">My workspace</a><a href="/status" target="_top">About &amp; readiness</a></div></details></div>
+    <div class="cad-toolbar-actions"><button data-command="pan" aria-label="Pan drawing">✥</button><button data-command="grid" aria-label="Toggle drawing grid" aria-pressed="true">Grid</button><label class="cad-floor-picker">Floor <select id="activeFloor" aria-label="Active floor"></select></label><span class="cad-snap" data-grid-description="200 mm / square" title="Device and room placement snap to the 200 mm model grid">Snap: 200 mm</span><button data-command="zoom-out" aria-label="Zoom out">−</button><button id="zoomLevel" data-command="fit" aria-label="Fit drawing">100%</button><button data-command="zoom-in" aria-label="Zoom in">+</button><button id="savePlan" type="button">Save</button><button id="exportPlan" type="button">Export</button><details class="cad-workspace-menu"><summary>Workspace</summary><div id="electricalShellControls" class="cad-menu"><a href="/workspace" target="_top">My workspace</a><a href="/status" target="_top">About &amp; readiness</a></div></details></div>
   </header>
   <input id="projectFile" type="file" accept="application/json,.json" hidden>
   <div class="cad-layout">
     <nav class="cad-rail" aria-label="Electrical panels"><button data-panel="library" aria-label="Installation objects" aria-expanded="false">▦</button><button data-panel="properties" aria-label="Properties" aria-expanded="false">⚙</button></nav>
     <aside class="cad-library" aria-label="Building installation components">
-      <div class="cad-panel-heading"><h2>Installation Objects</h2><button data-close-panel="library" aria-label="Close installation objects">×</button></div><p>Drag a typed electrical device onto the measured plan or select it, then click the grid.</p>
+      <div class="cad-panel-heading"><h2>Installation catalogue</h2><button data-close-panel="library" aria-label="Close installation objects">×</button></div><label class="cad-library-field">Search equipment / designation<input id="catalogSearch" type="search" placeholder="e.g. RCBO B16, NYM-J, ceiling fan" autocomplete="off"></label>
+      <label class="cad-library-field">Category<select id="catalogCategory"></select></label>
+      <label class="cad-library-field">Results page<select id="catalogPage"></select></label>
+      <p id="catalogCount" role="status"></p>
       <div id="componentLibrary"></div>
-      <p class="cad-hint">Plan object markers are not licensed IEC 60617 symbols. Select and verify a project symbol set before issuing a formal drawing.</p>
+      <p class="cad-hint">Original explanatory drawing symbols. Specification records require a selected manufacturer part; licensed IEC/ANSI symbol identity and installation suitability are not asserted.</p><details><summary>Jurisdiction &amp; source references</summary><p id="profileGuidance"></p><div id="profileSources"></div></details>
     </aside>
     <main class="cad-editor">
       <div class="cad-workarea" id="workarea" aria-label="Building plan with coordinate rulers">
@@ -58,16 +61,20 @@
     </main>
     <aside class="cad-properties" aria-label="Selected component properties">
       <div class="cad-panel-heading"><h2>Properties</h2><button data-close-panel="properties" aria-label="Close properties">×</button></div>
-      <p id="emptyProperties">Select a component to edit its name, room, and voltage.</p>
+      <p id="emptyProperties">Select equipment, a material item or a cable route to edit its specification and assignments.</p>
+      <section id="engineeringReport" hidden aria-label="Engineering review"></section>
+      <form id="wirePropertiesForm" hidden></form>
       <form id="roomPropertiesForm" hidden>
         <label>Room object ID <input id="roomId" readonly></label>
-        <label>Room name <input id="roomName" maxlength="60"></label>
+        <label>Room name <input id="roomName" maxlength="60"></label><label>Floor<select id="roomFloor"></select></label>
         <label>Width (mm) <input id="roomWidth" readonly></label>
         <label>Height (mm) <input id="roomHeight" readonly></label>
         <button id="deleteRoom" type="button">Remove room boundary</button>
       </form>
       <form id="propertiesForm" hidden>
-        <label>Object ID <input id="componentId" readonly></label>
+        <div id="componentIdentity"></div><label>Object ID <input id="componentId" readonly></label>
+        <label>Floor<select id="componentFloor"></select></label><label id="quantityLabel">Quantity<input id="componentQuantity" type="number" min="0.01" step="0.01"></label>
+        <label>Distribution board<select id="componentBoard"></select></label><label>Upstream protective device<select id="componentProtection"></select></label><div id="componentSpecification"></div>
         <label>Reference <input id="componentTag" maxlength="24" autocomplete="off"></label>
         <label>Name <input id="componentName" maxlength="60"></label>
         <label>Room <input id="componentRoom" maxlength="60" list="roomOptions"></label><datalist id="roomOptions"></datalist>
