@@ -112,6 +112,9 @@ The fixture is an engineering draft, not a compliant installation. It records ge
 
 Validation: 23 targeted tests passed. Browser checks covered blank initial state, house generation/import, both floors, project download and blank refresh afterward. Native unload prompts are browser controlled. Remote-service availability and site-specific installation approval are separate checks. PLC source remains unchanged.
 
+### Oscilloscope Help and dropdowns
+Help now opens a comprehensive in-app user guide covering operation, acquisition limits, controls, triggers, measurements, cursors, files, AI and troubleshooting. Top-menu dropdowns use the browser top layer so the waveform and scrollable header cannot cover or clip them. Pointer exit, outside clicks, Escape and leaving keyboard focus close menus; command selection still works.
+
 ### Documentation maintenance
 
 Update this README alongside every project change that affects functionality, navigation, setup, configuration, deployment or verification. Describe delivered behaviour, accurate library counts, relevant checks and known limitations; preserve still-valid documentation.
