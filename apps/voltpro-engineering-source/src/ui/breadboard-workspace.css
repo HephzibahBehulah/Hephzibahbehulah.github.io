@@ -25,3 +25,6 @@ html:has(.bb-workspace) body.hb-unified #vpBotLauncher{position:fixed!important;
 /* The open state must outrank the base flyout's hidden transform/visibility. */
 .bb-workspace .layout.bb-library-open>.bb-parts-panel{transform:none!important;visibility:visible!important;pointer-events:auto!important}
 .bb-shell-rail button[aria-label="Components"]{height:53px;flex-direction:column;gap:3px}.bb-shell-rail button[aria-label="Components"] small{font:8px system-ui;color:inherit}.bb-search-results{font:10px system-ui;color:#9db4c2;margin:5px 0 10px}.bb-parts-panel [data-part][hidden],.bb-parts-panel .bb-parts-category[hidden]{display:none!important}
+/* Keep managed-panel decorators from putting the library in an implicit grid row. */
+.bb-workspace .layout>.side.bb-parts-panel{position:absolute!important;inset:0 auto 0 46px!important;width:220px!important;height:auto!important;max-height:none!important;min-height:0!important;grid-area:auto!important;z-index:60!important}
+@media(max-width:700px){.bb-workspace .layout>.side.bb-parts-panel{left:40px!important}}
