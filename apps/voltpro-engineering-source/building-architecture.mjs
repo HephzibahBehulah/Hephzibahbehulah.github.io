@@ -13,7 +13,7 @@ export function nearestWall(doc,point,floor,maxDistanceMM=Infinity){
  let found=null;for(const wall of doc.walls||[]){if(wall.floor!==floor)continue;const hit=projectToWall(point,wall,doc.gridMillimetres);if(hit.distanceMM<=maxDistanceMM&&(!found||hit.distanceMM<found.distanceMM))found={...hit,wall};}return found;
 }
 export function wallsFromRooms(rooms,{grid=200,thicknessMM=200,prefix='WALL'}={}){
- const lines=[];for(const room of rooms){const {x,y,width:w,height:h}=room,roomId=room.id;for(const [a,b]of [[{x,y},{x:x+w,y}],[{x:x+w,y},{x:x+w,y:y+h}],[{x:x+w,y:y+h},{x,y:y+h}],[{x,y:y+h},{x,y}]])lines.push({a,b,floor:room.floor||1,roomId});}
+ const lines=[];for(const room of rooms){const {x,y,width:w,height:h}=room,roomId=room.id;for(const [a,b]of [[{x,y},{x:x+w,y}],[{x:x+w,y},{x:x+w,y:y+h}],[{x:x+w,y:y+h},{x,y:y+h}],[{x,y:y+h},{x,y}]])lines.push({a:{x:Math.round(a.x*1e7)/1e7,y:Math.round(a.y*1e7)/1e7},b:{x:Math.round(b.x*1e7)/1e7,y:Math.round(b.y*1e7)/1e7},floor:room.floor||1,roomId});}
  const walls=[];
  for(const floor of [...new Set(lines.map(l=>l.floor))])for(const horizontal of [true,false]){
   const relevant=lines.filter(l=>l.floor===floor&&isHorizontal(l)===horizontal),coords=[...new Set(relevant.map(l=>horizontal?l.a.y:l.a.x))];
