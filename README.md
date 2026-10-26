@@ -94,6 +94,24 @@ The engineering suite now includes `/oscilloscope`: a two-channel sampled-data i
 
 The engineering root has seven project links in the requested order. All tool bottom bars add **Oscilloscope**, without a VoltPro prefix. Existing PLC and Breadboard changes are limited to this navigation link.
 
+### Electrical installation catalogue and engineering data tools
+
+Electrical now provides 610 named specification records in 13 categories, with original explanatory drawing graphics. Three LAPP cable identities are manufacturer-referenced; the other records are equipment/material specifications, not verified manufacturer products. Search, category and jurisdiction filters use bounded result pages. Project contains Germany, USA, Nigeria and Dubai reference profiles and 1–300-storey project settings. Existing library, menu and toolbar actions are reused.
+
+Equipment and materials retain floor, circuit, quantity, board and protective-device assignments. Cable routes store cable designation, cross-section, entered ampacity, design current, fault-current input and surveyed length allowances; cross-floor routes require an entered vertical rise. The existing Electrical review action shows data checks and unresolved engineering requirements. The existing schedule action exports grouped material and cable quantities. Resistance-only voltage-drop estimates identify their assumptions and do not size cables or certify installations. Manufacturer catalogue JSON import requires source and permitted-use information, is limited to 5,000 records per local project and does not independently verify supplier declarations. This is not a ten-million-manufacturer-part database.
+
+Validation: 19 targeted tests passed; browser checks confirmed search, symbol placement, technical properties, cable editing and the 30-storey design review. Full UI regression, physical installation validation and approval remain pending. PLC files are unchanged.
+
+### Electrical session lifecycle and installation AI
+
+Electrical now starts with an empty project on refresh or a fresh tab; it does not automatically reload the previous local-storage drawing. Save, Export and Ctrl+S download the current project JSON. Editing marks the project unsaved, with beforeunload guards in the editor and embedding shell; browsers control whether/how the native warning is displayed. Cancel navigation and use Save to retain a draft. Reopen saved files through File / Project. Browser termination or mobile lifecycle events cannot guarantee an unload prompt.
+
+The existing floating assistant is reused inside Electrical, with an Electrical-specific title, project/catalogue context, the same configured remote AI service, validated building-JSON proposals and an explicit import action. Other workspaces retain their existing assistant. A deterministic, clearly labelled two-storey house test generates the eight requested room areas, a planned meter cabinet, circuit/protection labels, lighting/sockets, requested cable specifications, a BOM and unresolved design checks. Other requests use the existing remote AI service rather than silently receiving the test fixture. Invalid parts, malformed routes and unsupported proposal sizes are rejected before import.
+
+The fixture is an engineering draft, not a compliant installation. It records geometry, socket-count and lighting-load assumptions and missing appliance/site inputs. Vertical riser quantities remain unresolved until surveyed; a 16 A / 400 V three-phase circuit has an 11.09 kVA capacity, not a known stove load. PE documentation and explicit minimum-cross-section requirements are screened, and missing bathroom RCD protection is reported. No zero-error check produces a DIN VDE compliance certificate. Two named specification records (meter cabinet and heated towel rail) extend the library to 610 records.
+
+Validation: 23 targeted tests passed. Browser checks covered blank initial state, house generation/import, both floors, project download and blank refresh afterward. Native unload prompts are browser controlled. Remote-service availability and site-specific installation approval are separate checks. PLC source remains unchanged.
+
 ### Oscilloscope Help and dropdowns
 Help now opens a comprehensive in-app user guide covering operation, acquisition limits, controls, triggers, measurements, cursors, files, AI and troubleshooting. Top-menu dropdowns use the browser top layer so the waveform and scrollable header cannot cover or clip them. Pointer exit, outside clicks, Escape and leaving keyboard focus close menus; command selection still works.
 
