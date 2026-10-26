@@ -21,3 +21,7 @@ body:has(.bb-workspace){margin:0!important;padding:0!important;height:100dvh!imp
 /* Production decorations may load after the tool stylesheet. */
 html:has(.bb-workspace) body.hb-unified #vpSiteHeader,html:has(.bb-workspace) body.hb-unified #vpBottomNavigation,html:has(.bb-workspace) body.hb-unified .hb-platform-bar,html:has(.bb-workspace) #hbBotLauncher{display:none!important}
 html:has(.bb-workspace) body.hb-unified #vpBotLauncher{position:fixed!important;inset:auto 22px 82px auto!important;display:grid!important;width:58px!important;height:58px!important;border-radius:50%!important;padding:0!important;font-size:17px!important;z-index:100000!important}
+
+/* The open state must outrank the base flyout's hidden transform/visibility. */
+.bb-workspace .layout.bb-library-open>.bb-parts-panel{transform:none!important;visibility:visible!important;pointer-events:auto!important}
+.bb-shell-rail button[aria-label="Components"]{height:53px;flex-direction:column;gap:3px}.bb-shell-rail button[aria-label="Components"] small{font:8px system-ui;color:inherit}.bb-search-results{font:10px system-ui;color:#9db4c2;margin:5px 0 10px}.bb-parts-panel [data-part][hidden],.bb-parts-panel .bb-parts-category[hidden]{display:none!important}
