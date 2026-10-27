@@ -73,7 +73,7 @@ test('wire inspector exposes AWG and metric cross-section with synchronized appr
   assert.ok(source.includes('data-wire-prop="size"'));
   assert.ok(source.includes('Drawing thickness only. It does not calculate current capacity or electrical safety.'));
   const html = fs.readFileSync(path.join(__dirname, '..', 'simulator.html'), 'utf8');
-  assert.ok(html.includes('simulator.js?v=20261027c'));
+  assert.ok(html.includes('simulator.js?v=20261027e'));
   assert.ok(html.includes('simulator.css?v=20261027a'));
 });
 
@@ -106,3 +106,4 @@ test('toolbar wire menu exists', () => {
  assert.match(source, /\["#wireBtn","#wireMenuBtn"\]\.forEach\(q=>\{const b=\$\(q\);if\(b\)b\.setAttribute\("aria-expanded",String\(isOpen\)\)\}\)/);
  assert.match(workflow, /if\(was\)this\.callbacks\.onCancel\?\.\(\)/);
 });
+
