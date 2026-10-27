@@ -221,3 +221,20 @@
 .tool-lab-capability-grid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.tool-lab-capability-grid a{display:flex;flex-direction:column;gap:6px;min-height:100px;padding:13px;text-decoration:none;border:1px solid rgba(0,255,220,.12);background:rgba(4,14,21,.82);transition:.2s ease}.tool-lab-capability-grid a:hover{border-color:rgba(0,255,220,.5);transform:translateY(-2px);box-shadow:0 0 25px rgba(0,255,220,.08)}.tool-lab-capability-grid b{font:800 .82rem Inter,sans-serif;letter-spacing:.09em}.tool-lab-capability-grid small{font-size:.72rem;line-height:1.45;opacity:.62}
 @media(max-width:900px){.tool-lab-hero-grid{grid-template-columns:1fr}.tool-lab-instrument-panel{min-height:auto}}
 @media(max-width:650px){.tool-lab-title-row{grid-template-columns:1fr}.tool-lab-title-row .os-title{font-size:4rem}.tool-lab-mission{border-left:0;border-top:1px solid rgba(0,255,220,.2);padding:14px 0 0}.tool-lab-capability-grid{grid-template-columns:1fr 1fr}.tool-instrument{flex-direction:column}}
+
+/* ADIGUN Security & Releases command console */
+#hb-admin-security{color:#e8f5ff;background:radial-gradient(ellipse at 88% 0%,#103344 0,transparent 38%),linear-gradient(145deg,#08111c,#0b1724 58%,#101426);border:1px solid #35d8ed88;box-shadow:0 0 0 1px #9a6bff22,0 24px 90px #000b;}
+#hb-admin-security::backdrop{background:#020711c9;backdrop-filter:blur(7px)}
+#hb-admin-security>header{position:sticky;top:0;z-index:2;padding:12px 0;background:linear-gradient(#08111cf5,#08111ce8);border-bottom:1px solid #35d8ed33}
+#hb-admin-security>header h2{font:700 clamp(19px,3vw,28px) 'JetBrains Mono',monospace;letter-spacing:.04em;text-shadow:0 0 18px #31d7ed66}
+#hb-admin-security [role=tablist]{display:flex;gap:8px;overflow-x:auto;padding:10px 0;border-bottom:1px solid #94a3b833}
+#hb-admin-security [role=tab]{flex:0 0 auto;border:1px solid #60728d88;border-radius:8px;background:#111e2b;color:#a9bdd2;padding:9px 13px;font:600 11px 'JetBrains Mono',monospace;cursor:pointer;transition:border-color .18s,background .18s,transform .18s}
+#hb-admin-security [role=tab]:hover{transform:translateY(-1px);border-color:#52e4f4}
+#hb-admin-security [role=tab][aria-selected=true]{color:#eaffff;border-color:#44e5f4;background:linear-gradient(120deg,#0a5160,#35205f);box-shadow:0 0 22px #22d3ee28}
+#hb-admin-security [role=tabpanel]{min-height:260px;padding:14px 4px;animation:adigun-scan-in .22s ease-out}
+#hb-admin-security h3{color:#80f1ff;font:700 13px 'JetBrains Mono',monospace;letter-spacing:.06em;margin:20px 0 10px}
+#hb-admin-security p,#hb-admin-security li{color:#c2cfde;line-height:1.65}
+#hb-admin-security table th{position:sticky;top:0;background:#122437;color:#79e8f5;text-align:left;padding:10px;font:600 10px 'JetBrains Mono',monospace}
+#hb-admin-security [role=tab]:focus-visible,#hb-admin-security button:focus-visible{outline:2px solid #f4dc75;outline-offset:2px}
+@keyframes adigun-scan-in{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){#hb-admin-security [role=tab]{transition:none}#hb-admin-security [role=tabpanel]{animation:none}}

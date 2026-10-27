@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import ts from 'typescript';
 import { buildIndustrialMachineProject } from '../src/machine-control-project.mjs';
 import { connectablePins, terminalId } from '../src/terminal-geometry.mjs';
@@ -44,7 +44,7 @@ test('industrial machine-control starter has three sheets and terminal-resolved 
 test('document decoder accepts stable terminal references and rejects a reference to a missing terminal', async () => {
   const source = fs.readFileSync(new URL('../src/editor-model.ts', import.meta.url), 'utf8');
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
-  const dir = path.dirname(new URL('../src/editor-model.ts', import.meta.url).pathname);
+  const dir = path.dirname(fileURLToPath(new URL('../src/editor-model.ts', import.meta.url)));
   const tempFile = path.join(dir, `.editor-model-test-${process.pid}-${Date.now()}.mjs`);
   fs.writeFileSync(tempFile, js);
   try {

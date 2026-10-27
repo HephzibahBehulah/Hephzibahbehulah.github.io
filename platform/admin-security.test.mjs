@@ -46,3 +46,9 @@ test('private UI renders untrusted records as text and links the account menu to
  const ui=fs.readFileSync(new URL('./admin-security-ui.js',import.meta.url),'utf8');assert.doesNotMatch(ui,/\.innerHTML\s*=/);assert.match(ui,/textContent/);assert.match(ui,/expiry&&Date\.now\(\)>=expiry/);assert.match(fs.readFileSync(new URL('./platform.js',import.meta.url),'utf8'),/watchSession\(accountMenu\)/);
 });
 
+
+test('ADIGUN security-review AI receives useful release evidence without operator identity or credentials',async()=>{
+ const {securityReviewSnapshot}=await import('./admin-security-ui.js');
+ const snapshot=securityReviewSnapshot({session:{email:'private@example.test',role:'Owner',token:'never-send'},build:{commitHash:'a'.repeat(40)},source:{repository:'owner/repo',mainCommit:'b'.repeat(40),branchProtected:true},verification:'successful deployment recorded',signals:[{level:'review',message:'asset mismatch'}],integrity:[{status:'match'},{status:'mismatch'}],releases:[{commit:'a'.repeat(40),status:'completed',actor:'private@example.test',createdAt:'2026-10-27T00:00:00Z',url:'https://github.com/run'}],coverage:['Cloudflare denials require provider logs']});
+ const json=JSON.stringify(snapshot);assert.match(json,/asset mismatch/);assert.match(json,/integrity/);assert.doesNotMatch(json,/private@example\.test|never-send|Owner/);assert.equal(snapshot.integrity.match,1);assert.equal(snapshot.integrity.mismatch,1);assert.equal(snapshot.releases[0].actor,undefined);
+});
