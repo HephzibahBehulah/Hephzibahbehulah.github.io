@@ -21,7 +21,7 @@ test('embedded Simulator follows the compact one-row workspace shell',()=>{
  assert.doesNotMatch(layout,/makeMenu\('More'\)/);
  assert.match(layout,/const categories=\['File','Edit','View','Insert','Project','Electrical','Simulation','Reports','Tools','Window','Help'\]/);
  assert.match(layout,/vp-toolbar-quick/);
- assert.match(layout,/MutationObserver\(moveNavigation\)/);
+ assert.match(layout,/breadboard/);
 });
 
 test('drawing sheet scrolls independently and keeps coordinate rails visible',()=>{
@@ -42,7 +42,7 @@ test('component rail, inspector tabs, and bottom simulation actions retain live 
  assert.match(shell,/data-rail="search"/);
  assert.match(shell,/data-dock-tab="properties"/);
  assert.match(shell,/data-dock-tab="results"/);
- assert.match(shell,/\["runBtn", "stepBtn", "stopBtn"\]/);
+ assert.match(shell,/\["runBtn", "pauseBtn", "stopBtn"\]/);
  assert.match(shell,/restoreSimulatorChrome\(\)/);
  assert.match(shell,/app\.prepend\(doc\.adoptNode\(sharedHeader\)\)/);
  assert.match(shell,/sharedHeader\.querySelectorAll\("details\[open\]"\)/);

@@ -9,12 +9,12 @@ const read = file => fs.readFileSync(path.join(root, file), "utf8");
 test("Academy sidebar has one canonical destination for each learning workspace", () => {
   const html = read("index.html");
   const sidebarNav = html.slice(html.indexOf('<nav class="nav"'), html.indexOf("</nav>", html.indexOf('<nav class="nav"')));
-  for (const label of ["Dashboard", "Learning Path", "Knowledge Checks", "Exam Practice", "Reference Library", "Safety &amp; Standards", "Virtual Labs", "Practical Workbench", "Tools &amp; Equipment", "Component Learning", "VoltPRo Simulator", "Engineering Tools", "AI Tutor"]) {
+  for (const label of ["Dashboard", "Learning Path", "Knowledge Checks", "Exam Practice", "Reference Library", "Safety &amp; Standards", "Virtual Labs", "Practical Workbench", "Tools &amp; Equipment", "Component Learning", "VoltPro Simulator", "Engineering Tools", "AI Tutor"]) {
     assert.ok(sidebarNav.includes(label), "missing sidebar destination: " + label);
   }
   assert.equal((sidebarNav.match(/data-view="tutor"/g) || []).length, 1);
-  assert.equal((sidebarNav.match(/href="simulator.html"/g) || []).length, 1);
-  assert.equal((sidebarNav.match(/href="engineering.html"/g) || []).length, 1);
+  assert.equal((sidebarNav.match(/href="\/simulator"/g) || []).length, 1);
+  assert.equal((sidebarNav.match(/href="\/tools"/g) || []).length, 1);
   assert.equal((sidebarNav.match(/href="academy-workbench.html"/g) || []).length, 1);
   assert.doesNotMatch(sidebarNav, /HB Professional Portfolio|GITHUB|LINKEDIN/);
 });

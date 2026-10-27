@@ -28,7 +28,7 @@ html.vp-simulator-template #vpBottomNavigation{height:52px;min-height:52px;max-h
 .vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner .vp-development-banner-copy>span:not(:first-child),.vp-simulator-template #vpBottomNavigation #vpDevelopmentBanner button{display:none}
 @media(max-width:760px){.vp-simulator-template #vpBottomNavigation{gap:2px;padding-inline:3px}.vp-simulator-template #vpBottomNavigation a{padding-inline:2px}.vp-simulator-template #vpBottomNavigation a small{display:none}.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{gap:2px;margin-left:1px;padding-left:3px}.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{padding-inline:5px}.vp-simulator-template #vpBottomNavigation #simStatus{display:none}}
-@media(max-width:470px){.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button:not(#runBtn){display:none}}
+@media(max-width:470px){.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls{gap:2px}.vp-simulator-template #vpBottomNavigation .vp-sim-bottom-controls button{padding-inline:4px;font-size:9px}.vp-simulator-template #vpBottomNavigation #simStatus{display:none}}
 
 /* PLC uses the shared site controls in one editor row and the module dock as its bottom bar. */
 html.vp-plc-template,html.vp-plc-template body{width:100%;height:100dvh;min-height:0;margin:0!important;overflow:hidden!important;padding:0!important}

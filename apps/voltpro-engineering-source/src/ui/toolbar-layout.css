@@ -117,3 +117,5 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summar
  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{gap:3px!important}
  body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{font-size:10px!important}
 }
+
+@media(max-width:760px){body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{flex:1 1 auto!important;min-width:0!important;max-width:42vw;overflow-x:auto!important;overflow-y:visible!important;scrollbar-width:thin}.vp-toolbar-menus>details{flex:0 0 auto!important}.vp-toolbar-menus summary{font-size:10px!important}}

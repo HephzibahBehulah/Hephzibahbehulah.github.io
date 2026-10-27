@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const tools = [
-    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261025t" },
+    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261027a" },
     { path: "/plc", title: "VoltPro PLC", src: "/voltpro-plc/?vp_embed=1" },
     { path: "/electcad", title: "VoltPro ElectCAD", src: "/voltpro-electcad/?vp_embed=1" },
     { path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" },
@@ -61,7 +61,7 @@
       if (parts.project) toolbar.append(parts.project);
       if (parts.bottomControls) {
         const controls = doc.createElement("div"); controls.className = "toolbar-group"; controls.setAttribute("role", "group"); controls.setAttribute("aria-label", "Simulation controls");
-        for (const id of ["runBtn", "stopBtn"]) { const node = parts.bottomControls.querySelector("#" + id) || doc.getElementById(id); if (node) controls.append(doc.adoptNode(node)); }
+        for (const id of ["runBtn", "pauseBtn", "stopBtn"]) { const node = parts.bottomControls.querySelector("#" + id) || doc.getElementById(id); if (node) controls.append(doc.adoptNode(node)); }
         const status = parts.bottomControls.querySelector("#simStatus") || parts.status;
         if (status) controls.append(doc.adoptNode(status));
         toolbar.prepend(controls);
@@ -249,11 +249,17 @@
     simControls.setAttribute("aria-label", "Simulation controls");
     if (status) simControls.append(status);
     const runControl = doc.getElementById("runBtn");
+    const pauseControl = doc.getElementById("pauseBtn");
     const stopControl = doc.getElementById("stopBtn");
     if (runControl) {
       runControl.textContent = "Start";
       runControl.setAttribute("aria-label", "Start simulation");
       simControls.append(runControl);
+    }
+    if (pauseControl) {
+      pauseControl.textContent = "Pause";
+      pauseControl.setAttribute("aria-label", "Pause simulation");
+      simControls.append(pauseControl);
     }
     if (stopControl) {
       stopControl.textContent = "Stop";
@@ -265,10 +271,11 @@
     const syncSimulationControls = () => {
       const state = status?.dataset.state || "stopped";
       const label = status?.querySelector(".status-label");
-      const title = state === "running" ? "Running" : state === "error" ? "Error" : "Stopped";
+      const title = state === "running" ? "Running" : state === "paused" ? "Paused" : state === "error" ? "Error" : "Stopped";
       if (label && label.textContent !== title) label.textContent = title;
       if (runControl) runControl.disabled = state === "running";
-      if (stopControl) stopControl.disabled = state !== "running";
+      if (pauseControl) pauseControl.disabled = state !== "running" && state !== "paused";
+      if (stopControl) stopControl.disabled = state !== "running" && state !== "paused";
     };
     syncSimulationControls();
     if (status) new MutationObserver(syncSimulationControls).observe(status, { attributes: true, childList: true, subtree: true });

@@ -11,17 +11,18 @@
   const project=document.createElement('div');project.className='vp-toolbar-project';
   const menus=document.createElement('div');menus.className='vp-toolbar-menus';
   const bins={};
+  const positionDropdown=details=>{if(!details.open)return;const summary=details.querySelector(':scope>summary'),box=details.querySelector(':scope>.vp-toolbar-dropdown');if(!summary||!box)return;const rect=summary.getBoundingClientRect(),width=Math.min(Math.max(box.scrollWidth,240),window.innerWidth-16),top=Math.min(rect.bottom+5,window.innerHeight-96);box.style.position='fixed';box.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-width-8))+'px';box.style.top=Math.max(52,top)+'px';box.style.width=width+'px';box.style.maxHeight=Math.max(120,window.innerHeight-Math.max(52,top)-8)+'px';};
   const makeMenu=(name,parent=menus)=>{
    const details=document.createElement('details'),summary=document.createElement('summary'),box=document.createElement('div');
    details.dataset.menu=name.toLowerCase();summary.textContent=name;summary.dataset.icon=icons[name];summary.title=name;summary.setAttribute('aria-label',name+' menu');
    box.className='vp-toolbar-dropdown';details.append(summary,box);parent.append(details);
-   details.addEventListener('toggle',()=>{if(details.open)for(const sibling of details.parentElement.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;});
+   details.addEventListener('toggle',()=>{if(details.open){for(const sibling of details.parentElement.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;requestAnimationFrame(()=>positionDropdown(details));}});
    details.addEventListener('pointerenter',()=>{clearTimeout(details._closeTimer);details.open=true;});
    details.addEventListener('pointerleave',()=>{details._closeTimer=setTimeout(()=>{if(!details.contains(document.activeElement))details.open=false;},260);});
    return {details,box};
   };
   for(const name of categories){const menu=makeMenu(name);bins[name]=menu.box;}
-  const primaryIds=new Set(['runBtn','stopBtn','simStatus','saveBtn','vpProjectName']);
+  const primaryIds=new Set(['runBtn','pauseBtn','stopBtn','simStatus','saveBtn','vpProjectName']);
   const put=(node,name)=>{
    if(!bins[name])name='Tools';
    if(node.id==='paletteBtn')node.setAttribute('aria-label','Components');
@@ -60,12 +61,17 @@
   const helpMenu=menus.querySelector('[data-menu="help"]');help.addEventListener('click',()=>{if(helpMenu){helpMenu.open=!helpMenu.open;helpMenu.querySelector('summary')?.focus();}});
   quick.append(help);primary.append(quick);
   if(!project.children.length){const selector=document.createElement('button');selector.type='button';selector.className='vp-project-selector';selector.innerHTML='<span aria-hidden="true">▱</span><span>Untitled project</span><span aria-hidden="true">⌄</span>';selector.setAttribute('aria-label','Project selector');selector.addEventListener('click',()=>{const projectMenu=menus.querySelector('[data-menu="project"]');if(projectMenu){projectMenu.open=!projectMenu.open;projectMenu.querySelector('summary')?.focus();}});project.append(selector);}
-  const moveNavigation=()=>{
-   const view=menus.querySelector('[data-menu="view"] .vp-toolbar-dropdown');
-   for(const selector of ['.sim-top .mode-tabs','.vp-view-tabs']){const nav=document.querySelector(selector);if(nav&&view&&nav.parentElement!==view)view.append(nav);}
+  const ensureWorkspaceRail=()=>{
+   const workspace=document.querySelector('.workspace');if(!workspace)return;workspace.classList.add('vp-has-rail');
+   let rail=workspace.querySelector('.vp-sim-rail');
+   if(!rail){rail=document.createElement('nav');rail.className='vp-sim-rail';rail.setAttribute('aria-label','Workspace and canvas tools');rail.innerHTML='<button type="button" data-rail="select" title="Select / cancel tool" aria-label="Select / cancel tool">↖</button><button type="button" data-rail="wire" title="Wire / connect terminals" aria-label="Wire / connect terminals">⌁</button><button type="button" data-rail="parts" title="Components / parts library" aria-label="Components / parts library">▤</button><button type="button" data-rail="search" title="Search components" aria-label="Search components">⌕</button><button type="button" data-rail="properties" title="Properties and results" aria-label="Properties and results">☷</button><button type="button" data-rail="fit" title="Fit drawing to view" aria-label="Fit drawing to view">⛶</button>';workspace.prepend(rail);}
+   let views=rail.querySelector('.vp-workspace-view-controls');if(!views){views=document.createElement('div');views.className='vp-workspace-view-controls';views.setAttribute('role','group');views.setAttribute('aria-label','Workspace views');views.innerHTML='<span aria-hidden="true"></span>';for(const [id,glyph,label] of [['schematic','⌁','Schematic'],['breadboard','▦','Breadboard'],['pcb','▣','PCB'],['code','{}','Code'],['serial','↔','Serial'],['scope','∿','Oscilloscope']]){const button=document.createElement('button');button.type='button';button.dataset.workspaceView=id;button.textContent=glyph;button.title=label;button.setAttribute('aria-label',label);button.setAttribute('aria-pressed',String(id==='schematic'));button.onclick=()=>window.VoltProWorkspaceViews?.switch(id);views.append(button);}rail.append(views);}
+   if(!rail.dataset.actionsBound){rail.dataset.actionsBound='true';rail.addEventListener('click',event=>{const action=event.target.closest('[data-rail]')?.dataset.rail;if(!action)return;const ui=window.VoltProUI,controls=window.VoltProWorkspaceControls;if(action==='parts'){if(controls?.setPanel)controls.setPanel('left',true);else document.querySelector('#paletteBtn')?.click()}if(action==='wire')document.querySelector('#wireBtn')?.click();if(action==='search'){if(controls?.setPanel)controls.setPanel('left',true);else document.querySelector('#palette')?.classList.add('open');document.querySelector('#componentSearch')?.focus()}if(action==='properties'){if(controls?.setPanel)controls.setPanel('right',true);else document.querySelector('#inspectorPanel')?.classList.remove('inspector-hidden')}if(action==='fit')document.querySelector('#fitBtn')?.click();if(action==='select'&&document.querySelector('#startWireBtn.active'))document.querySelector('#startWireBtn')?.click();});}
   };
-  moveNavigation();new MutationObserver(moveNavigation).observe(document.body,{childList:true,subtree:true});
-  const adaptMenus=()=>{menus.dataset.compact=String(window.innerWidth<1100);};
+  ensureWorkspaceRail();new MutationObserver(ensureWorkspaceRail).observe(document.body,{childList:true,subtree:true});
+  document.addEventListener('voltpro-workspace-view-change',event=>document.querySelectorAll('[data-workspace-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.workspaceView===event.detail))));  const simActions=menus.querySelector('[data-menu="simulation"] .vp-toolbar-dropdown');
+  if(simActions&&!simActions.querySelector('[data-sim-command]'))for(const [label,id] of [['Run simulation','runBtn'],['Pause / resume','pauseBtn'],['Stop simulation','stopBtn'],['Open oscilloscope','studioLaunch']]){const button=document.createElement('button');button.type='button';button.dataset.simCommand=id;button.textContent=label;button.onclick=()=>{if(id==='studioLaunch'){window.VoltProWorkspaceViews?.switch('scope');return}document.getElementById(id)?.click()};simActions.append(button);}
+  const adaptMenus=()=>{menus.dataset.compact=String(window.innerWidth<1100);menus.querySelectorAll('details[open]').forEach(positionDropdown);};
   adaptMenus();window.addEventListener('resize',adaptMenus,{passive:true});
   document.addEventListener('keydown',event=>{if(event.key==='Escape')menus.querySelectorAll('details').forEach(menu=>menu.open=false);});
   document.addEventListener('pointerdown',event=>{if(!menus.contains(event.target))menus.querySelectorAll('details').forEach(menu=>menu.open=false);});

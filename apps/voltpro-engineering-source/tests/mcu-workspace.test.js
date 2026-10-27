@@ -30,13 +30,13 @@ test("MCU runner lifecycle clears timers and supports a changing tick interval",
 test("simulator loads MCU assets while breadboard uses its native electrical model",()=>{
   assert.match(simulator,/platform\/mcu-engine\.js\?v=20261017f/);
   assert.match(simulator,/platform\/mcu-circuit-bridge\.js\?v=20261013a/);
-  assert.match(simulator,/platform\/mcu-lab-ui\.js\?v=20261017f/);
+  assert.match(simulator,/platform\/mcu-lab-ui\.js\?v=20261027a/);
   assert.match(breadboard,/engine\/breadboard-project\.js/);
   assert.match(breadboard,/engine\/breadboard-solver\.js/);
 });
 
 test("service worker cache version is advanced for the MCU workspace release",()=>{
-  assert.match(worker,/const CACHE="voltpro-v93"/);
+  assert.match(worker,/const CACHE="voltpro-v95"/);
   assert.ok(worker.includes('"./platform/mcu-circuit-bridge.js"'));
   assert.ok(worker.includes('"./platform/mcu-lab-ui.js"'));
   assert.ok(worker.includes('"./platform/mcu-engine.js"'));

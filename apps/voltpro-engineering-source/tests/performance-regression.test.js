@@ -93,7 +93,7 @@ test("toolbar SVG export, library collapse, and grid spacing are wired", () => {
   const source = fs.readFileSync(path.join(root, "simulator.js"), "utf8");
   assert.ok(source.includes('svgExport.onclick=exportSVG'));
   assert.ok(source.includes('workspace?.classList.toggle("palette-hidden"'));
-  assert.ok(source.includes('pat.setAttribute("width",S.grid)'));
+  assert.ok(source.includes('pattern.setAttribute("width",S.grid)'));
 });
 
 test("PLC input switches execute ladder scans and calculate output state", () => {
@@ -179,7 +179,7 @@ test("PLC workbench executes the ladder scan engine instead of hard-coded output
 test("Run mode continuously re-solves and Stop clears the simulation timer",()=>{
  const source=fs.readFileSync(path.join(root,"simulator.js"),"utf8");
  assert.ok(source.includes("function solveSimulationTick(continuous=false)"));
- assert.ok(source.includes("setInterval(()=>{if(S.running)solveSimulationTick(true)"));
+ assert.ok(source.includes("setInterval(()=>{if(S.running&&!simulationPaused)solveSimulationTick(true)"));
  assert.ok(source.includes("clearInterval(simulationInterval)"));
  assert.ok(source.includes("scanTimeMs:250"));
 });

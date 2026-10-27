@@ -230,3 +230,35 @@ body.simulator-page.light .status[data-state="error"]{background:#fff0f1;border-
 .component.mcu-led-lit{color:#ff435d;filter:drop-shadow(0 0 5px #ff435d);}
 
 .sim-scope-panel{position:fixed;right:18px;bottom:calc(62px + env(safe-area-inset-bottom));z-index:12050;width:min(1120px,calc(100vw - 36px));height:min(680px,calc(100dvh - 112px));display:grid;grid-template-rows:36px minmax(0,1fr);overflow:hidden;border:1px solid #3c7380;border-radius:10px;background:#10161b;box-shadow:0 18px 60px #000c,0 0 25px #2bd8d622}.sim-scope-panel[hidden]{display:none!important}.sim-scope-heading{display:flex;align-items:center;gap:12px;min-width:0;padding:4px 8px;background:#13232b;border-bottom:1px solid #31515e;color:#d9edf5;font:10px ui-monospace,monospace}.sim-scope-heading strong{color:#7fe7e4;white-space:nowrap}.sim-scope-heading span{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#a8bdca}.sim-scope-heading button{padding:4px 9px;flex:none}.sim-scope-body{position:relative;min-width:0;min-height:0}.sim-scope-body iframe{display:block;width:100%;height:100%;border:0;background:#121212}.sim-scope-body iframe[hidden]{display:none}.sim-scope-panel.collapsed{height:36px}.sim-scope-panel.collapsed .sim-scope-body{display:none}#simScopeFallback{height:100%;display:grid;place-items:center;padding:24px;color:#ffd39b;text-align:center;font:12px/1.6 system-ui,sans-serif}#simScopeFallback[hidden]{display:none!important}@media(max-width:650px){.sim-scope-panel{right:6px;bottom:calc(58px + env(safe-area-inset-bottom));width:calc(100vw - 12px);height:min(74dvh,640px)}.sim-scope-heading{gap:6px;padding-inline:5px;font-size:8px}.sim-scope-heading button{font-size:9px}}
+/* In-canvas workspace rail and reserved instrument dock. */
+.workspace.vp-has-rail{grid-template-columns:56px 260px minmax(0,1fr) 290px;min-width:0}
+.workspace.vp-has-rail>.vp-sim-rail{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 5px;background:#09131f;border-right:1px solid #243b50;z-index:3}
+.vp-sim-rail>button,.vp-workspace-view-controls>button{width:42px;min-height:40px;border:1px solid #29445b;border-radius:8px;background:#101f2d;color:#b8cad8;font-size:16px;cursor:pointer}
+.vp-sim-rail>button:hover,.vp-workspace-view-controls>button:hover{border-color:#56cad0;color:#eaffff;background:#12303b}
+.vp-workspace-view-controls{display:grid;gap:5px;margin-top:auto;padding-top:8px;border-top:1px solid #263c4f}
+.vp-workspace-view-controls>button[aria-pressed="true"]{border-color:#62dbe0;background:#123842;color:#dfffff;box-shadow:inset 0 0 0 1px #62dbe044}
+.workspace.vp-has-rail>#palette{grid-column:2;grid-row:1;min-width:0}
+.workspace.vp-has-rail>#canvasWrap{grid-column:3;grid-row:1;min-width:0;min-height:0}
+.workspace.vp-has-rail>#inspectorPanel{grid-column:4;grid-row:1;min-width:0}
+.workspace.vp-has-rail.palette-hidden{grid-template-columns:56px minmax(0,1fr) 290px}
+.workspace.vp-has-rail.palette-hidden>#canvasWrap{grid-column:2}.workspace.vp-has-rail.palette-hidden>#inspectorPanel{grid-column:3}
+.workspace.vp-has-rail.inspector-hidden{grid-template-columns:56px 260px minmax(0,1fr)}
+.workspace.vp-has-rail.inspector-hidden>#canvasWrap{grid-column:3}
+.workspace.vp-has-rail.palette-hidden.inspector-hidden{grid-template-columns:56px minmax(0,1fr)}
+.workspace.vp-view-active{grid-template-columns:56px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;min-height:0}
+.workspace.vp-view-active>#palette,.workspace.vp-view-active>#canvasWrap,.workspace.vp-view-active>#inspectorPanel{display:none!important}
+.workspace.vp-view-active>.vp-pcb-host,.workspace.vp-view-active>.vp-board-host{grid-column:2/-1!important;grid-row:1!important;display:block!important;width:auto!important;height:auto!important;min-width:0;min-height:0;margin:0;border:0;border-radius:0;overflow:auto}
+.workspace.vp-view-active>.vp-pcb-host[hidden],.workspace.vp-view-active>.vp-board-host[hidden]{display:none!important}
+.vp-pcb-host,.vp-board-host{min-width:0;min-height:0;overflow:auto;background:#091522}
+.vp-pcb-host[hidden],.vp-board-host[hidden]{display:none!important}
+.vp-board-host iframe{display:block;width:100%;height:100%;min-height:600px;border:0;background:#07111d}
+.vp-serial-view{height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px;padding:16px;background:#091522;color:#eaf5ff;font:12px system-ui}
+.vp-serial-view header{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #294258;padding-bottom:10px}.vp-serial-view header small,.vp-serial-view p{color:#9db5ca}
+.vp-serial-view pre{min-height:0;overflow:auto;white-space:pre-wrap;background:#040b12;border:1px solid #223b55;border-radius:8px;padding:12px;color:#9fecc7;font:12px/1.6 ui-monospace,monospace}
+.workspace.vp-scope-open{grid-template-columns:56px 260px minmax(280px,1fr) minmax(300px,34vw) 290px;min-width:0}
+.workspace.vp-scope-open>#canvasWrap{grid-column:3;min-width:0}.workspace.vp-scope-open>#inspectorPanel{grid-column:5}
+.workspace.vp-scope-open>#simScopePanel{grid-column:4;grid-row:1;position:relative;inset:auto;z-index:1;width:auto;height:auto;min-width:0;min-height:0;max-height:none;display:grid;border-radius:8px;box-shadow:0 8px 28px #0006}
+.workspace.vp-scope-open>#simScopePanel[hidden]{display:none!important}
+.workspace.vp-scope-open>#simScopePanel .sim-scope-heading button{min-width:34px}
+@media(max-width:1000px){.workspace.vp-has-rail,.workspace.vp-scope-open{grid-template-columns:50px minmax(0,1fr)!important;grid-template-rows:minmax(320px,1fr)!important}.workspace.vp-has-rail>#palette,.workspace.vp-has-rail>#inspectorPanel{display:none!important}.workspace.vp-has-rail>#canvasWrap{grid-column:2!important;grid-row:1!important}.workspace.vp-scope-open>#canvasWrap{grid-column:2!important;grid-row:1!important}.workspace.vp-scope-open>#simScopePanel{grid-column:2!important;grid-row:2!important;min-height:280px;max-height:42vh}.workspace.vp-scope-open{grid-template-rows:minmax(320px,1fr) minmax(280px,42vh)!important}.vp-workspace-view-controls>button{width:40px}}
+@media(max-width:650px){.workspace.vp-scope-open>#simScopePanel{min-height:240px;max-height:38vh}.workspace.vp-scope-open{grid-template-rows:minmax(280px,1fr) minmax(240px,38vh)!important}.vp-sim-rail{padding-inline:3px!important}.vp-sim-rail>button,.vp-workspace-view-controls>button{width:38px;min-height:38px}}
