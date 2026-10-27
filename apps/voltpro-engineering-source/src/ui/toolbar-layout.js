@@ -64,6 +64,7 @@
   const click=id=>{const el=document.getElementById(id);if(!el)throw Error('This Simulator action is unavailable.');el.click()};
   const platform=name=>{const action=window.VoltProPlatformActions?.[name];if(typeof action!=='function')throw Error('The '+name+' tool has not loaded.');action()};
   const switchView=id=>{const control=document.querySelector('[data-workspace-view="'+id+'"]');if(!control)throw Error('The '+id+' workspace is unavailable.');control.click()};
+  addCommand('Edit','Lock / unlock selected group',()=>{if(!window.VoltProUI?.lockSelection?.())throw Error('Select one or more components first.')});
   addCommand('File','Save named project',()=>{if(window.VoltProProjects?.save)window.VoltProProjects.save();else click('saveBtn')});
   for(const [id,label] of [['schematic','Schematic canvas'],['breadboard','Breadboard workspace'],['pcb','PCB workspace'],['code','Code workspace'],['serial','Serial monitor'],['scope','Oscilloscope panel']])addCommand('View',label,()=>switchView(id));
   addCommand('View','Fit drawing to canvas',()=>click('fitBtn'));
@@ -72,14 +73,21 @@
   addCommand('Electrical','Run circuit analysis',()=>click('runBtn'));
   addCommand('Electrical','Open engineering calculations',()=>platform('engineering'));
   addCommand('Electrical','Open component reference',()=>platform('info'));
+  addCommand('Electrical','Ohm’s law lesson · series resistor',()=>{if(!window.VoltProExperimentLibrary)throw Error('Circuit experiment library is unavailable.');window.VoltProExperimentLibrary.launch(0)});
+  addCommand('Electrical','Kirchhoff laws · Wheatstone bridge',()=>{if(!window.VoltProExperimentLibrary)throw Error('Circuit experiment library is unavailable.');window.VoltProExperimentLibrary.launch(1500)});
   addCommand('Electrical','Show measurement results',()=>{const controls=window.VoltProWorkspaceControls;if(controls?.setPanel)controls.setPanel('right',true);else click('inspectorBtn')});
   addCommand('Reports','Generate project report',()=>platform('docs'));
   addCommand('Reports','Create bill of materials',()=>platform('bom'));
   addCommand('Reports','Export project data',()=>click('exportBtn'));
   addCommand('Reports','Export drawing as SVG',()=>click('pngBtn'));
   addCommand('Reports','Show analysis results',()=>{const controls=window.VoltProWorkspaceControls;if(controls?.setPanel)controls.setPanel('right',true);else click('inspectorBtn')});
+  addCommand('Reports','Export simulation log',()=>{const log=document.querySelector('#console')?.textContent||'';if(!log.trim())throw Error('The simulation log is empty.');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([log],{type:'text/plain'}));a.download='voltpro-simulation.log';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});
+  addCommand('Reports','Export terminal netlist',()=>{const state=window.S;if(!state)throw Error('Simulator project is unavailable.');const payload={project:document.querySelector('#vpProjectName')?.value||'Untitled project',components:state.components.map(c=>({id:c.id,type:c.type,terminals:window.VoltProTerminalGraph?.definitionFor?.(c.type)?.terminals?.map(t=>t.label)||[],parameters:c.props||{}})),connections:state.wires.map(w=>({id:w.id,from:w.a,to:w.b}))};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}));a.download='voltpro-netlist.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});
   addCommand('Window','Toggle focus mode',()=>click('vpFocusMode'));
-  addCommand('Help','Open Simulator guide',()=>{const guide=document.querySelector('#guideBtn,#helpBtn,[data-help-dialog]');if(guide)guide.click();else platform('docs')});  const ensureWorkspaceRail=()=>{
+  addCommand('Tools','Browse 10,000 wired circuit experiments',()=>{if(!window.VoltProExperimentLibrary)throw Error('Circuit experiment library is unavailable.');window.VoltProExperimentLibrary.open()});
+  addCommand('Help','Open Simulator guide',()=>{const guide=document.querySelector('#guideBtn,#helpBtn,[data-help-dialog]');if(guide)guide.click();else platform('docs')});
+  addCommand('Help','Interactive tutorial · first circuit',()=>window.VoltProPlatformActions?.tutorial?.('first-circuit'));
+  addCommand('Help','Documentation workspace',()=>platform('docs'));  const ensureWorkspaceRail=()=>{
    const workspace=document.querySelector('.workspace');if(!workspace)return;workspace.classList.add('vp-has-rail');
    let rail=workspace.querySelector('.vp-sim-rail');
    if(!rail){rail=document.createElement('nav');rail.className='vp-sim-rail';rail.setAttribute('aria-label','Workspace and canvas tools');rail.innerHTML='<button type="button" data-rail="select" title="Select / cancel tool" aria-label="Select / cancel tool">↖</button><button type="button" data-rail="wire" title="Wire / connect terminals" aria-label="Wire / connect terminals">⌁</button><button type="button" data-rail="parts" title="Components / parts library" aria-label="Components / parts library">▤</button><button type="button" data-rail="search" title="Search components" aria-label="Search components">⌕</button><button type="button" data-rail="properties" title="Properties and results" aria-label="Properties and results">☷</button><button type="button" data-rail="fit" title="Fit drawing to view" aria-label="Fit drawing to view">⛶</button>';workspace.prepend(rail);}
@@ -97,3 +105,4 @@ menus.addEventListener('pointerout',event=>{if(event.pointerType==='touch')retur
  }
  window.addEventListener('load',layout);
 })();
+

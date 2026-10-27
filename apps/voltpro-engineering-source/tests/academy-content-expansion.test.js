@@ -8,7 +8,7 @@ test("Academy expansion is loaded after the existing Academy script", () => {
   const html = read("index.html");
   assert.match(html, /<script src="script\.js[^"]*"><\/script>\s*<script src="academy-content-expansion\.js\?v=20261011a"><\/script>/);
   assert.match(read("service-worker.js"), /"\.\/academy-content-expansion\.js"/);
-  assert.match(read("service-worker.js"), /voltpro-v97/);
+  assert.match(read("service-worker.js"), /voltpro-v99/);
 });
 
 test("Academy expansion parses and expands existing content collections", () => {
@@ -48,3 +48,4 @@ test("Existing sidebar menu remains unchanged and expansion is not a new navigat
   assert.ok(!nav.includes("academy-content-expansion"));
   assert.equal((nav.match(/data-view=/g) || []).length, 10);
 });
+

@@ -52,7 +52,7 @@ test("simulator exposes one in-page dropdown system without duplicated controls"
   assert.equal(ids.length, new Set(ids).size, "HTML IDs must be unique");
   assert.ok(!ui.includes("bar.appendChild(b)"));
   assert.ok(ui.includes("window.VoltProPlatformActions=actions"));
-  assert.ok(html.includes("service-worker.js?v=20261027c"));
+  assert.ok(html.includes("service-worker.js?v=20261027e"));
 });
 
 test("colour console accepts standard HEX lengths but not five-digit HEX", () => {
@@ -74,7 +74,7 @@ test("simulator toolbar has one authored menu system with no duplicate injected 
   assert.ok(!ui.includes("bar.appendChild(b)"));
   assert.ok(ui.includes("window.VoltProPlatformActions=actions"));
   assert.ok(!html.includes('href="academy-workbench.html'));
-  assert.ok(html.includes("service-worker.js?v=20261027c"));
+  assert.ok(html.includes("service-worker.js?v=20261027e"));
 });
 
 test("primary destinations are consistent across the practical and engineering pages", () => {
@@ -97,3 +97,4 @@ test("engineering tools routes to the existing specialist workspaces", () => {
   assert.match(html, /id="specialist-tools-title"/);
   assert.match(read("academy-workbench.html"), /href="engineering.html"><span>02 \/ CALCULATE/);
 });
+
