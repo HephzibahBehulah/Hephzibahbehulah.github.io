@@ -67,3 +67,21 @@ test('Simulator opens on an unobstructed canvas and keeps examples optional',()=
  assert.match(analysis,/welcome\.hidden=!welcomeOpen\|\|S\.components\.length>0/);
  assert.match(analysis,/welcomeOpen=!welcomeOpen/);
 });
+
+
+test('all toolbar dropdowns open on hover and close after the pointer leaves',()=>{
+ const layout=read('src/ui/toolbar-layout.js');
+ assert.ok(layout.includes("menus.addEventListener('pointerover'"));
+ assert.ok(layout.includes("menus.addEventListener('pointerout'"));
+ assert.ok(layout.includes("details.open=false;details.querySelectorAll('details[open]')"));
+ const add=layout.indexOf('const addCommand='),put=layout.indexOf('const put=(node,name)=>');
+ assert.ok(add>=0&&put>add,'toolbar commands remain in layout scope');
+});
+
+test('component library launcher keeps the list in the workspace sidebar',()=>{
+ const launcher=read('src/ui/component-studio.js');
+ const reference=read('src/ui/reference-workspace.js');
+ assert.match(launcher,/Focus component search/);
+ assert.match(reference,/setPanel\?\.\('left',true\)/);
+ assert.ok(!reference.includes("e.stopImmediatePropagation();open();"),'component button does not open the canvas-covering dialog');
+});

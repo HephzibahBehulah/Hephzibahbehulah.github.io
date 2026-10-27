@@ -14,12 +14,12 @@ test("left rail switches workspace views through an independent runtime",()=>{
 });
 test("oscilloscope is docked, closable and activated only by its workspace view",()=>{
  const css=read("simulator.css"),html=read("simulator.html"),views=read("src/ui/workspace-views.js"),runtime=read("simulator.js");
- assert.ok(css.includes(".workspace.vp-scope-open>#simScopePanel"));
+ assert.ok(css.includes(".sim-scope-panel{position:absolute"));
  assert.ok(css.includes("@media(max-width:1000px)"));
  assert.ok(html.includes('id="simScopeClose"'));
- assert.ok(views.includes('workspace.classList.add("vp-scope-open")'));
- assert.ok(runtime.includes('if(scopeProject&&window.VoltProWorkspaceViews?.active?.()==="scope")captureSimulatorScope(scopeProject)'));
- assert.ok(html.includes("workspace-views.js?v=20261027b"));
+ assert.ok(views.includes("canvasWrap.append(scopePanel)"));
+ assert.ok(runtime.includes("VoltProWorkspaceViews?.openScope?.()"));
+ assert.ok(html.includes("workspace-views.js?v=20261027c"));
 });
 test("Run, Pause, Resume and Stop retain explicit active states",()=>{
  const html=read("simulator.html"),runtime=read("simulator.js");
@@ -41,7 +41,7 @@ test("Serial view receives output from the virtual MCU interpreter",()=>{
 });
 test("new workspace module is included in the active offline cache",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js");
- assert.ok(html.includes("service-worker.js?v=20261027b"));
- assert.ok(worker.includes('const CACHE="voltpro-v96"'));
+ assert.ok(html.includes("service-worker.js?v=20261027c"));
+ assert.ok(worker.includes('const CACHE="voltpro-v97"'));
  assert.ok(worker.includes('"./src/ui/workspace-views.js"'));
 });

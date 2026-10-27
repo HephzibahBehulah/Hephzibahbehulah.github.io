@@ -16,7 +16,7 @@ test('admin AI has a larger dedicated rate limit than public AI',()=>{
 
 test('private AI authenticates administrators before consuming its dedicated limit',()=>{
  const start=worker.indexOf('async function privateAgent(');
- const end=worker.indexOf('\n}\n',start);
+ const end=worker.indexOf('\n}',start);
  const source=worker.slice(start,end);
  assert.ok(start>=0&&end>start);
  assert.ok(source.indexOf('authenticateAdmin')<source.indexOf('ADMIN_AI_LIMITER'));

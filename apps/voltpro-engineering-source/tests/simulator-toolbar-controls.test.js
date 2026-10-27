@@ -68,3 +68,20 @@ test("component and inspector controls bind before initial rendering can fail",(
  assert.match(js,/const pb=document\.querySelector\("#paletteBtn"\)/);
  assert.match(js,/const ib=document\.querySelector\("#inspectorBtn"\)/);
 });
+
+test("empty top menus now contain purposeful simulator actions",()=>{
+ const layout=read("src/ui/toolbar-layout.js");
+ for(const label of ["Fit drawing to canvas","Open engineering calculations","Show measurement results","Generate project report","Create bill of materials","Import .voltpro / JSON","Save a separate copy","Schematic canvas","Breadboard workspace","PCB workspace"])assert.ok(layout.includes(label),"missing action "+label);
+ assert.ok(layout.includes("\u0027File\u0027"));
+ assert.ok(layout.includes("VoltProProjectWorkspace?.open"));
+ assert.ok(layout.includes("VoltProPlatformActions"));
+ assert.ok(layout.includes("data-vp-command"));
+});
+
+test("responsive inspector and component panels resize the canvas instead of overlaying it",()=>{
+ const template=read("simulator-template.css"),css=read("simulator.css");
+ assert.ok(template.includes("Compact screens keep panels in the workspace grid"));
+ assert.match(template,/\.workspace\.vp-managed-panels #inspectorPanel\{position:relative!important/);
+ assert.match(template,/\.workspace\.vp-managed-panels #palette,\s*body\.simulator-page\.vp-template-simulator \.workspace\.vp-managed-panels #inspectorPanel\{position:relative!important/);
+ assert.ok(css.includes("Responsive panel layout: sidebars stay in grid flow"));
+});

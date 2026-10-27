@@ -1,0 +1,9 @@
+{
+  "cloudflare": {
+    "productionBranch": "main",
+    "buildCommand": "node platform/release.mjs",
+    "deployCommand": "node platform/cloudflare-build-deploy.mjs",
+    "deployScript": "platform/cloudflare-build-deploy.mjs",
+    "containerImageOwner": "GitHub Actions"
+  }
+}

@@ -69,26 +69,31 @@ let activeTrigger=null,popover=null;
 function close(){if(popover){popover.remove();popover=null}if(activeTrigger){activeTrigger.setAttribute("aria-expanded","false");activeTrigger=null}}
 function position(){
  if(!popover||!activeTrigger)return;
- const r=activeTrigger.getBoundingClientRect(),w=popover.offsetWidth,h=popover.offsetHeight;
- const left=Math.max(8,Math.min(window.innerWidth-w-8,r.left));
- let top=r.bottom+6;if(top+h>window.innerHeight-8)top=Math.max(8,r.top-h-6);
+ const r=activeTrigger.getBoundingClientRect(),w=popover.offsetWidth,h=popover.scrollHeight,gutter=8,below=window.innerHeight-r.bottom-gutter,above=r.top-gutter;
+ const placeBelow=below>=Math.min(h,180)||below>=above;
+ const available=Math.max(0,placeBelow?below:above);
+ popover.style.maxHeight=Math.max(80,available)+"px";
+ const actualHeight=Math.min(h,available),left=Math.max(gutter,Math.min(window.innerWidth-w-gutter,r.left));
+ let top=placeBelow?r.bottom+6:r.top-actualHeight-6;
+ top=Math.max(gutter,Math.min(window.innerHeight-actualHeight-gutter,top));
  popover.style.left=left+"px";popover.style.top=top+"px";
 }
+function invoke(target,method,label,arg){const action=target?.[method];if(typeof action!=="function")throw Error(label+" did not load. Reload the Simulator and try again.");return action.call(target,arg)}
 function dispatch(kind,value){
  const actions=window.VoltProPlatformActions||{};
- if(kind==="applications"){window.VoltProReferenceLibrary?.open({view:"applications"});return}
- if(kind==="reference"){window.VoltProReferenceLibrary?.open({view:"components"});return}
- if(kind==="demo"){const d=window.VoltProDemoLibrary?.demos?.().find(x=>x.title===value);if(!d){window.VoltProDemoLibrary?.open?.();return}window.VoltProDemoLibrary.load(d);return}
- if(kind==="demo-library"){window.VoltProDemoLibrary?.open?.();return}
- if(kind==="project-library"){window.VoltProProjectWorkspace?.open?.();return}
- if(kind==="click-id"){document.getElementById(value)?.click();return}
- if(kind==="plc"){window.VoltProWorkbench?.plc?.();return}
+ if(kind==="applications"){invoke(window.VoltProReferenceLibrary,"open","Engineering application library",{view:"applications"});return}
+ if(kind==="reference"){invoke(window.VoltProReferenceLibrary,"open","Component reference",{view:"components"});return}
+ if(kind==="demo"){const d=window.VoltProDemoLibrary?.demos?.().find(x=>x.title===value);if(!d){invoke(window.VoltProDemoLibrary,"open","Demo library");return}window.VoltProDemoLibrary.load(d);return}
+ if(kind==="demo-library"){invoke(window.VoltProDemoLibrary,"open","Demo library");return}
+ if(kind==="project-library"){invoke(window.VoltProProjectWorkspace,"open","Project library");return}
+ if(kind==="click-id"){const control=document.getElementById(value);if(!control)throw Error("The requested project control is missing.");control.click();return}
+ if(kind==="plc"){invoke(window.VoltProWorkbench,"plc","PLC workspace");return}
  if(kind==="mode"){document.querySelector('.mode[data-mode="'+value+'"]')?.click();return}
- if(kind==="fault"){actions.fault?.(value);return}
- if(kind==="challenge"){actions.challenge?.(value);return}
- if(kind==="tutorial"){actions.tutorial?.(value);return}
- if(kind==="mcu"){actions.mcu?.(value);return}
- if(kind==="tool"){if(typeof actions[value]==="function")actions[value]();return}
+ if(kind==="fault"){invoke(actions,"fault","Fault Lab",value);return}
+ if(kind==="challenge"){invoke(actions,"challenge","Challenge",value);return}
+ if(kind==="tutorial"){invoke(actions,"tutorial","Tutorial",value);return}
+ if(kind==="mcu"){invoke(actions,"mcu","Microcontroller Lab",value);return}
+ if(kind==="tool"){invoke(actions,value,"Engineering tool");return}
  if(kind==="navigate"){window.location.href=value;return}
 }
 function open(trigger){
@@ -98,7 +103,7 @@ function open(trigger){
  popover=document.createElement("div");popover.className="vp-toolbar-popover";popover.id="vp-menu-"+key;popover.setAttribute("role","menu");popover.setAttribute("aria-label",definition.title);
  popover.innerHTML='<div class="vp-toolbar-popover-title">'+esc(definition.title)+'</div>'+definition.items.map((item,i)=>'<button type="button" role="menuitem" data-index="'+i+'" data-kind="'+esc(item[1])+'" data-value="'+esc(item[2]||"")+'">'+esc(item[0])+'</button>').join("");
  document.body.appendChild(popover);trigger.setAttribute("aria-controls",popover.id);position();
- popover.addEventListener("click",event=>{const button=event.target.closest("button[role=menuitem]");if(!button)return;const kind=button.dataset.kind,value=button.dataset.value;close();try{dispatch(kind,value)}catch(error){console.error("VoltPRo toolbar action failed:",error);const status=$("#simStatus");if(status){status.dataset.state="error";status.querySelector(".status-label").textContent="TOOL ERROR"}window.alert("That tool could not be opened. Check the simulator console and try again.")}});
+ popover.addEventListener("click",event=>{const button=event.target.closest("button[role=menuitem]");if(!button)return;const kind=button.dataset.kind,value=button.dataset.value;close();try{dispatch(kind,value)}catch(error){console.error("VoltPRo toolbar action failed:",error);const status=$("#simStatus");if(status){status.dataset.state="error";status.querySelector(".status-label").textContent="TOOL ERROR"}const message="Tool action failed: "+error.message;const log=$("#console");if(log)log.textContent+="\n"+message;const live=$("#simStatus");if(live){live.dataset.state="error";const label=live.querySelector(".status-label");if(label)label.textContent="TOOL UNAVAILABLE";live.setAttribute("aria-label",message)}console.error(message)}});
  popover.addEventListener("keydown",event=>{const items=[...popover.querySelectorAll("button[role=menuitem]")],i=items.indexOf(document.activeElement);if(event.key==="Escape"){event.preventDefault();close();trigger.focus()}else if(event.key==="ArrowDown"||event.key==="ArrowUp"){event.preventDefault();items[(i+(event.key==="ArrowDown"?1:-1)+items.length)%items.length]?.focus()}else if(event.key==="Home"){event.preventDefault();items[0]?.focus()}else if(event.key==="End"){event.preventDefault();items.at(-1)?.focus()}});
  popover.querySelector("button")?.focus();
 }

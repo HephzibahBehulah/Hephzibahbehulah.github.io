@@ -37,16 +37,16 @@ test("dropdown runtime parses and supplies accessible, keyboard-operable menus",
  assert.ok(js.includes('event.key==="Escape"'));
  assert.ok(js.includes("getBoundingClientRect()"));
  assert.ok(js.includes("VoltProDemoLibrary.load(d)"));
- assert.ok(js.includes("VoltProProjectWorkspace?.open?.()"));
+ assert.ok(js.includes("VoltProProjectWorkspace,\"open\""));
 });
 
 test("menu contents connect demo, motor, PLC, fault, challenge, tutorial, MCU and engineering tools locally",()=>{
  const js=read("platform/toolbar-menus.js");
  for(const term of ["Protected DC Lamp · Starter","Contactor Motor Concept · Starter","Open PLC ladder editor","Open conductor / open circuit","Switch a lamp · Beginner","Your first circuit","Button input example","Engineering Documentation","Bill of Materials"])assert.ok(js.includes(term),"missing menu option "+term);
- assert.ok(js.includes('actions.fault?.(value)'));
- assert.ok(js.includes('actions.challenge?.(value)'));
- assert.ok(js.includes('actions.tutorial?.(value)'));
- assert.ok(js.includes('actions.mcu?.(value)'));
+ assert.ok(js.includes('invoke(actions,\"fault\",\"Fault Lab\",value)'));
+ assert.ok(js.includes('invoke(actions,\"challenge\",\"Challenge\",value)'));
+ assert.ok(js.includes('invoke(actions,\"tutorial\",\"Tutorial\",value)'));
+ assert.ok(js.includes('invoke(actions,\"mcu\",\"Microcontroller Lab\",value)'));
  assert.ok(js.includes('window.location.href=value'));
 });
 
@@ -62,15 +62,15 @@ test("MCU Lab accepts named example sketches and retains explicit interpreter li
 
 test("cache and deployment version invalidates stale simulator shell and precaches menu runtime",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js"),css=read("simulator-layout-restore.css");
- assert.ok(worker.includes('const CACHE="voltpro-v96"'));
+ assert.ok(worker.includes('const CACHE="voltpro-v97"'));
  assert.ok(worker.includes('"./platform/toolbar-menus.js"'));
  assert.ok(worker.includes('"./platform/ui.js"'));
  assert.ok(worker.includes('"./platform/workbench.js"'));
- assert.ok(html.includes('service-worker.js?v=20261027b'));
+ assert.ok(html.includes('service-worker.js?v=20261027c'));
  assert.ok(html.includes('updateViaCache:"none"'));
  assert.ok(html.includes('platform/toolbar-menus.js?v=20261017f'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
- assert.ok(html.includes('simulator.js?v=20261027b'));
+ assert.ok(html.includes('simulator.js?v=20261027c'));
  assert.ok(css.includes(".vp-toolbar-popover"));
 });
 

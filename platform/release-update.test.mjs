@@ -4,13 +4,13 @@ import vm from 'node:vm';
 import fs from 'node:fs';
 const source=fs.readFileSync(new URL('./release-update.js',import.meta.url),'utf8');
 function setup({running='a'.repeat(40),available='b'.repeat(40),online=true,confirmed=true,frame=false}={}){
- const nodes=[],listeners={},documentListeners={},requests=[],timers=[];let reloads=0;
+ const nodes=[],listeners={},documentListeners={},requests=[],timers=[],storage=new Map();let reloads=0,latest=available;
  const node=tag=>({tag,style:{},children:[],listeners:{},setAttribute(){},append(...items){this.children.push(...items);},addEventListener(type,fn){this.listeners[type]=fn;},remove(){nodes.splice(nodes.indexOf(this),1);}});
  const window={top:{},self:null,confirm:()=>confirmed,addEventListener:(type,fn)=>listeners[type]=fn};window.self=frame?{}:window.top;
  const document={visibilityState:'visible',querySelector:()=>({content:running}),createElement:node,body:{append:n=>nodes.push(n)},addEventListener:(type,fn)=>documentListeners[type]=fn};
- const context={window,document,navigator:{onLine:online},location:{href:'https://engineering.hephzibahbehulah.com/plc',reload:()=>reloads++},fetch:async(url,options)=>{requests.push({url,options});return Response.json({commitHash:available});},Response,AbortSignal,Date,setInterval:fn=>timers.push(fn),setTimeout:()=>{}};
+ const context={window,document,navigator:{onLine:online},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},location:{href:'https://engineering.hephzibahbehulah.com/plc',reload:()=>reloads++},fetch:async(url,options)=>{requests.push({url,options});return Response.json({commitHash:latest});},Response,AbortSignal,Date,setInterval:fn=>timers.push(fn),setTimeout:()=>{}};
  vm.runInNewContext(source,context);
- return {window,document,nodes,listeners,requests,async ready(){await new Promise(resolve=>setImmediate(resolve));},get reloads(){return reloads;}};
+ return {window,document,nodes,listeners,requests,async ready(){await new Promise(resolve=>setImmediate(resolve));},get reloads(){return reloads;},async refresh(value){if(value)latest=value;await window.HBReleaseUpdate.check(true);}};
 }
 test('running A detects deployed B without automatically reloading or changing the running identifier',async()=>{
  const h=setup();await h.ready();assert.equal(h.nodes.length,1);assert.equal(h.window.HBReleaseUpdate.running,'a'.repeat(40));assert.equal(h.window.HBReleaseUpdate.available,'b'.repeat(40));assert.equal(h.reloads,0);assert.equal(h.requests[0].options.cache,'no-store');
@@ -26,4 +26,11 @@ test('accepting an update reloads at most once',async()=>{
 });
 test('lazy-loading failures offer recovery without discarding work',async()=>{
  const h=setup({available:'a'.repeat(40)});await h.ready();h.listeners['vite:preloadError']();assert.equal(h.nodes.length,1);assert.equal(h.reloads,0);
+});
+
+test('Later suppresses the same release across routes but allows a newer release',async()=>{
+ const h=setup();await h.ready();await h.nodes[0].children[2].listeners.click();await h.refresh();assert.equal(h.nodes.length,0);await h.refresh('c'.repeat(40));assert.equal(h.nodes.length,1);
+});
+test('a stale update notice clears when the deployed release catches up',async()=>{
+ const h=setup();await h.ready();assert.equal(h.nodes.length,1);await h.refresh('a'.repeat(40));assert.equal(h.nodes.length,0);assert.equal(h.window.HBReleaseUpdate.available,null);
 });

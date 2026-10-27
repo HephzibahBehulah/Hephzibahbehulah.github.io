@@ -397,3 +397,18 @@ body.simulator-page.vp-template-simulator .vp-title-block footer{min-width:0;ove
 /* Keep the live simulation notice fixed to the canvas viewport while the drawing pans, scrolls, or zooms. */
 body.simulator-page.vp-template-simulator .live-flow-status{position:fixed!important;left:84px!important;bottom:80px!important;z-index:1000!important;max-width:calc(100vw - 120px)!important}
 @media(max-width:760px){body.simulator-page.vp-template-simulator .live-flow-status{left:80px!important;bottom:80px!important;max-width:calc(100vw - 116px)!important}}
+
+/* Compact screens keep panels in the workspace grid so they resize the canvas instead of covering it. */
+@media(max-width:1000px){
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{grid-template-columns:42px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;min-height:0;overflow:hidden}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #canvasWrap{grid-column:2!important;grid-row:1!important;min-width:0;min-height:0}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #palette,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #inspectorPanel{position:relative!important;inset:auto!important;grid-column:2!important;width:auto!important;max-width:none!important;max-height:none!important;min-width:0;min-height:0;transform:none!important;box-shadow:none!important;z-index:1!important;overflow:auto}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed #palette,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed #inspectorPanel{display:none!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed) #palette{display:block!important;grid-row:2!important;max-height:38vh}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-right-closed) #inspectorPanel{display:block!important;grid-row:2!important;max-height:38vh}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed){grid-template-rows:minmax(0,1fr) minmax(120px,28vh) minmax(120px,28vh)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #palette{grid-row:2!important;max-height:none}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #inspectorPanel{grid-row:3!important;max-height:none}
+}
