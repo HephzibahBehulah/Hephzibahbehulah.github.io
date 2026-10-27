@@ -412,3 +412,31 @@ body.simulator-page.vp-template-simulator .live-flow-status{position:fixed!impor
  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #palette{grid-row:2!important;max-height:none}
  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #inspectorPanel{grid-row:3!important;max-height:none}
 }
+
+/* Keep workspace docks beside or below the drawing; they never float over the canvas. */
+@media(min-width:1001px){
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) minmax(265px,310px)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed{grid-template-columns:42px minmax(0,1fr) minmax(265px,310px)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed:not(.vp-left-closed){grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) 42px!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed{grid-template-columns:42px minmax(0,1fr) 42px!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels .vp-sim-rail{grid-column:1!important;grid-row:1!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #palette{grid-column:2!important;grid-row:1!important;position:relative!important;inset:auto!important;transform:none!important;width:auto!important;min-width:0!important;max-width:none!important;z-index:2!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels .vp-canvas-frame{grid-column:3!important;grid-row:1!important;min-width:0!important;width:auto!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed .vp-canvas-frame{grid-column:2!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #inspectorPanel{grid-column:4!important;grid-row:1!important;position:relative!important;inset:auto!important;transform:none!important;width:auto!important;max-width:none!important;z-index:2!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed #inspectorPanel{grid-column:3!important}
+}
+@media(max-width:1000px){
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{grid-template-columns:38px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;min-height:0;overflow:hidden}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels .vp-sim-rail{grid-column:1!important;grid-row:1!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels .vp-canvas-frame{grid-column:2!important;grid-row:1!important;min-width:0;min-height:0}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #palette,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels #inspectorPanel{position:relative!important;inset:auto!important;grid-column:2!important;width:auto!important;max-width:none!important;max-height:none!important;min-width:0;min-height:0;transform:none!important;box-shadow:none!important;z-index:1!important;overflow:auto}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed #palette,
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed #inspectorPanel{display:none!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed) #palette{display:block!important;grid-row:2!important;max-height:none}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-right-closed) #inspectorPanel{display:block!important;grid-row:2!important;max-height:none}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed){grid-template-rows:minmax(0,1fr) minmax(110px,25vh) minmax(110px,25vh)!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #palette{grid-row:2!important}
+ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #inspectorPanel{grid-row:3!important}
+}

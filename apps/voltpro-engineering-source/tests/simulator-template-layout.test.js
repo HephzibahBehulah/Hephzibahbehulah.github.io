@@ -56,8 +56,11 @@ test('component rail, inspector tabs, and bottom simulation actions retain live 
 test('saved panel states keep the Simulator rail narrow and never stretch the canvas hint',()=>{
  const css=read('simulator-template.css');
  assert.match(css,/\.workspace\.vp-managed-panels\{grid-template-columns:42px minmax\(205px,245px\) minmax\(0,1fr\) minmax\(265px,310px\)!important\}/);
- assert.match(css,/grid-template-columns:42px minmax\(0,1fr\) minmax\(265px,310px\)!important/);
- assert.match(css,/grid-template-columns:42px minmax\(0,1fr\)!important/);
+ assert.match(css,/\.workspace\.vp-managed-panels\.vp-left-closed\{grid-template-columns:42px minmax\(0,1fr\) minmax\(265px,310px\)!important/);
+ assert.match(css,/\.workspace\.vp-managed-panels\.vp-right-closed:not\(\.vp-left-closed\)\{grid-template-columns:42px minmax\(205px,245px\) minmax\(0,1fr\) 42px!important/);
+ assert.match(css,/\.workspace\.vp-managed-panels\.vp-left-closed\.vp-right-closed\{grid-template-columns:42px minmax\(0,1fr\) 42px!important/);
+ assert.match(css,/\.workspace\.vp-managed-panels #palette\{grid-column:2!important;grid-row:1!important;position:relative!important/);
+ assert.match(css,/@media\(max-width:1000px\)[\s\S]*?#inspectorPanel\{position:relative!important/);
  assert.match(css,/\.canvas-help\{[^}]*bottom:auto;height:auto/);
 });
 
