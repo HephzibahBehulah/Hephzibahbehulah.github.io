@@ -282,11 +282,11 @@ test("PLC project view switching keeps the same editable project and scan mode",
   assert.match(io, /same device tags, terminals, wires and scan results/);
 });
 
-test("shared assistant voice input fills the prompt without sending it automatically", () => {
-  const assistant = read("apps/voltpro-engineering-source/voltpro-assistant.js");
-  assert.match(assistant, /id="vpBotVoice" type="button"/);
-  assert.match(assistant, /recognition\.onresult = event => \{ input\.value/);
-  assert.match(assistant, /recognition\.onend = \(\) => \{ voice\.disabled = false/);
+test("shared Adigun voice input fills the new chat without sending automatically", () => {
+  const assistant = read("apps/voltpro-engineering-source/src/ui/assistant-chat.js");
+  assert.match(assistant, /class="adigun-voice"/);
+  assert.match(assistant, /voice\.onresult=event=>\{input\.value/);
+  assert.match(assistant, /voice\.onend=\(\)=>\{button\.disabled=false\}/);
   assert.match(assistant, /Voice input is not available in this browser/);
 });
 
