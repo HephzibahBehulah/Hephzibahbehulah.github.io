@@ -54,6 +54,8 @@ test("Serial view receives output from the virtual MCU interpreter",()=>{
  const views=read("src/ui/workspace-views.js"),mcu=read("platform/mcu-lab-ui.js");
  assert.ok(views.includes("voltpro-serial-output"));
  assert.ok(mcu.includes("voltpro-serial-output"));
+ assert.ok(views.includes('boardHost.querySelector(".vp-board-live")'));
+ assert.ok(views.includes("if (boardCanvas) boardCanvas.hidden = true"));
 });
 test("new workspace module is included in the active offline cache",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js");
