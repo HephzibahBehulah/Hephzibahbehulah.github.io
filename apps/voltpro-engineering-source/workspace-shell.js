@@ -596,6 +596,23 @@
     });
   }
 
+  function importAssistantDesign(answer) {
+    const active = canonicalPath(location.pathname);
+    const target = active === "/simulator" || active === "/breadboard" ? active : "/simulator";
+    const tool = tools.find(item => item.path === target);
+    const panel = ensurePanel(tool);
+    const frame = panel.querySelector("iframe");
+    activate(target);
+    const deliver = () => frame.contentWindow?.postMessage({ type: "voltpro:assistant-design", answer: String(answer || "") }, location.origin);
+    try {
+      if (frame.contentDocument?.readyState === "complete") queueMicrotask(deliver);
+      else frame.addEventListener("load", deliver, { once: true });
+    } catch {
+      frame.addEventListener("load", deliver, { once: true });
+    }
+  }
+  window.VoltProWorkspace = { importDesign: importAssistantDesign };
+
   document.addEventListener("click", event => {
     const link = event.target.closest("#vpBottomNavigation a[data-vp-route], #vpSiteHeader nav a[data-vp-route]");
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
