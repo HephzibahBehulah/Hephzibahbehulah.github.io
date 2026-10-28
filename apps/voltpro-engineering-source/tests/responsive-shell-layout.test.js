@@ -3,8 +3,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const css = readFileSync(new URL("../src/ui/toolbar-layout.css", import.meta.url), "utf8");
+const shellCss = readFileSync(new URL("../workspace-shell.css", import.meta.url), "utf8");
+const toolbar = readFileSync(new URL("../src/ui/toolbar-layout.js", import.meta.url), "utf8");
+const menus = readFileSync(new URL("../platform/toolbar-menus.js", import.meta.url), "utf8");
 const page = readFileSync(new URL("../simulator.html", import.meta.url), "utf8");
 const shell = readFileSync(new URL("../workspace-shell.js", import.meta.url), "utf8");
+const shellHtml = readFileSync(new URL("../workspace-shell.html", import.meta.url), "utf8");
 
 test("Simulator header groups shared controls instead of letting them drift into the menu row", () => {
   assert.match(css, /\.vp-sim-header-utilities\s*\{[^}]*display:flex!important/s);
@@ -23,6 +27,30 @@ test("Simulator canvas, component library and inspector have non-overlapping res
 });
 
 test("embedded Simulator and responsive stylesheet use new cache keys", () => {
-  assert.match(page, /toolbar-layout\.css\?v=20261028b/);
-  assert.match(shell, /simulator\.html\?vp_embed=1&v=20261028b/);
+  assert.match(page, /toolbar-layout\.css\?v=20261028c/);
+  assert.match(shell, /simulator\.html\?vp_embed=1&v=20261028c/);
+});
+
+
+test("VoltPro Simulator keeps a single non-scrolling menu row with its own mobile menu button", () => {
+  assert.match(shellCss, /flex-flow:row nowrap/);
+  assert.match(shellCss, /\.vp-toolbar-menus\[data-compact="true"\][\s\S]*?summary::before/);
+  assert.match(shellCss, /\.vp-mobile-menu-toggle/);
+  assert.match(shellCss, /vp-mobile-menu-mode\.vp-mobile-menus-open/);
+  assert.match(shell, /aria-label", "VoltPro Simulator"/);
+  assert.match(shell, /subtitle\.textContent = "Simulator"/);
+});
+
+test("Simulator dropdowns open as overlays and close after pointer leaves", () => {
+  assert.doesNotMatch(toolbar, /menuDock|vp-menu-dock/);
+  assert.match(toolbar, /positionMenu/);
+  assert.match(toolbar, /hoverMenus=window\.matchMedia/);
+  assert.match(toolbar, /pointerleave.*scheduleMenuClose/);
+  assert.match(menus, /trigger\.closest\("\.vp-toolbar-menus"\).*trigger\.closest\("\.vp-toolbar-dropdown"\)/);
+  assert.match(shellCss, /\.vp-toolbar-dropdown\s*\{[\s\S]*?position:fixed!important/);
+});
+
+test("workspace shell cache keys are bumped for the new Simulator header", () => {
+  assert.match(shellHtml, /workspace-shell\.css\?v=20261028-menu1/);
+  assert.match(shellHtml, /workspace-shell\.js\?v=20261028e/);
 });
