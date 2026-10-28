@@ -56,7 +56,7 @@ frame.addEventListener("load",()=>{
   const doc=frame.contentDocument;
   const style=doc.createElement("style");
   style.id="vp-unified-shell-controls";
-  style.textContent="#language-control,#vpShellLanguage,#hbLanguageControl,.vp-site-navigation,.vp-main-site-link,.profile-button,#theme,.theme-button,#vpThemeToggle,#vpBottomNavigation,#vpDevelopmentBanner,#vpDevelopmentFooter{display:none!important}";
+  style.textContent="#language-control,#vpShellLanguage,#hbLanguageControl,.vp-site-navigation,.vp-main-site-link,.profile-button,#theme,.theme-button,#vpThemeToggle,.electcad-main-site,.hb-brand,.language-switch,.icon-btn.theme-toggle,.avatar,.global-bottom-bar>a,.global-nav-separator,#bottom,header .main,#vpBottomNavigation,#vpDevelopmentBanner,#vpDevelopmentFooter{display:none!important}";
   doc.head.append(style);
   doc.documentElement.dataset.vpTheme=localStorage.getItem("vp-theme")||"dark";
   doc.documentElement.lang=localStorage.getItem("hb_language")||"en";
