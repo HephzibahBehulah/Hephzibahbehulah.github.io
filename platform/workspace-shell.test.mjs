@@ -288,6 +288,8 @@ test("shared Adigun voice input fills the new chat without sending automatically
   assert.match(assistant, /voice\.onresult=event=>\{input\.value/);
   assert.match(assistant, /voice\.onend=\(\)=>\{button\.disabled=false\}/);
   assert.match(assistant, /Voice input is not available in this browser/);
+  assert.match(assistant, /removeLegacyLauncher/);
+  assert.match(assistant, /legacyLauncherObserver\.observe/);
 });
 
 test("embedded ElectCAD keeps zoom and all five requested top controls reachable", () => {
