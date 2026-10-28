@@ -44,6 +44,8 @@
   };
   const closeScope = () => { if (!scopePanel) return; saveScopeLayout(); scopeOpen = false; scopePanel.hidden = true; updateButtons(); };
   const ensureSerialView = () => {
+    const boardCanvas = boardHost.querySelector(".vp-board-live");
+    if (boardCanvas) boardCanvas.hidden = true;
     let pane = boardHost.querySelector(".vp-serial-view");
     if (!pane) { pane = document.createElement("section"); pane.className = "vp-serial-view"; pane.innerHTML = '<header><div><strong>VIRTUAL SERIAL MONITOR</strong><small>Output from a supported microcontroller sketch</small></div><button type="button" data-clear-serial>Clear</button></header><pre aria-live="polite">Waiting for virtual MCU output.</pre><p role="status">Run a supported sketch to capture Serial.print / Serial.println output.</p>'; pane.querySelector("[data-clear-serial]").addEventListener("click", () => { pane.querySelector("pre").textContent = "Serial output cleared."; }); boardHost.append(pane); }
     pane.hidden = false; const latest = window.VoltProLatestSerialOutput;
