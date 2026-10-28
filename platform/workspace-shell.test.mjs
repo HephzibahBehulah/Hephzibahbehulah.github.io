@@ -335,3 +335,12 @@ test("shared engineering language selector offers all four choices on every requ
   }
   assert.doesNotMatch(shell, /option.textContent = option.value.toUpperCase/);
 });
+
+
+test("oscilloscope initialization has no handler for removed image control", () => {
+  const html = read("apps/voltpro-engineering-source/oscilloscope.html");
+  const app = read("apps/voltpro-engineering-source/oscilloscope/app.mjs");
+  assert.ok(!html.includes('id="image"'), "PNG export control stays out of the header");
+  assert.ok(!app.includes("$('#image').onclick"), "startup must not bind to the removed PNG control");
+  assert.ok(app.includes("Export waveform PNG"), "PNG export remains available from the File menu");
+});
