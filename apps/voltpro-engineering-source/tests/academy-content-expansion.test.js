@@ -7,10 +7,11 @@ const read = p => fs.readFileSync(path.join(__dirname, "..", p), "utf8");
 test("Academy expansion is loaded after the existing Academy script", () => {
   const html = read("index.html");
   assert.match(html, /<script src="script\.js[^"]*"><\/script>\s*<script src="academy-content-expansion\.js\?v=20261011a"><\/script>/);
+  assert.match(read("service-worker.js"), /"\.\/academy-content-expansion\.js"/);
+  assert.match(read("service-worker.js"), /voltpro-v99/);
 });
 
 test("Academy expansion parses and expands existing content collections", () => {
-  assert.doesNotMatch(read("index.html"), /serviceWorker.register/);
   const expansion = read("academy-content-expansion.js");
   assert.doesNotThrow(() => new Function(expansion));
   assert.match(expansion, /modules\.push\(\.\.\.VMODULES\)/);

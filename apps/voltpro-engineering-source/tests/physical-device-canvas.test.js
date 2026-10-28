@@ -6,6 +6,7 @@ const path = require("node:path");
 const source = fs.readFileSync(path.join(__dirname, "../simulator.js"), "utf8");
 const html = fs.readFileSync(path.join(__dirname, "../simulator.html"), "utf8");
 const css = fs.readFileSync(path.join(__dirname, "../simulator.css"), "utf8");
+const worker = fs.readFileSync(path.join(__dirname, "../service-worker.js"), "utf8");
 
 test("physical devices render as large canvas faces rather than photos over schematic blocks", () => {
   assert.match(source, /const physicalCanvasKinds=new Set/);
@@ -29,6 +30,7 @@ test("physical canvas terminals and labels remain visually prominent and cache-b
   assert.match(css, /\.component \.pin\{r:6;stroke-width:2\}/);
   assert.match(html, /simulator\.css\?v=20261027a/);
   assert.match(html, /simulator\.js\?v=20261027e/);
+  assert.match(worker, /voltpro-v99/);
 });
 
 test("Arduino terminal labels stay readable at close header spacing",()=>{
