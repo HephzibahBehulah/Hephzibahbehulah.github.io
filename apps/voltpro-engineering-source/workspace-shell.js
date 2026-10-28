@@ -536,7 +536,7 @@
     const frame = document.createElement("iframe");
     frame.className = "vp-workspace-frame";
     frame.title = tool.title;
-    frame.loading = "lazy";
+    frame.loading = tool.path === "/simulator" ? "eager" : "lazy";
     frame.referrerPolicy = "same-origin";
     panel.append(frame);
     root.replaceChildren(...[...root.children].filter(node => !node.classList.contains("vp-workspace-loading")), panel);
@@ -557,7 +557,8 @@
     const key = canonicalPath(path);
     if (document.documentElement.dataset.vpWorkspace === "breadboard" && key !== "/breadboard") closeBreadboardCommandMenus();
     const tool = tools.find(item => item.path === key) || tools[0];
-    if (tool.path !== "/simulator") restoreSharedHeader();
+    if (tool.path === "/simulator") restoreSharedHeader();
+    else restoreSharedHeader();
     const panel = ensurePanel(tool);
     for (const [route, element] of panels) {
       const active = route === tool.path;
