@@ -68,7 +68,7 @@ test("cache and deployment version invalidates stale simulator shell and precach
  assert.ok(worker.includes('"./platform/workbench.js"'));
  assert.ok(html.includes('service-worker.js?v=20261027e'));
  assert.ok(html.includes('updateViaCache:"none"'));
- assert.ok(html.includes('platform/toolbar-menus.js?v=20261017f'));
+ assert.ok(html.includes('platform/toolbar-menus.js?v=20261028a'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
  assert.ok(html.includes('simulator.js?v=20261027e'));
  assert.ok(css.includes(".vp-toolbar-popover"));

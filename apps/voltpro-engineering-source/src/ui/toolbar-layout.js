@@ -10,25 +10,58 @@
   const primary=document.createElement('div');primary.className='vp-toolbar-primary';
   const project=document.createElement('div');project.className='vp-toolbar-project';
   const menus=document.createElement('div');menus.className='vp-toolbar-menus';
-  const workspace=document.querySelector('.workspace');let menuDock=workspace?.querySelector('.vp-menu-dock');
-  if(workspace&&!menuDock){menuDock=document.createElement('aside');menuDock.className='vp-menu-dock';menuDock.hidden=true;menuDock.setAttribute('aria-label','Open menu panel');workspace.insertBefore(menuDock,document.querySelector('#inspectorPanel'));}
   let activeMenu=null,menuCloseTimer=0;
-  const closeMenu=()=>{clearTimeout(menuCloseTimer);if(!menuDock)return;const current=activeMenu;activeMenu=null;if(current){current.details.append(current.box);current.details.open=false}menuDock.replaceChildren();menuDock.hidden=true;workspace?.classList.remove('vp-menu-dock-open');window.VoltProToolbarMenus?.close?.()};
-  const openMenu=details=>{if(!menuDock||!workspace)return;if(activeMenu?.details===details)return;if(activeMenu)closeMenu();const box=details._vpDropdown;if(!box)return;const title=document.createElement('header');title.className='vp-menu-dock-heading';title.textContent=details.dataset.menu.replace(/^[a-z]/,x=>x.toUpperCase())+' MENU';menuDock.replaceChildren(title,box);menuDock.hidden=false;workspace.classList.add('vp-menu-dock-open');activeMenu={details,box}};
-  const scheduleMenuClose=()=>{clearTimeout(menuCloseTimer);menuCloseTimer=setTimeout(()=>{if(activeMenu&&!activeMenu.details.matches(':hover')&&!menuDock?.matches(':hover'))closeMenu()},180)};
-  menuDock?.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer));menuDock?.addEventListener('pointerleave',scheduleMenuClose);
-  if(menuDock)window.VoltProMenuDock={element:menuDock,close:closeMenu};
+  const mobileToggle=document.createElement('button');
+  mobileToggle.type='button';mobileToggle.className='vp-mobile-menu-toggle';
+  mobileToggle.textContent='☰';mobileToggle.title='Show Simulator menus';
+  mobileToggle.setAttribute('aria-label','Show Simulator menus');mobileToggle.setAttribute('aria-expanded','false');
+  const closeMenu=()=>{
+   clearTimeout(menuCloseTimer);
+   if(!activeMenu)return;
+   const current=activeMenu;activeMenu=null;current.details.open=false;
+   current.box.style.removeProperty('left');current.box.style.removeProperty('top');
+   window.VoltProToolbarMenus?.close?.();
+  };
+  const positionMenu=details=>{
+   const box=details._vpDropdown,summary=details.querySelector('summary');
+   if(!box||!summary)return;
+   const rect=summary.getBoundingClientRect(),width=Math.min(360,window.innerWidth-16),height=Math.min(box.scrollHeight,Math.max(100,window.innerHeight-72));
+   box.style.setProperty('--vp-menu-width',width+'px');
+   box.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-width-8))+'px';
+   box.style.top=Math.max(8,Math.min(rect.bottom+4,window.innerHeight-height-8))+'px';
+  };
+  const openMenu=details=>{
+   if(activeMenu?.details===details){positionMenu(details);return}
+   if(activeMenu)closeMenu();
+   const box=details._vpDropdown;if(!box)return;
+   details.open=true;positionMenu(details);activeMenu={details,box};
+  };
+  const scheduleMenuClose=details=>{
+   clearTimeout(menuCloseTimer);
+   menuCloseTimer=setTimeout(()=>{
+    if(activeMenu?.details===details&&!details.matches(':hover')&&!details._vpDropdown.matches(':hover'))closeMenu();
+   },140);
+  };
+  const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');
+  window.addEventListener('resize',()=>{if(activeMenu)positionMenu(activeMenu.details)},{passive:true});
+  mobileToggle.addEventListener('click',()=>{
+   const opened=menus.classList.toggle('vp-mobile-menus-open');
+   mobileToggle.setAttribute('aria-expanded',String(opened));
+   mobileToggle.setAttribute('aria-label',opened?'Hide Simulator menus':'Show Simulator menus');
+   mobileToggle.title=opened?'Hide Simulator menus':'Show Simulator menus';
+  });
   const bins={};
   const makeMenu=(name,parent=menus)=>{
    const details=document.createElement('details'),summary=document.createElement('summary'),box=document.createElement('div');
    details.dataset.menu=name.toLowerCase();summary.textContent=name;summary.dataset.icon=icons[name];summary.title=name;summary.setAttribute('aria-label',name+' menu');
    box.className='vp-toolbar-dropdown';details._vpDropdown=box;details.append(summary,box);parent.append(details);
    details.addEventListener('toggle',()=>{if(details.open){for(const sibling of menus.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;openMenu(details)}else if(activeMenu?.details===details)closeMenu()});
-   details.addEventListener('pointerenter',()=>{clearTimeout(menuCloseTimer);details.open=true;openMenu(details)});
-   details.addEventListener('pointerleave',event=>{if(menuDock?.contains(event.relatedTarget))return;scheduleMenuClose()});
+   details.addEventListener('pointerenter',()=>{if(!hoverMenus?.matches)return;clearTimeout(menuCloseTimer);openMenu(details)});
+   details.addEventListener('pointerleave',()=>{if(hoverMenus?.matches)scheduleMenuClose(details)});
    return {details,box};
   };
   for(const name of categories){const menu=makeMenu(name);bins[name]=menu.box;}
+  menus.append(mobileToggle);
   const primaryIds=new Set(['runBtn','pauseBtn','stopBtn','simStatus','saveBtn','vpProjectName']);
   const addCommand=(name,label,run)=>{const box=bins[name];if(!box||box.querySelector('[data-vp-command="'+label+'"]'))return;const button=document.createElement('button');button.type='button';button.className='vp-menu-command';button.dataset.vpCommand=label;button.textContent=label;button.addEventListener('click',()=>{for(const menu of menus.querySelectorAll('details'))menu.open=false;try{run()}catch(error){console.error('VoltPro menu action failed:',error);const status=document.querySelector('#simStatus');if(status){status.dataset.state='error';const text=status.querySelector('.status-label');if(text)text.textContent='ACTION UNAVAILABLE';status.setAttribute('aria-label',error.message)}}});box.append(button);};const put=(node,name)=>{
    if(!bins[name])name='Tools';
@@ -104,10 +137,14 @@
   ensureWorkspaceRail();new MutationObserver(ensureWorkspaceRail).observe(document.body,{childList:true,subtree:true});
   document.addEventListener('voltpro-workspace-view-change',()=>document.querySelectorAll('[data-workspace-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.workspaceView==='scope'?Boolean(window.VoltProWorkspaceViews?.scopeOpen?.()):button.dataset.workspaceView===window.VoltProWorkspaceViews?.active?.()))));  const simActions=menus.querySelector('[data-menu="simulation"] .vp-toolbar-dropdown');
   if(simActions&&!simActions.querySelector('[data-sim-command]'))for(const [label,id] of [['Run simulation','runBtn'],['Pause / resume','pauseBtn'],['Stop simulation','stopBtn'],['Open oscilloscope','studioLaunch']]){const button=document.createElement('button');button.type='button';button.dataset.simCommand=id;button.textContent=label;button.onclick=()=>{if(id==='studioLaunch'){window.VoltProWorkspaceViews?.switch('scope');return}document.getElementById(id)?.click()};simActions.append(button);}
-  const adaptMenus=()=>{menus.dataset.compact=String(window.innerWidth<1100);};
+  const adaptMenus=()=>{
+   menus.dataset.compact=String(window.innerWidth<1550);
+   menus.classList.toggle('vp-mobile-menu-mode',window.innerWidth<=900);
+   if(window.innerWidth>900){menus.classList.remove('vp-mobile-menus-open');mobileToggle.setAttribute('aria-expanded','false')}
+  };
   adaptMenus();window.addEventListener('resize',adaptMenus,{passive:true});
-  document.addEventListener('keydown',event=>{if(event.key==='Escape')menus.querySelectorAll('details').forEach(menu=>menu.open=false);});
-  document.addEventListener('pointerdown',event=>{if(menus.contains(event.target)||menuDock?.contains(event.target))return;closeMenu();menus.querySelectorAll('details').forEach(menu=>menu.open=false);});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'){closeMenu();menus.classList.remove('vp-mobile-menus-open');mobileToggle.setAttribute('aria-expanded','false')}});
+  document.addEventListener('pointerdown',event=>{if(menus.contains(event.target)||event.target===mobileToggle)return;closeMenu();menus.querySelectorAll('details').forEach(menu=>menu.open=false);menus.classList.remove('vp-mobile-menus-open');mobileToggle.setAttribute('aria-expanded','false')});
  }
  window.addEventListener('load',layout);
 })();
