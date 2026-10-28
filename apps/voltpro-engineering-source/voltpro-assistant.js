@@ -158,11 +158,13 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
   const boot = () => {
     if ((new URLSearchParams(location.search).has("vp_embed") && !document.body.classList.contains("building-cad")) || document.getElementById("vpBotWindow")) return;
     const root = document.createElement("div");
+    root.id = "vpBotLayer";
+    root.className = "vp-bot-layer";
     root.innerHTML = `
       <button class="vp-bot-launcher" id="vpBotLauncher" type="button" aria-label="Open VoltPRo learning assistant" aria-expanded="false" title="Ask VoltPRo"><span>AI</span><i class="vp-bot-dot" aria-hidden="true"></i></button>
       <section class="vp-bot-window" id="vpBotWindow" role="dialog" aria-label="VoltPRo learning assistant" aria-modal="false" aria-hidden="true">
         <header class="vp-bot-head"><div class="vp-bot-brand"><div class="vp-bot-core">VP</div><div class="vp-bot-title"><strong>ADIGUN · ENGINEERING ASSISTANT</strong><span>PROJECT KNOWLEDGE · ENGINEERING · RESEARCH</span></div></div>
-          <div class="vp-bot-actions"><button id="vpBotClear" type="button" title="Clear conversation" aria-label="Clear conversation">⌫</button><button id="vpBotClose" type="button" title="Close assistant" aria-label="Close assistant">×</button></div>
+          <div class="vp-bot-actions"><button id="vpBotMove" class="vp-bot-move" type="button" title="Drag to move assistant" aria-label="Move assistant window">⠿</button><button id="vpBotMinimize" type="button" title="Minimize assistant" aria-label="Minimize assistant" aria-expanded="true">−</button><button id="vpBotClear" type="button" title="Clear conversation" aria-label="Clear conversation">⌫</button><button id="vpBotClose" type="button" title="Close assistant" aria-label="Close assistant">×</button></div>
         </header>
         <div class="vp-bot-status"><b>● READY</b> · CIRCUIT TOOLS · ENGINEERING · RESEARCH</div>
         <div class="vp-bot-messages" id="vpBotMessages" aria-live="polite" aria-relevant="additions text"></div>
@@ -171,9 +173,12 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
         <form class="vp-bot-composer" id="vpBotForm"><textarea id="vpBotInput" rows="1" maxlength="12000" placeholder="Ask about VoltPRo or electrical engineering…" autocomplete="off" aria-label="Ask VoltPRo"></textarea><button class="vp-bot-voice" id="vpBotVoice" type="button" aria-label="Speak your request" title="Voice input">🎙</button><button class="vp-bot-send" id="vpBotSend" type="submit" aria-label="Send message">→</button></form>
         <footer class="vp-bot-footer"><span>EDUCATIONAL USE ONLY · VERIFY SAFETY-CRITICAL WORK</span><span>VOLTPRO / HB</span></footer>
       </section>`;
-    document.body.appendChild(root);
+    // The assistant is a viewport-level overlay, outside the app body's stacking contexts.
+    document.documentElement.appendChild(root);
     const launcher = root.querySelector("#vpBotLauncher");
     const win = root.querySelector("#vpBotWindow");
+    const moveHandle = root.querySelector("#vpBotMove");
+    const minimize = root.querySelector("#vpBotMinimize");
     const msgs = root.querySelector("#vpBotMessages");
     const input = root.querySelector("#vpBotInput");
     const form = root.querySelector("#vpBotForm");
@@ -208,7 +213,75 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
     if(document.body.classList.contains("building-cad")){launcher.setAttribute("aria-label","Open Electrical Building AI");win.setAttribute("aria-label","Electrical Building installation assistant");input.setAttribute("aria-label","Ask Electrical Building AI");root.querySelector(".vp-bot-title strong").textContent="ELECTRICAL BUILDING · INSTALLATION AI";root.querySelector(".vp-bot-title span").textContent="FLOOR PLANS · CIRCUITS · BOM · DESIGN REVIEW";const suggestions=root.querySelectorAll("#vpBotSuggestions button");["Generate the two-storey house test draft","Explain the unresolved cable-sizing inputs","Review bathroom protection and PE requirements"].forEach((text,i)=>suggestions[i].textContent=text);input.placeholder="Ask about a building installation or request an editable draft…";}
     add(document.body.classList.contains("building-cad")?"Electrical Building AI is ready. Generate the two-storey house test, ask installation questions, or request a supported project JSON. Draft imports remain subject to design review; compliance is not certified.":"Adigun is ready. Ask me to draw a 3-way switch circuit, build an LED circuit, calculate current at 24 V through 120 ohm, explain engineering concepts, or research a topic. Circuit tools and checked calculations work locally; broader AI answers use the configured service.");
     const open = () => { win.classList.add("open"); win.setAttribute("aria-hidden", "false"); launcher.setAttribute("aria-expanded", "true"); setTimeout(() => input.focus(), 80); };
-    const close = () => { win.classList.remove("open"); win.setAttribute("aria-hidden", "true"); launcher.setAttribute("aria-expanded", "false"); launcher.focus(); };
+    const close = () => { win.classList.remove("open", "minimized"); win.setAttribute("aria-hidden", "true"); launcher.setAttribute("aria-expanded", "false"); minimize.setAttribute("aria-expanded", "true"); minimize.setAttribute("aria-label", "Minimize assistant"); minimize.title = "Minimize assistant"; launcher.focus(); };
+    const toggleMinimized = () => {
+      const minimized = win.classList.toggle("minimized");
+      minimize.setAttribute("aria-expanded", String(!minimized));
+      minimize.setAttribute("aria-label", minimized ? "Restore assistant" : "Minimize assistant");
+      minimize.title = minimized ? "Restore assistant" : "Minimize assistant";
+      if (!minimized) input.focus();
+    };
+    let drag = null;
+    let offsetX = 0;
+    let offsetY = 0;
+    const constrain = (x, y) => {
+      const rect = win.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const left = viewport?.offsetLeft || 0;
+      const top = viewport?.offsetTop || 0;
+      const width = viewport?.width || document.documentElement.clientWidth || window.innerWidth;
+      const height = viewport?.height || document.documentElement.clientHeight || window.innerHeight;
+      const dx = x - offsetX;
+      const dy = y - offsetY;
+      return {
+        x: offsetX + Math.max(left - rect.left, Math.min(dx, left + width - rect.right)),
+        y: offsetY + Math.max(top - rect.top, Math.min(dy, top + height - rect.bottom))
+      };
+    };
+    const setOffset = (x, y) => {
+      const next = constrain(x, y);
+      offsetX = next.x;
+      offsetY = next.y;
+      win.style.setProperty("--vp-bot-x", `${offsetX}px`);
+      win.style.setProperty("--vp-bot-y", `${offsetY}px`);
+    };
+    const stopDrag = event => {
+      if (!drag || (event && event.pointerId !== drag.pointerId)) return;
+      drag = null;
+      root.classList.remove("is-dragging");
+      if (moveHandle.hasPointerCapture?.(event.pointerId)) moveHandle.releasePointerCapture(event.pointerId);
+    };
+    moveHandle.addEventListener("pointerdown", event => {
+      if (event.button !== undefined && event.button !== 0) return;
+      event.preventDefault();
+      drag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, offsetX, offsetY };
+      moveHandle.setPointerCapture?.(event.pointerId);
+      root.classList.add("is-dragging");
+    });
+    moveHandle.addEventListener("pointermove", event => {
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      setOffset(drag.offsetX + event.clientX - drag.x, drag.offsetY + event.clientY - drag.y);
+    });
+    moveHandle.addEventListener("pointerup", stopDrag);
+    moveHandle.addEventListener("pointercancel", stopDrag);
+    moveHandle.addEventListener("lostpointercapture", stopDrag);
+    moveHandle.addEventListener("keydown", event => {
+      const step = event.shiftKey ? 24 : 8;
+      const delta = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[event.key];
+      if (!delta) return;
+      event.preventDefault();
+      setOffset(offsetX + delta[0], offsetY + delta[1]);
+    });
+    minimize.addEventListener("click", toggleMinimized);
+    win.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close();
+      }
+    });
+    window.addEventListener("resize", () => {
+      if (win.classList.contains("open")) setOffset(offsetX, offsetY);
+    }, { passive: true });
     launcher.addEventListener("click", () => win.classList.contains("open") ? close() : open());
     root.querySelector("#vpBotClose").addEventListener("click", close);
     root.querySelector("#vpBotClear").addEventListener("click", () => { if(send.disabled)return;historyEl.length = 0; history.length=0; window.VoltProConversationUI?.reset('bot');msgs.replaceChildren(); add("Conversation cleared. Ask a new question."); });

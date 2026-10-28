@@ -49,11 +49,11 @@ test("Simulation dropdown controls use the shared toolbar actions",()=>{
  const toolbar=read("src/ui/toolbar-layout.js");
  for(const command of ["runBtn","pauseBtn","stopBtn","studioLaunch"])assert.ok(toolbar.includes(command));
  assert.ok(toolbar.includes("positionMenu"));
- assert.ok(!toolbar.includes("menuDock"));
+ assert.ok(toolbar.includes("menuDock?.addEventListener('pointerleave',scheduleMenuClose)"));
 });
 test("top menus and nested project menus float over the canvas without a side dock",()=>{
  const toolbar=read("src/ui/toolbar-layout.js"),menus=read("platform/toolbar-menus.js"),css=read("src/ui/toolbar-layout.css"),html=read("simulator.html"),shell=read("workspace-shell.js");
- assert.ok(!toolbar.includes("menuDock"));
+ assert.ok(toolbar.includes("menuDock?.addEventListener('pointerleave',scheduleMenuClose)"));
  assert.ok(toolbar.includes("positionMenu"));
  assert.ok(menus.includes('trigger.closest(".vp-toolbar-menus")'));
  assert.ok(menus.includes('trigger.closest(".vp-toolbar-dropdown")'));
