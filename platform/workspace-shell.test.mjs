@@ -10,6 +10,7 @@ const nav = read("apps/voltpro-engineering-source/src/ui/site-shell.js");
 const platformScript = read("platform/platform.js");
 const shell = read("apps/voltpro-engineering-source/workspace-shell.js");
 const shellHtml = read("apps/voltpro-engineering-source/workspace-shell.html");
+const workspaceShellCss = read("apps/voltpro-engineering-source/workspace-shell.css");
 const assistantTheme = read("apps/voltpro-engineering-source/voltpro-hb-theme.css");
 const canvas = read("apps/voltpro-engineering-source/electrical-canvas.html");
 const ai = read("apps/voltpro-engineering-source/voltpro-assistant.js");
@@ -35,6 +36,18 @@ test("workspace switches reuse hidden tool iframes and update history client-sid
   assert.match(shell, /history\.pushState/);
   assert.match(shell, /element\.dataset\.active = String\(active\)/);
   for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
+});
+
+test("Oscilloscope hides injected site chrome and leaving Breadboard closes its command menus", () => {
+  assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-bar'));
+  assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-footer'));
+  assert.ok(shell.includes('doc.querySelectorAll(".breadboard-menubar details[open]").forEach(menu => { menu.open = false; });'));
+  assert.ok(shell.includes('if (document.documentElement.dataset.vpWorkspace === "breadboard" && key !== "/breadboard") closeBreadboardCommandMenus();'));
+});
+
+test("bottom workspace links are intercepted and routed to their declared destination", () => {
+  assert.ok(shell.includes('const link = event.target.closest("#vpBottomNavigation a[data-vp-route], #vpSiteHeader nav a[data-vp-route]");'));
+  assert.ok(shell.includes("event.preventDefault();\n    activate(target);"));
 });
 
 test("ElectCAD uses a professional three-column scrollable CAD workspace", () => {
