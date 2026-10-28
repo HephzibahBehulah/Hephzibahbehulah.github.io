@@ -16,6 +16,7 @@ export function injectSitewideTheme(root) {
   let injected = 0;
   for (const file of pages) {
     const html = fs.readFileSync(file, 'utf8');
+    if (/data-hb-sitewide-theme=["']off["']/i.test(html)) continue;
     if (html.includes('data-hb-sitewide-theme')) continue;
     if (!/<head(?:\s[^>]*)?>/i.test(html) || !/<\/head\s*>/i.test(html)) continue;
     const updated = html.replace(/<\/head\s*>/i, LINK + '</head>');
@@ -24,7 +25,7 @@ export function injectSitewideTheme(root) {
     injected++;
   }
   if (injected === 0 && pages.length === 0) throw new Error('No built HTML pages were found for the global theme.');
-  const themed = pages.filter(file => fs.readFileSync(file, 'utf8').includes('data-hb-sitewide-theme'));
+  const themed = pages.filter(file => fs.readFileSync(file, 'utf8').includes(LINK));
   if (themed.length === 0) throw new Error('The global theme was not applied to any built HTML page.');
   return {pages:pages.length, themed:themed.length, injected};
 }

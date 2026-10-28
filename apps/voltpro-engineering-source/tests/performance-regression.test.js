@@ -22,13 +22,12 @@ test("simulator external scripts are deferred for parallel fetch and non-blockin
   assert.ok(tags.every(tag => tag.endsWith(" defer")), "every external simulator script should use defer");
 });
 
-test("service worker does not prefetch the entire asset catalog during installation", () => {
-  const source = fs.readFileSync(path.join(root, "service-worker.js"), "utf8");
-  const start = source.indexOf('self.addEventListener("install"');
-  const end = source.indexOf('self.addEventListener("activate"');
-  const install = source.slice(start, end);
-  assert.ok(install.includes("small application shell"));
-  assert.ok(!install.includes("ASSETS.map"), "install must not fetch the full asset catalog");
+test("production worker removes old cache entries and never stores app code", () => {
+  const source = fs.readFileSync(path.resolve(root, "../..", "platform/public-sw.mjs"), "utf8");
+  assert.match(source, /self.skipWaiting/);
+  assert.match(source, /caches.delete/);
+  assert.match(source, /registration.unregister/);
+  assert.doesNotMatch(source, /cache.put|ASSETS.map/);
 });
 
 test("component media requests start after page load and run in small batches", () => {

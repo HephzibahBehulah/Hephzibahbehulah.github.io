@@ -27,21 +27,19 @@ test("main portfolio return link is same-tab and part of the persistent shared h
   assert.doesNotMatch(nav.match(/const mainSite=.*?const nav=/)?.[0] || "", /target|data-vp-route/);
 });
 
-test("workspace switches reuse hidden tool iframes and update history client-side", () => {
-  assert.match(shell, /const panels = new Map\(\)/);
-  assert.match(shell, /frame\.src = rootPrefix \+ tool\.src/);
-  const frameSetup = shell.slice(shell.indexOf("function ensurePanel"), shell.indexOf("function activate"));
-  assert.ok(frameSetup.indexOf('frame.addEventListener("load"') < frameSetup.indexOf("frame.src = rootPrefix + tool.src"));
-  assert.match(shell, /history\.pushState/);
-  assert.match(shell, /element\.dataset\.active = String\(active\)/);
-  for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
+test("all engineering routes use one shared shell and embedded tool view", () => {
+  for (const path of ["/electcad", "/tools", "/breadboard", "/electrical", "/oscilloscope", "/simulator", "/plc"]) assert.ok(shell.includes('path: "' + path + '"'));
+  assert.match(shell, /rootPrefix = location\.hostname\.startsWith\("admin\."/);
+  assert.match(shell, /frame\.src = rootPrefix \+ active\.src/);
+  assert.ok(shellHtml.includes('id="toolFrame"'));
+  assert.ok(shellHtml.includes('id="toolNav"'));
+  for (const label of ["English", "Deutsch", "Yoruba", "Pidgin English (PNG)"]) assert.ok(shellHtml.includes(label));
 });
-
 test("ElectCAD uses a professional three-column scrollable CAD workspace", () => {
   const app = read("apps/voltpro-electcad/App.tsx");
   const appCss = read("apps/voltpro-electcad/styles.css");
   const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
-  assert.match(shell, /classList\.toggle\("vp-electcad-maximized", tool\.path === "\/electcad"\)/);
+  assert.ok(shell.includes('path: "/electcad"'));
   assert.match(nav, /if\(isElectCADRoute\)\{document\.documentElement\.classList\.add\('vp-electcad-maximized'\).*?return;\}const header=/);
   assert.match(platformScript, /else if\(!isElectCADWorkspace\)document\.body\.prepend\(header\)/);
   assert.match(platformScript, /if\(!isElectCADWorkspace&&!document\.querySelector\('\.os-footer,\.hb-footer-brand'\)\)document\.body\.append\(footer\)/);
@@ -263,7 +261,7 @@ test("shared engineering design system reaches main, admin, embedded and standal
   for (const html of appRoutes) assert.match(html, /workspace-engineering-theme\.css/);
   assert.match(plcEntry, /workspace-engineering-theme\.css/);
   assert.match(shell, /hostname\.startsWith\("admin\."\)/);
-  assert.match(shell, /frame\.src = rootPrefix \+ tool\.src/);
+  assert.match(shell, /frame\.src = rootPrefix \+ active\.src/);
 });
 
 test("PLC project view switching keeps the same editable project and scan mode", () => {

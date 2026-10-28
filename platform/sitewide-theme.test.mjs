@@ -12,12 +12,12 @@ test('the charcoal and orange theme is injected into nested pages once', () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'hb-theme-'));
   try {
     fs.mkdirSync(path.join(fixture, '_apps/engineering'), {recursive:true});
-    fs.writeFileSync(path.join(fixture, 'index.html'), '<html><head><title>Main</title></head><body></body></html>');
+    fs.writeFileSync(path.join(fixture, 'index.html'), '<html data-hb-sitewide-theme="off"><head><title>Main</title></head><body></body></html>');
     fs.writeFileSync(path.join(fixture, '_apps/engineering/tool.html'), '<html><head></head><body></body></html>');
     fs.writeFileSync(path.join(fixture, 'fragment.html'), '<section>Not a page head</section>');
-    assert.deepEqual(injectSitewideTheme(fixture), {pages:3, themed:2, injected:2});
-    assert.deepEqual(injectSitewideTheme(fixture), {pages:3, themed:2, injected:0});
-    for (const file of ['index.html', '_apps/engineering/tool.html']) {
+    assert.deepEqual(injectSitewideTheme(fixture), {pages:3, themed:1, injected:1});
+    assert.deepEqual(injectSitewideTheme(fixture), {pages:3, themed:1, injected:0});
+    for (const file of ['_apps/engineering/tool.html']) {
       const html = fs.readFileSync(path.join(fixture, file), 'utf8');
       assert.equal((html.match(/data-hb-sitewide-theme/g) || []).length, 1);
       assert.ok(html.indexOf('sitewide-osint-theme.css') < html.indexOf('</head>'));
