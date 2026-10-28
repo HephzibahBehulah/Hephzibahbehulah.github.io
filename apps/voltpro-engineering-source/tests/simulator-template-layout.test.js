@@ -74,9 +74,10 @@ test('Simulator opens on an unobstructed canvas and keeps examples optional',()=
 
 test('all toolbar dropdowns open on hover and close after the pointer leaves',()=>{
  const layout=read('src/ui/toolbar-layout.js');
- assert.ok(layout.includes("menus.addEventListener('pointerover'"));
- assert.ok(layout.includes("menus.addEventListener('pointerout'"));
- assert.ok(layout.includes("details.open=false;details.querySelectorAll('details[open]')"));
+ assert.ok(layout.includes("details.addEventListener('pointerenter'"));
+ assert.ok(layout.includes("details.addEventListener('pointerleave'"));
+ assert.ok(layout.includes("menuDock?.addEventListener('pointerleave',scheduleMenuClose)"));
+ assert.ok(layout.includes("setTimeout(()=>{if(activeMenu&&!activeMenu.details.matches(':hover')&&!menuDock?.matches(':hover'))closeMenu()},180)"));
  const add=layout.indexOf('const addCommand='),put=layout.indexOf('const put=(node,name)=>');
  assert.ok(add>=0&&put>add,'toolbar commands remain in layout scope');
 });
@@ -88,3 +89,4 @@ test('component library launcher keeps the list in the workspace sidebar',()=>{
  assert.match(reference,/setPanel\?\.\('left',true\)/);
  assert.ok(!reference.includes("e.stopImmediatePropagation();open();"),'component button does not open the canvas-covering dialog');
 });
+

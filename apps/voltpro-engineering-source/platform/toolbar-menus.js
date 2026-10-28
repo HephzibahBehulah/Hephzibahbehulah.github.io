@@ -69,6 +69,7 @@ let activeTrigger=null,popover=null;
 function close(){if(popover){popover.remove();popover=null}if(activeTrigger){activeTrigger.setAttribute("aria-expanded","false");activeTrigger=null}}
 function position(){
  if(!popover||!activeTrigger)return;
+ const dock=window.VoltProMenuDock?.element;if(dock&&dock.contains(popover)){popover.style.position="static";popover.style.left="";popover.style.top="";popover.style.width="";popover.style.maxHeight="";return}
  const r=activeTrigger.getBoundingClientRect(),w=popover.offsetWidth,h=popover.scrollHeight,gutter=8,below=window.innerHeight-r.bottom-gutter,above=r.top-gutter;
  const placeBelow=below>=Math.min(h,180)||below>=above;
  const available=Math.max(0,placeBelow?below:above);
@@ -102,8 +103,8 @@ function open(trigger){
  activeTrigger=trigger;trigger.setAttribute("aria-expanded","true");
  popover=document.createElement("div");popover.className="vp-toolbar-popover";popover.id="vp-menu-"+key;popover.setAttribute("role","menu");popover.setAttribute("aria-label",definition.title);
  popover.innerHTML='<div class="vp-toolbar-popover-title">'+esc(definition.title)+'</div>'+definition.items.map((item,i)=>'<button type="button" role="menuitem" data-index="'+i+'" data-kind="'+esc(item[1])+'" data-value="'+esc(item[2]||"")+'">'+esc(item[0])+'</button>').join("");
- document.body.appendChild(popover);trigger.setAttribute("aria-controls",popover.id);position();
- popover.addEventListener("click",event=>{const button=event.target.closest("button[role=menuitem]");if(!button)return;const kind=button.dataset.kind,value=button.dataset.value;close();try{dispatch(kind,value)}catch(error){console.error("VoltPRo toolbar action failed:",error);const status=$("#simStatus");if(status){status.dataset.state="error";status.querySelector(".status-label").textContent="TOOL ERROR"}const message="Tool action failed: "+error.message;const log=$("#console");if(log)log.textContent+="\n"+message;const live=$("#simStatus");if(live){live.dataset.state="error";const label=live.querySelector(".status-label");if(label)label.textContent="TOOL UNAVAILABLE";live.setAttribute("aria-label",message)}console.error(message)}});
+ const dock=window.VoltProMenuDock?.element;if(dock&&!dock.hidden)dock.appendChild(popover);else document.body.appendChild(popover);trigger.setAttribute("aria-controls",popover.id);position();
+ popover.addEventListener("click",event=>{const button=event.target.closest("button[role=menuitem]");if(!button)return;const kind=button.dataset.kind,value=button.dataset.value;close();try{dispatch(kind,value);window.VoltProMenuDock?.close?.()}catch(error){console.error("VoltPRo toolbar action failed:",error);const status=$("#simStatus");if(status){status.dataset.state="error";status.querySelector(".status-label").textContent="TOOL ERROR"}const message="Tool action failed: "+error.message;const log=$("#console");if(log)log.textContent+="\n"+message;const live=$("#simStatus");if(live){live.dataset.state="error";const label=live.querySelector(".status-label");if(label)label.textContent="TOOL UNAVAILABLE";live.setAttribute("aria-label",message)}console.error(message)}});
  popover.addEventListener("keydown",event=>{const items=[...popover.querySelectorAll("button[role=menuitem]")],i=items.indexOf(document.activeElement);if(event.key==="Escape"){event.preventDefault();close();trigger.focus()}else if(event.key==="ArrowDown"||event.key==="ArrowUp"){event.preventDefault();items[(i+(event.key==="ArrowDown"?1:-1)+items.length)%items.length]?.focus()}else if(event.key==="Home"){event.preventDefault();items[0]?.focus()}else if(event.key==="End"){event.preventDefault();items.at(-1)?.focus()}});
  popover.querySelector("button")?.focus();
 }
@@ -113,3 +114,4 @@ document.addEventListener("keydown",event=>{if(event.key==="Escape"&&popover){co
 const bar=$(".toolbar");bar?.addEventListener("scroll",close,{passive:true});window.addEventListener("resize",position);window.addEventListener("scroll",position,true);
 window.VoltProToolbarMenus={close,open,definitions:menus};
 })();
+

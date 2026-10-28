@@ -33,6 +33,16 @@
 .vp-toolbar-quick #saveBtn::before{content:'▣';font:19px/1 system-ui,sans-serif;color:#171717}
 .vp-toolbar-help::before{content:attr(data-toolbar-icon);font:19px/1 system-ui,sans-serif;color:#e8eef2}
 .vp-toolbar-help{font-size:0}
+.vp-menu-dock{grid-column:4;grid-row:1;display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0;max-height:100%;overflow:auto;padding:10px;background:#0a1521;border-left:1px solid #2a4054;color:#e6f1f8;overscroll-behavior:contain}
+.vp-menu-dock[hidden]{display:none!important}
+.vp-menu-dock-heading{position:sticky;top:-10px;z-index:1;padding:10px 2px 8px;background:#0a1521;border-bottom:1px solid #29445b;color:#41d8e5;font:800 10px/1.4 ui-monospace,monospace;letter-spacing:.1em}
+.vp-menu-dock>.vp-toolbar-dropdown{position:static;left:auto;right:auto;top:auto;width:100%;max-width:none;max-height:none;overflow:visible;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.vp-menu-dock .vp-toolbar-popover{position:static;width:auto;max-width:none;max-height:none;overflow:visible;margin:6px 0 0;padding:8px;border-radius:8px;box-shadow:none}
+.workspace.vp-has-rail.vp-menu-dock-open{grid-template-columns:56px 260px minmax(220px,1fr) minmax(230px,280px) 290px}
+.workspace.vp-has-rail.vp-menu-dock-open>.vp-menu-dock{grid-column:4;grid-row:1}
+.workspace.vp-has-rail.vp-menu-dock-open>#inspectorPanel{grid-column:5;grid-row:1}
+.workspace.vp-view-active.vp-menu-dock-open>.vp-pcb-host,.workspace.vp-view-active.vp-menu-dock-open>.vp-board-host{grid-column:2/4!important;grid-row:1!important}
+@media(max-width:1000px){.workspace.vp-has-rail.vp-menu-dock-open{grid-template-columns:44px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr) minmax(160px,34vh)!important}.workspace.vp-has-rail.vp-menu-dock-open>#canvasWrap{grid-column:2!important;grid-row:1!important}.workspace.vp-has-rail.vp-menu-dock-open>.vp-menu-dock{grid-column:2!important;grid-row:2!important;max-height:34vh}.workspace.vp-has-rail.vp-menu-dock-open>#palette,.workspace.vp-has-rail.vp-menu-dock-open>#inspectorPanel{display:none!important}.workspace.vp-view-active.vp-menu-dock-open>.vp-pcb-host,.workspace.vp-view-active.vp-menu-dock-open>.vp-board-host{grid-column:2!important;grid-row:1!important}}
 .vp-sim-header-utilities{display:flex;align-items:center;gap:5px;flex:0 0 auto;margin-left:2px;white-space:nowrap}
 .vp-sim-language-control{display:flex;align-items:center;gap:4px;color:#e1ebf0}
 .vp-sim-language-control>span{font-size:16px}
@@ -119,3 +129,4 @@ body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus summar
 }
 
 @media(max-width:760px){body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{flex:1 1 auto!important;min-width:0!important;max-width:42vw;overflow-x:auto!important;overflow-y:visible!important;scrollbar-width:thin}.vp-toolbar-menus>details{flex:0 0 auto!important}.vp-toolbar-menus summary{font-size:10px!important}}
+

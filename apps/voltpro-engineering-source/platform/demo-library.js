@@ -67,13 +67,12 @@ function loadDemo(d){
  }else{
   const invalid=components.find(c=>(defs[c.type]?.pins||2)!==2);
   if(invalid)throw Error("No verified two-terminal wiring plan exists for "+invalid.type+".");
-  for(let i=0;i<components.length-1;i++)link(components[i].id,1,components[i+1].id,0);
-  if(components.length>1)link(components.at(-1).id,1,components[0].id,1);
+  if(components.length>1){link(components[0].id,0,components[1].id,0);for(let i=1;i<components.length-1;i++)link(components[i].id,1,components[i+1].id,0);link(components.at(-1).id,1,components[0].id,1)}
  }
  const knownPins={battery:2,threephase:4,contactor:12,motor:7,"circuit-breaker-3p":6,"overload-relay":10,"plc-controller":13,ground:1,switch:2};const pinCount=c=>window.VoltProRegistry?.get?.(c.type)?.terminals?.length||window.VoltProComponents?.get?.(c.type)?.terminals?.length||defs[c.type]?.pins||knownPins[c.type]||2;const idsPresent=new Map(components.map(c=>[c.id,new Set(Array.from({length:pinCount(c)},(_,i)=>i))]));
  for(const wire of wires){for(const end of [wire.a,wire.b]){const parts=String(end).split(":"),valid=idsPresent.get(parts[0]);if(!valid||!valid.has(Number(parts[1])))throw Error("Demo wiring references a missing terminal: "+end)}}
  S.components=components;S.wires=wires;S.selected=components[0]?.id||null;S.selectedWireId=null;S.mode="schematic";S.running=false;S.lastAnalysis=null;S.lastSolverProject=null;S.pan={x:0,y:0};S.zoom=1;
- window.VoltProUI?.render?.();document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("active",b.dataset.mode==="schematic"));close();
+ window.VoltProUI?.render?.();document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("active",b.dataset.mode==="schematic"));document.querySelector("#fitBtn")?.click();close();
  const c=document.querySelector("#console");if(c)c.textContent+="\nLoaded demo "+d.id+": "+d.title+" · "+wires.length+" verified terminal connections\n"+d.goal;
 }
 window.VoltProDemoLibrary={open,demos:()=>demos.slice(),load:loadDemo};

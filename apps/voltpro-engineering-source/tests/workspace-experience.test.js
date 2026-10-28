@@ -14,6 +14,13 @@ test("left rail switches workspace views through an independent runtime",()=>{
  assert.ok(views.includes("component.x = 80 + part.x * 12"));
  assert.ok(!views.includes("location.href"));
 });
+test("PCB view reads and writes state through the simulator runtime API",()=>{
+ const views=read("src/ui/workspace-views.js");
+ assert.ok(views.includes("simulator.state.components"));
+ assert.ok(views.includes("simulator.state.wires"));
+ assert.ok(views.includes("simulator.state.projectMetadata"));
+ assert.ok(!views.includes("ui.state"));
+});
 test("oscilloscope is compact, resizable, persistent and activated only by its workspace view",()=>{
  const css=read("simulator.css"),html=read("simulator.html"),views=read("src/ui/workspace-views.js"),runtime=read("simulator.js");
  assert.ok(css.includes(".sim-scope-panel{position:absolute"));
@@ -41,12 +48,26 @@ test("Run, Pause, Resume and Stop retain explicit active states",()=>{
 test("Simulation dropdown controls use the shared toolbar actions",()=>{
  const toolbar=read("src/ui/toolbar-layout.js");
  for(const command of ["runBtn","pauseBtn","stopBtn","studioLaunch"])assert.ok(toolbar.includes(command));
- assert.ok(toolbar.includes("positionDropdown"));
+ assert.ok(toolbar.includes("vp-menu-dock-open"));
+});
+test("top menus and nested project menus use an in-flow dock beside the canvas",()=>{
+ const toolbar=read("src/ui/toolbar-layout.js"),menus=read("platform/toolbar-menus.js"),css=read("src/ui/toolbar-layout.css"),html=read("simulator.html");
+ assert.ok(toolbar.includes("workspace.insertBefore(menuDock"));
+ assert.ok(toolbar.includes("menuDock.replaceChildren(title,box)"));
+ assert.ok(toolbar.includes("menuDock?.contains(event.target)"));
+ assert.ok(menus.includes("dock.appendChild(popover)"));
+ assert.ok(css.includes(".workspace.vp-has-rail.vp-menu-dock-open"));
+ assert.ok(css.includes("grid-row:2!important"));
+ assert.ok(css.includes(".vp-menu-dock .vp-toolbar-popover{position:static"));
+ assert.ok(html.includes("toolbar-layout.js?v=20261028a"));
+ assert.ok(html.includes("toolbar-layout.css?v=20261028a"));
 });
 test("Serial view receives output from the virtual MCU interpreter",()=>{
  const views=read("src/ui/workspace-views.js"),mcu=read("platform/mcu-lab-ui.js");
  assert.ok(views.includes("voltpro-serial-output"));
  assert.ok(mcu.includes("voltpro-serial-output"));
+ assert.ok(views.includes('boardHost.querySelector(".vp-board-live")'));
+ assert.ok(views.includes("if (boardCanvas) boardCanvas.hidden = true"));
 });
 test("new workspace module is included in the active offline cache",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js");
