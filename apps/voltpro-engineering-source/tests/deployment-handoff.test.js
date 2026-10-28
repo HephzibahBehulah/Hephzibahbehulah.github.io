@@ -10,6 +10,7 @@ const deploy=fs.readFileSync(path.join(root,"platform/cloudflare-build-deploy.mj
 test("future deployment agents keep Docker image rollout in the GitHub pipeline",()=>{
  assert.match(doc,/workflow owns updates to the Sandbox Durable Object image/i);
  assert.match(doc,/GITHUB_TOKEN is not used/i);
- assert.match(deploy,/--containers-rollout=none/);
+ assert.match(deploy,/validation-only mode/i);
+ assert.doesNotMatch(deploy,/wrangler\s+deploy/i);
  assert.doesNotMatch(deploy,/wrangler deploy(?!.*containers-rollout)/s);
 });
