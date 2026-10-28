@@ -209,7 +209,7 @@
     if (language) {
       language.title = "Language";
       language.setAttribute("aria-label", "Language selector");
-      language.querySelectorAll("option").forEach(option => { option.dataset.fullLabel ||= option.textContent; option.textContent = option.value.toUpperCase(); });
+      language.querySelectorAll("option").forEach(option => { option.dataset.fullLabel ||= option.textContent; });
     }
     if (project) sharedHeader.append(project);
     if (mobileToggle) sharedHeader.append(mobileToggle);
