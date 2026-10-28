@@ -24,6 +24,12 @@
     document.body.insertBefore(document.adoptNode(header), headerPlaceholder?.nextSibling || document.body.firstChild);
     delete doc.__vpElectricalHeader;
   }
+  function closeBreadboardCommandMenus() {
+    const doc = panels.get("/breadboard")?.querySelector("iframe")?.contentDocument;
+    if (!doc) return;
+    doc.querySelectorAll(".breadboard-menubar details[open]").forEach(menu => { menu.open = false; });
+  }
+
   function integrateElectrical(panel) {
     const doc = panel.querySelector("iframe")?.contentDocument;
     const host = doc?.getElementById("electricalShellControls");
@@ -549,6 +555,7 @@
   function activate(path, push = true) {
     restoreElectricalChrome();
     const key = canonicalPath(path);
+    if (document.documentElement.dataset.vpWorkspace === "breadboard" && key !== "/breadboard") closeBreadboardCommandMenus();
     const tool = tools.find(item => item.path === key) || tools[0];
     if (tool.path !== "/simulator") restoreSharedHeader();
     const panel = ensurePanel(tool);
