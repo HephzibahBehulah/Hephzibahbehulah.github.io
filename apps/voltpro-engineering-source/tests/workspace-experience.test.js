@@ -48,23 +48,22 @@ test("Run, Pause, Resume and Stop retain explicit active states",()=>{
 test("Simulation dropdown controls use the shared toolbar actions",()=>{
  const toolbar=read("src/ui/toolbar-layout.js");
  for(const command of ["runBtn","pauseBtn","stopBtn","studioLaunch"])assert.ok(toolbar.includes(command));
- assert.ok(toolbar.includes("vp-menu-dock-open"));
+ assert.ok(toolbar.includes("positionMenu"));
+ assert.ok(!toolbar.includes("menuDock"));
 });
-test("top menus and nested project menus use an in-flow dock beside the canvas",()=>{
+test("top menus and nested project menus float over the canvas without a side dock",()=>{
  const toolbar=read("src/ui/toolbar-layout.js"),menus=read("platform/toolbar-menus.js"),css=read("src/ui/toolbar-layout.css"),html=read("simulator.html"),shell=read("workspace-shell.js");
- assert.ok(toolbar.includes("workspace.insertBefore(menuDock"));
- assert.ok(toolbar.includes("menuDock.replaceChildren(title,box)"));
- assert.ok(toolbar.includes("menuDock?.contains(event.target)"));
- assert.ok(menus.includes("dock.appendChild(popover)"));
- assert.ok(css.includes(".workspace.vp-has-rail.vp-menu-dock-open"));
- assert.ok(css.includes("grid-row:2!important"));
- assert.ok(css.includes("grid-template-rows:minmax(180px,1fr) minmax(140px,34vh)!important"));
- assert.ok(css.includes("height:100%!important;min-height:0!important;max-height:none!important"));
- assert.ok(css.includes("#canvasWrap{grid-column:2!important;grid-row:1!important;display:block!important"));
- assert.ok(css.includes(".vp-menu-dock .vp-toolbar-popover{position:static"));
- assert.ok(html.includes("toolbar-layout.js?v=20261028a"));
- assert.ok(html.includes("toolbar-layout.css?v=20261028a"));
- assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261028a"));
+ assert.ok(!toolbar.includes("menuDock"));
+ assert.ok(toolbar.includes("positionMenu"));
+ assert.ok(menus.includes('trigger.closest(".vp-toolbar-menus")'));
+ assert.ok(menus.includes('trigger.closest(".vp-toolbar-dropdown")'));
+ assert.ok(css.includes(".vp-toolbar-dropdown"));
+ assert.ok(css.includes("position:fixed!important;z-index:100100"));
+ assert.ok(css.includes(".vp-toolbar-popover{z-index:100200"));
+ assert.ok(html.includes("toolbar-layout.js?v=20261028b"));
+ assert.ok(html.includes("toolbar-layout.css?v=20261028c"));
+ assert.ok(html.includes("platform/toolbar-menus.js?v=20261028a"));
+ assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261028c"));
 });
 test("Serial view receives output from the virtual MCU interpreter",()=>{
  const views=read("src/ui/workspace-views.js"),mcu=read("platform/mcu-lab-ui.js");
