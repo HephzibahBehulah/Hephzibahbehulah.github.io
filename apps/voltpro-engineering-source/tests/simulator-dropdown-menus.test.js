@@ -60,10 +60,18 @@ test("MCU Lab accepts named example sketches and retains explicit interpreter li
  assert.ok(ui.includes("not a native compiler"));
 });
 
-test("menu runtime loads without a per-app cache worker",()=>{
- const html=read("simulator.html");
- assert.doesNotMatch(html,/serviceWorker.register/);
- assert.ok(html.includes("platform/toolbar-menus.js?v=20261028a"));
+test("cache and deployment version invalidates stale simulator shell and precaches menu runtime",()=>{
+ const html=read("simulator.html"),worker=read("service-worker.js"),css=read("simulator-layout-restore.css");
+ assert.ok(worker.includes('const CACHE="voltpro-v99"'));
+ assert.ok(worker.includes('"./platform/toolbar-menus.js"'));
+ assert.ok(worker.includes('"./platform/ui.js"'));
+ assert.ok(worker.includes('"./platform/workbench.js"'));
+ assert.ok(html.includes('service-worker.js?v=20261027e'));
+ assert.ok(html.includes('updateViaCache:"none"'));
+ assert.ok(html.includes('platform/toolbar-menus.js?v=20261028a'));
+ assert.ok(html.includes('platform/ui.js?v=20261012b'));
+ assert.ok(html.includes('simulator.js?v=20261027e'));
+ assert.ok(css.includes(".vp-toolbar-popover"));
 });
 
 test("MCU Lab mounts through the Workbench host without recursive legacy startup",()=>{
