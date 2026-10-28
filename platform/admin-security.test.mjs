@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createPlatform,resolveRoute} from './router.mjs';
-import {adminSecurity,INTEGRITY_ASSETS,EXTRA_ASSET_TARGETS} from './admin-security.mjs';
+import {adminSecurity,INTEGRITY_ASSETS,EXTRA_ASSET_TARGETS,SURFACE_ROUTES} from './admin-security.mjs';
 const origin='https://admin.hephzibahbehulah.com';
 const identity={ok:true,identity:{email:'owner@example.test'},claims:{exp:Date.now()/1000+300}};
 const gate={limit:async()=>({success:true})};
@@ -28,22 +28,23 @@ test('security reporting is read-only, identity-bound, and rate limited',async()
  assert.equal((await adminSecurity(new Request(origin+'/api/admin/security'),{},identity)).status,503);
  assert.equal((await adminSecurity(new Request(origin+'/api/admin/security'),{ADMIN_AI_LIMITER:{limit:async()=>({success:false})}},identity)).status,429);
 });
-async function report({mismatch=false,githubFailed=false}={}){
+async function report({mismatch=false,githubFailed=false,surfaceIssue=false}={}){
  const bytes=new TextEncoder().encode('trusted code'),hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join(''),commit='a'.repeat(40),manifest={assets:Object.fromEntries(INTEGRITY_ASSETS.map(p=>['_apps/engineering/'+p,hash]))};
  for(const target of EXTRA_ASSET_TARGETS)manifest.assets[target.key]=hash;
  const env={GITHUB_TOKEN:'test-secret',ADMIN_AI_LIMITER:gate,ASSETS:{fetch:async req=>{const path=new URL(req.url).pathname;if(path==='/release-manifest.json')return Response.json(manifest);if(manifest.assets[path.slice(1)])return new Response(mismatch?'modified code':bytes,{headers:{'content-type':'text/javascript'}});return Response.json({commitHash:commit});}}};
- const fetcher=async(url,options)=>{
+ const surfaceRequests=[];const fetcher=async(url,options)=>{
   assert.equal(options.redirect,'manual');
   if(url.startsWith('https://api.github.com')){assert.equal(options.headers.authorization,'Bearer test-secret');if(githubFailed)return new Response(null,{status:503});if(url.endsWith('/branches/main'))return Response.json({protected:true,commit:{sha:commit}});return Response.json({workflow_runs:[{id:1,head_sha:commit,status:'completed',conclusion:'success',event:'push'}]});}
-  assert.equal(options.headers?.authorization,undefined);if(url.startsWith('https://raw.githubusercontent.com/'))return new Response(bytes);assert.ok(['https://engineering.hephzibahbehulah.com/','https://hephzibahbehulah.com/','https://cyber.hephzibahbehulah.com/'].some(prefix=>url.startsWith(prefix)));return new Response(mismatch?'modified code':bytes,{headers:{'content-type':'text/javascript'}});
+  assert.equal(options.headers?.authorization,undefined);if(url.startsWith('https://raw.githubusercontent.com/'))return new Response(bytes);if(SURFACE_ROUTES.some(route=>route.url===url)){surfaceRequests.push({url,options});if(surfaceIssue&&url.endsWith('/simulator'))return new Response(null,{status:302,headers:{location:'https://untrusted.example/','cache-control':'public, max-age=3600'}});return new Response(null,{headers:{'content-type':'text/html','cache-control':'no-store','strict-transport-security':'max-age=31536000','content-security-policy':'default-src \'self\'','x-content-type-options':'nosniff','referrer-policy':'strict-origin-when-cross-origin'}});}assert.ok(['https://engineering.hephzibahbehulah.com/','https://hephzibahbehulah.com/','https://cyber.hephzibahbehulah.com/'].some(prefix=>url.startsWith(prefix)));return new Response(mismatch?'modified code':bytes,{headers:{'content-type':'text/javascript'}});
  };
- const r=await adminSecurity(new Request(origin+'/api/admin/security'),env,identity,{fetcher});return r.json();
+ const r=await adminSecurity(new Request(origin+'/api/admin/security'),env,identity,{fetcher});return {data:await r.json(),surfaceRequests};
 }
-test('matching deployed code and successful workflow are reported with honest coverage',async()=>{const data=await report();assert.equal(data.integrity.length,INTEGRITY_ASSETS.length+EXTRA_ASSET_TARGETS.length);assert.ok(data.integrity.every(x=>x.status==='match'));assert.equal(data.signals.length,0);assert.match(data.verification,/Successful/);assert.ok(data.coverage.some(x=>/not independent/.test(x)));assert.ok(!JSON.stringify(data).includes('test-secret'));});
-test('modified code produces alerts without claiming proven malicious intent',async()=>{const data=await report({mismatch:true});assert.ok(data.integrity.every(x=>x.status==='mismatch'));assert.ok(data.signals.some(x=>x.level==='alert'));});
-test('unavailable source and workflow evidence never becomes verified or healthy',async()=>{const data=await report({githubFailed:true});assert.equal(data.source,null);assert.equal(data.verification,undefined);assert.ok(data.signals.some(x=>/unverified/.test(x.message)));});
+test('matching code and workflow include passive checks for only the eight owned routes',async()=>{const {data,surfaceRequests}=await report();assert.equal(data.integrity.length,INTEGRITY_ASSETS.length+EXTRA_ASSET_TARGETS.length);assert.ok(data.integrity.every(x=>x.status==='match'));assert.equal(data.signals.length,0);assert.match(data.verification,/Successful/);assert.ok(data.coverage.some(x=>/not independent/.test(x)));assert.equal(data.surface.length,SURFACE_ROUTES.length);assert.ok(data.surface.every(x=>x.ok&&x.findings.length===0));assert.equal(surfaceRequests.length,SURFACE_ROUTES.length);assert.ok(surfaceRequests.every(x=>x.options.method==='GET'&&x.options.redirect==='manual'&&x.options.cache==='no-store'));assert.ok(!JSON.stringify(data).includes('test-secret'));});
+test('surface failures and redirects are reported without following or exposing redirect targets',async()=>{const {data,surfaceRequests}=await report({surfaceIssue:true});const result=data.surface.find(x=>x.label==='Simulator');assert.equal(result.status,302);assert.equal(result.ok,false);assert.ok(result.findings.some(x=>x.code==='redirect'));assert.doesNotMatch(JSON.stringify(result),/untrusted\.example/);assert.equal(surfaceRequests.find(x=>x.url.endsWith('/simulator')).options.redirect,'manual');});
+test('modified code produces alerts without claiming proven malicious intent',async()=>{const {data}=await report({mismatch:true});assert.ok(data.integrity.every(x=>x.status==='mismatch'));assert.ok(data.signals.some(x=>x.level==='alert'));});
+test('unavailable source and workflow evidence never becomes verified or healthy',async()=>{const {data}=await report({githubFailed:true});assert.equal(data.source,null);assert.equal(data.verification,undefined);assert.ok(data.signals.some(x=>/unverified/.test(x.message)));});
 test('private UI renders untrusted records as text and links the account menu to monitoring',()=>{
- const ui=fs.readFileSync(new URL('./admin-security-ui.js',import.meta.url),'utf8');assert.doesNotMatch(ui,/\.innerHTML\s*=/);assert.match(ui,/textContent/);assert.match(ui,/expiry&&Date\.now\(\)>=expiry/);assert.match(fs.readFileSync(new URL('./platform.js',import.meta.url),'utf8'),/watchSession\(accountMenu\)/);
+ const ui=fs.readFileSync(new URL('./admin-security-ui.js',import.meta.url),'utf8');assert.doesNotMatch(ui,/\.innerHTML\s*=/);assert.match(ui,/textContent/);assert.match(ui,/expiry&&Date\.now\(\)>=expiry/);assert.match(ui,/Surface checks/);assert.match(ui,/Malicious activity/);assert.match(ui,/ArrowRight/);assert.match(ui,/No CVE database or reputation feed is connected/);assert.match(fs.readFileSync(new URL('./platform.js',import.meta.url),'utf8'),/watchSession\(accountMenu\)/);
 });
 
 
