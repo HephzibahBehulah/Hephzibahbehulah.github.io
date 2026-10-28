@@ -10,15 +10,22 @@
   const primary=document.createElement('div');primary.className='vp-toolbar-primary';
   const project=document.createElement('div');project.className='vp-toolbar-project';
   const menus=document.createElement('div');menus.className='vp-toolbar-menus';
+  const workspace=document.querySelector('.workspace');let menuDock=workspace?.querySelector('.vp-menu-dock');
+  if(workspace&&!menuDock){menuDock=document.createElement('aside');menuDock.className='vp-menu-dock';menuDock.hidden=true;menuDock.setAttribute('aria-label','Open menu panel');workspace.insertBefore(menuDock,document.querySelector('#inspectorPanel'));}
+  let activeMenu=null,menuCloseTimer=0;
+  const closeMenu=()=>{clearTimeout(menuCloseTimer);if(!menuDock)return;const current=activeMenu;activeMenu=null;if(current){current.details.append(current.box);current.details.open=false}menuDock.replaceChildren();menuDock.hidden=true;workspace?.classList.remove('vp-menu-dock-open');window.VoltProToolbarMenus?.close?.()};
+  const openMenu=details=>{if(!menuDock||!workspace)return;if(activeMenu?.details===details)return;if(activeMenu)closeMenu();const box=details._vpDropdown;if(!box)return;const title=document.createElement('header');title.className='vp-menu-dock-heading';title.textContent=details.dataset.menu.replace(/^[a-z]/,x=>x.toUpperCase())+' MENU';menuDock.replaceChildren(title,box);menuDock.hidden=false;workspace.classList.add('vp-menu-dock-open');activeMenu={details,box}};
+  const scheduleMenuClose=()=>{clearTimeout(menuCloseTimer);menuCloseTimer=setTimeout(()=>{if(activeMenu&&!activeMenu.details.matches(':hover')&&!menuDock?.matches(':hover'))closeMenu()},180)};
+  menuDock?.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer));menuDock?.addEventListener('pointerleave',scheduleMenuClose);
+  if(menuDock)window.VoltProMenuDock={element:menuDock,close:closeMenu};
   const bins={};
-  const positionDropdown=details=>{if(!details.open)return;const summary=details.querySelector(':scope>summary'),box=details.querySelector(':scope>.vp-toolbar-dropdown');if(!summary||!box)return;const rect=summary.getBoundingClientRect(),width=Math.min(Math.max(box.scrollWidth,240),window.innerWidth-16),top=Math.min(rect.bottom+5,window.innerHeight-96);box.style.position='fixed';box.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-width-8))+'px';box.style.top=Math.max(52,top)+'px';box.style.width=width+'px';box.style.maxHeight=Math.max(120,window.innerHeight-Math.max(52,top)-8)+'px';};
   const makeMenu=(name,parent=menus)=>{
    const details=document.createElement('details'),summary=document.createElement('summary'),box=document.createElement('div');
    details.dataset.menu=name.toLowerCase();summary.textContent=name;summary.dataset.icon=icons[name];summary.title=name;summary.setAttribute('aria-label',name+' menu');
-   box.className='vp-toolbar-dropdown';details.append(summary,box);parent.append(details);
-   details.addEventListener('toggle',()=>{if(details.open){for(const sibling of details.parentElement.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;requestAnimationFrame(()=>positionDropdown(details));}});
-   details.addEventListener('pointerenter',()=>{clearTimeout(details._closeTimer);details.open=true;});
-   details.addEventListener('pointerleave',()=>{details._closeTimer=setTimeout(()=>{details.open=false;details.querySelectorAll('details[open]').forEach(child=>child.open=false);},180);});
+   box.className='vp-toolbar-dropdown';details._vpDropdown=box;details.append(summary,box);parent.append(details);
+   details.addEventListener('toggle',()=>{if(details.open){for(const sibling of menus.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;openMenu(details)}else if(activeMenu?.details===details)closeMenu()});
+   details.addEventListener('pointerenter',()=>{clearTimeout(menuCloseTimer);details.open=true;openMenu(details)});
+   details.addEventListener('pointerleave',event=>{if(menuDock?.contains(event.relatedTarget))return;scheduleMenuClose()});
    return {details,box};
   };
   for(const name of categories){const menu=makeMenu(name);bins[name]=menu.box;}
@@ -97,11 +104,10 @@
   ensureWorkspaceRail();new MutationObserver(ensureWorkspaceRail).observe(document.body,{childList:true,subtree:true});
   document.addEventListener('voltpro-workspace-view-change',()=>document.querySelectorAll('[data-workspace-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.workspaceView==='scope'?Boolean(window.VoltProWorkspaceViews?.scopeOpen?.()):button.dataset.workspaceView===window.VoltProWorkspaceViews?.active?.()))));  const simActions=menus.querySelector('[data-menu="simulation"] .vp-toolbar-dropdown');
   if(simActions&&!simActions.querySelector('[data-sim-command]'))for(const [label,id] of [['Run simulation','runBtn'],['Pause / resume','pauseBtn'],['Stop simulation','stopBtn'],['Open oscilloscope','studioLaunch']]){const button=document.createElement('button');button.type='button';button.dataset.simCommand=id;button.textContent=label;button.onclick=()=>{if(id==='studioLaunch'){window.VoltProWorkspaceViews?.switch('scope');return}document.getElementById(id)?.click()};simActions.append(button);}
-  menus.addEventListener('pointerover',event=>{if(event.pointerType==='touch')return;const details=event.target.closest('details');if(!details||!menus.contains(details))return;clearTimeout(details._closeTimer);details.open=true;});
-menus.addEventListener('pointerout',event=>{if(event.pointerType==='touch')return;const details=event.target.closest('details');if(!details||!menus.contains(details)||details.contains(event.relatedTarget))return;details._closeTimer=setTimeout(()=>{details.open=false;details.querySelectorAll('details[open]').forEach(child=>child.open=false);},180);});const adaptMenus=()=>{menus.dataset.compact=String(window.innerWidth<1100);menus.querySelectorAll('details[open]').forEach(positionDropdown);};
+  const adaptMenus=()=>{menus.dataset.compact=String(window.innerWidth<1100);};
   adaptMenus();window.addEventListener('resize',adaptMenus,{passive:true});
   document.addEventListener('keydown',event=>{if(event.key==='Escape')menus.querySelectorAll('details').forEach(menu=>menu.open=false);});
-  document.addEventListener('pointerdown',event=>{if(!menus.contains(event.target))menus.querySelectorAll('details').forEach(menu=>menu.open=false);});
+  document.addEventListener('pointerdown',event=>{if(menus.contains(event.target)||menuDock?.contains(event.target))return;closeMenu();menus.querySelectorAll('details').forEach(menu=>menu.open=false);});
  }
  window.addEventListener('load',layout);
 })();
