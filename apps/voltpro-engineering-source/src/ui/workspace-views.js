@@ -88,9 +88,9 @@
     if (view === "schematic") { host.hidden = true; boardHost.hidden = true; return; }
     if (view === "breadboard") { host.hidden = true; boardHost.hidden = false; try { ensureBreadboardView(); } catch (error) { boardHost.textContent = error.message; } return; }
     if (view === "serial") { host.hidden = true; boardHost.hidden = false; ensureSerialView(); return; }
-    boardHost.hidden = true; host.hidden = false; const ui = window.VoltProUI;
-    if (!ui || !window.VoltProPCBStudio) { host.textContent = "The PCB and code workspace did not finish loading. Reload the Simulator and try again."; return; }
-    if (!pcbView) pcbView = window.VoltProPCBStudio.open({ host, kind: "simulator", read: () => ({ components: ui.state.components, wires: ui.state.wires, pcbRoutes: ui.state.projectMetadata?.pcbRoutes || [] }), onViewChange: next => document.querySelectorAll(".vp-pcb-host [data-view]").forEach(button => button.classList.toggle("active", button.dataset.view === next)), onChange: () => { ui.state.projectMetadata = { ...(ui.state.projectMetadata || {}), pcbRoutes: host._pcbRoutes || [] }; window.VoltProCanvasSession?.markChanged(); } }); else pcbView.refresh();
+    boardHost.hidden = true; host.hidden = false; const ui = window.VoltProUI, simulator = window.VoltProSimulator;
+    if (!ui || !simulator || !window.VoltProPCBStudio) { host.textContent = "The PCB and code workspace did not finish loading. Reload the Simulator and try again."; return; }
+    if (!pcbView) pcbView = window.VoltProPCBStudio.open({ host, kind: "simulator", read: () => ({ components: simulator.state.components, wires: simulator.state.wires, pcbRoutes: simulator.state.projectMetadata?.pcbRoutes || [] }), onViewChange: next => document.querySelectorAll(".vp-pcb-host [data-view]").forEach(button => button.classList.toggle("active", button.dataset.view === next)), onChange: () => { simulator.state.projectMetadata = { ...(simulator.state.projectMetadata || {}), pcbRoutes: host._pcbRoutes || [] }; window.VoltProCanvasSession?.markChanged(); } }); else pcbView.refresh();
     if (view === "pcb") host.querySelector('[data-view="pcb"]')?.click(); if (view === "code") host.querySelector('[data-view="code"]')?.click();
   };
   if (scopePanel) {
