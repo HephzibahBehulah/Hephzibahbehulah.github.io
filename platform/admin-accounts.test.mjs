@@ -1,4 +1,5 @@
 import test from 'node:test';
+import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {createAccountService} from './admin-accounts-core.mjs';
 import {accountGateway} from './admin-accounts.mjs';
@@ -18,3 +19,5 @@ test('public origins cannot reach owner account scripts or APIs',()=>{for(const 
 test('private account API authenticates before contacting its service',async()=>{let called=false;const worker=createPlatform({verifyAdmin:async()=>({ok:false}),accountAdmin:async()=>{called=true;}});assert.equal((await worker.fetch(new Request('https://admin.hephzibahbehulah.com/api/admin/accounts'),{})).status,401);assert.equal(called,false);});
 
 test('account mutations require exact account confirmation and an auditable reason',async()=>{let writes=0;const service=createAccountService({readEnv:environment,verify:approved,fetcher:async(url,init)=>{if(init.method==='POST'||init.method==='PUT')writes++;return Response.json({id:'00000000-0000-0000-0000-000000000002',email:'student@example.test'});}});const badTarget=await service(new Request('https://service.test/',{method:'POST',body:JSON.stringify({user_id:'00000000-0000-0000-0000-000000000002',action:'pause_login_24h',confirmation:'PAUSE LOGIN other@example.test',reason:'Risk confirmed by review'})}));assert.equal(badTarget.status,400);const noReason=await service(new Request('https://service.test/',{method:'POST',body:JSON.stringify({user_id:'00000000-0000-0000-0000-000000000002',action:'pause_login_24h',confirmation:'PAUSE LOGIN student@example.test',reason:'short'})}));assert.equal(noReason.status,400);assert.equal(writes,0);});
+
+test('private account console masks sensitive details by default and stays keyboard operable',()=>{const ui=fs.readFileSync(new URL('./admin-accounts-ui.js',import.meta.url),'utf8');assert.match(ui,/privacy\.checked=true/);assert.match(ui,/Hide email and IP details/);assert.match(ui,/masked\(row\.email\|\|row\.id,'email'\)/);assert.match(ui,/ArrowDown/);assert.match(ui,/not available in this account feed/);assert.doesNotMatch(ui,/\.innerHTML\s*=/);});
