@@ -598,7 +598,7 @@
 
   function importAssistantDesign(answer) {
     const active = canonicalPath(location.pathname);
-    const target = active === "/simulator" || active === "/breadboard" ? active : "/simulator";
+    const target = active === "/electcad" || active === "/simulator" || active === "/breadboard" ? active : "/simulator";
     const tool = tools.find(item => item.path === target);
     const panel = ensurePanel(tool);
     const frame = panel.querySelector("iframe");
