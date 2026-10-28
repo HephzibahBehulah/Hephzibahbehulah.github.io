@@ -10,3 +10,27 @@ html:has(#scopeApp) .hb-platform-bar,html:has(#scopeApp) #vpSiteHeader,html:has(
 #guide{width:min(850px,calc(100vw - 24px));max-width:850px;scroll-behavior:smooth}#guide h2{color:#ffb15a}#guide h3{margin-top:26px;padding-top:10px;border-top:1px solid #34444e;color:#c9e0ec}#guide nav{display:flex;flex-wrap:wrap;gap:6px 14px;margin:15px 0}#guide a{color:#7edce2;text-decoration:underline}#guide table{border-collapse:collapse;width:100%;font-size:12px}#guide th,#guide td{padding:8px;border:1px solid #3d4e58;text-align:left;vertical-align:top}#guide code{color:#ffe1a2}#guide #closeGuide{position:sticky;top:0;float:right;z-index:1;background:#202d36}#guide section{scroll-margin-top:45px}#guide li{margin:6px 0}
 
 #scopeApp.scope-embedded{height:100%;min-height:0;grid-template-rows:minmax(0,1fr) 42px;background:#0c1216}#scopeApp.scope-embedded>header,#scopeApp.scope-embedded>footer,#scopeApp.scope-embedded main>.rail,#scopeApp.scope-embedded main>aside{display:none!important}#scopeApp.scope-embedded main{display:grid;grid-template-columns:minmax(0,1fr);min-height:0}#scopeApp.scope-embedded #viewport{min-height:0}#scopeApp.scope-embedded #measurements{min-height:0;max-height:42px;overflow:auto;padding:3px 6px;gap:8px}#scopeApp.scope-embedded .measurement{min-width:0;flex:1;font:8px/1.35 ui-monospace,monospace;white-space:nowrap}#scopeApp.scope-embedded .measurement strong{margin-right:5px}#scopeApp.scope-embedded .measurement span{margin-right:5px}#scopeApp.scope-embedded #scales span{max-width:44%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Oscilloscope top bar: grouped flex layout keeps menus, controls and profile clear of each other. */
+header{gap:16px;justify-content:space-between}
+.toolbar-left,.toolbar-center,.toolbar-right{display:flex;align-items:center;min-width:0}
+.toolbar-left{flex:1;gap:10px}
+.toolbar-center,.toolbar-right{flex:none;gap:8px}
+#menus{justify-content:flex-start;gap:0}
+#menus details,.toolbar-right details{position:relative;flex:none}
+summary::-webkit-details-marker{display:none}
+#menus .scope-menu-panel,#language-menu{position:absolute;inset:auto;top:calc(100% + 4px);left:0;right:auto;width:220px;min-width:0;max-width:calc(100vw - 16px);max-height:calc(100dvh - 80px);overflow:auto;z-index:9999;background:#182027;color:#d8e2e8;border:1px solid #52646f;padding:5px;box-shadow:0 12px 35px #000b}
+#language-menu{left:auto;right:0}
+#menus details:not([open])>.scope-menu-panel,#language-control:not([open])>#language-menu{display:none}
+#menus details[open]>.scope-menu-panel,#language-control[open]>#language-menu{display:block}
+#menus .scope-menu-panel button,#language-menu button{display:block;width:100%;text-align:left;margin:0 0 3px}
+#language-menu button:last-child{margin-bottom:0}
+#language-menu [aria-checked=true]{border-color:var(--accent);color:#ffbd61}
+#language-control summary{cursor:pointer;list-style:none;padding:6px}
+.icon-button{display:inline-grid;place-items:center;width:36px;height:34px;padding:6px;flex:none}
+.icon-button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.profile-button{border:1px solid #35434d;border-radius:5px;color:#ff941b}
+#scopeApp.light .toolbar-right .icon-button{color:#9a4e00}
+@media(max-width:1350px){header{gap:12px}.toolbar-left{flex:none}header img{display:block}}
+@media(max-width:950px){header{justify-content:flex-start}.toolbar-left{flex:none}#menus{flex:none}.toolbar-center,.toolbar-right{flex:none}}
+@media(max-width:650px){header{gap:8px}.toolbar-left{gap:7px}.toolbar-center,.toolbar-right{gap:5px}}
