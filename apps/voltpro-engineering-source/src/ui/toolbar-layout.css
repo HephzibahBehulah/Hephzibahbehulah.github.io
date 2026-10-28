@@ -179,19 +179,19 @@ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-board
     grid-column:2!important;grid-row:1!important;min-height:180px!important;
   }
   body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette{
-    grid-column:2!important;grid-row:2!important;max-height:26vh!important;
+    grid-column:2!important;grid-row:2!important;max-height:18vh!important;
   }
   body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{
-    grid-column:2!important;grid-row:3!important;max-height:26vh!important;
+    grid-column:2!important;grid-row:3!important;max-height:18vh!important;
   }
   body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed){
-    grid-template-rows:minmax(180px,1fr) minmax(92px,26vh) minmax(92px,26vh)!important;
+    grid-template-rows:minmax(120px,1fr) minmax(64px,18vh) minmax(64px,18vh)!important;
   }
   body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed).vp-right-closed{
-    grid-template-rows:minmax(180px,1fr) minmax(92px,30vh) 0!important;
+    grid-template-rows:minmax(120px,1fr) minmax(72px,24vh) 0!important;
   }
   body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed:not(.vp-right-closed){
-    grid-template-rows:minmax(180px,1fr) 0 minmax(92px,30vh)!important;
+    grid-template-rows:minmax(120px,1fr) 0 minmax(72px,24vh)!important;
   }
   body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed{
     grid-template-rows:minmax(0,1fr)!important;
@@ -224,5 +224,19 @@ body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-board
   }
   body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed:not(.vp-right-closed){
     grid-template-rows:minmax(160px,1fr) 0 minmax(72px,22vh)!important;
+  }
+}
+
+@media (max-width:900px) and (max-height:500px){
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{max-height:15vh!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed){
+    grid-template-rows:minmax(110px,1fr) minmax(56px,15vh) minmax(56px,15vh)!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed).vp-right-closed{
+    grid-template-rows:minmax(110px,1fr) minmax(56px,18vh) 0!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed:not(.vp-right-closed){
+    grid-template-rows:minmax(110px,1fr) 0 minmax(56px,18vh)!important;
   }
 }
