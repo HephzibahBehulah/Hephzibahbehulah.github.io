@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const tools = [
-    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261028b" },
+    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261028c" },
     { path: "/plc", title: "VoltPro PLC", src: "/voltpro-plc/?vp_embed=1" },
     { path: "/electcad", title: "VoltPro ElectCAD", src: "/voltpro-electcad/?vp_embed=1" },
     { path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" },
@@ -195,6 +195,7 @@
     const primary = toolbar.querySelector(".vp-toolbar-primary");
     const project = toolbar.querySelector(".vp-toolbar-project");
     const menus = toolbar.querySelector(".vp-toolbar-menus");
+    const mobileToggle = menus?.querySelector(".vp-mobile-menu-toggle");
     const status = toolbar.querySelector("#simStatus");
     const language = sharedHeader.querySelector("#vpShellLanguage");
     const mainSite = sharedHeader.querySelector(".vp-main-site-link");
@@ -206,7 +207,7 @@
     const themeControl = sharedHeader.querySelector("#vpThemeToggle");
     if (themeControl) themeControl.title = "Switch light or dark theme";
     sharedHeader.querySelectorAll("details[open]").forEach(menu => { menu.open = false; });
-    doc.__vpShellParts = { integrated: true, header: sharedHeader, banner: null, dialog, brand, zoom, zoomParent, primary, menus, project, status, toolbar, language };
+    doc.__vpShellParts = { integrated: true, header: sharedHeader, banner: null, dialog, brand, zoom, zoomParent, primary, menus, mobileToggle, project, status, toolbar, language };
     const app = doc.querySelector(".sim-app");
     if (toolbar.parentElement !== top) top.append(toolbar);
     if (app && (sharedHeader.ownerDocument !== doc || sharedHeader.parentElement !== app)) app.prepend(doc.adoptNode(sharedHeader));
@@ -217,6 +218,7 @@
       language.querySelectorAll("option").forEach(option => { option.dataset.fullLabel ||= option.textContent; option.textContent = option.value.toUpperCase(); });
     }
     if (project) sharedHeader.append(project);
+    if (mobileToggle) sharedHeader.append(mobileToggle);
     if (menus) sharedHeader.append(menus);
     if (primary) sharedHeader.append(primary);
     const account = sharedHeader.querySelector(".vp-site-identity");
@@ -238,6 +240,7 @@
     if (mainSite) sharedHeader.append(mainSite);
     if (brand) sharedHeader.append(brand);
     if (project) sharedHeader.append(project);
+    if (mobileToggle) sharedHeader.append(mobileToggle);
     if (menus) sharedHeader.append(menus);
     if (primary) sharedHeader.append(primary);
     sharedHeader.append(utilities);
