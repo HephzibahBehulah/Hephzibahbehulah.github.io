@@ -5,12 +5,9 @@ const path = require("node:path");
 const vm = require("node:vm");
 const read = p => fs.readFileSync(path.join(__dirname, "..", p), "utf8");
 
-test("million-variant bank is loaded after the existing content expansion and cached", () => {
+test("million-variant bank is loaded after the existing content expansion", () => {
   const html = read("index.html");
   assert.match(html, /academy-content-expansion\.js\?v=20261011a"><\/script>\s*<script src="academy-question-bank\.js\?v=20261011c"><\/script>/);
-  const worker = read("service-worker.js");
-  assert.match(worker, /voltpro-v99/);
-  assert.match(worker, /"\.\/academy-question-bank\.js"/);
 });
 
 test("both existing assessment sections expose one million on-demand variants without materializing the pool", () => {

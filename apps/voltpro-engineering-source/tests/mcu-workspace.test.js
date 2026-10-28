@@ -5,7 +5,6 @@ const fs=require("node:fs");
 const ui=fs.readFileSync("platform/mcu-lab-ui.js","utf8");
 const simulator=fs.readFileSync("simulator.html","utf8");
 const breadboard=fs.readFileSync("breadboard.html","utf8");
-const worker=fs.readFileSync("service-worker.js","utf8");
 const runtime=fs.readFileSync("simulator.js","utf8");
 const css=fs.readFileSync("simulator.css","utf8");
 const bridge=fs.readFileSync("platform/mcu-circuit-bridge.js","utf8");
@@ -33,15 +32,6 @@ test("simulator loads MCU assets while breadboard uses its native electrical mod
   assert.match(simulator,/platform\/mcu-lab-ui\.js\?v=20261027a/);
   assert.match(breadboard,/engine\/breadboard-project\.js/);
   assert.match(breadboard,/engine\/breadboard-solver\.js/);
-});
-
-test("service worker cache version is advanced for the MCU workspace release",()=>{
-  assert.match(worker,/const CACHE="voltpro-v99"/);
-  assert.ok(worker.includes('"./platform/mcu-circuit-bridge.js"'));
-  assert.ok(worker.includes('"./platform/mcu-lab-ui.js"'));
-  assert.ok(worker.includes('"./platform/mcu-engine.js"'));
-  assert.ok(worker.includes('"./engine/breadboard-project.js"'));
-  assert.ok(worker.includes('"./engine/breadboard-solver.js"'));
 });
 
 test("MCU outputs propagate into correctly wired schematic LED visuals",()=>{

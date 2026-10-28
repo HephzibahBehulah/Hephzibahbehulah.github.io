@@ -16,6 +16,7 @@ export function injectSitewideTheme(root) {
   let injected = 0;
   for (const file of pages) {
     const html = fs.readFileSync(file, 'utf8');
+    if (/data-hb-sitewide-theme=["']off["']/i.test(html)) continue;
     if (html.includes('data-hb-sitewide-theme')) continue;
     if (!/<head(?:\s[^>]*)?>/i.test(html) || !/<\/head\s*>/i.test(html)) continue;
     const updated = html.replace(/<\/head\s*>/i, LINK + '</head>');

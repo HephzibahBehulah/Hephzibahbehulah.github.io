@@ -28,25 +28,26 @@ test('missing JS stays a real 404 instead of becoming an HTML fallback',async()=
 });
 function harness({fetcher=async()=>new Response('release B'),cacheNames=[]}={}){
  const events={},deleted=[],opened=[],calls=[];
- const context={URL,Response,self:{location:{origin},clients:{claim:async()=>{}},skipWaiting:async()=>calls.push('skip'),addEventListener:(name,fn)=>events[name]=fn},caches:{keys:async()=>cacheNames,delete:async name=>deleted.push(name),open:async name=>{opened.push(name);return {keys:async()=>[],match:async()=>new Response('old media'),put:async()=>{}};}},fetch:async(request,options)=>{calls.push(options);return fetcher(request,options);}};
+ const context={URL,Response,self:{location:{origin},clients:{claim:async()=>calls.push('claim')},registration:{unregister:async()=>calls.push('unregister')},skipWaiting:async()=>calls.push('skip'),addEventListener:(name,fn)=>events[name]=fn},caches:{keys:async()=>cacheNames,delete:async name=>deleted.push(name),open:async name=>{opened.push(name);return {keys:async()=>[],match:async()=>new Response('stale'),put:async()=>{}};}},fetch:async(request,options)=>{calls.push(options);return fetcher(request,options);}};
  vm.runInNewContext(publicServiceWorker,context);
  return {events,deleted,opened,calls,async fetch(path,mode){let result;events.fetch({request:{url:origin+path,method:'GET',mode},respondWith:value=>result=value,waitUntil:()=>{}});return result;}};
 }
-test('old browser cache cannot satisfy online application code after deployment A to B',async()=>{
+test('online pages and code always use a fresh network response',async()=>{
  const h=harness();for(const p of ['/workspace-shell.js?v=unchanged','/style.css','/tool.json','/api/member/session','/_hb/release.json'])assert.equal(await(await h.fetch(p)).text(),'release B');
  assert.equal(h.opened.length,0);assert.ok(h.calls.every(options=>options.cache==='no-store'));
 });
-test('offline application code fails rather than silently mixing release A with B',async()=>{
- const h=harness({fetcher:async()=>{throw Error('offline');}});await assert.rejects(h.fetch('/tool.js'),/offline/);await assert.rejects(h.fetch('/plc','navigate'),/offline/);assert.equal(h.opened.length,0);
+test('offline code and media fail instead of restoring an old cached release',async()=>{
+ const h=harness({fetcher:async()=>{throw Error('offline');}});
+ await assert.rejects(h.fetch('/tool.js'),/offline/);await assert.rejects(h.fetch('/plc','navigate'),/offline/);await assert.rejects(h.fetch('/runtime/test.wasm'),/offline/);
+ assert.equal(h.opened.length,0);
 });
-test('offline media fallback reads only this worker cache',async()=>{
- const h=harness({fetcher:async()=>{throw Error('offline');}});assert.equal(await(await h.fetch('/runtime/test.wasm')).text(),'old media');assert.deepEqual(h.opened,['hb-public-static-v2']);
+test('worker activation deletes old site cache namespaces and unregisters itself',async()=>{
+ const h=harness({cacheNames:['hb-site-v6','voltpro-v99','hb-public-static-v2','other-app-v1']});let done;h.events.install({waitUntil:p=>done=p});await done;assert.deepEqual(h.calls,['skip']);
+ h.calls.length=0;h.events.activate({waitUntil:p=>done=p});await done;
+ assert.deepEqual(h.deleted,['hb-site-v6','voltpro-v99','hb-public-static-v2']);assert.ok(!h.opened.includes('other-app-v1'));assert.ok(h.calls.includes('unregister'));
 });
-test('activation cleans owned legacy caches and leaves unrelated origin caches intact',async()=>{
- const h=harness({cacheNames:['hb-site-v6','voltpro-v93','hb-public-static-20261019','other-app-v1','hb-public-static-v2']});let done;h.events.activate({waitUntil:p=>done=p});await done;assert.deepEqual(h.deleted,['hb-site-v6','voltpro-v93','hb-public-static-20261019']);assert.ok(!h.opened.includes('other-app-v1'));
-});
-test('worker waits by default and activates only after the update action',async()=>{
- const h=harness();assert.equal(h.events.install,undefined);let done;h.events.message({data:{type:'HB_ACTIVATE_UPDATE'},waitUntil:p=>done=p});await done;assert.deepEqual(h.calls,['skip']);
+test('legacy update messages can still activate the cache-cleanup worker',async()=>{
+ const h=harness();let done;h.events.message({data:{type:'HB_ACTIVATE_UPDATE'},waitUntil:p=>done=p});await done;assert.deepEqual(h.calls,['skip']);
 });
 import {verifyDeployment} from './verify-deployment.mjs';
 test('production verifier checks embedded bases and hashed bundle URLs as well as shell routes',async()=>{

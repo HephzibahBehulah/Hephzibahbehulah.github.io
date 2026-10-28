@@ -65,6 +65,12 @@ test("top menus and nested project menus float over the canvas without a side do
  assert.ok(html.includes("platform/toolbar-menus.js?v=20261028a"));
  assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261028c"));
 });
+test("workspace modules load without a per-app cache worker",()=>{
+ const html=read("simulator.html");
+ assert.ok(html.includes("src/ui/workspace-views.js?v=20261027e"));
+ assert.doesNotMatch(html,/serviceWorker.register/);
+});
+
 test("Serial view receives output from the virtual MCU interpreter",()=>{
  const views=read("src/ui/workspace-views.js"),mcu=read("platform/mcu-lab-ui.js");
  assert.ok(views.includes("voltpro-serial-output"));
@@ -72,10 +78,5 @@ test("Serial view receives output from the virtual MCU interpreter",()=>{
  assert.ok(views.includes('boardHost.querySelector(".vp-board-live")'));
  assert.ok(views.includes("if (boardCanvas) boardCanvas.hidden = true"));
 });
-test("new workspace module is included in the active offline cache",()=>{
- const html=read("simulator.html"),worker=read("service-worker.js");
- assert.ok(html.includes("service-worker.js?v=20261027e"));
- assert.ok(worker.includes('const CACHE="voltpro-v99"'));
- assert.ok(worker.includes('"./src/ui/workspace-views.js"'));
 });
 
