@@ -156,7 +156,7 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
   };
   const ask = async (question,options={}) => {const C=window.VoltProChats,channel=options.channel||'tutor',id=C?.current(channel),prior=C?.read(id);window.VoltProDesignStudio?.remember?.(options.contextPlan||[...(prior?.messages||[])].reverse().find(m=>m.plan)?.plan||null);const result=await answer(question,{...options,history:(prior?.messages||[]).map(m=>({role:m.role,content:m.content}))});if(String(question).trim()&&C){try{C.record(channel,id,String(question),result);}catch(e){result.answer+='\n\nHistory was not saved: '+e.message;}}return result;};
   const boot = () => {
-    if ((new URLSearchParams(location.search).has("vp_embed") && !document.body.classList.contains("building-cad")) || document.getElementById("vpBotWindow")) return;
+    if (document.getElementById("vpBotWindow")) return;
     const root = document.createElement("div");
     root.id = "vpBotLayer";
     root.className = "vp-bot-layer";
