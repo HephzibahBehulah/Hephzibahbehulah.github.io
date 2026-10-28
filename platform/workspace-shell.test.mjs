@@ -38,6 +38,13 @@ test("workspace switches reuse hidden tool iframes and update history client-sid
   for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
 });
 
+test("Simulator embed applies its template before first paint and resets shared chrome on entry", () => {
+  const simulator = read("apps/voltpro-engineering-source/simulator.html");
+  assert.match(simulator, /new URLSearchParams\(location\.search\).*vp_embed.*vp-template-simulator/);
+  assert.match(shell, /frame\.loading = tool\.path === "\/simulator" \? "eager" : "lazy";/);
+  assert.match(shell, /restoreSharedHeader\(\);\n    const panel = ensurePanel\(tool\);/);
+});
+
 test("Oscilloscope hides injected site chrome and leaving Breadboard closes its command menus", () => {
   assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-bar'));
   assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-footer'));
