@@ -28,7 +28,7 @@ test('missing JS stays a real 404 instead of becoming an HTML fallback',async()=
 });
 function harness({fetcher=async()=>new Response('release B'),cacheNames=[]}={}){
  const events={},deleted=[],opened=[],calls=[];
- const context={URL,Response,self:{location:{origin},clients:{claim:async()=>calls.push('claim')},registration:{unregister:async()=>calls.push('unregister')},skipWaiting:async()=>calls.push('skip'),addEventListener:(name,fn)=>events[name]=fn},caches:{keys:async()=>cacheNames,delete:async name=>deleted.push(name),open:async name=>{opened.push(name);return {keys:async()=>[],match:async()=>new Response('stale'),put:async()=>{}};}},fetch:async(request,options)=>{calls.push(options);return fetcher(request,options);}};
+ const context={URL,Response,self:{location:{origin,hostname:'engineering.hephzibahbehulah.com'},clients:{claim:async()=>calls.push('claim')},registration:{unregister:async()=>calls.push('unregister')},skipWaiting:async()=>calls.push('skip'),addEventListener:(name,fn)=>events[name]=fn},caches:{keys:async()=>cacheNames,delete:async name=>deleted.push(name),open:async name=>{opened.push(name);return {keys:async()=>[],match:async()=>new Response('stale'),put:async()=>{}};}},fetch:async(request,options)=>{calls.push(options);return fetcher(request,options);}};
  vm.runInNewContext(publicServiceWorker,context);
  return {events,deleted,opened,calls,async fetch(path,mode){let result;events.fetch({request:{url:origin+path,method:'GET',mode},respondWith:value=>result=value,waitUntil:()=>{}});return result;}};
 }
@@ -41,10 +41,10 @@ test('offline code and media fail instead of restoring an old cached release',as
  await assert.rejects(h.fetch('/tool.js'),/offline/);await assert.rejects(h.fetch('/plc','navigate'),/offline/);await assert.rejects(h.fetch('/runtime/test.wasm'),/offline/);
  assert.equal(h.opened.length,0);
 });
-test('worker activation deletes old site cache namespaces and unregisters itself',async()=>{
+test('worker activation deletes all engineering-origin caches and unregisters itself',async()=>{
  const h=harness({cacheNames:['hb-site-v6','voltpro-v99','hb-public-static-v2','other-app-v1']});let done;h.events.install({waitUntil:p=>done=p});await done;assert.deepEqual(h.calls,['skip']);
  h.calls.length=0;h.events.activate({waitUntil:p=>done=p});await done;
- assert.deepEqual(h.deleted,['hb-site-v6','voltpro-v99','hb-public-static-v2']);assert.ok(!h.opened.includes('other-app-v1'));assert.ok(h.calls.includes('unregister'));
+ assert.deepEqual(h.deleted,['hb-site-v6','voltpro-v99','hb-public-static-v2','other-app-v1']);assert.ok(h.calls.includes('unregister'));
 });
 test('legacy update messages can still activate the cache-cleanup worker',async()=>{
  const h=harness();let done;h.events.message({data:{type:'HB_ACTIVATE_UPDATE'},waitUntil:p=>done=p});await done;assert.deepEqual(h.calls,['skip']);
