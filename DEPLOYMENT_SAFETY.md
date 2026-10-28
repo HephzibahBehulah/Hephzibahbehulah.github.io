@@ -25,9 +25,9 @@ The `main` branch may move forward only through small, reviewable changes. Do no
 6. Only then promote a verified commit to the known-good snapshot.
 7. Keep the previous known-good source snapshot intact until the new version has been verified.
 
-## Manual production deployment
+## Production deployment
 
-After adding the repository Actions secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, open Actions → Integrated platform validation → Run workflow, select `main`, and run it. The validation/build must pass before the Cloudflare deployment steps execute. The existing `deploy-*` tag path remains available.
+GitHub Actions is the sole production deploy writer. Open Actions → Integrated platform validation → Run workflow, select `main`, and run it when a manual release is needed. The existing `deploy-*` tag path remains available. Cloudflare Workers Builds may validate the same source, but its deployment wrapper intentionally performs no production deploy.
 
 ## Rollback discipline
 
@@ -38,9 +38,9 @@ If a release regresses production:
 - Restore from that exact commit rather than reconstructing files manually.
 - Re-run CI and verify the live Worker before making additional changes.
 
-## Current deployment limitation
+## Deployment consistency
 
-`.github/workflows/platform-validation.yml` builds the consolidated applications and runs `npx wrangler deploy`. The source build no longer downloads application archives from production hosts. The latest deployment attempt completed the build and stopped at Wrangler authentication because `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` were empty in the workflow environment. Those Cloudflare credentials must be configured as GitHub Actions secrets before a production deployment can succeed; a source-only change cannot replace Cloudflare account authentication.
+Only the GitHub Actions release may update production Worker code and assets. Cloudflare Workers Builds runs the same verified source build in validation-only mode. This prevents independent deployments from finishing out of order and replacing the current release with an older commit.
 
 ## Regression checklist
 
