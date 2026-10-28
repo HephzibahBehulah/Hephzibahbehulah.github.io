@@ -46,6 +46,14 @@ test("AI Tutor knows the canonical ownership map and offers external public look
   assert.match(assistant, /data\/electrical-tool-index\.json/);
 });
 
+test("VoltPRo assistant mounts inside the embedded Simulator workspace", () => {
+  const assistant = read("voltpro-assistant.js");
+  assert.doesNotMatch(assistant, /has\("vp_embed"\).*return/);
+  for (const page of ["simulator.html", "workspace-shell.html", "academy-workbench.html"]) {
+    assert.match(read(page), /voltpro-assistant\.js\?v=20261028-aiwindow2/);
+  }
+});
+
 test("Academy scripts parse and tutor page uses the shared project-aware assistant", () => {
   assert.doesNotThrow(() => new Function(read("script.js")));
   assert.doesNotThrow(() => new Function(read("voltpro-assistant.js")));
