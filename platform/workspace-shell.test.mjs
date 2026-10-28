@@ -325,3 +325,14 @@ test("Oscilloscope root project navigation contains exactly seven tools in the r
  assert.deepEqual([...section.matchAll(/href="([^"]+)"/g)].map(m=>m[1]),['/simulator','/plc','/electcad','/breadboard','/oscilloscope','/electrical','/tools']);
  assert.match(shell,/path: "\/oscilloscope".*oscilloscope\.html/);
 });
+
+
+test("shared engineering language selector offers all four choices on every requested route", () => {
+  const block = nav.match(/const language=make\\('select'\\);([\\s\\S]*?)language\\.value=/)?.[1] || "";
+  const choices = [...block.matchAll(/\\['(en|de|yo|pid)','([^']+)'\\]/g)].map(match => [match[1], match[2]]);
+  assert.deepEqual(choices, [["en", "English"], ["de", "Deutsch"], ["yo", "Yoruba"], ["pid", "Pidgin English (PNG)"]]);
+  for (const route of ["/electcad", "/breadboard", "/electrical", "/oscilloscope", "/simulator"]) {
+    assert.ok(shell.includes('path: "' + route + '"'), "missing shared route " + route);
+  }
+  assert.doesNotMatch(shell, /option\\.textContent\\s*=\\s*option\\.value\\.toUpperCase\\(\\)/);
+});
