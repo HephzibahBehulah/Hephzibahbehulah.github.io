@@ -557,8 +557,7 @@
     const key = canonicalPath(path);
     if (document.documentElement.dataset.vpWorkspace === "breadboard" && key !== "/breadboard") closeBreadboardCommandMenus();
     const tool = tools.find(item => item.path === key) || tools[0];
-    if (tool.path === "/simulator") restoreSharedHeader();
-    else restoreSharedHeader();
+    restoreSharedHeader();
     const panel = ensurePanel(tool);
     for (const [route, element] of panels) {
       const active = route === tool.path;
