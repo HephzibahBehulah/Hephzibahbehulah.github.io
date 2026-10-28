@@ -43,3 +43,200 @@
 .workspace.vp-has-rail.vp-menu-dock-open>#inspectorPanel{grid-column:5;grid-row:1}
 .workspace.vp-view-active.vp-menu-dock-open>.vp-pcb-host,.workspace.vp-view-active.vp-menu-dock-open>.vp-board-host{grid-column:2/4!important;grid-row:1!important}
 @media(max-width:1000px){.workspace.vp-has-rail.vp-menu-dock-open{grid-template-columns:44px minmax(0,1fr)!important;grid-template-rows:minmax(180px,1fr) minmax(140px,34vh)!important;align-content:stretch!important;min-height:0!important;overflow:hidden!important}.workspace.vp-has-rail.vp-menu-dock-open>#canvasWrap{grid-column:2!important;grid-row:1!important;display:block!important;min-width:0!important;min-height:180px!important;position:relative!important;z-index:0!important}.workspace.vp-has-rail.vp-menu-dock-open>.vp-menu-dock{grid-column:2!important;grid-row:2!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;box-sizing:border-box!important;overflow:auto!important;position:relative!important;z-index:1!important}.workspace.vp-has-rail.vp-menu-dock-open>.vp-menu-dock>.vp-toolbar-dropdown{flex:1 1 auto;min-height:0;overflow:visible}.workspace.vp-has-rail.vp-menu-dock-open>#palette,.workspace.vp-has-rail.vp-menu-dock-open>#inspectorPanel{display:none!important;grid-row:auto!important}.workspace.vp-has-rail.vp-menu-dock-open>.vp-pcb-host,.workspace.vp-has-rail.vp-menu-dock-open>.vp-board-host{grid-column:2!important;grid-row:1!important;min-height:180px!important}.workspace.vp-view-active.vp-menu-dock-open>.vp-pcb-host,.workspace.vp-view-active.vp-menu-dock-open>.vp-board-host{grid-column:2!important;grid-row:1!important}}
+
+
+/* VoltPro responsive shell correction: reserve separate space for every panel and header group. */
+body.simulator-page.vp-template-simulator .sim-app{
+  grid-template-rows:auto minmax(0,1fr)!important;
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader{
+  box-sizing:border-box!important;height:auto!important;max-height:none!important;min-height:54px!important;
+  flex-wrap:nowrap!important;align-items:center!important;gap:6px!important;overflow:visible!important;
+  padding:6px 8px!important;white-space:normal!important;
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-brand-group{order:0!important;flex:0 0 auto!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.vp-main-site-link{order:0!important;flex:0 0 auto!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{order:1!important;flex:0 1 155px!important;min-width:92px!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-project{order:2!important;flex:0 1 170px!important;min-width:112px!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{order:4!important;flex:1 1 auto!important;min-width:0!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{order:5!important;flex:0 0 auto!important;margin-left:0!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-sim-header-utilities{
+  order:6!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  flex:0 0 auto!important;gap:5px!important;min-width:0!important;margin-left:auto!important;
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-sim-language-control{
+  display:flex!important;align-items:center!important;gap:4px!important;flex:0 0 auto!important;
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-sim-header-utilities .vp-site-identity{
+  order:4!important;position:relative!important;flex:0 0 auto!important;margin:0!important;
+}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details[open],
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation[open]{z-index:20030!important}
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-dropdown,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-site-navigation nav,
+body.simulator-page.vp-template-simulator #vpSiteHeader .vp-account-menu{max-width:calc(100vw - 16px)!important;max-height:calc(100dvh - 72px)!important}
+
+/* The rail, library, drawing and inspector occupy explicit, non-overlapping grid cells. */
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{
+  display:grid!important;align-items:stretch!important;min-width:0!important;min-height:0!important;
+  width:100%!important;max-width:100%!important;overflow:hidden!important;
+}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-sim-rail{
+  grid-column:1!important;grid-row:1!important;position:relative!important;inset:auto!important;
+  z-index:2!important;min-width:0!important;min-height:0!important;
+}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-canvas-frame{
+  position:relative!important;inset:auto!important;z-index:0!important;min-width:0!important;min-height:0!important;
+  width:auto!important;height:auto!important;max-width:none!important;overflow:hidden!important;
+}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{
+  position:relative!important;inset:auto!important;transform:none!important;z-index:1!important;
+  min-width:0!important;min-height:0!important;width:auto!important;max-width:none!important;
+  height:auto!important;max-height:none!important;box-sizing:border-box!important;overflow:auto!important;
+}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>#palette,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed>#inspectorPanel{
+  display:none!important;
+}
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-pcb-host,
+body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-board-host{
+  grid-column:3!important;grid-row:1!important;position:relative!important;min-width:0!important;min-height:0!important;
+  width:auto!important;height:auto!important;overflow:hidden!important;
+}
+
+@media (min-width:1101px){
+  body.simulator-page.vp-template-simulator #vpSiteHeader{height:56px!important;min-height:56px!important;max-height:56px!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) minmax(265px,310px)!important;grid-template-rows:minmax(0,1fr)!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette{grid-column:2!important;grid-row:1!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-canvas-frame{grid-column:3!important;grid-row:1!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{grid-column:4!important;grid-row:1!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-canvas-frame{grid-column:2!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-board-host{grid-column:2!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-board-host{grid-column:2!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>#inspectorPanel{grid-column:3!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed:not(.vp-left-closed)>.vp-canvas-frame{grid-column:3!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed:not(.vp-left-closed)>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed:not(.vp-left-closed)>.vp-board-host{grid-column:3!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed>.vp-canvas-frame,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed>.vp-board-host{grid-column:2!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed>#inspectorPanel{display:none!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>#palette{display:none!important}
+}
+
+@media (min-width:901px) and (max-width:1100px){
+  body.simulator-page.vp-template-simulator #vpSiteHeader{
+    min-height:96px!important;max-height:none!important;flex-wrap:wrap!important;align-content:center!important;
+  }
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-project{flex:0 1 160px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{
+    order:4!important;flex:1 0 100%!important;display:flex!important;flex-wrap:wrap!important;
+    align-items:center!important;gap:2px!important;overflow:visible!important;
+  }
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{order:5!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-sim-header-utilities{order:6!important;margin-left:auto!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{grid-template-columns:38px minmax(180px,22vw) minmax(0,1fr) minmax(225px,25vw)!important;grid-template-rows:minmax(0,1fr)!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette{grid-column:2!important;grid-row:1!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-canvas-frame{grid-column:3!important;grid-row:1!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{grid-column:4!important;grid-row:1!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-canvas-frame,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>.vp-board-host{grid-column:2!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>#inspectorPanel{grid-column:3!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed:not(.vp-left-closed)>.vp-canvas-frame,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed:not(.vp-left-closed)>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed:not(.vp-left-closed)>.vp-board-host{grid-column:3!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed>.vp-canvas-frame,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed>.vp-board-host{grid-column:2!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>#palette,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed>#inspectorPanel{display:none!important}
+}
+
+@media (max-width:900px){
+  body.simulator-page.vp-template-simulator #vpSiteHeader{
+    min-height:96px!important;max-height:none!important;flex-wrap:wrap!important;align-content:center!important;
+  }
+  body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{display:flex!important;flex:0 1 150px!important;min-width:100px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-project{flex:1 1 130px!important;min-width:110px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus{
+    order:4!important;flex:1 0 100%!important;display:flex!important;flex-wrap:wrap!important;
+    align-items:center!important;gap:2px!important;overflow:visible!important;
+  }
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details{flex:0 0 auto!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details>summary{padding:6px 5px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{order:5!important;flex:1 1 auto!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-sim-header-utilities{order:6!important;margin-left:auto!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels{
+    grid-template-columns:38px minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr) auto auto!important;
+    align-content:stretch!important;overflow:hidden!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-sim-rail{grid-column:1!important;grid-row:1!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-canvas-frame{
+    grid-column:2!important;grid-row:1!important;min-height:180px!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette{
+    grid-column:2!important;grid-row:2!important;max-height:18vh!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{
+    grid-column:2!important;grid-row:3!important;max-height:18vh!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed){
+    grid-template-rows:minmax(120px,1fr) minmax(64px,18vh) minmax(64px,18vh)!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed).vp-right-closed{
+    grid-template-rows:minmax(120px,1fr) minmax(72px,24vh) 0!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed:not(.vp-right-closed){
+    grid-template-rows:minmax(120px,1fr) 0 minmax(72px,24vh)!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed.vp-right-closed{
+    grid-template-rows:minmax(0,1fr)!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed>#palette,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-right-closed>#inspectorPanel{display:none!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-pcb-host,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>.vp-board-host{
+    grid-column:2!important;grid-row:1!important;
+  }
+}
+@media (max-width:600px){
+  body.simulator-page.vp-template-simulator #vpSiteHeader{min-height:104px!important;gap:3px!important;padding:4px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader>.brand{display:none!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-main-site-link{padding-inline:6px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-project{flex:1 1 115px!important;max-width:calc(100vw - 190px)!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-menus>details>summary{font-size:11px!important;padding:5px 4px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary{min-width:0!important;gap:3px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-toolbar-primary button{min-width:28px!important;padding-inline:4px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-sim-header-utilities{gap:3px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader .vp-sim-header-utilities>*{min-width:28px!important}
+  body.simulator-page.vp-template-simulator #vpSiteHeader #vpShellLanguage{width:38px!important;min-width:38px!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette{max-height:18vh!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{max-height:18vh!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed){
+    grid-template-rows:minmax(160px,1fr) minmax(72px,18vh) minmax(72px,18vh)!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed).vp-right-closed{
+    grid-template-rows:minmax(160px,1fr) minmax(72px,22vh) 0!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed:not(.vp-right-closed){
+    grid-template-rows:minmax(160px,1fr) 0 minmax(72px,22vh)!important;
+  }
+}
+
+@media (max-width:900px) and (max-height:500px){
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#palette,
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels>#inspectorPanel{max-height:15vh!important}
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed){
+    grid-template-rows:minmax(110px,1fr) minmax(56px,15vh) minmax(56px,15vh)!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed).vp-right-closed{
+    grid-template-rows:minmax(110px,1fr) minmax(56px,18vh) 0!important;
+  }
+  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels.vp-left-closed:not(.vp-right-closed){
+    grid-template-rows:minmax(110px,1fr) 0 minmax(56px,18vh)!important;
+  }
+}
