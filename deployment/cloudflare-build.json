@@ -4,6 +4,8 @@
     "buildCommand": "node platform/release.mjs",
     "deployCommand": "node platform/cloudflare-build-deploy.mjs",
     "deployScript": "platform/cloudflare-build-deploy.mjs",
+    "workerDeploymentOwner": "GitHub Actions",
+    "cloudflareBuildsRole": "validation-only",
     "containerImageOwner": "GitHub Actions"
   }
 }
