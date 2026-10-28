@@ -42,7 +42,7 @@ test("Simulator embed applies its template before first paint and resets shared 
   const simulator = read("apps/voltpro-engineering-source/simulator.html");
   assert.match(simulator, /new URLSearchParams\(location\.search\).*vp_embed.*vp-template-simulator/);
   assert.match(shell, /frame\.loading = tool\.path === "\/simulator" \? "eager" : "lazy";/);
-  assert.match(shell, /if \(tool\.path === "\/simulator"\) restoreSharedHeader\(\);/);
+  assert.match(shell, /restoreSharedHeader\(\);\n    const panel = ensurePanel\(tool\);/);
 });
 
 test("Oscilloscope hides injected site chrome and leaving Breadboard closes its command menus", () => {
