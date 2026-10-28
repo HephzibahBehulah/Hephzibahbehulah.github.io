@@ -25,4 +25,5 @@ test("Protected DC Lamp demo closes the source-to-fuse-to-switch-to-lamp loop",(
  vm.createContext(context);vm.runInContext(source,context);
  context.window.VoltProDemoLibrary.load(context.window.VoltProDemoLibrary.demos().find(d=>d.title==="Protected DC Lamp · Starter"));
  assert.deepEqual(JSON.parse(JSON.stringify(state.wires.map(w=>[w.a,w.b]))),[["demo1_0:0","demo1_1:0"],["demo1_1:1","demo1_2:0"],["demo1_2:1","demo1_3:0"],["demo1_3:1","demo1_0:1"]]);
+ assert.ok(source.includes("document.querySelector(\"#fitBtn\")?.click()"),"all imported circuit stages should be fitted into view");
 });
