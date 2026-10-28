@@ -111,7 +111,6 @@
       parts.banner.classList.remove("vp-plc-bottom-warning");
       document.body.insertBefore(parts.banner, parts.header?.nextSibling || headerPlaceholder?.nextSibling || null);
     }
-    if (parts.assistant && parts.assistantParent) parts.assistantParent.insertBefore(document.adoptNode(parts.assistant), parts.assistantNext?.parentElement === parts.assistantParent ? parts.assistantNext : null);
     doc.documentElement.classList.remove("vp-template-plc");
     document.documentElement.classList.remove("vp-plc-template");
     delete doc.__vpPLCShellParts;
@@ -129,16 +128,11 @@
     if (!doc || !app || !slot || !statusbar || !bottom) return;
     if (app.querySelector("[data-plc-unified-bottom]")) return;
     if (doc.__vpPLCShellParts?.integrated) return;
-    const assistant = document.getElementById("vpBotLauncher");
-    const assistantParent = assistant?.parentElement || null;
-    const assistantNext = assistant?.nextSibling || null;
-    const controls = sharedHeader.querySelector(".vp-shell-controls");
     doc.documentElement.classList.add("vp-template-plc");
     document.documentElement.classList.add("vp-plc-template");
     sharedHeader.querySelectorAll("details[open]").forEach(menu => { menu.open = false; });
-    doc.__vpPLCShellParts = { integrated: true, app, header: sharedHeader, statusbar, banner, assistant, assistantParent, assistantNext };
+    doc.__vpPLCShellParts = { integrated: true, app, header: sharedHeader, statusbar, banner };
     slot.append(doc.adoptNode(sharedHeader));
-    if (assistant && controls && assistant.parentElement !== controls) controls.append(doc.adoptNode(assistant));
     statusbar.classList.add("vp-plc-bottom-status");
     bottom.append(doc.adoptNode(statusbar));
     if (banner && banner.parentElement !== bottom) {

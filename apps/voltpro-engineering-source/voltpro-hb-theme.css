@@ -179,3 +179,21 @@
 .vp-bot-sources a:hover{border-color:var(--vp-hb-cyan,#35d5ff)}
 
 .vp-bot-voice{flex:0 0 38px;width:38px;border:1px solid rgba(255,138,36,.35);border-radius:7px;background:#302318;color:#ffb568;cursor:pointer;font:14px system-ui,sans-serif}.vp-bot-voice:disabled{opacity:.55;cursor:wait}
+
+/* Keep the assistant above canvas stacking contexts and make its controls directly interactive. */
+html>#vpBotLayer.vp-bot-layer{position:fixed!important;inset:0!important;z-index:2147483000!important;isolation:isolate;overflow:visible;pointer-events:none;transform:none!important;contain:none!important}
+#vpBotLayer .vp-bot-launcher,#vpBotLayer .vp-bot-window{pointer-events:auto}
+#vpBotLayer .vp-bot-launcher{position:absolute;z-index:1}
+#vpBotLayer .vp-bot-window{position:absolute;inset:auto 22px calc(154px + env(safe-area-inset-bottom)) auto;z-index:2;width:min(320px,calc(100vw - 24px));height:min(440px,calc(100dvh - 24px));max-height:calc(100dvh - 24px);transform:translate3d(var(--vp-bot-x,0px),var(--vp-bot-y,0px),0);touch-action:auto}
+#vpBotLayer .vp-bot-window.open{animation:vpBotFadeIn .16s ease-out}
+@keyframes vpBotFadeIn{from{opacity:0}to{opacity:1}}
+#vpBotLayer .vp-bot-head{user-select:none;-webkit-user-select:none}
+#vpBotLayer .vp-bot-move{touch-action:none;cursor:grab;color:var(--vp-hb-cyan)}
+#vpBotLayer .vp-bot-move:active{cursor:grabbing}
+#vpBotLayer.is-dragging,#vpBotLayer.is-dragging *{user-select:none!important;-webkit-user-select:none!important;cursor:grabbing!important}
+#vpBotLayer .vp-bot-window.minimized{height:auto;min-height:0}
+#vpBotLayer .vp-bot-window.minimized .vp-bot-status,#vpBotLayer .vp-bot-window.minimized .vp-bot-messages,#vpBotLayer .vp-bot-window.minimized .vp-bot-suggestions,#vpBotLayer .vp-bot-window.minimized .vp-bot-external,#vpBotLayer .vp-bot-window.minimized .vp-bot-footer{display:none}
+#vpBotLayer .vp-bot-window.minimized .vp-bot-composer{padding:7px;border-top:0}
+#vpBotLayer .vp-bot-window.minimized .vp-bot-composer textarea{height:38px;min-height:38px;max-height:38px;resize:none;padding:8px}
+@media(max-width:560px){#vpBotLayer .vp-bot-window{inset:auto 8px calc(144px + env(safe-area-inset-bottom)) auto;width:min(360px,calc(100vw - 16px));height:min(440px,calc(100dvh - 180px - env(safe-area-inset-bottom)));max-height:calc(100dvh - 180px - env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){#vpBotLayer .vp-bot-window.open{animation:none}}

@@ -42,7 +42,7 @@ test("VoltPro Simulator keeps a single non-scrolling menu row with its own mobil
 });
 
 test("Simulator dropdowns open as overlays and close after pointer leaves", () => {
-  assert.doesNotMatch(toolbar, /menuDock|vp-menu-dock/);
+  assert.match(toolbar, /menuDock\?\.addEventListener\('pointerleave',scheduleMenuClose\)/);
   assert.match(toolbar, /positionMenu/);
   assert.match(toolbar, /hoverMenus=window\.matchMedia/);
   assert.match(toolbar, /pointerleave.*scheduleMenuClose/);

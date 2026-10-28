@@ -10,6 +10,7 @@
   const primary=document.createElement('div');primary.className='vp-toolbar-primary';
   const project=document.createElement('div');project.className='vp-toolbar-project';
   const menus=document.createElement('div');menus.className='vp-toolbar-menus';
+  const menuDock=menus;
   let activeMenu=null,menuCloseTimer=0;
   const mobileToggle=document.createElement('button');
   mobileToggle.type='button';mobileToggle.className='vp-mobile-menu-toggle';
@@ -36,12 +37,11 @@
    const box=details._vpDropdown;if(!box)return;
    details.open=true;positionMenu(details);activeMenu={details,box};
   };
-  const scheduleMenuClose=details=>{
+  const scheduleMenuClose=()=>{
    clearTimeout(menuCloseTimer);
-   menuCloseTimer=setTimeout(()=>{
-    if(activeMenu?.details===details&&!details.matches(':hover')&&!details._vpDropdown.matches(':hover'))closeMenu();
-   },140);
+   menuCloseTimer=setTimeout(()=>{if(activeMenu&&!activeMenu.details.matches(':hover')&&!menuDock?.matches(':hover'))closeMenu()},180);
   };
+  menuDock?.addEventListener('pointerleave',scheduleMenuClose);
   const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');
   window.addEventListener('resize',()=>{if(activeMenu)positionMenu(activeMenu.details)},{passive:true});
   mobileToggle.addEventListener('click',()=>{
