@@ -14,6 +14,13 @@ test("left rail switches workspace views through an independent runtime",()=>{
  assert.ok(views.includes("component.x = 80 + part.x * 12"));
  assert.ok(!views.includes("location.href"));
 });
+test("PCB view reads and writes state through the simulator runtime API",()=>{
+ const views=read("src/ui/workspace-views.js");
+ assert.ok(views.includes("simulator.state.components"));
+ assert.ok(views.includes("simulator.state.wires"));
+ assert.ok(views.includes("simulator.state.projectMetadata"));
+ assert.ok(!views.includes("ui.state"));
+});
 test("oscilloscope is compact, resizable, persistent and activated only by its workspace view",()=>{
  const css=read("simulator.css"),html=read("simulator.html"),views=read("src/ui/workspace-views.js"),runtime=read("simulator.js");
  assert.ok(css.includes(".sim-scope-panel{position:absolute"));
