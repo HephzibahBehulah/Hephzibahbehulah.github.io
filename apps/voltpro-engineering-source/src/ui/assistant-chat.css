@@ -1,0 +1,37 @@
+/* One viewport-anchored Adigun surface shared by every VoltPro workspace. */
+#vpAdigunChat{--adigun-bg:#08111d;--adigun-panel:#0c1928;--adigun-line:#29445a;--adigun-text:#eaf4ff;--adigun-muted:#a9bdcf;--adigun-cyan:#75dcff;position:fixed;inset:0;z-index:2147483000;pointer-events:none;font:14px/1.45 Inter,system-ui,sans-serif;color:var(--adigun-text);isolation:isolate}
+#vpAdigunChat *{box-sizing:border-box}
+#vpAdigunChat button,#vpAdigunChat textarea,#vpAdigunChat input{font:inherit}
+#vpAdigunChat .adigun-launcher{position:absolute;right:20px;bottom:calc(76px + env(safe-area-inset-bottom));pointer-events:auto;width:58px;height:58px;border:1px solid #54bad7;border-radius:50%;background:linear-gradient(145deg,#15384b,#08111d 72%);box-shadow:0 8px 28px #0009,0 0 22px #39bfd233;color:#d8f8ff;font-weight:800;cursor:pointer}
+#vpAdigunChat .adigun-launcher:hover{border-color:#a6f1ff;transform:translateY(-2px)}
+#vpAdigunChat .adigun-dot{position:absolute;right:3px;top:3px;width:10px;height:10px;border-radius:50%;background:#60dda5;border:2px solid #08111d}
+#vpAdigunChat .adigun-panel{position:absolute;right:20px;bottom:calc(146px + env(safe-area-inset-bottom));pointer-events:auto;display:none;width:min(430px,calc(100vw - 24px));height:min(660px,calc(100dvh - 170px - env(safe-area-inset-bottom)));min-height:300px;max-height:calc(100dvh - 24px);overflow:hidden;flex-direction:column;border:1px solid #3c657c;border-radius:18px;background:var(--adigun-bg);box-shadow:0 24px 80px #000b,0 0 36px #4ecbe51a}
+#vpAdigunChat .adigun-panel.open{display:flex}
+#vpAdigunChat .adigun-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--adigun-line);background:linear-gradient(100deg,#123247,#101a2b)}
+#vpAdigunChat .adigun-brand{min-width:0;flex:1}
+#vpAdigunChat .adigun-brand strong{display:block;font-size:14px;letter-spacing:.055em}
+#vpAdigunChat .adigun-brand small{display:block;color:var(--adigun-muted);font-size:11px;margin-top:2px}
+#vpAdigunChat .adigun-head button{flex:0 0 36px;height:36px;border:1px solid #35546a;border-radius:9px;background:#0b1724;color:var(--adigun-text);cursor:pointer}
+#vpAdigunChat .adigun-head button:hover,#vpAdigunChat button:focus-visible{outline:2px solid var(--adigun-cyan);outline-offset:2px}
+#vpAdigunChat .adigun-status{padding:7px 16px;border-bottom:1px solid #203648;color:#91c3d2;font-size:10px;letter-spacing:.06em}
+#vpAdigunChat .adigun-messages{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:11px;padding:16px;scroll-behavior:smooth}
+#vpAdigunChat .adigun-message{max-width:94%;padding:11px 13px;border:1px solid #2a4559;border-radius:13px;background:#0d1c2b;color:var(--adigun-text);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+#vpAdigunChat .adigun-message.user{align-self:flex-end;border-color:#42517a;background:#181c34}
+#vpAdigunChat .adigun-message.system{align-self:center;padding:5px 9px;border:0;background:transparent;color:var(--adigun-muted);font-size:12px;text-align:center}
+#vpAdigunChat .adigun-message.error{border-color:#9c4c52;color:#ffd5d8}
+#vpAdigunChat .adigun-import{align-self:flex-start;margin-top:-4px;border:1px solid #3787a2;border-radius:10px;padding:9px 12px;background:#103347;color:#c8f5ff;font-weight:700;cursor:pointer}
+#vpAdigunChat .adigun-import:hover{background:#174a5e}
+#vpAdigunChat .adigun-suggestions{display:flex;gap:7px;padding:0 14px 11px;overflow-x:auto}
+#vpAdigunChat .adigun-suggestions button{flex:0 0 auto;max-width:90%;border:1px solid #29465c;border-radius:999px;padding:7px 10px;background:#0b1a28;color:#b9d7e6;font-size:11px;cursor:pointer}
+#vpAdigunChat .adigun-options{display:flex;align-items:center;gap:8px;padding:8px 15px;border-top:1px solid #203648;color:var(--adigun-muted);font-size:11px}
+#vpAdigunChat .adigun-options input{accent-color:#55c7df}
+#vpAdigunChat .adigun-composer{display:flex;align-items:flex-end;gap:8px;padding:10px 12px;border-top:1px solid #29445a;background:#0a1522}
+#vpAdigunChat .adigun-composer textarea{flex:1;min-width:0;min-height:44px;max-height:140px;resize:vertical;border:1px solid #34546a;border-radius:11px;padding:11px 12px;background:#07111c;color:var(--adigun-text);outline:none;line-height:1.45}
+#vpAdigunChat .adigun-composer textarea:focus{border-color:#75dcff;box-shadow:0 0 0 2px #75dcff22}
+#vpAdigunChat .adigun-composer button{flex:0 0 42px;width:42px;height:44px;border:1px solid #438aa0;border-radius:11px;background:#12374a;color:#d7f8ff;cursor:pointer}
+#vpAdigunChat .adigun-composer button:disabled{opacity:.5;cursor:wait}
+#vpAdigunChat .adigun-footer{padding:7px 14px 10px;color:#8da4b8;font-size:10px}
+#vpAdigunChat .adigun-minimized{height:auto;min-height:0}
+#vpAdigunChat .adigun-minimized .adigun-status,#vpAdigunChat .adigun-minimized .adigun-messages,#vpAdigunChat .adigun-minimized .adigun-suggestions,#vpAdigunChat .adigun-minimized .adigun-options,#vpAdigunChat .adigun-minimized .adigun-footer{display:none}
+@media(max-width:600px){#vpAdigunChat .adigun-launcher{right:14px;bottom:calc(68px + env(safe-area-inset-bottom));width:54px;height:54px}#vpAdigunChat .adigun-panel{right:8px;bottom:calc(132px + env(safe-area-inset-bottom));width:calc(100vw - 16px);height:min(620px,calc(100dvh - 150px - env(safe-area-inset-bottom)));min-height:260px;border-radius:15px}#vpAdigunChat .adigun-head{padding:11px 12px}#vpAdigunChat .adigun-messages{padding:12px}}
+@media(prefers-reduced-motion:reduce){#vpAdigunChat *{scroll-behavior:auto;transition:none!important}}
