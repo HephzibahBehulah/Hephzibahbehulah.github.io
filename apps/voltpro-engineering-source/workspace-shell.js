@@ -552,12 +552,22 @@
     frame.src = rootPrefix + tool.src;
     return panel;
   }
+  function disposeIsolatedWorkspace(path) {
+    if (path !== "/simulator" && path !== "/plc") return;
+    const panel = panels.get(path);
+    if (!panel) return;
+    panel.remove();
+    panels.delete(path);
+  }
+
   function activate(path, push = true) {
     restoreElectricalChrome();
+    const activePath = document.documentElement.dataset.vpWorkspace ? "/" + document.documentElement.dataset.vpWorkspace : "";
     const key = canonicalPath(path);
     if (document.documentElement.dataset.vpWorkspace === "breadboard" && key !== "/breadboard") closeBreadboardCommandMenus();
     const tool = tools.find(item => item.path === key) || tools[0];
     restoreSharedHeader();
+    if (activePath !== tool.path) disposeIsolatedWorkspace(activePath);
     const panel = ensurePanel(tool);
     for (const [route, element] of panels) {
       const active = route === tool.path;
