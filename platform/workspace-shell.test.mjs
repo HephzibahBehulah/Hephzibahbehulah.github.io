@@ -28,8 +28,11 @@ test("main portfolio return link is same-tab and part of the persistent shared h
   assert.doesNotMatch(nav.match(/const mainSite=.*?const nav=/)?.[0] || "", /target|data-vp-route/);
 });
 
-test("workspace switches reuse hidden tool iframes and update history client-side", () => {
+test("workspace switches isolate Simulator and PLC iframe lifecycles and update history client-side", () => {
   assert.match(shell, /const panels = new Map\(\)/);
+  assert.match(shell, /function disposeIsolatedWorkspace\(path\)/);
+  assert.match(shell, /if \(path !== "\/simulator" && path !== "\/plc"\) return/);
+  assert.match(shell, /panel\.remove\(\);\n    panels\.delete\(path\);/);
   assert.match(shell, /frame\.src = rootPrefix \+ tool\.src/);
   const frameSetup = shell.slice(shell.indexOf("function ensurePanel"), shell.indexOf("function activate"));
   assert.ok(frameSetup.indexOf('frame.addEventListener("load"') < frameSetup.indexOf("frame.src = rootPrefix + tool.src"));
@@ -42,7 +45,7 @@ test("Simulator embed applies its template before first paint and resets shared 
   const simulator = read("apps/voltpro-engineering-source/simulator.html");
   assert.match(simulator, /new URLSearchParams\(location\.search\).*vp_embed.*vp-template-simulator/);
   assert.match(shell, /frame\.loading = tool\.path === "\/simulator" \? "eager" : "lazy";/);
-  assert.match(shell, /restoreSharedHeader\(\);\n    const panel = ensurePanel\(tool\);/);
+  assert.match(shell, /restoreSharedHeader\(\);\n    if \(activePath !== tool\.path\) disposeIsolatedWorkspace\(activePath\);\n    const panel = ensurePanel\(tool\);/);
 });
 
 test("Oscilloscope hides injected site chrome and leaving Breadboard closes its command menus", () => {
@@ -66,18 +69,20 @@ test("ElectCAD uses a professional three-column scrollable CAD workspace", () =>
   assert.match(platformScript, /else if\(!isElectCADWorkspace\)document\.body\.prepend\(header\)/);
   assert.match(platformScript, /if\(!isElectCADWorkspace&&!document\.querySelector\('\.os-footer,\.hb-footer-brand'\)\)document\.body\.append\(footer\)/);
   assert.match(siteCss, /vp-electcad-maximized #vpSiteHeader\{display:none!important\}/);
-  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace\{position:fixed!important;inset:0!important/);
+  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace\{position:fixed!important;inset:0 0 80px!important/);
   assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{display:none!important\}/);
 
   assert.match(siteCss, /vp-bottom-dev-note/);
-  assert.match(siteCss, /vp-electcad-maximized body>\.hb-platform-footer\{display:none!important\}/);
+  assert.match(siteCss, /vp-electcad-maximized #vpBottomNavigation\{position:fixed;inset:auto 0 0/);
+  assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{position:fixed;inset:auto 0 50px/);
   assert.match(siteCss, /vp-electcad-maximized #vpWorkspace \.vp-workspace-panel\[data-active=true\]\{position:absolute!important;inset:0!important;width:100%!important/);
   assert.match(siteCss, /vp-electcad-maximized #vpWorkspace \.vp-workspace-frame\{display:block!important;width:100%!important;height:100%!important/);
-  assert.match(appCss, /app-shell\{display:grid;grid-template-rows:50px minmax\(0,1fr\) 40px;grid-template-columns:50px minmax\(0,1fr\) 280px/);
+  assert.match(appCss, /app-shell\{display:grid;grid-template-rows:50px minmax\(0,1fr\);grid-template-columns:50px minmax\(0,1fr\) 280px/);
+  assert.doesNotMatch(app, /global-bottom-bar/);
+  assert.doesNotMatch(appCss, /global-bottom-bar/);
   assert.match(appCss, /html\.vp-electcad-embed \.topbar\{grid-column:1\/-1;grid-row:1;height:50px/);
   assert.match(appCss, /html\.vp-electcad-embed \.menu-toolbar-row\{display:contents/);
   assert.match(appCss, /html\.vp-electcad-embed \.icon-rail\{grid-column:1;grid-row:2/);
-  assert.match(appCss, /html\.vp-electcad-embed \.global-bottom-bar\{grid-column:1\/-1;grid-row:3/);
   assert.match(appCss, /html\.vp-electcad-embed \.left-sidebar\{width:250px;min-width:250px/);
   assert.match(appCss, /html\.vp-electcad-embed \.right-sidebar\{width:280px;min-width:280px/);
   assert.match(appCss, /html\.vp-electcad-embed \.workspace\{display:contents/);
@@ -100,19 +105,11 @@ test("ElectCAD uses a professional three-column scrollable CAD workspace", () =>
   assert.match(appCss, /\.edge-reveal\.edge-right\{display:flex!important/);
   assert.match(appCss, /\.canvas-rulers\{inset:0 0 0 0\}/);
   assert.match(app, /className="electcad-main-site"[\s\S]*className="hb-brand"[\s\S]*Hephzibah Behulah[\s\S]*VoltPro <span>ElectCAD<\/span>[\s\S]*className="project-dropdown"/);
-  assert.match(app, /className="simulation-controls global-simulation-controls" role="group" aria-label="Simulation controls"/);
-  assert.ok(app.indexOf('className="simulation-controls global-simulation-controls"') > app.indexOf('<footer className="global-bottom-bar"'));
-  assert.ok(app.indexOf('className="simulation-controls global-simulation-controls"') < app.indexOf('className="bottom-dev-note"'));
-  assert.match(appCss, /\.global-bottom-bar\{overflow-x:auto;overflow-y:hidden;white-space:nowrap/);
-  assert.match(app, /className=\{`simulation-state state-\$\{simulationState\}`\}/);
-  assert.match(app, /aria-label="Start simulation"/);
-  assert.match(app, /aria-label="Stop simulation"/);
+  assert.match(siteCss, /#vpBottomNavigation\{position:fixed/);
   assert.match(app, /new Worker\(new URL\('\.\/src\/dc-solver\.worker\.ts',import\.meta\.url\)/);
   assert.match(app, /worker\.terminate\(\)/);
   assert.match(appCss, /\.hb-brand strong\{display:inline!important/);
-  assert.match(appCss, /\.simulation-state\.state-running/);
-  assert.match(appCss, /\.simulation-state\.state-error/);
-  assert.match(app, /className="global-bottom-bar" aria-label="VoltPro tool navigation"/);
+
   assert.match(app, /title="Component Library" aria-label="Component Library"/);
   assert.match(app, /className="title-company-mark"[\s\S]*HEPHZIBAH BEHULAH[\s\S]*className="title-copyright"/);
   assert.match(app, /const printAllSheets=\(\)=>\{setPrintDocument\(true\)/);
