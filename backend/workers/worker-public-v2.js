@@ -1,5 +1,5 @@
 import legacy, { Sandbox } from "./worker-openai.js";
-import publicSI from "./platform/public-ai.mjs";
+import publicSI from "../../platform/public-ai.mjs";
 
 export { Sandbox };
 

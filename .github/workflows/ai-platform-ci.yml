@@ -19,10 +19,10 @@ jobs:
           node --check js/progressive-disclosure.js
           node --check js/ai-lab.js
           node --check js/adigun-agent.js
-          node --check worker-v2.js
-          node --check worker-openai.js
-          grep -q 'api/transcribe' worker-openai.js
-          grep -q 'audio/transcriptions' worker-openai.js
+          node --check backend/workers/worker-v2.js
+          node --check backend/workers/worker-openai.js
+          grep -q 'api/transcribe' backend/workers/worker-openai.js
+          grep -q 'audio/transcriptions' backend/workers/worker-openai.js
           node --check js/adigun-admin.js
           node --check js/adigun-private-operator.js
           node --check js/adigun-renderer.js
@@ -77,11 +77,11 @@ jobs:
           grep -q 'class_name.*Sandbox' wrangler.jsonc
           grep -q 'durable_objects' wrangler.jsonc
           grep -q 'new_sqlite_classes' wrangler.jsonc
-          grep -q '/api/admin/sandbox' worker-openai.js
-          grep -q 'SANDBOX_COMMANDS' worker-openai.js
-          grep -q 'sandbox.exec' worker-openai.js
-          grep -q 'import { DurableObject } from "cloudflare:workers"' worker-openai.js
-          grep -q 'enableInternet:false' worker-openai.js
+          grep -q '/api/admin/sandbox' backend/workers/worker-openai.js
+          grep -q 'SANDBOX_COMMANDS' backend/workers/worker-openai.js
+          grep -q 'sandbox.exec' backend/workers/worker-openai.js
+          grep -q 'import { DurableObject } from "cloudflare:workers"' backend/workers/worker-openai.js
+          grep -q 'enableInternet:false' backend/workers/worker-openai.js
 
       - name: Validate secure execution lab
         run: |
@@ -92,7 +92,7 @@ jobs:
 
       - name: Validate ADIGUN production surfaces
         run: |
-          test -f worker-openai.js
+          test -f backend/workers/worker-openai.js
           test -f js/adigun-agent.js
           test -f js/ai-lab.js
           test -f js/adigun-admin.js
@@ -112,4 +112,4 @@ jobs:
           grep -q 'language-system.js' index.html
           grep -q 'mobile-system.css' index.html
           ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
-          ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js worker-openai.js
+          ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js backend/workers/worker-openai.js

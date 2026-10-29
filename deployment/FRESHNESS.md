@@ -2,7 +2,7 @@
 
 ## Architecture and observed baseline
 
-Production is a Cloudflare Worker (`worker-platform.mjs`) with a versioned ASSETS binding, built from this GitHub repository by Integrated platform validation. It is not GitHub Pages behind a generic static CDN. All seven engineering routes resolve to the shared workspace shell; embedded tools retain their own routes and assets.
+Production is a Cloudflare Worker (`backend/workers/worker-platform.mjs`) with a versioned ASSETS binding, built from this GitHub repository by Integrated platform validation. It is not GitHub Pages behind a generic static CDN. All seven engineering routes resolve to the shared workspace shell; embedded tools retain their own routes and assets.
 
 On 2026-10-26 the production status API reported commit `083d45643f2d09e6defb87df0f5deb17b837d889`, matching main. All seven requested routes returned 200, `private, no-store` HTML; shared assets returned `max-age=0, must-revalidate`. A missing JS URL returned 404. The Cloudflare `HIT` header can come from the static asset binding and alone does not prove stale edge delivery. The original stale-session symptom was not reproduced in the clean browser session.
 

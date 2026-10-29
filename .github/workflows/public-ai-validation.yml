@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - "worker-public-v2.js"
-      - "worker-platform.mjs"
+      - "backend/workers/worker-public-v2.js"
+      - "backend/workers/worker-platform.mjs"
       - "ai-agent.html"
       - "ai.html"
       - "js/ai-lab.js"
@@ -27,8 +27,8 @@ jobs:
           node-version: 22
       - name: Validate public AI gateway
         run: |
-          node --check worker-public-v2.js
-          node --check worker-platform.mjs
+          node --check backend/workers/worker-public-v2.js
+          node --check backend/workers/worker-platform.mjs
           test -s ai-agent.html
           test -s ai.html
           test -s js/ai-lab.js
@@ -39,6 +39,6 @@ jobs:
           grep -q 'id="aiVideo"' ai-agent.html
           grep -q 'id="aiVoice"' ai-agent.html
           grep -q 'id="aiRecord"' ai-agent.html
-          grep -q '/api/transcribe' worker-public-v2.js
-          grep -q 'api.openai.com/v1/audio/transcriptions' worker-public-v2.js
-          grep -q '"main": "worker-platform.mjs"' wrangler.jsonc
+          grep -q '/api/transcribe' backend/workers/worker-public-v2.js
+          grep -q 'api.openai.com/v1/audio/transcriptions' backend/workers/worker-public-v2.js
+          grep -q '"main": "backend/workers/worker-platform.mjs"' wrangler.jsonc

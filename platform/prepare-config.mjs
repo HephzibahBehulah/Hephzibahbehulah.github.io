@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 const config=JSON.parse(fs.readFileSync('wrangler.jsonc','utf8'));
-config.main='worker-platform.mjs';
+config.main='backend/workers/worker-platform.mjs';
 config.assets={directory:'dist-platform',binding:'ASSETS',run_worker_first:true,html_handling:'none',not_found_handling:'none'};
 config.workers_dev=false;
 config.preview_urls=false;

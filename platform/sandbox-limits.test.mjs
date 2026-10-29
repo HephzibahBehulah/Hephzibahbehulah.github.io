@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {boundSandboxOutput,SANDBOX_MAX_OUTPUT_BYTES} from './sandbox-limits.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const worker=fs.readFileSync(path.join(root,'worker-openai.js'),'utf8');
+const worker=fs.readFileSync(path.join(root,'backend/workers/worker-openai.js'),'utf8');
 const wrangler=fs.readFileSync(path.join(root,'wrangler.jsonc'),'utf8');
 
 test('sandbox execution is offline and bounded',()=>{

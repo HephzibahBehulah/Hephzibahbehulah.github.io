@@ -21,7 +21,7 @@ jobs:
           node-version: 22
       - name: Check integration JavaScript
         run: |
-          node --check worker-platform.mjs
+          node --check backend/workers/worker-platform.mjs
           node --check platform/platform.js
           node --check platform/experience.js
           node --check platform/account-page.js
