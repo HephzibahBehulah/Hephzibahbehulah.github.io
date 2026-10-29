@@ -41,6 +41,7 @@ test("dropdown runtime parses and supplies accessible, keyboard-operable menus",
  assert.ok(layout.includes("box.classList.add('vp-menu-open')"));
  assert.ok(layout.includes("document.body.append(box)"));
  assert.ok(layout.includes("activeMenu.box.matches(':hover')"));
+ assert.ok(layout.includes("details.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer))"),"hover must not toggle a native details menu before click");
  assert.ok(!layout.includes("vp-menu-dock"),"menu dropdowns must not create a side dock");
  assert.ok(toolbarCss.includes(".vp-toolbar-dropdown.vp-menu-open"));
  assert.ok(js.includes("VoltProDemoLibrary.load(d)"));

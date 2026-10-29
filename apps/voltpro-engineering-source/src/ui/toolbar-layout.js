@@ -67,7 +67,7 @@
    details.dataset.menu=name.toLowerCase();summary.textContent=name;summary.dataset.icon=icons[name];summary.title=name;summary.setAttribute('aria-label',name+' menu');
    box.className='vp-toolbar-dropdown';details._vpDropdown=box;details.append(summary,box);box.addEventListener('pointerleave',scheduleMenuClose);parent.append(details);
    details.addEventListener('toggle',()=>{if(details.open){for(const sibling of menus.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;openMenu(details)}else if(activeMenu?.details===details)closeMenu()});
-   details.addEventListener('pointerenter',()=>{if(!hoverMenus?.matches)return;clearTimeout(menuCloseTimer);openMenu(details)});
+   details.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer));
    details.addEventListener('pointerleave',()=>{if(hoverMenus?.matches)scheduleMenuClose(details)});
    return {details,box};
   };
