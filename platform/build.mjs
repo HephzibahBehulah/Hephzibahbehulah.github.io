@@ -32,6 +32,10 @@ function copy(from,to,{main=false,cyber=false}={}){
  }
 }
 copy(root,destination,{main:true});
+// HTML sources live under apps/, while deployed paths stay rooted for Worker routing.
+copy(path.join(root,'apps/public'),destination);
+copy(path.join(root,'apps/admin'),destination);
+copy(path.join(root,'apps/cyber-os'),path.join(destination,'cyber-os'));
 copySharedAssets(root,destination);
 copy(engineering,path.join(destination,'_apps/engineering'));
 fs.copyFileSync(path.join(root,'gaps.json'),path.join(destination,'_apps/engineering/gaps.json'));

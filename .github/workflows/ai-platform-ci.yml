@@ -39,12 +39,12 @@ jobs:
           node --check scripts/sync-rfc-index.mjs
           node --check cyber-os/catalog-loader.js
           node --check cyber-os/cybersecurity-tools-academy.js
-          grep -q "progressive-disclosure.css" index.html
-          grep -q "progressive-disclosure.css" admin-tools.html
-          grep -q "progressive-disclosure.css" cyber-os/index.html
-          grep -q "progressive-disclosure.js" index.html
-          grep -q "progressive-disclosure.js" admin-tools.html
-          grep -q "progressive-disclosure.js" cyber-os/index.html
+          grep -q "progressive-disclosure.css" apps/public/index.html
+          grep -q "progressive-disclosure.css" apps/admin/admin-tools.html
+          grep -q "progressive-disclosure.css" apps/cyber-os/index.html
+          grep -q "progressive-disclosure.js" apps/public/index.html
+          grep -q "progressive-disclosure.js" apps/admin/admin-tools.html
+          grep -q "progressive-disclosure.js" apps/cyber-os/index.html
           node --check cyber-os/encyclopedia-engine.js
           node -e "const d=JSON.parse(require('fs').readFileSync('cyber-os/data/generated/cybersecurity-tools.json','utf8')); if(!Array.isArray(d.records)||d.records.length!==d.count||!d.records.every(x=>x.name&&x.purpose&&x.safeUse&&/^https:/.test(x.sourceUrl))) process.exit(1)"
           node --check cyber-os/knowledge-graph-engine.js
@@ -60,7 +60,7 @@ jobs:
           JSON.parse(require('fs').readFileSync('cyber-os/data/catalog-manifest.json','utf8'))
           JSON.parse(require('fs').readFileSync('cyber-os/data/source-manifest.json','utf8'))
           JSON.parse(require('fs').readFileSync('cyber-os/data/relationships.json','utf8'))"
-          test -f cyber-os/index.html
+          test -f apps/cyber-os/index.html
           test -f cyber-os/cyber-os.css
           test -f cyber-os/PHASES.md
           test -f cyber-os/data/README.md
@@ -97,19 +97,19 @@ jobs:
           test -f js/ai-lab.js
           test -f js/adigun-admin.js
           test -f js/adigun-renderer.js
-          test -f ai-agent.html
+          test -f apps/public/ai-agent.html
           test -f css/mobile-system.css
           test -f js/language-system.js
           test -f data/translations/en.json
           test -f data/translations/de.json
           test -f data/translations/yo.json
           test -f data/translations/pid.json
-          grep -q 'id="adminMessages"' admin.html
-          grep -q 'hb-bot-chat.css' admin.html
-          grep -q 'hb-bot-chat.js' admin.html
-          grep -q 'Cybersecurity Tools Academy' cyber-os/index.html
-          grep -q 'cybersecurity-tools-academy.js' cyber-os/index.html
-          grep -q 'language-system.js' index.html
-          grep -q 'mobile-system.css' index.html
+          grep -q 'id="adminMessages"' apps/admin/admin.html
+          grep -q 'hb-bot-chat.css' apps/admin/admin.html
+          grep -q 'hb-bot-chat.js' apps/admin/admin.html
+          grep -q 'Cybersecurity Tools Academy' apps/cyber-os/index.html
+          grep -q 'cybersecurity-tools-academy.js' apps/cyber-os/index.html
+          grep -q 'language-system.js' apps/public/index.html
+          grep -q 'mobile-system.css' apps/public/index.html
           ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
           ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js backend/workers/worker-openai.js
