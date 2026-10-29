@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles.css';
-import '../voltpro-engineering-source/workspace-engineering-theme.css';
+import '../../voltpro-engineering-source/workspace-engineering-theme.css';
 
 if(new URLSearchParams(window.location.search).has('vp_embed'))document.documentElement.classList.add('vp-electcad-embed');
 

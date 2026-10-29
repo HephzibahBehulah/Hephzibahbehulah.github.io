@@ -43,10 +43,11 @@ The application layer must remain usable without assuming that the current hosti
 The following files are deployment/provider adapters rather than the core browser application:
 
 - `wrangler.jsonc`
-- `worker-public-v2.js`
-- `worker-openai.js`
-- `worker-v2.js`
-- `worker.js`
+- `backend/workers/worker-platform.mjs`
+- `backend/workers/worker-public-v2.js`
+- `backend/workers/worker-openai.js`
+- `backend/workers/worker-v2.js`
+- `backend/workers/worker.js`
 - `backend/src/worker.js`
 - `backend/wrangler.jsonc`
 - Cloudflare-specific workflow checks

@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const pkg=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
 const wrangler=JSON.parse(fs.readFileSync(path.join(root,'wrangler.jsonc'),'utf8'));
-const worker=fs.readFileSync(path.join(root,'worker-openai.js'),'utf8');
+const worker=fs.readFileSync(path.join(root,'backend/workers/worker-openai.js'),'utf8');
 const dockerfile=fs.readFileSync(path.join(root,'Dockerfile'),'utf8');
 
 test('Cloudflare Sandbox SDK and helper image are both pinned to 1.0.3',()=>{

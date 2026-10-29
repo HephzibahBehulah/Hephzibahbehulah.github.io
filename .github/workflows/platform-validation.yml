@@ -21,7 +21,7 @@ jobs:
           node-version: 22
       - name: Check integration JavaScript
         run: |
-          node --check worker-platform.mjs
+          node --check backend/workers/worker-platform.mjs
           node --check platform/platform.js
           node --check platform/experience.js
           node --check platform/account-page.js
@@ -43,7 +43,7 @@ jobs:
           node --check platform/admin-accounts-ui.js
           node --check platform/admin-security-ui.js
           node --check platform/admin-security.mjs
-          node --check js/language-system.js
+          node --check packages/shared-i18n/language-system.js
       - name: Verify authorization, routing and tutor boundaries
         run: node --test apps/voltpro-engineering-source/tests/electrical-engine.test.mjs platform/workspace-shell.test.mjs platform/access.test.mjs platform/router.test.mjs platform/deployment-cache.test.mjs platform/release-update.test.mjs platform/admin-security.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/engineering-capability-matrix.test.mjs platform/status-page.test.mjs platform/acceptance/gaps/*.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs platform/sitewide-theme.test.mjs
       - name: Verify preservation of the original platform
@@ -62,6 +62,9 @@ jobs:
 
       - name: Build the pinned ADIGUN sandbox image
         run: docker build --tag adigun-private-sandbox:ci .
+
+      - name: Dry-run integrated Worker bundle
+        run: npx wrangler deploy --dry-run --outdir /tmp/wrangler-dry
 
       - name: Deploy integrated Worker and assets to Cloudflare
         if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}

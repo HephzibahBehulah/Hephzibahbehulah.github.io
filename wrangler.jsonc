@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "hephzibahbehulah-github-io",
   "account_id": "4ba25f0c9e0b7bf55d54d129acd63251",
-  "main": "worker-platform.mjs",
+  "main": "backend/workers/worker-platform.mjs",
   "compatibility_date": "2026-09-25",
   "assets": {
     "directory": "dist-platform",

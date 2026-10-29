@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-const source=fs.readFileSync(new URL('../js/language-system.js',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../packages/shared-i18n/language-system.js',import.meta.url),'utf8');
 
 function browser({host='cyber.hephzibahbehulah.com',cookie='',saved='en',readyState='complete',translations={},scriptSrc=null}={}){
   const store=new Map([['hb_language',saved]]), assigned=[],observers=[],fetched=[];

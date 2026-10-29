@@ -4,12 +4,12 @@ on:
   push:
     branches: [main]
     paths:
-      - "worker-public-v2.js"
-      - "worker-platform.mjs"
-      - "ai-agent.html"
-      - "ai.html"
-      - "js/ai-lab.js"
-      - "js/adigun-agent.js"
+      - "backend/workers/worker-public-v2.js"
+      - "backend/workers/worker-platform.mjs"
+      - "apps/public/ai-agent.html"
+      - "apps/public/ai.html"
+      - "packages/shared-ui/js/ai-lab.js"
+      - "apps/terminal/adigun-agent.js"
       - "wrangler.jsonc"
       - ".github/workflows/public-ai-validation.yml"
   workflow_dispatch:
@@ -27,18 +27,18 @@ jobs:
           node-version: 22
       - name: Validate public AI gateway
         run: |
-          node --check worker-public-v2.js
-          node --check worker-platform.mjs
-          test -s ai-agent.html
-          test -s ai.html
-          test -s js/ai-lab.js
-          test -s js/adigun-agent.js
-          grep -q 'id="aiAdd"' ai-agent.html
-          grep -q 'id="aiFile"' ai-agent.html
-          grep -q 'id="aiPhoto"' ai-agent.html
-          grep -q 'id="aiVideo"' ai-agent.html
-          grep -q 'id="aiVoice"' ai-agent.html
-          grep -q 'id="aiRecord"' ai-agent.html
-          grep -q '/api/transcribe' worker-public-v2.js
-          grep -q 'api.openai.com/v1/audio/transcriptions' worker-public-v2.js
-          grep -q '"main": "worker-platform.mjs"' wrangler.jsonc
+          node --check backend/workers/worker-public-v2.js
+          node --check backend/workers/worker-platform.mjs
+          test -s apps/public/ai-agent.html
+          test -s apps/public/ai.html
+          test -s packages/shared-ui/js/ai-lab.js
+          test -s apps/terminal/adigun-agent.js
+          grep -q 'id="aiAdd"' apps/public/ai-agent.html
+          grep -q 'id="aiFile"' apps/public/ai-agent.html
+          grep -q 'id="aiPhoto"' apps/public/ai-agent.html
+          grep -q 'id="aiVideo"' apps/public/ai-agent.html
+          grep -q 'id="aiVoice"' apps/public/ai-agent.html
+          grep -q 'id="aiRecord"' apps/public/ai-agent.html
+          grep -q '/api/transcribe' backend/workers/worker-public-v2.js
+          grep -q 'api.openai.com/v1/audio/transcriptions' backend/workers/worker-public-v2.js
+          grep -q '"main": "backend/workers/worker-platform.mjs"' wrangler.jsonc

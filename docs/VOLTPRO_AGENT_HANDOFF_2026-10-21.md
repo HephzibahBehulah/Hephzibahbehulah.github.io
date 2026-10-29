@@ -16,7 +16,7 @@ Do not interpret permission to proceed as permission to weaken security, ignore 
 |---|---|---|
 | Main portfolio + canonical shared platform | [HephzibahBehulah/Hephzibahbehulah.github.io](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io) | [hephzibahbehulah.com](https://hephzibahbehulah.com/) |
 | Simulator, academy, Breadboard, PLC source | [HephzibahBehulah/Hephzibah-VoltPRo](https://github.com/HephzibahBehulah/Hephzibah-VoltPRo) | [Simulator](https://engineering.hephzibahbehulah.com/simulator), [PLC](https://engineering.hephzibahbehulah.com/voltpro-plc/), [Breadboard](https://engineering.hephzibahbehulah.com/breadboard) |
-| Integrated ElectCAD | `apps/voltpro-electcad/` inside the main platform repository | [ElectCAD](https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/) |
+| Integrated ElectCAD | `apps/engineering/voltpro-electcad/` inside the main platform repository | [ElectCAD](https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/) |
 | Standalone ElectCAD project | [HephzibahBehulah/VoltPro-ElexCAD](https://github.com/HephzibahBehulah/VoltPro-ElexCAD) | Source/reference; integrated deployment is in the main platform repository |
 | Separate PLC repository | [HephzibahBehulah/VoltProPlc](https://github.com/HephzibahBehulah/VoltProPlc) | Empty repository; **not** the current PLC source |
 | Cyber Workbench release source used by the platform build | [HephzibahBehulah/Hephzibah-PenTestingApp](https://github.com/HephzibahBehulah/Hephzibah-PenTestingApp) | Release archive expected at cyber.hephzibahbehulah.com |
@@ -46,7 +46,7 @@ The main platform is the canonical shared engineering Worker source. Do not conf
 - Repository: main platform repository
 - PR: [#43 — Connect ElectCAD to shared VoltPro cloud projects](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/pull/43)
 - Merge commit: `9ca27499e05d72f50456de23c90bccb62a81679f`
-- Files: `apps/voltpro-electcad/App.tsx`, `apps/voltpro-electcad/index.html`, `.github/workflows/platform-validation.yml`
+- Files: `apps/engineering/voltpro-electcad/App.tsx`, `apps/engineering/voltpro-electcad/index.html`, `.github/workflows/platform-validation.yml`
 - Change: connects ElectCAD to the existing authenticated VoltPro account client and owner-scoped cloud `projects` store for save/list/load/archive; uses version-aware updates and preserves revision history when archiving.
 - This reuses existing Supabase project infrastructure; no database migration was made in this session.
 
@@ -55,7 +55,7 @@ The main platform is the canonical shared engineering Worker source. Do not conf
 - Repository: main platform repository
 - PR: [#44 — Reopen ElectCAD cloud projects from workspace library](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/pull/44)
 - Merge commit: `09c7659e66c9561634b249dc316a09e08b9442f0`
-- File: `apps/voltpro-electcad/App.tsx`
+- File: `apps/engineering/voltpro-electcad/App.tsx`
 - Change: supports the project handoff/import path from the shared account library and restores the cloud project ID/revision; historical revisions are opened as copies rather than overwriting the current project.
 - Check exact behavior against current source before extending it; do not assume every tool has a complete lossless interchange format yet.
 
@@ -64,7 +64,7 @@ The main platform is the canonical shared engineering Worker source. Do not conf
 - Repository: main platform repository
 - PR: [#45 — Route ElectCAD voice proposals through shared VoltPRo AI](https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/pull/45)
 - Merge commit: `e6b9b6919f9e697437f6ef974d2a60081358d62f`
-- File: `apps/voltpro-electcad/App.tsx`
+- File: `apps/engineering/voltpro-electcad/App.tsx`
 - Change:
   - Uses the configured dedicated design API if present; otherwise attempts the same-origin `/api/engineering/chat` gateway.
   - Supplies a bounded current-project/current-sheet summary and component catalogue.

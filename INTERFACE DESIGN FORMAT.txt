@@ -7,7 +7,7 @@ ElectCAD is the visual reference for the VoltPro engineering workspace. The othe
 
 REFERENCE IMPLEMENTATION
 Live reference: https://engineering.hephzibahbehulah.com/electcad
-Source: apps/voltpro-electcad/App.tsx and apps/voltpro-electcad/styles.css
+Source: apps/engineering/voltpro-electcad/App.tsx and apps/engineering/voltpro-electcad/styles.css
 Shared routes and shell: apps/voltpro-engineering-source/workspace-shell.html, workspace-shell.js, workspace-shell.css
 
 1. SHARED WORKSPACE SHELL

@@ -12,7 +12,7 @@
 | Simulator, academy and Breadboard source | `HephzibahBehulah/Hephzibah-VoltPRo` | https://engineering.hephzibahbehulah.com/simulator and /breadboard |
 | PLC workspace | `apps/voltpro-plc/` in `HephzibahBehulah/Hephzibah-VoltPRo`; the separate `HephzibahBehulah/VoltProPlc` repository is empty | https://engineering.hephzibahbehulah.com/voltpro-plc/ |
 | ElexCAD standalone source | `HephzibahBehulah/VoltPro-ElexCAD` | Legacy repository URL redirects to the integrated deployment |
-| ElexCAD integrated source | `apps/voltpro-electcad/` in the main platform repository | https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/ |
+| ElexCAD integrated source | `apps/engineering/voltpro-electcad/` in the main platform repository | https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/ |
 
 The main platform README describes the shared engineering Worker as the deployment surface for the static ElexCAD build. Verify the actual route configuration and artifact provenance before changing deployment wiring. Do not assume similarly named repositories are interchangeable.
 

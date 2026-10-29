@@ -21,12 +21,8 @@ data/ai-platform.json
 # Cloudflare/site configuration that should not be public
 _headers
 
-# Root Worker source is deployed as code, not as a static asset
-worker.js
-worker-openai.js
-worker-v2.js
-worker-public-v2.js
-worker-platform.mjs
+# Worker source is deployed as code, not as a static asset
+backend/workers/
 platform/
 dist-platform/
 wrangler.platform.jsonc

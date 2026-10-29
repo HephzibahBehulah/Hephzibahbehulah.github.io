@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const wrangler=JSON.parse(fs.readFileSync(path.join(root,'wrangler.jsonc'),'utf8'));
-const worker=fs.readFileSync(path.join(root,'worker-openai.js'),'utf8');
+const worker=fs.readFileSync(path.join(root,'backend/workers/worker-openai.js'),'utf8');
 
 test('admin AI has a larger dedicated rate limit than public AI',()=>{
  const limiters=Object.fromEntries(wrangler.ratelimits.map(item=>[item.name,item.simple.limit]));

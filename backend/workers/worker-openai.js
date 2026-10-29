@@ -2,8 +2,8 @@
 // Free Cloudflare Workers AI fallback is enabled when the primary provider is unavailable.
 import { DurableObject } from "cloudflare:workers";
 import legacy from "./worker-v2.js";
-import {accountGateway} from "./platform/admin-accounts.mjs";
-import {boundSandboxOutput} from "./platform/sandbox-limits.mjs";
+import {accountGateway} from "../../platform/admin-accounts.mjs";
+import {boundSandboxOutput} from "../../platform/sandbox-limits.mjs";
 
 const SANDBOX_INACTIVITY_TIMEOUT_MS=30*60*1000;
 export class Sandbox extends DurableObject {
@@ -342,8 +342,8 @@ async function privateRepositoryInspection(env, task) {
   const wanted = q.includes("frontend")||q.includes("front end")||q.includes("ui")||q.includes("browser")
     ? ["index.html","ai-agent.html","admin.html","admin-tools.html","js/adigun-agent.js","js/adigun-private-operator.js","js/ai-lab.js","css/ai-lab.css","css/adigun-admin.css"]
     : q.includes("backend")||q.includes("back end")||q.includes("api")||q.includes("worker")||q.includes("server")
-    ? ["worker-openai.js","worker-public-v2.js","worker-v2.js","backend/src/worker.js","backend/ADIGUN-AUTOMATION.md","ARCHITECTURE.md"]
-    : ["README.md","ARCHITECTURE.md","worker-openai.js","worker-public-v2.js","admin.html","index.html","js/adigun-agent.js","js/adigun-private-operator.js"];
+    ? ["backend/workers/worker-openai.js","backend/workers/worker-public-v2.js","backend/workers/worker-v2.js","backend/src/worker.js","backend/ADIGUN-AUTOMATION.md","ARCHITECTURE.md"]
+    : ["README.md","ARCHITECTURE.md","backend/workers/worker-openai.js","backend/workers/worker-public-v2.js","admin.html","index.html","js/adigun-agent.js","js/adigun-private-operator.js"];
   const available=new Set(entries.map(x=>x.path));
   const paths=[...new Set(wanted.filter(p=>available.has(p)))].slice(0,16);
   const files=[];
