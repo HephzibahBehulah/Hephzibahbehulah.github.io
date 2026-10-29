@@ -11,24 +11,6 @@
   const project=document.createElement('div');project.className='vp-toolbar-project';
   const menus=document.createElement('div');menus.className='vp-toolbar-menus';
   let activeMenu=null,menuCloseTimer=0;
-  const getWorkspaceMenuDock=()=>{
-   const workspace=document.querySelector('.workspace');if(!workspace)return null;
-   let dock=workspace.querySelector(':scope > .vp-menu-dock');
-   if(!dock){dock=document.createElement('aside');dock.className='vp-menu-dock';dock.hidden=true;dock.setAttribute('aria-label','Open menu panel');const heading=document.createElement('div');heading.className='vp-menu-dock-heading';const content=document.createElement('div');content.className='vp-menu-dock-content';dock.append(heading,content);workspace.append(dock);}
-   return dock;
-  };
-  const closeDock=()=>{
-   const dock=getWorkspaceMenuDock();if(!dock)return;
-   dock.hidden=true;dock.querySelector('.vp-menu-dock-content')?.replaceChildren();dock.querySelector('.vp-menu-dock-heading').textContent='';
-   document.querySelector('.workspace')?.classList.remove('vp-menu-dock-open');
-  };
-  const openDock=(element,title)=>{
-   const dock=getWorkspaceMenuDock();if(!dock)return false;
-   dock.querySelector('.vp-menu-dock-heading').textContent=title||'MENU';
-   dock.querySelector('.vp-menu-dock-content').replaceChildren(element);dock.hidden=false;document.querySelector('.workspace')?.classList.add('vp-menu-dock-open');return true;
-  };
-  window.VoltProMenuDock={get element(){return getWorkspaceMenuDock()},open:openDock,close:closeDock};
-  const menuDock=()=>getWorkspaceMenuDock();
   const mobileToggle=document.createElement('button');
   mobileToggle.type='button';mobileToggle.className='vp-mobile-menu-toggle';
   mobileToggle.textContent='☰';mobileToggle.title='Show Simulator menus';
@@ -36,29 +18,41 @@
   const closeMenu=()=>{
    clearTimeout(menuCloseTimer);
    if(!activeMenu)return;
-   const current=activeMenu;activeMenu=null;current.details.open=false;
-   current.box.style.removeProperty('left');current.box.style.removeProperty('top');
-   current.details.append(current.box);closeDock();
+   const current=activeMenu;activeMenu=null;
+   current.box.classList.remove('vp-menu-open');
+   for(const property of ['left','top','position','width','max-height','z-index'])current.box.style.removeProperty(property);
+   current.details.open=false;current.details.append(current.box);
    window.VoltProToolbarMenus?.close?.();
   };
   const positionMenu=details=>{
    const box=details._vpDropdown,summary=details.querySelector('summary');
    if(!box||!summary)return;
-   box.style.removeProperty('left');box.style.removeProperty('top');box.style.removeProperty('position');
-   box.style.setProperty('--vp-menu-width','100%');
+   const r=summary.getBoundingClientRect(),gutter=8,width=Math.min(280,window.innerWidth-gutter*2);
+   const left=Math.max(gutter,Math.min(window.innerWidth-width-gutter,r.left));
+   const top=r.bottom+4,maxHeight=Math.max(100,Math.min(window.innerHeight-top-gutter,window.innerHeight*.65));
+   box.classList.add('vp-menu-open');
+   if(box.parentElement!==document.body)document.body.append(box);
+   box.style.setProperty('position','fixed','important');
+   box.style.setProperty('left',left+'px','important');
+   box.style.setProperty('top',top+'px','important');
+   box.style.setProperty('width',width+'px','important');
+   box.style.setProperty('max-height',maxHeight+'px','important');
+   box.style.setProperty('z-index','100100','important');
   };
   const openMenu=details=>{
    if(activeMenu?.details===details){positionMenu(details);return}
    if(activeMenu)closeMenu();
    const box=details._vpDropdown;if(!box)return;
-   details.open=true;activeMenu={details,box};if(openDock(box,details.dataset.menu||details.querySelector('summary')?.textContent))positionMenu(details);
+   details.open=true;activeMenu={details,box};positionMenu(details);
   };
   const scheduleMenuClose=()=>{
    clearTimeout(menuCloseTimer);
-   menuCloseTimer=setTimeout(()=>{if(activeMenu&&!activeMenu.details.matches(':hover')&&!menuDock()?.matches(':hover'))closeMenu()},180);
+   menuCloseTimer=setTimeout(()=>{
+    const nested=document.querySelector('.vp-toolbar-popover');
+    if(activeMenu&&!activeMenu.details.matches(':hover')&&!activeMenu.box.matches(':hover')&&!nested?.matches(':hover'))closeMenu();
+   },180);
   };
-  getWorkspaceMenuDock()?.addEventListener('pointerleave',scheduleMenuClose);
-  const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');
+    const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');  const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');
   window.addEventListener('resize',()=>{if(activeMenu)positionMenu(activeMenu.details)},{passive:true});
   mobileToggle.addEventListener('click',()=>{
    const opened=menus.classList.toggle('vp-mobile-menus-open');
@@ -70,7 +64,7 @@
   const makeMenu=(name,parent=menus)=>{
    const details=document.createElement('details'),summary=document.createElement('summary'),box=document.createElement('div');
    details.dataset.menu=name.toLowerCase();summary.textContent=name;summary.dataset.icon=icons[name];summary.title=name;summary.setAttribute('aria-label',name+' menu');
-   box.className='vp-toolbar-dropdown';details._vpDropdown=box;details.append(summary,box);parent.append(details);
+   box.className='vp-toolbar-dropdown';details._vpDropdown=box;details.append(summary,box);box.addEventListener('pointerleave',scheduleMenuClose);parent.append(details);
    details.addEventListener('toggle',()=>{if(details.open){for(const sibling of menus.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;openMenu(details)}else if(activeMenu?.details===details)closeMenu()});
    details.addEventListener('pointerenter',()=>{if(!hoverMenus?.matches)return;clearTimeout(menuCloseTimer);openMenu(details)});
    details.addEventListener('pointerleave',()=>{if(hoverMenus?.matches)scheduleMenuClose(details)});
