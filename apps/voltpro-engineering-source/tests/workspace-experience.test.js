@@ -49,21 +49,21 @@ test("Simulation dropdown controls use the shared toolbar actions",()=>{
  const toolbar=read("src/ui/toolbar-layout.js");
  for(const command of ["runBtn","pauseBtn","stopBtn","studioLaunch"])assert.ok(toolbar.includes(command));
  assert.ok(toolbar.includes("positionMenu"));
- assert.ok(toolbar.includes("menuDock?.addEventListener('pointerleave',scheduleMenuClose)"));
+ assert.ok(toolbar.includes("box.addEventListener('pointerleave',scheduleMenuClose)"));
 });
 test("top menus and nested project menus float over the canvas without a side dock",()=>{
  const toolbar=read("src/ui/toolbar-layout.js"),menus=read("platform/toolbar-menus.js"),css=read("src/ui/toolbar-layout.css"),html=read("simulator.html"),shell=read("workspace-shell.js");
- assert.ok(toolbar.includes("menuDock?.addEventListener('pointerleave',scheduleMenuClose)"));
+ assert.ok(toolbar.includes("box.addEventListener('pointerleave',scheduleMenuClose)"));
  assert.ok(toolbar.includes("positionMenu"));
  assert.ok(menus.includes('trigger.closest(".vp-toolbar-menus")'));
  assert.ok(menus.includes('trigger.closest(".vp-toolbar-dropdown")'));
  assert.ok(css.includes(".vp-toolbar-dropdown"));
- assert.ok(css.includes("position:fixed!important;z-index:100100"));
+ assert.ok(css.includes(".vp-toolbar-dropdown.vp-menu-open{position:fixed!important;z-index:100100!important"));
  assert.ok(css.includes(".vp-toolbar-popover{z-index:100200"));
- assert.ok(html.includes("toolbar-layout.js?v=20261028b"));
- assert.ok(html.includes("toolbar-layout.css?v=20261028c"));
- assert.ok(html.includes("platform/toolbar-menus.js?v=20261028a"));
- assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261028c"));
+ assert.ok(html.includes("toolbar-layout.js?v=20261029-dropdown1"));
+ assert.ok(html.includes("toolbar-layout.css?v=20261029-dropdown1"));
+ assert.ok(html.includes("platform/toolbar-menus.js?v=20261029-dropdown1"));
+ assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261029-dropdown1"));
 });
 test("Serial view receives output from the virtual MCU interpreter",()=>{
  const views=read("src/ui/workspace-views.js"),mcu=read("platform/mcu-lab-ui.js");
