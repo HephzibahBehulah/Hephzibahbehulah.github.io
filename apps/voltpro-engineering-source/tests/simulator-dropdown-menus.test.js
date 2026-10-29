@@ -28,14 +28,20 @@ test("platform UI no longer appends a duplicate toolbar and exposes tool actions
 });
 
 test("dropdown runtime parses and supplies accessible, keyboard-operable menus",()=>{
- const js=read("platform/toolbar-menus.js");
+ const js=read("platform/toolbar-menus.js"),layout=read("src/ui/toolbar-layout.js"),toolbarCss=read("src/ui/toolbar-layout.css");
  assert.doesNotThrow(()=>new Function(js));
+ assert.doesNotThrow(()=>new Function(layout));
  assert.ok(js.includes('setAttribute("role","menu")'));
  assert.ok(js.includes('role="menuitem"'));
  assert.ok(js.includes('aria-expanded'));
  assert.ok(js.includes('event.key==="ArrowDown"'));
  assert.ok(js.includes('event.key==="Escape"'));
  assert.ok(js.includes("getBoundingClientRect()"));
+ assert.ok(js.includes('VoltProMenuDock?.open?.(popover'));
+ assert.ok(layout.includes('window.VoltProMenuDock={get element(){'));
+ assert.ok(layout.includes('openDock(box,details.dataset.menu'));
+ assert.ok(layout.includes('closeDock()'));
+ assert.ok(toolbarCss.includes('.workspace.vp-managed-panels.vp-menu-dock-open'));
  assert.ok(js.includes("VoltProDemoLibrary.load(d)"));
  assert.ok(js.includes("VoltProProjectWorkspace,\"open\""));
 });
@@ -68,8 +74,10 @@ test("cache and deployment version invalidates stale simulator shell and precach
  assert.ok(worker.includes('"./platform/workbench.js"'));
  assert.ok(html.includes('service-worker.js?v=20261027e'));
  assert.ok(html.includes('updateViaCache:"none"'));
- assert.ok(html.includes('platform/toolbar-menus.js?v=20261028a'));
+ assert.ok(html.includes('platform/toolbar-menus.js?v=20261029-dock1'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
+ assert.ok(html.includes('src/ui/toolbar-layout.js?v=20261029-dock1'));
+ assert.ok(html.includes('src/ui/toolbar-layout.css?v=20261029-dock1'));
  assert.ok(html.includes('simulator.js?v=20261027e'));
  assert.ok(css.includes(".vp-toolbar-popover"));
 });
