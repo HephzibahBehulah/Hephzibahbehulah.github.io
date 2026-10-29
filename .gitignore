@@ -88,3 +88,9 @@ wrangler.platform.jsonc
 platform-source/
 /assets/images/original/
 /assets/images/cache/
+# Local Wrangler and temporary release state
+.wrangler/
+**/.wrangler/
+.cache/
+**/.cache/
+.dist-platform-*/
