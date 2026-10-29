@@ -36,6 +36,10 @@ test("dropdown runtime parses and supplies accessible, keyboard-operable menus",
  assert.ok(js.includes('event.key==="ArrowDown"'));
  assert.ok(js.includes('event.key==="Escape"'));
  assert.ok(js.includes("getBoundingClientRect()"));
+ assert.ok(js.includes('window.VoltProMenuDock={get element()'));
+ assert.ok(js.includes('openDock(box,details.dataset.menu'));
+ assert.ok(js.includes('closeDock()'));
+ assert.ok(css.includes('.workspace.vp-managed-panels.vp-menu-dock-open'));
  assert.ok(js.includes("VoltProDemoLibrary.load(d)"));
  assert.ok(js.includes("VoltProProjectWorkspace,\"open\""));
 });
