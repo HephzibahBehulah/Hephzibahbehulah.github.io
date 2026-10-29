@@ -52,8 +52,9 @@
     if(activeMenu&&!activeMenu.details.matches(':hover')&&!activeMenu.box.matches(':hover')&&!nested?.matches(':hover'))closeMenu();
    },180);
   };
-    const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');  const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');
+    const hoverMenus=window.matchMedia?.('(hover: hover) and (pointer: fine)');
   window.addEventListener('resize',()=>{if(activeMenu)positionMenu(activeMenu.details)},{passive:true});
+  window.addEventListener('scroll',()=>{if(activeMenu)positionMenu(activeMenu.details)},true);
   mobileToggle.addEventListener('click',()=>{
    const opened=menus.classList.toggle('vp-mobile-menus-open');
    mobileToggle.setAttribute('aria-expanded',String(opened));
