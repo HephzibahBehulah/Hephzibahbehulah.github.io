@@ -868,46 +868,36 @@ Sensitive operations should remain behind authenticated service boundaries.
 
 # 18. Repository Structure
 
-The repository contains the public application, private-control application, Cyber OS, shared systems, backend/runtime components and deployment documentation.
+The repository uses a monorepo layout. The source tree is distinct from the generated `dist-platform/` release uploaded to Cloudflare.
 
-Important areas include:
+Important source areas include:
 
 ```text
 /
-├── index.html
-├── admin.html
-├── admin-tools.html
-├── ai-agent.html
-├── cyber-os/
-│   ├── index.html
-│   ├── cyber-os.js
-│   └── cyber-os.css
-├── css/
-│   ├── adigun-admin.css
-│   ├── ai-lab.css
-│   ├── accessibility.css
-│   ├── mobile-system.css
-│   └── other shared styles
-├── js/
-│   ├── adigun-admin.js
-│   ├── adigun-agent.js
-│   ├── adigun-command-engine.js
-│   ├── adigun-private-operator.js
-│   ├── adigun-renderer.js
-│   ├── adigun-terminal-controller-v2.js
-│   ├── ai-lab.js
-│   ├── language-system.js
-│   └── other application modules
-├── data/
+├── apps/
+│   ├── public/                         # Public website pages
+│   ├── admin/                          # Private admin pages
+│   ├── cyber-os/                       # Cyber OS entry page
+│   ├── terminal/                       # ADIGUN terminal modules
+│   ├── engineering/
+│   │   └── voltpro-electcad/           # ElectCAD application
+│   └── voltpro-engineering-source/      # Simulator, PLC and engineering tools
 ├── backend/
-├── deployment/
-├── assets/
-├── ARCHITECTURE.md
+│   └── workers/                        # Cloudflare Worker entry points
+├── packages/
+│   ├── shared-data/                    # Shared catalogues and translations
+│   ├── shared-i18n/                    # Shared language runtime
+│   └── shared-ui/                      # Shared assets and styles
+├── cyber-os/data/                      # Cyber OS source catalogues
+├── platform/                           # Routing, build, release and validation
+├── deployment/                         # Deployment and portability guidance
+├── .github/workflows/                  # CI, validation and deployment workflows
+├── wrangler.jsonc                      # Integrated Worker and asset configuration
 ├── DEPLOYMENT_SAFETY.md
 └── README.md
 ```
 
-Additional compatibility and legacy assets may remain where they are required by the existing application.
+The build assembles these sources into the deployed asset tree while keeping public URLs stable. Compatibility files and data that are still consumed from the repository root remain there intentionally; do not move or delete them without checking build inputs and references.
 
 ---
 
