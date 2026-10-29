@@ -60,10 +60,10 @@ test("top menus and nested project menus float over the canvas without a side do
  assert.ok(css.includes(".vp-toolbar-dropdown"));
  assert.ok(css.includes(".vp-toolbar-dropdown.vp-menu-open{position:fixed!important;z-index:100100!important"));
  assert.ok(css.includes(".vp-toolbar-popover{z-index:100200"));
- assert.ok(html.includes("toolbar-layout.js?v=20261029-dropdown1"));
- assert.ok(html.includes("toolbar-layout.css?v=20261029-dropdown1"));
- assert.ok(html.includes("platform/toolbar-menus.js?v=20261029-dropdown1"));
- assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261029-dropdown1"));
+ assert.ok(html.includes("toolbar-layout.js?v=20261029-dropdown2"));
+ assert.ok(html.includes("toolbar-layout.css?v=20261029-dropdown2"));
+ assert.ok(html.includes("platform/toolbar-menus.js?v=20261029-dropdown2"));
+ assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261029-dropdown2"));
 });
 test("Serial view receives output from the virtual MCU interpreter",()=>{
  const views=read("src/ui/workspace-views.js"),mcu=read("platform/mcu-lab-ui.js");
