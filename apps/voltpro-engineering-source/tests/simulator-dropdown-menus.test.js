@@ -70,16 +70,16 @@ test("MCU Lab accepts named example sketches and retains explicit interpreter li
 
 test("cache and deployment version invalidates stale simulator shell and precaches menu runtime",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js"),css=read("simulator-layout-restore.css");
- assert.ok(worker.includes('const CACHE="voltpro-v100"'));
+ assert.ok(worker.includes('const CACHE="voltpro-v101"'));
  assert.ok(worker.includes('"./platform/toolbar-menus.js"'));
  assert.ok(worker.includes('"./platform/ui.js"'));
  assert.ok(worker.includes('"./platform/workbench.js"'));
- assert.ok(html.includes('service-worker.js?v=20261029-dropdown1'));
+ assert.ok(html.includes('service-worker.js?v=20261029-dropdown2'));
  assert.ok(html.includes('updateViaCache:"none"'));
- assert.ok(html.includes('platform/toolbar-menus.js?v=20261029-dropdown1'));
+ assert.ok(html.includes('platform/toolbar-menus.js?v=20261029-dropdown2'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
- assert.ok(html.includes('src/ui/toolbar-layout.js?v=20261029-dropdown1'));
- assert.ok(html.includes('src/ui/toolbar-layout.css?v=20261029-dropdown1'));
+ assert.ok(html.includes('src/ui/toolbar-layout.js?v=20261029-dropdown2'));
+ assert.ok(html.includes('src/ui/toolbar-layout.css?v=20261029-dropdown2'));
  assert.ok(html.includes('simulator.js?v=20261027e'));
  assert.ok(css.includes(".vp-toolbar-popover"));
 });
