@@ -38,10 +38,11 @@ test("dropdown runtime parses and supplies accessible, keyboard-operable menus",
  assert.ok(js.includes('event.key==="Escape"'));
  assert.ok(js.includes("getBoundingClientRect()"));
  assert.ok(js.includes('VoltProMenuDock?.open?.(popover'));
- assert.ok(layout.includes('window.VoltProMenuDock={get element(){'));
- assert.ok(layout.includes('openDock(box,details.dataset.menu'));
- assert.ok(layout.includes('closeDock()'));
- assert.ok(toolbarCss.includes('.workspace.vp-managed-panels.vp-menu-dock-open'));
+ assert.ok(layout.includes("box.classList.add('vp-menu-open')"));
+ assert.ok(layout.includes("document.body.append(box)"));
+ assert.ok(layout.includes("current.box.matches(':hover')"));
+ assert.ok(!layout.includes("vp-menu-dock"),"menu dropdowns must not create a side dock");
+ assert.ok(toolbarCss.includes(".vp-toolbar-dropdown.vp-menu-open"));
  assert.ok(js.includes("VoltProDemoLibrary.load(d)"));
  assert.ok(js.includes("VoltProProjectWorkspace,\"open\""));
 });
@@ -68,16 +69,16 @@ test("MCU Lab accepts named example sketches and retains explicit interpreter li
 
 test("cache and deployment version invalidates stale simulator shell and precaches menu runtime",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js"),css=read("simulator-layout-restore.css");
- assert.ok(worker.includes('const CACHE="voltpro-v99"'));
+ assert.ok(worker.includes('const CACHE="voltpro-v100"'));
  assert.ok(worker.includes('"./platform/toolbar-menus.js"'));
  assert.ok(worker.includes('"./platform/ui.js"'));
  assert.ok(worker.includes('"./platform/workbench.js"'));
- assert.ok(html.includes('service-worker.js?v=20261027e'));
+ assert.ok(html.includes('service-worker.js?v=20261029-dropdown1'));
  assert.ok(html.includes('updateViaCache:"none"'));
- assert.ok(html.includes('platform/toolbar-menus.js?v=20261029-dock1'));
+ assert.ok(html.includes('platform/toolbar-menus.js?v=20261029-dropdown1'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
- assert.ok(html.includes('src/ui/toolbar-layout.js?v=20261029-dock1'));
- assert.ok(html.includes('src/ui/toolbar-layout.css?v=20261029-dock1'));
+ assert.ok(html.includes('src/ui/toolbar-layout.js?v=20261029-dropdown1'));
+ assert.ok(html.includes('src/ui/toolbar-layout.css?v=20261029-dropdown1'));
  assert.ok(html.includes('simulator.js?v=20261027e'));
  assert.ok(css.includes(".vp-toolbar-popover"));
 });
