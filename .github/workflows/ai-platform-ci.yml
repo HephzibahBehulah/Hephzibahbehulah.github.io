@@ -17,15 +17,15 @@ jobs:
           node --check js/global-search.js
           node --check js/mega-tools.js
           node --check js/progressive-disclosure.js
-          node --check js/ai-lab.js
-          node --check js/adigun-agent.js
+          node --check packages/shared-ui/js/ai-lab.js
+          node --check apps/terminal/adigun-agent.js
           node --check backend/workers/worker-v2.js
           node --check backend/workers/worker-openai.js
           grep -q 'api/transcribe' backend/workers/worker-openai.js
           grep -q 'audio/transcriptions' backend/workers/worker-openai.js
-          node --check js/adigun-admin.js
-          node --check js/adigun-private-operator.js
-          node --check js/adigun-renderer.js
+          node --check apps/terminal/adigun-admin.js
+          node --check apps/terminal/adigun-private-operator.js
+          node --check apps/terminal/adigun-renderer.js
 
       - name: Validate ADIGUN Cyber OS
         run: |
@@ -93,17 +93,17 @@ jobs:
       - name: Validate ADIGUN production surfaces
         run: |
           test -f backend/workers/worker-openai.js
-          test -f js/adigun-agent.js
-          test -f js/ai-lab.js
-          test -f js/adigun-admin.js
-          test -f js/adigun-renderer.js
+          test -f apps/terminal/adigun-agent.js
+          test -f packages/shared-ui/js/ai-lab.js
+          test -f apps/terminal/adigun-admin.js
+          test -f apps/terminal/adigun-renderer.js
           test -f apps/public/ai-agent.html
-          test -f css/mobile-system.css
-          test -f js/language-system.js
-          test -f data/translations/en.json
-          test -f data/translations/de.json
-          test -f data/translations/yo.json
-          test -f data/translations/pid.json
+          test -f packages/shared-ui/css/mobile-system.css
+          test -f packages/shared-i18n/language-system.js
+          test -f packages/shared-data/data/translations/en.json
+          test -f packages/shared-data/data/translations/de.json
+          test -f packages/shared-data/data/translations/yo.json
+          test -f packages/shared-data/data/translations/pid.json
           grep -q 'id="adminMessages"' apps/admin/admin.html
           grep -q 'hb-bot-chat.css' apps/admin/admin.html
           grep -q 'hb-bot-chat.js' apps/admin/admin.html
@@ -111,5 +111,5 @@ jobs:
           grep -q 'cybersecurity-tools-academy.js' apps/cyber-os/index.html
           grep -q 'language-system.js' apps/public/index.html
           grep -q 'mobile-system.css' apps/public/index.html
-          ! grep -q 'I do not have a local answer for that yet' js/ai-lab.js
-          ! grep -q 'ADIGUN_AGENT_KEY' js/adigun-agent.js backend/workers/worker-openai.js
+          ! grep -q 'I do not have a local answer for that yet' packages/shared-ui/js/ai-lab.js
+          ! grep -q 'ADIGUN_AGENT_KEY' apps/terminal/adigun-agent.js backend/workers/worker-openai.js

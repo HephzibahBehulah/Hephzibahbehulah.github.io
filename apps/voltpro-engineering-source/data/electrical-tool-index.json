@@ -1,6 +1,6 @@
 {
-  "source": "HephzibahBehulah/Hephzibahbehulah.github.io:data/source-library.json",
-  "generatedFrom": "template source-library; only electrical/electronics, installation, automation/PLC and directly relevant engineering entries retained",
+  "source": "HephzibahBehulah/Hephzibahbehulah.github.io:packages/shared-data/data/source-library.json",
+  "generatedFrom": "template packages/shared-data/data/source-library.json; only electrical/electronics, installation, automation/PLC and directly relevant engineering entries retained",
   "count": 401,
   "tools": [
     {

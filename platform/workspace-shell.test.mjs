@@ -61,8 +61,8 @@ test("bottom workspace links are intercepted and routed to their declared destin
 });
 
 test("ElectCAD uses a professional three-column scrollable CAD workspace", () => {
-  const app = read("apps/voltpro-electcad/App.tsx");
-  const appCss = read("apps/voltpro-electcad/styles.css");
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
+  const appCss = read("apps/engineering/voltpro-electcad/styles.css");
   const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
   assert.match(shell, /classList\.toggle\("vp-electcad-maximized", tool\.path === "\/electcad"\)/);
   assert.match(nav, /if\(isElectCADRoute\)\{document\.documentElement\.classList\.add\('vp-electcad-maximized'\).*?return;\}const header=/);
@@ -186,7 +186,7 @@ test("PLC command menus are wired to project, editing, draw, validation, simulat
 });
 
 test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying symbol provenance audit", () => {
-  const app = read("apps/voltpro-electcad/App.tsx");
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
   assert.ok(app.includes("['Run connectivity diagnostics',runDiagnostics]"));
   assert.ok(app.includes("['Wire numbering',autoNumberWires]"));
   assert.ok(app.includes("['Audit symbol source IDs',reviewStandardsProvenance]"));
@@ -194,7 +194,7 @@ test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying 
 });
 
 test("ElectCAD places parts in the inspector and wires to terminals or free canvas points", () => {
-  const app = read("apps/voltpro-electcad/App.tsx");
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
   assert.match(app, /setParts\(prev=>\[\.\.\.prev,part\]\);selectForInspector\(part\.id\)/);
   assert.ok(app.includes("onTerminalClick(index)"));
   assert.ok(app.includes("onTerminalClick={index=>tool==='wire'?handleTerminalClick(p,index):selectForInspector(p.id)}"));
@@ -208,8 +208,8 @@ test("ElectCAD places parts in the inspector and wires to terminals or free canv
 });
 
 test("ElectCAD rail buttons open distinct panels and close the flyout when the pointer leaves", () => {
-  const app = read("apps/voltpro-electcad/App.tsx");
-  const css = read("apps/voltpro-electcad/styles.css");
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
+  const css = read("apps/engineering/voltpro-electcad/styles.css");
   for (const panel of ["pages", "components", "search"]) assert.ok(app.includes(`setLeftPanel('${panel}')`));
   assert.match(app, /icon-rail[^\n]*onMouseLeave=\{\(\)=>\{panelCloseTimer\.current=window\.setTimeout\(\(\)=>setLeftOpen\(false\),180\)\}\}/);
   assert.match(css, /left-sidebar\.panel-pages .*library-head/);
@@ -218,7 +218,7 @@ test("ElectCAD rail buttons open distinct panels and close the flyout when the p
 
 test("ElectCAD account controls stay inside the CAD header instead of floating over the inspector", () => {
   assert.match(read("platform/member.js"), /voltpro-electcad/);
-  assert.match(read("apps/voltpro-electcad/App.tsx"), /className="account-popover"/);
+  assert.match(read("apps/engineering/voltpro-electcad/App.tsx"), /className="account-popover"/);
 });
 
 test("legacy ElectCAD URL casing cannot inject the portfolio header or member controls", () => {
@@ -230,7 +230,7 @@ test("legacy ElectCAD URL casing cannot inject the portfolio header or member co
 });
 
 test("ElectCAD File to Help dropdowns escape horizontal menu clipping and stack above the canvas", () => {
-  const css = read("apps/voltpro-electcad/styles.css");
+  const css = read("apps/engineering/voltpro-electcad/styles.css");
   assert.match(css, /menubar\{position:relative;z-index:10002;overflow:visible!important\}/);
   assert.match(css, /menu-pop\{position:absolute;z-index:10004/);
   assert.match(css, /canvas-area\{position:relative;z-index:0\}/);
@@ -259,7 +259,7 @@ test("all five editor entry points load the shared charcoal and orange finish", 
   assert.match(shared, /--vp-workspace-accent:#ff8a24/);
   for (const file of ["apps/voltpro-engineering-source/simulator.html", "apps/voltpro-engineering-source/breadboard.html", "apps/voltpro-engineering-source/electrical-canvas.html"]) assert.ok(read(file).includes("workspace-engineering-theme.css"));
   assert.ok(read("apps/voltpro-engineering-source/apps/voltpro-plc/src/main.tsx").includes("workspace-engineering-theme.css"));
-  assert.ok(read("apps/voltpro-electcad/main.tsx").includes("workspace-engineering-theme.css"));
+  assert.ok(read("apps/engineering/voltpro-electcad/main.tsx").includes("workspace-engineering-theme.css"));
 });
 
 test("Adigun switches into architectural wiring context on the electrical route", () => {
@@ -310,8 +310,8 @@ test("shared Adigun voice input fills the new chat without sending automatically
 });
 
 test("embedded ElectCAD keeps zoom and all five requested top controls reachable", () => {
-  const app = read("apps/voltpro-electcad/App.tsx");
-  const css = read("apps/voltpro-electcad/styles.css");
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
+  const css = read("apps/engineering/voltpro-electcad/styles.css");
   for (const phrase of ["Zoom out", "Zoom in", "My workspace and examples", "Interface language", "About and readiness", "VoltPro account"]) assert.ok(app.includes(phrase));
   assert.match(app, /\{zoom\}%/);
   assert.match(css, /\.menubar \.menu-wrap:nth-child\(n\+6\)\{display:flex!important\}/);

@@ -21,7 +21,7 @@ if(fs.existsSync(destination))throw Error('Use a fresh output directory; refusin
 const extensions=new Set(['.html','.css','.js','.mjs','.json','.csv','.svg','.png','.jpg','.jpeg','.webp','.ico','.woff','.woff2','.ttf','.webmanifest','.wasm','.zip','.py','.txt']);
 function copy(from,to,{main=false,cyber=false}={}){
  for(const entry of fs.readdirSync(from,{withFileTypes:true})){
-  if(entry.name.startsWith('.')||['node_modules','dist-platform','platform-source','platform','tests','scripts','server','apps','docs','backend','deployment','production-inventory','ml-service','pentest-script'].includes(entry.name)&&main)continue;
+  if(entry.name.startsWith('.')||['node_modules','dist-platform','platform-source','platform','tests','scripts','server','apps','packages','docs','backend','deployment','production-inventory','ml-service','pentest-script'].includes(entry.name)&&main)continue;
   if(!main&&['node_modules','.git','.github','server','apps','tests','scripts','docs'].includes(entry.name))continue;
   if(main&&['js','css'].includes(entry.name))continue;
   if(main&&entry.name==='favicon.ico')continue;
@@ -36,6 +36,7 @@ copy(root,destination,{main:true});
 copy(path.join(root,'apps/public'),destination);
 copy(path.join(root,'apps/admin'),destination);
 copy(path.join(root,'apps/cyber-os'),path.join(destination,'cyber-os'));
+copy(path.join(root,'packages/shared-data/data'),path.join(destination,'data'));
 copySharedAssets(root,destination);
 copy(engineering,path.join(destination,'_apps/engineering'));
 fs.copyFileSync(path.join(root,'gaps.json'),path.join(destination,'_apps/engineering/gaps.json'));
@@ -54,15 +55,15 @@ const preferenceSource=fs.readFileSync(preferences,'utf8');
 if(!preferenceSource.includes("new URL('/api/engineering/chat'"))fs.writeFileSync(preferences,preferenceSource.replace("'https://voltpro-engineering-ai.hephzibah-behulah.workers.dev/chat'","new URL('/api/engineering/chat',root.location?.origin||'https://engineering.hephzibahbehulah.com').href").replace("const u=new URL(String(input.aiEndpoint));","const u=new URL(String(input.aiEndpoint));if(u.href==='https://voltpro-engineering-ai.hephzibah-behulah.workers.dev/chat')u.href=defaults.aiEndpoint;"));
 const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 for(const file of ['platform.css','platform.js','release-update.js','admin-security-ui.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
-fs.copyFileSync(path.join(root,'assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
-fs.copyFileSync(path.join(root,'css/sitewide-osint-theme.css'),path.join(shared,'sitewide-osint-theme.css'));
+fs.copyFileSync(path.join(root,'packages/shared-ui/assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
+fs.copyFileSync(path.join(root,'packages/shared-ui/css/sitewide-osint-theme.css'),path.join(shared,'sitewide-osint-theme.css'));
 for(const file of ['account-config.js','account-client.js','cloud-projects.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
-fs.copyFileSync(path.join(root,'js/language-system.js'),path.join(shared,'language-system.js'));
-fs.cpSync(path.join(root,'data/translations'),path.join(shared,'data/translations'),{recursive:true});
+fs.copyFileSync(path.join(root,'packages/shared-i18n/language-system.js'),path.join(shared,'language-system.js'));
+fs.cpSync(path.join(root,'packages/shared-data/data/translations'),path.join(shared,'data/translations'),{recursive:true});
 const manifest={version:1,applications:lock,assets:{}};
 const releases=publishArchives(destination,lock);
 fs.writeFileSync(path.join(root,'platform/public-apps-lock.json'),JSON.stringify(releases,null,2)+'\n');
-const electCadDist=path.join(root,'apps/voltpro-electcad/dist');
+const electCadDist=path.join(root,'apps/engineering/voltpro-electcad/dist');
 if(!fs.existsSync(path.join(electCadDist,'index.html')))throw Error('VoltPro ElectCAD production build is missing.');
 copy(electCadDist,path.join(destination,'_apps/engineering/voltpro-electcad'));
 const electCadIndex=path.join(destination,'_apps/engineering/voltpro-electcad/index.html');

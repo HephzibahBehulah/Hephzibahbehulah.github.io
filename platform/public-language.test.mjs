@@ -18,7 +18,7 @@ test('release keeps Simulator, Breadboard and PLC UI available to translation',(
 
 test('all supported language dictionaries cover common and engineering UI terms',()=>{
   const locales=['de','yo','pid'];
-  const dictionaries=locales.map(locale=>JSON.parse(read(`data/translations/${locale}.json`)));
+  const dictionaries=locales.map(locale=>JSON.parse(read(`packages/shared-data/data/translations/${locale}.json`)));
   for(const dictionary of dictionaries){
     assert.ok(Object.keys(dictionary).length>=220);
     for(const key of ['language selector','save changes','search components','run simulation','ladder logic','verification code']){
@@ -28,7 +28,7 @@ test('all supported language dictionaries cover common and engineering UI terms'
 });
 
 test('live translation tracks dynamic UI changes and accessibility attributes',()=>{
-  const source=read('js/language-system.js');
+  const source=read('packages/shared-i18n/language-system.js');
   assert.match(source,/characterData:true/);
   assert.match(source,/attributeFilter:\['placeholder','aria-label','title'\]/);
   assert.match(source,/el\.closest\('\[translate="no"\]'\)/);

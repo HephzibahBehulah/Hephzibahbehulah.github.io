@@ -8,8 +8,8 @@ on:
       - "backend/workers/worker-platform.mjs"
       - "apps/public/ai-agent.html"
       - "apps/public/ai.html"
-      - "js/ai-lab.js"
-      - "js/adigun-agent.js"
+      - "packages/shared-ui/js/ai-lab.js"
+      - "apps/terminal/adigun-agent.js"
       - "wrangler.jsonc"
       - ".github/workflows/public-ai-validation.yml"
   workflow_dispatch:
@@ -31,8 +31,8 @@ jobs:
           node --check backend/workers/worker-platform.mjs
           test -s apps/public/ai-agent.html
           test -s apps/public/ai.html
-          test -s js/ai-lab.js
-          test -s js/adigun-agent.js
+          test -s packages/shared-ui/js/ai-lab.js
+          test -s apps/terminal/adigun-agent.js
           grep -q 'id="aiAdd"' apps/public/ai-agent.html
           grep -q 'id="aiFile"' apps/public/ai-agent.html
           grep -q 'id="aiPhoto"' apps/public/ai-agent.html
