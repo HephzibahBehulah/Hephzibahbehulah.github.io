@@ -94,3 +94,5 @@ platform-source/
 .cache/
 **/.cache/
 .dist-platform-*/
+
+!apps/engineering/voltpro-electcad/package-lock.json
