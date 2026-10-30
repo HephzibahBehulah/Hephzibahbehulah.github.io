@@ -11,7 +11,7 @@ Status definitions: Complete requires its named acceptance test to exist and pas
 | PLC-HIST | PLC | History | Complete | — | Store up to 300 local PLC logic/device/wire change summaries, coalesce rapid edits, and export the audit history as JSON without copying project contents | accept.plc.history.audit-trail |
 | PLC-SW | PLC | Smart Wire | Complete | — | Ladder commissioning checks detect series-connected coils, open coil terminals, and missing control-supply/neutral returns; no standards compliance is implied | accept.plc.wiring.coil-and-rung-rules |
 | SIM-DRC | Simulator | DRC | Partial | Logic not implemented; Standards text needed; Test not written | You supply verified component-limit sources; Codex implements complete checks | accept.sim.drc.topology-and-ratings |
-| SIM-WN | Simulator | Wire Numbering | Partial | Logic not implemented; Test not written | Codex completes stable net labels and net-based coloring | accept.sim.nets.labels-colors-roundtrip |
+| SIM-WN | Simulator | Wire Numbering | Complete | — | Stable endpoint-anchored net labels and consistent net colors survive project export/import | accept.sim.nets.labels-colors-roundtrip |
 | SIM-BOM | Simulator | BOM | Partial | Logic not implemented; Test not written | Codex reports per-instance tolerances and model parameters | accept.sim.bom.model-parameters |
 | SIM-MS | Simulator | Multi-Sheet | Not Started | Logic not implemented; Test not written | Codex implements hierarchical blocks and typed ports | accept.sim.hierarchy.typed-ports |
 | SIM-HIST | Simulator | History | Partial | Logic not implemented; Test not written | Codex adds persistent parameter-change history | accept.sim.history.parameter-audit |
@@ -35,3 +35,7 @@ Status definitions: Complete requires its named acceptance test to exist and pas
 | BUILD-HIST | Building | History | Partial | Logic not implemented; Test not written | Codex adds visible persistent drawing audit history | accept.building.history.drawing-audit |
 | BUILD-SW | Building | Smart Wire | Partial | Logic not implemented; Test not written | Codex constrains routes to walls and checks room requirements | accept.building.wiring.wall-routes.room-requirements |
 
+
+## Branding
+
+The shared HEPHZIBAH BEHULAH theme now spans the public, Cyber OS, engineering, and embedded workspace shells. VoltPro and ADIGUN Cyber OS keep distinct product wordmarks under the parent company identity. No logo placeholders were added. Live verification is pending because the public hostnames did not resolve from this environment.
