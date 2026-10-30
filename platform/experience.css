@@ -32,6 +32,14 @@ body.hb-unified{background-color:var(--bg)!important;color:var(--hb-text)!import
 .hb-unified .hb-bot-launcher{right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:9990}.hb-unified .hb-bot-window{right:14px;bottom:88px;max-height:calc(100dvh - 110px);z-index:9991;background:var(--hb-surface)!important;color:var(--hb-text)}
 .hb-unified .hb-bot-window :is(textarea,.hb-bot-msg){background:var(--hb-surface-alt);color:var(--hb-text)}.hb-unified .hb-bot-window .hb-bot-status b{color:var(--green,#63d297)}
 .hb-unified .hb-account-page footer,.hb-unified .hb-account-page p{color:var(--hb-muted)}
+/* Product-specific text lockup: the parent company remains the shared identity. */
+.os-brand.hb-product-lockup{display:flex;align-items:center;gap:11px;min-height:68px;padding:12px 14px;color:var(--hb-text);text-decoration:none;border-bottom:1px solid var(--hb-border)}
+.hb-company-wordmark{color:var(--hb-text);font:800 9px/1.5 Inter,system-ui,sans-serif;letter-spacing:.12em;white-space:nowrap}
+.hb-brand-divider{width:1px;height:32px;flex:0 0 1px;background:var(--hb-border)}
+.hb-product-wordmark{color:var(--accent,#48d8d0);font:800 14px/1.25 Inter,system-ui,sans-serif;letter-spacing:.025em}
+.hb-product-wordmark small{display:block;margin-top:3px;color:var(--hb-muted);font:700 9px/1.2 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.os-brand.hb-product-lockup:focus-visible{outline:2px solid var(--accent,#48d8d0);outline-offset:2px}
+html[data-hb-theme=light] .hb-product-wordmark{color:#087e83}
 html[data-hb-theme=light] .hb-unified :is(.hb-platform-bar,.hb-platform-footer,.hb-account-card,.hb-platform-dialog,.hb-footer-brand,.hb-member-actions>a,.hb-member-actions>button,.os-top,.os-panel-head,.os-panel-body,.admin-terminal,.admin-chat,.admin-chat-messages,.hb-bot-head,.hb-bot-composer,.hb-bot-suggestions,.hb-bot-footer){background:var(--hb-surface)!important;color:var(--hb-text)!important}
 html[data-hb-theme=light] .hb-unified :is(input,textarea,select,button,.os-btn,.card,.stat,.term,.hb-platform-links a,.tool-command,.calc-output){background-color:var(--hb-surface-alt)!important;color:var(--hb-text)!important;border-color:var(--hb-border)!important}
 html[data-hb-theme=light] .hb-unified :is(.hb-platform-brand,.hb-account-card a,.hb-platform-footer a,.hb-platform-brand small,.hb-platform-footer small,.hb-footer-brand span,.adigun-overview-title-row p,.os-brand span){color:var(--hb-text)!important}
