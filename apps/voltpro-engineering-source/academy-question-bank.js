@@ -1,4 +1,4 @@
-/* VoltPRo virtual question bank.
+/* VoltPro virtual question bank.
  * Adds one million parameterized variants to each existing question section.
  * Questions are generated deterministically on demand; never materialize the full bank.
  * This preserves the existing sidebar and keeps rendering limited to one page.
@@ -83,3 +83,4 @@ window.vpxMillionAnswer=function(k,id,n){
 window.quiz=renderQuiz;
 window.expandedExam=renderExam;
 })();
+

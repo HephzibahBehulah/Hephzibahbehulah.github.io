@@ -1,4 +1,4 @@
-# VoltPRo terminal wiring workflow
+# VoltPro terminal wiring workflow
 
 ## Interaction
 
@@ -23,3 +23,4 @@ The wiring controller rejects identical endpoints, terminals on the same compone
 ## Tests
 
 Run `npm test` with Node.js 22 or newer. `tests/wiring-workflow.test.js` covers orthogonal routes, routing bends, endpoint persistence, duplicate rejection, pointer preview/commit, invalid feedback, Escape/Delete keyboard handling, and explicit-junction versus crossing connectivity.
+

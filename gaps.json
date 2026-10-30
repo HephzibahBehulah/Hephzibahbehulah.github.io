@@ -20,24 +20,22 @@
       "gapId": "PLC-WN",
       "tool": "PLC",
       "capability": "Wire Numbering",
-      "currentStatus": "Not Started",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex implements automatic I/O addresses and cross-references",
+      "ownerActionRequired": "Automatically assign logical IEC-style I/O addresses and cross-reference matching device tags by drawing sheet",
       "acceptanceTestName": "accept.plc.io-addresses.cross-reference"
     },
     {
       "gapId": "PLC-BOM",
       "tool": "PLC",
       "capability": "BOM",
-      "currentStatus": "Not Started",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex implements controller and module configuration BOM",
+      "ownerActionRequired": "Generic training CPU and 8-channel input/output module BOM is generated from the I/O map; no vendor order codes are asserted",
       "acceptanceTestName": "accept.plc.hardware-bom.complete"
     },
     {
@@ -56,24 +54,22 @@
       "gapId": "PLC-HIST",
       "tool": "PLC",
       "capability": "History",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds persistent logic-edit audit history",
+      "ownerActionRequired": "Store up to 300 local PLC logic/device/wire change summaries, coalesce rapid edits, and export the audit history as JSON without copying project contents",
       "acceptanceTestName": "accept.plc.history.audit-trail"
     },
     {
       "gapId": "PLC-SW",
       "tool": "PLC",
       "capability": "Smart Wire",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds series-coil and rung-termination checks",
+      "ownerActionRequired": "Ladder commissioning checks detect series-connected coils, open coil terminals, and missing control-supply/neutral returns; no standards compliance is implied",
       "acceptanceTestName": "accept.plc.wiring.coil-and-rung-rules"
     },
     {

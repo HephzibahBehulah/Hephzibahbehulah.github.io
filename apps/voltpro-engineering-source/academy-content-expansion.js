@@ -1,4 +1,4 @@
-/* VoltPRo Academy content expansion — existing sections only.
+/* VoltPro Academy content expansion — existing sections only.
  * Educational content only. No new sidebar items or simulator controls.
  * IDs are stable so progress remains portable in local storage.
  */

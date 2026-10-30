@@ -1,6 +1,6 @@
-# VoltPRo Circuit Designer
+# VoltPro Circuit Designer
 
-The simulator's AI Circuit Designer is currently a deterministic, template-backed prompt planner. It creates editable VoltPRo component and wire objects; it does not generate a raster diagram or send prompts to a remote AI service.
+The simulator's AI Circuit Designer is currently a deterministic, template-backed prompt planner. It creates editable VoltPro component and wire objects; it does not generate a raster diagram or send prompts to a remote AI service.
 
 ## Supported first-release templates
 
@@ -36,3 +36,4 @@ node --test tests/terminal-engine.test.js tests/v5-runtime-terminal-mapping.test
 ```
 
 Run the full repository suite with `npm test`.
+

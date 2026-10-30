@@ -1,4 +1,4 @@
-/* VoltPRo Academy navigation + dashboard refinements.
+/* VoltPro Academy navigation + dashboard refinements.
    Presentation-only overrides: keep the learning and simulator logic untouched. */
 .academy-page .app-shell{grid-template-columns:248px minmax(0,1fr)}
 .academy-page .sidebar{padding:16px 12px;gap:0;overflow-y:auto;overscroll-behavior:contain}
@@ -130,3 +130,4 @@
 .vp-bot-sources a{display:inline-block;border:1px solid rgba(86,207,225,.22);border-radius:8px;padding:6px 8px;color:var(--vp-hb-cyan,#35d5ff);font-size:11px;text-decoration:none}
 .vp-bot-sources a:hover{border-color:var(--vp-hb-cyan,#35d5ff)}
 @media(max-width:760px){.academy-page .nav-group-items .nav-item{padding:9px}.academy-page .vp-ecosystem-links{margin-top:6px}}
+

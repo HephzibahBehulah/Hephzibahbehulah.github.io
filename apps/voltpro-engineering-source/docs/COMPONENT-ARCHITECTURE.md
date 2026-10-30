@@ -1,6 +1,6 @@
 # Component engineering architecture
 
-Released 2026-10-17. Original VoltPRo implementation informed by CircuitLab's documented model distinctions, Falstad's editable circuit elements, breadboard.build's physical parts workflow, and manufacturer pin tables. No reference application's source, artwork, or commercial component database was copied.
+Released 2026-10-17. Original VoltPro implementation informed by CircuitLab's documented model distinctions, Falstad's editable circuit elements, breadboard.build's physical parts workflow, and manufacturer pin tables. No reference application's source, artwork, or commercial component database was copied.
 
 ## One definition, several views
 
@@ -41,3 +41,4 @@ Custom definitions used by a schematic are embedded in its exported project and 
 Behavior tests cover potentiometer ratios, SPDT throw isolation, every input combination of four powered gate ICs, missing supply rejection, fourteen-pin breadboard simulation, transient output, pin order, relay paths, reference-model rejection, quarantine behavior and unsafe geometry. Existing circuit, project, MCU, topology and breadboard tests remain part of the release checks.
 
 This is not a ten-million-part database. Millions of genuine parts require licensed/sourced catalogue ingestion, versioned manufacturer/package identities, provenance review, server-side indexed search/paging, package-specific mappings and automated model qualification. The retained 768-record adapter still loads its small legacy catalogue eagerly. Do not scale that loader to millions or inflate the displayed count with parameter permutations. Next priorities are tested NE555 and amplifier models, manufacturer transistor packages, richer physical component artwork, package-aware custom pin positioning and additional sourced devices.
+

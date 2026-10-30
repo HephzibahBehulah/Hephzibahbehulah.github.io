@@ -4,7 +4,7 @@ function unwrap(input){
  const value=typeof input==="string"?JSON.parse(input):input;
  if(!value||typeof value!=="object"||Array.isArray(value))throw Error("Invalid .voltpro project");
  if(value.format==="voltpro-export"){
-  if(!value.project||typeof value.project!=="object"||Array.isArray(value.project))throw Error("Invalid VoltPRo export envelope: project payload is missing");
+  if(!value.project||typeof value.project!=="object"||Array.isArray(value.project))throw Error("Invalid VoltPro export envelope: project payload is missing");
   return value.project;
  }
  return value;
@@ -35,7 +35,7 @@ function toLegacy(input){
  const envelope=typeof input==="string"?JSON.parse(input):input;
  if(!envelope||typeof envelope!=="object")throw Error("Invalid .voltpro project");
  const raw=envelope.format==="voltpro-export"?envelope.project:envelope;
- if(!raw||raw.format!=="voltpro")throw Error("Unsupported VoltPRo project format");
+ if(!raw||raw.format!=="voltpro")throw Error("Unsupported VoltPro project format");
  const p=migrate(raw),devices=p.devices||[],byId=new Map(devices.map(d=>[String(d.id),d]));
  const components=devices.map(d=>({id:d.id,ref:d.ref||d.id,type:d.type||d.model||"unknown",registryId:d.registryId||null,x:Number(d.position?.x??0),y:Number(d.position?.y??0),rotation:Number(d.rotation||0),props:structuredClone(d.parameters||{}),pins:(d.terminals||[]).map((_,i)=>d.id+":"+i),pcb:structuredClone(d.pcb||{})}));
  function endpoint(value){
@@ -58,3 +58,4 @@ function toLegacy(input){
 }
 window.VoltProProject={CURRENT,normalize,encode,decode,migrate,toLegacy};
 })();
+

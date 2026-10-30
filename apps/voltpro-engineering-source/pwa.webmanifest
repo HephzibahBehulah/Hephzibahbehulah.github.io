@@ -1,14 +1,15 @@
 {
-  "name":"VoltPRo Academy by Hephzibah Behulah",
-  "short_name":"VoltPRo",
+  "name":"VoltPro Engineering Suite — HEPHZIBAH BEHULAH",
+  "short_name":"VoltPro",
   "start_url":"./",
   "scope":"./",
   "display":"standalone",
-  "background_color":"#050c15",
-  "theme_color":"#07111f",
-  "description":"VoltPRo Academy by Hephzibah Behulah: an open-source electrical engineering learning and simulation laboratory.",
+  "background_color":"#0a1118",
+  "theme_color":"#0a1118",
+  "description":"VoltPro engineering workspaces, a product of HEPHZIBAH BEHULAH.",
   "icons":[
     {"src":"icons/voltpro-192.svg","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},
     {"src":"icons/voltpro-512.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}
   ]
 }
+

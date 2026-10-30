@@ -1,4 +1,4 @@
-/* VoltPRo breadboard DC engine. Deterministic educational DC operating-point solver.
+/* VoltPro breadboard DC engine. Deterministic educational DC operating-point solver.
  * Supports resistors, red/green/yellow/blue/white LEDs (piecewise-linear), and DC batteries.
  * No AC, transient, capacitor, Arduino firmware, or semiconductor switching claims.
  */
@@ -10,7 +10,7 @@ function validHole(h){return h.r>=0&&h.r<15&&h.r!==7&&h.c>=0&&h.c<(h.r<2||h.r>12
 function group(h){if(!validHole(h))throw Error('Terminal references a hole outside the 830-point breadboard.');if(h.r<2||h.r>12&&h.r!==7)return 'rail:'+h.r+':'+Math.floor(h.c/25);return h.r<=6?'upper:'+h.c:'lower:'+h.c}
 function solveLinear(A,b){const n=b.length,M=A.map((row,i)=>row.slice().concat(b[i]));for(let k=0;k<n;k++){let p=k;for(let i=k+1;i<n;i++)if(Math.abs(M[i][k])>Math.abs(M[p][k]))p=i;if(Math.abs(M[p][k])<EPS)throw Error('Circuit is floating or singular. Connect a complete return path and remove conflicting ideal sources.');[M[k],M[p]]=[M[p],M[k]];const d=M[k][k];for(let j=k;j<=n;j++)M[k][j]/=d;for(let i=0;i<n;i++){if(i===k)continue;const f=M[i][k];if(!f)continue;for(let j=k;j<=n;j++)M[i][j]-=f*M[k][j]}}return M.map(row=>row[n])}
 function analyze(project){
- if(!project||project.format!=='voltpro.vbb.json'||!Array.isArray(project.parts)||!Array.isArray(project.wires))throw Error('Invalid VoltPRo breadboard project.');
+ if(!project||project.format!=='voltpro.vbb.json'||!Array.isArray(project.parts)||!Array.isArray(project.wires))throw Error('Invalid VoltPro breadboard project.');
  const parts=project.parts, wires=project.wires, parent=new Map(), find=x=>{if(!parent.has(x))parent.set(x,x);let p=parent.get(x);if(p!==x){p=find(p);parent.set(x,p)}return p}, union=(a,b)=>{a=find(a);b=find(b);if(a!==b)parent.set(a,b)};
  const groups=new Map();function attach(h){const k=key(h),g=group(h);if(!groups.has(g))groups.set(g,[]);groups.get(g).push(k);parent.set(k,g);return k}
  // All breadboard holes in one native five-hole strip / split rail are equipotential.
@@ -33,3 +33,4 @@ function analyze(project){
 }
 const api={version:VERSION,analyze,holeGroup:group};root.VoltProBreadboardSolver=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
+

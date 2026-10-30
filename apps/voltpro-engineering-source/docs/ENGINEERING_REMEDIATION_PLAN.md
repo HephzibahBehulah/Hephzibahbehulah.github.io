@@ -1,4 +1,4 @@
-# VoltPRo Engineering Remediation Plan
+# VoltPro Engineering Remediation Plan
 
 **Created:** 2026-10-09  
 **Audit baseline:** `ece4df043764e38eafacc671e418c611a2b0ac45`  
@@ -402,3 +402,4 @@ This is a prioritised plan based on the source-level audit. It is intentionally 
 ## Immediate next step
 
 Execute **Step 1 only** from this plan: freeze/document current contracts and add fixtures/tests without changing runtime behaviour. Then review and commit that step before implementing the canonical schema. The two audit documents themselves do not implement any of the remediation items.
+

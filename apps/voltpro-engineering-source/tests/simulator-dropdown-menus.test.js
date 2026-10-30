@@ -41,7 +41,7 @@ test("dropdown runtime parses and supplies accessible, keyboard-operable menus",
  assert.ok(layout.includes("box.classList.add('vp-menu-open')"));
  assert.ok(layout.includes("document.body.append(box)"));
  assert.ok(layout.includes("activeMenu.box.matches(':hover')"));
- assert.ok(layout.includes("details.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer))"),"hover must not toggle a native details menu before click");
+ assert.ok(layout.includes("if(hoverMenus?.matches)openMenu(details)"),"desktop hover opens the shared menu while touch keeps click behavior");
  assert.ok(!layout.includes("vp-menu-dock"),"menu dropdowns must not create a side dock");
  assert.ok(toolbarCss.includes(".vp-toolbar-dropdown.vp-menu-open"));
  assert.ok(js.includes("VoltProDemoLibrary.load(d)"));
@@ -70,11 +70,11 @@ test("MCU Lab accepts named example sketches and retains explicit interpreter li
 
 test("cache and deployment version invalidates stale simulator shell and precaches menu runtime",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js"),css=read("simulator-layout-restore.css");
- assert.ok(worker.includes('const CACHE="voltpro-v101"'));
+ assert.ok(worker.includes('const CACHE="voltpro-v102"'));
  assert.ok(worker.includes('"./platform/toolbar-menus.js"'));
  assert.ok(worker.includes('"./platform/ui.js"'));
  assert.ok(worker.includes('"./platform/workbench.js"'));
- assert.ok(html.includes('service-worker.js?v=20261029-dropdown2'));
+ assert.ok(html.includes('service-worker.js?v=20261030-brand-shell'));
  assert.ok(html.includes('updateViaCache:"none"'));
  assert.ok(html.includes('platform/toolbar-menus.js?v=20261029-dropdown2'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
@@ -90,4 +90,5 @@ test("MCU Lab mounts through the Workbench host without recursive legacy startup
  assert.ok(workbench.includes('openWorkspace:(title,body)=>open(title,body)'));
  assert.ok(!ui.includes("legacyMicro()"));
 });
+
 

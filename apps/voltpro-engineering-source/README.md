@@ -1,6 +1,6 @@
-# VoltPRo Academy
+# VoltPro Engineering Suite
 
-VoltPRo Academy is a free, open-source, browser-based electrical and electronics learning and simulation laboratory.
+VoltPro Engineering Suite is a free, open-source, browser-based electrical and electronics learning and simulation laboratory.
 
 The project is being developed as a local-first alternative to subscription-based electrical training and control-panel simulation tools. The goal is to let students, technicians, engineers, makers, and educators build circuits, wire components, explore control logic, run simulations, study component behaviour, practise fault diagnosis, and save their work without requiring an account or subscription.
 
@@ -8,28 +8,30 @@ Project source: https://github.com/HephzibahBehulah/Hephzibahbehulah.github.io/t
 
 Canonical production workspace: https://engineering.hephzibahbehulah.com/
 
+- PLC: https://engineering.hephzibahbehulah.com/plc
+- ElectCAD: https://engineering.hephzibahbehulah.com/electcad
+- Breadboard: https://engineering.hephzibahbehulah.com/breadboard
+- Electrical: https://engineering.hephzibahbehulah.com/electrical
+- Oscilloscope: https://engineering.hephzibahbehulah.com/oscilloscope
 - Simulator: https://engineering.hephzibahbehulah.com/simulator
-- VoltProPLC: https://engineering.hephzibahbehulah.com/voltpro-plc/
-- Breadboard Electronics: https://engineering.hephzibahbehulah.com/breadboard
-- VoltPro ElectCAD: https://engineering.hephzibahbehulah.com/voltPro-ElectCAD/
 
 The canonical production workspaces are served by the shared engineering platform. The legacy GitHub Pages URL is not the production source of truth; the repository's Pages workflow requires repository-level Pages enablement before its standalone deployment can succeed.
 
 ## Project status
 
-VoltPRo is an active development project.
+VoltPro is an active development project.
 
 The current application already includes a browser-based simulation workspace, a structured component registry, schematic and panel workflows, a PLC learning workspace, a microcontroller workspace, component reference tools, project save/load/export, engineering calculations, challenges, fault-learning infrastructure, and offline/PWA support.
 
 The component catalogue currently contains 768 structured records across 24 component families.
 
-Important: the 768 catalogue records do not mean that 768 individual devices already have complete manufacturer-accurate electrical simulation models. VoltPRo deliberately distinguishes between catalogue/reference data and validated simulation behaviour. The core simulation engine and the most important device behaviours are being expanded incrementally.
+Important: the 768 catalogue records do not mean that 768 individual devices already have complete manufacturer-accurate electrical simulation models. VoltPro deliberately distinguishes between catalogue/reference data and validated simulation behaviour. The core simulation engine and the most important device behaviours are being expanded incrementally.
 
-## What VoltPRo is designed to provide
+## What VoltPro is designed to provide
 
 ### Electrical and electronics simulation
 
-VoltPRo provides a browser-based environment for creating and analysing educational electrical and electronic circuits.
+VoltPro provides a browser-based environment for creating and analysing educational electrical and electronic circuits.
 
 Current simulation foundations include:
 
@@ -48,7 +50,7 @@ The simulator is intended for education, experimentation, and engineering study.
 
 ## Simulator workspaces
 
-VoltPRo currently provides several connected workspaces:
+VoltPro currently provides several connected workspaces:
 
 | Workspace | Purpose |
 | --- | --- |
@@ -62,7 +64,7 @@ The interface is designed around one application rather than a collection of dis
 
 ## Component library
 
-VoltPRo uses a versioned component manifest and family-based databases under `components/`.
+VoltPro uses a versioned component manifest and family-based databases under `components/`.
 
 The current catalogue contains:
 
@@ -139,9 +141,9 @@ The current media integration covers datasets including:
 - Instrumentation and amplifiers
 - Other electronic and electrical component categories
 
-VoltPRo uses this information to improve component discovery and reference workflows.
+VoltPro uses this information to improve component discovery and reference workflows.
 
-Third-party catalogue data and images remain subject to their original terms and applicable rights. VoltPRo does not treat third-party catalogue material as VoltPRo-owned content.
+Third-party catalogue data and images remain subject to their original terms and applicable rights. VoltPro does not treat third-party catalogue material as VoltPro-owned content.
 
 ## Control-panel and automation direction
 
@@ -212,7 +214,7 @@ The development roadmap includes increasingly complete support for:
 
 ## Fault diagnosis and training
 
-VoltPRo includes infrastructure for educational fault scenarios and guided troubleshooting.
+VoltPro includes infrastructure for educational fault scenarios and guided troubleshooting.
 
 The target fault-training environment covers cases such as:
 
@@ -233,7 +235,7 @@ The long-term objective is to let a learner observe symptoms, measure the circui
 
 ## Guided learning
 
-VoltPRo is intended to be more than a circuit drawing tool.
+VoltPro is intended to be more than a circuit drawing tool.
 
 Planned and developing learning exercises include:
 
@@ -261,6 +263,14 @@ Planned and developing learning exercises include:
 
 The PLC workspace provides an educational environment for learning control logic.
 
+Its PLC I/O view assigns deterministic project-local IEC-style `%Ibyte.bit` and `%Qbyte.bit` addresses to digital field inputs and physical outputs, then lists terminals, tags, and drawing sheets in one schedule. Repeated device tags link to their matching devices across sheets. The generated addresses are logical teaching assignments; selecting a real controller and validating its module layout remain separate commissioning tasks. Arduino export pins are stored separately and do not change the PLC address map.
+
+The same view derives a generic training hardware configuration: one virtual CPU plus eight-channel digital I/O modules sized to the mapped point count. This BOM is not purchasable hardware and contains no manufacturer-specific order codes.
+
+The Commissioning bench includes Smart Wire diagnostics for possible series-connected coils, open coil terminals, and supply/neutral return paths. These topology checks do not test every IEC rule and are not a safety or compliance assessment.
+
+PLC logic, device and wire edits are recorded locally as up to 300 concise change summaries. Rapid changes to the same item are coalesced; canvas-only movement is omitted. Users can export the log as JSON. The log does not store project contents and remains on the current device.
+
 The project is also developing digital and microcontroller capabilities, including:
 
 - Digital inputs and outputs
@@ -275,7 +285,7 @@ The PLC workspace should not be interpreted as a replacement for programming or 
 
 ## Project management
 
-VoltPRo supports local project workflows including:
+VoltPro supports local project workflows including:
 
 - New project
 - Save
@@ -290,7 +300,7 @@ The project format is designed to make circuits portable and inspectable rather 
 
 ## Offline and PWA support
 
-VoltPRo is designed as a Progressive Web App.
+VoltPro is designed as a Progressive Web App.
 
 The simulator includes:
 
@@ -305,7 +315,7 @@ The exact availability of individual features while offline depends on whether t
 
 ## Architecture
 
-At a high level, VoltPRo follows this model:
+At a high level, VoltPro follows this model:
 
 ```
 Component Library
@@ -340,7 +350,7 @@ The application is intentionally modular so that the component catalogue, simula
 
 ## Technology
 
-VoltPRo is primarily built with browser-native technologies:
+VoltPro is primarily built with browser-native technologies:
 
 - HTML
 - CSS
@@ -374,7 +384,7 @@ The repository currently targets Node.js 22 or newer for development validation.
 
 ## Open-source and licensing approach
 
-VoltPRo Academy is distributed under the Apache License 2.0.
+VoltPro Engineering Suite is distributed under the Apache License 2.0.
 
 The project may evaluate or integrate compatible open-source technologies when they provide meaningful simulation capabilities. Each external dependency or borrowed implementation must be reviewed for licence compatibility before incorporation.
 
@@ -386,11 +396,11 @@ Potential technologies for future evaluation include:
 - Digital logic engines
 - Microcontroller and processor emulation
 
-Open-source projects are not copied into VoltPRo simply because they provide useful functionality. Their licences and attribution requirements must be respected.
+Open-source projects are not copied into VoltPro simply because they provide useful functionality. Their licences and attribution requirements must be respected.
 
 ## WireONa-inspired product direction
 
-WireONa has been used as a functional reference for the type of user experience VoltPRo is intended to achieve, particularly:
+WireONa has been used as a functional reference for the type of user experience VoltPro is intended to achieve, particularly:
 
 - Control-panel design
 - Component arrangement
@@ -399,9 +409,9 @@ WireONa has been used as a functional reference for the type of user experience 
 - PLC logic
 - Practical learning workflows
 
-VoltPRo is not intended to copy WireONa's proprietary implementation, private APIs, protected assets, or commercial service.
+VoltPro is not intended to copy WireONa's proprietary implementation, private APIs, protected assets, or commercial service.
 
-The objective is to independently implement comparable educational workflows while keeping VoltPRo free, open source, local-first, and under the project's own architecture and licensing.
+The objective is to independently implement comparable educational workflows while keeping VoltPro free, open source, local-first, and under the project's own architecture and licensing.
 
 ## Current development priorities
 
@@ -424,7 +434,7 @@ The major engineering priorities are:
 
 ## Safety and engineering disclaimer
 
-VoltPRo is an educational simulator.
+VoltPro is an educational simulator.
 
 Simulation results must not be treated as proof that a real electrical installation, control panel, machine, component, or protection system is safe.
 
@@ -436,7 +446,7 @@ For real installations:
 - Have qualified personnel verify designs and installations.
 - Perform the required physical tests and measurements.
 
-VoltPRo does not provide electrical certification or safety approval.
+VoltPro does not provide electrical certification or safety approval.
 
 ## Contributing
 
@@ -472,7 +482,7 @@ Important project documentation includes:
 
 Open:
 
-https://hephzibahbehulah.github.io/VoltPRo-Academy/simulator.html
+https://hephzibahbehulah.github.io/VoltPro-Academy/simulator.html
 
 No account or subscription is required.
 
@@ -491,13 +501,13 @@ A local HTTP server is recommended when testing service-worker and PWA behaviour
 
 ## Project vision
 
-VoltPRo Academy is being built toward one clear goal:
+VoltPro Engineering Suite is being built toward one clear goal:
 
 > A free, open-source, practical electrical and electronics laboratory that lets people build, simulate, measure, troubleshoot, learn, and experiment directly in the browser.
 
 The long-term product is not simply a schematic editor and not simply a component catalogue. It is intended to become a complete learning and experimentation environment covering electrical circuits, electronics, industrial control, automation, PLC logic, microcontrollers, renewable energy, building automation, measurement, and fault diagnosis.
 
-VoltPRo remains under active development, and individual component models should be considered educational until their behaviour has been independently validated.
+VoltPro remains under active development, and individual component models should be considered educational until their behaviour has been independently validated.
 
 
 ## Electrical architectural drafting and AI project import
@@ -527,3 +537,4 @@ The catalogue combines 25 explicitly named building programmes with 10 distinct 
 These are preliminary regional studies, not approved construction projects. Feeder conductor sizes, MCCB settings, actual loads, surveyed rises, supply/earthing, thermal/fault/disconnection data and product listings remain unresolved. Scenario services are explicitly unconnected interfaces until designed. High-rise fire/escape, lift/fire-pump, independent emergency power, HV/substation and structural engineering are not claimed complete. References: [DIN planning](https://www.dinmedia.de/de/norm/din-18015-1/320242977), [DEWA regulations and later circulars](https://dewa.gov.ae/en/builder/useful-tools/dewa-circulars), [NFPA 70 editions/local adoption](https://www.nfpa.org/codes-and-standards/nfpa-70-development/70), [NEMSA guidance](https://web.nemsa.gov.ng/regulations). Verify adopted editions and authority amendments. No licensed full standards text or compliance certificate is supplied. USA conductor quantities represent separately specified L/N/EGC conductors with containment still to be engineered.
 
 Round-trip project recovery retains example provenance and open-input notes. Tower overview zoom extends to 10%; fit uses the active floor and dense labels hide at overview scale. PLC remains unchanged.
+

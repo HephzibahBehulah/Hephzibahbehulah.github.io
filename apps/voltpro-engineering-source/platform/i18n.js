@@ -18,7 +18,7 @@ async function load(requested=locale){
     return dict;
   }catch(e){
     if(target!==FALLBACK) return load(FALLBACK);
-    console.error("VoltPRo i18n:",e);
+    console.error("VoltPro i18n:",e);
     return dict;
   }
 }

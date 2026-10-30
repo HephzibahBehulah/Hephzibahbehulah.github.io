@@ -1,4 +1,4 @@
-/* VoltPRo deterministic electrical net resolver. */
+/* VoltPro deterministic electrical net resolver. */
 (()=>{'use strict';
 const endpointId=value=>{
  if(typeof value==='string')return value;

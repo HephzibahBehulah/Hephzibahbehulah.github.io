@@ -1,5 +1,5 @@
-/* VoltPRo Engine — browser-native Modified Nodal Analysis (MNA).
- * Original VoltPRo implementation. It is an MNA engine, not a claim of
+/* VoltPro Engine — browser-native Modified Nodal Analysis (MNA).
+ * Original VoltPro implementation. It is an MNA engine, not a claim of
  * Ngspice compatibility. Educational use only; verify real designs against
  * applicable standards, manufacturer data and qualified engineering practice.
  */
@@ -62,7 +62,7 @@ function topology(project){
     return {find:pin=>resolved.terminalToNet.get(pinToTerminal.get(String(pin)))||String(pin),source:"canonical-net-resolver"};
    }
   }
- }catch(error){console.warn?.("VoltPRo canonical topology fallback:",error?.message||error)}
+ }catch(error){console.warn?.("VoltPro canonical topology fallback:",error?.message||error)}
  const parent=new Map(), find=x=>{if(!parent.has(x))parent.set(x,x);let r=x;while(parent.get(r)!==r)r=parent.get(r);while(parent.get(x)!==x){const q=parent.get(x);parent.set(x,r);x=q}return r};
  const union=(a,b)=>{const x=find(a),y=find(b);if(x!==y)parent.set(x,y)};
  (project.components||[]).forEach(x=>pinsOf(x).forEach(p=>find(p)));
@@ -309,7 +309,7 @@ function operatingPoint(project,options={}){
  const branches=b.branches.map(q=>{const u=nodeVoltage(q.a)-nodeVoltage(q.b),i=branchAmps(q,nodeVoltage);return {id:q.comp.id,type:q.comp.type,terminalA:q.terminalA,terminalB:q.terminalB,contactId:q.contactId||null,voltage:u,current:i,power:q.kind==='cmos-output'?i*i*q.R:u*i};});
  const sourceCurrents=b.voltageSources.map((q,k)=>({id:q.comp.id,type:q.comp.type,internal:q.kind==='lm317',...sourceEnds(b,q),current:x[b.N+k]?.re||0}));
  const totalCurrent=sourceCurrents.reduce((s,q)=>s+(q.internal?0:Math.abs(q.current)),0);
- return {ok:true,analysis:"DC operating point (MNA)",engine:"VoltPRo MNA",sourceVoltage:b.voltageSources[0]?.value||0,totalCurrent,totalPower:branches.reduce((s,q)=>s+q.power,0),nodes:b.N,branches,sourceCurrents,nodeVoltages:Array.from({length:b.N},(_,i)=>({node:i+1,voltage:nodeVoltage(i+1)})),terminalVoltages:Object.fromEntries(b.comps.flatMap(c=>pinsOf(c).map(pin=>[pin,nodeVoltage(b.nodeFor(pin))]))),deviceStates:Object.fromEntries(Object.entries(stateOverrides)),iterations:12};
+ return {ok:true,analysis:"DC operating point (MNA)",engine:"VoltPro MNA",sourceVoltage:b.voltageSources[0]?.value||0,totalCurrent,totalPower:branches.reduce((s,q)=>s+q.power,0),nodes:b.N,branches,sourceCurrents,nodeVoltages:Array.from({length:b.N},(_,i)=>({node:i+1,voltage:nodeVoltage(i+1)})),terminalVoltages:Object.fromEntries(b.comps.flatMap(c=>pinsOf(c).map(pin=>[pin,nodeVoltage(b.nodeFor(pin))]))),deviceStates:Object.fromEntries(Object.entries(stateOverrides)),iterations:12};
 }
 function dc(project,options={}){return operatingPoint(project,options)}
 function ac(project,{start=1,stop=1e5,points=50,frequency=50,groundRef,scanTimeMs=20}={}){
@@ -376,7 +376,7 @@ function transient(project,{duration=.1,steps=100,groundRef}={}){
 function dcSweep(project,{componentId,param="resistance",start=100,stop=10000,points=20}={}){const base=JSON.parse(JSON.stringify(project));const target=(base.components||[]).find(x=>x.id===componentId);if(!target)return {ok:false,analysis:"DC sweep",error:"Component not found: "+componentId};const values=points<=1?[start]:Array.from({length:points},(_,i)=>start+(stop-start)*i/(points-1));const sweep=[];for(const v of values){target.props=target.props||{};target.props[param]=v;const r=dc(base);if(!r.ok)return {ok:false,analysis:"DC sweep",error:r.error,value:v};sweep.push({value:v,totalCurrent:r.totalCurrent,totalPower:r.totalPower,branches:r.branches})}return {ok:true,analysis:"DC parameter sweep (MNA)",componentId,param,start,stop,points:sweep.length,sweep}}
 function power(project,options={}){const r=dc(project,options);if(!r.ok)return r;return {ok:true,analysis:"DC power",totalPower:r.totalPower,branches:r.branches.map(x=>({id:x.id,power:x.power}))}}
 function analyze(project,options={}){
- const out={engine:"VoltPRo MNA",version:4,dc:dc(project,options)};
+ const out={engine:"VoltPro MNA",version:4,dc:dc(project,options)};
  if(options.ac)out.ac=ac(project,options.ac===true?options:options.ac);
  if(options.transient)out.transient=transient(project,options.transient===true?options:options.transient);
  if(options.power)out.power=power(project,options);
@@ -385,3 +385,4 @@ function analyze(project,options={}){
 const guarded=fn=>(...args)=>{try{return fn(...args)}catch(error){return {ok:false,error:String(error.message||error)}}};
 window.VoltProEngine={version:4,analyze:guarded(analyze),dc:guarded(dc),dcSweep:guarded(dcSweep),transient:guarded(transient),ac:guarded(ac),power:guarded(power),math:{mag,solve}};
 })();
+

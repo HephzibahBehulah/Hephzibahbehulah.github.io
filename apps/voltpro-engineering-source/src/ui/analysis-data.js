@@ -1,4 +1,4 @@
-/* Original VoltPRo analysis helpers. Pure functions shared by UI and tests. */
+/* Original VoltPro analysis helpers. Pure functions shared by UI and tests. */
 (function(root){'use strict';
 function voltage(sample,nodes,component){
  const a=nodes[component+':0'],b=nodes[component+':1'];
@@ -32,3 +32,4 @@ function csv(points,xLabel='time_s',yLabel='voltage_V'){return xLabel+','+yLabel
 const api={voltage,trace,stats,spectrum,bode,csv};
 if(typeof module==='object')module.exports=api;else root.VoltProAnalysisData=api;
 })(typeof window==='object'?window:globalThis);
+

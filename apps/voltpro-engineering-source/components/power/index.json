@@ -748,7 +748,7 @@
       },
       "electricalModel": {
         "type": "three-phase-source",
-        "engine": "VoltPRo balanced three-phase MNA source",
+        "engine": "VoltPro balanced three-phase MNA source",
         "editable": true
       },
       "behaviorModel": {
@@ -825,7 +825,7 @@
       },
       "electricalModel": {
         "type": "three-phase-source",
-        "engine": "VoltPRo balanced three-phase MNA source",
+        "engine": "VoltPro balanced three-phase MNA source",
         "editable": true
       },
       "behaviorModel": {
@@ -2230,3 +2230,4 @@
     }
   ]
 }
+

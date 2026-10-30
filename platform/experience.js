@@ -55,7 +55,7 @@ function repairEngineering(){
  const header=document.querySelector('#vpSiteHeader');if(!header)return;if(document.body.classList.contains('hb-studio'))return;
  document.body.classList.add('hb-engineering');
  let tools=header.querySelector('.hb-vp-tools');if(!tools){tools=el('div','hb-vp-tools');header.append(tools);}
- const brand=header.querySelector('.vp-site-brand');if(brand&&!brand.querySelector('img')){const image=el('img');image.src='/_hb/hb-logo.svg';image.alt='Hephzibah Behulah';brand.replaceChildren(image);brand.setAttribute('aria-label','Hephzibah Behulah engineering home');}
+ const brand=header.querySelector('.vp-site-brand');if(brand&&!brand.querySelector('img')&&!brand.dataset.brandWordmark){const image=el('img');image.src='/_hb/hb-logo.svg';image.alt='Hephzibah Behulah';brand.replaceChildren(image);brand.setAttribute('aria-label','Hephzibah Behulah engineering home');}
  const sidebar=document.querySelector('#sidebar');if(sidebar&&!sidebar.querySelector('.hb-engineering-close')){const close=el('button','hb-engineering-close','Close menu ×');close.type='button';close.onclick=()=>sidebar.classList.remove('open');sidebar.prepend(close);}
  const bar=document.querySelector('.hb-platform-bar');if(bar){const nav=bar.querySelector('.hb-platform-links');if(nav){const sites=el('details','hb-learning-nav'),title=el('summary','','Learning sites');sites.append(title,nav);tools.append(sites);}for(const child of [...bar.children])if(child.matches('.hb-utilities,.hb-member-actions'))tools.append(child);bar.remove();}
  const identity=header.querySelector('.vp-site-identity');if(identity&&identity.parentElement!==tools)tools.append(identity);
@@ -66,14 +66,14 @@ function repairEngineering(){
  const simulator=document.querySelector('.sim-app');if(simulator&&!simulator.dataset.hbSized){simulator.dataset.hbSized='true';const resize=()=>{const heights=[header,simulator.querySelector('.sim-top'),simulator.querySelector('.toolbar')].reduce((sum,n)=>sum+(n?.getBoundingClientRect().height||0),0);simulator.style.setProperty('--hb-canvas-height',Math.max(420,innerHeight-heights-40)+'px');};const observer=new ResizeObserver(resize);for(const n of [header,simulator.querySelector('.sim-top'),simulator.querySelector('.toolbar')])if(n)observer.observe(n);window.addEventListener('resize',resize);resize();}
 }
 const media=matchMedia('(prefers-color-scheme: dark)');let preference='system';
-try{const shared=document.cookie.split('; ').find(x=>x.startsWith('hb-colour-theme='))?.split('=')[1];const saved=shared||localStorage.getItem('hb-colour-theme');if(['dark','light','system'].includes(saved))preference=saved;}catch{}
-function applyTheme(){const theme=preference==='system'?(media.matches?'dark':'light'):preference;document.documentElement.dataset.hbTheme=theme;document.documentElement.dataset.hbThemePreference=preference;document.documentElement.style.colorScheme=theme;
+try{const shared=document.cookie.split('; ').find(x=>x.startsWith('hb-colour-theme='))?.split('=')[1];const saved=shared||localStorage.getItem('hb-colour-theme')||localStorage.getItem('vp-theme');if(['dark','light','system'].includes(saved))preference=saved;}catch{}
+function applyTheme(){const theme=preference==='system'?(media.matches?'dark':'light'):preference;document.documentElement.dataset.hbTheme=theme;document.documentElement.dataset.hbThemePreference=preference;document.documentElement.dataset.theme=theme;document.documentElement.dataset.vpTheme=theme;document.documentElement.style.colorScheme=theme;
  document.body.classList.toggle('light',theme==='light');document.body.classList.toggle('light-mode',theme==='light');document.body.classList.toggle('dark-mode',theme==='dark');document.body.dataset.theme=theme;
  document.querySelectorAll('#hbTheme').forEach(n=>n.value=preference);
  document.dispatchEvent(new CustomEvent('hb:theme',{detail:{theme,preference}}));}
-function setTheme(value){preference=['dark','light','system'].includes(value)?value:'system';try{localStorage.setItem('hb-colour-theme',preference);if(location.hostname.endsWith('hephzibahbehulah.com'))document.cookie='hb-colour-theme='+preference+'; Domain=hephzibahbehulah.com; Path=/; Max-Age=31536000; Secure; SameSite=Lax';}catch{}applyTheme();}
+function setTheme(value){preference=['dark','light','system'].includes(value)?value:'system';try{localStorage.setItem('hb-colour-theme',preference);localStorage.setItem('vp-theme',preference);if(location.hostname.endsWith('hephzibahbehulah.com'))document.cookie='hb-colour-theme='+preference+'; Domain=hephzibahbehulah.com; Path=/; Max-Age=31536000; Secure; SameSite=Lax';}catch{}applyTheme();}
 media.addEventListener('change',()=>{if(preference==='system')applyTheme();});
-document.addEventListener('click',event=>{if(event.target.closest?.('#themeToggle,#hbLabTheme,.theme-toggle,#themeBtn')){event.preventDefault();event.stopImmediatePropagation();setTheme(document.documentElement.dataset.hbTheme==='dark'?'light':'dark');}},true);
+document.addEventListener('click',event=>{if(event.target.closest?.('#themeToggle,#vpThemeToggle,#hbLabTheme,.theme-toggle,#themeBtn')){event.preventDefault();event.stopImmediatePropagation();setTheme(document.documentElement.dataset.hbTheme==='dark'?'light':'dark');}},true);
 function decorateOverview(){
  const candidates=[document.querySelector('.tool-lab-command-deck,.tool-lab-overview,.tool-lab-hero'),document.querySelector('.toolbench-intro'),document.querySelector('.cyber-command-deck,#dashboard .cyber-hero,#dashboard .os-hero,#dashboard>.os-panel'),document.querySelector('#view>.hero,#view>.academy-command'),document.querySelector('body.hb-platform-cyber>header:not(.hb-platform-bar)'),document.querySelector('.adigun-command-overview')].filter(Boolean);
  for(const container of candidates){container.classList.add('hb-command-surface');if(container.matches('.adigun-command-overview,.academy-command,.cyber-command-deck,.tool-lab-command-deck')||container.querySelector('.hb-overview-orbit'))continue;
@@ -89,3 +89,4 @@ function init(){const sheet=document.querySelector('link[href="/_hb/experience.c
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
+

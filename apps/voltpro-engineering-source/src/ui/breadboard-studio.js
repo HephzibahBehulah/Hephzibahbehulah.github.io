@@ -1,4 +1,4 @@
-/* Original VoltPRo Breadboard Studio. Physical connectivity and measured results. */
+/* Original VoltPro Breadboard Studio. Physical connectivity and measured results. */
 (()=>{'use strict';
 const ui=window.VoltProBreadboardUI;if(!ui)return;
 const S=ui.state,$=s=>document.querySelector(s),bridge=window.VoltProBreadboardMNA,engine=window.VoltProEngine,math=window.VoltProAnalysisData;
@@ -141,3 +141,4 @@ document.addEventListener('keydown',e=>{if(e.target.isContentEditable||/INPUT|TE
  Promise.resolve(window.VoltProRegistry?.ready).finally(()=>{cataloguePending=false;startSession()});
  syncSignals();changed();new ResizeObserver(()=>{if(!scope.hidden)drawScope()}).observe(scope);
 })();
+

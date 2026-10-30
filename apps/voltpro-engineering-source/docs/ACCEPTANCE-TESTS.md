@@ -1,4 +1,4 @@
-# VoltPRo Acceptance Tests
+# VoltPro Acceptance Tests
 
 ## Beginner
 Build source → switch → lamp → source in under two minutes. Run the circuit and see current/power.
@@ -18,3 +18,4 @@ Load the Arduino challenge, map a GPIO to a virtual LED, execute a Blink-compati
 
 ## Responsive/accessibility matrix
 Verify at 1920, 1440, 1366, 1024, 768, 430, 390 and 375 px; keyboard-only navigation; visible focus; non-colour status; reduced-motion preference.
+

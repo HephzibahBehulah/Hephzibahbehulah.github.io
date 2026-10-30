@@ -1,4 +1,4 @@
-/* VoltPRo transactional command history. Commands are serializable intent, not UI callbacks. */
+/* VoltPro transactional command history. Commands are serializable intent, not UI callbacks. */
 (()=>{'use strict';
 const clone=x=>structuredClone(x);
 function replaceAt(obj,path,value){let cur=obj;for(let i=0;i<path.length-1;i++)cur=cur[path[i]];cur[path[path.length-1]]=clone(value)}

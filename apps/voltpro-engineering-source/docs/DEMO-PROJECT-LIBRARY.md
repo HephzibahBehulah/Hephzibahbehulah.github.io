@@ -1,4 +1,4 @@
-# VoltPRo Demo Project Library
+# VoltPro Demo Project Library
 
 The simulator includes 100 selectable educational demo projects. The library is generated from 20 documented starter circuits, each offered in five parameter variants: Starter, Low Range, Standard Range, High Range, and Troubleshooting.
 
@@ -43,3 +43,4 @@ The simulator includes 100 selectable educational demo projects. The library is 
 These projects are learning scaffolds, not manufacturer-validated designs. Their wire diagrams illustrate terminal relationships, but simplified component models do not guarantee that every physical device behaviour is represented. Some examples are intended primarily for drawing, parameter-editing, and topology practice.
 
 Do not use demo results to certify real installations, select protective devices, commission machinery, or establish electrical safety. Real designs require applicable standards, manufacturer datasheets, qualified review, and appropriate physical verification.
+

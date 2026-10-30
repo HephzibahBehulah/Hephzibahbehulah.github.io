@@ -1,4 +1,4 @@
-/* Original VoltPRo instrument UI. All traces come from the local MNA engine. */
+/* Original VoltPro instrument UI. All traces come from the local MNA engine. */
 (()=>{'use strict';
 const $=s=>document.querySelector(s),data=window.VoltProAnalysisData,api=window.VoltProSimulator;
 if(!api||!window.VoltProUI||!data)return;
@@ -160,3 +160,4 @@ new ResizeObserver(()=>{if(!drawer.hidden)draw()}).observe(drawer);
 new ResizeObserver(()=>{if(!drawer.hidden)$('#fitBtn').click()}).observe($('#canvas'));
 window.VoltProStudio={open,capture,invalidate,example};invalidate();
 })();
+

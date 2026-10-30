@@ -4,7 +4,7 @@ This integration is deployed on the four hostnames below. It preserves the origi
 
 ## Hostnames
 
-- `engineering.hephzibahbehulah.com`: the repository-built VoltPRo application.
+- `engineering.hephzibahbehulah.com`: the repository-built VoltPro application.
 - `cyber.hephzibahbehulah.com`: the repository-built cybersecurity browser companion.
 - `hephzibahbehulah.com`: the public company platform, with a two-minute guest preview and central public account login.
 - `admin.hephzibahbehulah.com`: the existing control room, with the same outer Access verification and its existing private API checks.
@@ -13,7 +13,7 @@ The private admin hostname also mounts the complete browser applications under `
 
 ## Build
 
-Use the exact repository commits in `source-lock.json`. Build VoltPRo's `apps/voltpro-plc` using its lockfile and build the cybersecurity companion using `core/build_app.py`. Keep its Pyodide distribution and licence files. Then, from the main repository:
+Use the exact repository commits in `source-lock.json`. Build VoltPro's `apps/voltpro-plc` using its lockfile and build the cybersecurity companion using `core/build_app.py`. Keep its Pyodide distribution and licence files. Then, from the main repository:
 
 ```sh
 node --test platform/access.test.mjs platform/router.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs
@@ -82,3 +82,4 @@ Verification: 71 integration tests, original script syntax/preflight, seven layo
 Customer membership now expires after five hours without accepted user activity. Four-minute expiry applies only to email verification. The encrypted HttpOnly member cookie is persistent for 18,000 seconds and remains server-bound to the last activity timestamp. Opening another tab, following a public app link or using a stale tab identifier no longer rejects a valid shared session. Same-origin POST checks, cookie encryption, host allowlists and private Cloudflare authorization remain. Passive refresh/visibility checks do not extend inactivity. Transient network/rate-limit failures no longer act as logout. Provider access tokens refresh independently of email-code lifetime. URL fragments are no longer needed for new cross-app navigation; older fragment links remain accepted for compatibility. This supersedes the earlier two-hour/per-tab closure description.
 
 Cyber OS dashboard now has a compact mission/identity grid and an animated vector ethical-cyber guardian. Its original section anchors and capability destinations remain. Tool Lab title/cards use normal flow and explicit rows. Engineering consolidates company branding, existing workspace navigation and preferences into its native shared header. Native simulator menus and IDs remain; expandable controls and a measured canvas height prevent toolbar/catalogue content from covering or stretching the drawing surface. Decorative ordinal labels and static terminal implementation banners are removed while instructional steps and real outputs remain.
+

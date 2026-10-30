@@ -1,4 +1,4 @@
-/* VoltPRo physical breadboard model. All public geometry is in millimeters. */
+/* VoltPro physical breadboard model. All public geometry is in millimeters. */
 (function(root,factory){const api=factory();if(typeof module!=="undefined"&&module.exports)module.exports=api;if(root)root.VoltProBoardModel=api;})(typeof globalThis!=="undefined"?globalThis:this,function(){
 'use strict';
 const PITCH=2.54, ROWS=['a','b','c','d','e','f','g','h','i','j'], COLS=63, RAIL_HOLES=50;

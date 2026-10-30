@@ -1,6 +1,6 @@
 # Simulation Model Guide
 
-VoltPRo's simulation contract is:
+VoltPro's simulation contract is:
 
 Schematic → topology/netlist → component models → MNA solve → results → visualisation.
 
@@ -21,3 +21,4 @@ This is an MNA implementation, not Ngspice.
 ## Model requirements
 
 A new model must document its equations/behaviour, units, pin order, supported analyses, parameter limits and regression tests. Safety-critical engineering claims require independent verification against manufacturer data and applicable standards.
+

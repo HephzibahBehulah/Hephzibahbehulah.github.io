@@ -1,17 +1,31 @@
 (() => {
   "use strict";
-  const tools = [
-    { path: "/simulator", title: "VoltPro Simulator", src: "/simulator.html?vp_embed=1&v=20261029-dropdown2" },
-    { path: "/plc", title: "VoltPro PLC", src: "/voltpro-plc/?vp_embed=1" },
-    { path: "/electcad", title: "VoltPro ElectCAD", src: "/voltpro-electcad/?vp_embed=1" },
-    { path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" },
-    { path: "/breadboard", title: "VoltPro Breadboard", src: "/breadboard.html?vp_embed=1" },
-    { path: "/oscilloscope", title: "VoltPro Oscilloscope", src: "/oscilloscope.html?vp_embed=1" },
-    { path: "/electrical", title: "VoltPro Electrical Building", src: "/electrical-canvas.html?vp_embed=1" }
-  ];
+  const brandConfig = window.VoltProBrandConfig;
+  if (!brandConfig?.brand || !Array.isArray(brandConfig.workspaces)) throw new Error("VoltPro brand configuration did not load.");
+  const sources = Object.freeze({
+    plc: "/voltpro-plc/?vp_embed=1",
+    electcad: "/voltpro-electcad/?vp_embed=1",
+    breadboard: "/breadboard.html?vp_embed=1",
+    electrical: "/electrical-canvas.html?vp_embed=1",
+    oscilloscope: "/oscilloscope.html?vp_embed=1",
+    simulator: "/simulator.html?vp_embed=1"
+  });
+  const tools = brandConfig.workspaces.map(({ id, name, href }) => ({
+    path: href,
+    title: brandConfig.brand.product + " " + name,
+    src: sources[id]
+  }));
+  tools.push({ path: "/tools", title: "Engineering Tools", src: "/engineering.html?vp_embed=1" });
   const rootPrefix = location.hostname.startsWith("admin.") && /^\/engineering(?:\/|$)/.test(location.pathname) ? "/engineering" : "";
   const root = document.getElementById("vpWorkspace");
   const panels = new Map();
+  const syncTheme = (doc, theme) => {
+    if (!doc?.documentElement) return;
+    doc.documentElement.dataset.hbTheme = theme;
+    doc.documentElement.dataset.theme = theme;
+    doc.documentElement.dataset.vpTheme = theme;
+    doc.body?.classList.toggle("light", theme === "light");
+  };
   const sharedHeader = document.getElementById("vpSiteHeader");
   const headerPlaceholder = sharedHeader ? document.createComment("VoltPro shared header position") : null;
   if (sharedHeader) sharedHeader.before(headerPlaceholder);
@@ -515,9 +529,8 @@
         activate(target);
       });
     }
-    const theme = document.documentElement.dataset.vpTheme || "dark";
-    doc.documentElement.dataset.vpTheme = theme;
-    doc.body.classList.toggle("light", theme === "light");
+    const theme = document.documentElement.dataset.hbTheme || document.documentElement.dataset.vpTheme || "dark";
+    syncTheme(doc, theme);
   }
 
   function canonicalPath(path) {
@@ -543,7 +556,7 @@
     panels.set(tool.path, panel);
     frame.addEventListener("load", () => {
       try {
-        frame.contentDocument.documentElement.dataset.vpTheme = document.documentElement.dataset.vpTheme || "dark";
+        syncTheme(frame.contentDocument, document.documentElement.dataset.hbTheme || document.documentElement.dataset.vpTheme || "dark");
         if (tool.path === "/simulator" && document.documentElement.dataset.vpWorkspace === "simulator") integrateSimulator(panel);
         if (tool.path === "/plc" && document.documentElement.dataset.vpWorkspace === "plc") integratePLC(panel);
         if (tool.path === "/electrical" && document.documentElement.dataset.vpWorkspace === "electrical") integrateElectrical(panel);
@@ -644,6 +657,12 @@
       try { frame?.contentDocument?.body?.classList.toggle("light", document.documentElement.dataset.vpTheme === "light"); } catch {}
     });
   });
+  document.addEventListener("hb:theme", event => {
+    const theme = event.detail?.theme || document.documentElement.dataset.hbTheme || "dark";
+    for (const frame of root.querySelectorAll("iframe")) {
+      try { syncTheme(frame.contentDocument, theme); } catch {}
+    }
+  });
   window.addEventListener("vp-plc-navigate", event => {
     if (document.documentElement.dataset.vpWorkspace !== "plc") return;
     if (!tools.some(tool => tool.path === event.detail)) return;
@@ -652,3 +671,4 @@
   window.addEventListener("popstate", () => activate(location.pathname, false));
   activate(location.pathname, false);
 })();
+

@@ -30,7 +30,7 @@ const photoCatalog={
  contactor:{url:"https://commons.wikimedia.org/wiki/Special:FilePath/Contactor_DIN_IEK.jpg?width=300",source:"https://commons.wikimedia.org/wiki/File:Contactor_DIN_IEK.jpg",credit:"Kae · CC BY-SA 3.0"}
 };
 function photo(type,name){return photoCatalog[kind(type,name)]?.url||""}
-function photoCredit(type,name){return photoCatalog[kind(type,name)]?.credit||"VoltPRo illustrative device view"}
+function photoCredit(type,name){return photoCatalog[kind(type,name)]?.credit||"VoltPro illustrative device view"}
 function photoSource(type,name){return photoCatalog[kind(type,name)]?.source||""}
 function face(type,name,ref){const url=photo(type,name);return '<span class="vp-device-visual">'+(url?'<img class="vp-device-photo" loading="lazy" src="'+esc(url)+'" alt="'+esc(name||type)+' representative product photograph" title="'+esc(photoCredit(type,name))+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\'">':'')+'<span class="vp-device-svg"'+(url?' style="display:none"':'')+'>'+svg(type,name,ref)+'</span></span>'}
 function state(){return window.VoltProSimulator?.state||null}
