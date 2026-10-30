@@ -52,11 +52,18 @@ test('Cyber OS carries the parent wordmark and its own product wordmark in the s
   const html = fs.readFileSync(path.join(root, 'apps/cyber-os/index.html'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'platform/experience.css'), 'utf8');
   const engineeringCss = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/src/ui/site-shell.css'), 'utf8');
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'apps/cyber-os/adigun-cyber-os.webmanifest'), 'utf8'));
+  const logo = fs.readFileSync(path.join(root, 'apps/cyber-os/assets/adigun-cyber-os.svg'), 'utf8');
   assert.match(html, /HEPHZIBAH BEHULAH/);
   assert.match(html, /ADIGUN/);
   assert.match(html, /Cyber OS/);
   assert.match(html, /a product of HEPHZIBAH BEHULAH/i);
   assert.match(html, /name="theme-color" content="#0a1118"/);
+  assert.match(html, /rel="manifest" href="\/cyber-os\/adigun-cyber-os\.webmanifest"/);
+  assert.match(html, /rel="icon" type="image\/svg\+xml" href="\/cyber-os\/assets\/adigun-cyber-os\.svg"/);
+  assert.equal(manifest.name, 'ADIGUN Cyber OS | HEPHZIBAH BEHULAH');
+  assert.equal(manifest.icons[0].src, '/cyber-os/assets/adigun-cyber-os.svg');
+  assert.match(logo, /<title id="title">ADIGUN Cyber OS<\/title>/);
   assert.match(css, /\.os-brand\.hb-product-lockup/);
   assert.match(css, /\.hb-company-wordmark/);
   assert.match(css, /\.hb-product-wordmark/);
