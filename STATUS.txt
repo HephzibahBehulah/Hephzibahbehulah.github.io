@@ -38,4 +38,4 @@ Status definitions: Complete requires its named acceptance test to exist and pas
 
 ## Branding
 
-The shared HEPHZIBAH BEHULAH theme now spans the public, Cyber OS, engineering, and embedded workspace shells. VoltPro and ADIGUN Cyber OS keep distinct product wordmarks under the parent company identity. No logo placeholders were added. Live verification is pending because the public hostnames did not resolve from this environment.
+The shared HEPHZIBAH BEHULAH theme now spans the public, Cyber OS, engineering, and embedded workspace shells. VoltPro and ADIGUN Cyber OS keep distinct product wordmarks and app icons under the parent company identity; the Cyber OS icon and install manifest are real product assets, not placeholders. Live verification is pending because the public hostnames did not resolve from this environment.
