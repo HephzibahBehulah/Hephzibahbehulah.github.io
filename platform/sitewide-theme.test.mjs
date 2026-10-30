@@ -48,3 +48,19 @@ test('shared brand theme matches the product template and supports both colour m
   assert.match(css, /color-scheme:light/);
 });
 
+test('Cyber OS carries the parent wordmark and its own product wordmark in the shared theme', () => {
+  const html = fs.readFileSync(path.join(root, 'apps/cyber-os/index.html'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'platform/experience.css'), 'utf8');
+  const engineeringCss = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/src/ui/site-shell.css'), 'utf8');
+  assert.match(html, /HEPHZIBAH BEHULAH/);
+  assert.match(html, /ADIGUN/);
+  assert.match(html, /Cyber OS/);
+  assert.match(html, /a product of HEPHZIBAH BEHULAH/i);
+  assert.match(html, /name="theme-color" content="#0a1118"/);
+  assert.match(css, /\.os-brand\.hb-product-lockup/);
+  assert.match(css, /\.hb-company-wordmark/);
+  assert.match(css, /\.hb-product-wordmark/);
+  assert.match(css, /html\[data-hb-theme=light\] \.hb-product-wordmark/);
+  assert.match(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#48d8d0/);
+  assert.doesNotMatch(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#ff9b43/);
+});
