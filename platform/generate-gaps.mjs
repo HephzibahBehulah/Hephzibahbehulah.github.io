@@ -23,14 +23,16 @@ const output = JSON.stringify({ schemaVersion:1, source:'STATUS.txt', updatedAt:
 const testDirectory = path.join(root, 'platform', 'acceptance', 'gaps');
 const testFiles = new Map(['PLC', 'Simulator', 'ElectCAD', 'Breadboard', 'Building'].map(tool => [tool, path.join(testDirectory, `${tool.toLowerCase()}-gaps.test.mjs`)]));
 for (const [tool, file] of testFiles) {
-  const cases = rows.filter(row => row.tool === tool).map(row => `test.todo(${JSON.stringify(row.acceptanceTestName)});`);
-  if (cases.length !== 6) throw new Error(`${tool} must have six gap acceptance tests.`);
-  const source = `import { test } from 'node:test';\n\n${cases.join('\n')}\n`;
+  const names = rows.filter(row => row.tool === tool).map(row => row.acceptanceTestName);
+  if (names.length !== 6) throw new Error(`${tool} must have six gap acceptance tests.`);
+  const source = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+  const missing = names.filter(name => !source.includes(name));
   if (process.argv.includes('--check')) {
-    if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== source) throw new Error(`Acceptance scaffold is stale: ${path.relative(root, file)}.`);
+    if (!fs.existsSync(file) || missing.length) throw new Error(`Acceptance scaffold is stale: ${path.relative(root, file)}. Missing: ${missing.join(', ')}.`);
   } else {
     fs.mkdirSync(testDirectory, { recursive:true });
-    fs.writeFileSync(file, source);
+    if (!fs.existsSync(file)) fs.writeFileSync(file, `import { test } from 'node:test';\n\n${names.map(name => `test.todo(${JSON.stringify(name)});`).join('\n')}\n`);
+    else if (missing.length) fs.appendFileSync(file, `\n${missing.map(name => `test.todo(${JSON.stringify(name)});`).join('\n')}\n`);
   }
 }
 if (process.argv.includes('--check')) {
@@ -40,3 +42,4 @@ if (process.argv.includes('--check')) {
   fs.writeFileSync(outputPath, output);
   console.log(`Generated ${rows.length} gap rows and 30 acceptance test scaffolds from STATUS.txt.`);
 }
+

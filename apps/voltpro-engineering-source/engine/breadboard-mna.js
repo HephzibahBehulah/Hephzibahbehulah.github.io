@@ -1,4 +1,4 @@
-/* Original VoltPRo bridge: real breadboard strips -> the shared MNA engine. */
+/* Original VoltPro bridge: real breadboard strips -> the shared MNA engine. */
 (function(root){'use strict';
 function group(h){
  if(!h||!Number.isInteger(h.r)||!Number.isInteger(h.c)||h.r<0||h.r>14||h.r===7||h.c<0||h.c>=((h.r<2||h.r>12)?50:63))throw Error('A terminal is outside the 830-point breadboard.');
@@ -12,7 +12,7 @@ function topology(project){
  return {net:h=>find(group(h)),same:(a,b)=>find(group(a))===find(group(b))};
 }
 function build(project){
- if(project?.format!=='voltpro.vbb.json'||!Array.isArray(project.parts)||!Array.isArray(project.wires))throw Error('Open a valid VoltPRo breadboard project.');
+ if(project?.format!=='voltpro.vbb.json'||!Array.isArray(project.parts)||!Array.isArray(project.wires))throw Error('Open a valid VoltPro breadboard project.');
  const topo=topology(project),components=[],wires=[],anchors=new Map(),netPins=new Map(),ids=new Set();
  for(const part of project.parts){
   if(ids.has(part.id))throw Error('Duplicate component ID: '+part.id);ids.add(part.id);
@@ -57,3 +57,4 @@ function capture(project,engine,{duration=.1,steps=400}={}){
 }
 const api={group,topology,build,analyze,capture,parseValue};root.VoltProBreadboardMNA=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
+

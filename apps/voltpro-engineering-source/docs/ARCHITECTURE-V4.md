@@ -1,4 +1,4 @@
-# VoltPRo Architecture V4
+# VoltPro Architecture V4
 
 ## Canonical runtime
 
@@ -29,4 +29,5 @@ Wires contain endpoints plus route segments and engineering metadata. The render
 
 ## Licensing
 
-The repository is Apache-2.0. Component catalogue data and third-party assets must retain their own attribution and licence metadata. VoltPRo-created symbols and assets are marked as original project assets.
+The repository is Apache-2.0. Component catalogue data and third-party assets must retain their own attribution and licence metadata. VoltPro-created symbols and assets are marked as original project assets.
+

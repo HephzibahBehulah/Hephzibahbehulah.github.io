@@ -1,6 +1,6 @@
 # Analysis Studio
 
-This release extends VoltPRo's original browser-native MNA engine. No source code,
+This release extends VoltPro's original browser-native MNA engine. No source code,
 screenshots, device models or assets from the four commercial/reference products
 were copied into this release. Existing third-party asset credits remain in place.
 
@@ -62,3 +62,4 @@ continues through the existing main-branch workflow.
 Project round-trip conversion now prioritizes exact terminal IDs over displayed pin
 labels, removes canonical endpoint aliases from legacy wires, and avoids double-mapping
 numeric IDs. Repeated save/load regression checks run with the real terminal graph.
+

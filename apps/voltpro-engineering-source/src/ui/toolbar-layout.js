@@ -65,9 +65,9 @@
   const makeMenu=(name,parent=menus)=>{
    const details=document.createElement('details'),summary=document.createElement('summary'),box=document.createElement('div');
    details.dataset.menu=name.toLowerCase();summary.textContent=name;summary.dataset.icon=icons[name];summary.title=name;summary.setAttribute('aria-label',name+' menu');
-   box.className='vp-toolbar-dropdown';details._vpDropdown=box;details.append(summary,box);box.addEventListener('pointerleave',scheduleMenuClose);parent.append(details);
+   box.className='vp-toolbar-dropdown';details._vpDropdown=box;details.append(summary,box);box.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer));box.addEventListener('pointerleave',scheduleMenuClose);parent.append(details);
    details.addEventListener('toggle',()=>{if(details.open){for(const sibling of menus.children)if(sibling!==details&&sibling.tagName==='DETAILS')sibling.open=false;openMenu(details)}else if(activeMenu?.details===details)closeMenu()});
-   details.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer));
+   details.addEventListener('pointerenter',()=>{clearTimeout(menuCloseTimer);if(hoverMenus?.matches)openMenu(details)});
    details.addEventListener('pointerleave',()=>{if(hoverMenus?.matches)scheduleMenuClose(details)});
    return {details,box};
   };
@@ -159,4 +159,5 @@
  }
  window.addEventListener('load',layout);
 })();
+
 

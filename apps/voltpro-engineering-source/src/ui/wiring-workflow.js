@@ -1,4 +1,4 @@
-/* VoltPRo wiring workflow: geometry and interaction state, independent of SVG rendering. */
+/* VoltPro wiring workflow: geometry and interaction state, independent of SVG rendering. */
 (function(root,factory){
  const api=factory();
  if(typeof module==="object"&&module.exports) module.exports=api;

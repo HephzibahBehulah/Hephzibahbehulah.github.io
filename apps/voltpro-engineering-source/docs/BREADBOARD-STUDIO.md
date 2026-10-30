@@ -1,7 +1,7 @@
 # Breadboard Studio — 2026-10-17
 
 The dedicated `breadboard.html` page now opens as a physical electronics workbench.
-This is an original implementation built on VoltPRo's board geometry and shared MNA
+This is an original implementation built on VoltPro's board geometry and shared MNA
 engine. The reference product was inspected for workflows; its source code, artwork,
 component models and assets were not copied.
 
@@ -58,3 +58,4 @@ Run `npm test`. New behavioral tests cover real strip topology, split rails, jum
 RC charging, a repeated save/load divider, LED polarity, switches, AC bias and waveform,
 engineering-unit parsing, shorted footprints, unsupported firmware and resistor bands.
 Browser checks cover examples, actual probes, the scope, undo/redo and local project loading.
+

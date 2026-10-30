@@ -1,4 +1,4 @@
-/* VoltPRo terminal engine.
+/* VoltPro terminal engine.
  * Pure topology/model layer: no SVG, DOM, or renderer dependency.
  * The legacy build()/endpoint() entry points remain compatible.
  */
@@ -387,3 +387,4 @@
   function endpoint(deviceId,terminalId) { return key(deviceId,String(terminalId)); }
   return {TerminalEngine,DEFINITIONS,DOMAINS:[...DOMAINS],key,endpoint,endpointId,definitionFor,terminalPosition,compatibility,build};
 });
+

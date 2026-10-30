@@ -1,8 +1,8 @@
 # Step 47 — WireONa-Parity Production Acceptance
 
-WireONa publicly presents three core workflows: design/wire, explore logic/simulation and learn/practise. VoltPRo implements these independently under its own architecture. citeturn0search0
+WireONa publicly presents three core workflows: design/wire, explore logic/simulation and learn/practise. VoltPro implements these independently under its own architecture. citeturn0search0
 
-| Capability | VoltPRo implementation | Gate |
+| Capability | VoltPro implementation | Gate |
 |---|---|---|
 | Component library | `src/ui/component-library.js` + existing catalogue | IMPLEMENTED |
 | Terminal wiring | terminal graph + net resolver | IMPLEMENTED |
@@ -43,4 +43,5 @@ The implementation is production-ready only after:
 
 ## Important distinction
 
-This matrix means functional workflow parity, not pixel-perfect cloning. WireONa is the public product reference for panel design, terminal wiring, simulation and PLC learning; VoltPRo must retain independent code, assets, naming and architecture. citeturn0search0
+This matrix means functional workflow parity, not pixel-perfect cloning. WireONa is the public product reference for panel design, terminal wiring, simulation and PLC learning; VoltPro must retain independent code, assets, naming and architecture. citeturn0search0
+

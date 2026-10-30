@@ -1,6 +1,6 @@
-# VoltPRo Engineering Build — 47-Step Execution Plan
+# VoltPro Engineering Build — 47-Step Execution Plan
 
-This document is the implementation contract for the VoltPRo engineering rebuild. It targets functional parity with the public workflow of WireONa while preserving an independent architecture, original assets, open-source licensing and VoltPRo identity.
+This document is the implementation contract for the VoltPro engineering rebuild. It targets functional parity with the public workflow of WireONa while preserving an independent architecture, original assets, open-source licensing and VoltPro identity.
 
 ## Foundation
 1. Architecture freeze and engineering contracts
@@ -60,3 +60,4 @@ This document is the implementation contract for the VoltPRo engineering rebuild
 47. WireONa-parity acceptance and production gate
 
 Each step is considered complete only when its implementation and automated validation are present.
+

@@ -55,15 +55,15 @@ test("top menus and nested project menus float over the canvas without a side do
  const toolbar=read("src/ui/toolbar-layout.js"),menus=read("platform/toolbar-menus.js"),css=read("src/ui/toolbar-layout.css"),html=read("simulator.html"),shell=read("workspace-shell.js");
  assert.ok(toolbar.includes("box.addEventListener('pointerleave',scheduleMenuClose)"));
  assert.ok(toolbar.includes("positionMenu"));
- assert.ok(menus.includes('trigger.closest(".vp-toolbar-menus")'));
- assert.ok(menus.includes('trigger.closest(".vp-toolbar-dropdown")'));
+ assert.ok(menus.includes('event.target.closest("[data-vp-menu]")'));
+ assert.ok(menus.includes('document.body.appendChild(popover)'));
  assert.ok(css.includes(".vp-toolbar-dropdown"));
  assert.ok(css.includes(".vp-toolbar-dropdown.vp-menu-open{position:fixed!important;z-index:100100!important"));
  assert.ok(css.includes(".vp-toolbar-popover{z-index:100200"));
  assert.ok(html.includes("toolbar-layout.js?v=20261029-dropdown2"));
  assert.ok(html.includes("toolbar-layout.css?v=20261029-dropdown2"));
  assert.ok(html.includes("platform/toolbar-menus.js?v=20261029-dropdown2"));
- assert.ok(shell.includes("simulator.html?vp_embed=1&v=20261029-dropdown2"));
+ assert.ok(shell.includes('simulator: "/simulator.html?vp_embed=1"'));
 });
 test("Serial view receives output from the virtual MCU interpreter",()=>{
  const views=read("src/ui/workspace-views.js"),mcu=read("platform/mcu-lab-ui.js");
@@ -74,8 +74,9 @@ test("Serial view receives output from the virtual MCU interpreter",()=>{
 });
 test("new workspace module is included in the active offline cache",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js");
- assert.ok(html.includes("service-worker.js?v=20261027e"));
- assert.ok(worker.includes('const CACHE="voltpro-v99"'));
+ assert.ok(html.includes("service-worker.js?v=20261030-brand-shell"));
+ assert.ok(worker.includes('const CACHE="voltpro-v102"'));
  assert.ok(worker.includes('"./src/ui/workspace-views.js"'));
 });
+
 

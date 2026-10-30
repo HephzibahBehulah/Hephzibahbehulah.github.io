@@ -16,8 +16,9 @@ window.addEventListener('message',event=>{
  if(event.origin!==location.origin||event.source!==window.parent||event.data?.type!=='voltpro:assistant-design')return;
  const answer=String(event.data.answer||'');
  if(answer.length>150000)return;
- try{const plan=E.remotePlan(answer);if(!plan)throw Error(E.proposalError||'The response does not contain a supported VoltPRo v3 circuit.');preview(plan);}
+ try{const plan=E.remotePlan(answer);if(!plan)throw Error(E.proposalError||'The response does not contain a supported VoltPro v3 circuit.');preview(plan);}
  catch(error){const dialog=document.createElement('dialog'),title=document.createElement('h2'),message=document.createElement('p'),close=document.createElement('button');dialog.className='assistant-preview';dialog.setAttribute('aria-label','Design import unavailable');title.textContent='Design could not be imported';message.textContent=error instanceof Error?error.message:'The assistant response is not an importable project.';close.textContent='Close';close.addEventListener('click',()=>dialog.close());dialog.append(title,message,close);document.body.append(dialog);dialog.addEventListener('close',()=>dialog.remove(),{once:true});dialog.showModal();}
 });
 const pending=localStorage.getItem('voltpro-assistant-import');if(pending&&(window.VoltProSimulator||window.VoltProBreadboardUI))Promise.resolve(window.VoltProRegistry?.ready).then(()=>requestAnimationFrame(async()=>{try{const x=JSON.parse(pending);await launch(x.plan,x.target);localStorage.removeItem('voltpro-assistant-import');}catch(error){const box=document.createElement('dialog');box.className='assistant-preview';box.innerHTML='<h2>Import needs attention</h2><p></p><button>Close</button>';box.querySelector('p').textContent=error.message;box.querySelector('button').onclick=()=>box.close();document.body.append(box);box.showModal();}}));
 })();
+

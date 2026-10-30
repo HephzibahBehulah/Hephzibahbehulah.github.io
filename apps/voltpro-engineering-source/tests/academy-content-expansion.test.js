@@ -5,10 +5,10 @@ const path = require("node:path");
 const read = p => fs.readFileSync(path.join(__dirname, "..", p), "utf8");
 
 test("Academy expansion is loaded after the existing Academy script", () => {
-  const html = read("index.html");
+  const html = read("academy.html");
   assert.match(html, /<script src="script\.js[^"]*"><\/script>\s*<script src="academy-content-expansion\.js\?v=20261011a"><\/script>/);
   assert.match(read("service-worker.js"), /"\.\/academy-content-expansion\.js"/);
-  assert.match(read("service-worker.js"), /voltpro-v99/);
+  assert.match(read("service-worker.js"), /voltpro-v102/);
 });
 
 test("Academy expansion parses and expands existing content collections", () => {
@@ -38,7 +38,7 @@ test("Expansion banks contain substantial unique question and lab sets", () => {
 });
 
 test("Existing sidebar menu remains unchanged and expansion is not a new navigation destination", () => {
-  const html = read("index.html");
+  const html = read("academy.html");
   const nav = html.slice(html.indexOf('<nav class="nav"'), html.indexOf("</nav>", html.indexOf('<nav class="nav"')));
   assert.ok(nav.includes('data-view="labs"'));
   assert.ok(nav.includes('data-view="quiz"'));
@@ -48,4 +48,5 @@ test("Existing sidebar menu remains unchanged and expansion is not a new navigat
   assert.ok(!nav.includes("academy-content-expansion"));
   assert.equal((nav.match(/data-view=/g) || []).length, 10);
 });
+
 

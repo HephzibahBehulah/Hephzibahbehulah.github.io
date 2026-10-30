@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const LINK = '<link rel="stylesheet" href="/_hb/sitewide-osint-theme.css?v=1" data-hb-sitewide-theme>';
+const LINK = '<link rel="stylesheet" href="/_hb/sitewide-osint-theme.css?v=2" data-hb-sitewide-theme>';
 
 export function injectSitewideTheme(root) {
   const pages = [];
@@ -28,3 +28,4 @@ export function injectSitewideTheme(root) {
   if (themed.length === 0) throw new Error('The global theme was not applied to any built HTML page.');
   return {pages:pages.length, themed:themed.length, injected};
 }
+

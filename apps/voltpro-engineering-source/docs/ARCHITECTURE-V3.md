@@ -1,7 +1,7 @@
-# VoltPRo Platform Architecture v3
+# VoltPro Platform Architecture v3
 
 ## Product boundary
-VoltPRo is an open-source browser learning platform and electrical/electronics simulation laboratory. It must never imply that a simulation is approval for real electrical work.
+VoltPro is an open-source browser learning platform and electrical/electronics simulation laboratory. It must never imply that a simulation is approval for real electrical work.
 
 ## Layers
 1. Academy: curriculum, lessons, labs, assessments, reference material.
@@ -20,3 +20,4 @@ A component definition supplies stable ID, category, pins, parameters, symbol re
 
 ## Safety
 High-voltage and three-phase features are educational models. No software output replaces VDE/DIN/IEC/NEC requirements, manufacturer instructions, inspection or qualified engineering judgement.
+

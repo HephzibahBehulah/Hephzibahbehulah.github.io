@@ -1,4 +1,4 @@
-# VoltPRo Terminal Engine
+# VoltPro Terminal Engine
 
 The terminal engine in `src/core/terminal-graph.js` is the framework-independent authority for terminal identity, device ownership, terminal positions, wire endpoint lookup, and topology validation. It runs in Node.js and in the browser and does not inspect SVG nodes, DOM IDs, or renderer state.
 
@@ -36,3 +36,4 @@ The legacy `build()`, `endpoint()`, `resolve()`, `endpointIds()`, `terminals`, `
 Run `node --test tests/terminal-engine.test.js` for focused terminal tests, or `npm test` for the full repository suite. Tests cover stable lookup, movement, rotation, duplicate IDs, contactor path independence, connected wires/nets, invalid references, safe device deletion, and canonical save/reload.
 
 The terminal engine validates topology metadata; it does not claim that every listed component has a complete manufacturer-validated electrical simulation model. Domain and connection rules are deliberately explicit and can be extended as device models mature.
+

@@ -16,10 +16,10 @@ test('engineering health returns JSON and reflects the deployed AI binding',asyn
 
 test('engineering chat applies domain-specific system contracts for all tools',async()=>{
  const cases=[
-  ['simulator','VoltPRo Simulator AI'],
-  ['plc','VoltPRo PLC AI'],
-  ['electcad','VoltPRo ElectCAD AI'],
-  ['breadboard','VoltPRo Breadboard AI'],
+  ['simulator','VoltPro Simulator AI'],
+  ['plc','VoltPro PLC AI'],
+  ['electcad','VoltPro ElectCAD AI'],
+  ['breadboard','VoltPro Breadboard AI'],
   ['building-electrical','VoltPro BuildingCAD AI']
  ];
  for(const [tool,expected] of cases){
@@ -53,3 +53,4 @@ test('engineering chat falls back to non-streaming when stream setup fails',asyn
  const result=await gateway.fetch(new Request(origin+'/chat',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({tool:'breadboard',stream:true,messages:[{role:'user',content:'Map a breadboard prototype'}]})}),{AI:{run:async(_model,opts)=>{calls++;if(opts.stream)throw Error('stream unavailable');return {response:'Fallback answer'};}},API_LIMITER:{limit:async()=>({success:true})}});
  const body=await result.text();assert.equal(calls,2);assert.match(body,/"type":"reset"/);assert.match(body,/"text":"Fallback answer"/);assert.match(body,/"type":"done"/);
 });
+

@@ -1,9 +1,9 @@
-/* VoltPRo core contracts. Framework-independent and deterministic. */
+/* VoltPro core contracts. Framework-independent and deterministic. */
 (()=>{"use strict";
 const VERSION=5;
 const PIN_TYPES=new Set(["electrical","power","control","ground","digital","analog","passive"]);
 const DOMAINS=new Set(["dc","ac","three-phase","digital","control","mechanical","ground"]);
-const assert=(ok,msg)=>{if(!ok)throw new Error("VoltPRo contract: "+msg)};
+const assert=(ok,msg)=>{if(!ok)throw new Error("VoltPro contract: "+msg)};
 function terminal(id,label,type="electrical",number=null,domain="dc"){
  assert(typeof id==="string"&&id.length>0,"terminal id required");
  assert(PIN_TYPES.has(type),"unknown pin type "+type);

@@ -9,13 +9,13 @@ function stopTimer(){if(timer!==null){clearTimeout(timer);timer=null}if(activeCo
 function open(options={}){
  stopTimer();
  const workbench=window.VoltProWorkbench;
- if(typeof workbench?.openWorkspace!=="function"){console.error("VoltPRo MCU Lab: Workbench workspace host is unavailable.");window.alert("The Microcontroller workspace is not ready. Reload the simulator and try again.");return}
+ if(typeof workbench?.openWorkspace!=="function"){console.error("VoltPro MCU Lab: Workbench workspace host is unavailable.");window.alert("The Microcontroller workspace is not ready. Reload the simulator and try again.");return}
  workbench.openWorkspace("MICROCONTROLLER LAB",'<main class="vpw-main"><p>Preparing the hardware workspace…</p></main>');
  const shell=$("#vpWorkbench"),body=shell?.querySelector(".vpw-body");
- if(!shell||!body){console.error("VoltPRo MCU Lab: workspace shell could not be mounted.");window.alert("The Microcontroller workspace could not be mounted. Reload the simulator and try again.");return}
+ if(!shell||!body){console.error("VoltPro MCU Lab: workspace shell could not be mounted.");window.alert("The Microcontroller workspace could not be mounted. Reload the simulator and try again.");return}
  const sample=options.sample||"blink";
  const samples={
- blink:["void setup(){","  pinMode(13, OUTPUT);","  Serial.println(\"VoltPRo ready\");","}","void loop(){","  digitalWrite(13, HIGH);","  delay(500);","  digitalWrite(13, LOW);","  delay(500);","}"].join("\n"),
+ blink:["void setup(){","  pinMode(13, OUTPUT);","  Serial.println(\"VoltPro ready\");","}","void loop(){","  digitalWrite(13, HIGH);","  delay(500);","  digitalWrite(13, LOW);","  delay(500);","}"].join("\n"),
  button:["void setup(){","  pinMode(2, INPUT_PULLUP);","  pinMode(13, OUTPUT);","  Serial.println(\"Press the virtual button to light the LED\");","}","void loop(){","  if (digitalRead(2) == LOW) { digitalWrite(13, HIGH); } else { digitalWrite(13, LOW); }","}"].join("\n"),
  pwm:["void setup(){","  pinMode(9, OUTPUT);","  Serial.println(\"PWM demo on D9\");","}","void loop(){","  analogWrite(9, 64);","  delay(300);","  analogWrite(9, 192);","  delay(300);","}"].join("\n")
  };

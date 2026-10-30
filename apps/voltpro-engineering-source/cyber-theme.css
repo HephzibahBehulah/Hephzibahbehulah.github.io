@@ -1,4 +1,4 @@
-/* VoltPRo Cyber Deck theme — visual layer only; application behaviour is unchanged. */
+/* VoltPro Cyber Deck theme — visual layer only; application behaviour is unchanged. */
 :root {
   --cyber-void: #050711;
   --cyber-deep: #080d1b;
@@ -440,3 +440,4 @@
   outline:2px solid #63f1ff!important;outline-offset:3px;
 }
 @media(max-width:640px){.academy-page .view .hero::after{right:-170px;opacity:.65}}
+

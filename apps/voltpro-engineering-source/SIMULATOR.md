@@ -1,6 +1,6 @@
-# VoltPRo Simulator
+# VoltPro Simulator
 
-VoltPRo Simulator is the interactive simulation workspace for VoltPRo Academy.
+VoltPro Simulator is the interactive simulation workspace for VoltPro Academy.
 
 ## Current capabilities
 - Browser-only schematic canvas with drag/drop components.
@@ -37,3 +37,4 @@ This is an educational simulator. It is not a substitute for current IEC/DIN/VDE
 3. Add digital event simulation and MCU execution.
 4. Add panel/DIN-rail layout, cable sizing and BOM.
 5. Add SVG/PDF exports, PWA offline shell and multilingual content.
+

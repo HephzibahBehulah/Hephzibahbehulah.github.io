@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const read = file => fs.readFileSync(path.join(root, file), "utf8");
+const read = file => fs.readFileSync(path.join(root, file), "utf8").replaceAll("\r\n", "\n");
 const nav = read("apps/voltpro-engineering-source/src/ui/site-shell.js");
 const platformScript = read("platform/platform.js");
 const shell = read("apps/voltpro-engineering-source/workspace-shell.js");
@@ -15,11 +15,40 @@ const assistantTheme = read("apps/voltpro-engineering-source/voltpro-hb-theme.cs
 const canvas = read("apps/voltpro-engineering-source/electrical-canvas.html");
 const ai = read("apps/voltpro-engineering-source/voltpro-assistant.js");
 const academy = read("apps/voltpro-engineering-source/index.html");
+const homeBrand = read("apps/voltpro-engineering-source/src/ui/voltpro-brand.js");
+const homeCopy = read("apps/voltpro-engineering-source/src/ui/voltpro-home-copy.js");
+const sharedExperience = read("platform/experience.js");
+const companyLogo = read("packages/shared-ui/assets/hb-logo.svg");
+const voltproLogo = read("apps/voltpro-engineering-source/icons/voltpro-512.svg");
+const cyberManifest = read("apps/pentest-source/app/manifest.webmanifest");
 
-test("global bottom navigation keeps the required workspace order", () => {
-  const block = nav.match(/for\(const \[icon,label,path\]of \[(.*?)\]\)\{const a=link/s)?.[1] || "";
-  const labels = [...block.matchAll(/\['[^']*','([^']+)','[^']+'\]/g)].map(match => match[1]);
-  assert.deepEqual(labels, ["Simulator", "PLC", "ElectCAD", "Engineering Tools", "Breadboard", "Oscilloscope", "Electrical"]);
+test("company and product marks remain separate, named identities", () => {
+  assert.match(companyLogo, /<title>Hephzibah Behulah<\/title>/i);
+  assert.match(academy, /class="parent-logo"[^>]+alt="HEPHZIBAH BEHULAH"/);
+  assert.match(academy, /class="product-wordmark">VoltPro<\/span>/);
+  assert.match(homeBrand, /company: "HEPHZIBAH BEHULAH"/);
+  assert.match(homeBrand, /product: "VoltPro"/);
+  assert.match(voltproLogo, /<title id="title">VoltPro<\/title>/);
+  assert.match(cyberManifest, /"short_name":"Cyber Learning"/);
+});
+
+test("company theme selection synchronizes the home, suite and embedded workspaces", () => {
+  assert.match(sharedExperience, /dataset\.hbTheme=theme/);
+  assert.match(sharedExperience, /dataset\.theme=theme/);
+  assert.match(sharedExperience, /dataset\.vpTheme=theme/);
+  assert.match(sharedExperience, /#vpThemeToggle/);
+  assert.match(shell, /const syncTheme = \(doc, theme\)/);
+  assert.match(shell, /doc\.documentElement\.dataset\.hbTheme = theme/);
+  assert.match(shell, /document\.addEventListener\("hb:theme"/);
+  assert.match(academy, /class="parent-logo"/);
+});
+
+test("global bottom navigation follows the shared engineering command order", () => {
+  assert.match(nav, /navigation=brandConfig\.navigation/);
+  assert.match(nav, /for\(const item of navigation\)/);
+  const navConfig = homeBrand.split("const navigation = Object.freeze([")[1].split("]);\\nwindow.VoltProBrandConfig")[0];
+  const labels = [...navConfig.matchAll(/name: "([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(labels, ["Simulator", "PLC", "ElectCAD", "Engineering Tools", "Breadboard", "Electrical"]);
 });
 
 test("main portfolio return link is same-tab and part of the persistent shared header", () => {
@@ -38,7 +67,9 @@ test("workspace switches isolate Simulator and PLC iframe lifecycles and update 
   assert.ok(frameSetup.indexOf('frame.addEventListener("load"') < frameSetup.indexOf("frame.src = rootPrefix + tool.src"));
   assert.match(shell, /history\.pushState/);
   assert.match(shell, /element\.dataset\.active = String\(active\)/);
-  for (const path of ["/simulator", "/plc", "/electcad", "/tools", "/breadboard", "/electrical"]) assert.ok(shell.includes('path: "' + path + '"'));
+  assert.match(shell, /brandConfig\.workspaces\.map\(\(\{ id, name, href \}\)/);
+  assert.match(shell, /tools\.push\(\{ path: "\/tools"/);
+  for (const path of ["/simulator", "/plc", "/electcad", "/breadboard", "/oscilloscope", "/electrical"]) assert.ok(homeBrand.includes('href: "' + path + '"'));
 });
 
 test("Simulator embed applies its template before first paint and resets shared chrome on entry", () => {
@@ -140,12 +171,13 @@ test("ElectCAD uses a professional three-column scrollable CAD workspace", () =>
 
 
 test("the academy sidebar includes the Electrical Building destination", () => {
-  assert.ok(academy.includes('href="/electrical"'));
-  assert.ok(academy.includes("VoltPro Electrical Building"));
+  assert.ok(homeBrand.includes('name: "Electrical", href: "/electrical"'));
+  assert.match(shell, /path: href/);
+  assert.match(shell, /title: brandConfig\.brand\.product \+ " " \+ name/);
 });
 
 test("Electrical Building uses its dedicated architectural plan editor", () => {
-  assert.ok(shell.includes('path: "/electrical", title: "VoltPro Electrical Building", src: "/electrical-canvas.html?vp_embed=1"'));
+  assert.ok(shell.includes('electrical: "/electrical-canvas.html?vp_embed=1"'));
   assert.match(canvas, /BuildingCAD/);
   assert.match(read("apps/voltpro-engineering-source/electrical-canvas.js"), /validateBuildingDocument/);
   assert.match(read("apps/voltpro-engineering-source/src/ui/account.js"), /schemaVersion===2\|\|item\.data\?\.schemaVersion===3/);
@@ -254,9 +286,9 @@ test("Breadboard command menu proxies only to implemented native controls", () =
   assert.match(html, /\.breadboard-menubar \[data-proxy\].*?\.click\(\)/s);
 });
 
-test("all five editor entry points load the shared charcoal and orange finish", () => {
+test("tool editor entry points load the shared VoltPro template palette", () => {
   const shared = read("apps/voltpro-engineering-source/workspace-engineering-theme.css");
-  assert.match(shared, /--vp-workspace-accent:#ff8a24/);
+  assert.match(shared, /--vp-workspace-accent:#48d8d0/);
   for (const file of ["apps/voltpro-engineering-source/simulator.html", "apps/voltpro-engineering-source/breadboard.html", "apps/voltpro-engineering-source/electrical-canvas.html"]) assert.ok(read(file).includes("workspace-engineering-theme.css"));
   assert.ok(read("apps/voltpro-engineering-source/apps/voltpro-plc/src/main.tsx").includes("workspace-engineering-theme.css"));
   assert.ok(read("apps/engineering/voltpro-electcad/main.tsx").includes("workspace-engineering-theme.css"));
@@ -270,13 +302,15 @@ test("Adigun switches into architectural wiring context on the electrical route"
 test("shared engineering design system reaches main, admin, embedded and standalone tool routes", () => {
   const theme = read("apps/voltpro-engineering-source/workspace-engineering-theme.css");
   const shellCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
-  const appRoutes = ["index.html", "academy-workbench.html", "engineering.html", "simulator.html", "breadboard.html", "electrical-canvas.html"]
+  const appRoutes = ["academy-workbench.html", "engineering.html", "simulator.html", "breadboard.html", "electrical-canvas.html"]
     .map(file => read("apps/voltpro-engineering-source/" + file));
   const plcEntry = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/main.tsx");
   assert.match(theme, /font-family:Inter,"Segoe UI",system-ui,sans-serif/);
-  assert.match(theme, /--vp-workspace-accent:#ff8a24/);
+  assert.match(theme, /--vp-workspace-accent:#48d8d0/);
   assert.match(theme, /\.vp-site-navigation>summary:hover/);
   assert.match(shellCss, /vp-site-navigation/);
+  assert.match(academy, /src\/ui\/voltpro-home\.css/);
+  assert.match(academy, /class="voltpro-home"/);
   for (const html of appRoutes) assert.match(html, /workspace-engineering-theme\.css/);
   assert.match(plcEntry, /workspace-engineering-theme\.css/);
   assert.match(shell, /hostname\.startsWith\("admin\."\)/);
@@ -296,7 +330,7 @@ test("PLC project view switching keeps the same editable project and scan mode",
   assert.match(layout, /project: \{ \.\.\.s\.project, mode: view \}/);
   assert.match(store, /view:'ladder'\|'fbd'\|'plc';setView/);
   assert.match(layout, /s\.view === 'plc' \? <PLCIOView project=\{s\.project\}/);
-  assert.match(io, /same device tags, terminals, wires and scan results/);
+  assert.match(io, /same tags, terminals, wiring and scan results as Ladder and Function Block views/);
 });
 
 test("shared Adigun voice input fills the new chat without sending automatically", () => {
@@ -337,19 +371,20 @@ test("fixed engineering header and readiness banner reserve their viewport space
 });
 
 
-test("Oscilloscope root project navigation contains exactly seven tools in the requested order",()=>{
- const section=academy.split('Design &amp; simulation</summary>')[1].split('</div></details>')[0];
- assert.deepEqual([...section.matchAll(/href="([^"]+)"/g)].map(m=>m[1]),['/simulator','/plc','/electcad','/breadboard','/oscilloscope','/electrical','/tools']);
- assert.match(shell,/path: "\/oscilloscope".*oscilloscope\.html/);
+test("clean VoltPro home links every workspace to a supported engineering route",()=>{
+ const routes=[...homeBrand.split("const navigation = Object.freeze([")[0].matchAll(/href: "([^"]+)"/g)].map(match=>match[1]);
+ assert.deepEqual(routes,['/plc','/electcad','/breadboard','/electrical','/oscilloscope','/simulator']);
+ assert.match(shell,/brandConfig\.workspaces\.map/);
+ for(const route of routes)assert.ok(homeBrand.includes(`href: "${route}"`),`Missing route ${route}`);
+ for(const language of ['en','de','yo','pcm'])assert.match(homeCopy,new RegExp(`\\n?  ${language}: \\{`));
 });
 
 
 test("shared engineering language selector offers all four choices on every requested route", () => {
   const expected = "[['en','English'],['de','Deutsch'],['yo','Yoruba'],['pid','Pidgin English (PNG)']]";
   assert.ok(nav.includes(expected), "shared header must offer all four named choices");
-  for (const route of ["/electcad", "/breadboard", "/electrical", "/oscilloscope", "/simulator"]) {
-    assert.ok(shell.includes('path: "' + route + '"'), "missing shared route " + route);
-  }
+  assert.match(shell,/brandConfig\.workspaces\.map/);
+  for (const route of ["/electcad", "/breadboard", "/electrical", "/oscilloscope", "/simulator", "/plc"]) assert.ok(homeBrand.includes('href: "' + route + '"'), "missing shared route " + route);
   assert.doesNotMatch(shell, /option.textContent = option.value.toUpperCase/);
 });
 
@@ -361,3 +396,4 @@ test("oscilloscope initialization has no handler for removed image control", () 
   assert.ok(!app.includes("$('#image').onclick"), "startup must not bind to the removed PNG control");
   assert.ok(app.includes("Export waveform PNG"), "PNG export remains available from the File menu");
 });
+

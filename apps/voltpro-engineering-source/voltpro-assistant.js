@@ -1,4 +1,4 @@
-/* VoltPRo public learning assistant. Project-aware, source-aware, safety-first. */
+/* VoltPro public learning assistant. Project-aware, source-aware, safety-first. */
 (() => {
   "use strict";
   if (window.VoltProAssistant) return;
@@ -16,7 +16,7 @@ CANONICAL CONTENT OWNERSHIP:
 5. Reference Library (reference view): glossary, formulas, Ohm calculator, and German standards/guidance reminders. Always verify current standards with their issuing bodies.
 6. Safety & Standards (safety view): five safety rules, safety gate and educational reminders. Never recommend working live, bypassing protective devices, or treating a checklist as authorization.
 7. Virtual Labs (labs view): guided in-browser exercises for Ohm’s law, safe isolation, open-conductor fault reasoning, distribution inspection, meter setup, diagram-to-reality, and RCD trip investigation. Simulations do not energize real circuits.
-8. VoltPRo Simulator (simulator.html + simulator.js): flagship schematic/circuit workspace. It owns circuit construction, component placement, wiring, simulation controls, measurement/analysis where supported, project creation/open/save/export, undo/redo and canvas interaction. Preserve every existing control. Do not promise a simulation mode or component that is not verified.
+8. VoltPro Simulator (simulator.html + simulator.js): flagship schematic/circuit workspace. It owns circuit construction, component placement, wiring, simulation controls, measurement/analysis where supported, project creation/open/save/export, undo/redo and canvas interaction. Preserve every existing control. Do not promise a simulation mode or component that is not verified.
 9. Engineering Tools (engineering.html + engineering.js): engineering calculators and utilities, including Ohm’s law, power, voltage drop, three-phase, cable exercise, protection and motor-related calculations. Inputs and results are estimates; confirm assumptions, units, installation method and current standards.
 10. Practical Workbench (academy-workbench.html + academy-workbench.js): canonical home for practical projects/starters, fault scenarios (1,000 parameterized cases), challenges (10,000 parameterized exercises), demo circuits (90), project starters (40), calculators (25), tutorials (30), Color/LED lab, Wire Lab/cable voltage-drop exercise and the curated technical tool index (401 entries). Do not duplicate these full banks inside the Simulator or Reference.
 11. Tools & Equipment (tools view): physical hand tools, test instruments, safe-use concepts and component lexicon. This is not the simulator component palette.
@@ -77,7 +77,7 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
     if (/where.*(calculator|voltage drop|three.phase|ohm|motor calculation)/.test(q))
       return "Open Engineering Tools for calculators and engineering estimates. The Practical Workbench also has its own guided calculator and practice sections; use the Engineering Tools page for the canonical engineering-calculator workspace.";
     if (/where.*(build|wire|circuit|schematic|simulate)/.test(q) || /simulator/.test(q))
-      return "Open VoltPRo Simulator for circuit construction, component placement, wiring, simulation controls, project actions, undo/redo and canvas interaction. Use Practical Workbench for prepared projects and practice banks.";
+      return "Open VoltPro Simulator for circuit construction, component placement, wiring, simulation controls, project actions, undo/redo and canvas interaction. Use Practical Workbench for prepared projects and practice banks.";
     if (/component learning|apprentice ar|ar mode|camera/.test(q))
       return "Component Learning is currently a camera/photo learning exercise only. It does not identify components automatically or verify ratings or wiring. Read markings and confirm the manufacturer data.";
     if (/virtual lab|virtual labs/.test(q))
@@ -97,9 +97,9 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
     if (/voltage drop|spannungsfall/.test(q))
       return "Voltage drop depends on current, conductor length, cross-sectional area, conductor material and circuit arrangement. Engineering Tools provides an educational estimate; verify assumptions and applicable requirements.";
     if (/safety|230 ?v|400 ?v|mains|live circuit|electric shock|sicherheit/.test(q))
-      return "Electrical safety first: do not work on live equipment. Isolate all sources, secure against reconnection, verify absence of voltage with suitable tested equipment, and follow applicable procedures and qualifications. VoltPRo is not authorization to perform electrical work.";
+      return "Electrical safety first: do not work on live equipment. Isolate all sources, secure against reconnection, verify absence of voltage with suitable tested equipment, and follow applicable procedures and qualifications. VoltPro is not authorization to perform electrical work.";
     if (/voltpro|what can you do|help|capabilit|project/.test(q))
-      return "I can explain VoltPRo’s project structure, direct you to the correct workspace, explain electrical fundamentals and calculations, and retrieve public reference summaries when external lookup is requested. The Simulator builds and simulates circuits; Engineering Tools calculates; Practical Workbench hosts project/fault/challenge/tutorial and Wire/Color labs.";
+      return "I can explain VoltPro’s project structure, direct you to the correct workspace, explain electrical fundamentals and calculations, and retrieve public reference summaries when external lookup is requested. The Simulator builds and simulates circuits; Engineering Tools calculates; Practical Workbench hosts project/fault/challenge/tutorial and Wire/Color labs.";
     return null;
   };
   const history = [];
@@ -145,9 +145,9 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
     } catch (_) {}
     if(!answer&&parts.length)answer=parts.map(r=>r.name+'\n'+r.description+'\nTerminals: '+r.terminals.map((t,i)=>(i+1)+' '+t.label).join(', ')+'\nParameters: '+Object.entries(r.props||{}).map(([k,v])=>k+' = '+v).join(', ')+'\nModel limits: '+r.limitations).join('\n\n');
     if (!answer) answer = window.VoltProAssistantEngineering?.knowledge(q)||localAnswer(q);
-    if (!answer && internalTools.length) answer = "I found these relevant entries in VoltPRo’s curated technical tool index. Open Practical Workbench → Tool Index to explore the wider catalogue:\n\n" + internalTools.map(tool => "• " + tool.name + " — " + tool.description).join("\n");
+    if (!answer && internalTools.length) answer = "I found these relevant entries in VoltPro’s curated technical tool index. Open Practical Workbench → Tool Index to explore the wider catalogue:\n\n" + internalTools.map(tool => "• " + tool.name + " — " + tool.description).join("\n");
     if (!answer && sources.length) answer = "I found these public reference pages. Their snippets are starting points, not a substitute for official technical documentation.";
-    if (!answer) answer = "The remote AI service is unavailable and I do not have a reliable offline answer for that question. Try a specific VoltPRo workspace or enable external lookup.";
+    if (!answer) answer = "The remote AI service is unavailable and I do not have a reliable offline answer for that question. Try a specific VoltPro workspace or enable external lookup.";
     if (sources.length && !/https?:\/\//i.test(answer)) answer += "\n\nExternal references: " + sources.map(s => s.title + " — " + s.url).join("; ");
     const proposal=window.VoltProAssistantEngineering?.remotePlan(answer);if(proposal)window.VoltProDesignStudio?.remember(proposal);else if(window.VoltProAssistantEngineering?.proposalError)answer+='\n\nPROJECT CHECK: Import is unavailable because '+window.VoltProAssistantEngineering.proposalError+' Ask for a corrected design.';
     history.push({ role: "user", content: q }, { role: "assistant", content: answer });
@@ -165,3 +165,4 @@ NAVIGATION POLICY: avoid duplicate content ownership. Simulator = build/simulate
     projectContext: PROJECT_CONTEXT
   };
 })();
+

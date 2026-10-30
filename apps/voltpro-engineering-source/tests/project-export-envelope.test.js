@@ -15,7 +15,7 @@ function projectV5() {
   return {
     format: "voltpro",
     version: 5,
-    metadata: { name: "Relay test circuit", author: "VoltPRo" },
+    metadata: { name: "Relay test circuit", author: "VoltPro" },
     workspace: "schematic",
     devices: [
       { id: "V1", type: "battery", position: { x: 20, y: 40 }, terminals: [{ id: "+", label: "+" }, { id: "-", label: "-" }], parameters: { voltage: 12 } },
@@ -67,3 +67,4 @@ test("toLegacy round-trips named terminal endpoints through the compatibility la
   assert.equal(legacy.components.length, 2);
   assert.deepEqual(Array.from(legacy.wires, wire => [wire.a, wire.b]), [["V1:0", "R1:0"], ["R1:1", "V1:1"]]);
 });
+

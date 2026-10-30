@@ -6,10 +6,10 @@ const vm = require("node:vm");
 const read = p => fs.readFileSync(path.join(__dirname, "..", p), "utf8");
 
 test("million-variant bank is loaded after the existing content expansion and cached", () => {
-  const html = read("index.html");
+  const html = read("academy.html");
   assert.match(html, /academy-content-expansion\.js\?v=20261011a"><\/script>\s*<script src="academy-question-bank\.js\?v=20261011c"><\/script>/);
   const worker = read("service-worker.js");
-  assert.match(worker, /voltpro-v99/);
+  assert.match(worker, /voltpro-v102/);
   assert.match(worker, /"\.\/academy-question-bank\.js"/);
 });
 
@@ -43,7 +43,7 @@ test("rendering stays paginated and shows the full available pool count", () => 
 });
 
 test("million-bank script adds no sidebar destinations", () => {
-  const html = read("index.html");
+  const html = read("academy.html");
   const start = html.indexOf('<nav class="nav"');
   const nav = html.slice(start, html.indexOf("</nav>", start));
   assert.equal((nav.match(/data-view=/g)||[]).length, 10);
@@ -55,4 +55,5 @@ test("Exam Practice is connected to the existing navigation and curated exam que
   assert.match(app, /exam:window\.expandedExam\|\|dashboard/);
   assert.match(app, /window\.examQuestions=examQuestions/);
 });
+
 

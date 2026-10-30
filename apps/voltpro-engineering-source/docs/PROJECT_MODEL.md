@@ -1,4 +1,4 @@
-# Canonical VoltPRo Project Model
+# Canonical VoltPro Project Model
 
 **Status:** Canonical contract v1 defined behind a standalone module and migration boundary. The legacy UI and solver are not switched over in this step.  
 **Implementation:** platform/canonical-project.js  
@@ -103,3 +103,4 @@ platform/canonical-project.js provides migrate(raw). It accepts legacy component
 The Node test suite covers creation, serialize/load round-trip, deterministic net derivation, explicit legacy endpoint migration, unknown top-level field retention, duplicate IDs, dangling endpoints, unsupported domains, malformed route geometry, and future-version rejection.
 
 This step establishes the model and validation boundary only. It does not yet route the legacy UI, PLC runtime, panel designer, terminal graph, net resolver, or MNA solver through this module. That integration is separate and must preserve existing projects through fixtures and adapter tests before active runtime behaviour changes.
+

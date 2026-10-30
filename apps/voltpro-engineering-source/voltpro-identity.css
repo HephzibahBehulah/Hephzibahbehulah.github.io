@@ -1,4 +1,4 @@
-/* HB identity node — presentation-only layer for VoltPRo Academy. */
+/* HB identity node — presentation-only layer for VoltPro Academy. */
 .hb-identity-node {
   --hb-ink:#071018; --hb-panel:rgba(8,15,27,.88); --hb-cyan:#54e7ff;
   position:relative; isolation:isolate; width:min(100%,1600px); margin:0 auto;

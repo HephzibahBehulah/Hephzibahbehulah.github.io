@@ -1,4 +1,4 @@
-/* VoltPRo Breadboard Studio: original responsive workbench design. */
+/* VoltPro Breadboard Studio: original responsive workbench design. */
 body{--bg:#11181c;--panel:#172126;--line:#304047;--cyan:#79e0bd;--green:#79e0bd;--muted:#a0b1b7;background:var(--bg)}
 .app{height:100dvh;min-height:0;grid-template-rows:54px 48px minmax(0,1fr) 28px;overflow:hidden}
 .top{padding:8px 14px;background:#172125;gap:12px}.brand strong{font-size:16px}.brand small{font-size:9px}.nav{flex-wrap:nowrap}.nav .btn{font-size:10px;padding:6px 9px}
@@ -20,3 +20,4 @@ body{--bg:#11181c;--panel:#172126;--line:#304047;--cyan:#79e0bd;--green:#79e0bd;
 .bb-pin-table{font-size:11px;width:100%;border-collapse:collapse;margin:12px 0}.bb-pin-table th,.bb-pin-table td{text-align:left;padding:5px;border-bottom:1px solid #294451}
 
 .part .glyph{max-width:38px;overflow:hidden;font-size:8px;word-break:break-all;line-height:1.1;flex-shrink:0}
+

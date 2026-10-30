@@ -7,7 +7,7 @@ const root = path.resolve(__dirname, "..");
 const read = file => fs.readFileSync(path.join(root, file), "utf8");
 
 test("Academy sidebar has one canonical destination for each learning workspace", () => {
-  const html = read("index.html");
+  const html = read("academy.html");
   const sidebarNav = html.slice(html.indexOf('<nav class="nav"'), html.indexOf("</nav>", html.indexOf('<nav class="nav"')));
   for (const label of ["Dashboard", "Learning Path", "Knowledge Checks", "Exam Practice", "Reference Library", "Safety &amp; Standards", "Virtual Labs", "Practical Workbench", "Tools &amp; Equipment", "Component Learning", "VoltPro Simulator", "Engineering Tools", "AI Tutor"]) {
     assert.ok(sidebarNav.includes(label), "missing sidebar destination: " + label);
@@ -20,7 +20,7 @@ test("Academy sidebar has one canonical destination for each learning workspace"
 });
 
 test("sidebar external links are consolidated in one compact section", () => {
-  const html = read("index.html");
+  const html = read("academy.html");
   const sidebar = html.slice(html.indexOf('<aside class="sidebar"'), html.indexOf("</aside>"));
   assert.equal((sidebar.match(/href="https:\/\/hephzibahbehulah\.com\//g) || []).length, 1);
   assert.equal((sidebar.match(/href="https:\/\/github\.com\/HephzibahBehulah"/g) || []).length, 1);
@@ -30,23 +30,23 @@ test("sidebar external links are consolidated in one compact section", () => {
 test("AI Tutor knows the canonical ownership map and offers external public lookup", () => {
   const assistant = read("voltpro-assistant.js");
   assert.match(assistant, /PROJECT_CONTEXT/);
-  for (const owner of ["VoltPRo Simulator", "Engineering Tools", "Practical Workbench", "Virtual Labs", "Reference Library", "Component Learning", "Knowledge Checks", "Exam Practice"]) {
+  for (const owner of ["VoltPro Simulator", "Engineering Tools", "Practical Workbench", "Virtual Labs", "Reference Library", "Component Learning", "Knowledge Checks", "Exam Practice"]) {
     assert.ok(assistant.includes(owner), "project context missing: " + owner);
   }
   assert.match(assistant, /wikipedia\.org\/w\/api\.php/);
   assert.match(assistant, /siteContext: PROJECT_CONTEXT/);
   assert.match(assistant, /window\.VoltProAssistant\s*=\s*\{/);
   assert.match(assistant, /ask,/);
-  assert.match(assistant, /vpBotExternal/);
+  assert.match(read("src/ui/assistant-chat.js"), /Search public references/);
   assert.match(assistant, /CURRENT WORKSPACE/);
   assert.match(assistant, /loadInternalKnowledge/);
   assert.match(assistant, /responseMode\s*=\s*"ai"/);
   assert.match(assistant, /mode: responseMode/);
-  assert.match(assistant, /Offline fallback/);
+  assert.match(assistant, /remote AI service is unavailable/);
   assert.match(assistant, /data\/electrical-tool-index\.json/);
 });
 
-test("VoltPRo assistant mounts inside the embedded Simulator workspace", () => {
+test("VoltPro assistant mounts inside the embedded Simulator workspace", () => {
   const assistant = read("voltpro-assistant.js");
   assert.doesNotMatch(assistant, /has\("vp_embed"\).*return/);
   for (const page of ["simulator.html", "workspace-shell.html", "academy-workbench.html"]) {
@@ -63,3 +63,4 @@ test("Academy scripts parse and tutor page uses the shared project-aware assista
   assert.match(script, /layout\("Exam Practice"/);
   assert.match(script, /layout\("Knowledge Checks"/);
 });
+

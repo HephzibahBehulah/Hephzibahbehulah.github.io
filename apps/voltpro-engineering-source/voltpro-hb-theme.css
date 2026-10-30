@@ -1,8 +1,8 @@
-/* VoltPRo × HB ecosystem — shared visual layer. No application logic is changed. */
+/* VoltPro × HB ecosystem — shared visual layer. No application logic is changed. */
 :root {
-  --vp-hb-bg:#080b10; --vp-hb-panel:#10151c; --vp-hb-panel-2:#151c25;
-  --vp-hb-line:#28323e; --vp-hb-text:#e7edf4; --vp-hb-muted:#91a0af;
-  --vp-hb-cyan:#56cfe1; --vp-hb-orange:#ff8a3d; --vp-hb-green:#63d297;
+  --vp-hb-bg:#0a1118; --vp-hb-panel:#111c26; --vp-hb-panel-2:#172431;
+  --vp-hb-line:#273744; --vp-hb-text:#eef4f5; --vp-hb-muted:#a2b2b8;
+  --vp-hb-cyan:#48d8d0; --vp-hb-orange:#e8bd62; --vp-hb-green:#63d297;
   --vp-hb-violet:#a78bfa; --vp-hb-radius:14px;
 }
 .academy-page,.simulator-page,.engineering-page {
@@ -69,7 +69,7 @@
 .vp-ecosystem-links {display:grid;gap:5px;padding:13px 8px 12px;margin-top:10px;border-top:1px solid rgba(86,207,225,.15)}
 .vp-ecosystem-links a {display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid transparent;border-radius:8px;color:var(--vp-hb-muted);font:10px/1.5 "JetBrains Mono",monospace;letter-spacing:.06em;text-decoration:none;overflow-wrap:anywhere}
 .vp-ecosystem-links a:hover {color:var(--vp-hb-cyan);border-color:rgba(86,207,225,.2);background:rgba(86,207,225,.04)}
-/* ADIGUN-inspired VoltPRo assistant */
+/* ADIGUN-inspired VoltPro assistant */
 .vp-bot-launcher {position:fixed;right:22px;bottom:calc(82px + env(safe-area-inset-bottom));z-index:100000;width:58px;height:58px;border:1px solid rgba(86,207,225,.62);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(86,207,225,.23),rgba(7,12,18,.98) 70%);color:var(--vp-hb-cyan);box-shadow:0 0 28px rgba(86,207,225,.16),inset 0 0 18px rgba(86,207,225,.06);cursor:pointer;display:grid;place-items:center;font:700 17px/1 "JetBrains Mono",monospace;transition:transform .2s,border-color .2s,box-shadow .2s}
 .vp-bot-launcher:hover {transform:translateY(-3px);border-color:var(--vp-hb-cyan);box-shadow:0 0 36px rgba(86,207,225,.25)}
 .vp-bot-dot {position:absolute;right:4px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--vp-hb-green);box-shadow:0 0 10px var(--vp-hb-green)}
@@ -197,3 +197,4 @@ html>#vpBotLayer.vp-bot-layer{position:fixed!important;inset:0!important;z-index
 #vpBotLayer .vp-bot-window.minimized .vp-bot-composer textarea{height:38px;min-height:38px;max-height:38px;resize:none;padding:8px}
 @media(max-width:560px){#vpBotLayer .vp-bot-window{inset:auto 8px calc(144px + env(safe-area-inset-bottom)) auto;width:min(360px,calc(100vw - 16px));height:min(440px,calc(100dvh - 180px - env(safe-area-inset-bottom)));max-height:calc(100dvh - 180px - env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){#vpBotLayer .vp-bot-window.open{animation:none}}
+

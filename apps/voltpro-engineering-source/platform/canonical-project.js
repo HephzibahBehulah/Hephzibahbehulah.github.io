@@ -1,4 +1,4 @@
-/* VoltPRo canonical project contract. Pure JavaScript: Node CommonJS + browser global. */
+/* VoltPro canonical project contract. Pure JavaScript: Node CommonJS + browser global. */
 (function (root, factory) {
   const api = factory();
   if (typeof module === "object" && module.exports) module.exports = api;
@@ -112,7 +112,7 @@
   function validate(project) {
     const errors = [];
     if (!object(project)) return { valid: false, errors: [{ code: "PROJECT_TYPE", path: "$", message: "Project must be an object" }] };
-    if (project.format !== FORMAT || project.formatVersion !== VERSION) errors.push({ code: "FORMAT_VERSION", path: "$.formatVersion", message: "Expected canonical VoltPRo format version " + VERSION });
+    if (project.format !== FORMAT || project.formatVersion !== VERSION) errors.push({ code: "FORMAT_VERSION", path: "$.formatVersion", message: "Expected canonical VoltPro format version " + VERSION });
     if (!Array.isArray(project.devices)) errors.push({ code: "DEVICES_TYPE", path: "$.devices", message: "devices must be an array" });
     if (!Array.isArray(project.wires)) errors.push({ code: "WIRES_TYPE", path: "$.wires", message: "wires must be an array" });
     const deviceIds = new Set(), terminalIds = new Map();
@@ -187,7 +187,7 @@
     const raw = typeof input === "string" ? JSON.parse(input) : clone(input);
     const project = raw?.format === FORMAT && raw?.formatVersion === VERSION ? raw : migrate(raw);
     const result = validate(project);
-    if (!result.valid) { const e = new Error("Invalid VoltPRo project"); e.validation = result; throw e; }
+    if (!result.valid) { const e = new Error("Invalid VoltPro project"); e.validation = result; throw e; }
     return project;
   }
   function createDevice({ id, type, modelVersion = "1.0.0", label, position = { x: 0, y: 0 }, rotation = 0, terminals, parameters = {}, operatingState = {} }) {
@@ -195,3 +195,4 @@
   }
   return { FORMAT, VERSION, DOMAINS: [...DOMAINS], terminalKey, migrate, validate, resolveNets, serialize, deserialize, createDevice };
 });
+

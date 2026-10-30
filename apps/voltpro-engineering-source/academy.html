@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="VoltPro Academy by HEPHZIBAH BEHULAH: a practical browser-based environment for electrical engineering, electronics, automation learning and simulation.">
+<meta name="author" content="HEPHZIBAH BEHULAH">
+<meta name="theme-color" content="#151515">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://engineering.hephzibahbehulah.com/academy">
+<link rel="icon" href="icons/voltpro-192.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HEPHZIBAH BEHULAH · VoltPro Academy">
+<meta property="og:title" content="VoltPro Academy — by HEPHZIBAH BEHULAH">
+<meta property="og:description" content="Build circuits, explore electrical systems, learn automation and practise engineering concepts in the browser.">
+<meta property="og:url" content="https://engineering.hephzibahbehulah.com/academy">
+<meta property="og:image" content="https://engineering.hephzibahbehulah.com/assets/voltpro-social-card.svg">
+<meta property="og:image:alt" content="VoltPro Academy by HEPHZIBAH BEHULAH — engineering learning and simulation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VoltPro Academy — by HEPHZIBAH BEHULAH">
+<meta name="twitter:description" content="A practical browser-based environment for electrical engineering, electronics, automation learning and simulation.">
+<meta name="twitter:image" content="https://engineering.hephzibahbehulah.com/assets/voltpro-social-card.svg">
+<title>VoltPro Academy | HEPHZIBAH BEHULAH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261009c">
+<link rel="stylesheet" href="cyber-theme.css?v=20261009c">
+<link rel="stylesheet" href="voltpro-hb-theme.css?v=20261028-aiwindow1">
+<link rel="stylesheet" href="voltpro-identity.css?v=20261010b">
+<link rel="manifest" href="pwa.webmanifest">
+<link rel="stylesheet" href="voltpro-navigation-dashboard.css?v=20261011e">
+<link rel="stylesheet" href="src/ui/account.css?v=20261017p">
+<link rel="stylesheet" href="src/ui/academy-expansion.css?v=20261018a"><script src="platform/conversations.js?v=92"></script><script src="platform/plc-project-bank.js?v=92"></script><link rel="stylesheet" href="src/ui/site-shell.css?v=20261030-brand-shell"><link rel="stylesheet" href="workspace-engineering-theme.css"></head>
+<body class="academy-page">
+<div id="app" class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand brand-lockup" href="./" aria-label="VoltPro Academy by HEPHZIBAH BEHULAH — home">
+      <img class="brand-hb-logo" src="assets/hb-logo.svg" alt="HEPHZIBAH BEHULAH" width="156" height="45">
+      <span class="brand-divider" aria-hidden="true"></span>
+      <span class="brand-product"><span class="eyebrow">ENGINEERING LEARNING PLATFORM</span><strong>VoltPro <em>Academy</em></strong><small>By HEPHZIBAH BEHULAH</small></span>
+    </a>
+    <div class="student-mini"><div class="avatar">HB</div><div><strong id="studentName">Student</strong><small>Electrical Apprentice</small></div></div>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="nav-item active" data-view="dashboard"><span>⌂</span>Dashboard</button>
+      <details class="nav-group"><summary class="nav-group-title">Study &amp; assessment</summary><div class="nav-group-items">
+        <button class="nav-item" data-view="learn"><span>▣</span>Learning Path</button>
+        <button class="nav-item" data-view="quiz"><span>✓</span>Knowledge Checks</button>
+        <button class="nav-item" data-view="exam"><span>🎓</span>Exam Practice</button>
+      </div></details>
+      <details class="nav-group" open><summary class="nav-group-title">Design &amp; simulation</summary><div class="nav-group-items">
+        <a class="nav-item" href="/simulator"><span>⚡</span>VoltPro Simulator</a>
+        <a class="nav-item" href="/plc"><span>⌘</span>VoltPro PLC</a>
+        <a class="nav-item" href="/electcad"><span>⌁</span>VoltPro ElectCAD</a>
+        <a class="nav-item" href="/breadboard"><span>▦</span>VoltPro Breadboard</a>
+        <a class="nav-item" href="/oscilloscope"><span>∑</span>VoltPro Oscilloscope</a>
+        <a class="nav-item" href="/electrical"><span>🏢</span>VoltPro Electrical Building</a>
+        <a class="nav-item" href="/tools"><span>🔧</span>Engineering Tools</a>
+      </div></details>
+      <details class="nav-group"><summary class="nav-group-title">Practical workshop</summary><div class="nav-group-items">
+        <button class="nav-item" data-view="labs"><span>⌘</span>Virtual Labs</button>
+        <a class="nav-item" href="academy-workbench.html"><span>⌁</span>Practical Workbench</a>
+        <button class="nav-item" data-view="tools"><span>🧰</span>Tools &amp; Equipment</button>
+        <button class="nav-item" data-view="ar"><span>◉</span>Component Learning</button>
+      </div></details>
+      <details class="nav-group"><summary class="nav-group-title">Reference &amp; safety</summary><div class="nav-group-items">
+        <button class="nav-item" data-view="reference"><span>☷</span>Reference Library</button>
+        <button class="nav-item" data-view="safety"><span>⚠</span>Safety &amp; Standards</button>
+      </div></details>
+      <details class="nav-group"><summary class="nav-group-title">AI assistance</summary><div class="nav-group-items">
+        <button class="nav-item" data-view="tutor"><span>AI</span>AI Tutor</button>
+        <button class="nav-item" data-open-adigun><span>AD</span>Adigun Assistant</button>
+      </div></details>
+    </nav><details class="sidebar-resources"><summary>External resources ↗</summary><div class="vp-ecosystem-links" aria-label="External links — HEPHZIBAH BEHULAH">
+      <a href="https://hephzibahbehulah.com/" rel="noopener noreferrer">HB / PROFESSIONAL PORTFOLIO ↗</a>
+      <a href="https://github.com/HephzibahBehulah" rel="noopener noreferrer">GITHUB ↗</a>
+      <a href="https://www.linkedin.com/in/isaacoluwoleadigun" rel="noopener noreferrer">LINKEDIN ↗</a>
+    </div>
+    </details><div class="sidebar-bottom">
+      <div class="progress-mini"><div><span>Academy progress</span><strong id="sideProgress">0%</strong></div><div class="track"><i id="sideProgressBar"></i></div></div>
+      <button class="nav-item" data-view="settings"><span>⚙</span>Settings</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+      <div class="crumb"><span>VoltPro Academy</span><b>/</b><strong id="pageTitle">Dashboard</strong><small class="topbar-byline">BY HEPHZIBAH BEHULAH</small></div>
+      <div class="top-actions">
+        <label class="search"><span>⌕</span><input id="globalSearch" placeholder="Search lessons, tools, terms..." autocomplete="off"></label>
+        <button class="icon-btn" id="languageBtn" title="Language">EN</button>
+        <a class="icon-btn" href="simulator.html" title="Open simulator" style="text-decoration:none">SIM</a>
+        <button class="icon-btn" id="resetBtn" title="Reset progress">↺</button>
+      </div>
+    </header>
+
+
+
+    <div id="toast" class="toast" role="status"></div>
+    <div id="view" class="view"></div>
+  <details class="hb-identity-disclosure" id="hbProfileDetails">
+    <summary><span>HEPHZIBAH BEHULAH / IDENTITY &amp; CAPABILITIES</span><small>Expand profile details</small><b>OPEN +</b></summary>
+  <section class="hb-identity-node" aria-labelledby="hbIdentityTitle">
+      <div class="hb-id-topline">
+        <span>IDENTITY NODE <strong>/ PROFILE-01</strong></span>
+        <span class="hb-id-status">PUBLIC PROFILE · ONLINE</span>
+        <span>PORTFOLIO CHANNEL / OPEN</span>
+      </div>
+      <div class="hb-id-layout">
+        <article class="hb-id-main">
+          <img class="hb-id-logo" src="assets/hb-logo.svg" alt="HEPHZIBAH BEHULAH HB engineering intelligence logo" width="520" height="150">
+          <p class="hb-id-kicker">HB\CORE · OPERATOR PROFILE // SYSTEMS THINKER</p>
+          <h2 class="hb-id-name" id="hbIdentityTitle">Building technology<br>from the <em>physical layer upward.</em></h2>
+          <p class="hb-id-disciplines">ENGINEERING <b>→</b> SOFTWARE <b>→</b> DATA <b>→</b> CYBER INTELLIGENCE</p>
+          <p class="hb-id-summary">An electronics and electrical engineering professional developing a practical path through automation, software, data analytics and cybersecurity. This portfolio is a live map of projects, experiments, learning and systems thinking.</p>
+          <nav class="hb-id-links" aria-label="HEPHZIBAH BEHULAH profile links">
+            <a class="hb-id-primary" href="https://hephzibahbehulah.com/#tree" rel="noopener noreferrer">ENTER INTELLIGENCE TREE ↓</a>
+            <a href="https://github.com/HephzibahBehulah" rel="noopener noreferrer">GITHUB ↗</a>
+            <a href="https://www.linkedin.com/in/isaacoluwoleadigun" rel="noopener noreferrer">LINKEDIN ↗</a>
+            <a href="https://hephzibahbehulah.com/cyber-os/" rel="noopener noreferrer">OPEN CYBER OS ↗</a>
+            <a href="https://hephzibahbehulah.com/about.html" rel="noopener noreferrer">FULL STORY →</a>
+          </nav>
+        </article>
+
+        <aside class="hb-id-console" aria-label="Identity matrix and capability profile">
+          <div class="hb-id-console-head"><span>HB@INTEL:~ <strong>IDENTITY MATRIX</strong></span><span>● LINK ACTIVE</span></div>
+          <div class="hb-id-console-body">
+            <div class="hb-id-terminal-line"><code>$ whoami</code><span class="hb-id-value">HEPHZIBAH BEHULAH</span></div>
+            <div class="hb-id-terminal-line"><code>$ background</code><span>electronics → automation → software</span></div>
+            <div class="hb-id-terminal-line"><code>$ focus</code><span>cybersecurity · data · Python · OSINT</span></div>
+            <div class="hb-id-terminal-line"><code>$ method</code><span>observe → research → build → test → document</span></div>
+            <div class="hb-id-terminal-line"><code>$ ethics</code><span>legal · authorised · privacy-aware</span></div>
+            <div class="hb-id-rule"></div>
+            <div class="hb-id-terminal-line"><code>NODE STATUS</code><span class="hb-id-value">OPERATIONAL</span></div>
+            <div class="hb-id-terminal-line"><code>PROFILE MODE</code><span>PUBLIC</span></div>
+            <p class="hb-id-cap-title">CAPABILITY MATRIX <span style="color:#54e7ff">/ HB-04</span></p>
+            <div class="hb-id-capabilities">
+              <div class="hb-id-cap"><b>01 / ENGINEERING</b><span>Electronics · electrical systems · automation</span></div>
+              <div class="hb-id-cap"><b>02 / SOFTWARE</b><span>Python · SQL · web · Git · Linux</span></div>
+              <div class="hb-id-cap"><b>03 / DATA</b><span>Analytics · Power BI · ML · structured insight</span></div>
+              <div class="hb-id-cap"><b>04 / SECURITY</b><span>Cybersecurity · OSINT · AI security</span></div>
+            </div>
+            <div class="hb-id-build">
+              <div class="hb-id-build-label"><span>BUILD PROTOCOL</span><span>SYS-THINK / 01</span></div>
+              <div class="hb-id-build-flow"><span>OBSERVE</span><i>→</i><span>RESEARCH</span><i>→</i><span>BUILD</span><i>→</i><span>TEST</span><i>→</i><span>DOCUMENT</span><i>→</i><span>SECURE</span></div>
+            </div>
+            <div class="hb-id-build">
+              <div class="hb-id-build-label"><span>WORKING MODEL</span><span>PHYSICAL → DIGITAL</span></div>
+              <div class="hb-id-build-flow"><span>HARDWARE</span><i>↓</i><span>ELECTRONICS + AUTOMATION</span><i>↓</i><span>PROGRAMMING</span><i>↓</i><span>DATA + SYSTEMS SECURITY</span><i>↓</i><span>SECURE, USEFUL TECHNOLOGY</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div class="hb-id-bottom"><span>LIVE DATA CHANNEL / <strong>PUBLIC GITHUB PORTFOLIO</strong> · <a href="https://github.com/HephzibahBehulah" rel="noopener noreferrer" style="color:#54e7ff;text-decoration:none">OPEN REPOSITORIES ↗</a></span><span>HB / SYSTEMS · INTELLIGENCE · SECURITY</span></div>
+    </section>
+  </details>
+  </main>
+</div>
+<dialog id="lessonDialog"><div id="lessonModal"></div></dialog>
+<script src="script.js?v=20261017n"></script>
+<script src="academy-content-expansion.js?v=20261011a"></script>
+<script src="academy-question-bank.js?v=20261011c"></script>
+<script src="voltpro-assistant.js?v=20261028-aiwindow1" defer></script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js").catch(()=>{})}</script>
+<script src="engine/voltpro-engine.js?v=20261017n" defer></script><script src="src/core/experiment-catalog.js?v=20261017d" defer></script><script src="src/ui/experiment-library.js?v=20261017d" defer></script><script src="src/ui/external-resources.js?v=20261017d" defer></script><script src="src/ui/academy-live.js?v=20261017d" defer></script><link rel="stylesheet" href="src/ui/integrated-labs.css?v=20261017d"><link rel="stylesheet" href="src/ui/academy-live.css?v=20261017d"><script src="src/core/component-contracts.js?v=20261017n" defer></script><script src="platform/catalog-models.js?v=20261017i" defer></script><script src="platform/board-targets.js?v=20261017f" defer></script><script src="src/core/reference-catalog.js?v=20261017n" defer></script><script src="platform/component-registry.js?v=20261017i" defer></script><script src="platform/mcu-projects.js?v=20261017f" defer></script><script src="platform/application-projects.js?v=20261017f" defer></script><script src="platform/panel-engineering.js?v=20261017f" defer></script><script src="src/ui/industrial-panel.js?v=20261017f" defer></script><script src="src/ui/component-studio.js?v=20261018a" defer></script><link rel="stylesheet" href="src/ui/component-studio.css?v=20261017i"><script src="src/ui/reference-workspace.js?v=20261017i" defer></script><link rel="stylesheet" href="src/ui/engineering-system.css?v=20261017f"><script src="platform/user-preferences.js?v=20261017n" defer></script><script src="platform/assistant-engineering.js?v=20261017n" defer></script><script src="platform/design-studio.js?v=20261017n" defer></script><script src="platform/physical-boards.js?v=20261017n" defer></script><link rel="stylesheet" href="src/ui/design-tools.css?v=20261017p"><script src="src/ui/assistant-actions.js?v=20261017n" defer></script><link rel="stylesheet" href="src/ui/assistant-command.css?v=20261017i"><script src="src/ui/academy-command.js?v=20261017n" defer></script><script src="src/ui/ai-circuit-planner.js?v=20261017i" defer></script><script src="platform/account-config.js?v=20261017p" defer></script><script src="platform/account-client.js?v=20261017p" defer></script><script src="platform/cloud-projects.js?v=20261017p" defer></script><script src="src/ui/account.js?v=20261017p" defer></script>
+<script src="platform/practice-bank.js?v=20261018a" defer></script><script src="src/ui/academy-practice.js?v=20261018a" defer></script><script src="src/ui/dashboard-gallery.js?v=20261018a" defer></script><script src="src/ui/plc-library.js?v=92" defer></script><script src="src/ui/voltpro-brand.js" defer></script><script src="src/ui/site-shell.js?v=20261030-brand-shell" defer></script><script src="src/ui/conversations.js?v=92" defer></script><link rel="stylesheet" href="src/ui/academy-layout.css?v=93"><link rel="stylesheet" href="src/ui/layout-polish.css?v=94"></body>
+</html>
+
+

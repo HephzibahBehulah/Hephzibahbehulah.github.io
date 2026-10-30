@@ -1,7 +1,7 @@
 {
   "$schema":"https://json-schema.org/draft/2020-12/schema",
   "$id":"https://voltpro.example/schema/project-v5.json",
-  "title":"VoltPRo Project v5",
+  "title":"VoltPro Project v5",
   "type":"object",
   "required":["format","version","metadata","settings","workspace","devices","wires","nets","simulation"],
   "properties":{

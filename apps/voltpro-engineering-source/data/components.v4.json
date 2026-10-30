@@ -2,7 +2,7 @@
   "format": "voltpro-components",
   "version": 4,
   "license": "Apache-2.0",
-  "engine": "VoltPRo MNA",
+  "engine": "VoltPro MNA",
   "components": [
     {
       "id": "resistor",
@@ -57,7 +57,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Resistor core model for the VoltPRo MNA engine.",
+        "description": "Functional Resistor core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -123,7 +123,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Capacitor core model for the VoltPRo MNA engine.",
+        "description": "Functional Capacitor core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -189,7 +189,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Inductor core model for the VoltPRo MNA engine.",
+        "description": "Functional Inductor core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -256,7 +256,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Diode core model for the VoltPRo MNA engine.",
+        "description": "Functional Diode core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -323,7 +323,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Zener Diode core model for the VoltPRo MNA engine.",
+        "description": "Functional Zener Diode core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -390,7 +390,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional LED core model for the VoltPRo MNA engine.",
+        "description": "Functional LED core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -461,7 +461,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional BJT core model for the VoltPRo MNA engine.",
+        "description": "Functional BJT core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -532,7 +532,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional MOSFET core model for the VoltPRo MNA engine.",
+        "description": "Functional MOSFET core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -602,7 +602,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional IGBT core model for the VoltPRo MNA engine.",
+        "description": "Functional IGBT core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -669,7 +669,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Voltage Source core model for the VoltPRo MNA engine.",
+        "description": "Functional Voltage Source core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -736,7 +736,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Current Source core model for the VoltPRo MNA engine.",
+        "description": "Functional Current Source core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -812,7 +812,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Dependent Voltage Source core model for the VoltPRo MNA engine.",
+        "description": "Functional Dependent Voltage Source core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],
@@ -888,7 +888,7 @@
         ]
       },
       "documentation": {
-        "description": "Functional Dependent Current Source core model for the VoltPRo MNA engine.",
+        "description": "Functional Dependent Current Source core model for the VoltPro MNA engine.",
         "applications": [
           "Educational circuit analysis"
         ],

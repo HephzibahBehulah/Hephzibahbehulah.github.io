@@ -1,6 +1,6 @@
 # Component Development Guide
 
-A functional VoltPRo component is more than metadata. It requires a versioned definition, pin contract, IEC/ANSI symbol references, panel asset, simulation model, documentation and regression tests.
+A functional VoltPro component is more than metadata. It requires a versioned definition, pin contract, IEC/ANSI symbol references, panel asset, simulation model, documentation and regression tests.
 
 ## Definition
 
@@ -22,3 +22,4 @@ Do not copy proprietary symbols, product photographs, datasheets or WireONa asse
 ## Review gate
 
 A component is DONE only when it can be placed, wired, simulated, inspected and tested end-to-end.
+

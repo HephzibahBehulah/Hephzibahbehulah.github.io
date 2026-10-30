@@ -27,8 +27,8 @@ test("Simulator canvas, component library and inspector have non-overlapping res
 });
 
 test("embedded Simulator and responsive stylesheet use new cache keys", () => {
-  assert.match(page, /toolbar-layout\.css\?v=20261028c/);
-  assert.match(shell, /simulator\.html\?vp_embed=1&v=20261028c/);
+  assert.match(page, /toolbar-layout\.css\?v=20261029-dropdown2/);
+  assert.match(shell, /simulator\.html\?vp_embed=1/);
 });
 
 
@@ -42,11 +42,11 @@ test("VoltPro Simulator keeps a single non-scrolling menu row with its own mobil
 });
 
 test("Simulator dropdowns open as overlays and close after pointer leaves", () => {
-  assert.match(toolbar, /menuDock\?\.addEventListener\('pointerleave',scheduleMenuClose\)/);
+  assert.match(toolbar, /box\.addEventListener\('pointerleave',scheduleMenuClose\)/);
   assert.match(toolbar, /positionMenu/);
   assert.match(toolbar, /hoverMenus=window\.matchMedia/);
   assert.match(toolbar, /pointerleave.*scheduleMenuClose/);
-  assert.match(menus, /trigger\.closest\("\.vp-toolbar-menus"\).*trigger\.closest\("\.vp-toolbar-dropdown"\)/);
+  assert.match(menus, /popover\.contains\(event\.target\).*event\.target\.closest\("\[data-vp-menu\]"\)/);
   assert.match(shellCss, /\.vp-toolbar-dropdown\s*\{[\s\S]*?position:fixed!important/);
 });
 
@@ -54,3 +54,4 @@ test("workspace shell cache keys are bumped for the new Simulator header", () =>
   assert.match(shellHtml, /workspace-shell\.css\?v=20261028-menu1/);
   assert.match(shellHtml, /workspace-shell\.js\?v=20261028e/);
 });
+

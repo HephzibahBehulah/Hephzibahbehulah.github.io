@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://voltpro.example/schema/component-v4.json",
-  "title": "VoltPRo Component Definition v4",
+  "title": "VoltPro Component Definition v4",
   "type": "object",
   "additionalProperties": false,
   "required": [

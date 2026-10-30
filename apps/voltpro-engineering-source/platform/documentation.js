@@ -1,6 +1,6 @@
 (()=>{"use strict";
 function markdown(project,results={}){
- const lines=["# VoltPRo Engineering Report","","## Project",project.metadata?.name||"Untitled Circuit","","## Components","| ID | Type | Parameters |","|---|---|---|"];
+ const lines=["# VoltPro Engineering Report","","## Project",project.metadata?.name||"Untitled Circuit","","## Components","| ID | Type | Parameters |","|---|---|---|"];
  for(const c of project.components||[])lines.push("| "+c.id+" | "+c.type+" | "+JSON.stringify(c.props||{}).replaceAll("|","\\|")+" |");
  const panel=project.panel;
  lines.push("","","## Panel layout");

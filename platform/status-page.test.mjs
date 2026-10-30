@@ -42,13 +42,19 @@ test('status table is rendered from fetched gaps.json, not embedded rows', () =>
   assert.doesNotMatch(html,/PLC-DRC|accept\.plc\./);
 });
 
-test('root STATUS.txt generates the exact JSON register and all 30 acceptance TODOs', () => {
+test('root STATUS.txt generates the exact JSON register and tracks all 30 acceptance checks', () => {
   execFileSync(process.execPath,['platform/generate-gaps.mjs','--check'],{cwd:new URL('../',import.meta.url),stdio:'pipe'});
   const data=JSON.parse(read('gaps.json'));
   assert.equal(data.gaps.length,30);
   assert.equal(new Set(data.gaps.map(gap=>gap.gapId)).size,30);
   const acceptance=read('platform/acceptance/gaps/plc-gaps.test.mjs')+read('platform/acceptance/gaps/simulator-gaps.test.mjs')+read('platform/acceptance/gaps/electcad-gaps.test.mjs')+read('platform/acceptance/gaps/breadboard-gaps.test.mjs')+read('platform/acceptance/gaps/building-gaps.test.mjs');
-  for(const gap of data.gaps)assert.ok(acceptance.includes(`test.todo(${JSON.stringify(gap.acceptanceTestName)})`),gap.gapId);
+  for(const gap of data.gaps){
+    assert.ok(acceptance.includes(gap.acceptanceTestName),gap.gapId);
+    const active=acceptance.includes(`test('${gap.acceptanceTestName}'`)||acceptance.includes(`test("${gap.acceptanceTestName}"`)||acceptance.includes(`t.test('${gap.acceptanceTestName}'`)||acceptance.includes(`t.test("${gap.acceptanceTestName}"`);
+    const todo=acceptance.includes(`test.todo('${gap.acceptanceTestName}')`)||acceptance.includes(`test.todo("${gap.acceptanceTestName}")`);
+    if(gap.currentStatus==='Complete')assert.ok(active&&!todo,`${gap.gapId} is marked complete without an active test`);
+    else assert.ok(active||todo,`${gap.gapId} has neither a test nor a TODO`);
+  }
 });
 
 test('all five tools share the exact notice, About readiness panel, and reload-reset banner', () => {
@@ -65,3 +71,4 @@ test('all five tools share the exact notice, About readiness panel, and reload-r
   assert.doesNotMatch(shell,/localStorage\.(?:getItem|setItem)\([^)]*dismiss/i);
   for(const route of ['simulator','plc','electcad','breadboard','electrical'])assert.equal(resolveRoute(new URL(`${host}/${route}`)).path,'/_apps/engineering/workspace-shell.html',route);
 });
+

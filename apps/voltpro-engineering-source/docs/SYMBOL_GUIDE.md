@@ -1,6 +1,6 @@
 # Symbol Guide
 
-VoltPRo keeps schematic symbols separate from physical panel assets.
+VoltPro keeps schematic symbols separate from physical panel assets.
 
 Directories:
 
@@ -12,3 +12,4 @@ The current Phase 2 core pack contains original SVG symbols for the first functi
 Symbols must be vector schematic geometry, not text labels inside boxes. Each file should have an accessible SVG title/aria label when rendered in the UI.
 
 No WireONa assets are to be copied.
+

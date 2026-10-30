@@ -1,4 +1,4 @@
-# VoltPRo Release Gate
+# VoltPro Release Gate
 
 ## Required before release
 - npm test passes
@@ -15,4 +15,5 @@
 
 ## Product statement
 
-VoltPRo is an independent free/open-source electrical, electronics and automation learning simulator. It implements comparable educational workflows independently; it is not a copy of WireONa and does not certify real electrical installations.
+VoltPro is an independent free/open-source electrical, electronics and automation learning simulator. It implements comparable educational workflows independently; it is not a copy of WireONa and does not certify real electrical installations.
+

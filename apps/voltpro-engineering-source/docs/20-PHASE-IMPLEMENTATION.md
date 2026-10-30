@@ -1,4 +1,4 @@
-# VoltPRo 20-Phase Delivery Matrix
+# VoltPro 20-Phase Delivery Matrix
 
 1. Baseline/stability — repository CI, syntax and required-file checks.
 2. Simulation core — isolated numerical engine and stable API.
@@ -23,3 +23,4 @@
 
 ## Current v3 implementation
 This delivery establishes the architectural seam for phases 2, 3, 10, 13, 14, 15 and 16 and adds documentation/contracts for the remaining phases. Features must be marked complete only after their acceptance tests pass.
+

@@ -1,4 +1,4 @@
-/* VoltPRo executable device-model registry. */
+/* VoltPro executable device-model registry. */
 (()=>{'use strict';
 const models=new Map();
 function register(model){if(!model?.id||typeof model.evaluate!=='function')throw Error('Invalid device model');if(models.has(model.id)&&!model.replace)throw Error('Duplicate device model: '+model.id);models.set(model.id,model);return model.id}

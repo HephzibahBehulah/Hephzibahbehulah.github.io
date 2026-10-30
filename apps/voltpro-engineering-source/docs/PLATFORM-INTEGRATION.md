@@ -1,4 +1,4 @@
-# VoltPRo Platform Integration
+# VoltPro Platform Integration
 ## Status
 This release wires the platform modules into the simulator without claiming unfinished features are production-complete.
 
@@ -16,4 +16,4 @@ This release wires the platform modules into the simulator without claiming unfi
 - Plugins: JSON plugin registration contract.
 
 ## Safety boundary
-VoltPRo is an educational simulator. It does not certify electrical designs, protective-device settings, installations, or safety compliance.
+VoltPro is an educational simulator. It does not certify electrical designs, protective-device settings, installations, or safety compliance.
