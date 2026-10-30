@@ -30,6 +30,7 @@ test('the shared brand theme is injected into nested pages once', () => {
 
 test('shared brand theme matches the product template and supports both colour modes', () => {
   const css = fs.readFileSync(path.join(root, 'packages/shared-ui/css/sitewide-osint-theme.css'), 'utf8');
+  const chrome = fs.readFileSync(path.join(root, 'platform/experience.css'), 'utf8');
   assert.match(css, /--bg:#0a1118/);
   assert.match(css, /--panel:#111c26/);
   assert.match(css, /--accent:#48d8d0/);
@@ -46,5 +47,33 @@ test('shared brand theme matches the product template and supports both colour m
   assert.match(css, /--hb-text:#eef4f5/);
   assert.match(css, /color-scheme:dark/);
   assert.match(css, /color-scheme:light/);
+  assert.match(chrome, /--hb-surface:#111c26/);
+  assert.match(chrome, /--bg:#0a1118/);
+  assert.match(chrome, /--hb-glow:#48d8d0/);
+  assert.match(chrome, /--bg:#f2f5f6/);
+  assert.match(chrome, /--accent:#087e83/);
 });
 
+test('Cyber OS carries the parent wordmark and its own product wordmark in the shared theme', () => {
+  const html = fs.readFileSync(path.join(root, 'apps/cyber-os/index.html'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'platform/experience.css'), 'utf8');
+  const engineeringCss = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/src/ui/site-shell.css'), 'utf8');
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'apps/cyber-os/adigun-cyber-os.webmanifest'), 'utf8'));
+  const logo = fs.readFileSync(path.join(root, 'apps/cyber-os/assets/adigun-cyber-os.svg'), 'utf8');
+  assert.match(html, /HEPHZIBAH BEHULAH/);
+  assert.match(html, /ADIGUN/);
+  assert.match(html, /Cyber OS/);
+  assert.match(html, /a product of HEPHZIBAH BEHULAH/i);
+  assert.match(html, /name="theme-color" content="#0a1118"/);
+  assert.match(html, /rel="manifest" href="\/cyber-os\/adigun-cyber-os\.webmanifest"/);
+  assert.match(html, /rel="icon" type="image\/svg\+xml" href="\/cyber-os\/assets\/adigun-cyber-os\.svg"/);
+  assert.equal(manifest.name, 'ADIGUN Cyber OS | HEPHZIBAH BEHULAH');
+  assert.equal(manifest.icons[0].src, '/cyber-os/assets/adigun-cyber-os.svg');
+  assert.match(logo, /<title id="title">ADIGUN Cyber OS<\/title>/);
+  assert.match(css, /\.os-brand\.hb-product-lockup/);
+  assert.match(css, /\.hb-company-wordmark/);
+  assert.match(css, /\.hb-product-wordmark/);
+  assert.match(css, /html\[data-hb-theme=light\] \.hb-product-wordmark/);
+  assert.match(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#48d8d0/);
+  assert.doesNotMatch(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#ff9b43/);
+});

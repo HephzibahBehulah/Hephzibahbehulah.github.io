@@ -89,12 +89,11 @@
       "gapId": "SIM-WN",
       "tool": "Simulator",
       "capability": "Wire Numbering",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex completes stable net labels and net-based coloring",
+      "ownerActionRequired": "Stable endpoint-anchored net labels and consistent net colors survive project export/import",
       "acceptanceTestName": "accept.sim.nets.labels-colors-roundtrip"
     },
     {

@@ -9,7 +9,7 @@ test("million-variant bank is loaded after the existing content expansion and ca
   const html = read("academy.html");
   assert.match(html, /academy-content-expansion\.js\?v=20261011a"><\/script>\s*<script src="academy-question-bank\.js\?v=20261011c"><\/script>/);
   const worker = read("service-worker.js");
-  assert.match(worker, /voltpro-v102/);
+  assert.match(worker, /voltpro-v103/);
   assert.match(worker, /"\.\/academy-question-bank\.js"/);
 });
 
@@ -55,5 +55,4 @@ test("Exam Practice is connected to the existing navigation and curated exam que
   assert.match(app, /exam:window\.expandedExam\|\|dashboard/);
   assert.match(app, /window\.examQuestions=examQuestions/);
 });
-
 

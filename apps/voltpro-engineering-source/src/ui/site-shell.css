@@ -101,7 +101,7 @@ html.vp-electcad-maximized #vpWorkspace .vp-workspace-frame{display:block!import
 
 #vpSiteHeader .vp-site-brand{display:flex;align-items:center;gap:9px;padding-inline:7px}
 #vpSiteHeader .vp-parent-wordmark{font-size:10px;font-weight:800;letter-spacing:.11em;color:#dce9ee}
-#vpSiteHeader .vp-product-wordmark{padding-left:9px;border-left:1px solid #46606c;font-size:14px;font-weight:850;letter-spacing:.035em;color:#ff9b43}
+#vpSiteHeader .vp-product-wordmark{padding-left:9px;border-left:1px solid #46606c;font-size:14px;font-weight:850;letter-spacing:.035em;color:#48d8d0}
 html[data-vp-theme=light] #vpSiteHeader .vp-parent-wordmark{color:#263941}
 @media(max-width:500px){#vpSiteHeader .vp-parent-wordmark{font-size:8px;letter-spacing:.05em}#vpSiteHeader .vp-product-wordmark{font-size:12px;padding-left:5px}}
 
