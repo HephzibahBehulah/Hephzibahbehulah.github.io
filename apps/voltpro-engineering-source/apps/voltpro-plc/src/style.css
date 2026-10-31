@@ -289,3 +289,9 @@ html[data-vp-theme=light] .plc-program-blocks li{border-color:#d8e1e4}
 .plc-app .canvas .plc-title-block{display:block}
 @media(max-width:760px){.plc-app>.workspace{--plc-properties-width:clamp(120px,32vw,280px)}.plc-app .properties>header{padding:0 5px;font-size:8px;gap:3px}.plc-dock-tabs{overflow-x:auto;flex-shrink:0}.plc-dock-tabs button{flex-shrink:0}}
 
+
+/* Embedded PLC keeps its real editor actions beneath the shared company header. */
+html.vp-template-plc,html.vp-template-plc body,html.vp-template-plc #root{width:100%;height:100%;min-height:0;overflow:hidden}
+html.vp-template-plc .plc-app{height:100%;min-height:0}
+html.vp-template-plc .plc-app>.plc-shell-slot{display:none!important}
+html.vp-template-plc .plc-unified-bottom>nav,html.vp-template-plc .plc-unified-bottom>.plc-bottom-readiness{display:none!important}

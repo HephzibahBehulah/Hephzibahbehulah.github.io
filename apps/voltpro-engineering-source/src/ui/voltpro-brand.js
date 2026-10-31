@@ -1,12 +1,13 @@
 const brand = Object.freeze({
   company: "HEPHZIBAH BEHULAH",
+  division: "HB ELEKTRONIKER",
   product: "VoltPro",
   attribution: "A product of HEPHZIBAH BEHULAH",
-  companyLogo: "/assets/hb-logo.svg",
+  companyLogo: "/assets/hephzibah-behulah-official.jpg",
   productLogo: "/icons/voltpro-512.svg",
   theme: {
-    dark: { background: "#0a1118", surface: "#111c26", accent: "#48d8d0", highlight: "#e8bd62" },
-    light: { background: "#f2f5f6", surface: "#ffffff", accent: "#087e83", highlight: "#9b6810" },
+    dark: { background: "#0b1220", surface: "#111d30", accent: "#22d3ee", highlight: "#d4af37" },
+    light: { background: "#f8fafc", surface: "#ffffff", accent: "#087e83", highlight: "#9b6810" },
   },
 });
 

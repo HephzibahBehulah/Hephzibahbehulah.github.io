@@ -542,9 +542,6 @@
     frame.addEventListener("load", () => {
       try {
         syncTheme(frame.contentDocument, document.documentElement.dataset.hbTheme || document.documentElement.dataset.vpTheme || "dark");
-        if (tool.path === "/simulator" && document.documentElement.dataset.vpWorkspace === "simulator") integrateSimulator(panel);
-        if (tool.path === "/plc" && document.documentElement.dataset.vpWorkspace === "plc") integratePLC(panel);
-        if (tool.path === "/electrical" && document.documentElement.dataset.vpWorkspace === "electrical") integrateElectrical(panel);
       } catch {}
     });
     frame.src = rootPrefix + tool.src;
@@ -577,12 +574,6 @@
     }
     document.documentElement.dataset.vpWorkspace = tool.path.slice(1);
     document.documentElement.classList.toggle("vp-electcad-maximized", tool.path === "/electcad");
-    document.documentElement.classList.toggle("vp-simulator-template", tool.path === "/simulator");
-    document.documentElement.classList.toggle("vp-plc-template", tool.path === "/plc");
-    document.documentElement.classList.toggle("vp-electrical-template", tool.path === "/electrical");
-    if (tool.path === "/electrical") integrateElectrical(panel);
-    if (tool.path === "/simulator") integrateSimulator(panel);
-    if (tool.path === "/plc") integratePLC(panel);
     const electCadNotice = document.querySelector("#vpDevelopmentBanner .vp-production-notice");
     const electCadStatus = document.querySelector("#vpDevelopmentBanner .vp-banner-status-link");
     const bannerCopy = document.querySelector("#vpDevelopmentBanner .vp-development-banner-copy");

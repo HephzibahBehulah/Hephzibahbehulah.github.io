@@ -1,0 +1,48 @@
+/* Product workspaces share the host company's official header and navigation. */
+html.vp-electcad-embed .electcad-main-site,html.vp-electcad-embed .hb-brand{display:none!important}
+html.vp-electcad-embed .topbar{height:48px;min-height:48px;background:#0b1220;border-bottom-color:#263b55;border-top:2px solid #d4af37;padding-inline:12px;gap:12px}
+html.vp-electcad-embed .topbar .brand{min-width:150px;gap:0}
+html.vp-electcad-embed .topbar .brand-mark{display:none}
+html.vp-electcad-embed .topbar .brand strong{font-size:15px;color:#e8eef7}
+html.vp-electcad-embed .topbar .brand strong span{color:#22d3ee}
+html.vp-electcad-embed .topbar .brand small{display:block;color:#d4af37;font:700 8px ui-monospace,monospace;letter-spacing:1px}
+html.vp-electcad-embed .topbar .top-divider:first-of-type{display:none}
+html.vp-electcad-embed .menu-toolbar-row{background:#101b2b;border-color:#263b55}
+html.vp-electcad-embed .menubar{background:#101b2b;border-color:#263b55}
+html.vp-electcad-embed .menubar button:hover,html.vp-electcad-embed .menubar button.menu-active{color:#22d3ee;background:#16283c}
+html.vp-electcad-embed .toolbar{background:#111d30;border-color:#263b55}
+html.vp-electcad-embed .primary-btn{background:#22d3ee;color:#06131b}
+html.vp-electcad-embed .app-shell{background:#0b1220}
+html.vp-electcad-embed .left-sidebar,html.vp-electcad-embed .right-sidebar{background:#111d30;border-color:#263b55}
+html.vp-electcad-embed .canvas-area{background:#0b1220}
+html.vp-electcad-embed .statusbar{background:#101b2b;border-color:#263b55}
+html[data-vp-theme="light"].vp-electcad-embed{color-scheme:light}
+html[data-vp-theme="light"].vp-electcad-embed .app-shell,html[data-vp-theme="light"].vp-electcad-embed .left-sidebar,html[data-vp-theme="light"].vp-electcad-embed .right-sidebar,html[data-vp-theme="light"].vp-electcad-embed .topbar,html[data-vp-theme="light"].vp-electcad-embed .menubar,html[data-vp-theme="light"].vp-electcad-embed .toolbar,html[data-vp-theme="light"].vp-electcad-embed .statusbar{background:#f8fafc;color:#172334;border-color:#d5dfeb}
+
+.vp-breadboard-embed .bb-shell-brand{gap:0;min-width:150px;flex-direction:column;align-items:flex-start;justify-content:center}
+.vp-breadboard-embed .bb-shell-brand .bb-product-wordmark{font-size:15px;line-height:1.1;letter-spacing:-.4px;color:#e8eef7}
+.vp-breadboard-embed .bb-shell-brand .bb-product-wordmark em{font-style:normal;color:#22d3ee}
+.vp-breadboard-embed .bb-shell-brand>small{color:#d4af37;font:700 8px ui-monospace,monospace;letter-spacing:1px}
+.vp-breadboard-embed .bb-workspace .top{background:#0b1220;border-bottom-color:#263b55;border-top:2px solid #d4af37}
+.vp-breadboard-embed .bb-workspace .breadboard-menubar{background:#101b2b}
+.vp-breadboard-embed .bb-workspace .breadboard-menubar summary{color:#dce8f4}
+.vp-breadboard-embed .bb-workspace .breadboard-menubar summary:hover{color:#22d3ee;background:#16283c}
+.vp-breadboard-embed .bb-shell-button{background:#111d30;border-color:#2a405b;color:#dce8f4}
+.vp-breadboard-embed .bb-shell-button:hover{border-color:#22d3ee;color:#22d3ee}
+.vp-breadboard-embed .bb-shell-controls>button[aria-label="Save breadboard project"]{background:#d4af37;color:#121a26}
+.vp-breadboard-embed .bb-workspace .footer{background:#101b2b;border-color:#263b55}
+.vp-breadboard-embed .bb-workspace .footer nav{display:none!important}
+.vp-breadboard-embed .bb-workspace .footer .bb-readiness{color:#d4af37}
+.vp-breadboard-embed .bb-workspace .physical-canvas-wrap{background-color:#0b1220;border-color:#344963;background-image:linear-gradient(#263b5566 1px,transparent 1px),linear-gradient(90deg,#263b5566 1px,transparent 1px)}
+.vp-breadboard-embed .bb-workspace .layout,.vp-breadboard-embed .bb-workspace .board-area{background:#0b1220}
+.vp-breadboard-embed .bb-workspace .layout>.bb-properties-panel,.vp-breadboard-embed .bb-workspace .layout>.bb-parts-panel{background:#111d30;border-color:#263b55}
+.vp-breadboard-embed .bb-workspace .bb-shell-controls>select,.vp-breadboard-embed .bb-workspace .bb-shell-controls>a[aria-label="My workspace and examples"]{display:none!important}
+html[data-vp-theme="light"] .vp-breadboard-embed .bb-workspace{--bg:#f8fafc;--panel:#fff;--line:#d5dfeb;--text:#172334;--muted:#52647a;background:#f8fafc;color:#172334}
+html[data-vp-theme="light"] .vp-breadboard-embed .bb-workspace .top,html[data-vp-theme="light"] .vp-breadboard-embed .bb-workspace .footer,html[data-vp-theme="light"] .vp-breadboard-embed .bb-workspace .layout,html[data-vp-theme="light"] .vp-breadboard-embed .bb-workspace .board-area{background:#f8fafc;color:#172334;border-color:#d5dfeb}
+html[data-vp-theme="light"] .vp-breadboard-embed .bb-workspace .bb-product-wordmark{color:#172334}
+
+html.vp-electrical-embed .cad-brand{display:flex;align-items:center;gap:9px}
+html.vp-electrical-embed .cad-brand .cad-product-wordmark{font-size:15px;letter-spacing:-.4px;color:#e8eef7}
+html.vp-electrical-embed .cad-brand .cad-product-wordmark span{color:#22d3ee}
+html.vp-electrical-embed .cad-brand>small{color:#d4af37;font:700 8px ui-monospace,monospace;letter-spacing:1px}
+html.vp-electrical-embed .cad-workspace-menu{display:none!important}

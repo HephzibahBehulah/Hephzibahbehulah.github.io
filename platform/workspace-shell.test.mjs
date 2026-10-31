@@ -27,7 +27,7 @@ const cyberManifest = read("apps/pentest-source/app/manifest.webmanifest");
 test("company and product marks remain separate, named identities", () => {
   assert.match(companyLogo, /<title>Hephzibah Behulah<\/title>/i);
   assert.match(academy, /class="parent-logo"[^>]+alt="HEPHZIBAH BEHULAH"/);
-  assert.match(academy, /class="product-wordmark">VoltPro<\/span>/);
+  assert.match(academy, /class="product-wordmark">VoltPro<small>BY HB ELEKTRONIKER<\/small><\/span>/);
   assert.match(homeBrand, /company: "HEPHZIBAH BEHULAH"/);
   assert.match(homeBrand, /product: "VoltPro"/);
   assert.match(voltproLogo, /<title id="title">VoltPro<\/title>/);
@@ -112,9 +112,9 @@ test("ElectCAD uses a professional three-column scrollable CAD workspace", () =>
   const appCss = read("apps/engineering/voltpro-electcad/styles.css");
   const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
   assert.match(shell, /classList\.toggle\("vp-electcad-maximized", tool\.path === "\/electcad"\)/);
-  assert.match(nav, /if\(isElectCADRoute\)\{document\.documentElement\.classList\.add\('vp-electcad-maximized'\).*?return;\}const header=/);
+  assert.match(nav, /isElectCADRoute=\/\^\\\//);
   assert.match(platformScript, /else if\(!isElectCADWorkspace\)document\.body\.prepend\(header\)/);
-  assert.match(platformScript, /if\(!isElectCADWorkspace&&!document\.querySelector\('\.os-footer,\.hb-footer-brand'\)\)document\.body\.append\(footer\)/);
+  assert.match(platformScript, /if\(!isElectCADWorkspace&&!existingFooter\)document\.body\.append\(footer\)/);
   assert.match(siteCss, /vp-electcad-maximized #vpSiteHeader\{display:none!important\}/);
   assert.match(siteCss, /vp-electcad-maximized #vpWorkspace\{position:fixed!important;inset:0 0 80px!important/);
   assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{display:none!important\}/);

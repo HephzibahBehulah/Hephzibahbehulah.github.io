@@ -31,12 +31,12 @@ test('the shared brand theme is injected into nested pages once', () => {
 test('shared brand theme matches the product template and supports both colour modes', () => {
   const css = fs.readFileSync(path.join(root, 'packages/shared-ui/css/sitewide-osint-theme.css'), 'utf8');
   const chrome = fs.readFileSync(path.join(root, 'platform/experience.css'), 'utf8');
-  assert.match(css, /--bg:#0a1118/);
-  assert.match(css, /--panel:#111c26/);
-  assert.match(css, /--accent:#48d8d0/);
+  assert.match(css, /--bg:#0b1220/);
+  assert.match(css, /--panel:#111d30/);
+  assert.match(css, /--accent:#2563eb/);
   assert.match(css, /html\[data-hb-theme="light"\]/);
-  assert.match(css, /--bg:#f2f5f6/);
-  assert.match(css, /--accent:#087e83/);
+  assert.match(css, /--bg:#f8fafc/);
+  assert.match(css, /--accent:#2563eb/);
   assert.doesNotMatch(css, /#ff8a3d/);
   assert.match(css, /\.nav-item/);
   assert.match(css, /:focus-visible/);
@@ -44,14 +44,14 @@ test('shared brand theme matches the product template and supports both colour m
   assert.ok(css.includes('body.hb-unified'));
   assert.ok(css.includes('button[type="submit"]'));
   assert.ok(css.includes('html[data-hb-theme] body.hb-unified button[type="submit"]'));
-  assert.match(css, /--hb-text:#eef4f5/);
+  assert.match(css, /--hb-text:#f8fafc/);
   assert.match(css, /color-scheme:dark/);
   assert.match(css, /color-scheme:light/);
-  assert.match(chrome, /--hb-surface:#111c26/);
-  assert.match(chrome, /--bg:#0a1118/);
-  assert.match(chrome, /--hb-glow:#48d8d0/);
-  assert.match(chrome, /--bg:#f2f5f6/);
-  assert.match(chrome, /--accent:#087e83/);
+  assert.match(chrome, /--hb-surface:#111d30/);
+  assert.match(chrome, /--bg:#0b1220/);
+  assert.match(chrome, /--hb-glow:#22d3ee/);
+  assert.match(chrome, /--bg:#f8fafc/);
+  assert.match(chrome, /--accent:#2563eb/);
 });
 
 test('private command center and workbench use parent and product wordmarks with valid workspace links', () => {
@@ -59,7 +59,7 @@ test('private command center and workbench use parent and product wordmarks with
   const tools = fs.readFileSync(path.join(root, 'apps/admin/admin-tools.html'), 'utf8');
   const cyber = fs.readFileSync(path.join(root, 'apps/cyber-os/index.html'), 'utf8');
   for (const html of [control, tools, cyber]) {
-    assert.match(html, /class="hb-company-wordmark">HEPHZIBAH<br>BEHULAH/);
+    assert.match(html, /class="hb-company-wordmark"><img class="hb-company-logo" src="\/_hb\/hephzibah-behulah-official\.jpg" alt="HEPHZIBAH BEHULAH">/);
     assert.match(html, /class="hb-product-wordmark">ADIGUN/);
   }
   assert.match(control, /href="\/admin\/" aria-label="HEPHZIBAH BEHULAH, ADIGUN Control"/);
@@ -98,7 +98,7 @@ test('Cyber OS carries the parent wordmark and its own product wordmark in the s
   assert.match(html, /ADIGUN/);
   assert.match(html, /Cyber OS/);
   assert.match(html, /a product of HEPHZIBAH BEHULAH/i);
-  assert.match(html, /name="theme-color" content="#0a1118"/);
+  assert.match(html, /name="theme-color" content="#0b1220"/);
   assert.match(html, /rel="manifest" href="\/cyber-os\/adigun-cyber-os\.webmanifest"/);
   assert.match(html, /rel="icon" type="image\/svg\+xml" href="\/cyber-os\/assets\/adigun-cyber-os\.svg"/);
   assert.equal(manifest.name, 'ADIGUN Cyber OS | HEPHZIBAH BEHULAH');
@@ -108,7 +108,38 @@ test('Cyber OS carries the parent wordmark and its own product wordmark in the s
   assert.match(css, /\.hb-company-wordmark/);
   assert.match(css, /\.hb-product-wordmark/);
   assert.match(css, /html\[data-hb-theme=light\] \.hb-product-wordmark/);
-  assert.match(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#48d8d0/);
+  assert.match(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#22d3ee/);
   assert.doesNotMatch(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#ff9b43/);
+});
+
+test('public, cyber, admin and engineering roots use the approved company logo and product wordmarks', () => {
+  const pages = ['apps/public/index.html','apps/cyber-os/index.html','apps/admin/admin.html','apps/admin/admin-tools.html'];
+  for (const file of pages) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    assert.match(html, /src="\/_hb\/hephzibah-behulah-official\.jpg"/i, file);
+    assert.match(html, /hb-product-wordmark|INTELLIGENCE PORTFOLIO/, file);
+  }
+  const engineering = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/index.html'), 'utf8');
+  assert.match(engineering, /assets\/hephzibah-behulah-official\.jpg/);
+  assert.match(engineering, /product-wordmark">VoltPro<small>BY HB ELEKTRONIKER/);
+  const shared = fs.readFileSync(path.join(root, 'platform/platform.js'), 'utf8');
+  assert.match(shared, /hephzibah-behulah-official\.jpg/);
+  assert.match(shared, /hb-platform-product-wordmark/);
+  assert.match(shared, /hb-footer-attribution/);
+});
+
+test('Simulator PCB workspace includes the reference layout and live simulation output', () => {
+  const html = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/simulator.html'), 'utf8');
+  const pcb = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/src/ui/pcb-studio.js'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/simulator-template.css'), 'utf8');
+  assert.match(html, /VoltPro Simulator<\/b><small>BY HB ELEKTRONIKER/);
+  assert.match(html, /assets\/hephzibah-behulah-official\.jpg/);
+  assert.match(pcb, /class="pcb-output-panel" aria-label="Simulation output"/);
+  assert.match(pcb, /document\.getElementById\('calcPanel'\)/);
+  assert.match(pcb, /document\.getElementById\('console'\)/);
+  assert.match(pcb, /new MutationObserver\(syncSimulationOutput\)/);
+  assert.match(css, /\.workspace\.vp-view-active>\.vp-pcb-host/);
+  assert.match(css, /\.vp-pcb \.pcb-output-panel/);
+  assert.match(css, /\.vp-pcb \.pcb-stage svg/);
 });
 

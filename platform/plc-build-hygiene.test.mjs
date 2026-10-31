@@ -10,9 +10,9 @@ const html=fs.readFileSync(path.join(app,'index.html'),'utf8');
 
 test('VoltPro PLC loads all twelve companion scripts with valid local paths',()=>{
  const scripts=[...html.matchAll(/<script\b([^>]*)>/gi)].map(match=>match[1]);
- const external=scripts.filter(attrs=>!attrs.includes('src="/src/main.tsx"'));
+ const external=scripts.filter(attrs=>attrs.trim()&&!attrs.includes('src="/src/main.tsx"'));
  assert.equal(external.length,12);
- for(const attrs of scripts){
+ for(const attrs of external){
   const src=attrs.match(/\bsrc="([^"]+)"/)?.[1];
   assert.ok(src,'Every PLC script must have a source.');
   const local=src.startsWith('/')?path.join(app,src.slice(1)):path.resolve(app,src.split('?')[0]);

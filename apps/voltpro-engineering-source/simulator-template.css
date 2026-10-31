@@ -440,3 +440,70 @@ body.simulator-page.vp-template-simulator .live-flow-status{position:fixed!impor
  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #palette{grid-row:2!important}
  body.simulator-page.vp-template-simulator .workspace.vp-managed-panels:not(.vp-left-closed):not(.vp-right-closed) #inspectorPanel{grid-row:3!important}
 }
+
+/* Embedded VoltPro Simulator shell: the host renders the parent-company logo;
+   this workspace keeps its own text wordmark, menus and editing actions visible. */
+body.simulator-page.vp-template-simulator .sim-app{height:100%!important;min-height:0!important;grid-template-rows:52px auto minmax(0,1fr)!important;overflow:hidden!important;background:#0b1220;color:#f8fafc}
+body.simulator-page.vp-template-simulator .sim-top{display:flex!important;min-height:52px;height:auto!important;align-items:center;gap:12px;padding:0 12px;background:#0b1220;border-bottom:1px solid #263b55;overflow:visible}
+body.simulator-page.vp-template-simulator .sim-top>.brand{min-width:160px;gap:0;overflow:hidden}
+body.simulator-page.vp-template-simulator .sim-top>.brand img,body.simulator-page.vp-template-simulator .sim-top>.brand .vp-brand-divider{display:none!important}
+body.simulator-page.vp-template-simulator .sim-top>.brand .vp-brand-product{display:flex;flex-direction:column;gap:3px;white-space:nowrap}
+body.simulator-page.vp-template-simulator .sim-top>.brand .vp-brand-product b{font-size:17px;letter-spacing:-.04em;color:#f8fafc}
+body.simulator-page.vp-template-simulator .sim-top>.brand .vp-brand-product small{font:700 8px/1.2 ui-monospace,monospace;letter-spacing:.12em;color:#d4af37}
+body.simulator-page.vp-template-simulator .sim-top>.mode-tabs{display:flex;align-items:center;flex:1 1 auto;gap:3px;min-width:0;overflow:auto}
+body.simulator-page.vp-template-simulator .sim-top>.mode-tabs .mode{min-height:34px;padding:6px 10px;border:1px solid transparent;border-radius:6px;background:transparent;color:#c9d7e8;white-space:nowrap}
+body.simulator-page.vp-template-simulator .sim-top>.mode-tabs .mode.active{border-color:#1b6e95;background:#102b43;color:#22d3ee}
+body.simulator-page.vp-template-simulator .sim-top>.top-actions{display:flex;align-items:center;gap:5px;flex:0 0 auto}
+body.simulator-page.vp-template-simulator .sim-top>.top-actions>a{display:none!important}
+body.simulator-page.vp-template-simulator>.sim-app>.toolbar{display:flex!important;position:relative!important;inset:auto!important;min-height:48px;height:auto!important;max-height:none!important;flex-wrap:nowrap;align-items:center;gap:8px;padding:5px 10px;background:#101b2b;border-bottom:1px solid #263b55;overflow-x:auto;overflow-y:visible;white-space:nowrap}
+body.simulator-page.vp-template-simulator .toolbar-group{display:flex;align-items:center;gap:4px;flex:0 0 auto;min-width:0}
+body.simulator-page.vp-template-simulator .toolbar button{min-height:34px;padding:6px 10px;border:1px solid #2a405b;border-radius:6px;background:#111d30;color:#dce8f4}
+body.simulator-page.vp-template-simulator .toolbar button:hover,body.simulator-page.vp-template-simulator .toolbar button:focus-visible{border-color:#22d3ee;color:#22d3ee}
+body.simulator-page.vp-template-simulator .toolbar button.primary{background:#22d3ee;color:#07111d;border-color:#22d3ee;font-weight:800}
+body.simulator-page.vp-template-simulator .toolbar .status{color:#d4af37}
+body.simulator-page.vp-template-simulator .workspace{min-height:0!important;overflow:hidden!important;background:#0b1220!important}
+body.simulator-page.vp-template-simulator .workspace.vp-view-active{grid-template-columns:42px minmax(205px,245px) minmax(0,1fr) minmax(265px,310px)!important;grid-template-rows:minmax(0,1fr)!important}
+body.simulator-page.vp-template-simulator .workspace.vp-view-active>#palette{display:block!important;grid-column:2!important;grid-row:1!important}
+body.simulator-page.vp-template-simulator .workspace.vp-view-active>#canvasWrap{display:none!important}
+body.simulator-page.vp-template-simulator .workspace.vp-view-active>#inspectorPanel{display:block!important;grid-column:4!important;grid-row:1!important}
+body.simulator-page.vp-template-simulator .workspace.vp-view-active>.vp-pcb-host,body.simulator-page.vp-template-simulator .workspace.vp-view-active>.vp-board-host{grid-column:3!important;grid-row:1!important;display:block!important;min-width:0!important;min-height:0!important;width:auto!important;height:auto!important;margin:0!important;border:0!important;border-radius:0!important;overflow:hidden!important;background:#0b1220!important}
+body.simulator-page.vp-template-simulator .workspace.vp-view-active>.vp-pcb-host[hidden],body.simulator-page.vp-template-simulator .workspace.vp-view-active>.vp-board-host[hidden]{display:none!important}
+body.simulator-page.vp-template-simulator .palette,body.simulator-page.vp-template-simulator .inspector{background:#111d30!important;border-color:#263b55!important;color:#e8eef7!important}
+body.simulator-page.vp-template-simulator .palette .panel-title,body.simulator-page.vp-template-simulator .inspector .panel-title{color:#a9d9ef!important}
+body.simulator-page.vp-template-simulator #componentSearch,body.simulator-page.vp-template-simulator .inspector input,body.simulator-page.vp-template-simulator .inspector select{background:#0b1220!important;border-color:#2a405b!important;color:#f8fafc!important}
+@media(max-width:900px){body.simulator-page.vp-template-simulator .sim-app{grid-template-rows:48px auto minmax(0,1fr)!important}body.simulator-page.vp-template-simulator .sim-top{flex-wrap:wrap;padding:5px 8px}body.simulator-page.vp-template-simulator .sim-top>.mode-tabs{flex-basis:100%;order:3}body.simulator-page.vp-template-simulator>.sim-app>.toolbar{min-height:44px}body.simulator-page.vp-template-simulator .workspace.vp-view-active{grid-template-columns:38px minmax(0,1fr) 220px!important}}
+@media(max-width:650px){body.simulator-page.vp-template-simulator .sim-top>.brand{min-width:130px}body.simulator-page.vp-template-simulator .sim-top>.mode-tabs{gap:1px}body.simulator-page.vp-template-simulator .sim-top>.mode-tabs .mode{padding-inline:6px;font-size:10px}body.simulator-page.vp-template-simulator .workspace.vp-view-active{grid-template-columns:34px minmax(0,1fr) 145px!important}body.simulator-page.vp-template-simulator .workspace.vp-view-active>#palette{display:none!important}body.simulator-page.vp-template-simulator .workspace.vp-view-active>.vp-pcb-host,body.simulator-page.vp-template-simulator .workspace.vp-view-active>.vp-board-host{grid-column:2!important}body.simulator-page.vp-template-simulator .workspace.vp-view-active>#inspectorPanel{grid-column:3!important}}
+
+/* PCB view follows the reference composition: component library, working board,
+   live simulation results and properties stay visible in one workspace. */
+body.simulator-page.vp-template-simulator .workspace.vp-view-active>.vp-pcb-host{grid-row:1!important}
+body.simulator-page.vp-template-simulator .vp-pcb-host>.vp-pcb{height:100%!important;min-height:0!important;grid-template-rows:auto auto minmax(160px,1.15fr) minmax(125px,.85fr) auto!important;overflow:hidden!important;background:#0b1220!important;color:#e8eef7!important}
+body.simulator-page.vp-template-simulator .vp-pcb>header{min-height:42px;padding:5px 10px;background:#0c1a2a!important;border-color:#263b55!important}
+body.simulator-page.vp-template-simulator .vp-pcb>header nav{gap:4px}
+body.simulator-page.vp-template-simulator .vp-pcb>header nav button,body.simulator-page.vp-template-simulator .vp-pcb>header nav a{padding:7px 13px;border:1px solid #263b55;border-radius:5px;color:#c7d9eb}
+body.simulator-page.vp-template-simulator .vp-pcb>header nav .active{background:#102b43!important;border-color:#22d3ee!important;color:#22d3ee!important}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-note{color:#9cb4c9}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-toolbar{min-height:40px;flex-wrap:nowrap;overflow-x:auto;padding:5px 9px;background:#101b2b;border-bottom:1px solid #263b55}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-toolbar button{flex:none;padding:6px 9px;border-color:#2a405b;border-radius:5px;background:#111d30;color:#dce8f4}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-toolbar button:hover,body.simulator-page.vp-template-simulator .vp-pcb .pcb-toolbar button:focus-visible{border-color:#22d3ee;color:#22d3ee}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-stage{min-height:0!important;min-width:0;overflow:auto;padding:12px;background-color:#081624;background-image:linear-gradient(#163047 1px,transparent 1px),linear-gradient(90deg,#163047 1px,transparent 1px);background-size:20px 20px}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-stage svg{width:min(1100px,96%);max-height:100%;box-shadow:0 8px 26px #0008}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:0;overflow:hidden;border-top:1px solid #263b55;background:#091725;color:#cfe0f2}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel>header{min-height:34px;padding:6px 10px;background:#0c1a2a;border-bottom:1px solid #263b55}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel>header strong{font-size:14px;color:#a9d9ef}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-output-state{color:#22d3ee;font-size:11px;font-weight:700;text-transform:uppercase}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-output-values{min-height:0;overflow:auto;margin:0;padding:8px 10px;background:#071421;color:#9dd6f4;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel>small{padding:5px 10px;border-top:1px solid #1c3347;color:#97abc0;font-size:10px}
+body.simulator-page.vp-template-simulator .vp-pcb .pcb-status{padding:5px 10px;border-color:#263b55;background:#0c1a27;color:#9dcab5;font-size:11px}
+@media(max-width:900px){body.simulator-page.vp-template-simulator .vp-pcb-host>.vp-pcb{grid-template-rows:auto auto minmax(145px,1fr) minmax(105px,.8fr) auto!important}body.simulator-page.vp-template-simulator .vp-pcb .pcb-note{display:none}}
+@media(max-width:650px){body.simulator-page.vp-template-simulator .vp-pcb-host>.vp-pcb{grid-template-rows:auto auto minmax(135px,1fr) minmax(100px,.8fr) auto!important}body.simulator-page.vp-template-simulator .vp-pcb>header nav button,body.simulator-page.vp-template-simulator .vp-pcb>header nav a{padding:6px 8px;font-size:11px}body.simulator-page.vp-template-simulator .vp-pcb .pcb-toolbar button{font-size:10px}body.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel>small{font-size:9px}}
+body.light.simulator-page.vp-template-simulator .vp-pcb-host>.vp-pcb{background:#f8fafc!important;color:#1e293b!important}
+body.light.simulator-page.vp-template-simulator .vp-pcb>header,body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel>header{background:#eaf1f8!important;border-color:#cbd5e1!important}
+body.light.simulator-page.vp-template-simulator .vp-pcb>header nav button,body.light.simulator-page.vp-template-simulator .vp-pcb>header nav a{color:#334155}
+body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-toolbar{background:#eaf1f8;border-color:#cbd5e1}
+body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-toolbar button{background:#fff;border-color:#cbd5e1;color:#1e293b}
+body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-stage{background-color:#e8f0f8;background-image:linear-gradient(#cbd5e1 1px,transparent 1px),linear-gradient(90deg,#cbd5e1 1px,transparent 1px)}
+body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel{background:#f8fafc;color:#334155;border-color:#cbd5e1}
+body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-output-values{background:#fff;color:#164e63}
+body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-output-panel>small{border-color:#cbd5e1;color:#475569}
+body.light.simulator-page.vp-template-simulator .vp-pcb .pcb-status{background:#eaf1f8;border-color:#cbd5e1;color:#166534}
