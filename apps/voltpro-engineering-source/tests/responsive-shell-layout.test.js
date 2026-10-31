@@ -64,4 +64,6 @@ test("embedded Electrical uses exactly three grid rows so the canvas and drawers
   assert.match(electricalCss, /html\.vp-electrical-embed \.cad-footer\{grid-row:3/);
   assert.match(electricalCss, /@media\(max-width:850px\)\{html\.vp-electrical-embed body\{grid-template-rows:minmax\(44px,auto\) minmax\(0,1fr\) 26px\}/);
   assert.match(electricalHtml, /electrical-canvas\.css\?v=20261031-gridfix1/);
+  assert.match(electricalHtml, /data-panel="library" aria-label="Installation objects" aria-expanded="true"/);
+  assert.match(electricalCss, /\.cad-footer span\{white-space:nowrap;flex:0 0 auto\}/);
 });
