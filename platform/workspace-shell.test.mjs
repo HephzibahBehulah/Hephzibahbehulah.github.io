@@ -89,6 +89,10 @@ test("PLC embeds the shared brand header above its editor and keeps the native w
   assert.match(plcCss, /\.vp-template-plc #vpSiteHeader\{position:static!important/);
   assert.match(plcCss, /\.vp-template-plc \.plc-main-site,\.vp-template-plc \.plc-company-logo/);
   assert.match(plcLayout, /<footer className="statusbar plc-unified-bottom" data-plc-unified-bottom="true">/);
+  assert.match(plcLayout, /target="_top"[^>]*aria-label=\{label\}[^>]*onClick=\{event=>\{[\s\S]*?window\.parent\.dispatchEvent\(new CustomEvent\('vp-plc-navigate'/);
+  assert.match(shell, /window\.addEventListener\("vp-plc-navigate"/);
+  assert.match(plcCss, /\.vp-template-plc \.plc-app>\.topbar\.plc-reference-header\{[^}]*overflow:visible/);
+  assert.match(plcCss, /\.vp-template-plc \.plc-reference-header \.plc-command-pop\{top:110px\}/);
 });
 
 test("Oscilloscope hides injected site chrome and leaving Breadboard closes its command menus", () => {
