@@ -387,6 +387,12 @@ scroll.addEventListener("pointerup",endCameraPointer); scroll.addEventListener("
 scroll.addEventListener("click",event=>{if(suppressClick){event.preventDefault();event.stopImmediatePropagation();suppressClick=false;}},true);
 document.querySelectorAll("[data-panel]").forEach(button=>button.addEventListener("click",()=>togglePanel(button.dataset.panel)));
 document.querySelectorAll("[data-close-panel]").forEach(button=>button.addEventListener("click",()=>togglePanel(button.dataset.closePanel,false)));
+if(window.matchMedia("(max-width: 850px)").matches) togglePanel("library",false);
+$("toggleTitleBlock").addEventListener("click",event=>{
+  const expanded=document.querySelector(".title-block").dataset.expanded!=="true";
+  document.querySelector(".title-block").dataset.expanded=String(expanded);
+  event.currentTarget.setAttribute("aria-expanded",String(expanded));
+});
 function openExampleLibrary() {
   const projectMenu = [...document.querySelectorAll(".cad-menubar details")].find(details => details.querySelector("#buildingExample"));
   if (!projectMenu) return setStatus("Example project library is unavailable. Refresh the Electrical workspace and try again.");
@@ -568,4 +574,5 @@ try {
 
 function exportSelectedFormat(){const format=$('drawingExportFormat').value;if(format==='json'){exportProject();return;}try{let content,type,name;if(format==='svg'){content=architectureUI.exportSVG();type='image/svg+xml';name='electrical-floor-'+state.metadata.activeFloor+'.svg';}else if(format==='review'){const structural=validateBuildingDocument(state),review=reviewInstallation(state),circuits=circuitAssessment(state);content=[state.metadata.name,'PRELIMINARY DESIGN REVIEW — no installation compliance certificate',...(state.designNotes||[]),...structural.errors.map(x=>'STRUCTURE ERROR: '+x),...review.issues.map(i=>`${i.level.toUpperCase()} ${i.object}: ${i.message}`),...circuits.flatMap(c=>c.issues.map(i=>`${i.level.toUpperCase()} ${c.id}: ${i.message}`))].join('\n');type='text/plain';name='electrical-full-engineering-review.txt';}else{const rows=architectureUI.circuitRows(),keys=['circuit','label','board','protection','rcd','cableTags','knownConnectedW','unresolvedLoads','designCurrentA','routeCount','reviewCount'];const clean=value=>String(value??'').replace(/[\t\r\n]/g,' ').replace(/^[=+@-]/,"'$&");content=[keys.join('\t'),...rows.map(r=>keys.map(k=>clean(r[k])).join('\t'))].join('\n');type='text/tab-separated-values';name='electrical-board-circuit-schedule.tsv';}const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus('Drawing/schedule exported. Save project JSON separately to preserve editability.');}catch(error){setStatus(error.message);}}
 for(const [id,key]of [['roomX','x'],['roomY','y'],['roomWidth','width'],['roomHeight','height']])$(id).addEventListener('change',()=>{const value=Number($(id).value);if(!Number.isFinite(value)||value<0)return;architectureUI.clearSelection();const before=clone(state);try{const room=state.rooms.find(r=>r.id===selectedRoom);if(!room)return;room[key]=key==='x'?1+value/state.gridMillimetres:value/state.gridMillimetres;rebuildRoomWalls(state);refreshAttachedGeometry(state);refreshWireRoutes(state);if(architectureErrors(state).length)throw Error(architectureErrors(state).join(' '));history.push(before);future.length=0;save();renderAll();showRoomProperties(room);}catch(error){state=before;renderAll();setStatus(error.message);}});
+
 
