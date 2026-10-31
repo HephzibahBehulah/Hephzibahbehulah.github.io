@@ -1,6 +1,6 @@
 {
   "source": "Linux man-pages project",
-  "count": 2636,
+  "count": 2637,
   "records": [
     {
       "id": "linux-man-diffman-git-1",
@@ -86,6 +86,17 @@
       "section": "1",
       "category": "Linux man page",
       "summary": "Linux manual-page reference for ldd (section 1).",
+      "source": "Linux man-pages project",
+      "sourceUrl": "https://man7.org/linux/man-pages/",
+      "verification": "source-backed"
+    },
+    {
+      "id": "linux-man-lman-1",
+      "name": "lman",
+      "command": "lman",
+      "section": "1",
+      "category": "Linux man page",
+      "summary": "Linux manual-page reference for lman (section 1).",
       "source": "Linux man-pages project",
       "sourceUrl": "https://man7.org/linux/man-pages/",
       "verification": "source-backed"
