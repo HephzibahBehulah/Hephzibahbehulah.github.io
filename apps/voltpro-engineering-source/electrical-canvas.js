@@ -138,7 +138,17 @@ function renderRooms() {
 function renderNodes() {
   nodeLayer.replaceChildren();
   const emptyState = $("emptyPlanState");
-  if (emptyState) emptyState.hidden = state.nodes.some(node => (node.floor || 1) === state.metadata.activeFloor) || state.rooms.some(room => room.floor === state.metadata.activeFloor) || state.walls.some(wall => wall.floor === state.metadata.activeFloor);
+  if (emptyState) {
+    const floor = state.metadata.activeFloor;
+    const hasVisibleGeometry = state.nodes.some(node => (node.floor || 1) === floor)
+      || state.rooms.some(room => (room.floor || 1) === floor)
+      || state.walls.some(wall => (wall.floor || 1) === floor)
+      || state.dimensions.some(dimension => dimension.floor === floor)
+      || state.spaces.some(space => space.floor === floor)
+      || state.stairs.some(stair => stair.floor === floor)
+      || state.risers.some(riser => floor >= riser.fromFloor && floor <= riser.toFloor);
+    emptyState.hidden = hasVisibleGeometry;
+  }
   for (const node of state.nodes.filter(node=>(node.floor||1)===state.metadata.activeFloor&&!node.inBoard)) {
     const item = typeOf(node.type), button = document.createElement("button");
     button.type = "button"; button.className = "cad-node"; button.dataset.id = node.id; button.dataset.system = item.system; button.dataset.category=item.category;
@@ -558,3 +568,4 @@ try {
 
 function exportSelectedFormat(){const format=$('drawingExportFormat').value;if(format==='json'){exportProject();return;}try{let content,type,name;if(format==='svg'){content=architectureUI.exportSVG();type='image/svg+xml';name='electrical-floor-'+state.metadata.activeFloor+'.svg';}else if(format==='review'){const structural=validateBuildingDocument(state),review=reviewInstallation(state),circuits=circuitAssessment(state);content=[state.metadata.name,'PRELIMINARY DESIGN REVIEW — no installation compliance certificate',...(state.designNotes||[]),...structural.errors.map(x=>'STRUCTURE ERROR: '+x),...review.issues.map(i=>`${i.level.toUpperCase()} ${i.object}: ${i.message}`),...circuits.flatMap(c=>c.issues.map(i=>`${i.level.toUpperCase()} ${c.id}: ${i.message}`))].join('\n');type='text/plain';name='electrical-full-engineering-review.txt';}else{const rows=architectureUI.circuitRows(),keys=['circuit','label','board','protection','rcd','cableTags','knownConnectedW','unresolvedLoads','designCurrentA','routeCount','reviewCount'];const clean=value=>String(value??'').replace(/[\t\r\n]/g,' ').replace(/^[=+@-]/,"'$&");content=[keys.join('\t'),...rows.map(r=>keys.map(k=>clean(r[k])).join('\t'))].join('\n');type='text/tab-separated-values';name='electrical-board-circuit-schedule.tsv';}const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus('Drawing/schedule exported. Save project JSON separately to preserve editability.');}catch(error){setStatus(error.message);}}
 for(const [id,key]of [['roomX','x'],['roomY','y'],['roomWidth','width'],['roomHeight','height']])$(id).addEventListener('change',()=>{const value=Number($(id).value);if(!Number.isFinite(value)||value<0)return;architectureUI.clearSelection();const before=clone(state);try{const room=state.rooms.find(r=>r.id===selectedRoom);if(!room)return;room[key]=key==='x'?1+value/state.gridMillimetres:value/state.gridMillimetres;rebuildRoomWalls(state);refreshAttachedGeometry(state);refreshWireRoutes(state);if(architectureErrors(state).length)throw Error(architectureErrors(state).join(' '));history.push(before);future.length=0;save();renderAll();showRoomProperties(room);}catch(error){state=before;renderAll();setStatus(error.message);}});
+
