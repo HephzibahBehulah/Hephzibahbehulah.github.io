@@ -9,11 +9,9 @@
       "capability": "DRC",
       "currentStatus": "Partial",
       "blockerType": [
-        "Logic not implemented",
-        "Standards text needed",
-        "Test not written"
+        "IEC 61131-3 profile and source data needed"
       ],
-      "ownerActionRequired": "You supply verified IEC 61131-3 data; Codex implements checks",
+      "ownerActionRequired": "Supply an authoritative, licensed IEC profile; current model and ladder topology diagnostics are educational only",
       "acceptanceTestName": "accept.plc.drc.iec61131-profile"
     },
     {
@@ -77,11 +75,9 @@
       "capability": "DRC",
       "currentStatus": "Partial",
       "blockerType": [
-        "Logic not implemented",
-        "Standards text needed",
-        "Test not written"
+        "Authoritative component rating and limit sources needed"
       ],
-      "ownerActionRequired": "You supply verified component-limit sources; Codex implements complete checks",
+      "ownerActionRequired": "Simulator now reviews terminal topology, model validity, DC results, and explicitly entered ratings; supply verifiable limits before standards-based claims",
       "acceptanceTestName": "accept.sim.drc.topology-and-ratings"
     },
     {
@@ -110,12 +106,11 @@
       "gapId": "SIM-MS",
       "tool": "Simulator",
       "capability": "Multi-Sheet",
-      "currentStatus": "Not Started",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex implements hierarchical blocks and typed ports",
+      "ownerActionRequired": "Tools menu converts selected components into a project-local hierarchical block with typed interface ports; definitions persist in project exports and recovery snapshots, instances flatten to solver components, and invalid types, missing terminals, and recursion are rejected. Wrapping an existing block in another block through selection is not yet available.",
       "acceptanceTestName": "accept.sim.hierarchy.typed-ports"
     },
     {
@@ -171,10 +166,10 @@
       "capability": "BOM",
       "currentStatus": "Partial",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "Manufacturer-verified source data needed",
+        "purchasing review required"
       ],
-      "ownerActionRequired": "Codex adds verified parts and route-derived wire lengths",
+      "ownerActionRequired": "Supply authoritative product data for selected parts; Codex now groups entered part identities and calculates drawing-route lengths with explicit limits",
       "acceptanceTestName": "accept.electcad.bom.manufacturing-and-lengths"
     },
     {
@@ -205,11 +200,9 @@
       "capability": "Smart Wire",
       "currentStatus": "Partial",
       "blockerType": [
-        "Logic not implemented",
-        "Standards text needed",
-        "Test not written"
+        "DIN EN 60445 source data needed for standards claims"
       ],
-      "ownerActionRequired": "You supply verified DIN EN 60445 data; Codex completes routing behavior",
+      "ownerActionRequired": "Supply the licensed colour-designation profile; Codex adds project-local same-net colour warnings and crossing review, without claiming compliance",
       "acceptanceTestName": "accept.electcad.wiring.routing-colors-crossings"
     },
     {

@@ -85,6 +85,7 @@ credentials.yml
 
 # Custom
 dist-platform/
+dist-platform-release-*/
 wrangler.platform.jsonc
 platform-source/
 /assets/images/original/
