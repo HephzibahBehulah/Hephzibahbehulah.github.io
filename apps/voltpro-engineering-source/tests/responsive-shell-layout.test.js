@@ -63,19 +63,48 @@ test("embedded Electrical uses exactly three grid rows so the canvas and drawers
   assert.match(electricalCss, /html\.vp-electrical-embed \.cad-layout\{grid-row:2/);
   assert.match(electricalCss, /html\.vp-electrical-embed \.cad-footer\{grid-row:3/);
   assert.match(electricalCss, /@media\(max-width:850px\)\{html\.vp-electrical-embed body\{grid-template-rows:minmax\(44px,auto\) minmax\(0,1fr\) 26px\}/);
-  assert.match(electricalHtml, /electrical-canvas\.css\?v=20261031-responsive1/);
+  assert.match(electricalHtml, /electrical-canvas\.css\?v=20261031-responsive2/);
   assert.match(electricalHtml, /data-panel="library" aria-label="Installation objects" aria-expanded="true"/);
   assert.match(electricalCss, /\.cad-footer span\{white-space:nowrap;flex:0 0 auto\}/);
 });
 
-test("Electrical mobile mode gives the canvas room and keeps drawing metadata collapsible", () => {
+test("Electrical responsive controls keep the canvas usable, sync on resize, and toggle drawing details", async () => {
   const electricalCss = readFileSync(new URL("../electrical-canvas.css", import.meta.url), "utf8");
-  const electricalHtml = readFileSync(new URL("../electrical-canvas.html", import.meta.url), "utf8");
   const electricalJs = readFileSync(new URL("../electrical-canvas.js", import.meta.url), "utf8");
-  assert.match(electricalJs, /matchMedia\("\(max-width: 850px\)"\)\.matches\) togglePanel\("library",false\)/);
-  assert.match(electricalHtml, /id="toggleTitleBlock" type="button" aria-expanded="false"/);
-  assert.match(electricalHtml, /class="title-block-fields"/);
+  const {installResponsiveElectricalControls} = await import("../electrical-responsive-ui.mjs");
+  assert.match(electricalJs,/installResponsiveElectricalControls\(\{ document, window, togglePanel \}\)/);
+  const makeButton = dataset => ({dataset, attributes:{}, handlers:{}, addEventListener(type, handler){this.handlers[type]=handler;}, setAttribute(name,value){this.attributes[name]=value;}, click(){this.handlers.click({currentTarget:this});}});
+  const library = makeButton({panel:"library"});
+  const closeLibrary = makeButton({closePanel:"library"});
+  const titleToggle = makeButton({});
+  const titleBlock = {dataset:{}};
+  const titleFields = {hidden:false};
+  const body = {dataset:{libraryOpen:"true"}};
+  const media = {matches:true,handlers:{},addEventListener(type,handler){this.handlers[type]=handler;},set(matches){this.matches=matches;this.handlers.change({matches});}};
+  const document = {body,querySelectorAll(selector){return selector==="[data-panel]"?[library]:[closeLibrary];},querySelector(selector){return selector===".title-block"?titleBlock:titleFields;},getElementById(){return titleToggle;}};
+  const togglePanel = (name,open=body.dataset[name+"Open"]!=="true")=>{body.dataset[name+"Open"]=String(open);};
+  installResponsiveElectricalControls({document,window:{matchMedia:()=>media},togglePanel});
+  assert.equal(body.dataset.libraryOpen,"false");
+  assert.equal(titleFields.hidden,true);
+  library.click();
+  assert.equal(body.dataset.libraryOpen,"true");
+  closeLibrary.click();
+  assert.equal(body.dataset.libraryOpen,"false");
+  titleToggle.click();
+  assert.equal(titleBlock.dataset.expanded,"true");
+  assert.equal(titleFields.hidden,false);
+  assert.equal(titleToggle.attributes["aria-expanded"],"true");
+  titleToggle.click();
+  assert.equal(titleFields.hidden,true);
+  media.set(false);
+  assert.equal(body.dataset.libraryOpen,"true");
+  assert.equal(titleFields.hidden,false);
+  media.set(true);
+  assert.equal(body.dataset.libraryOpen,"false");
+  assert.equal(titleFields.hidden,true);
   assert.match(electricalCss, /@media\(max-width:850px\)[\s\S]*?\.building-cad \.title-block-fields\{display:none\}/);
   assert.match(electricalCss, /\.building-cad \.title-block\[data-expanded="true"\] \.title-block-fields\{display:grid/);
+  assert.match(electricalCss, /@media print\{[\s\S]*?\.building-cad #toggleTitleBlock\{display:none!important\}[\s\S]*?\.building-cad \.title-block-fields\{display:grid!important/);
+  assert.match(electricalCss, /\.building-cad \.title-block\{right:8px;top:8px;bottom:auto/);
 });
 
