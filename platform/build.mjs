@@ -59,6 +59,7 @@ if(!preferenceSource.includes("new URL('/api/engineering/chat'"))fs.writeFileSyn
 const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 for(const file of ['platform.css','platform.js','release-update.js','admin-security-ui.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css','studio.js','studio.css','studio-bank.js','studio-search-worker.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'packages/shared-ui/assets/hb-logo.svg'),path.join(shared,'hb-logo.svg'));
+fs.copyFileSync(path.join(root,'packages/shared-ui/assets/hephzibah-behulah-official.jpg'),path.join(shared,'hephzibah-behulah-official.jpg'));
 fs.copyFileSync(path.join(root,'packages/shared-ui/css/sitewide-osint-theme.css'),path.join(shared,'sitewide-osint-theme.css'));
 for(const file of ['account-config.js','account-client.js','cloud-projects.js'])fs.copyFileSync(path.join(engineering,'platform',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'packages/shared-i18n/language-system.js'),path.join(shared,'language-system.js'));

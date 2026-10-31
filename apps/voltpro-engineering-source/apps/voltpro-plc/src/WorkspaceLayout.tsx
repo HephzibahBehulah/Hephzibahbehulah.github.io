@@ -111,8 +111,8 @@ export function WorkspaceLayout(p: Props) {
   const loadLibrary = (project: Project) => p.onReplace(project);
 
   return <div className="plc-app">
+    <div className="plc-shell-slot" />
     <header className="topbar plc-reference-header" onKeyDown={event => { if (event.key === 'Escape') event.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(menu => {menu.open=false;}); }} onClick={event => { const target=event.target as HTMLElement; if(target.closest('.plc-command-pop button, .plc-command-pop a')) target.closest('details')?.removeAttribute('open'); }}>
-      <div className="plc-shell-slot" hidden />
       <div className="plc-header-identity">
         <a className="plc-main-site" href="https://hephzibahbehulah.com/" target="_top"><ArrowLeft size={14}/><span>Main Site</span></a>
         <a className="plc-company-logo" href="https://hephzibahbehulah.com/" target="_top" aria-label="Hephzibah Behulah main site"><img src="/assets/hb-logo.svg" alt="HB"/></a>

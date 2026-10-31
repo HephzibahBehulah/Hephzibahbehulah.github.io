@@ -1,8 +1,8 @@
 /* VoltPro × HB ecosystem — shared visual layer. No application logic is changed. */
 :root {
-  --vp-hb-bg:#0a1118; --vp-hb-panel:#111c26; --vp-hb-panel-2:#172431;
-  --vp-hb-line:#273744; --vp-hb-text:#eef4f5; --vp-hb-muted:#a2b2b8;
-  --vp-hb-cyan:#48d8d0; --vp-hb-orange:#e8bd62; --vp-hb-green:#63d297;
+  --vp-hb-bg:#0b1220; --vp-hb-panel:#111d30; --vp-hb-panel-2:#15243a;
+  --vp-hb-line:#2b3b51; --vp-hb-text:#f8fafc; --vp-hb-muted:#b9c5d5;
+  --vp-hb-cyan:#22d3ee; --vp-hb-orange:#d4af37; --vp-hb-green:#22c55e;
   --vp-hb-violet:#a78bfa; --vp-hb-radius:14px;
 }
 .academy-page,.simulator-page,.engineering-page {

@@ -11,6 +11,8 @@ const platformScript = read("platform/platform.js");
 const shell = read("apps/voltpro-engineering-source/workspace-shell.js");
 const shellHtml = read("apps/voltpro-engineering-source/workspace-shell.html");
 const workspaceShellCss = read("apps/voltpro-engineering-source/workspace-shell.css");
+const plcLayout = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/WorkspaceLayout.tsx");
+const plcCss = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/style.css");
 const assistantTheme = read("apps/voltpro-engineering-source/voltpro-hb-theme.css");
 const canvas = read("apps/voltpro-engineering-source/electrical-canvas.html");
 const ai = read("apps/voltpro-engineering-source/voltpro-assistant.js");
@@ -25,7 +27,7 @@ const cyberManifest = read("apps/pentest-source/app/manifest.webmanifest");
 test("company and product marks remain separate, named identities", () => {
   assert.match(companyLogo, /<title>Hephzibah Behulah<\/title>/i);
   assert.match(academy, /class="parent-logo"[^>]+alt="HEPHZIBAH BEHULAH"/);
-  assert.match(academy, /class="product-wordmark">VoltPro<\/span>/);
+  assert.match(academy, /class="product-wordmark">VoltPro<small>BY HB ELEKTRONIKER<\/small><\/span>/);
   assert.match(homeBrand, /company: "HEPHZIBAH BEHULAH"/);
   assert.match(homeBrand, /product: "VoltPro"/);
   assert.match(voltproLogo, /<title id="title">VoltPro<\/title>/);
@@ -79,6 +81,20 @@ test("Simulator embed applies its template before first paint and resets shared 
   assert.match(shell, /restoreSharedHeader\(\);\n    if \(activePath !== tool\.path\) disposeIsolatedWorkspace\(activePath\);\n    const panel = ensurePanel\(tool\);/);
 });
 
+test("PLC embeds the shared brand header above its editor and keeps the native workspace footer", () => {
+  assert.match(plcLayout, /<div className="plc-app">\s*<div className="plc-shell-slot" \/>/);
+  assert.match(shell, /if \(!doc \|\| !app \|\| !slot\) return;/);
+  assert.doesNotMatch(shell, /if \(app\.querySelector\("\[data-plc-unified-bottom\]"\)\) return;/);
+  assert.match(plcCss, /\.plc-app>\.plc-shell-slot\{display:block!important;flex:0 0 60px/);
+  assert.match(plcCss, /\.vp-template-plc #vpSiteHeader\{position:static!important/);
+  assert.match(plcCss, /\.vp-template-plc \.plc-main-site,\.vp-template-plc \.plc-company-logo/);
+  assert.match(plcLayout, /<footer className="statusbar plc-unified-bottom" data-plc-unified-bottom="true">/);
+  assert.match(plcLayout, /target="_top"[^>]*aria-label=\{label\}[^>]*onClick=\{event=>\{[\s\S]*?window\.parent\.dispatchEvent\(new CustomEvent\('vp-plc-navigate'/);
+  assert.match(shell, /window\.addEventListener\("vp-plc-navigate"/);
+  assert.match(plcCss, /\.vp-template-plc \.plc-app>\.topbar\.plc-reference-header\{[^}]*overflow:visible/);
+  assert.match(plcCss, /\.vp-template-plc \.plc-reference-header \.plc-command-pop\{top:110px\}/);
+});
+
 test("Oscilloscope hides injected site chrome and leaving Breadboard closes its command menus", () => {
   assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-bar'));
   assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-footer'));
@@ -96,9 +112,9 @@ test("ElectCAD uses a professional three-column scrollable CAD workspace", () =>
   const appCss = read("apps/engineering/voltpro-electcad/styles.css");
   const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
   assert.match(shell, /classList\.toggle\("vp-electcad-maximized", tool\.path === "\/electcad"\)/);
-  assert.match(nav, /if\(isElectCADRoute\)\{document\.documentElement\.classList\.add\('vp-electcad-maximized'\).*?return;\}const header=/);
+  assert.match(nav, /isElectCADRoute=\/\^\\\//);
   assert.match(platformScript, /else if\(!isElectCADWorkspace\)document\.body\.prepend\(header\)/);
-  assert.match(platformScript, /if\(!isElectCADWorkspace&&!document\.querySelector\('\.os-footer,\.hb-footer-brand'\)\)document\.body\.append\(footer\)/);
+  assert.match(platformScript, /if\(!isElectCADWorkspace&&!existingFooter\)document\.body\.append\(footer\)/);
   assert.match(siteCss, /vp-electcad-maximized #vpSiteHeader\{display:none!important\}/);
   assert.match(siteCss, /vp-electcad-maximized #vpWorkspace\{position:fixed!important;inset:0 0 80px!important/);
   assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{display:none!important\}/);

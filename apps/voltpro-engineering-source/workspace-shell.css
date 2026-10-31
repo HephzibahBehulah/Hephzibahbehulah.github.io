@@ -183,3 +183,12 @@ html.vp-simulator-template #vpSiteHeader .vp-toolbar-popover{z-index:100200!impo
  html.vp-simulator-template #vpSiteHeader #vpAboutReadiness{width:34px!important;min-width:34px!important;padding:0!important;font-size:0!important}
  html.vp-simulator-template #vpSiteHeader #vpAboutReadiness::before{content:'ⓘ';font:17px/1 system-ui,sans-serif!important}
 }
+
+/* One parent-company header and workspace footer frame every engineering tool. */
+html[data-vp-workspace] body{height:100dvh!important;min-height:0!important;overflow:hidden!important;padding-bottom:72px!important}
+html[data-vp-workspace] #vpSiteHeader{display:flex!important}
+html[data-vp-workspace] #vpDevelopmentFooter{display:none!important}
+html[data-vp-workspace] #vpBottomNavigation{display:flex!important;position:fixed!important;inset:auto 0 0!important;height:72px!important;min-height:72px!important;max-height:72px!important}
+html[data-vp-workspace] #vpWorkspace{position:relative!important;inset:auto!important;width:100%!important;height:calc(100dvh - var(--vp-header-height,60px) - var(--vp-development-banner-height,0px) - 72px)!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+html[data-vp-workspace] #vpWorkspace .vp-workspace-panel,html[data-vp-workspace] #vpWorkspace .vp-workspace-panel[data-active=true]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;display:block!important}
+html[data-vp-workspace] #vpWorkspace .vp-workspace-frame{display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;border:0!important}

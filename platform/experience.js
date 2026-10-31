@@ -55,7 +55,7 @@ function repairEngineering(){
  const header=document.querySelector('#vpSiteHeader');if(!header)return;if(document.body.classList.contains('hb-studio'))return;
  document.body.classList.add('hb-engineering');
  let tools=header.querySelector('.hb-vp-tools');if(!tools){tools=el('div','hb-vp-tools');header.append(tools);}
- const brand=header.querySelector('.vp-site-brand');if(brand&&!brand.querySelector('img')&&!brand.dataset.brandWordmark){const image=el('img');image.src='/_hb/hb-logo.svg';image.alt='Hephzibah Behulah';brand.replaceChildren(image);brand.setAttribute('aria-label','Hephzibah Behulah engineering home');}
+ const brand=header.querySelector('.vp-site-brand');if(brand&&!brand.querySelector('img')&&!brand.dataset.brandWordmark){const image=el('img');image.src='/_hb/hephzibah-behulah-official.jpg';image.alt='Hephzibah Behulah';brand.replaceChildren(image);brand.setAttribute('aria-label','Hephzibah Behulah engineering home');}
  const sidebar=document.querySelector('#sidebar');if(sidebar&&!sidebar.querySelector('.hb-engineering-close')){const close=el('button','hb-engineering-close','Close menu ×');close.type='button';close.onclick=()=>sidebar.classList.remove('open');sidebar.prepend(close);}
  const bar=document.querySelector('.hb-platform-bar');if(bar){const nav=bar.querySelector('.hb-platform-links');if(nav){const sites=el('details','hb-learning-nav'),title=el('summary','','Learning sites');sites.append(title,nav);tools.append(sites);}for(const child of [...bar.children])if(child.matches('.hb-utilities,.hb-member-actions'))tools.append(child);bar.remove();}
  const identity=header.querySelector('.vp-site-identity');if(identity&&identity.parentElement!==tools)tools.append(identity);
@@ -77,7 +77,7 @@ document.addEventListener('click',event=>{if(event.target.closest?.('#themeToggl
 function decorateOverview(){
  const candidates=[document.querySelector('.tool-lab-command-deck,.tool-lab-overview,.tool-lab-hero'),document.querySelector('.toolbench-intro'),document.querySelector('.cyber-command-deck,#dashboard .cyber-hero,#dashboard .os-hero,#dashboard>.os-panel'),document.querySelector('#view>.hero,#view>.academy-command'),document.querySelector('body.hb-platform-cyber>header:not(.hb-platform-bar)'),document.querySelector('.adigun-command-overview')].filter(Boolean);
  for(const container of candidates){container.classList.add('hb-command-surface');if(container.matches('.adigun-command-overview,.academy-command,.cyber-command-deck,.tool-lab-command-deck')||container.querySelector('.hb-overview-orbit'))continue;
-  const orbit=el('div','hb-overview-orbit');orbit.setAttribute('aria-hidden','true');orbit.append(el('span','hb-orbit-ring'),el('span','hb-orbit-sweep'));const logo=el('img');logo.src='/_hb/hb-logo.svg';logo.alt='';orbit.append(logo);(container.matches('.toolbench-intro')?container.firstElementChild:container).append(orbit);
+  const orbit=el('div','hb-overview-orbit');orbit.setAttribute('aria-hidden','true');orbit.append(el('span','hb-orbit-ring'),el('span','hb-orbit-sweep'));const logo=el('img');logo.src='/_hb/hephzibah-behulah-official.jpg';logo.alt='';orbit.append(logo);(container.matches('.toolbench-intro')?container.firstElementChild:container).append(orbit);
  }
 }
 function loadScript(src){if([...document.scripts].some(s=>new URL(s.src,location.href).pathname===src))return;const s=el('script');s.src=src;s.defer=true;document.head.append(s);}
