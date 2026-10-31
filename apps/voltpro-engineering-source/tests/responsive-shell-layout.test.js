@@ -63,7 +63,19 @@ test("embedded Electrical uses exactly three grid rows so the canvas and drawers
   assert.match(electricalCss, /html\.vp-electrical-embed \.cad-layout\{grid-row:2/);
   assert.match(electricalCss, /html\.vp-electrical-embed \.cad-footer\{grid-row:3/);
   assert.match(electricalCss, /@media\(max-width:850px\)\{html\.vp-electrical-embed body\{grid-template-rows:minmax\(44px,auto\) minmax\(0,1fr\) 26px\}/);
-  assert.match(electricalHtml, /electrical-canvas\.css\?v=20261031-examples1/);
+  assert.match(electricalHtml, /electrical-canvas\.css\?v=20261031-responsive1/);
   assert.match(electricalHtml, /data-panel="library" aria-label="Installation objects" aria-expanded="true"/);
   assert.match(electricalCss, /\.cad-footer span\{white-space:nowrap;flex:0 0 auto\}/);
 });
+
+test("Electrical mobile mode gives the canvas room and keeps drawing metadata collapsible", () => {
+  const electricalCss = readFileSync(new URL("../electrical-canvas.css", import.meta.url), "utf8");
+  const electricalHtml = readFileSync(new URL("../electrical-canvas.html", import.meta.url), "utf8");
+  const electricalJs = readFileSync(new URL("../electrical-canvas.js", import.meta.url), "utf8");
+  assert.match(electricalJs, /matchMedia\("\(max-width: 850px\)"\)\.matches\) togglePanel\("library",false\)/);
+  assert.match(electricalHtml, /id="toggleTitleBlock" type="button" aria-expanded="false"/);
+  assert.match(electricalHtml, /class="title-block-fields"/);
+  assert.match(electricalCss, /@media\(max-width:850px\)[\s\S]*?\.building-cad \.title-block-fields\{display:none\}/);
+  assert.match(electricalCss, /\.building-cad \.title-block\[data-expanded="true"\] \.title-block-fields\{display:grid/);
+});
+
