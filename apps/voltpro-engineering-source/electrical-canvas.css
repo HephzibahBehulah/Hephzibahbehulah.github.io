@@ -105,4 +105,23 @@ html.vp-electrical-embed .cad-footer{grid-row:3;min-height:0;overflow-x:auto}
 html.vp-electrical-embed .cad-status{color:#a9bfd1}html.vp-electrical-embed #commandStatus{color:#22d3ee}
 html[data-vp-theme="light"].vp-electrical-embed,html[data-vp-theme="light"].vp-electrical-embed body{--cad-bg:#f8fafc;--cad-panel:#fff;--cad-line:#d5dfeb;--cad-text:#172334;--cad-muted:#52647a;color-scheme:light;background:#f8fafc;color:#172334}html[data-vp-theme="light"].vp-electrical-embed .cad-toolbar,html[data-vp-theme="light"].vp-electrical-embed .cad-menubar,html[data-vp-theme="light"].vp-electrical-embed .cad-layout{background:#f8fafc}html[data-vp-theme="light"].vp-electrical-embed .cad-library,html[data-vp-theme="light"].vp-electrical-embed .title-block{background:#fff;color:#172334}html[data-vp-theme="light"].vp-electrical-embed .cad-workarea{background-color:#f8fafc!important}
 @media(max-width:850px){html.vp-electrical-embed body{grid-template-rows:minmax(44px,auto) minmax(0,1fr) 26px}html.vp-electrical-embed .cad-toolbar{grid-row:1;min-height:44px;padding-inline:6px;overflow-x:auto;justify-content:flex-start}html.vp-electrical-embed .cad-layout{grid-row:2}html.vp-electrical-embed .cad-footer{grid-row:3}.cad-footer span{white-space:nowrap;flex:0 0 auto}}
+/* Keep the Electrical drawing accessible on narrow workspaces. The catalogue
+   stays available from the rail; drawing metadata no longer floats over it. */
+.title-block-fields{display:contents}#toggleTitleBlock{display:none}
+@media(max-width:850px){
+  .building-cad .title-block{right:8px;top:8px;bottom:auto;width:auto;max-width:calc(100% - 60px);padding:0;border:0;background:transparent;box-shadow:none;display:block}
+  .building-cad #toggleTitleBlock{display:inline-flex;align-items:center;min-height:34px;padding:6px 10px;border:1px solid #2a405b;border-radius:7px;background:#111d30;color:#dce8f4;font:600 11px/1.2 Inter,system-ui,sans-serif;cursor:pointer}
+  .building-cad .title-block-fields{display:none}
+  .building-cad .title-block[data-expanded="true"]{width:min(290px,calc(100% - 60px));max-height:48vh;overflow:auto;padding:8px;border:1px solid #263b55;border-radius:9px;background:#111d30;color:#e8eef7;box-shadow:0 12px 32px #0009}
+  .building-cad .title-block[data-expanded="true"] .title-block-fields{display:grid;grid-template-columns:1fr 1fr;gap:5px 8px}
+  .building-cad .title-block[data-expanded="true"] #toggleTitleBlock{margin-bottom:8px}
+  .building-cad .title-block-fields>b{grid-column:1/-1}
+}
+@media print{
+  .building-cad #toggleTitleBlock{display:none!important}
+  .building-cad .title-block{position:fixed!important;right:10mm!important;bottom:10mm!important;top:auto!important;width:78mm!important;max-width:none!important;display:grid!important;padding:7px!important;border:1px solid #444!important;background:#fff!important;color:#111!important;box-shadow:none!important}
+  .building-cad .title-block-fields{display:grid!important;grid-template-columns:1fr 1fr!important;gap:3px 6px!important}
+  .building-cad .title-block-fields>b{grid-column:1/-1!important}
+}
+
 
