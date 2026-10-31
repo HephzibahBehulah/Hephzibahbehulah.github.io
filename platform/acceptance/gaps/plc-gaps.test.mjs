@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { buildHardwareBom, resolveIoMap } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/io-addresses.mjs';
 import { analyzePLCWiring } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/wiring-checks.mjs';
+import { createPLCDRCReport } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/drc-report.mjs';
 import { AUDIT_LIMIT, appendAudit, loadAudit, makeAuditEntry, saveAudit } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/audit-history.mjs';
 import { createProgramBlock, createProgramCall, normalizeProgramStructure, validateProgramStructure } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/program-blocks.mjs';
 
@@ -67,6 +68,24 @@ test('accept.plc.io-addresses.cross-reference', async t => {
     ]);
     assert.deepEqual(buildHardwareBom({ nodes: [] }).map(line => line.id), ['CPU-01']);
   });
+});
+
+test('accept.plc.drc.educational-review-report', () => {
+  const report = createPLCDRCReport(
+    ['A project-model error.'],
+    [{ code: 'rung-return-missing', severity: 'warning', deviceIds: ['coil-1'], message: 'Return is not connected.' }],
+  );
+  assert.equal(report.passed, false);
+  assert.equal(report.profile, 'VoltPro educational project review');
+  assert.equal(report.standardsAssessment, 'not-assessed');
+  assert.deepEqual(report.findings.map(({ code, severity, deviceIds }) => [code, severity, deviceIds]), [
+    ['project-model', 'error', []],
+    ['rung-return-missing', 'warning', ['coil-1']],
+  ]);
+  const commissioning = fs.readFileSync(new URL('../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/Commissioning.tsx', import.meta.url), 'utf8');
+  assert.match(commissioning, /Run Project DRC/);
+  assert.match(commissioning, /createPLCDRCReport\(validate\(s\.project\),analyzePLCWiring\(s\.project\)\)/);
+  assert.match(commissioning, /Normative standards assessment: Not performed/);
 });
 
 test.todo('accept.plc.drc.iec61131-profile');
