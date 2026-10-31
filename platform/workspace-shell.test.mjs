@@ -1,4 +1,269 @@
-YªçŠx-®éÜj×¢ëiºÚ+Š§j[h‘éÜ¢éí÷8N‹Z–‹­¦ëeŠw¬Õ¥µÁ½ÉÐÑ•ÍÐ™É½´€‰¹½‘”éÑ•ÍÐˆì4)¥µÁ½ÉÐ…ÍÍ•ÉÐ™É½´€‰¹½‘”é…ÍÍ•ÉÐ½ÍÑÉ¥Ðˆì4)¥µÁ½ÉÐ™Ì™É½´€‰¹½‘”é™Ìˆì4)¥µÁ½ÉÐÁ…Ñ ™É½´€‰¹½‘”éÁ…Ñ ˆì4)¥µÁ½ÉÐì™¥±•UI1Q½A…Ñ ô™É½´€‰¹½‘”éÕÉ°ˆì4(4)½¹ÍÐÉ½½Ð€ôÁ…Ñ ¹É•Í½±Ù”¡Á…Ñ ¹‘¥É¹…µ”¡™¥±•UI1Q½A…Ñ ¡¥µÁ½ÉÐ¹µ•Ñ„¹ÕÉ°¤¤°€ˆ¸¸ˆ¤ì4)½¹ÍÐÉ•…€ô™¥±”€ôø™Ì¹É•…‘¥±•Må¹Œ¡Á…Ñ ¹©½¥¸¡É½½Ð°™¥±”¤°€‰ÕÑ˜àˆ¤¹É•Á±…•±° ‰qÉq¸ˆ°€‰q¸ˆ¤ì4)½¹ÍÐ¹…Ø€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½ÍÉŒ½Õ¤½Í¥Ñ”µÍ¡•±°¹©Ìˆ¤ì4)½¹ÍÐÁ±…Ñ™½ÉµMÉ¥ÁÐ€ôÉ•… ‰Á±…Ñ™½É´½Á±…Ñ™½É´¹©Ìˆ¤ì4)½¹ÍÐÍ¡•±°€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½Ý½É­ÍÁ…”µÍ¡•±°¹©Ìˆ¤ì4)½¹ÍÐÍ¡•±±!Ñµ°€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½Ý½É­ÍÁ…”µÍ¡•±°¹¡Ñµ°ˆ¤ì4)½¹ÍÐÝ½É­ÍÁ…•M¡•±±ÍÌ€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½Ý½É­ÍÁ…”µÍ¡•±°¹ÍÌˆ¤ì4)½¹ÍÐ…ÍÍ¥ÍÑ…¹ÑQ¡•µ”€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½Ù½±ÑÁÉ¼µ¡ˆµÑ¡•µ”¹ÍÌˆ¤ì4)½¹ÍÐ…¹Ù…Ì€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½•±•ÑÉ¥…°µ…¹Ù…Ì¹¡Ñµ°ˆ¤ì4)½¹ÍÐ…¤€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½Ù½±ÑÁÉ¼µ…ÍÍ¥ÍÑ…¹Ð¹©Ìˆ¤ì4)½¹ÍÐ……‘•µä€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½¥¹‘•à¹¡Ñµ°ˆ¤ì4)½¹ÍÐ¡½µ•	É…¹€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½ÍÉŒ½Õ¤½Ù½±ÑÁÉ¼µ‰É…¹¹©Ìˆ¤ì4)½¹ÍÐ¡½µ•½Áä€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½ÍÉŒ½Õ¤½Ù½±ÑÁÉ¼µ¡½µ”µ½Áä¹©Ìˆ¤ì4)½¹ÍÐÍ¡…É•‘áÁ•É¥•¹”€ôÉ•… ‰Á±…Ñ™½É´½•áÁ•É¥•¹”¹©Ìˆ¤ì4)½¹ÍÐ½µÁ…¹å1½¼€ôÉ•… ‰Á…­…•Ì½Í¡…É•µÕ¤½…ÍÍ•ÑÌ½¡ˆµ±½¼¹ÍÙœˆ¤ì4)½¹ÍÐÙ½±ÑÁÉ½1½¼€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½¥½¹Ì½Ù½±ÑÁÉ¼´ÔÄÈ¹ÍÙœˆ¤ì4)½¹ÍÐå‰•É5…¹¥™•ÍÐ€ôÉ•… ‰…ÁÁÌ½Á•¹Ñ•ÍÐµÍ½ÕÉ”½…ÁÀ½µ…¹¥™•ÍÐ¹Ý•‰µ…¹¥™•ÍÐˆ¤ì4(4)Ñ•ÍÐ ‰½µÁ…¹ä…¹ÁÉ½‘ÕÐµ…É­ÌÉ•µ…¥¸Í•Á…É…Ñ”°¹…µ•¥‘•¹Ñ¥Ñ¥•Ìˆ°€ ¤€ôøì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡½µÁ…¹å1½¼°€¼ñÑ¥Ñ±”ù!•Á¡é¥‰… 	•¡Õ±… ñp½Ñ¥Ñ±”ø½¤¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡……‘•µä°€½±…ÍÌô‰Á…É•¹Ðµ±½¼‰mxùt­…±Ðô‰!A!i%	 	!U1 ˆ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡……‘•µä°€½±…ÍÌô‰ÁÉ½‘ÕÐµÝ½É‘µ…É¬ˆùY½±ÑAÉ¼ñp½ÍÁ…¸ø¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡¡½µ•	É…¹°€½½µÁ…¹äè€‰!A!i%	 	!U1 ˆ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡¡½µ•	É…¹°€½ÁÉ½‘ÕÐè€‰Y½±ÑAÉ¼ˆ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Ù½±ÑÁÉ½1½¼°€¼ñÑ¥Ñ±”¥ô‰Ñ¥Ñ±”ˆùY½±ÑAÉ¼ñp½Ñ¥Ñ±”ø¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡å‰•É5…¹¥™•ÍÐ°€¼‰Í¡½ÉÑ}¹…µ”ˆè‰å‰•È1•…É¹¥¹œˆ¼¤ì4)ô¤ì4(4)Ñ•ÍÐ ‰½µÁ…¹äÑ¡•µ”Í•±•Ñ¥½¸Íå¹¡É½¹¥é•ÌÑ¡”¡½µ”°ÍÕ¥Ñ”…¹•µ‰•‘‘•Ý½É­ÍÁ…•Ìˆ°€ ¤€ôøì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡…É•‘áÁ•É¥•¹”°€½‘…Ñ…Í•Ñp¹¡‰Q¡•µ”õÑ¡•µ”¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡…É•‘áÁ•É¥•¹”°€½‘…Ñ…Í•Ñp¹Ñ¡•µ”õÑ¡•µ”¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡…É•‘áÁ•É¥•¹”°€½‘…Ñ…Í•Ñp¹ÙÁQ¡•µ”õÑ¡•µ”¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡…É•‘áÁ•É¥•¹”°€¼ÙÁQ¡•µ•Q½±”¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½½¹ÍÐÍå¹Q¡•µ”€ôp¡‘½Œ°Ñ¡•µ•p¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½‘½p¹‘½Õµ•¹Ñ±•µ•¹Ñp¹‘…Ñ…Í•Ñp¹¡‰Q¡•µ”€ôÑ¡•µ”¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½‘½Õµ•¹Ñp¹…‘‘Ù•¹Ñ1¥ÍÑ•¹•Ép ‰¡ˆéÑ¡•µ”ˆ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡……‘•µä°€½±…ÍÌô‰Á…É•¹Ðµ±½¼ˆ¼¤ì4)ô¤ì4(4)Ñ•ÍÐ ‰±½‰…°‰½ÑÑ½´¹…Ù¥…Ñ¥½¸™½±±½ÝÌÑ¡”Í¡…É••¹¥¹••É¥¹œ½µµ…¹½É‘•Èˆ°€ ¤€ôøì(€…ÍÍ•ÉÐ¹µ…Ñ ¡¹…Ø°€½¹…Ù¥…Ñ¥½¸õ‰É…¹‘½¹™¥p¹¹…Ù¥…Ñ¥½¸¼¤ì(€…ÍÍ•ÉÐ¹µ…Ñ ¡¹…Ø°€½™½Ép¡½¹ÍÐ¥Ñ•´½˜¹…Ù¥…Ñ¥½¹p¤¼¤ì(€½¹ÍÐ¹…Ù½¹™¥œ€ô¡½µ•	É…¹¹ÍÁ±¥Ð ‰½¹ÍÐ¹…Ù¥…Ñ¥½¸€ô=‰©•Ð¹™É••é”¡lˆ¥lÅt¹ÍÁ±¥Ð ‰t¤íqq¹Ý¥¹‘½Ü¹Y½±ÑAÉ½	É…¹‘½¹™¥œˆ¥lÁtì(€½¹ÍÐ±…‰•±Ì€ôl¸¸¹¹…Ù½¹™¥œ¹µ…Ñ¡±° ½¹…µ”è€ˆ¡mx‰t¬¤ˆ½œ¥t¹µ…À¡µ…Ñ €ôøµ…Ñ¡lÅt¤ì(€…ÍÍ•ÉÐ¹‘••ÁÅÕ…°¡±…‰•±Ì°l‰M¥µÕ±…Ñ½Èˆ°€‰A1ˆ°€‰±•Ñˆ°€‰¹¥¹••É¥¹œQ½½±Ìˆ°€‰	É•…‘‰½…Éˆ°€‰±•ÑÉ¥…°‰t¤ì)ô¤ì4(4)Ñ•ÍÐ ‰µ…¥¸Á½ÉÑ™½±¥¼É•ÑÕÉ¸±¥¹¬¥ÌÍ…µ”µÑ…ˆ…¹Á…ÉÐ½˜Ñ¡”Á•ÉÍ¥ÍÑ•¹ÐÍ¡…É•¡•…‘•Èˆ°€ ¤€ôøì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡¹…Ø°€½±¥¹­p ŸŠ@5…¥¸M¥Ñ”œ°¡ÑÑÁÌép½p½¡•Á¡é¥‰…¡‰•¡Õ±…¡p¹½µp¼p¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡¹…Ø°€½‰É…¹‘É½ÕÁp¹…ÁÁ•¹‘p¡‰É…¹±µ…¥¹M¥Ñ•p¤¼¤ì4(€…ÍÍ•ÉÐ¹‘½•Í9½Ñ5…Ñ ¡¹…Ø¹µ…Ñ  ½½¹ÍÐµ…¥¹M¥Ñ”ô¸¨ý½¹ÍÐ¹…Øô¼¤ü¹lÁtñð€ˆˆ°€½Ñ…É•Ññ‘…Ñ„µÙÀµÉ½ÕÑ”¼¤ì4)ô¤ì4(4)Ñ•ÍÐ ‰Ý½É­ÍÁ…”ÍÝ¥Ñ¡•Ì¥Í½±…Ñ”M¥µÕ±…Ñ½È…¹A1¥™É…µ”±¥™•å±•Ì…¹ÕÁ‘…Ñ”¡¥ÍÑ½Éä±¥•¹ÐµÍ¥‘”ˆ°€ ¤€ôøì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½½¹ÍÐÁ…¹•±Ì€ô¹•Ü5…Áp¡p¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½™Õ¹Ñ¥½¸‘¥ÍÁ½Í•%Í½±…Ñ•‘]½É­ÍÁ…•p¡Á…Ñ¡p¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½¥˜p¡Á…Ñ €„ôô€‰p½Í¥µÕ±…Ñ½Èˆ€˜˜Á…Ñ €„ôô€‰p½Á±Œ‰p¤É•ÑÕÉ¸¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½Á…¹•±p¹É•µ½Ù•p¡p¤íq¸€€€Á…¹•±Íp¹‘•±•Ñ•p¡Á…Ñ¡p¤ì¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½™É…µ•p¹ÍÉŒ€ôÉ½½ÑAÉ•™¥àp¬Ñ½½±p¹ÍÉŒ¼¤ì4(€½¹ÍÐ™É…µ•M•ÑÕÀ€ôÍ¡•±°¹Í±¥”¡Í¡•±°¹¥¹‘•á=˜ ‰™Õ¹Ñ¥½¸•¹ÍÕÉ•A…¹•°ˆ¤°Í¡•±°¹¥¹‘•á=˜ ‰™Õ¹Ñ¥½¸…Ñ¥Ù…Ñ”ˆ¤¤ì4(€…ÍÍ•ÉÐ¹½¬¡™É…µ•M•ÑÕÀ¹¥¹‘•á=˜ ™É…µ”¹…‘‘Ù•¹Ñ1¥ÍÑ•¹•È ‰±½…ˆœ¤€ð™É…µ•M•ÑÕÀ¹¥¹‘•á=˜ ‰™É…µ”¹ÍÉŒ€ôÉ½½ÑAÉ•™¥à€¬Ñ½½°¹ÍÉŒˆ¤¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½¡¥ÍÑ½Éåp¹ÁÕÍ¡MÑ…Ñ”¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½•±•µ•¹Ñp¹‘…Ñ…Í•Ñp¹…Ñ¥Ù”€ôMÑÉ¥¹p¡…Ñ¥Ù•p¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½‰É…¹‘½¹™¥p¹Ý½É­ÍÁ…•Íp¹µ…Áp¡p¡qì¥°¹…µ”°¡É•˜qõp¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½Ñ½½±Íp¹ÁÕÍ¡p¡qìÁ…Ñ è€‰p½Ñ½½±Ìˆ¼¤ì4(€™½È€¡½¹ÍÐÁ…Ñ ½˜lˆ½Í¥µÕ±…Ñ½Èˆ°€ˆ½Á±Œˆ°€ˆ½•±•Ñ…ˆ°€ˆ½‰É•…‘‰½…Éˆ°€ˆ½½Í¥±±½Í½Á”ˆ°€ˆ½•±•ÑÉ¥…°‰t¤…ÍÍ•ÉÐ¹½¬¡¡½µ•	É…¹¹¥¹±Õ‘•Ì ¡É•˜è€ˆœ€¬Á…Ñ €¬€œˆœ¤¤ì4)ô¤ì4(4)Ñ•ÍÐ ‰M¥µÕ±…Ñ½È•µ‰•…ÁÁ±¥•Ì¥ÑÌÑ•µÁ±…Ñ”‰•™½É”™¥ÉÍÐÁ…¥¹Ð…¹É•Í•ÑÌÍ¡…É•¡É½µ”½¸•¹ÑÉäˆ°€ ¤€ôøì4(€½¹ÍÐÍ¥µÕ±…Ñ½È€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½Í¥µÕ±…Ñ½È¹¡Ñµ°ˆ¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥µÕ±…Ñ½È°€½¹•ÜUI1M•…É¡A…É…µÍp¡±½…Ñ¥½¹p¹Í•…É¡p¤¸©ÙÁ}•µ‰•¸©ÙÀµÑ•µÁ±…Ñ”µÍ¥µÕ±…Ñ½È¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½™É…µ•p¹±½…‘¥¹œ€ôÑ½½±p¹Á…Ñ €ôôô€‰p½Í¥µÕ±…Ñ½Èˆpü€‰•…•Èˆ€è€‰±…éäˆì¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½É•ÍÑ½É•M¡…É•‘!•…‘•Ép¡p¤íq¸€€€¥˜p¡…Ñ¥Ù•A…Ñ €„ôôÑ½½±p¹Á…Ñ¡p¤‘¥ÍÁ½Í•%Í½±…Ñ•‘]½É­ÍÁ…•p¡…Ñ¥Ù•A…Ñ¡p¤íq¸€€€½¹ÍÐÁ…¹•°€ô•¹ÍÕÉ•A…¹•±p¡Ñ½½±p¤ì¼¤ì4)ô¤ì4(4)Ñ•ÍÐ ‰=Í¥±±½Í½Á”¡¥‘•Ì¥¹©•Ñ•Í¥Ñ”¡É½µ”…¹±•…Ù¥¹œ	É•…‘‰½…É±½Í•Ì¥ÑÌ½µµ…¹µ•¹ÕÌˆ°€ ¤€ôøì4(€…ÍÍ•ÉÐ¹½¬¡Ý½É­ÍÁ…•M¡•±±ÍÌ¹¥¹±Õ‘•Ì ¡Ñµ±m‘…Ñ„µÙÀµÝ½É­ÍÁ…”ô‰½Í¥±±½Í½Á”‰t€¹¡ˆµÁ±…Ñ™½É´µ‰…Èœ¤¤ì4(€…ÍÍ•ÉÐ¹½¬¡Ý½É­ÍÁ…•M¡•±±ÍÌ¹¥¹±Õ‘•Ì ¡Ñµ±m‘…Ñ„µÙÀµÝ½É­ÍÁ…”ô‰½Í¥±±½Í½Á”‰t€¹¡ˆµÁ±…Ñ™½É´µ™½½Ñ•Èœ¤¤ì4(€…ÍÍ•ÉÐ¹½¬¡Í¡•±°¹¥¹±Õ‘•Ì ‘½Œ¹ÅÕ•ÉåM•±•Ñ½É±° ˆ¹‰É•…‘‰½…Éµµ•¹Õ‰…È‘•Ñ…¥±Ím½Á•¹tˆ¤¹™½É… ¡µ•¹Ô€ôøìµ•¹Ô¹½Á•¸€ô™…±Í”ìô¤ìœ¤¤ì4(€…ÍÍ•ÉÐ¹½¬¡Í¡•±°¹¥¹±Õ‘•Ì ¥˜€¡‘½Õµ•¹Ð¹‘½Õµ•¹Ñ±•µ•¹Ð¹‘…Ñ…Í•Ð¹ÙÁ]½É­ÍÁ…”€ôôô€‰‰É•…‘‰½…Éˆ€˜˜­•ä€„ôô€ˆ½‰É•…‘‰½…Éˆ¤±½Í•	É•…‘‰½…É‘½µµ…¹‘5•¹ÕÌ ¤ìœ¤¤ì4)ô¤ì4(4)Ñ•ÍÐ ‰‰½ÑÑ½´Ý½É­ÍÁ…”±¥¹­Ì…É”¥¹Ñ•É•ÁÑ•…¹É½ÕÑ•Ñ¼Ñ¡•¥È‘•±…É•‘•ÍÑ¥¹…Ñ¥½¸ˆ°€ ¤€ôøì4(€…ÍÍ•ÉÐ¹½¬¡Í¡•±°¹¥¹±Õ‘•Ì ½¹ÍÐ±¥¹¬€ô•Ù•¹Ð¹Ñ…É•Ð¹±½Í•ÍÐ ˆÙÁ	½ÑÑ½µ9…Ù¥…Ñ¥½¸…m‘…Ñ„µÙÀµÉ½ÕÑ•t°€ÙÁM¥Ñ•!•…‘•È¹…Ø…m‘…Ñ„µÙÀµÉ½ÕÑ•tˆ¤ìœ¤¤ì4(€…ÍÍ•ÉÐ¹½¬¡Í¡•±°¹¥¹±Õ‘•Ì ‰•Ù•¹Ð¹ÁÉ•Ù•¹Ñ•™…Õ±Ð ¤íq¸€€€…Ñ¥Ù…Ñ”¡Ñ…É•Ð¤ìˆ¤¤ì4)ô¤ì4(4)Ñ•ÍÐ ‰±•ÑÕÍ•Ì„ÁÉ½™•ÍÍ¥½¹…°Ñ¡É•”µ½±Õµ¸ÍÉ½±±…‰±”Ý½É­ÍÁ…”ˆ°€ ¤€ôøì4(€½¹ÍÐ…ÁÀ€ôÉ•… ‰…ÁÁÌ½•¹¥¹••É¥¹œ½Ù½±ÑÁÉ¼µ•±•Ñ…½ÁÀ¹ÑÍàˆ¤ì4(€½¹ÍÐ…ÁÁÍÌ€ôÉ•… ‰…ÁÁÌ½•¹¥¹••É¥¹œ½Ù½±ÑÁÉ¼µ•±•Ñ…½ÍÑå±•Ì¹ÍÌˆ¤ì4(€½¹ÍÐÍ¥Ñ•ÍÌ€ôÉ•… ‰…ÁÁÌ½Ù½±ÑÁÉ¼µ•¹¥¹••É¥¹œµÍ½ÕÉ”½ÍÉŒ½Õ¤½Í¥Ñ”µÍ¡•±°¹ÍÌˆ¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¡•±°°€½±…ÍÍ1¥ÍÑp¹Ñ½±•p ‰ÙÀµ•±•Ñ…µµ…á¥µ¥é•ˆ°Ñ½½±p¹Á…Ñ €ôôô€‰p½•±•Ñ…‰p¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡¹…Ø°€½¥™p¡¥Í±•ÑI½ÕÑ•p¥qí‘½Õµ•¹Ñp¹‘½Õµ•¹Ñ±•µ•¹Ñp¹±…ÍÍ1¥ÍÑp¹…‘‘p ÙÀµ•±•Ñ…µµ…á¥µ¥é•p¤¸¨ýÉ•ÑÕÉ¸íqõ½¹ÍÐ¡•…‘•Èô¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Á±…Ñ™½ÉµMÉ¥ÁÐ°€½•±Í”¥™p …¥Í±•Ñ]½É­ÍÁ…•p¥‘½Õµ•¹Ñp¹‰½‘åp¹ÁÉ•Á•¹‘p¡¡•…‘•Ép¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Á±…Ñ™½ÉµMÉ¥ÁÐ°€½¥™p …¥Í±•Ñ]½É­ÍÁ…”˜˜…‘½Õµ•¹Ñp¹ÅÕ•ÉåM•±•Ñ½Ép p¹½Ìµ™½½Ñ•È±p¹¡ˆµ™½½Ñ•Èµ‰É…¹p¥p¥‘½Õµ•¹Ñp¹‰½‘åp¹…ÁÁ•¹‘p¡™½½Ñ•Ép¤¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ•±•Ñ…µµ…á¥µ¥é•€ÙÁM¥Ñ•!•…‘•Éqí‘¥ÍÁ±…äé¹½¹”…¥µÁ½ÉÑ…¹Ñqô¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ•±•Ñ…µµ…á¥µ¥é•€ÙÁ]½É­ÍÁ…•qíÁ½Í¥Ñ¥½¸é™¥á•…¥µÁ½ÉÑ…¹Ðí¥¹Í•ÐèÀ€À€àÁÁà…¥µÁ½ÉÑ…¹Ð¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ•±•Ñ…µµ…á¥µ¥é•€ÙÁ•Ù•±½Áµ•¹Ñ	…¹¹•Éqí‘¥ÍÁ±…äé¹½¹”…¥µÁ½ÉÑ…¹Ñqô¼¤ì4(4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ‰½ÑÑ½´µ‘•Øµ¹½Ñ”¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ•±•Ñ…µµ…á¥µ¥é•€ÙÁ	½ÑÑ½µ9…Ù¥…Ñ¥½¹qíÁ½Í¥Ñ¥½¸é™¥á•í¥¹Í•Ðé…ÕÑ¼€À€À¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ•±•Ñ…µµ…á¥µ¥é•€ÙÁ•Ù•±½Áµ•¹Ñ	…¹¹•ÉqíÁ½Í¥Ñ¥½¸é™¥á•í¥¹Í•Ðé…ÕÑ¼€À€ÔÁÁà¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ•±•Ñ…µµ…á¥µ¥é•€ÙÁ]½É­ÍÁ…”p¹ÙÀµÝ½É­ÍÁ…”µÁ…¹•±qm‘…Ñ„µ…Ñ¥Ù”õÑÉÕ•quqíÁ½Í¥Ñ¥½¸é…‰Í½±ÕÑ”…¥µÁ½ÉÑ…¹Ðí¥¹Í•ÐèÀ…¥µÁ½ÉÑ…¹ÐíÝ¥‘Ñ èÄÀÀ”…¥µÁ½ÉÑ…¹Ð¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡Í¥Ñ•ÍÌ°€½ÙÀµ•±•Ñ…µµ…á¥µ¥é•€ÙÁ]½É­ÍÁ…”p¹ÙÀµÝ½É­ÍÁ…”µ™É…µ•qí‘¥ÍÁ±…äé‰±½¬…¥µÁ½ÉÑ…¹ÐíÝ¥‘Ñ èÄÀÀ”…¥µÁ½ÉÑ…¹Ðí¡•¥¡ÐèÄÀÀ”…¥µÁ½ÉÑ…¹Ð¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½…ÁÀµÍ¡•±±qí‘¥ÍÁ±…äéÉ¥íÉ¥µÑ•µÁ±…Ñ”µÉ½ÝÌèÔÁÁàµ¥¹µ…áp À°Å™Ép¤íÉ¥µÑ•µÁ±…Ñ”µ½±Õµ¹ÌèÔÁÁàµ¥¹µ…áp À°Å™Ép¤€ÈàÁÁà¼¤ì4(€…ÍÍ•ÉÐ¹‘½•Í9½Ñ5…Ñ ¡…ÁÀ°€½±½‰…°µ‰½ÑÑ½´µ‰…È¼¤ì4(€…ÍÍ•ÉÐ¹‘½•Í9½Ñ5…Ñ ¡…ÁÁÍÌ°€½±½‰…°µ‰½ÑÑ½´µ‰…È¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹Ñ½Á‰…ÉqíÉ¥µ½±Õµ¸èÅp¼´ÄíÉ¥µÉ½ÜèÄí¡•¥¡ÐèÔÁÁà¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹µ•¹ÔµÑ½½±‰…ÈµÉ½Ýqí‘¥ÍÁ±…äé½¹Ñ•¹ÑÌ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹¥½¸µÉ…¥±qíÉ¥µ½±Õµ¸èÄíÉ¥µÉ½ÜèÈ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹±•™ÐµÍ¥‘•‰…ÉqíÝ¥‘Ñ èÈÔÁÁàíµ¥¸µÝ¥‘Ñ èÈÔÁÁà¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹É¥¡ÐµÍ¥‘•‰…ÉqíÝ¥‘Ñ èÈàÁÁàíµ¥¸µÝ¥‘Ñ èÈàÁÁà¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹Ý½É­ÍÁ…•qí‘¥ÍÁ±…äé½¹Ñ•¹ÑÌ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹…¹Ù…Ìµ…É•…qíÉ¥µ½±Õµ¸èÈíÉ¥µÉ½ÜèÈ¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹É¥¡ÐµÍ¥‘•‰…ÉqíÉ¥µ½±Õµ¸èÌíÉ¥µÉ½ÜèÈíÝ¥‘Ñ èÈàÁÁà¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹…¹Ù…ÌµÝÉ…ÁqíÁ½Í¥Ñ¥½¸éÉ•±…Ñ¥Ù”í‘¥ÍÁ±…äé‰±½¬í™±•àèÄ€Ä€Àíµ¥¸µÝ¥‘Ñ èÀíµ¥¸µ¡•¥¡ÐèÀí½Ù•É™±½Üé…ÕÑ¼¼¤ì4(€…ÍÍ•ÉÐ¹µ…Ñ ¡…ÁÁÍÌ°€½¡Ñµ±p¹ÙÀµ•±•Ñ…µ•µ‰•p¹‡~4âÚ$z{-®éÜj×tant\}/);
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const read = file => fs.readFileSync(path.join(root, file), "utf8").replaceAll("\r\n", "\n");
+const nav = read("apps/voltpro-engineering-source/src/ui/site-shell.js");
+const platformScript = read("platform/platform.js");
+const shell = read("apps/voltpro-engineering-source/workspace-shell.js");
+const shellHtml = read("apps/voltpro-engineering-source/workspace-shell.html");
+const workspaceShellCss = read("apps/voltpro-engineering-source/workspace-shell.css");
+const assistantTheme = read("apps/voltpro-engineering-source/voltpro-hb-theme.css");
+const canvas = read("apps/voltpro-engineering-source/electrical-canvas.html");
+const ai = read("apps/voltpro-engineering-source/voltpro-assistant.js");
+const academy = read("apps/voltpro-engineering-source/index.html");
+const homeBrand = read("apps/voltpro-engineering-source/src/ui/voltpro-brand.js");
+const homeCopy = read("apps/voltpro-engineering-source/src/ui/voltpro-home-copy.js");
+const sharedExperience = read("platform/experience.js");
+const companyLogo = read("packages/shared-ui/assets/hb-logo.svg");
+const voltproLogo = read("apps/voltpro-engineering-source/icons/voltpro-512.svg");
+const cyberManifest = read("apps/pentest-source/app/manifest.webmanifest");
+
+test("company and product marks remain separate, named identities", () => {
+  assert.match(companyLogo, /<title>Hephzibah Behulah<\/title>/i);
+  assert.match(academy, /class="parent-logo"[^>]+alt="HEPHZIBAH BEHULAH"/);
+  assert.match(academy, /class="product-wordmark">VoltPro<\/span>/);
+  assert.match(homeBrand, /company: "HEPHZIBAH BEHULAH"/);
+  assert.match(homeBrand, /product: "VoltPro"/);
+  assert.match(voltproLogo, /<title id="title">VoltPro<\/title>/);
+  assert.match(cyberManifest, /"short_name":"Cyber Learning"/);
+});
+
+test("company theme selection synchronizes the home, suite and embedded workspaces", () => {
+  assert.match(sharedExperience, /dataset\.hbTheme=theme/);
+  assert.match(sharedExperience, /dataset\.theme=theme/);
+  assert.match(sharedExperience, /dataset\.vpTheme=theme/);
+  assert.match(sharedExperience, /#vpThemeToggle/);
+  assert.match(shell, /const syncTheme = \(doc, theme\)/);
+  assert.match(shell, /doc\.documentElement\.dataset\.hbTheme = theme/);
+  assert.match(shell, /document\.addEventListener\("hb:theme"/);
+  assert.match(academy, /class="parent-logo"/);
+});
+
+test("global bottom navigation follows the shared engineering command order", () => {
+  assert.match(nav, /navigation=brandConfig\.navigation/);
+  assert.match(nav, /for\(const item of navigation\)/);
+  const navConfig = homeBrand.split("const navigation = Object.freeze([")[1].split("]);\\nwindow.VoltProBrandConfig")[0];
+  const labels = [...navConfig.matchAll(/name: "([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(labels, ["Simulator", "PLC", "ElectCAD", "Engineering Tools", "Breadboard", "Electrical"]);
+});
+
+test("main portfolio return link is same-tab and part of the persistent shared header", () => {
+  assert.match(nav, /link\('â† Main Site','https:\/\/hephzibahbehulah\.com\/'\)/);
+  assert.match(nav, /brandGroup\.append\(brand,mainSite\)/);
+  assert.doesNotMatch(nav.match(/const mainSite=.*?const nav=/)?.[0] || "", /target|data-vp-route/);
+});
+
+test("workspace switches isolate Simulator and PLC iframe lifecycles and update history client-side", () => {
+  assert.match(shell, /const panels = new Map\(\)/);
+  assert.match(shell, /function disposeIsolatedWorkspace\(path\)/);
+  assert.match(shell, /if \(path !== "\/simulator" && path !== "\/plc"\) return/);
+  assert.match(shell, /panel\.remove\(\);\n    panels\.delete\(path\);/);
+  assert.match(shell, /frame\.src = rootPrefix \+ tool\.src/);
+  const frameSetup = shell.slice(shell.indexOf("function ensurePanel"), shell.indexOf("function activate"));
+  assert.ok(frameSetup.indexOf('frame.addEventListener("load"') < frameSetup.indexOf("frame.src = rootPrefix + tool.src"));
+  assert.match(shell, /history\.pushState/);
+  assert.match(shell, /element\.dataset\.active = String\(active\)/);
+  assert.match(shell, /brandConfig\.workspaces\.map\(\(\{ id, name, href \}\)/);
+  assert.match(shell, /tools\.push\(\{ path: "\/tools"/);
+  for (const path of ["/simulator", "/plc", "/electcad", "/breadboard", "/oscilloscope", "/electrical"]) assert.ok(homeBrand.includes('href: "' + path + '"'));
+});
+
+test("Simulator embed applies its template before first paint and resets shared chrome on entry", () => {
+  const simulator = read("apps/voltpro-engineering-source/simulator.html");
+  assert.match(simulator, /new URLSearchParams\(location\.search\).*vp_embed.*vp-template-simulator/);
+  assert.match(shell, /frame\.loading = tool\.path === "\/simulator" \? "eager" : "lazy";/);
+  assert.match(shell, /restoreSharedHeader\(\);\n    if \(activePath !== tool\.path\) disposeIsolatedWorkspace\(activePath\);\n    const panel = ensurePanel\(tool\);/);
+});
+
+test("Oscilloscope hides injected site chrome and leaving Breadboard closes its command menus", () => {
+  assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-bar'));
+  assert.ok(workspaceShellCss.includes('html[data-vp-workspace="oscilloscope"] .hb-platform-footer'));
+  assert.ok(shell.includes('doc.querySelectorAll(".breadboard-menubar details[open]").forEach(menu => { menu.open = false; });'));
+  assert.ok(shell.includes('if (document.documentElement.dataset.vpWorkspace === "breadboard" && key !== "/breadboard") closeBreadboardCommandMenus();'));
+});
+
+test("bottom workspace links are intercepted and routed to their declared destination", () => {
+  assert.ok(shell.includes('const link = event.target.closest("#vpBottomNavigation a[data-vp-route], #vpSiteHeader nav a[data-vp-route]");'));
+  assert.ok(shell.includes("event.preventDefault();\n    activate(target);"));
+});
+
+test("ElectCAD uses a professional three-column scrollable CAD workspace", () => {
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
+  const appCss = read("apps/engineering/voltpro-electcad/styles.css");
+  const siteCss = read("apps/voltpro-engineering-source/src/ui/site-shell.css");
+  assert.match(shell, /classList\.toggle\("vp-electcad-maximized", tool\.path === "\/electcad"\)/);
+  assert.match(nav, /if\(isElectCADRoute\)\{document\.documentElement\.classList\.add\('vp-electcad-maximized'\).*?return;\}const header=/);
+  assert.match(platformScript, /else if\(!isElectCADWorkspace\)document\.body\.prepend\(header\)/);
+  assert.match(platformScript, /if\(!isElectCADWorkspace&&!document\.querySelector\('\.os-footer,\.hb-footer-brand'\)\)document\.body\.append\(footer\)/);
+  assert.match(siteCss, /vp-electcad-maximized #vpSiteHeader\{display:none!important\}/);
+  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace\{position:fixed!important;inset:0 0 80px!important/);
+  assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{display:none!important\}/);
+
+  assert.match(siteCss, /vp-bottom-dev-note/);
+  assert.match(siteCss, /vp-electcad-maximized #vpBottomNavigation\{position:fixed;inset:auto 0 0/);
+  assert.match(siteCss, /vp-electcad-maximized #vpDevelopmentBanner\{position:fixed;inset:auto 0 50px/);
+  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace \.vp-workspace-panel\[data-active=true\]\{position:absolute!important;inset:0!important;width:100%!important/);
+  assert.match(siteCss, /vp-electcad-maximized #vpWorkspace \.vp-workspace-frame\{display:block!important;width:100%!important;height:100%!important/);
+  assert.match(appCss, /app-shell\{display:grid;grid-template-rows:50px minmax\(0,1fr\);grid-template-columns:50px minmax\(0,1fr\) 280px/);
+  assert.doesNotMatch(app, /global-bottom-bar/);
+  assert.doesNotMatch(appCss, /global-bottom-bar/);
+  assert.match(appCss, /html\.vp-electcad-embed \.topbar\{grid-column:1\/-1;grid-row:1;height:50px/);
+  assert.match(appCss, /html\.vp-electcad-embed \.menu-toolbar-row\{display:contents/);
+  assert.match(appCss, /html\.vp-electcad-embed \.icon-rail\{grid-column:1;grid-row:2/);
+  assert.match(appCss, /html\.vp-electcad-embed \.left-sidebar\{width:250px;min-width:250px/);
+  assert.match(appCss, /html\.vp-electcad-embed \.right-sidebar\{width:280px;min-width:280px/);
+  assert.match(appCss, /html\.vp-electcad-embed \.workspace\{display:contents/);
+  assert.match(appCss, /html\.vp-electcad-embed \.canvas-area\{grid-column:2;grid-row:2/);
+  assert.match(appCss, /html\.vp-electcad-embed \.right-sidebar\{grid-column:3;grid-row:2;width:280px/);
+  assert.match(appCss, /html\.vp-electcad-embed \.canvas-wrap\{position:relative;display:block;flex:1 1 0;min-width:0;min-height:0;overflow:auto/);
+  assert.match(appCss, /html\.vp-electcad-embed \.canvas-rulers\{position:absolute;z-index:4;inset:0 0 109px 0/);
+  assert.match(appCss, /\.menu-pop\{top:39px;left:0;min-width:205px;max-height:75vh;overflow:auto\}/);
+  assert.match(appCss, /html\.vp-electcad-embed \.menu-pop\{z-index:9999\}/);
+  assert.match(app, /id="app-container" className=\{`app-shell \$\{rightOpen\?\'\'\:\'right-collapsed\'\}`\}/);
+  assert.match(app, /className="icon-rail" aria-label="Workspace panels"/);
+  assert.match(app, /className="right-panel-tabs" role="tablist" aria-label="Right workspace panels"/);
+  assert.match(app, /rightPanel==='properties'/);
+  assert.match(app, /rightPanel==='results'/);
+  assert.match(app, /className="results-view"/);
+  assert.doesNotMatch(app, /className="bottom-dock"/);
+  assert.match(app, /setRightPanel\('results'\)/);
+  assert.match(app, /className="edge-reveal edge-right"/);
+  assert.match(appCss, /\.app-shell\.right-collapsed\{grid-template-columns:50px minmax\(0,1fr\) 28px\}/);
+  assert.match(appCss, /\.edge-reveal\.edge-right\{display:flex!important/);
+  assert.match(appCss, /\.canvas-rulers\{inset:0 0 0 0\}/);
+  assert.match(app, /className="electcad-main-site"[\s\S]*className="hb-brand"[\s\S]*Hephzibah Behulah[\s\S]*VoltPro <span>ElectCAD<\/span>[\s\S]*className="project-dropdown"/);
+  assert.match(siteCss, /#vpBottomNavigation\{position:fixed/);
+  assert.match(app, /new Worker\(new URL\('\.\/src\/dc-solver\.worker\.ts',import\.meta\.url\)/);
+  assert.match(app, /worker\.terminate\(\)/);
+  assert.match(appCss, /\.hb-brand strong\{display:inline!important/);
+
+  assert.match(app, /title="Component Library" aria-label="Component Library"/);
+  assert.match(app, /className="title-company-mark"[\s\S]*HEPHZIBAH BEHULAH[\s\S]*className="title-copyright"/);
+  assert.match(app, /const printAllSheets=\(\)=>\{setPrintDocument\(true\)/);
+  assert.match(app, /className="print-document" aria-label="Printable multi-sheet drawing set"/);
+  assert.match(appCss, /@page\{size:A3 landscape;margin:8mm\}/);
+  assert.match(appCss, /\.print-sheet:last-child\{break-after:auto;page-break-after:auto\}/);
+  assert.match(app, /className="paper-ruler paper-ruler-top"/);
+  assert.match(app, /className="paper-ruler paper-ruler-bottom"/);
+  assert.match(app, /className="paper-ruler paper-ruler-left"/);
+  assert.match(app, /className="paper-ruler paper-ruler-right"/);
+  assert.match(app, /const worldWidth=Math\.max\(Math\.ceil\(viewportSize\.width\*3\)/);
+  assert.match(app, /scrollLeft=p\.scrollLeft-\(e\.clientX-p\.clientX\)/);
+  assert.match(app, /setCanvasScroll\(\{x:e\.currentTarget\.scrollLeft,y:e\.currentTarget\.scrollTop\}\)/);
+  assert.match(app, /spreadsheetRowLabel\(firstRow\+i\)/);
+  assert.match(app, /e\.ctrlKey\|\|e\.metaKey\).*changeCanvasZoom/);
+  assert.match(app, /className="sheet-tabs" role="tablist"/);
+  assert.match(app, /onDoubleClick=.*renameSheetById/);
+  assert.match(app, /onContextMenu=.*duplicateSheetById/);
+  assert.match(app, /targetSheetId/);
+  assert.match(app, /wireCrossings\(wires\)/);
+  assert.match(app, /kind==='junction'/);
+  assert.match(app, /className="electcad-main-site" href="https:\/\/hephzibahbehulah\.com\/" target="_top"/);
+  assert.match(app, /className="icon-btn theme-toggle"/);
+  assert.match(app, /About &amp; readiness/);
+  for (const label of ["Engineering Systems Lab", "Circuit Examples", "GitHub Repositories"]) assert.ok(app.includes(label));
+  for (const movedLink of ["Learning sites / Academy", "Open Workbench", "PLC studies"]) assert.ok(app.includes(movedLink));
+});
+
+
+test("the academy sidebar includes the Electrical Building destination", () => {
+  assert.ok(homeBrand.includes('name: "Electrical", href: "/electrical"'));
+  assert.match(shell, /path: href/);
+  assert.match(shell, /title: brandConfig\.brand\.product \+ " " \+ name/);
+});
+
+test("Electrical Building uses its dedicated architectural plan editor", () => {
+  assert.ok(shell.includes('electrical: "/electrical-canvas.html?vp_embed=1"'));
+  assert.match(canvas, /class="building-cad"/);
+  assert.match(read("apps/voltpro-engineering-source/electrical-canvas.js"), /validateBuildingDocument/);
+  assert.match(read("apps/voltpro-engineering-source/src/ui/account.js"), /schemaVersion===2\|\|item\.data\?\.schemaVersion===3/);
+});
+
+test("the public /engineering alias keeps tool iframe URLs at the domain root", () => {
+  assert.ok(shell.includes("rootPrefix = location.hostname.startsWith"));
+});
+
+
+test("persistent workspace shell loads the engineering assistant styles", () => {
+  assert.ok(shellHtml.includes("voltpro-hb-theme.css?v="));
+  assert.ok(assistantTheme.includes("display:none;flex-direction:column"));
+});
+
+test("assistant launcher and chat panel clear the fixed bottom workspace navigation", () => {
+  assert.ok(assistantTheme.includes("bottom:calc(82px + env(safe-area-inset-bottom))"));
+  assert.ok(assistantTheme.includes("bottom:calc(154px + env(safe-area-inset-bottom))"));
+});
+
+test("BuildingCAD includes measured grid, rulers, title block and editable properties", () => {
+  for (const id of ["topRulerTicks", "leftRulerTicks", "planSurface", "componentLibrary", "title-block", "propertiesForm", "projectName", "documentNumber", "revision", "projectDate", "titleScale", "drafter", "componentTag", "componentRoom", "componentVoltage"]) assert.ok(canvas.includes(id));
+  assert.match(canvas, /200 mm \/ square/);
+});
+
+test("BuildingCAD menus have live document, edit, draw, validation and layer commands", () => {
+  for (const action of ["new", "open", "save", "export", "print", "undo", "redo", "delete", "select", "room", "wire", "validate", "references", "schedule", "fit"]) assert.ok(canvas.includes(`data-command="${action}"`));
+  const source = read("apps/voltpro-engineering-source/electrical-canvas.js");
+  for (const handler of ["function validate()", "function openProject(", "function undo()", "function redo()", "function addRoom(", "function showSchedule()"]) assert.ok(source.includes(handler));
+});
+
+test("PLC command menus are wired to project, editing, draw, validation, simulation, and view handlers", () => {
+  const menu = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/CommandMenus.tsx");
+  const layout = read("apps/voltpro-engineering-source/apps/voltpro-plc/src/WorkspaceLayout.tsx");
+  for (const item of ["File", "Edit", "Draw", "Project", "Simulation", "Tools", "View", "New control project", "Open / import project JSON", "Validate program", "On-delay timer", "Reset scan memory"]) assert.ok(menu.includes(item));
+  for (const prop of ["onNew=", "onOpen=", "onSave=", "onCloudSave=", "onExport=", "onUndo=", "onRedo=", "onDraw=", "onValidate=", "onReset=", "onFit=", "onView="]) assert.ok(layout.includes(prop));
+  for (const feature of ["plc-run-controls", "Single scan", "onArduino", "onNewSheet", "plc-system-project-slot"]) assert.ok(layout.includes(feature) || menu.includes(feature));
+});
+
+test("ElectCAD Tools exposes connectivity, wire numbering, and a non-certifying symbol provenance audit", () => {
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
+  assert.ok(app.includes("['Run connectivity diagnostics',runDiagnostics]"));
+  assert.ok(app.includes("['Wire numbering',autoNumberWires]"));
+  assert.ok(app.includes("['Audit symbol source IDs',reviewStandardsProvenance]"));
+  assert.match(app, /installation-specific DIN VDE checks are not assessed/);
+});
+
+test("ElectCAD places parts in the inspector and wires to terminals or free canvas points", () => {
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
+  assert.match(app, /setParts\(prev=>\[\.\.\.prev,part\]\);selectForInspector\(part\.id\)/);
+  assert.ok(app.includes("onTerminalClick(index)"));
+  assert.ok(app.includes("onTerminalClick={index=>tool==='wire'?handleTerminalClick(p,index):selectForInspector(p.id)}"));
+  assert.match(app, /r="26" fill="transparent" stroke="none" pointerEvents="all"/);
+  assert.match(app, /onPointerDown=\{e=>\{if\(!onTerminalClick\)return;e\.preventDefault\(\);e\.stopPropagation\(\);onTerminalClick\(index\)\}\}/);
+  assert.match(app, /WIRE MODE/);
+  assert.match(app, /if\(!wireStart\)\{setWireStart\(\{x,y\}\)/);
+  assert.ok(app.includes("placeWireSegment(wireStart,{x,y})"));
+  assert.match(app, /e\.key==='Enter'&&tool==='wire'&&wireStart/);
+  assert.ok(app.includes('Wire path finished Â· Wire tool remains active'));
+});
+
+test("ElectCAD rail buttons open distinct panels and close the flyout when the pointer leaves", () => {
+  const app = read("apps/engineering/voltpro-electcad/App.tsx");
+  const css = read("apps/engineering/voltpro-electcad/styles.css");
+  for (const panel of ["pages", "components", "search"]) assert.ok(app.includes(`setLeftPanel('${panel}')`));
+  assert.match(app, /icon-rail[^\n]*onMouseLeave=\{\(\)=>\{panelCloseTimer\.current=window\.setTimeout\(\(\)=>setLeftOpen\(false\),180\)\}\}/);
+  assert.match(css, /left-sidebar\.panel-pages .*library-head/);
+  assert.match(css, /left-sidebar\.panel-components .*pages-heading/);
+});
+
+test("ElectCAD account controls stay inside the CAD header instead of floating over the inspector", () => {
+  assert.match(read("platform/member.js"), /voltpro-electcad/);
+  assert.match(read("apps/engineering/voltpro-electcad/App.tsx"), /className="account-popover"/);
+});
+
+test("legacy ElectCAD URL casing cannot inject the portfolio header or member controls", () => {
+  assert.match(platformScript, /isElectCADWorkspace=.*voltpro-electcad.*\/i\.test\(location\.pathname\)/);
+  assert.match(read("platform/member.js"), /voltpro-electcad.*\/i\.test\(location\.pathname\)/);
+  assert.match(read("platform/router.mjs"), /voltpro-electcad.*\/i\.test\(relative\)/);
+  assert.ok(read("platform/build.mjs").includes('href="/electcad"'));
+  assert.match(read("apps/voltpro-electcad-source/vite.config.ts"), /hephzibahbehulah\.com\/electcad/);
+});
+
+test("ElectCAD File to Help dropdowns escape horizontal menu clipping and stack above the canvas", () => {
+  const css = read("apps/engineering/voltpro-electcad/styles.css");
+  assert.match(css, /menubar\{position:relative;z-index:10002;overflow:visible!important\}/);
   assert.match(css, /menu-pop\{position:absolute;z-index:10004/);
   assert.match(css, /canvas-area\{position:relative;z-index:0\}/);
   assert.match(css, /Dropdowns must escape the header[\s\S]*?\.topbar\{overflow:visible!important\}/);
