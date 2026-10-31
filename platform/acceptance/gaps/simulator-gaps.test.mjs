@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
 test.todo("accept.sim.drc.topology-and-ratings");
@@ -28,7 +29,21 @@ test("accept.sim.bom.model-parameters",()=>{
  const rows=bom.buildDetailed(project,library);assert.equal(rows.length,2);assert.equal(rows[0].reference,"R1");assert.equal(rows[0].description,"Resistor");assert.equal(rows[0].tolerance,"5");assert.match(rows[0].modelParameters,/4700/);assert.equal(rows[1].tolerance,"Not specified");
  const csv=bom.detailedCsv(rows);assert.match(csv,/Model parameters/);assert.match(csv,/tolerancePercent/);assert.equal(bom.build(project,library).reduce((sum,row)=>sum+row.quantity,0),2);
 });
-test.todo("accept.sim.hierarchy.typed-ports");
+test("accept.sim.hierarchy.typed-ports",()=>{
+ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"../../../apps/voltpro-engineering-source"),require=createRequire(import.meta.url),hierarchy=require(path.join(root,"src/core/hierarchy-blocks.js"));
+ const definitions={battery:{terminals:[{id:"PLUS",label:"+",type:"electrical",domain:"dc",direction:"output"},{id:"MINUS",label:"−",type:"electrical",domain:"dc",direction:"output"}]},resistor:{terminals:[{id:"1",label:"1",type:"electrical",domain:"dc",direction:"passive"},{id:"2",label:"2",type:"electrical",domain:"dc",direction:"passive"}]},lamp:{terminals:[{id:"1",label:"L",type:"electrical",domain:"dc",direction:"input"},{id:"2",label:"N",type:"electrical",domain:"dc",direction:"output"}]}};
+ const project={components:[{id:"V1",type:"battery",x:0,y:0,props:{voltage:12}},{id:"R1",type:"resistor",x:100,y:0,props:{resistance:1000}},{id:"L1",type:"lamp",x:200,y:0,props:{resistance:120}}],wires:[{id:"W1",a:"V1:0",b:"R1:0"},{id:"W2",a:"R1:1",b:"L1:0"},{id:"W3",a:"L1:1",b:"V1:1"}],subcircuits:[],definitionFor:type=>definitions[type]};
+ const grouped=hierarchy.createFromSelection(project,["R1"],"Series resistor","Block_test");
+ assert.equal(grouped.definition.ports.length,2);assert.ok(grouped.definition.ports.every(port=>port.type==="electrical"&&port.domain==="dc"));assert.deepEqual(grouped.components.filter(component=>component.type==="hierarchy-Block_test").map(component=>component.id),[grouped.instance.id]);
+ assert.ok(grouped.wires.some(wire=>wire.a==="V1:0"&&wire.b===grouped.instance.id+":"+grouped.definition.ports[0].id));
+ assert.deepEqual(hierarchy.validateDefinition(grouped.definition),{valid:true,errors:[]});
+ const flat=hierarchy.flatten({components:grouped.components,wires:grouped.wires,subcircuits:grouped.subcircuits});
+ assert.equal(flat.components.some(component=>component.type==="resistor"),true);assert.equal(flat.components.some(component=>component.type.startsWith("hierarchy-")),false);assert.equal(flat.wires.length,3);assert.ok(flat.wires.every(wire=>!wire.a.startsWith(grouped.instance.id+":")&&!wire.b.startsWith(grouped.instance.id+":")));
+ const malformed={...grouped.definition,ports:[{...grouped.definition.ports[0],domain:"logic"},grouped.definition.ports[1]]};assert.equal(hierarchy.validateDefinition(malformed).valid,false);
+ const cycle={id:"Cycle",name:"Cycle",components:[{id:"nested",type:"hierarchy-Cycle",props:{subcircuitId:"Cycle"},terminals:[{id:"P1",type:"electrical",domain:"dc"}]}],wires:[],ports:[{id:"P1",label:"P1",type:"electrical",domain:"dc",direction:"passive",memberTerminal:"nested:P1"}]};assert.throws(()=>hierarchy.flatten({components:[{id:"I1",type:"hierarchy-Cycle",props:{subcircuitId:"Cycle"}}],wires:[],subcircuits:[cycle]}),/Recursive hierarchical block reference/);
+ const html=fs.readFileSync(path.join(root,"simulator.html"),"utf8"),simulator=fs.readFileSync(path.join(root,"simulator.js"),"utf8"),toolbar=fs.readFileSync(path.join(root,"platform/toolbar-menus.js"),"utf8");
+ assert.match(html,/src\/core\/hierarchy-blocks\.js/);assert.match(simulator,/createHierarchyFromSelection/);assert.match(simulator,/VoltProHierarchyBlocks\?\.flatten/);assert.match(toolbar,/hierarchy-create/);
+});
 test("accept.sim.history.parameter-audit",()=>{
  const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"../../../apps/voltpro-engineering-source"),ctx={console,window:{},structuredClone};
  vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(root,"src/core/parameter-history.js"),"utf8"),ctx,{filename:"parameter-history.js"});
@@ -40,7 +55,7 @@ test("accept.sim.history.parameter-audit",()=>{
  assert.equal(core.saveParameterAudit(storage,"project-a",coalesced),true);assert.equal(core.loadParameterAudit(storage,"project-a").length,1);assert.equal(core.loadParameterAudit(storage,"project-b").length,0);
  const capped=Array.from({length:305},(_,index)=>({...first,id:"e"+index,at:new Date(Date.parse(first.at)+index*3000).toISOString()}));assert.equal(core.normalizeParameterAudit(capped).length,300);assert.equal(core.normalizeParameterAudit(capped)[0].id,"e5");
  const html=fs.readFileSync(path.join(root,"simulator.html"),"utf8"),simulator=fs.readFileSync(path.join(root,"simulator.js"),"utf8"),toolbar=fs.readFileSync(path.join(root,"platform/toolbar-menus.js"),"utf8");
- assert.match(html,/src\/core\/parameter-history\.js[^>]*defer><\/script><script src="simulator\.js/);assert.match(simulator,/VoltProSimulatorAudit\?\.record/);assert.match(toolbar,/Parameter change history/);assert.match(fs.readFileSync(path.join(root,"simulator.css"),"utf8"),/\.vp-audit-backdrop/);
+ assert.match(html,/src\/core\/parameter-history\.js[^>]*defer><\/script><script src="src\/core\/hierarchy-blocks\.js[^>]*defer><\/script><script src="simulator\.js/);assert.match(simulator,/VoltProSimulatorAudit\?\.record/);assert.match(toolbar,/Parameter change history/);assert.match(fs.readFileSync(path.join(root,"simulator.css"),"utf8"),/\.vp-audit-backdrop/);
 });
 test("accept.sim.wiring.domains-and-current-flow",()=>{
  const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"../../../apps/voltpro-engineering-source"),ctx={console,window:{}};vm.createContext(ctx);
