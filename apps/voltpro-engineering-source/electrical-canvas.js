@@ -12,6 +12,7 @@ import { RULER_COLUMNS, RULER_ROWS, clampZoom, drawingPoint, visibleTicks, zoomS
 import { GRID_MM, GRID_PX, columnLabel, snapGrid } from "./electrical-engine.mjs";
 import { BUILDING_TYPES, createBuildingDocument, recoverBuildingDocument, routeBuildingConnection, validateBuildingDocument } from "./building-document.mjs";
 import { appendBuildingAudit, loadBuildingAudit, makeBuildingAuditEntry, saveBuildingAudit, snapshotBuildingAudit } from "./building-audit.mjs";
+import { installResponsiveElectricalControls } from "./electrical-responsive-ui.mjs";
 
 
 const $ = id => document.getElementById(id);
@@ -385,14 +386,7 @@ scroll.addEventListener("pointermove",event => {
 function endCameraPointer(event) { touches.delete(event.pointerId); if(touches.size<2) pinch=null; if(pan?.id===event.pointerId)pan=null; }
 scroll.addEventListener("pointerup",endCameraPointer); scroll.addEventListener("pointercancel",endCameraPointer);
 scroll.addEventListener("click",event=>{if(suppressClick){event.preventDefault();event.stopImmediatePropagation();suppressClick=false;}},true);
-document.querySelectorAll("[data-panel]").forEach(button=>button.addEventListener("click",()=>togglePanel(button.dataset.panel)));
-document.querySelectorAll("[data-close-panel]").forEach(button=>button.addEventListener("click",()=>togglePanel(button.dataset.closePanel,false)));
-if(window.matchMedia("(max-width: 850px)").matches) togglePanel("library",false);
-$("toggleTitleBlock").addEventListener("click",event=>{
-  const expanded=document.querySelector(".title-block").dataset.expanded!=="true";
-  document.querySelector(".title-block").dataset.expanded=String(expanded);
-  event.currentTarget.setAttribute("aria-expanded",String(expanded));
-});
+installResponsiveElectricalControls({ document, window, togglePanel });
 function openExampleLibrary() {
   const projectMenu = [...document.querySelectorAll(".cad-menubar details")].find(details => details.querySelector("#buildingExample"));
   if (!projectMenu) return setStatus("Example project library is unavailable. Refresh the Electrical workspace and try again.");
