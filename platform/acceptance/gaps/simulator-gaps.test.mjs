@@ -11,7 +11,7 @@ test("accept.sim.drc.topology-and-ratings",()=>{
  for(const file of ["src/core/component-contracts.js","src/core/terminal-graph.js","engine/voltpro-engine.js","platform/circuit-review.js"])vm.runInContext(fs.readFileSync(path.join(root,file),"utf8"),ctx,{filename:file});
  const project={components:[{id:"V1",type:"battery",pins:["V1:0","V1:1"],props:{voltage:10}},{id:"R1",type:"resistor",pins:["R1:0","R1:1"],props:{resistance:12,powerRatingW:5}}],wires:[{id:"W1",a:"V1:0",b:"R1:0"},{id:"W2",a:"R1:1",b:"V1:1"}]};
  const report=ctx.VoltProCircuitReview.review(project);assert.equal(report.ok,true);assert.match(report.warnings.join(" "),/exceeds entered 5 W/);assert.equal(report.devices.find(device=>device.id==="R1").status,"educational");assert.match(report.scope,/does not certify/);
- project.wires.push({id:"W3",a:"V1:0",b:"missing:0"});assert.match(ctx.VoltProCircuitReview.review(project).errors.join(" "),/invalid topology \\(INVALID_TERMINAL_REFERENCE\\)/);project.wires.pop();
+ project.wires.push({id:"W3",a:"V1:0",b:"missing:0"});assert.match(ctx.VoltProCircuitReview.review(project).errors.join(" "),/invalid topology \(INVALID_TERMINAL_REFERENCE\)/);project.wires.pop();
  project.wires.push({id:"W4",a:"V1:0",b:"V1:1"});assert.match(ctx.VoltProCircuitReview.review(project).errors.join(" "),/source terminals are directly shorted/);
 });
 test("accept.sim.nets.labels-colors-roundtrip",()=>{

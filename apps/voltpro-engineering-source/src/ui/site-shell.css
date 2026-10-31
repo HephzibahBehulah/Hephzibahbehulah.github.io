@@ -23,6 +23,10 @@
 .vp-unified-site .plc-app,.vp-unified-site .sim-app{height:calc(100dvh - var(--vp-header-height) - var(--vp-development-banner-height) - var(--vp-development-footer-height))}
 html[data-vp-theme=light] #vpDevelopmentFooter{background:#fff5d7;color:#604600}html[data-vp-theme=light] #vpReadinessDialog{background:#fffaf0;color:#292317}
 
+/* Keep the shared assistant clear of the fixed brand header, readiness notice, and workspace navigation. */
+html.vp-unified-site #vpAdigunChat .adigun-panel{top:calc(var(--vp-header-height) + var(--vp-development-banner-height) + 12px);right:12px;bottom:calc(64px + var(--vp-development-footer-height) + 12px + env(safe-area-inset-bottom));height:auto;min-height:0;max-height:none}
+html[data-vp-theme=light] #vpSiteHeader .vp-parent-wordmark{filter:brightness(.42) saturate(1.15)}
+
 /* ElectCAD uses its own compact CAD header; keep the outer suite shell to the canvas, notice and tool dock. */
 html.vp-electcad-maximized,html.vp-electcad-maximized body{height:100dvh;min-height:0;overflow:hidden}
 html.vp-electcad-maximized.vp-unified-site body{display:flex;flex-direction:column;padding:0!important;padding-top:0!important;padding-bottom:0!important}

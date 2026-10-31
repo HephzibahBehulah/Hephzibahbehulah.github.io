@@ -4,20 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#151515">
-  <title>VoltPro BuildingCAD</title>
-  <link rel="stylesheet" href="src/ui/site-shell.css">
-  <link rel="stylesheet" href="electrical-canvas.css">
+  <title>VoltPro Electrical | HEPHZIBAH BEHULAH</title>
+  <link rel="stylesheet" href="src/ui/site-shell.css?v=20261031-theme-polish">
+  <link rel="stylesheet" href="electrical-canvas.css?v=20261031-light-theme">
   <link rel="stylesheet" href="voltpro-hb-theme.css?v=20261028-aiwindow1">
   <link rel="stylesheet" href="src/ui/assistant-chat.css?v=20261028-adigun1">
   <link rel="stylesheet" href="workspace-engineering-theme.css">
   <script type="module" src="electrical-canvas.js"></script>
+  <script type="module" src="platform/account-config.js?v=20261017p"></script>
+  <script type="module" src="platform/account-client.js?v=20261017p"></script>
+  <script src="src/ui/voltpro-brand.js?v=20261031a" defer></script>
+  <script src="src/ui/site-shell.js?v=20261031a" defer></script>
   <script src="platform/assistant-engineering.js" defer></script>
   <script src="voltpro-assistant.js?v=20261028-adigun1" defer></script>
   <script src="src/ui/assistant-chat.js?v=20261028-adigun1" defer></script>
 </head>
 <body class="building-cad">
   <header class="cad-toolbar">
-    <div class="cad-brand"><a href="https://hephzibahbehulah.com/" target="_top">← Main Site</a><a class="cad-company" href="https://hephzibahbehulah.com/" target="_top" aria-label="Hephzibah Behulah"><img src="/_hb/hb-logo.svg" alt="HB"></a><strong>⚡ VoltPro <span>Electrical</span></strong></div>
+    <div class="cad-brand"><strong>⚡ VoltPro <span>Electrical</span></strong></div>
     <nav class="cad-menubar" aria-label="Drawing commands">
       <details><summary>File</summary><div class="cad-menu"><button data-command="new">New project</button><button data-command="open">Open project / manufacturer catalogue JSON…</button><button data-command="save">Save project</button><button data-command="export">Export project JSON</button><button data-command="print">Print drawing…</button><label>Export format<select id="drawingExportFormat"><option value="json">Project JSON</option><option value="svg">Current floor drawing · SVG</option><option value="circuits">Board / circuit schedule · TSV</option><option value="review">Full engineering review · TXT</option></select></label></div></details>
       <details><summary>Edit</summary><div class="cad-menu"><button data-command="undo">Undo</button><button data-command="redo">Redo</button><button data-command="delete">Delete selected object</button></div></details>

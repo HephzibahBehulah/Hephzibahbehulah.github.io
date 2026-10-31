@@ -39,9 +39,27 @@ html body.building-cad{display:grid;grid-template-rows:50px minmax(0,1fr) 28px;o
 html[data-vp-theme=light] body.building-cad{--cad-bg:#f0f2f4;--cad-panel:#fff;--cad-line:#c6ccd1;--cad-text:#1c2329;--cad-muted:#54616a;background:#f0f2f4;color:#1c2329}
 html[data-vp-theme=light] .building-cad .plan-surface{background-color:#f5f6f7;background-image:linear-gradient(to right,#53657533 1px,transparent 1px),linear-gradient(to bottom,#53657533 1px,transparent 1px)}
 html[data-vp-theme=light] .building-cad .title-block{background:#f8f9fa;color:#1c2329}html[data-vp-theme=light] .building-cad .title-block input{background:#fff;color:#1c2329}
+html[data-vp-theme=light] body.building-cad .cad-toolbar,html[data-vp-theme=light] body.building-cad .cad-menubar{background:#edf1f3;color:#1c2329;border-color:#c6ccd1}
+html[data-vp-theme=light] body.building-cad .cad-toolbar button,html[data-vp-theme=light] body.building-cad .cad-toolbar input,html[data-vp-theme=light] body.building-cad .cad-toolbar select,html[data-vp-theme=light] body.building-cad .cad-menubar .cad-menu{background:#fff;color:#1c2329;border-color:#c6ccd1}
+html[data-vp-theme=light] body.building-cad .cad-menubar summary{color:#263944}
+html[data-vp-theme=light] body.building-cad .cad-menubar details[open]>summary,html[data-vp-theme=light] body.building-cad .cad-menubar summary:hover{background:#dce8ec;color:#a84d00}
+html[data-vp-theme=light] body.building-cad .cad-menu button,html[data-vp-theme=light] body.building-cad .cad-menu label{color:#1c2329}
+html[data-vp-theme=light] body.building-cad .cad-library .cad-part{background:#f5f7f8;color:#1c2329;border-color:#c6ccd1}
+html[data-vp-theme=light] body.building-cad .cad-workarea{background:#fff;border-color:#c6ccd1}
+html[data-vp-theme=light] body.building-cad .cad-status,html[data-vp-theme=light] body.building-cad #commandStatus{color:#394b56}
+html[data-vp-theme=light] body.building-cad .ruler-corner,html[data-vp-theme=light] body.building-cad .top-ruler,html[data-vp-theme=light] body.building-cad .left-ruler{background:#e8edf0;color:#394b56}
+html[data-vp-theme=light] body.building-cad .top-ruler span,html[data-vp-theme=light] body.building-cad .left-ruler span{border-color:#c6ccd1}
+html[data-vp-theme=light] body.building-cad #commandStatus,html[data-vp-theme=light] body.building-cad .cad-status{background:#f8fafbcc;color:#394b56;border:1px solid #d2d9de}
+html[data-vp-theme=light] body.building-cad .cad-footer{background:#edf1f3;color:#394b56;border-color:#c6ccd1}
+html[data-vp-theme=light] body.building-cad .cad-rail{background:#edf1f3;border-color:#c6ccd1}
+html[data-vp-theme=light] body.building-cad .cad-rail button{background:#fff;color:#263944;border-color:#c6ccd1}
 
 /* Keep the anchored title editable while the inspector is open. */
 .building-cad .cad-properties{bottom:220px;min-height:120px}
+
+/* Reserve space for the shared VoltPro header, development notice and navigation. */
+.vp-unified-site body.building-cad{padding-top:calc(var(--vp-header-height) + var(--vp-development-banner-height))!important;padding-bottom:calc(var(--vp-development-footer-height) + 72px)!important;grid-template-rows:50px minmax(0,1fr) 28px}
+html.vp-unified-site #vpAdigunChat .adigun-launcher{top:calc(var(--vp-header-height) + var(--vp-development-banner-height) + 66px)!important;bottom:auto!important}
 
 .cad-company img{display:block;width:28px;height:28px;object-fit:contain}
 .cad-company img{width:90px;height:28px}
