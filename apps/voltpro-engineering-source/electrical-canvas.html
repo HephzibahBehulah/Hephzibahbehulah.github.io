@@ -7,7 +7,7 @@
   <title>VoltPro Electrical | HEPHZIBAH BEHULAH</title>
   <script>if(new URLSearchParams(location.search).has('vp_embed'))document.documentElement.classList.add('vp-electrical-embed');</script>
   <link rel="stylesheet" href="src/ui/site-shell.css?v=20261031-theme-polish">
-  <link rel="stylesheet" href="electrical-canvas.css?v=20261031-light-theme">
+  <link rel="stylesheet" href="electrical-canvas.css?v=20261031-gridfix1">
   <link rel="stylesheet" href="voltpro-hb-theme.css?v=20261028-aiwindow1">
   <link rel="stylesheet" href="src/ui/assistant-chat.css?v=20261028-adigun1">
   <link rel="stylesheet" href="workspace-engineering-theme.css"><link rel="stylesheet" href="src/ui/embedded-product-brand.css?v=20261031a">
@@ -20,7 +20,7 @@
   <script src="voltpro-assistant.js?v=20261028-adigun1" defer></script>
   <script src="src/ui/assistant-chat.js?v=20261028-adigun1" defer></script>
 </head>
-<body class="building-cad">
+<body class="building-cad" data-library-open="true">
   <header class="cad-toolbar">
     <div class="cad-brand"><strong class="cad-product-wordmark">VoltPro <span>Electrical</span></strong><small>BY HB ELEKTRONIKER</small></div>
     <nav class="cad-menubar" aria-label="Drawing commands">
@@ -35,7 +35,7 @@
   </header>
   <input id="projectFile" type="file" accept="application/json,.json" hidden>
   <div class="cad-layout">
-    <nav class="cad-rail" aria-label="Electrical panels"><button data-panel="library" aria-label="Installation objects" aria-expanded="false">▦</button><button data-panel="properties" aria-label="Properties" aria-expanded="false">⚙</button></nav>
+    <nav class="cad-rail" aria-label="Electrical panels"><button data-panel="library" aria-label="Installation objects" aria-expanded="true">▦</button><button data-panel="properties" aria-label="Properties" aria-expanded="false">⚙</button></nav>
     <aside class="cad-library" aria-label="Building installation components">
       <div class="cad-panel-heading"><h2>Installation catalogue</h2><button data-close-panel="library" aria-label="Close installation objects">×</button></div><label class="cad-library-field">Search equipment / designation<input id="catalogSearch" type="search" placeholder="e.g. RCBO B16, NYM-J, ceiling fan" autocomplete="off"></label>
       <label class="cad-library-field">Category<select id="catalogCategory"></select></label>

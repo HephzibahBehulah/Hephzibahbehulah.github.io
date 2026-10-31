@@ -54,4 +54,16 @@ test("workspace shell cache keys are bumped for the new Simulator header", () =>
   assert.match(shellHtml, /workspace-shell\.css\?v=20261028-menu1/);
   assert.match(shellHtml, /workspace-shell\.js\?v=20261028e/);
 });
-
+ 
+test("embedded Electrical uses exactly three grid rows so the canvas and drawers keep full height", () => {
+  const electricalCss = readFileSync(new URL("../electrical-canvas.css", import.meta.url), "utf8");
+  const electricalHtml = readFileSync(new URL("../electrical-canvas.html", import.meta.url), "utf8");
+  assert.match(electricalCss, /html\.vp-electrical-embed body\{grid-template-rows:minmax\(48px,auto\) minmax\(0,1fr\) 28px\}/);
+  assert.match(electricalCss, /html\.vp-electrical-embed \.cad-toolbar\{grid-row:1/);
+  assert.match(electricalCss, /html\.vp-electrical-embed \.cad-layout\{grid-row:2/);
+  assert.match(electricalCss, /html\.vp-electrical-embed \.cad-footer\{grid-row:3/);
+  assert.match(electricalCss, /@media\(max-width:850px\)\{html\.vp-electrical-embed body\{grid-template-rows:minmax\(44px,auto\) minmax\(0,1fr\) 26px\}/);
+  assert.match(electricalHtml, /electrical-canvas\.css\?v=20261031-gridfix1/);
+  assert.match(electricalHtml, /data-panel="library" aria-label="Installation objects" aria-expanded="true"/);
+  assert.match(electricalCss, /\.cad-footer span\{white-space:nowrap;flex:0 0 auto\}/);
+});
