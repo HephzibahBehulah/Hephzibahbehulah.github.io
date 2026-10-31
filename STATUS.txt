@@ -4,7 +4,7 @@ Status definitions: Complete requires its named acceptance test to exist and pas
 
 | Gap ID | Tool | Capability | Current status | Blocker type | Owner action required | Acceptance test name |
 |---|---|---|---|---|---|---|
-| PLC-DRC | PLC | DRC | Partial | Logic not implemented; Standards text needed; Test not written | You supply verified IEC 61131-3 data; Codex implements checks | accept.plc.drc.iec61131-profile |
+| PLC-DRC | PLC | DRC | Partial | IEC 61131-3 profile and source data needed | Supply an authoritative, licensed IEC profile; current model and ladder topology diagnostics are educational only | accept.plc.drc.iec61131-profile |
 | PLC-WN | PLC | Wire Numbering | Complete | — | Automatically assign logical IEC-style I/O addresses and cross-reference matching device tags by drawing sheet | accept.plc.io-addresses.cross-reference |
 | PLC-BOM | PLC | BOM | Complete | — | Generic training CPU and 8-channel input/output module BOM is generated from the I/O map; no vendor order codes are asserted | accept.plc.hardware-bom.complete |
 | PLC-MS | PLC | Multi-Sheet | Complete | — | Main, subroutine, and interrupt blocks map to sheets; block calls are validated for missing targets, duplicates, invalid interrupt targets, self-calls, and recursion. Interrupt events are metadata; the educational simulator still scans the full project every 20 ms. | accept.plc.program-blocks.cross-reference |
