@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --noEmit && vite build && node scripts/licenses.cjs",
     "dev": "vite --host 127.0.0.1",
-    "test": "node --import tsx --test src/engine.test.ts src/canvas-geometry.test.ts"
+    "test": "node --import tsx --test src/engine.test.ts src/canvas-geometry.test.ts tests/program-blocks.test.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.0",

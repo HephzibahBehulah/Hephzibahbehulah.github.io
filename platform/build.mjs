@@ -13,7 +13,9 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 execFileSync(process.execPath,['platform/generate-gaps.mjs','--check'],{cwd:root,stdio:'inherit'});
 const engineering=path.resolve(process.argv[2]||'../engineering-source');
 const cyber=path.resolve(process.argv[3]||'../cyber/build-app/web');
-const destination=path.resolve(root,'dist-platform');
+const assetDirectory=process.env.HB_PLATFORM_ASSETS_DIR||'dist-platform';
+const destination=path.resolve(root,assetDirectory);
+if(!destination.startsWith(root+path.sep))throw Error('HB_PLATFORM_ASSETS_DIR must resolve inside the repository.');
 const lock=JSON.parse(fs.readFileSync(path.join(root,'platform/source-lock.json'),'utf8'));
 verifyMainAssets(root);
 for(const file of [path.join(engineering,'simulator.html'),path.join(engineering,'voltpro-plc/index.html'),path.join(cyber,'data.json'),path.join(cyber,'runtime/pyodide.asm.wasm')])if(!fs.existsSync(file))throw Error('Required built application asset is missing: '+file);
@@ -21,11 +23,12 @@ if(fs.existsSync(destination))throw Error('Use a fresh output directory; refusin
 const extensions=new Set(['.html','.css','.js','.mjs','.json','.csv','.svg','.png','.jpg','.jpeg','.webp','.ico','.woff','.woff2','.ttf','.webmanifest','.wasm','.zip','.py','.txt']);
 function copy(from,to,{main=false,cyber=false}={}){
  for(const entry of fs.readdirSync(from,{withFileTypes:true})){
-  if(entry.name.startsWith('.')||['node_modules','dist-platform','platform-source','platform','tests','scripts','server','apps','packages','docs','backend','deployment','production-inventory','ml-service','pentest-script'].includes(entry.name)&&main)continue;
+  if(entry.name.startsWith('.')||['node_modules','dist-platform','platform-source','platform','tests','scripts','server','apps','packages','docs','backend','deployment','production-inventory','ml-service','pentest-script','work'].includes(entry.name)&&main)continue;
   if(!main&&['node_modules','.git','.github','server','apps','tests','scripts','docs'].includes(entry.name))continue;
   if(main&&['js','css'].includes(entry.name))continue;
   if(main&&entry.name==='favicon.ico')continue;
-  const src=path.join(from,entry.name),dst=path.join(to,entry.name);
+  const src=path.join(from,entry.name),resolvedSource=path.resolve(src),dst=path.join(to,entry.name);
+  if(resolvedSource===destination||resolvedSource.startsWith(destination+path.sep))continue;
   if(entry.isDirectory()){copy(src,dst,{main,cyber});continue;}
   if(!extensions.has(path.extname(entry.name))||main&&/^worker.*\.[cm]?js$/.test(entry.name)||!cyber&&['.py','.zip'].includes(path.extname(entry.name)))continue;
   fs.mkdirSync(path.dirname(dst),{recursive:true});fs.copyFileSync(src,dst);

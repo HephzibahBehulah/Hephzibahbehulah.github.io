@@ -70,7 +70,7 @@ test("MCU Lab accepts named example sketches and retains explicit interpreter li
 
 test("cache and deployment version invalidates stale simulator shell and precaches menu runtime",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js"),css=read("simulator-layout-restore.css");
- assert.ok(worker.includes('const CACHE="voltpro-v102"'));
+ assert.ok(worker.includes('const CACHE="voltpro-v103"'));
  assert.ok(worker.includes('"./platform/toolbar-menus.js"'));
  assert.ok(worker.includes('"./platform/ui.js"'));
  assert.ok(worker.includes('"./platform/workbench.js"'));
@@ -80,7 +80,7 @@ test("cache and deployment version invalidates stale simulator shell and precach
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
  assert.ok(html.includes('src/ui/toolbar-layout.js?v=20261029-dropdown2'));
  assert.ok(html.includes('src/ui/toolbar-layout.css?v=20261029-dropdown2'));
- assert.ok(html.includes('simulator.js?v=20261027e'));
+ assert.ok(html.includes('simulator.js?v=20261030b'));
  assert.ok(css.includes(".vp-toolbar-popover"));
 });
 

@@ -164,9 +164,9 @@ test("new palette components can be placed by click and selected for editing", (
   assert.ok(source.includes('const c=S.components.find(x=>x.id===S.selected)'));
 });
 
-test("wire inspector exposes cable type, colour, cross-section, width and line pattern", () => {
+test("wire inspector exposes cable type, net colour, cross-section, width and line pattern", () => {
   const source = fs.readFileSync(path.join(root, "simulator.js"), "utf8");
-  for (const property of ["cableType", "color", "size", "width", "pattern"]) {
+  for (const property of ["cableType", "netColor", "size", "width", "pattern"]) {
     assert.ok(source.includes('data-wire-prop="' + property + '"'), "missing wire property " + property);
   }
   assert.ok(source.includes("stroke-dasharray"));

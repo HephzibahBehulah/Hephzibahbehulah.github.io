@@ -18,6 +18,7 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 yarn.lock
+!apps/engineering/voltpro-electcad/package-lock.json
 
 # Environment variables
 .env
@@ -94,3 +95,4 @@ platform-source/
 .cache/
 **/.cache/
 .dist-platform-*/
+work/

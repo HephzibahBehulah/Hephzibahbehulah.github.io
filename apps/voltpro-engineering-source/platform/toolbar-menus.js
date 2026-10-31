@@ -62,6 +62,7 @@ const menus={
   ["Panel Designer","tool","panel"],
   ["Component Information","tool","info"],
   ["Accessibility settings","tool","a11y"],
+  ["Parameter change history","history"],
   ["Demo Project Library","demo-library"]
  ]}
 };
@@ -96,6 +97,7 @@ function dispatch(kind,value){
  if(kind==="mcu"){invoke(actions,"mcu","Microcontroller Lab",value);return}
  if(kind==="tool"){invoke(actions,value,"Engineering tool");return}
  if(kind==="navigate"){window.location.href=value;return}
+ if(kind==="history"){invoke(window.VoltProSimulatorAudit,"open","Parameter change history");return}
 }
 function open(trigger){
  const key=trigger.dataset.vpMenu,definition=menus[key];if(!definition)return;

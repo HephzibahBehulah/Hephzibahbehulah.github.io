@@ -212,7 +212,7 @@ This register addresses every requested capability separately for every tool. **
 | DRC | **Partial.** The validator/runtime reject malformed tags and terminals, duplicate coil drivers, cycles, and modeled shorts; timer behavior is scan-tested. Missing end-of-rung rules and findings citing verified IEC 61131-3 clauses are not implemented. |
 | Wire numbering | **Gap.** Tags are editable, but automatic `%I`/`%Q` address assignment and address-to-I/O-list cross-references are absent. |
 | BOM | **Gap.** There is no controller/rack/module configuration model from which to derive a hardware BOM. |
-| Multi-sheet | **Partial.** Documents can contain sheets and keep nodes scoped to sheets. Main/subroutine/interrupt program-block organization and block-call cross-references are absent. |
+| Multi-sheet | **Implemented (scoped).** Main, subroutine, and interrupt program blocks map one-to-one to drawing sheets. Cross-references reject missing targets, duplicate links, interrupt-call targets, self-calls, and recursion. Interrupt triggers are recorded as project metadata; the educational simulator still scans the complete project every 20 ms rather than scheduling isolated blocks. |
 | History | **Partial.** Undo/redo records model snapshots for editing. A readable, persistent audit log of rung-level actions is absent. |
 | Smart Wire | **Partial.** Typed terminals and scan checks reject invalid connections and shorts. A dedicated rule preventing series-connected coils and requiring an output/function block at every rung end is absent. |
 
@@ -222,10 +222,10 @@ This register addresses every requested capability separately for every tool. **
 |---|---|
 | DRC | **Partial.** Circuit review, graph validation, and solvers report selected topology/model issues. Complete floating-node and direct-supply-short coverage, rated voltage/current evaluation, and rule findings tied to exact datasheet limits are not established for every catalog device. |
 | Wire numbering | **Partial.** The net resolver forms deterministic nets and the wire utility can number wires. User-assigned net names, common-color highlighting by net identity, and stable label round-tripping are not integrated as a complete workflow. |
-| BOM | **Partial.** Existing inventory utilities can count component types. A simulation BOM containing each instance’s tolerance and the precise model parameter set is not implemented as a verified report. |
+| BOM | **Complete within the scoped acceptance.** The grouped inventory remains available, and an instance-level export lists reference, description, project model parameters, and tolerance when explicitly supplied. Missing tolerance is labeled “Not specified”; the report does not invent manufacturer order codes or verified limits. |
 | Multi-sheet | **Gap.** Hierarchical circuit blocks with typed ports and validated inter-sheet connectivity are not implemented. |
-| History | **Partial.** Canvas undo/redo and recovery exist. A persistent human-readable record of each parameter change is absent. |
-| Smart Wire | **Partial.** Orthogonal drawing and typed terminal/domain metadata exist in parts of the simulator. Live current particles and comprehensive analog/digital compatibility enforcement are not implemented across all connection paths. |
+| History | **Complete within the scoped acceptance.** Canvas undo/redo and recovery remain available. Parameter edits are recorded in a persistent, human-readable, per-project device-local audit (up to 300 entries), can be exported as JSON, and are explicitly not uploaded to cloud storage. Other canvas actions are not part of this parameter-audit scope. |
+| Smart Wire | **Complete within the scoped acceptance.** Terminal graph checks reject incompatible terminal domains and types. During a supported live simulation, solver-derived wire voltage and current direction are shown; ideal parallel-wire loops are labeled indeterminate rather than assigned fabricated currents. This does not certify physical wiring suitability. |
 
 ### VoltPro ElectCAD
 

@@ -54,7 +54,7 @@
     const rawDevices = Array.isArray(raw.devices) ? raw.devices : (Array.isArray(raw.components) ? raw.components : []);
     const known = new Set(["format","formatVersion","version","metadata","settings","workspace","workspaceConfig","devices","components","wires","nets","panel","plc","firmware","simulation","faults","history","results","simulationResults","extensions"]);
     const deviceKnown = new Set(["id","ref","type","model","kind","modelVersion","version","label","position","x","y","rotation","terminals","pins","parameters","props","operatingState","state","extensions","simulation"]);
-    const wireKnown = new Set(["id","from","to","a","b","label","number","colour","color","routing","segments","points","domain","crossSection","cross_section","material","phase","electrical","extensions"]);
+    const wireKnown = new Set(["id","from","to","a","b","label","number","colour","color","netId","netLabel","netColor","routing","segments","points","domain","crossSection","cross_section","material","phase","electrical","extensions"]);
 
     const devices = rawDevices.map((d, i) => {
       if (!object(d)) throw new Error("Device at index " + i + " must be an object");
@@ -89,6 +89,7 @@
         id: w.id || "W" + String(i + 1).padStart(3, "0"),
         from, to, label: w.label ?? w.number ?? "",
         colour: w.colour ?? w.color ?? null,
+        netId: w.netId ?? null, netLabel: w.netLabel ?? null, netColor: w.netColor ?? null,
         routing: clone(w.routing || w.segments || w.points || []),
         domain: w.domain || "dc",
         electrical: { crossSection: w.crossSection ?? w.cross_section ?? null, material: w.material ?? null, phase: w.phase ?? null },

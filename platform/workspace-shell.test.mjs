@@ -275,7 +275,7 @@ test("Breadboard command menu proxies only to implemented native controls", () =
   assert.ok(proxies.length >= 15);
   for (const target of proxies) {
     if (target === "print") continue;
-    if (target === "#bbUndo" || target === "#bbRedo") {
+    if (target === "#bbUndo" || target === "#bbRedo" || target === "#bbWireChecklist" || target === "#bbBOM") {
       const studio = read("apps/voltpro-engineering-source/src/ui/breadboard-studio.js");
       assert.ok(studio.includes(`id="${target.slice(1)}"`), `Missing dynamic ${target}`);
       continue;

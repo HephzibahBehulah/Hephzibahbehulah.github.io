@@ -42,12 +42,11 @@
       "gapId": "PLC-MS",
       "tool": "PLC",
       "capability": "Multi-Sheet",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds Main/Subroutine/Interrupt program blocks and references",
+      "ownerActionRequired": "Main, subroutine, and interrupt blocks map to sheets; block calls are validated for missing targets, duplicates, invalid interrupt targets, self-calls, and recursion. Interrupt events are metadata; the educational simulator still scans the full project every 20 ms.",
       "acceptanceTestName": "accept.plc.program-blocks.cross-reference"
     },
     {
@@ -89,24 +88,22 @@
       "gapId": "SIM-WN",
       "tool": "Simulator",
       "capability": "Wire Numbering",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex completes stable net labels and net-based coloring",
+      "ownerActionRequired": "Stable endpoint-anchored net labels and consistent net colors survive project export/import",
       "acceptanceTestName": "accept.sim.nets.labels-colors-roundtrip"
     },
     {
       "gapId": "SIM-BOM",
       "tool": "Simulator",
       "capability": "BOM",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex reports per-instance tolerances and model parameters",
+      "ownerActionRequired": "Detailed export lists each instance, project model parameters, and explicitly supplied tolerance; missing tolerances remain marked Not specified, with no vendor claims",
       "acceptanceTestName": "accept.sim.bom.model-parameters"
     },
     {
@@ -125,24 +122,22 @@
       "gapId": "SIM-HIST",
       "tool": "Simulator",
       "capability": "History",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds persistent parameter-change history",
+      "ownerActionRequired": "Local parameter-change audit is capped at 300 entries per project, coalesces rapid edits, and exports as JSON; history is device-local and is not uploaded",
       "acceptanceTestName": "accept.sim.history.parameter-audit"
     },
     {
       "gapId": "SIM-SW",
       "tool": "Simulator",
       "capability": "Smart Wire",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex enforces domains and shows simulation current flow",
+      "ownerActionRequired": "Terminal graph rejects incompatible domain/type connections; active solver results color wires and show flow direction, while ideal parallel-loop current is reported indeterminate",
       "acceptanceTestName": "accept.sim.wiring.domains-and-current-flow"
     },
     {
@@ -163,12 +158,11 @@
       "gapId": "ECAD-WN",
       "tool": "ElectCAD",
       "capability": "Wire Numbering",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex enforces prefixes and off-page cross-references",
+      "ownerActionRequired": "Tools assigns per-sheet W001-style drawing-order references; off-page connectors select a valid different sheet and display its sheet number and drawing zone. This is a project-local convention, not a standards designation",
       "acceptanceTestName": "accept.electcad.wire-numbers.off-page-links"
     },
     {
@@ -187,24 +181,22 @@
       "gapId": "ECAD-MS",
       "tool": "ElectCAD",
       "capability": "Multi-Sheet",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex enforces linked multi-sheet project structure",
+      "ownerActionRequired": "Projects support up to 1,000 independent sheets; off-page connectors must target an existing different sheet, and missing/self links are rejected. Cross-sheet references are navigation/document references, not inferred electrical connectivity.",
       "acceptanceTestName": "accept.electcad.sheets.cross-link-integrity"
     },
     {
       "gapId": "ECAD-HIST",
       "tool": "ElectCAD",
       "capability": "History",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds exportable documentation audit history",
+      "ownerActionRequired": "Browser-local audit records project-level sheet/device/wire count changes, coalesces rapid edits, caps history at 300, and exports JSON without storing drawing contents",
       "acceptanceTestName": "accept.electcad.history.document-audit"
     },
     {
@@ -224,72 +216,66 @@
       "gapId": "BB-DRC",
       "tool": "Breadboard",
       "capability": "DRC",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex completes overlap, hole, footprint and ground checks",
+      "ownerActionRequired": "Checks valid terminal holes, pin conflicts, components sharing a breadboard strip, jumper shorts across source terminals, and whether a source return reaches a designated negative rail. Educational review only; it does not model package-body clearance, protective earth, standards compliance, or installation safety.",
       "acceptanceTestName": "accept.breadboard.drc.placement-and-ground"
     },
     {
       "gapId": "BB-WN",
       "tool": "Breadboard",
       "capability": "Wire Numbering",
-      "currentStatus": "Not Started",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex implements the color and endpoint wiring checklist",
+      "ownerActionRequired": "Existing Tools menu now provides a checklist of recorded wire endpoints and colors, with incomplete endpoint status shown; this is documentation support, not electrical safety validation",
       "acceptanceTestName": "accept.breadboard.wiring-checklist.endpoints"
     },
     {
       "gapId": "BB-BOM",
       "tool": "Breadboard",
       "capability": "BOM",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds replication values, LED colors and jumper lengths",
+      "ownerActionRequired": "BOM groups repeated components with their values and LED colour; jumper rows show endpoints, wire colour, user-entered measured length when available, and geometric minimum separation otherwise. The minimum is not a cut-length recommendation; assembly slack and bends must be measured.",
       "acceptanceTestName": "accept.breadboard.bom.replication-details"
     },
     {
       "gapId": "BB-MS",
       "tool": "Breadboard",
       "capability": "Multi-Sheet",
-      "currentStatus": "Not Started",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex implements named independent board pages",
+      "ownerActionRequired": "Browser-local page library creates, opens, auto-saves, duplicates, deletes, and exports up to 100 independently named board projects; an older single saved project is imported into the library on first use and retained as a legacy backup. These are independent projects, not multi-sheet electrical connectivity.",
       "acceptanceTestName": "accept.breadboard.pages.independent-projects"
     },
     {
       "gapId": "BB-HIST",
       "tool": "Breadboard",
       "capability": "History",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds durable component and wire action history",
+      "ownerActionRequired": "Browser-local action summaries track component placement, removal, movement and edits plus jumper placement, removal, endpoint changes and colour changes; rapid edits coalesce; history is capped at 300 entries, viewable by project name, and exportable as JSON. Project contents are not copied into the audit log.",
       "acceptanceTestName": "accept.breadboard.history.placement-and-wire-moves"
     },
     {
       "gapId": "BB-SW",
       "tool": "Breadboard",
       "capability": "Smart Wire",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex enforces power/data endpoint compatibility",
+      "ownerActionRequired": "Advisory checks report mixed declared signal domains, multiple active outputs on one net, non-overlapping explicitly declared terminal voltage ranges, and input-only nets. Missing pin limits stay unknown; this is not a standards or safety approval.",
       "acceptanceTestName": "accept.breadboard.wiring.net-compatibility"
     },
     {
@@ -309,60 +295,55 @@
       "gapId": "BUILD-WN",
       "tool": "Building",
       "capability": "Wire Numbering",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds circuit/cable tags and board cross-references",
+      "ownerActionRequired": "Missing equipment tags are assigned by device family, cable routes receive stable project-local CBL tags, and circuit references link board/protection/RCD IDs with cable tags in schedules. Verify local designation conventions before issue; no standards compliance is implied.",
       "acceptanceTestName": "accept.building.circuits.cable-tags-and-board-links"
     },
     {
       "gapId": "BUILD-BOM",
       "tool": "Building",
       "capability": "BOM",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds material counts and route-derived cable lengths",
+      "ownerActionRequired": "Material schedule groups placed quantities by floor and specification, calculates orthogonal route lengths with declared runs/spare, and labels cross-floor routes unmeasured until surveyed rise is supplied. Catalogue identity does not establish procurement suitability.",
       "acceptanceTestName": "accept.building.bom.materials-and-route-lengths"
     },
     {
       "gapId": "BUILD-MS",
       "tool": "Building",
       "capability": "Multi-Sheet",
-      "currentStatus": "Not Started",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex implements floor/room hierarchy and sheets",
+      "ownerActionRequired": "Floor selector navigates storeys; rooms/devices are assigned per floor, drawings render only the active floor, and project recovery preserves the hierarchy. Validation rejects active-floor and object-floor references outside the declared storeys.",
       "acceptanceTestName": "accept.building.floors.rooms.sheet-navigation"
     },
     {
       "gapId": "BUILD-HIST",
       "tool": "Building",
       "capability": "History",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex adds visible persistent drawing audit history",
+      "ownerActionRequired": "Device-local drawing audit records project-level add/remove/edit counts without embedding drawing contents; the visible history is capped at 300 entries and coalesces rapid edits",
       "acceptanceTestName": "accept.building.history.drawing-audit"
     },
     {
       "gapId": "BUILD-SW",
       "tool": "Building",
       "capability": "Smart Wire",
-      "currentStatus": "Partial",
+      "currentStatus": "Complete",
       "blockerType": [
-        "Logic not implemented",
-        "Test not written"
+        "—"
       ],
-      "ownerActionRequired": "Codex constrains routes to walls and checks room requirements",
+      "ownerActionRequired": "Wall-mode routes follow connected wall geometry, avoid door/window openings at the declared routing height, validate endpoints and orthogonal geometry, and warn when equipment lacks a room assignment; manual routes remain explicitly reviewable",
       "acceptanceTestName": "accept.building.wiring.wall-routes.room-requirements"
     }
   ]

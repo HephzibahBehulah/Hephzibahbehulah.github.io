@@ -27,6 +27,23 @@ test('all supported language dictionaries cover common and engineering UI terms'
   }
 });
 
+test('shared account sign-in, onboarding, and recovery copy is translated',()=>{
+  const keys=[
+    'your hephzibah behulah account',
+    'one account for the main website, voltpro academy and cyber learning',
+    'password',
+    'use your email and password, then verify the code sent to your inbox.',
+    'sessions end after five hours without activity. use sign out when you finish, particularly on a shared computer.'
+  ];
+  const source=read('platform/account.html').toLowerCase();
+  for(const key of keys) assert.ok(source.includes(key),`account page is missing ${key}`);
+  for(const locale of ['de','yo','pid']){
+    const dictionary=JSON.parse(read(`packages/shared-data/data/translations/${locale}.json`));
+    for(const key of keys) assert.ok(dictionary[key],`${locale} is missing ${key}`);
+    assert.match(dictionary[keys[0]],/HEPHZIBAH BEHULAH/);
+  }
+});
+
 test('live translation tracks dynamic UI changes and accessibility attributes',()=>{
   const source=read('packages/shared-i18n/language-system.js');
   assert.match(source,/characterData:true/);

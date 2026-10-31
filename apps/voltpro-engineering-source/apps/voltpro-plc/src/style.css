@@ -117,6 +117,26 @@
 .plc-setting-toggle input{accent-color:#54cf9a}
 .plc-more-settings{width:100%;margin-top:8px;padding:7px;border-color:#343d42;background:#101518;font-size:11px}
 .plc-advanced-settings{padding:5px 2px;color:#9caab0;font-size:10px;line-height:1.6}
+.plc-program-blocks{max-height:42%;overflow:auto;padding:12px 16px 68px;border-top:1px solid #273744;background:#111c26;color:#eef4f5;font-size:11px}
+.plc-program-blocks h3{margin:0 0 8px;color:#48d8d0;font:700 10px ui-monospace,monospace;letter-spacing:.12em}
+.plc-program-blocks>p,.plc-program-blocks>small{display:block;color:#a2b2b8;line-height:1.5}
+.plc-program-block-list{display:grid;gap:5px;margin:8px 0}
+.plc-program-block-list>button{display:grid;grid-template-columns:1fr;gap:3px;width:100%;padding:8px;text-align:left;background:#172431;color:#eef4f5;border:1px solid #273744;border-radius:6px}
+.plc-program-block-list>button.active{border-color:#48d8d0;box-shadow:inset 3px 0 #48d8d0}
+.plc-program-block-list small{color:#48d8d0;font:700 9px ui-monospace,monospace}
+.plc-program-blocks>label{display:grid;gap:5px;margin:10px 0;color:#a2b2b8}
+.plc-program-blocks select{min-height:34px;padding:5px;background:#172431;color:#eef4f5;border:1px solid #273744;border-radius:5px}
+.plc-program-blocks>button,.plc-program-blocks li button{min-height:32px;padding:5px 9px;background:#172431;color:#eef4f5;border:1px solid #273744;border-radius:5px}
+.plc-program-blocks>button:not(:disabled):hover,.plc-program-blocks li button:hover{border-color:#48d8d0}
+.plc-program-blocks>button:disabled{opacity:.5}
+.plc-program-blocks ul{display:grid;gap:6px;padding:0;list-style:none}
+.plc-program-blocks li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #273744}
+html[data-vp-theme=light] .plc-program-blocks{background:#fff;color:#15242b;border-color:#d8e1e4}
+html[data-vp-theme=light] .plc-program-blocks h3,html[data-vp-theme=light] .plc-program-block-list small{color:#087e83}
+html[data-vp-theme=light] .plc-program-blocks>p,html[data-vp-theme=light] .plc-program-blocks>small{color:#52666e}
+html[data-vp-theme=light] .plc-program-block-list>button,html[data-vp-theme=light] .plc-program-blocks select,html[data-vp-theme=light] .plc-program-blocks>button,html[data-vp-theme=light] .plc-program-blocks li button{background:#edf2f3;color:#15242b;border-color:#d8e1e4}
+html[data-vp-theme=light] .plc-program-block-list>button.active{border-color:#087e83;box-shadow:inset 3px 0 #087e83}
+html[data-vp-theme=light] .plc-program-blocks li{border-color:#d8e1e4}
 .plc-ruler{position:absolute;z-index:6;display:flex;pointer-events:none;color:#a9b3b8;background:#181c1e;font:10px ui-monospace,monospace}
 .plc-ruler span{display:grid;place-items:center;flex:1;min-width:0;border-right:1px solid #2b3033}
 .plc-ruler-top{top:0;left:0;right:18px;height:24px;border-bottom:1px solid #454b4e}

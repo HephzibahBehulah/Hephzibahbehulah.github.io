@@ -26,6 +26,7 @@ export function resolveRoute(url){
   if(!privateHost&&(path==='/_hb/release.json'||host==='engineering.'+ROOT&&path==='/api/status'))return {kind:'status',privateHost:false};
   if(path==='/api/engineering/chat'||path==='/api/engineering/health')return {kind:'engineering-ai',privateHost};
   if(path==='/api/cyber/chat')return {kind:'cyber-ai',privateHost};
+  if(privateHost&&['/and','/and/'].includes(path))return {kind:'app',privateHost:true,app:'admin',prefix:'',base:'/',path:'/admin.html'};
   if(privateHost&&['/api/admin/security','/api/admin/security/session'].includes(path))return {kind:'admin-security',privateHost:true};
   if(privateHost&&['/api/admin/accounts','/api/admin/accounts/events','/api/admin/accounts/operations'].includes(path))return {kind:'admin-accounts',privateHost:true};
   if(!privateHost&&path.startsWith('/api/')&&!MAIN.has(host))return {kind:'reject',status:404};

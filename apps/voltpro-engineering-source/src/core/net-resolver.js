@@ -34,7 +34,7 @@ function resolve(project,terminalGraph){
   }
  }
  const groups=new Map();for(const id of terminalGraph.endpointIds()){const root=find(id);if(!groups.has(root))groups.set(root,[]);groups.get(root).push(id)}
- const nets=Array.from(groups.values()).map((members,i)=>({id:'N'+String(i+1).padStart(3,'0'),terminals:members.slice().sort()}));
+ const nets=Array.from(groups.values()).map(members=>({terminals:members.slice().sort()})).sort((a,b)=>a.terminals[0].localeCompare(b.terminals[0])).map((net,i)=>({id:'N'+String(i+1).padStart(3,'0'),terminals:net.terminals}));
  const terminalToNet=new Map();for(const n of nets)for(const t of n.terminals)terminalToNet.set(t,n.id);
  return {nets,terminalToNet,errors,valid:errors.length===0};
 }

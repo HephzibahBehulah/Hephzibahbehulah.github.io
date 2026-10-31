@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ADIGUN Cyber OS</title>
+  <desc id="desc">ADIGUN Cyber OS product mark in the HEPHZIBAH BEHULAH teal and gold palette.</desc>
+  <rect width="512" height="512" rx="88" fill="#0a1118"/>
+  <path d="M256 62 94 348h92l70-124 70 124h92L256 62Z" fill="#48d8d0"/>
+  <path d="M190 311h132" fill="none" stroke="#e8bd62" stroke-linecap="round" stroke-width="18"/>
+  <text x="256" y="426" text-anchor="middle" fill="#eef4f5" font-family="Inter,Arial,sans-serif" font-size="43" font-weight="800" letter-spacing="5">ADIGUN</text>
+</svg>

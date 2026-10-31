@@ -68,12 +68,12 @@ test('wire inspector exposes AWG and metric cross-section with synchronized appr
   assert.ok(source.includes('data-wire-prop="gauge"'));
   assert.ok(source.includes('wire.gauge=String(v);wire.size=nearestMetricSize(v)'));
   assert.ok(source.includes('wire.size=String(v);wire.gauge=String(nearestAwg(v))'));
-  assert.ok(source.includes('data-wire-prop="color" type="color"'));
+  assert.ok(source.includes('data-wire-prop="netColor" type="color"'));
   assert.ok(source.includes('data-wire-prop="cableType"'));
   assert.ok(source.includes('data-wire-prop="size"'));
   assert.ok(source.includes('Drawing thickness only. It does not calculate current capacity or electrical safety.'));
   const html = fs.readFileSync(path.join(__dirname, '..', 'simulator.html'), 'utf8');
-  assert.ok(html.includes('simulator.js?v=20261027e'));
+  assert.ok(html.includes('simulator.js?v=20261030b'));
   assert.ok(html.includes('simulator.css?v=20261027a'));
 });
 

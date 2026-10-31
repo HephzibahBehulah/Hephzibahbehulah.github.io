@@ -11,5 +11,7 @@ function build(project,library=[]){
  return [...counts.values()].map(x=>({reference:x.type,description:x.description,quantity:x.quantity,properties:x.properties}));
 }
 function csv(rows){const head="Reference,Description,Quantity,Properties";return [head,...rows.map(r=>[r.reference,r.description,r.quantity,r.properties].map(x=>'"'+String(x).replaceAll('"','""')+'"').join(","))].join("\n")}
-window.VoltProBOM={build,csv};
+function buildDetailed(project,library=[]){return (project.components||[]).map((component,index)=>{const props=component.props&&typeof component.props==="object"?component.props:{},record=library.find(item=>item.id===component.type||item.type===component.type),tolerance=props.tolerance??props.tolerancePercent??props.tolerancePct??"Not specified";return {reference:String(component.tag||component.reference||component.id||"REF-"+(index+1)),type:String(component.type||"unknown"),description:String(record?.name||component.name||component.type||"Unspecified component"),quantity:1,tolerance:String(tolerance),modelParameters:JSON.stringify(props),properties:props}})}
+function detailedCsv(rows){const head="Reference,Type,Description,Quantity,Tolerance,Model parameters";return [head,...rows.map(row=>[row.reference,row.type,row.description,row.quantity,row.tolerance,row.modelParameters].map(value=>'"'+String(value).replaceAll('"','""')+'"').join(","))].join("\n")}
+window.VoltProBOM={build,csv,buildDetailed,detailedCsv};
 })();
