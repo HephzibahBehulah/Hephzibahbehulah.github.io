@@ -81,13 +81,15 @@ test("Electrical responsive controls keep the canvas usable, sync on resize, and
   const titleFields = {hidden:false};
   const body = {dataset:{libraryOpen:"true"}};
   const media = {matches:true,handlers:{},addEventListener(type,handler){this.handlers[type]=handler;},set(matches){this.matches=matches;this.handlers.change({matches});}};
-  const document = {body,querySelectorAll(selector){return selector==="[data-panel]"?[library]:[closeLibrary];},querySelector(selector){return selector===".title-block"?titleBlock:titleFields;},getElementById(){return titleToggle;}};
-  const togglePanel = (name,open=body.dataset[name+"Open"]!=="true")=>{body.dataset[name+"Open"]=String(open);};
+  const document = {body,querySelectorAll(selector){if(selector==="[data-panel]")return[library];if(selector==="[data-close-panel]")return[closeLibrary];if(selector==='[data-panel="library"]')return[library];return[];},querySelector(selector){return selector===".title-block"?titleBlock:titleFields;},getElementById(){return titleToggle;}};
+  const togglePanel = (name,open=body.dataset[name+"Open"]!=="true")=>{body.dataset[name+"Open"]=String(open);document.querySelectorAll(`[data-panel="${name}"]`).forEach(button=>button.setAttribute("aria-expanded",String(open)));};
   installResponsiveElectricalControls({document,window:{matchMedia:()=>media},togglePanel});
   assert.equal(body.dataset.libraryOpen,"false");
+  assert.equal(library.attributes["aria-expanded"],"false");
   assert.equal(titleFields.hidden,true);
   library.click();
   assert.equal(body.dataset.libraryOpen,"true");
+  assert.equal(library.attributes["aria-expanded"],"true");
   closeLibrary.click();
   assert.equal(body.dataset.libraryOpen,"false");
   titleToggle.click();
