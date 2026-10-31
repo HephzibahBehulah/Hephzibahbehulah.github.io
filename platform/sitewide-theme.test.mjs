@@ -143,3 +143,8 @@ test('Simulator PCB workspace includes the reference layout and live simulation 
   assert.match(css, /\.vp-pcb \.pcb-stage svg/);
 });
 
+
+test('legacy footer attribution logo remains at compact brand-mark size', () => {
+  const css = fs.readFileSync(path.join(root, 'platform/platform.css'), 'utf8');
+  assert.match(css, /\.hb-footer-attribution img\{[^}]*width:112px!important;[^}]*height:40px!important/);
+});

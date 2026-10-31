@@ -137,6 +137,8 @@ function renderRooms() {
 }
 function renderNodes() {
   nodeLayer.replaceChildren();
+  const emptyState = $("emptyPlanState");
+  if (emptyState) emptyState.hidden = state.nodes.some(node => (node.floor || 1) === state.metadata.activeFloor) || state.rooms.some(room => room.floor === state.metadata.activeFloor) || state.walls.some(wall => wall.floor === state.metadata.activeFloor);
   for (const node of state.nodes.filter(node=>(node.floor||1)===state.metadata.activeFloor&&!node.inBoard)) {
     const item = typeOf(node.type), button = document.createElement("button");
     button.type = "button"; button.className = "cad-node"; button.dataset.id = node.id; button.dataset.system = item.system; button.dataset.category=item.category;
@@ -375,6 +377,15 @@ scroll.addEventListener("pointerup",endCameraPointer); scroll.addEventListener("
 scroll.addEventListener("click",event=>{if(suppressClick){event.preventDefault();event.stopImmediatePropagation();suppressClick=false;}},true);
 document.querySelectorAll("[data-panel]").forEach(button=>button.addEventListener("click",()=>togglePanel(button.dataset.panel)));
 document.querySelectorAll("[data-close-panel]").forEach(button=>button.addEventListener("click",()=>togglePanel(button.dataset.closePanel,false)));
+function openExampleLibrary() {
+  const projectMenu = [...document.querySelectorAll(".cad-menubar details")].find(details => details.querySelector("#buildingExample"));
+  if (!projectMenu) return setStatus("Example project library is unavailable. Refresh the Electrical workspace and try again.");
+  document.querySelectorAll(".cad-menubar details").forEach(details => { details.open = details === projectMenu; });
+  $("exampleSearch").focus({preventScroll:true});
+  setStatus("Choose a regional building study from the Project menu. The selected example opens on the canvas.");
+}
+$("showExamples").addEventListener("click", openExampleLibrary);
+$("emptyLoadExample").addEventListener("click", openExampleLibrary);
 for (const [name,selector] of [["library",".cad-library"],["properties",".cad-properties"]]) {
   const panel=document.querySelector(selector);
   panel.addEventListener("mouseleave",()=>togglePanel(name,false));

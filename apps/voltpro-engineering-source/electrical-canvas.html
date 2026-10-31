@@ -7,11 +7,11 @@
   <title>VoltPro Electrical | HEPHZIBAH BEHULAH</title>
   <script>if(new URLSearchParams(location.search).has('vp_embed'))document.documentElement.classList.add('vp-electrical-embed');</script>
   <link rel="stylesheet" href="src/ui/site-shell.css?v=20261031-theme-polish">
-  <link rel="stylesheet" href="electrical-canvas.css?v=20261031-gridfix1">
+  <link rel="stylesheet" href="electrical-canvas.css?v=20261031-examples1">
   <link rel="stylesheet" href="voltpro-hb-theme.css?v=20261028-aiwindow1">
   <link rel="stylesheet" href="src/ui/assistant-chat.css?v=20261028-adigun1">
   <link rel="stylesheet" href="workspace-engineering-theme.css"><link rel="stylesheet" href="src/ui/embedded-product-brand.css?v=20261031a">
-  <script type="module" src="electrical-canvas.js"></script>
+  <script type="module" src="electrical-canvas.js?v=20261031-examples1"></script>
   <script type="module" src="platform/account-config.js?v=20261017p"></script>
   <script type="module" src="platform/account-client.js?v=20261017p"></script>
   <script src="src/ui/voltpro-brand.js?v=20261031a" defer></script>
@@ -31,7 +31,7 @@
       <details><summary>Project</summary><div class="cad-menu"><button data-command="new">Start with a blank project</button><button data-command="open">Open project / manufacturer catalogue JSON…</button><div class="cad-example-browser" role="group" aria-label="Regional example project library"><h3>1,000 regional example projects</h3><p id="exampleCount" aria-live="polite"></p><label>Region<select id="exampleRegion"><option value="">All four regions</option></select></label><label>Building category<select id="exampleCategory"><option value="">All buildings</option><option>Houses</option><option>Multi-storey</option><option>Towers</option><option>Skyscrapers</option></select></label><label>Find a named project<input id="exampleSearch" type="search" placeholder="e.g. 67, water services, Dubai Marina"></label><label>Results page<select id="examplePage"></select></label><label>Open example<select id="buildingExample"><option value="">Choose an example to open…</option></select></label><p id="exampleDescription">Editable regional studies. No construction approval or certified compliance is implied.</p></div><label>Jurisdiction <select id="buildingProfile"></select></label><label>Circuit engineering<select id="circuitEditor"><option value="">Choose a circuit</option></select></label><label>Storeys <input id="buildingFloors" type="number" min="1" max="300" value="1"></label><label>Title block scale <select id="drawingScale"><option>1:50</option><option>1:100</option><option>1:200</option></select></label></div></details>
       <details><summary>Electrical</summary><div class="cad-menu"><button data-command="validate">Review design &amp; installation data</button><button data-command="references">Assign missing references</button><button data-command="schedule">Materials &amp; cable schedule</button><button data-command="history">Drawing audit history</button></div></details>
     </nav>
-    <div class="cad-toolbar-actions"><button data-command="pan" aria-label="Pan drawing">✥</button><button data-command="grid" aria-label="Toggle drawing grid" aria-pressed="true">Grid</button><label class="cad-floor-picker">Floor <select id="activeFloor" aria-label="Active floor"></select></label><span class="cad-snap" data-grid-description="200 mm / square" title="Device and room placement snap to the 200 mm model grid">Snap: 200 mm</span><button data-command="zoom-out" aria-label="Zoom out">−</button><button id="zoomLevel" data-command="fit" aria-label="Fit drawing">100%</button><button data-command="zoom-in" aria-label="Zoom in">+</button><button id="savePlan" type="button">Save</button><button id="exportPlan" type="button">Export</button><details class="cad-workspace-menu"><summary>Workspace</summary><div id="electricalShellControls" class="cad-menu"><a href="/workspace" target="_top">My workspace</a><a href="/status" target="_top">About &amp; readiness</a></div></details></div>
+    <div class="cad-toolbar-actions"><button data-command="pan" aria-label="Pan drawing">✥</button><button data-command="grid" aria-label="Toggle drawing grid" aria-pressed="true">Grid</button><label class="cad-floor-picker">Floor <select id="activeFloor" aria-label="Active floor"></select></label><span class="cad-snap" data-grid-description="200 mm / square" title="Device and room placement snap to the 200 mm model grid">Snap: 200 mm</span><button data-command="zoom-out" aria-label="Zoom out">−</button><button id="zoomLevel" data-command="fit" aria-label="Fit drawing">100%</button><button data-command="zoom-in" aria-label="Zoom in">+</button><button id="showExamples" type="button" aria-label="Open the example project library">Examples</button><button id="savePlan" type="button">Save</button><button id="exportPlan" type="button">Export</button><details class="cad-workspace-menu"><summary>Workspace</summary><div id="electricalShellControls" class="cad-menu"><a href="/workspace" target="_top">My workspace</a><a href="/status" target="_top">About &amp; readiness</a></div></details></div>
   </header>
   <input id="projectFile" type="file" accept="application/json,.json" hidden>
   <div class="cad-layout">
@@ -45,6 +45,11 @@
       <p class="cad-hint">Original explanatory drawing symbols. Specification records require a selected manufacturer part; licensed IEC/ANSI symbol identity and installation suitability are not asserted.</p><details><summary>Jurisdiction &amp; source references</summary><p id="profileGuidance"></p><div id="profileSources"></div></details>
     </aside>
     <main class="cad-editor">
+      <section id="emptyPlanState" class="cad-empty-state" aria-label="Empty electrical plan">
+        <strong>Your new building plan is ready</strong>
+        <p>Load a guided example, choose equipment from the catalogue, or draw a room to begin.</p>
+        <button id="emptyLoadExample" type="button">Browse example projects</button>
+      </section>
       <div class="cad-workarea" id="workarea" aria-label="Building plan with coordinate rulers">
         <div class="ruler-corner" aria-hidden="true">200 mm</div>
         <div class="top-ruler" aria-hidden="true"><div id="topRulerTicks"></div></div>
