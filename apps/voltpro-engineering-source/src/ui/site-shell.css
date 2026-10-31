@@ -102,6 +102,8 @@ html.vp-electcad-maximized #vpWorkspace .vp-workspace-frame{display:block!import
 #vpBottomNavigation .vp-sim-bottom-controls #simStatus .status-dot{width:9px;height:9px;border:2px solid #9aa6ad;border-radius:50%;box-sizing:border-box}
 #vpBottomNavigation .vp-sim-bottom-controls #simStatus[data-state=running] .status-dot{border-color:#6fe0a7;background:#6fe0a7}
 #vpBottomNavigation .vp-sim-bottom-controls #simStatus .status-label{text-transform:none}
+#vpBottomNavigation .vp-footer-brand{display:flex;flex:0 0 auto;align-items:center;gap:8px;min-width:0;max-width:280px;overflow:hidden}
+#vpBottomNavigation .vp-footer-brand img{display:block!important;width:112px!important;max-width:112px!important;height:40px!important;max-height:40px!important;object-fit:contain!important;object-position:left center}
 
 #vpSiteHeader .vp-site-brand{display:flex;align-items:center;gap:9px;padding-inline:7px}
 #vpSiteHeader .vp-parent-wordmark{font-size:10px;font-weight:800;letter-spacing:.11em;color:#dce9ee}
@@ -117,3 +119,4 @@ html[data-vp-theme=light] #vpSiteHeader .vp-parent-wordmark{color:#263941}
 #vpSiteHeader .vp-product-wordmark{font-size:15px;font-weight:850;letter-spacing:.04em;color:#22d3ee}
 #vpSiteHeader .vp-division-wordmark{font-size:8px;font-weight:700;letter-spacing:.12em;color:#d4af37}
 @media(max-width:720px){#vpSiteHeader .vp-parent-wordmark{width:132px;height:40px}#vpSiteHeader .vp-product-identity{padding-left:5px}#vpSiteHeader .vp-product-wordmark{font-size:12px}#vpSiteHeader .vp-division-wordmark{font-size:6px}}
+
