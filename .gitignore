@@ -18,6 +18,7 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 yarn.lock
+!apps/engineering/voltpro-electcad/package-lock.json
 
 # Environment variables
 .env
@@ -84,6 +85,7 @@ credentials.yml
 
 # Custom
 dist-platform/
+dist-platform-release-*/
 wrangler.platform.jsonc
 platform-source/
 /assets/images/original/
@@ -94,5 +96,4 @@ platform-source/
 .cache/
 **/.cache/
 .dist-platform-*/
-
-!apps/engineering/voltpro-electcad/package-lock.json
+work/

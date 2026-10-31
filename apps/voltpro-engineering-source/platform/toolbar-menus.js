@@ -62,6 +62,8 @@ const menus={
   ["Panel Designer","tool","panel"],
   ["Component Information","tool","info"],
   ["Accessibility settings","tool","a11y"],
+  ["Parameter change history","history"],
+  ["Create hierarchical block from selection","hierarchy-create"],
   ["Demo Project Library","demo-library"]
  ]}
 };
@@ -82,6 +84,7 @@ function position(){
 function invoke(target,method,label,arg){const action=target?.[method];if(typeof action!=="function")throw Error(label+" did not load. Reload the Simulator and try again.");return action.call(target,arg)}
 function dispatch(kind,value){
  const actions=window.VoltProPlatformActions||{};
+ if(kind==="hierarchy-create"){invoke(window.VoltProSimulator,"createHierarchyFromSelection","Hierarchical block");return}
  if(kind==="applications"){invoke(window.VoltProReferenceLibrary,"open","Engineering application library",{view:"applications"});return}
  if(kind==="reference"){invoke(window.VoltProReferenceLibrary,"open","Component reference",{view:"components"});return}
  if(kind==="demo"){const d=window.VoltProDemoLibrary?.demos?.().find(x=>x.title===value);if(!d){invoke(window.VoltProDemoLibrary,"open","Demo library");return}window.VoltProDemoLibrary.load(d);return}
@@ -96,6 +99,7 @@ function dispatch(kind,value){
  if(kind==="mcu"){invoke(actions,"mcu","Microcontroller Lab",value);return}
  if(kind==="tool"){invoke(actions,value,"Engineering tool");return}
  if(kind==="navigate"){window.location.href=value;return}
+ if(kind==="history"){invoke(window.VoltProSimulatorAudit,"open","Parameter change history");return}
 }
 function open(trigger){
  const key=trigger.dataset.vpMenu,definition=menus[key];if(!definition)return;

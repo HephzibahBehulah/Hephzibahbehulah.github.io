@@ -44,6 +44,8 @@ jobs:
           node --check platform/admin-security-ui.js
           node --check platform/admin-security.mjs
           node --check packages/shared-i18n/language-system.js
+      - name: Install ElectCAD acceptance-test dependencies
+        run: npm ci --prefix apps/engineering/voltpro-electcad --no-audit --no-fund
       - name: Verify authorization, routing and tutor boundaries
         run: node --test apps/voltpro-engineering-source/tests/electrical-engine.test.mjs platform/workspace-shell.test.mjs platform/access.test.mjs platform/router.test.mjs platform/deployment-cache.test.mjs platform/release-update.test.mjs platform/admin-security.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/engineering-capability-matrix.test.mjs platform/status-page.test.mjs platform/acceptance/gaps/*.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs platform/sitewide-theme.test.mjs
       - name: Verify preservation of the original platform

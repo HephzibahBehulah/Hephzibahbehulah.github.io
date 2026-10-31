@@ -196,3 +196,4 @@
   }
   return { FORMAT, VERSION, DOMAINS: [...DOMAINS], terminalKey, migrate, validate, resolveNets, serialize, deserialize, createDevice };
 });
+

@@ -68,3 +68,17 @@ test("toLegacy round-trips named terminal endpoints through the compatibility la
   assert.deepEqual(Array.from(legacy.wires, wire => [wire.a, wire.b]), [["V1:0", "R1:0"], ["R1:1", "V1:1"]]);
 });
 
+test("hierarchical block definitions survive v5 encode, decode and legacy loading", () => {
+  const format = loadProjectFormat();
+  const subcircuits = [{
+    id: "Block_test", name: "Series resistor", components: [{ id: "R1", type: "resistor", terminals: [{ id: "1", label: "1", type: "electrical", domain: "dc" }, { id: "2", label: "2", type: "electrical", domain: "dc" }] }],
+    wires: [], ports: [{ id: "P1", label: "Input", type: "electrical", domain: "dc", direction: "passive", memberTerminal: "R1:1", position: { x: -60, y: 0 } }]
+  }];
+  const source = { ...projectV5(), subcircuits };
+  const encoded = format.encode(source);
+  const decoded = format.decode(encoded);
+  const legacy = format.toLegacy(decoded);
+  assert.deepEqual(decoded.subcircuits, subcircuits);
+  assert.deepEqual(legacy.subcircuits, subcircuits);
+});
+

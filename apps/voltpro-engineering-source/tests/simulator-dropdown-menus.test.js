@@ -70,17 +70,17 @@ test("MCU Lab accepts named example sketches and retains explicit interpreter li
 
 test("cache and deployment version invalidates stale simulator shell and precaches menu runtime",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js"),css=read("simulator-layout-restore.css");
- assert.ok(worker.includes('const CACHE="voltpro-v103"'));
+ assert.ok(worker.includes('const CACHE="voltpro-v107"'));
  assert.ok(worker.includes('"./platform/toolbar-menus.js"'));
  assert.ok(worker.includes('"./platform/ui.js"'));
  assert.ok(worker.includes('"./platform/workbench.js"'));
- assert.ok(html.includes('service-worker.js?v=20261030-brand-shell'));
+ assert.ok(html.includes('service-worker.js?v=20261031-hierarchy'));
  assert.ok(html.includes('updateViaCache:"none"'));
  assert.ok(html.includes('platform/toolbar-menus.js?v=20261029-dropdown2'));
  assert.ok(html.includes('platform/ui.js?v=20261012b'));
  assert.ok(html.includes('src/ui/toolbar-layout.js?v=20261029-dropdown2'));
  assert.ok(html.includes('src/ui/toolbar-layout.css?v=20261029-dropdown2'));
- assert.ok(html.includes('simulator.js?v=20261030a'));
+ assert.ok(html.includes('simulator.js?v=20261031a'));
  assert.ok(css.includes(".vp-toolbar-popover"));
 });
 
@@ -90,4 +90,5 @@ test("MCU Lab mounts through the Workbench host without recursive legacy startup
  assert.ok(workbench.includes('openWorkspace:(title,body)=>open(title,body)'));
  assert.ok(!ui.includes("legacyMicro()"));
 });
+
 

@@ -74,8 +74,9 @@ test("Serial view receives output from the virtual MCU interpreter",()=>{
 });
 test("new workspace module is included in the active offline cache",()=>{
  const html=read("simulator.html"),worker=read("service-worker.js");
- assert.ok(html.includes("service-worker.js?v=20261030-brand-shell"));
- assert.ok(worker.includes('const CACHE="voltpro-v103"'));
+ assert.ok(html.includes("service-worker.js?v=20261031-hierarchy"));
+ assert.ok(worker.includes('const CACHE="voltpro-v107"'));
  assert.ok(worker.includes('"./src/ui/workspace-views.js"'));
 });
+
 

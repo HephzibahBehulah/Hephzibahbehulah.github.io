@@ -23,7 +23,7 @@ test('each tool documents each requested capability and its implementation gap',
     for (const capability of capabilities) {
       const row = section.split('\n').find(line => line.startsWith(`| ${capability} |`));
       assert.ok(row, `${tool} explicitly addresses ${capability}`);
-      assert.match(row, /\*\*(?:Partial|Gap)\.?\*\*/, `${tool} labels ${capability} status`);
+      assert.match(row, /\*\*(?:(?:Partial|Gap)\.?|Implemented \(scoped\)\.?|Complete within the scoped acceptance\.?)\*\*/, `${tool} labels ${capability} status`);
     }
   }
   assert.match(matrix, /requirements are \*\*not fully implemented\*\*/);

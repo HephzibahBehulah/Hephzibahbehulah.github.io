@@ -178,7 +178,7 @@ test("the academy sidebar includes the Electrical Building destination", () => {
 
 test("Electrical Building uses its dedicated architectural plan editor", () => {
   assert.ok(shell.includes('electrical: "/electrical-canvas.html?vp_embed=1"'));
-  assert.match(canvas, /BuildingCAD/);
+  assert.match(canvas, /class="building-cad"/);
   assert.match(read("apps/voltpro-engineering-source/electrical-canvas.js"), /validateBuildingDocument/);
   assert.match(read("apps/voltpro-engineering-source/src/ui/account.js"), /schemaVersion===2\|\|item\.data\?\.schemaVersion===3/);
 });
@@ -275,7 +275,7 @@ test("Breadboard command menu proxies only to implemented native controls", () =
   assert.ok(proxies.length >= 15);
   for (const target of proxies) {
     if (target === "print") continue;
-    if (target === "#bbUndo" || target === "#bbRedo") {
+    if (target === "#bbUndo" || target === "#bbRedo" || target === "#bbWireChecklist" || target === "#bbBOM") {
       const studio = read("apps/voltpro-engineering-source/src/ui/breadboard-studio.js");
       assert.ok(studio.includes(`id="${target.slice(1)}"`), `Missing dynamic ${target}`);
       continue;

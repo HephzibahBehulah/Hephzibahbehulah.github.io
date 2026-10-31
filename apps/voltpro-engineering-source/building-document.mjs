@@ -3,6 +3,7 @@ import { CATALOG, catalogItem, PROFILES, importManufacturerCatalog } from "./bui
 export const BUILDING_TYPES = Object.freeze(Object.fromEntries(CATALOG.filter(item=>item.kind==='device').map(item=>[item.id,item])));
 
 export function createBuildingDocument(metadata = {}) {
+  const floors = Number.isInteger(metadata.floors) && metadata.floors >= 1 && metadata.floors <= 300 ? metadata.floors : 1;
   return {
     format: "voltpro.buildingcad",
     version: 2,
@@ -16,8 +17,8 @@ export function createBuildingDocument(metadata = {}) {
       documentNumber: metadata.documentNumber || "",
       revision: metadata.revision || "A",
       profile: PROFILES[metadata.profile] ? metadata.profile : "DE",
-      floors: Number.isInteger(metadata.floors) && metadata.floors >= 1 && metadata.floors <= 300 ? metadata.floors : 1,
-      activeFloor: Number.isInteger(metadata.activeFloor) && metadata.activeFloor >= 1 ? metadata.activeFloor : 1
+      floors,
+      activeFloor: Number.isInteger(metadata.activeFloor) && metadata.activeFloor >= 1 && metadata.activeFloor <= floors ? metadata.activeFloor : 1
     },
     layers: { architecture: true, power: true, data: true },
     architectureVersion: 1,
@@ -70,6 +71,8 @@ export function validateBuildingDocument(doc) {
   if (!doc || doc.format !== "voltpro.buildingcad" || doc.version !== 2) errors.push("Document format/version is invalid.");
   if (doc?.units !== "mm" || !Number.isFinite(doc?.gridMillimetres) || doc.gridMillimetres <= 0) errors.push("Metric units and a positive grid interval are required.");
   if (!doc?.metadata?.name?.trim()) errors.push("Project name is required for the drawing title block.");
+  if (!Number.isInteger(doc?.metadata?.floors) || doc.metadata.floors < 1 || doc.metadata.floors > 300) errors.push("Storey count must be an integer from 1 to 300.");
+  if (!Number.isInteger(doc?.metadata?.activeFloor) || doc.metadata.activeFloor < 1 || doc.metadata.activeFloor > doc.metadata.floors) errors.push("Active floor must reference a declared storey.");
   if (!/^1:\d+$/.test(doc?.metadata?.scale || "")) errors.push("Drawing scale must use the 1:n form.");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(doc?.metadata?.date || "")) errors.push("Issue date must use YYYY-MM-DD.");
   if (!doc?.metadata?.documentNumber?.trim()) warnings.push("Document number is not assigned.");
@@ -83,11 +86,15 @@ export function validateBuildingDocument(doc) {
     "data-point": ["SELV / data"]
   };
   for (const room of doc?.rooms || []) {
+    const floor = room.floor ?? 1;
+    if (!Number.isInteger(floor) || floor < 1 || floor > doc.metadata.floors) errors.push(`${room.id || "Room"}: floor must reference a declared storey.`);
     if (!room.id || ids.has(room.id)) errors.push(`${room.id || "Room"}: missing or duplicate object ID.`);
     ids.add(room.id);
     if (!room.name?.trim() || ![room.x, room.y, room.width, room.height].every(Number.isFinite) || room.width < 1 || room.height < 1) errors.push(`${room.id}: invalid room boundary geometry.`);
   }
   for (const node of doc?.nodes || []) {
+    const floor = node.floor ?? 1;
+    if (!Number.isInteger(floor) || floor < 1 || floor > doc.metadata.floors) errors.push(`${node.id || "Device"}: floor must reference a declared storey.`);
     const item = catalogItem(node.type,doc.catalog);
     if (!item || item.kind === "route") errors.push(`${node.id}: unknown device type.`);
     if (!node.id || ids.has(node.id)) errors.push(`${node.id || "Device"}: missing or duplicate object ID.`);

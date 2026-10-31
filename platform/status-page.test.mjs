@@ -66,7 +66,7 @@ test('all five tools share the exact notice, About readiness panel, and reload-r
   assert.match(shell,/title\.id='vpReadinessTitle'/);
   assert.match(shell,/Production Readiness: NOT READY/);
   assert.match(shell,/⚠️ Development Build — Not for Production Documentation\. Standards and catalogs pending\./);
-  assert.match(shell,/dismiss\.onclick=\(\)=>banner\.remove\(\)/);
+  assert.match(shell,/dismiss\.onclick=\(\)=>\{banner\.remove\(\);document\.documentElement\.style\.setProperty\('--vp-development-banner-height','0px'\);\}/);
   assert.doesNotMatch(shell,/sessionStorage/i);
   assert.doesNotMatch(shell,/localStorage\.(?:getItem|setItem)\([^)]*dismiss/i);
   for(const route of ['simulator','plc','electcad','breadboard','electrical'])assert.equal(resolveRoute(new URL(`${host}/${route}`)).path,'/_apps/engineering/workspace-shell.html',route);

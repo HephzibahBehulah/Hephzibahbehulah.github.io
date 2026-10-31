@@ -1,7 +1,11 @@
 import fs from 'node:fs';
+import path from 'node:path';
 const config=JSON.parse(fs.readFileSync('wrangler.jsonc','utf8'));
+const assetDirectory=process.env.HB_PLATFORM_ASSETS_DIR||'dist-platform';
+const resolvedAssetDirectory=path.resolve(assetDirectory);
+if(!resolvedAssetDirectory.startsWith(path.resolve('.')+path.sep))throw Error('HB_PLATFORM_ASSETS_DIR must resolve inside the repository.');
 config.main='backend/workers/worker-platform.mjs';
-config.assets={directory:'dist-platform',binding:'ASSETS',run_worker_first:true,html_handling:'none',not_found_handling:'none'};
+config.assets={directory:assetDirectory,binding:'ASSETS',run_worker_first:true,html_handling:'none',not_found_handling:'none'};
 config.workers_dev=false;
 config.preview_urls=false;
 if(!config.ratelimits.some(binding=>binding.name==='ENGINEERING_LIMITER'))config.ratelimits.push({name:'ENGINEERING_LIMITER',namespace_id:'1785',simple:{limit:6,period:60}});

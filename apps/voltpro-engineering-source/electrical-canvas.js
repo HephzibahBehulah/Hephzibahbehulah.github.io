@@ -3,6 +3,7 @@ import {parseBuildingBrief,generateBuildingBrief} from './building-generator.mjs
 import { installArchitectureUI } from './building-architecture-ui.mjs';
 import { nearestWall,mountOnWall,rebuildRoomWalls,refreshAttachedGeometry,refreshWireRoutes,routeWireOnArchitecture,routeGeometryErrors,architectureErrors } from './building-architecture.mjs';
 import { circuitAssessment } from './building-circuits.mjs';
+import { assignMissingBuildingReferences } from './building-references.mjs';
 import { houseDraft, checkBuildingProposal, houseReport } from './building-house.mjs';
 import { CATALOG, CATEGORIES, PROFILES, SOURCES, catalogItem, catalogSearch, importManufacturerCatalog } from "./building-catalog.mjs";
 import { symbolMarkup } from "./building-symbols.mjs";
@@ -10,12 +11,14 @@ import { reviewInstallation, materialSchedule, connectionLength, resistiveVoltag
 import { RULER_COLUMNS, RULER_ROWS, clampZoom, drawingPoint, visibleTicks, zoomScroll, drawingExtent } from "./electrical-viewport.mjs";
 import { GRID_MM, GRID_PX, columnLabel, snapGrid } from "./electrical-engine.mjs";
 import { BUILDING_TYPES, createBuildingDocument, recoverBuildingDocument, routeBuildingConnection, validateBuildingDocument } from "./building-document.mjs";
+import { appendBuildingAudit, loadBuildingAudit, makeBuildingAuditEntry, saveBuildingAudit, snapshotBuildingAudit } from "./building-audit.mjs";
 
 
 const $ = id => document.getElementById(id);
 const surface = $("planSurface"), nodeLayer = $("nodeLayer"), wireLayer = $("wireLayer"), roomLayer = $("roomLayer");
 const status = $("status"), propForm = $("propertiesForm"), roomForm = $("roomPropertiesForm");
 let state = loadState(), selected = null, selectedRoom = null, pendingType = null, wireStart = null, dragState = null, roomStart = null;
+let drawingAudit = loadBuildingAudit(), auditBaseline = snapshotBuildingAudit(state);
 let selectedWire = null, pendingCable = null;
 let pendingRoutePoints=[];
 let projectDirty=false;
@@ -60,8 +63,26 @@ function updateMetadata() {
 }
 function save() {
   updateMetadata();
+  const nextAuditSnapshot = snapshotBuildingAudit(state);
+  const auditEntry = makeBuildingAuditEntry(auditBaseline, nextAuditSnapshot);
+  if (auditEntry) { drawingAudit = appendBuildingAudit(drawingAudit, auditEntry); saveBuildingAudit(localStorage, drawingAudit); }
+  auditBaseline = nextAuditSnapshot;
   projectDirty=true;
   $("commandStatus").textContent = "Unsaved project · Save / Export before refresh or closing";
+}
+function showDrawingAudit() {
+  const dialog = document.createElement("dialog"); dialog.className = "building-audit-dialog";
+  const heading = document.createElement("h2"); heading.textContent = "Drawing audit history";
+  const note = document.createElement("p"); note.textContent = "Device-local edit summaries. Project contents and credentials are not stored in this history.";
+  const list = document.createElement("ol");
+  for (const entry of [...drawingAudit].reverse()) {
+    const row = document.createElement("li"), title = document.createElement("strong"), detail = document.createElement("span"), time = document.createElement("time");
+    title.textContent = entry.project; detail.textContent = entry.summary; time.dateTime = entry.at; time.textContent = new Date(entry.at).toLocaleString();
+    row.append(title, detail, time); list.append(row);
+  }
+  if (!drawingAudit.length) { const empty = document.createElement("li"); empty.textContent = "No drawing edits recorded on this device yet."; list.append(empty); }
+  const close = document.createElement("button"); close.type = "button"; close.textContent = "Close"; close.addEventListener("click", () => dialog.close());
+  dialog.append(heading, note, list, close); dialog.addEventListener("close", () => dialog.remove(), { once: true }); document.body.append(dialog); dialog.showModal();
 }
 function typeOf(type) { return catalogItem(type,state.catalog) || {label:"Unrecognised catalogue ID: "+type,system:"unknown",defaultVoltage:"",terminals:[],category:"",spec:{}}; }
 function objectId(prefix) { return prefix + crypto.randomUUID().replaceAll("-", "").slice(0, 8).toUpperCase(); }
@@ -265,10 +286,9 @@ function validate() {
   return result;
 }
 function assignReferences() {
-  const used=new Set(state.nodes.map(node=>node.tag).filter(Boolean)),next={};
-  for(const node of state.nodes){if(node.tag)continue;const prefix=typeOf(node.type).reference||'EQ';let candidate;do{candidate=`${prefix}-${String(next[prefix]=(next[prefix]||0)+1).padStart(3,'0')}`;}while(used.has(candidate));node.tag=candidate;used.add(candidate);}
+  const result=assignMissingBuildingReferences(state,type=>typeOf(type).reference||'EQ');
   save();renderNodes();if(selected)showProperties(state.nodes.find(node=>node.id===selected));
-  setStatus("Project-local references assigned by equipment family. Verify the project's IEC 81346 or local designation convention before issue.");
+  setStatus(`Assigned ${result.assignedEquipment} equipment references and ${result.assignedRoutes} cable route references. Verify the project's IEC 81346 or local designation convention before issue.`);
 }
 function openProject(file) {
   if(projectDirty&&!confirm("Replace unsaved work? Cancel and Save first to keep it."))return;
@@ -299,6 +319,7 @@ function command(name) {
     case "validate": { const result = validate(); announce(`${result.errors.length} errors · ${result.warnings.length} warnings · installation checks not assessed`); break; }
     case "references": snapshot(); assignReferences(); break;
     case "schedule": showSchedule(); break;
+    case "history": showDrawingAudit(); break;
     case "fit": fitDrawing(); announce("Drawing fitted to view"); break;
     case "origin": scroll.scrollTo(0,0); renderRulers(); announce("Plan origin shown"); break;
     case "zoom-in": setZoom(zoom * 1.2); break;
@@ -524,5 +545,5 @@ try {
  }
 }catch{}
 
-function exportSelectedFormat(){const format=$('drawingExportFormat').value;if(format==='json'){exportProject();return;}try{let content,type,name;if(format==='svg'){content=architectureUI.exportSVG();type='image/svg+xml';name='electrical-floor-'+state.metadata.activeFloor+'.svg';}else if(format==='review'){const structural=validateBuildingDocument(state),review=reviewInstallation(state),circuits=circuitAssessment(state);content=[state.metadata.name,'PRELIMINARY DESIGN REVIEW — no installation compliance certificate',...(state.designNotes||[]),...structural.errors.map(x=>'STRUCTURE ERROR: '+x),...review.issues.map(i=>`${i.level.toUpperCase()} ${i.object}: ${i.message}`),...circuits.flatMap(c=>c.issues.map(i=>`${i.level.toUpperCase()} ${c.id}: ${i.message}`))].join('\n');type='text/plain';name='electrical-full-engineering-review.txt';}else{const rows=architectureUI.circuitRows(),keys=['circuit','label','board','protection','rcd','knownConnectedW','unresolvedLoads','designCurrentA','routeCount','reviewCount'];const clean=value=>String(value??'').replace(/[\t\r\n]/g,' ').replace(/^[=+@-]/,"'$&");content=[keys.join('\t'),...rows.map(r=>keys.map(k=>clean(r[k])).join('\t'))].join('\n');type='text/tab-separated-values';name='electrical-board-circuit-schedule.tsv';}const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus('Drawing/schedule exported. Save project JSON separately to preserve editability.');}catch(error){setStatus(error.message);}}
+function exportSelectedFormat(){const format=$('drawingExportFormat').value;if(format==='json'){exportProject();return;}try{let content,type,name;if(format==='svg'){content=architectureUI.exportSVG();type='image/svg+xml';name='electrical-floor-'+state.metadata.activeFloor+'.svg';}else if(format==='review'){const structural=validateBuildingDocument(state),review=reviewInstallation(state),circuits=circuitAssessment(state);content=[state.metadata.name,'PRELIMINARY DESIGN REVIEW — no installation compliance certificate',...(state.designNotes||[]),...structural.errors.map(x=>'STRUCTURE ERROR: '+x),...review.issues.map(i=>`${i.level.toUpperCase()} ${i.object}: ${i.message}`),...circuits.flatMap(c=>c.issues.map(i=>`${i.level.toUpperCase()} ${c.id}: ${i.message}`))].join('\n');type='text/plain';name='electrical-full-engineering-review.txt';}else{const rows=architectureUI.circuitRows(),keys=['circuit','label','board','protection','rcd','cableTags','knownConnectedW','unresolvedLoads','designCurrentA','routeCount','reviewCount'];const clean=value=>String(value??'').replace(/[\t\r\n]/g,' ').replace(/^[=+@-]/,"'$&");content=[keys.join('\t'),...rows.map(r=>keys.map(k=>clean(r[k])).join('\t'))].join('\n');type='text/tab-separated-values';name='electrical-board-circuit-schedule.tsv';}const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setStatus('Drawing/schedule exported. Save project JSON separately to preserve editability.');}catch(error){setStatus(error.message);}}
 for(const [id,key]of [['roomX','x'],['roomY','y'],['roomWidth','width'],['roomHeight','height']])$(id).addEventListener('change',()=>{const value=Number($(id).value);if(!Number.isFinite(value)||value<0)return;architectureUI.clearSelection();const before=clone(state);try{const room=state.rooms.find(r=>r.id===selectedRoom);if(!room)return;room[key]=key==='x'?1+value/state.gridMillimetres:value/state.gridMillimetres;rebuildRoomWalls(state);refreshAttachedGeometry(state);refreshWireRoutes(state);if(architectureErrors(state).length)throw Error(architectureErrors(state).join(' '));history.push(before);future.length=0;save();renderAll();showRoomProperties(room);}catch(error){state=before;renderAll();setStatus(error.message);}});

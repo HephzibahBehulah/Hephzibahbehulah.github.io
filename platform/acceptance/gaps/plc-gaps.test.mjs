@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { buildHardwareBom, resolveIoMap } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/io-addresses.mjs';
 import { analyzePLCWiring } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/wiring-checks.mjs';
+import { createPLCDRCReport } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/drc-report.mjs';
 import { AUDIT_LIMIT, appendAudit, loadAudit, makeAuditEntry, saveAudit } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/audit-history.mjs';
+import { createProgramBlock, createProgramCall, normalizeProgramStructure, validateProgramStructure } from '../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/program-blocks.mjs';
 
 const device = (id, kind, tag, sheet = 'main', pin = 7) => ({
   id,
@@ -68,8 +70,36 @@ test('accept.plc.io-addresses.cross-reference', async t => {
   });
 });
 
+test('accept.plc.drc.educational-review-report', () => {
+  const report = createPLCDRCReport(
+    ['A project-model error.'],
+    [{ code: 'rung-return-missing', severity: 'warning', deviceIds: ['coil-1'], message: 'Return is not connected.' }],
+  );
+  assert.equal(report.passed, false);
+  assert.equal(report.profile, 'VoltPro educational project review');
+  assert.equal(report.standardsAssessment, 'not-assessed');
+  assert.deepEqual(report.findings.map(({ code, severity, deviceIds }) => [code, severity, deviceIds]), [
+    ['project-model', 'error', []],
+    ['rung-return-missing', 'warning', ['coil-1']],
+  ]);
+  const commissioning = fs.readFileSync(new URL('../../../apps/voltpro-engineering-source/apps/voltpro-plc/src/Commissioning.tsx', import.meta.url), 'utf8');
+  assert.match(commissioning, /Run Project DRC/);
+  assert.match(commissioning, /createPLCDRCReport\(validate\(s\.project\),analyzePLCWiring\(s\.project\)\)/);
+  assert.match(commissioning, /Normative standards assessment: Not performed/);
+});
+
 test.todo('accept.plc.drc.iec61131-profile');
-test.todo('accept.plc.program-blocks.cross-reference');
+test('accept.plc.program-blocks.cross-reference',()=>{
+ const initial=normalizeProgramStructure({version:1,name:'Plant',mode:'ladder',nodes:[],edges:[],sheets:[{id:'main',name:'Main'},{id:'legacy',name:'Legacy sequence'}]});
+ assert.deepEqual(initial.programBlocks.map(block=>[block.kind,block.sheetId]),[['main','main'],['subroutine','legacy']]);
+ const withSubroutine=createProgramBlock(initial,{id:'cleanup',sheetId:'cleanup-sheet',name:'Cleanup'});
+ const withInterrupt=createProgramBlock(withSubroutine,{id:'trip',sheetId:'trip-sheet',name:'Trip monitor',kind:'interrupt',trigger:'Overload input rising edge'});
+ const linked=createProgramCall(withInterrupt,{id:'main-to-cleanup',fromBlockId:'main',toBlockId:'cleanup'});
+ assert.deepEqual(validateProgramStructure(linked),[]);
+ assert.match(validateProgramStructure({...linked,programCalls:[...linked.programCalls,{id:'bad-target',fromBlockId:'main',toBlockId:'trip'}]}).join(' '),/must originate from Main or a subroutine and target a subroutine/);
+ assert.match(validateProgramStructure({...linked,programCalls:[...linked.programCalls,{id:'cleanup-to-legacy',fromBlockId:'cleanup',toBlockId:'sub_1'},{id:'legacy-to-cleanup',fromBlockId:'sub_1',toBlockId:'cleanup'}]}).join(' '),/Recursive PLC program-block calls/);
+ assert.throws(()=>createProgramCall(linked,{id:'duplicate',fromBlockId:'main',toBlockId:'cleanup'}),/Duplicate program call/);
+});
 
 test('accept.plc.history.audit-trail', async t => {
   await t.test('records logic, device and wire edits but ignores canvas-only movement', () => {

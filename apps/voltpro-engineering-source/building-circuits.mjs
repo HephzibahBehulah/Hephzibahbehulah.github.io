@@ -1,5 +1,6 @@
 import {catalogItem} from './building-catalog.mjs';
 import {connectionLength,nodeSpecification} from './building-tools.mjs';
+import {buildingCircuitCrossReferences} from './building-references.mjs';
 export function circuitAssessment(doc){
  const result=[];
  for(const circuit of doc.circuits||[]){
@@ -42,4 +43,4 @@ export function circuitAssessment(doc){
  }
  return result;
 }
-export function circuitSchedule(doc){return circuitAssessment(doc).map(c=>({circuit:c.id,label:c.label,board:c.board,protection:c.protection,rcd:c.rcd,knownConnectedW:c.knownConnectedW,unresolvedLoads:c.unresolvedLoads,designCurrentA:c.designCurrentA??'UNRESOLVED',routeCount:c.routes.length,reviewCount:c.issues.length}));}
+export function circuitSchedule(doc){const references=new Map(buildingCircuitCrossReferences(doc).map(row=>[row.circuit,row]));return circuitAssessment(doc).map(c=>({circuit:c.id,label:c.label,board:c.board,protection:c.protection,rcd:c.rcd,cableTags:(references.get(c.id)?.cableTags||[]).join(', '),knownConnectedW:c.knownConnectedW,unresolvedLoads:c.unresolvedLoads,designCurrentA:c.designCurrentA??'UNRESOLVED',routeCount:c.routes.length,reviewCount:c.issues.length}));}

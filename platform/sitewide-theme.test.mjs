@@ -54,6 +54,40 @@ test('shared brand theme matches the product template and supports both colour m
   assert.match(chrome, /--accent:#087e83/);
 });
 
+test('private command center and workbench use parent and product wordmarks with valid workspace links', () => {
+  const control = fs.readFileSync(path.join(root, 'apps/admin/admin.html'), 'utf8');
+  const tools = fs.readFileSync(path.join(root, 'apps/admin/admin-tools.html'), 'utf8');
+  const cyber = fs.readFileSync(path.join(root, 'apps/cyber-os/index.html'), 'utf8');
+  for (const html of [control, tools, cyber]) {
+    assert.match(html, /class="hb-company-wordmark">HEPHZIBAH<br>BEHULAH/);
+    assert.match(html, /class="hb-product-wordmark">ADIGUN/);
+  }
+  assert.match(control, /href="\/admin\/" aria-label="HEPHZIBAH BEHULAH, ADIGUN Control"/);
+  assert.match(tools, /href="\/admin\/cyber-os\/"[^>]*>⌘ ADIGUN CYBER OS/);
+  assert.match(tools, /href="\/admin\/">ADIGUN Control/);
+  assert.doesNotMatch(tools, /adigun-contol/);
+});
+
+test('private applications menu exposes every protected workspace under the admin host', () => {
+  const platform = fs.readFileSync(path.join(root, 'platform/platform.js'), 'utf8');
+  for (const [name, pathName] of [['Simulator','simulator'],['PLC','plc'],['ElectCAD','electcad'],['Breadboard','breadboard'],['Oscilloscope','oscilloscope'],['Electrical / BuildingCAD','electrical']]) {
+    assert.ok(platform.includes("['" + name + "','" + pathName + "']"), name + ' must appear in the protected application menu');
+  }
+  assert.ok(platform.includes("link('Public website','https://'+domain+'/')"), 'public website must have a portal link');
+  assert.ok(platform.includes("'/engineering/'"), 'engineering overview must have a portal link');
+  assert.match(platform, /sidebar\.querySelector\('\.os-brand'\)\?\.after\(section\)/, 'the unified applications menu must mount on every private workspace page');
+});
+
+test('ADIGUN command center and Tool Lab directly link all VoltPro workspaces', () => {
+  for (const file of ['apps/admin/admin.html', 'apps/admin/admin-tools.html']) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    assert.match(html, /data-nav-group="workbench"[\s\S]*?VoltPro Engineering overview/);
+    for (const route of ['simulator', 'plc', 'electcad', 'breadboard', 'oscilloscope', 'electrical']) {
+      assert.ok(html.includes(`href="/engineering/${route}"`), `${file} must link the ${route} workspace`);
+    }
+  }
+});
+
 test('Cyber OS carries the parent wordmark and its own product wordmark in the shared theme', () => {
   const html = fs.readFileSync(path.join(root, 'apps/cyber-os/index.html'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'platform/experience.css'), 'utf8');
@@ -77,3 +111,4 @@ test('Cyber OS carries the parent wordmark and its own product wordmark in the s
   assert.match(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#48d8d0/);
   assert.doesNotMatch(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#ff9b43/);
 });
+
