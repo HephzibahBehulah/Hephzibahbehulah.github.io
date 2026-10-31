@@ -8,6 +8,7 @@ const require=createRequire(new URL('../../../apps/engineering/voltpro-electcad/
 import { assignWireReferences, formatSheetZoneReference } from '../../../apps/engineering/voltpro-electcad/src/wire-numbering.mjs';
 import { recordDocumentAudit, readDocumentAudit, exportDocumentAudit } from '../../../apps/engineering/voltpro-electcad/src/document-audit.mjs';
 import { buildManufacturingSchedule, routeGeometryLength } from '../../../apps/engineering/voltpro-electcad/src/manufacturing-bom.mjs';
+import { auditWireColorConsistency } from '../../../apps/engineering/voltpro-electcad/src/wiring-audit.mjs';
 
 test.todo("accept.electcad.drc.verified-profile");
 test("accept.electcad.wire-numbers.off-page-links", () => {
@@ -69,4 +70,18 @@ test("accept.electcad.history.document-audit",()=>{
  const app=fs.readFileSync(new URL('../../../apps/engineering/voltpro-electcad/App.tsx',import.meta.url),'utf8');
  assert.match(app,/\['Diagnostics','Simulation','Reports','Console','History'\]/);assert.match(app,/Export audit JSON/);assert.match(app,/recordDocumentAudit\(projectName,previous,currentSnapshot\)/);
 });
-test.todo("accept.electcad.wiring.routing-colors-crossings");
+test("accept.electcad.wiring.routing-colors-crossings",async()=>{
+ const wires=[
+  {id:'h1',ref:'W001',label:'L1',color:'#ff0000',x1:0,y1:50,x2:100,y2:50},
+  {id:'v1',ref:'W002',label:'L1',color:'#00ff00',x1:50,y1:0,x2:50,y2:100},
+  {id:'h2',ref:'W003',label:'N',color:'#0000ff',x1:0,y1:20,x2:100,y2:20},
+  {id:'v2',ref:'W004',label:'N',color:'#0000ff',x1:50,y1:20,x2:50,y2:90}
+ ];
+ const findings=auditWireColorConsistency(wires);
+ assert.equal(findings.length,1);assert.equal(findings[0].label,'L1');assert.deepEqual(findings[0].references,['W001','W002']);assert.match(findings[0].basis,/not a wiring-colour standard/);
+ const ts=require('typescript'),sourceUrl=new URL('../../../apps/engineering/voltpro-electcad/src/editor-model.ts',import.meta.url),source=fs.readFileSync(sourceUrl,'utf8'),js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText,dir=path.dirname(fileURLToPath(sourceUrl)),temp=path.join(dir,`.accept-wiring-${process.pid}-${Date.now()}.mjs`);
+ fs.writeFileSync(temp,js);
+ try{const {wireCrossings}=await import(pathToFileURL(temp).href);const crossings=wireCrossings(wires);assert.ok(crossings.some(mark=>mark.x===50&&mark.y===50&&mark.kind==='bridge'));assert.ok(crossings.some(mark=>mark.x===50&&mark.y===20&&mark.kind==='junction'));}finally{fs.rmSync(temp,{force:true});}
+ const app=fs.readFileSync(new URL('../../../apps/engineering/voltpro-electcad/App.tsx',import.meta.url),'utf8');assert.match(app,/auditWireColorConsistency\(wires\)/);assert.match(app,/wireCrossings\(wires\)/);assert.match(app,/CROSSING_REVIEW/);
+ for(const language of ["routeLength:'Route geometry length'","routeLength:'Geometrische Routenlänge'","routeLength:'Ìwọ̀n gígùn ọ̀nà àwòrán'","routeLength:'Drawing route length'"])assert.ok(app.includes(language));
+});
