@@ -7,11 +7,11 @@
   <title>VoltPro Electrical | HEPHZIBAH BEHULAH</title>
   <script>if(new URLSearchParams(location.search).has('vp_embed'))document.documentElement.classList.add('vp-electrical-embed');</script>
   <link rel="stylesheet" href="src/ui/site-shell.css?v=20261031-theme-polish">
-  <link rel="stylesheet" href="electrical-canvas.css?v=20261031-examples1">
+  <link rel="stylesheet" href="electrical-canvas.css?v=20261031-responsive1">
   <link rel="stylesheet" href="voltpro-hb-theme.css?v=20261028-aiwindow1">
   <link rel="stylesheet" href="src/ui/assistant-chat.css?v=20261028-adigun1">
   <link rel="stylesheet" href="workspace-engineering-theme.css"><link rel="stylesheet" href="src/ui/embedded-product-brand.css?v=20261031a">
-  <script type="module" src="electrical-canvas.js?v=20261031-examples1"></script>
+  <script type="module" src="electrical-canvas.js?v=20261031-responsive1"></script>
   <script type="module" src="platform/account-config.js?v=20261017p"></script>
   <script type="module" src="platform/account-client.js?v=20261017p"></script>
   <script src="src/ui/voltpro-brand.js?v=20261031a" defer></script>
@@ -63,13 +63,16 @@
         </div>
       </div>
       <section class="title-block" aria-label="Editable drawing title block">
-        <b>DRAWING INFORMATION</b>
-        <label>Project <input id="projectName" value="Residential electrical plan" maxlength="80"></label>
-        <label>Drawing no. <input id="documentNumber" maxlength="32"></label>
-        <label>Revision <input id="revision" value="A" maxlength="8"></label>
-        <label>Date <input id="projectDate" type="date"></label>
-        <label>Scale <input id="titleScale" value="1:50" maxlength="12"></label>
-        <label>Drafter <input id="drafter" value="VoltPro user" maxlength="60"></label>
+        <button id="toggleTitleBlock" type="button" aria-expanded="false">Drawing information</button>
+        <div class="title-block-fields">
+          <b>DRAWING INFORMATION</b>
+          <label>Project <input id="projectName" value="Residential electrical plan" maxlength="80"></label>
+          <label>Drawing no. <input id="documentNumber" maxlength="32"></label>
+          <label>Revision <input id="revision" value="A" maxlength="8"></label>
+          <label>Date <input id="projectDate" type="date"></label>
+          <label>Scale <input id="titleScale" value="1:50" maxlength="12"></label>
+          <label>Drafter <input id="drafter" value="VoltPro user" maxlength="60"></label>
+        </div>
       </section>
       <span id="commandStatus" role="status">Ready · local project</span>
       <p class="cad-status" id="status" role="status">Select a component. One grid square represents 200 mm in the model.</p>
@@ -103,3 +106,4 @@
   <footer class="cad-footer"><span>Plan model units: millimetres · Grid is a drafting aid</span><span id="validationState">Not checked against an installation profile</span><span>Development · Not for production documentation · <a href="/status" target="_top">readiness &amp; limitations</a></span></footer>
 </body>
 </html>
+
