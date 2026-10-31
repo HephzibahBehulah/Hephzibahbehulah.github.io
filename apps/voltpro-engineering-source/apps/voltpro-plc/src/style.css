@@ -174,7 +174,14 @@ html[data-vp-theme=light] .plc-program-blocks li{border-color:#d8e1e4}
 @media(max-width:760px){.plc-command-menu:nth-child(n+5){display:block}.canvas.dock-visible .plc-title-block{display:none}}
 /* ElectCAD reference: one row with three non-overlapping header regions. */
 .plc-app>.topbar.plc-reference-header{height:50px;min-height:50px;flex:0 0 50px;display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr) max-content;gap:6px;padding:0 4px;background:#111315;border-bottom:1px solid #343a3e;isolation:isolate;z-index:10000}
-.plc-reference-header>.plc-shell-slot{display:none!important}
+.plc-app>.plc-shell-slot{display:block!important;flex:0 0 60px;width:100%;height:60px;min-height:60px}
+.vp-template-plc #vpSiteHeader{position:static!important;inset:auto!important;width:100%!important;height:60px!important;min-height:60px!important;display:flex!important;z-index:100!important}
+.vp-template-plc .plc-app>.topbar.plc-reference-header{height:50px;min-height:50px;flex:0 0 50px;display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;padding:0 6px}
+.vp-template-plc .plc-header-identity{display:contents}
+.vp-template-plc .plc-main-site,.vp-template-plc .plc-company-logo,.vp-template-plc .plc-header-divider,.vp-template-plc .plc-header-brand,.vp-template-plc .plc-header-actions{display:none!important}
+.vp-template-plc .plc-header-identity>.plc-project-dropdown{display:block;flex:0 0 150px;width:150px}
+.vp-template-plc .plc-header-center{flex:1 0 auto;min-width:max-content}
+.vp-template-plc .plc-header-tools{flex:0 0 auto}
 .plc-header-identity,.plc-header-center,.plc-header-tools,.plc-header-actions{display:flex;align-items:center;min-width:0;height:100%;gap:4px}
 .plc-header-identity{gap:7px}.plc-header-identity a{color:#dce6ee;text-decoration:none;flex-shrink:0}
 .plc-main-site{display:flex;align-items:center;gap:5px;padding:6px;border:1px solid #343a3e;border-radius:4px;background:#111;font-size:10px;white-space:nowrap}

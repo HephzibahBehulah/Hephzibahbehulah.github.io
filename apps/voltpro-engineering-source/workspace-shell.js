@@ -125,12 +125,7 @@
     const doc = panels.get("/plc")?.querySelector("iframe")?.contentDocument;
     const parts = doc?.__vpPLCShellParts;
     if (!doc || !parts) return;
-    if (parts.statusbar && parts.app) parts.app.append(doc.adoptNode(parts.statusbar));
     if (parts.header && parts.header.parentElement !== document.body) document.body.insertBefore(document.adoptNode(parts.header), headerPlaceholder?.nextSibling || document.body.firstChild);
-    if (parts.banner && parts.banner.parentElement !== document.body) {
-      parts.banner.classList.remove("vp-plc-bottom-warning");
-      document.body.insertBefore(parts.banner, parts.header?.nextSibling || headerPlaceholder?.nextSibling || null);
-    }
     doc.documentElement.classList.remove("vp-template-plc");
     document.documentElement.classList.remove("vp-plc-template");
     delete doc.__vpPLCShellParts;
@@ -142,23 +137,13 @@
     const doc = frame?.contentDocument;
     const app = doc?.querySelector(".plc-app");
     const slot = doc?.querySelector(".plc-shell-slot");
-    const statusbar = doc?.querySelector(".plc-app > .statusbar");
-    const bottom = document.getElementById("vpBottomNavigation");
-    const banner = document.getElementById("vpDevelopmentBanner");
-    if (!doc || !app || !slot || !statusbar || !bottom) return;
-    if (app.querySelector("[data-plc-unified-bottom]")) return;
+    if (!doc || !app || !slot) return;
     if (doc.__vpPLCShellParts?.integrated) return;
     doc.documentElement.classList.add("vp-template-plc");
     document.documentElement.classList.add("vp-plc-template");
     sharedHeader.querySelectorAll("details[open]").forEach(menu => { menu.open = false; });
-    doc.__vpPLCShellParts = { integrated: true, app, header: sharedHeader, statusbar, banner };
+    doc.__vpPLCShellParts = { integrated: true, app, header: sharedHeader };
     slot.append(doc.adoptNode(sharedHeader));
-    statusbar.classList.add("vp-plc-bottom-status");
-    bottom.append(doc.adoptNode(statusbar));
-    if (banner && banner.parentElement !== bottom) {
-      banner.classList.add("vp-plc-bottom-warning");
-      bottom.append(banner);
-    }
     doc.querySelectorAll("#vpSiteHeader a").forEach(link => { link.target = "_top"; });
     if (!doc.__vpPLCCrossNavigationBound) {
       doc.__vpPLCCrossNavigationBound = true;
