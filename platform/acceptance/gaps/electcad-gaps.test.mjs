@@ -7,6 +7,7 @@ import { createRequire } from 'node:module';
 const require=createRequire(new URL('../../../apps/engineering/voltpro-electcad/package.json',import.meta.url));
 import { assignWireReferences, formatSheetZoneReference } from '../../../apps/engineering/voltpro-electcad/src/wire-numbering.mjs';
 import { recordDocumentAudit, readDocumentAudit, exportDocumentAudit } from '../../../apps/engineering/voltpro-electcad/src/document-audit.mjs';
+import { buildManufacturingSchedule, routeGeometryLength } from '../../../apps/engineering/voltpro-electcad/src/manufacturing-bom.mjs';
 
 test.todo("accept.electcad.drc.verified-profile");
 test("accept.electcad.wire-numbers.off-page-links", () => {
@@ -22,7 +23,28 @@ test("accept.electcad.wire-numbers.off-page-links", () => {
  assert.match(app,/formatSheetZoneReference\(sheetNumber\(target\.id\),zoneOf\(part\.x,part\.y\)\)/);
  assert.match(app,/<label>Connected sheet/);
 });
-test.todo("accept.electcad.bom.manufacturing-and-lengths");
+test("accept.electcad.bom.manufacturing-and-lengths", async()=>{
+ const sheets=[
+  {id:'power',name:'Power',parts:[
+   {id:'p1',type:'circuit-breaker',ref:'Q1',value:'3P 16 A',manufacturer:'Owner entered',partNumber:'CB-16'},
+   {id:'p2',type:'circuit-breaker',ref:'Q2',value:'3P 16 A',manufacturer:'Owner entered',partNumber:'CB-16'},
+   {id:'n1',type:'text-note',ref:'N1',value:'Not a material'}
+  ],wires:[{id:'w1',ref:'W001',label:'L1',cableType:'Cu conductor',gauge:'2.5 mm²',cores:1,manufacturer:'Owner entered',partNumber:'CU-25',x1:10,y1:20,x2:70,y2:100,lengthAllowance:10}]},
+  {id:'control',name:'Control',parts:[{id:'p3',type:'circuit-breaker',ref:'Q3',value:'3P 16 A',manufacturer:'Owner entered',partNumber:'CB-16'}],wires:[{id:'w2',x1:0,y1:0,x2:0,y2:50}]}
+ ];
+ const result=buildManufacturingSchedule(sheets);
+ assert.deepEqual(routeGeometryLength(sheets[0].wires[0]),{horizontal:60,vertical:80,total:140});
+ assert.equal(result.deviceItems.length,1);assert.equal(result.deviceItems[0].quantity,3);assert.deepEqual(result.deviceItems[0].references,['Q1','Q2','Q3']);
+ assert.equal(result.totals.deviceQuantity,3);assert.equal(result.totals.cableRunCount,2);assert.equal(result.totals.cableGeometryLength,190);
+ assert.equal(result.cableRuns[0].geometryLength,140);assert.equal(result.cableRuns[0].geometryPlusAllowance,150);assert.equal(result.cableRuns[0].sourcingStatus,'Owner-supplied identity; not independently verified');
+ assert.match(result.cableRuns[0].lengthStatus,/not installed|installed route/i);assert.ok(result.notes.some(note=>/not independently verified|does not assert manufacturer validation/i.test(note)));
+ assert.throws(()=>routeGeometryLength({x1:NaN,y1:0,x2:1,y2:1}),/finite/);
+ const app=fs.readFileSync(new URL('../../../apps/engineering/voltpro-electcad/App.tsx',import.meta.url),'utf8');
+ assert.match(app,/buildManufacturingSchedule\(documentData\(\)\.sheets\)/);assert.match(app,/geometryLength/);assert.match(app,/wire\.lengthAllowance/);assert.match(app,/tr\('cableType'\)/);
+ const ts=require('typescript'),sourceUrl=new URL('../../../apps/engineering/voltpro-electcad/src/editor-model.ts',import.meta.url),source=fs.readFileSync(sourceUrl,'utf8'),js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText,dir=path.dirname(fileURLToPath(sourceUrl)),temp=path.join(dir,`.accept-bom-${process.pid}-${Date.now()}.mjs`);
+ fs.writeFileSync(temp,js);
+ try{const {decodeDocument,serializeDocument}=await import(pathToFileURL(temp).href);const doc=decodeDocument({schemaVersion:3,projectName:'Manufacturing',activeSheetId:'s1',sheets:[{id:'s1',name:'Main',parts:[{id:'p',type:'cable',x:0,y:0,ref:'C1',value:'Control cable',manufacturer:'Owner entered',partNumber:'C-2'}],wires:[{id:'w',x1:0,y1:0,x2:10,y2:10,cableType:'Shielded cable',manufacturer:'Owner entered',partNumber:'W-2',lengthAllowance:5}]}]});const roundtrip=JSON.parse(serializeDocument(doc));assert.equal(roundtrip.sheets[0].wires[0].cableType,'Shielded cable');assert.equal(roundtrip.sheets[0].wires[0].lengthAllowance,5);assert.equal(roundtrip.sheets[0].parts[0].partNumber,'C-2');assert.throws(()=>decodeDocument({...roundtrip,sheets:[{...roundtrip.sheets[0],wires:[{...roundtrip.sheets[0].wires[0],lengthAllowance:-1}]}]}),/Invalid wire/);}finally{fs.rmSync(temp,{force:true});}
+});
 test("accept.electcad.sheets.cross-link-integrity",async()=>{
  const ts=require('typescript'),sourceUrl=new URL('../../../apps/engineering/voltpro-electcad/src/editor-model.ts',import.meta.url),source=fs.readFileSync(sourceUrl,'utf8'),js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText,dir=path.dirname(fileURLToPath(sourceUrl)),temp=path.join(dir,`.accept-sheets-${process.pid}-${Date.now()}.mjs`);
  fs.writeFileSync(temp,js);
