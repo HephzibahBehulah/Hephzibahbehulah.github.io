@@ -46,7 +46,7 @@ const shared=path.join(destination,'_hb');fs.mkdirSync(shared,{recursive:true});
 let commitHash=process.env.GITHUB_SHA||'';
 if(!/^[a-f0-9]{40}$/i.test(commitHash))try{commitHash=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();}catch{commitHash='Unknown';}
 fs.writeFileSync(path.join(shared,'status-build.json'),JSON.stringify({version:repositoryPackage.version||'Unknown',commitHash,buildTimestamp:new Date().toISOString()},null,2)+'\n');
-for(const file of ['platform.css','platform.js','release-update.js','admin-security-ui.js','admin-accounts-ui.js','account.html','account-page.js','member.js','member.css','experience.js','experience.css'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
+for(const file of ['platform.css','platform.js','release-update.js','admin-security-ui.js','admin-accounts-ui.js','adigunsps-admin-ui.js','adigunsps-admin-client.mjs','account.html','account-page.js','member.js','member.css','experience.js','experience.css'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 for(const file of ['account-config.js','account-client.js'])fs.copyFileSync(path.join(root,'platform',file),path.join(shared,file));
 for(const file of ['hb-logo.svg','hephzibah-behulah-official.jpg'])fs.copyFileSync(path.join(root,'packages/shared-ui/assets',file),path.join(shared,file));
 fs.copyFileSync(path.join(root,'packages/shared-ui/css/sitewide-osint-theme.css'),path.join(shared,'sitewide-osint-theme.css'));

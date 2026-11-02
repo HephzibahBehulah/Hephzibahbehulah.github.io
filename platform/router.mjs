@@ -21,7 +21,7 @@ export function resolveRoute(url){
   if(!privateHost&&(decoded.startsWith('/api/admin/')||['/admin','/admin/','/admin.html','/admin-tools.html','/api/automation/demo'].includes(decoded)))return {kind:'reject',status:404};
   if(!privateHost&&path.startsWith('/api/member/'))return {kind:'member',privateHost:false};
   if(!privateHost&&['/account','/account/','/account.html'].includes(path))return {kind:'account',privateHost:false};
-  if(!privateHost&&['/_hb/admin-accounts-ui.js','/_hb/admin-security-ui.js'].includes(decoded))return {kind:'reject',status:404};
+  if(!privateHost&&['/_hb/admin-accounts-ui.js','/_hb/admin-security-ui.js','/_hb/adigunsps-admin-ui.js','/_hb/adigunsps-admin-client.mjs'].includes(decoded))return {kind:'reject',status:404};
   if(path.startsWith('/_hb/')&&path!=='/_hb/release.json')return {kind:'shared',privateHost,path};
   if(!privateHost&&path==='/_hb/release.json')return {kind:'status',privateHost:false};
   if(path==='/api/cyber/chat')return {kind:'cyber-ai',privateHost};
