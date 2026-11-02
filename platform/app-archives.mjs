@@ -30,7 +30,7 @@ export function extractArchive(data,destination){
 }
 export function publishArchives(destination,lock){
  const releases={version:1,applications:{}};
- for(const app of ['engineering','cyber']){const dir=path.join(destination,'_apps',app),data=archiveDirectory(dir),sha256=digest(data),name=lock[app].commit+'.tar';if(data.length>25*1024*1024)throw Error('Application release exceeds asset size limit');fs.mkdirSync(path.join(dir,'releases'),{recursive:true});fs.writeFileSync(path.join(dir,'releases',name),data);releases.applications[app]={...lock[app],url:`https://${app}.hephzibahbehulah.com/releases/${name}`,sha256,bytes:data.length};}
+ for(const app of ['cyber']){const dir=path.join(destination,'_apps',app),data=archiveDirectory(dir),sha256=digest(data),name=lock[app].commit+'.tar';if(data.length>25*1024*1024)throw Error('Application release exceeds asset size limit');fs.mkdirSync(path.join(dir,'releases'),{recursive:true});fs.writeFileSync(path.join(dir,'releases',name),data);releases.applications[app]={...lock[app],url:`https://${app}.hephzibahbehulah.com/releases/${name}`,sha256,bytes:data.length};}
  return releases;
 }
 export {digest};

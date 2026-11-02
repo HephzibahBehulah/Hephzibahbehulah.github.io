@@ -11,13 +11,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 test('the shared brand theme is injected into nested pages once', () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'hb-theme-'));
   try {
-    fs.mkdirSync(path.join(fixture, '_apps/engineering'), {recursive:true});
+    fs.mkdirSync(path.join(fixture, '_apps/cyber'), {recursive:true});
     fs.writeFileSync(path.join(fixture, 'index.html'), '<html><head><title>Main</title></head><body></body></html>');
-    fs.writeFileSync(path.join(fixture, '_apps/engineering/tool.html'), '<html><head></head><body></body></html>');
+    fs.writeFileSync(path.join(fixture, '_apps/cyber/tool.html'), '<html><head></head><body></body></html>');
     fs.writeFileSync(path.join(fixture, 'fragment.html'), '<section>Not a page head</section>');
     assert.deepEqual(injectSitewideTheme(fixture), {pages:3, themed:2, injected:2});
     assert.deepEqual(injectSitewideTheme(fixture), {pages:3, themed:2, injected:0});
-    for (const file of ['index.html', '_apps/engineering/tool.html']) {
+    for (const file of ['index.html', '_apps/cyber/tool.html']) {
       const html = fs.readFileSync(path.join(fixture, file), 'utf8');
       assert.equal((html.match(/data-hb-sitewide-theme/g) || []).length, 1);
       assert.ok(html.indexOf('sitewide-osint-theme.css') < html.indexOf('</head>'));
@@ -68,30 +68,24 @@ test('private command center and workbench use parent and product wordmarks with
   assert.doesNotMatch(tools, /adigun-contol/);
 });
 
-test('private applications menu exposes every protected workspace under the admin host', () => {
+test('shared navigation omits the retired engineering workspaces', () => {
   const platform = fs.readFileSync(path.join(root, 'platform/platform.js'), 'utf8');
-  for (const [name, pathName] of [['Simulator','simulator'],['PLC','plc'],['ElectCAD','electcad'],['Breadboard','breadboard'],['Oscilloscope','oscilloscope'],['Electrical / BuildingCAD','electrical']]) {
-    assert.ok(platform.includes("['" + name + "','" + pathName + "']"), name + ' must appear in the protected application menu');
-  }
   assert.ok(platform.includes("link('Public website','https://'+domain+'/')"), 'public website must have a portal link');
-  assert.ok(platform.includes("'/engineering/'"), 'engineering overview must have a portal link');
+  assert.doesNotMatch(platform, /Engineering overview|VoltPro Academy|VoltPro Simulator|VoltPro PLC|VoltPro ElectCAD|VoltPro Breadboard|VoltPro Oscilloscope|BuildingCAD/);
   assert.match(platform, /sidebar\.querySelector\('\.os-brand'\)\?\.after\(section\)/, 'the unified applications menu must mount on every private workspace page');
 });
 
-test('ADIGUN command center and Tool Lab directly link all VoltPro workspaces', () => {
+test('ADIGUN command center and Tool Lab omit retired workspaces', () => {
   for (const file of ['apps/admin/admin.html', 'apps/admin/admin-tools.html']) {
     const html = fs.readFileSync(path.join(root, file), 'utf8');
-    assert.match(html, /data-nav-group="workbench"[\s\S]*?VoltPro Engineering overview/);
-    for (const route of ['simulator', 'plc', 'electcad', 'breadboard', 'oscilloscope', 'electrical']) {
-      assert.ok(html.includes(`href="/engineering/${route}"`), `${file} must link the ${route} workspace`);
-    }
+    assert.doesNotMatch(html, /VoltPro Engineering overview|VoltPro Simulator|VoltPro PLC|VoltPro ElectCAD|VoltPro Breadboard|VoltPro Oscilloscope|VoltPro Electrical/);
+    assert.doesNotMatch(html, /href="\/engineering\//);
   }
 });
 
 test('Cyber OS carries the parent wordmark and its own product wordmark in the shared theme', () => {
   const html = fs.readFileSync(path.join(root, 'apps/cyber-os/index.html'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'platform/experience.css'), 'utf8');
-  const engineeringCss = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/src/ui/site-shell.css'), 'utf8');
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'apps/cyber-os/adigun-cyber-os.webmanifest'), 'utf8'));
   const logo = fs.readFileSync(path.join(root, 'apps/cyber-os/assets/adigun-cyber-os.svg'), 'utf8');
   assert.match(html, /HEPHZIBAH BEHULAH/);
@@ -108,8 +102,6 @@ test('Cyber OS carries the parent wordmark and its own product wordmark in the s
   assert.match(css, /\.hb-company-wordmark/);
   assert.match(css, /\.hb-product-wordmark/);
   assert.match(css, /html\[data-hb-theme=light\] \.hb-product-wordmark/);
-  assert.match(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#22d3ee/);
-  assert.doesNotMatch(engineeringCss, /#vpSiteHeader \.vp-product-wordmark[^}]*color:#ff9b43/);
 });
 
 test('public, cyber, admin and engineering roots use the approved company logo and product wordmarks', () => {
@@ -119,27 +111,9 @@ test('public, cyber, admin and engineering roots use the approved company logo a
     assert.match(html, /src="\/_hb\/hephzibah-behulah-official\.jpg"/i, file);
     assert.match(html, /hb-product-wordmark|INTELLIGENCE PORTFOLIO/, file);
   }
-  const engineering = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/index.html'), 'utf8');
-  assert.match(engineering, /assets\/hephzibah-behulah-official\.jpg/);
-  assert.match(engineering, /product-wordmark">VoltPro<small>BY HB ELEKTRONIKER/);
   const shared = fs.readFileSync(path.join(root, 'platform/platform.js'), 'utf8');
   assert.match(shared, /hephzibah-behulah-official\.jpg/);
   assert.match(shared, /hb-platform-product-wordmark/);
   assert.match(shared, /hb-footer-attribution/);
-});
-
-test('Simulator PCB workspace includes the reference layout and live simulation output', () => {
-  const html = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/simulator.html'), 'utf8');
-  const pcb = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/src/ui/pcb-studio.js'), 'utf8');
-  const css = fs.readFileSync(path.join(root, 'apps/voltpro-engineering-source/simulator-template.css'), 'utf8');
-  assert.match(html, /VoltPro Simulator<\/b><small>BY HB ELEKTRONIKER/);
-  assert.match(html, /assets\/hephzibah-behulah-official\.jpg/);
-  assert.match(pcb, /class="pcb-output-panel" aria-label="Simulation output"/);
-  assert.match(pcb, /document\.getElementById\('calcPanel'\)/);
-  assert.match(pcb, /document\.getElementById\('console'\)/);
-  assert.match(pcb, /new MutationObserver\(syncSimulationOutput\)/);
-  assert.match(css, /\.workspace\.vp-view-active>\.vp-pcb-host/);
-  assert.match(css, /\.vp-pcb \.pcb-output-panel/);
-  assert.match(css, /\.vp-pcb \.pcb-stage svg/);
 });
 

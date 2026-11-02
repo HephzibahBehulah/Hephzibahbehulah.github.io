@@ -23,8 +23,7 @@ export function resolveRoute(url){
   if(!privateHost&&['/account','/account/','/account.html'].includes(path))return {kind:'account',privateHost:false};
   if(!privateHost&&['/_hb/admin-accounts-ui.js','/_hb/admin-security-ui.js'].includes(decoded))return {kind:'reject',status:404};
   if(path.startsWith('/_hb/')&&path!=='/_hb/release.json')return {kind:'shared',privateHost,path};
-  if(!privateHost&&(path==='/_hb/release.json'||host==='engineering.'+ROOT&&path==='/api/status'))return {kind:'status',privateHost:false};
-  if(path==='/api/engineering/chat'||path==='/api/engineering/health')return {kind:'engineering-ai',privateHost};
+  if(!privateHost&&path==='/_hb/release.json')return {kind:'status',privateHost:false};
   if(path==='/api/cyber/chat')return {kind:'cyber-ai',privateHost};
   if(privateHost&&['/and','/and/'].includes(path))return {kind:'app',privateHost:true,app:'admin',prefix:'',base:'/',path:'/admin.html'};
   if(privateHost&&['/api/admin/security','/api/admin/security/session'].includes(path))return {kind:'admin-security',privateHost:true};
@@ -36,37 +35,23 @@ export function resolveRoute(url){
     for(const name of ['engineering','cyber'])if(path==='/'+name||path.startsWith('/'+name+'/')){app=name;prefix='/'+name;break;}
     if(!app)return {kind:'legacy',privateHost:true};
   }
+  if(app==='engineering')return {kind:'retired',privateHost,status:404};
   if(prefix&&path===prefix)return {kind:'redirect',privateHost,location:prefix+'/'};
   let relative=path.slice(prefix.length)||'/';
-  const embedded=url.searchParams.get('vp_embed')==='1';
-  // Older shell builds incorrectly prefixed iframe URLs with /engineering on the public subdomain.
-  if(app==='engineering'&&embedded&&!prefix&&relative.startsWith('/engineering/'))relative=relative.slice('/engineering'.length)||'/';
-  // Retire the old mixed-case standalone ElectCAD URL; one canonical route avoids portfolio chrome
-  // being injected by older shared-header code on that alias.
-  if(app==='engineering'&&!embedded&&/^\/voltpro-electcad\/?$/i.test(relative))return {kind:'redirect',privateHost,location:prefix+'/electcad'};
-  const workspaceAliases=['/simulator','/plc','/electcad','/tools','/engineering','/breadboard','/oscilloscope','/electrical','/voltpro-plc','/voltpro-plc/'];
-  if(app==='engineering'&&!embedded&&workspaceAliases.includes(relative.toLowerCase()))return {kind:'app',privateHost,app,prefix,base:prefix+'/',path:'/_apps/engineering/workspace-shell.html'};
-  if(app==='engineering'&&/^\/voltpro-electcad(?:\/|$)/i.test(relative)){
-    const suffix=relative.slice('/voltPro-ElectCAD'.length);
-    if(!suffix)return {kind:'redirect',privateHost,location:prefix+'/voltPro-ElectCAD/'};
-    const assetSuffix=suffix==='/'?'/index.html':suffix;
-    return {kind:'app',privateHost,app,prefix,base:prefix+'/voltPro-ElectCAD/',path:'/_apps/engineering/voltpro-electcad'+assetSuffix};
-  }
-  if(app==='engineering'&&relative==='/voltpro-plc')return {kind:'redirect',privateHost,location:prefix+'/voltpro-plc/'};
-  if(relative.endsWith('.html')&&!embedded)return {kind:'redirect',privateHost,location:(prefix+relative.replace(/\/index\.html$/,'/').replace(/\.html$/,''))||'/'};
-  const asset=app==='engineering'&&relative==='/workspace'?'/account.html':relative.endsWith('/')?relative+'index.html':/\.[^/]+$/.test(relative)?relative:relative+'.html';
+  if(relative.endsWith('.html'))return {kind:'redirect',privateHost,location:(prefix+relative.replace(/\/index\.html$/,'/').replace(/\.html$/,''))||'/'};
+  const asset=relative.endsWith('/')?relative+'index.html':/\.[^/]+$/.test(relative)?relative:relative+'.html';
   return {kind:'app',privateHost,app,prefix,base:prefix+asset.slice(0,asset.lastIndexOf('/')+1),path:'/_apps/'+app+asset};
 }
 
-export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,accountAdmin,memberAuth=publicAuth}){
+export function createPlatform({legacy,verifyAdmin,cyberAI,accountAdmin,memberAuth=publicAuth}){
   const handler={async fetch(request,env,ctx){
     const url=new URL(request.url),route=resolveRoute(url);
     const releaseMeta=!route.privateHost?'<script src="/_hb/release-update.js" defer></script>':'';
-    if(route.kind==='reject')return reply(route.status,'Not found');
+    if(route.kind==='reject'||route.kind==='retired'&&!route.privateHost)return reply(route.status,'Not found');
     if(route.kind==='status'){
       if(!['GET','HEAD'].includes(request.method))return reply(405,'Method not allowed');
       let build={};
-      try{const response=await env.ASSETS.fetch(new Request(new URL('/_apps/engineering/status-build.json',url.origin)));if(response.ok)build=await response.json();}catch{}
+      try{const response=await env.ASSETS.fetch(new Request(new URL('/_hb/status-build.json',url.origin)));if(response.ok)build=await response.json();}catch{}
       const body=JSON.stringify({version:build.version||'Unknown',commitHash:build.commitHash||'Unknown',buildTimestamp:build.buildTimestamp||null,deploymentTimestamp:env.DEPLOYMENT_TIMESTAMP||null});
       return new Response(request.method==='HEAD'?null:body,{headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','cloudflare-cdn-cache-control':'no-store','x-content-type-options':'nosniff'}});
     }
@@ -83,7 +68,8 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
       if(!verified.ok){console.warn('HB_PRIVATE_ACCESS_DENIED',verified.code||'configuration_or_identity_rejected');return reply(verified.status||401,'Private workspace. Sign in through Cloudflare Access.');}
     }
     if(['GET','HEAD'].includes(request.method)&&(route.privateHost||route.kind==='app'&&route.path.endsWith('.html'))){const headers=new Headers(request.headers);headers.delete('if-none-match');headers.delete('if-modified-since');request=new Request(request,{headers});}
-    if(route.privateHost&&['GET','HEAD'].includes(request.method)&&/\/(?:sw|service-worker|serviceworker)\.js$/.test(url.pathname))return new Response(request.method==='HEAD'?null:"self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())if(['hb-site-','voltpro-','hb-public-static-'].some(prefix=>key.startsWith(prefix)))await caches.delete(key);await self.registration.unregister();})()));",{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'private, no-store','x-robots-tag':'noindex, nofollow, noarchive'}});
+    if(route.privateHost&&['GET','HEAD'].includes(request.method)&&/\/(?:sw|service-worker|serviceworker)\.js$/.test(url.pathname))return new Response(request.method==='HEAD'?null:"self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())if(['hb-site-','hb-public-static-'].some(prefix=>key.startsWith(prefix)))await caches.delete(key);await self.registration.unregister();})()));",{headers:{'content-type':'text/javascript; charset=utf-8','cache-control':'private, no-store','x-robots-tag':'noindex, nofollow, noarchive'}});
+    if(route.kind==='retired')return reply(404,'Not found');
     if(route.kind==='redirect'){const next=new URL(route.location,url);next.search=url.search;return Response.redirect(next.toString(),308);}
     let visit;
     const isPage=route.kind==='app'&&route.path.endsWith('.html')||route.kind==='legacy'&&!/\.[a-z0-9]+$/i.test(url.pathname)||route.kind==='legacy'&&url.pathname.endsWith('.html');
@@ -95,13 +81,6 @@ export function createPlatform({legacy,verifyAdmin,engineeringAI,cyberAI,account
     const withVisit=response=>{if(!visit?.cookie)return response;const headers=new Headers(response.headers);headers.append('set-cookie',visit.cookie);return new Response(response.body,{status:response.status,headers});};
     if(route.kind==='cyber-ai')return withVisit(await cyberAI.fetch(request,env,ctx));
     if(route.kind==='admin-accounts')return accountAdmin(request,env,ctx);
-    if(route.kind==='engineering-ai'){
-      const origin=request.headers.get('origin');if(origin&&origin!==url.origin)return reply(403,'Origin not allowed');
-      if(!env.ENGINEERING_LIMITER?.limit)return reply(503,'Engineering request limiter is not configured');
-      const next=new URL(request.url);next.pathname=url.pathname.endsWith('/health')?'/health':'/chat';
-      const headers=new Headers(request.headers);headers.set('origin','https://'+url.hostname);
-      return withVisit(await engineeringAI.fetch(new Request(next, {...request,method:request.method,headers,body:['GET','HEAD'].includes(request.method)?undefined:request.body,duplex:'half'}),{...env,API_LIMITER:env.ENGINEERING_LIMITER},ctx));
-    }
     if(route.kind==='legacy'){
       // Preserve the existing root portfolio and all private tools. Existing
       // admin APIs keep their established hostname and authorization checks.

@@ -8,7 +8,7 @@ function setup({running='a'.repeat(40),available='b'.repeat(40),online=true,conf
  const node=tag=>({tag,style:{},children:[],listeners:{},setAttribute(){},append(...items){this.children.push(...items);},addEventListener(type,fn){this.listeners[type]=fn;},remove(){nodes.splice(nodes.indexOf(this),1);}});
  const window={top:{},self:null,confirm:()=>confirmed,addEventListener:(type,fn)=>listeners[type]=fn};window.self=frame?{}:window.top;
  const document={visibilityState:'visible',querySelector:()=>({content:running}),createElement:node,body:{append:n=>nodes.push(n)},addEventListener:(type,fn)=>documentListeners[type]=fn};
- const context={window,document,navigator:{onLine:online},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},location:{href:'https://engineering.hephzibahbehulah.com/plc',reload:()=>reloads++},fetch:async(url,options)=>{requests.push({url,options});return Response.json({commitHash:latest});},Response,AbortSignal,Date,setInterval:fn=>timers.push(fn),setTimeout:()=>{}};
+ const context={window,document,navigator:{onLine:online},localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},location:{href:'https://cyber.hephzibahbehulah.com/',reload:()=>reloads++},fetch:async(url,options)=>{requests.push({url,options});return Response.json({commitHash:latest});},Response,AbortSignal,Date,setInterval:fn=>timers.push(fn),setTimeout:()=>{}};
  vm.runInNewContext(source,context);
  return {window,document,nodes,listeners,requests,async ready(){await new Promise(resolve=>setImmediate(resolve));},get reloads(){return reloads;},async refresh(value){if(value)latest=value;await window.HBReleaseUpdate.check(true);}};
 }
@@ -34,3 +34,4 @@ test('Later suppresses the same release across routes but allows a newer release
 test('a stale update notice clears when the deployed release catches up',async()=>{
  const h=setup();await h.ready();assert.equal(h.nodes.length,1);await h.refresh('a'.repeat(40));assert.equal(h.nodes.length,0);assert.equal(h.window.HBReleaseUpdate.available,null);
 });
+

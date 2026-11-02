@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const MAIN='https://hephzibahbehulah.com';
-const APP_HOSTS={engineering:'https://engineering.hephzibahbehulah.com',cyber:'https://cyber.hephzibahbehulah.com'};
+const APP_HOSTS={cyber:'https://cyber.hephzibahbehulah.com'};
 const escape=value=>String(value).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const text=value=>String(value).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,' ').replace(/<[^>]+>/g,' ').replace(/&(?:nbsp|amp|quot|#39|lt|gt);/g,' ').replace(/\s+/g,' ').trim();
 

@@ -37,14 +37,6 @@
         "limit": 120,
         "period": 60
       }
-    },
-    {
-      "name": "ENGINEERING_LIMITER",
-      "namespace_id": "1785",
-      "simple": {
-        "limit": 6,
-        "period": 60
-      }
     }
   ],
   "routes": [

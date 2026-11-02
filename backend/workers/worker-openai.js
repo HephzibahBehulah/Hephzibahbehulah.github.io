@@ -1696,7 +1696,7 @@ export default {
     // the server-side ADIGUN_ADMIN_EMAIL allow-list.
     const isAdminHost = url.hostname === "admin.hephzibahbehulah.com";
     const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
-    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/tools":"/admin-tools.html","/tools/":"/admin-tools.html","/admin/cyber-os":"/cyber-os/index.html","/admin/cyber-os/":"/cyber-os/index.html"});
+    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/admin/cyber-os":"/cyber-os/index.html","/admin/cyber-os/":"/cyber-os/index.html"});
     const publicBlockedPath = ["/portfolio.html","/resources.html","/admin-tools.html","/data/source-library.json","/js/technical-workbench.js","/js/mega-tools.js","/js/engineering-calculators-local.js","/js/engineering-library.js","/js/intelligence-core.js"].includes(url.pathname);
 
     if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
@@ -1833,3 +1833,4 @@ export default {
     return legacy.fetch(request, env, ctx);
   }
 };
+

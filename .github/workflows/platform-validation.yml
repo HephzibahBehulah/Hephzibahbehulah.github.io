@@ -26,28 +26,14 @@ jobs:
           node --check platform/experience.js
           node --check platform/account-page.js
           node --check platform/member.js
-          node --check platform/studio.js
-          node --check platform/studio-bank.js
-          node --check platform/studio-search-worker.js
-          node --check platform/studio-plc-bridge.js
           node --check platform/build.mjs
-          node --check platform/generate-gaps.mjs
           node --check platform/sitewide-theme.mjs
-          node --check platform/engineering-ai.mjs
           node --check platform/router.mjs
-          node --check apps/voltpro-engineering-source/workspace-shell.js
-          node --check apps/voltpro-engineering-source/electrical-canvas.js
-          node --check apps/voltpro-engineering-source/electrical-engine.mjs
-          node --check apps/voltpro-engineering-source/status.js
           node --check platform/cyber-ai.mjs
           node --check platform/admin-accounts-ui.js
           node --check platform/admin-security-ui.js
           node --check platform/admin-security.mjs
           node --check packages/shared-i18n/language-system.js
-      - name: Install ElectCAD acceptance-test dependencies
-        run: npm ci --prefix apps/engineering/voltpro-electcad --no-audit --no-fund
-      - name: Verify authorization, routing and tutor boundaries
-        run: node --test apps/voltpro-engineering-source/tests/electrical-engine.test.mjs platform/workspace-shell.test.mjs platform/access.test.mjs platform/router.test.mjs platform/deployment-cache.test.mjs platform/release-update.test.mjs platform/admin-security.test.mjs platform/engineering-ai.test.mjs platform/app-archives.test.mjs platform/admin-accounts.test.mjs platform/public-auth.test.mjs platform/studio-bank.test.mjs platform/language-system.test.mjs platform/release-assets.test.mjs platform/engineering-capability-matrix.test.mjs platform/status-page.test.mjs platform/acceptance/gaps/*.test.mjs platform/about-contact.test.mjs platform/public-language.test.mjs platform/public-ai.test.mjs platform/sitewide-theme.test.mjs
       - name: Verify preservation of the original platform
         run: node platform/preflight.mjs
       - name: Check every original browser script
@@ -75,16 +61,9 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: Verify production release and freshness on all engineering tool routes
+      - name: Verify production release and retired engineering routes
         if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
         run: node platform/verify-admin-deployment.mjs
-
-      - name: Deploy dedicated VoltPro engineering AI Worker
-        if: ${{ (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'push')) || startsWith(github.ref, 'refs/tags/deploy-') }}
-        run: npx wrangler deploy --config apps/voltpro-engineering-source/server/wrangler.toml
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Preserve the production security and upgrade report
         if: ${{ always() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/deploy-')) }}

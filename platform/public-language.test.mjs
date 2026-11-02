@@ -5,12 +5,10 @@ import fs from 'node:fs';
 const root=new URL('../',import.meta.url);
 const read=path=>fs.readFileSync(new URL(path,root),'utf8');
 
-test('release keeps Simulator, Breadboard and PLC UI available to translation',()=>{
+test('release includes the retained shared language runtime and excludes the engineering suite',()=>{
   const build=read('platform/build.mjs');
   assert.doesNotMatch(build,/translate=["']no["']/);
-  assert.match(build,/voltpro-plc/);
-  assert.match(build,/simulator\.html/);
-  assert.match(build,/breadboard\.html/);
+  assert.doesNotMatch(build,/voltpro-engineering-source|voltpro-plc|simulator\.html|breadboard\.html/);
   assert.match(build,/shared,'language-system\.js'/);
   assert.match(build,/shared,'data\/translations'/);
   assert.match(read('platform/router.mjs'),/\/_hb\/language-system\.js/);
@@ -30,7 +28,7 @@ test('all supported language dictionaries cover common and engineering UI terms'
 test('shared account sign-in, onboarding, and recovery copy is translated',()=>{
   const keys=[
     'your hephzibah behulah account',
-    'one account for the main website, voltpro academy and cyber learning',
+    'one account for the main website and cyber learning',
     'password',
     'use your email and password, then verify the code sent to your inbox.',
     'sessions end after five hours without activity. use sign out when you finish, particularly on a shared computer.'
@@ -51,3 +49,5 @@ test('live translation tracks dynamic UI changes and accessibility attributes',(
   assert.match(source,/el\.closest\('\[translate="no"\]'\)/);
   assert.doesNotMatch(source,/\[role="status"\]/);
 });
+
+
