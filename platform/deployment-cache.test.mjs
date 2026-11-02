@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {createPlatform} from './router.mjs';
 import {publicServiceWorker} from './public-sw.mjs';
-const origin='https://engineering.hephzibahbehulah.com';
+const origin='https://cyber.hephzibahbehulah.com';
 const worker=createPlatform({memberAuth:{gate:async()=>({allowed:true})}});
 test('all seven tool routes return uncached HTML and discard stale HTML validators',async()=>{
  for(const path of ['/plc','/electcad','/tools','/breadboard','/electrical','/oscilloscope','/simulator']){
@@ -48,18 +48,19 @@ test('activation cleans owned legacy caches and leaves unrelated origin caches i
 test('worker waits by default and activates only after the update action',async()=>{
  const h=harness();assert.equal(h.events.install,undefined);let done;h.events.message({data:{type:'HB_ACTIVATE_UPDATE'},waitUntil:p=>done=p});await done;assert.deepEqual(h.calls,['skip']);
 });
-import {verifyDeployment} from './verify-deployment.mjs';
-test('production verifier checks embedded bases and hashed bundle URLs as well as shell routes',async()=>{
+import {verifyDeployment,REMOVED_PATHS} from './verify-deployment.mjs';
+test('production verifier checks retired routes and retained main-site assets',async()=>{
  const calls=[],commit='c'.repeat(40);
- const fetcher=async input=>{
+ const fetcher=async(input,options={})=>{
   const url=new URL(input);calls.push(url.pathname);
   if(url.pathname==='/_hb/release.json')return Response.json({commitHash:commit});
+  if(REMOVED_PATHS.includes(url.pathname))return new Response(null,{status:404});
   if(url.pathname==='/__hb_missing_release_asset__.js')return new Response(null,{status:404});
   if(['/sw.js','/service-worker.js'].includes(url.pathname))return new Response('HB_ACTIVATE_UPDATE',{headers:{'cache-control':'no-store'}});
   if(/\.(?:js|css)$/.test(url.pathname))return new Response('asset',{headers:{'cache-control':'no-cache','content-type':'text/javascript'}});
-  return new Response(`<head><base href="/voltPro-ElectCAD/"><meta name="hb-release" content="${commit}"><script src="/_hb/release-update.js"></script><script src="assets/index-contenthash.js"></script></head>`,{headers:{'cache-control':'private, no-store','content-type':'text/html'}});
+  return new Response('<head><meta name="hb-release" content="'+commit+'"></head>',{headers:{'cache-control':'private, no-store','content-type':'text/html'}});
  };
- await verifyDeployment({commit,fetcher});assert.ok(calls.includes('/voltPro-ElectCAD/assets/index-contenthash.js'));assert.ok(calls.includes('/electrical-canvas.html'));assert.ok(calls.includes('/voltpro-plc/'));
+ await verifyDeployment({commit,fetcher});assert.ok(calls.includes('/plc'));assert.ok(calls.includes('/tools'));assert.ok(calls.includes('/_hb/platform.js'));
 });
 test('production verifier fails a deployment whose live commit does not match',async()=>{
  await assert.rejects(verifyDeployment({commit:'b'.repeat(40),fetcher:async()=>Response.json({commitHash:'a'.repeat(40)})}),/Production release must match/);
@@ -77,3 +78,4 @@ test('release identity is embedded in every HTML build without depending on depl
   assert.equal(stampRelease(dir,commit),2);assert.throws(()=>stampRelease(dir,'Unknown'),/valid Git commit/);
  }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
+

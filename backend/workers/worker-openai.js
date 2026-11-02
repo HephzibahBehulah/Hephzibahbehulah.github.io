@@ -606,132 +606,892 @@ async function executeReconBase(base) {
     const r=await fetchRecon("/");
     const parsed=parseHtml(r.body);
     if(base==="http-body") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,body:r.body}};
-    if(base==="http-links"||base==="site-links") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,links:parsed.links}};
-    if(base==="http-scripts") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,scripts:parsed.scripts}};
-    if(base==="http-styles") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,styles:parsed.styles}};
-    if(base==="http-images") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,images:parsed.images}};
-    if(base==="http-forms") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,forms:parsed.forms}};
-    if(base==="http-headings") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,headings:parsed.headings}};
-    if(base==="http-meta") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,title:parsed.title,meta:parsed.meta,canonical:parsed.canonical}};
-    if(base==="http-title") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,title:parsed.title}};
-    if(base==="http-size") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,contentLength:r.headers["content-length"]||null,measuredBodyBytes:new TextEncoder().encode(r.body||"").length}};
-    if(base==="site-assets") return {target:RECON_TARGET,result:{httpStatus:r.httpStatus,scripts:parsed.scripts,styles:parsed.styles,images:parsed.images}};
+    if(base==="http-links"||base==="site-links") retu…5491 tokens truncated…?.content);
+    if (!content || (typeof content==="string" && !content.trim())) continue;
+    const weight = typeof content==="string"
+      ? content.length
+      : content.reduce((sum,p)=>{
+          if(p?.type==="input_image") return sum+120;
+          if(p?.type==="input_file") return sum+String(p.file_data||"").length+256;
+          return sum+String(p?.text||"").length;
+        },0);
+    if(total+weight>MAX_NORMALIZED_BYTES) break;
+    total += weight;
+    out.push({role,content});
   }
-  if(base==="http-methods"){
-    const [get,head,options]=await Promise.all([
-      fetchRecon("/",{readBody:false}),
-      fetchRecon("/",{method:"HEAD",readBody:false}),
-      fetchRecon("/",{method:"OPTIONS",readBody:false})
-    ]);
-    return {target:RECON_TARGET,result:{GET:get.httpStatus,HEAD:head.httpStatus,OPTIONS:options.httpStatus}};
-  }
-  const dnsTypes={"dns-a":1,"dns-aaaa":28,"dns-mx":15,"dns-ns":2,"dns-txt":16,"dns-cname":5,"dns-soa":6,"dns-caa":257,"dns-srv":33};
-  if(dnsTypes[base]) return {target:RECON_TARGET,result:await doh("hephzibahbehulah.com",dnsTypes[base])};
-  if(base==="dns-dmarc") return {target:RECON_TARGET,result:await doh("_dmarc.hephzibahbehulah.com",16)};
-  if(base==="dns-spf"){
-    const d=await doh("hephzibahbehulah.com",16);
-    return {target:RECON_TARGET,result:{...d,spf:d.answers.filter(a=>String(a.data||"").toLowerCase().includes("v=spf1"))}};
-  }
-  if(base==="dns-dnssec"){
-    const [ds,dnskey]=await Promise.all([doh("hephzibahbehulah.com",43),doh("hephzibahbehulah.com",48)]);
-    return {target:RECON_TARGET,result:{DS:ds,DNSKEY:dnskey}};
-  }
-  const fixedPaths={
-    "robots":["/robots.txt"],"sitemap":["/sitemap.xml"],"security-txt":["/.well-known/security.txt","/security.txt"],
-    "manifest":["/manifest.json","/manifest.webmanifest"],"favicon":["/favicon.ico","/favicon.svg"],
-    "humans":["/humans.txt"],"llms":["/llms.txt"],"ai-txt":["/ai.txt","/ai-policy.txt"],
-    "ads-txt":["/ads.txt"],"feed":["/feed.xml","/rss.xml","/atom.xml"],
-    "well-known":["/.well-known/change-password","/.well-known/assetlinks.json","/.well-known/apple-app-site-association"]
-  };
-  if(fixedPaths[base]){
-    const results=await Promise.all(fixedPaths[base].map(async path=>{
-      try{const r=await fetchRecon(path,{readBody:true});return {path,httpStatus:r.httpStatus,ok:r.ok,finalUrl:r.finalUrl,content:String(r.body||"").slice(0,30000)};}
-      catch(error){return {path,error:String(error?.message||error)};}
-    }));
-    return {target:RECON_TARGET,result:{checks:results}};
-  }
-  const gh={
-    "github-repo":"/repos/"+RECON_REPO,
-    "github-commits":"/repos/"+RECON_REPO+"/commits?per_page=20",
-    "github-branches":"/repos/"+RECON_REPO+"/branches?per_page=50",
-    "github-runs":"/repos/"+RECON_REPO+"/actions/runs?per_page=20",
-    "github-releases":"/repos/"+RECON_REPO+"/releases?per_page=20",
-    "github-languages":"/repos/"+RECON_REPO+"/languages",
-    "github-contributors":"/repos/"+RECON_REPO+"/contributors?per_page=50",
-    "github-tags":"/repos/"+RECON_REPO+"/tags?per_page=50"
-  };
-  if(gh[base]){
-    const r=await githubJson(gh[base]);
-    return {target:RECON_REPO,result:r};
-  }
-  if(base==="site-summary"||base==="site-assets"||base==="site-links"){
-    const names=["site-health","security-headers","dns-a","dns-aaaa","dns-mx","dns-ns","dns-txt","robots","sitemap","http-meta","http-links","http-scripts","http-styles","edge","github-repo"];
-    const rows=await Promise.all(names.map(async name=>({command:name,...await executeReconBase(name)})));
-    return {target:RECON_TARGET,result:{checks:rows}};
-  }
-  throw new Error("Unknown reconnaissance operation: "+base);
+  return out;
+}
+function attachmentCount(messages) {
+  return messages.reduce((n,m)=>n+(Array.isArray(m.content)?m.content.filter(p=>p?.type==="input_file"||p?.type==="input_image").length:0),0);
 }
 
-function reconEvidence(base,data,actor) {
-  return evidenceRecord({
-    tool:"recon."+base,
-    target:RECON_TARGET,
-    actor,
-    status:"observed",
-    startedAt:data.startedAt,
-    result:data.result
+function extractOutputText(data) {
+  if (typeof data?.output_text === "string" && data.output_text.trim()) {
+    return data.output_text;
+  }
+
+  const parts = [];
+  for (const item of data?.output || []) {
+    for (const c of item?.content || []) {
+      if (c?.type === "output_text" && c?.text) parts.push(c.text);
+    }
+  }
+  return parts.join("\n\n").trim();
+}
+
+function isSiteHealthQuery(q) {
+  return /(?:check|is|status|health|healthy|up|down|reachable|available).*(?:hephzibahbehulah\\.com|website|site)|(?:hephzibahbehulah\\.com|website|site).*(?:health|healthy|status|up|down|reachable)/i.test(String(q||""));
+}
+
+async function publicSiteHealthEvidence() {
+  const started = new Date().toISOString();
+  const startedMs = Date.now();
+  try {
+    const response = await fetch("https://hephzibahbehulah.com/", { redirect:"follow" });
+    const headers = Object.fromEntries(response.headers);
+    const result = {
+      httpStatus: response.status,
+      ok: response.ok,
+      finalUrl: response.url,
+      server: headers.server || null,
+      cloudflareRay: headers["cf-ray"] || null,
+      durationMs: Date.now()-startedMs
+    };
+    return evidenceRecord({tool:"http.inspect",target:"https://hephzibahbehulah.com/",result,status:"observed",startedAt:started});
+  } catch (error) {
+    return evidenceRecord({tool:"http.inspect",target:"https://hephzibahbehulah.com/",result:{error:String(error?.message||error),durationMs:Date.now()-startedMs},status:"error",startedAt:started});
+  }
+}
+
+function evidenceContext(evidence) {
+  if (!evidence) return "";
+  return "\n\nLIVE SERVER EVIDENCE (machine-generated; do not contradict or invent):\n" + JSON.stringify(evidence, null, 2);
+}
+
+function evidenceOnlyHealthAnswer(evidence) {
+  const r=evidence?.result||{};
+  if(evidence?.status==="observed") {
+    return "## Live website health check\n\n" +
+      "- Target: https://hephzibahbehulah.com/\n" +
+      "- HTTP status: " + String(r.httpStatus) + "\n" +
+      "- Reachability: " + (r.ok ? "The server responded successfully." : "The server returned a non-success HTTP status.") + "\n" +
+      "- Final URL: " + String(r.finalUrl||"unavailable") + "\n" +
+      "- Observed at: " + String(evidence.observedAt) + "\n" +
+      "- Evidence ID: " + String(evidence.evidenceId) + "\n\n" +
+      "This is a live HTTP observation. It does not by itself prove application correctness, database health, or every dependent service is healthy.";
+  }
+  return "## Live website health check\n\nThe live HTTP check could not be completed. No HTTP status is being claimed.\n\n" +
+    "- Observed at: " + String(evidence?.observedAt||new Date().toISOString()) + "\n" +
+    "- Evidence ID: " + String(evidence?.evidenceId||"unavailable");
+}
+
+function collectSources(data) {
+  const urls = [];
+  for (const item of data?.output || []) {
+    if (item?.type !== "message") continue;
+    for (const c of item?.content || []) {
+      for (const a of c?.annotations || []) {
+        if (a?.type === "url_citation" && a.url) urls.push(a.url);
+      }
+    }
+  }
+  return [...new Set(urls)].slice(0, 20);
+}
+
+function isJobSearchIntent(q) {
+  return /\b(job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for)\b/i.test(String(q||""));
+}
+function isCurrentInfoIntent(q) {
+  return /\b(today|now|currently|right now|this morning|this afternoon|tonight|latest|recent|live|current|what time|weather|forecast|news|where is|what happened|jobs?|vacanc(?:y|ies)|hiring|openings?|recruit(?:ment)?)\b/i.test(String(q||""));
+}
+
+function normalizeSourceUrl(value) {
+  try {
+    const u=new URL(String(value||""));
+    if(u.protocol!=="https:") return null;
+    if(["google.com","www.google.com","bing.com","www.bing.com","search.yahoo.com","duckduckgo.com"].includes(u.hostname.toLowerCase())) return null;
+    return u.href;
+  } catch { return null; }
+}
+
+function extractWebCitations(data) {
+  const out=[];
+  for(const item of data?.output||[]) {
+    if(item?.type!=="message") continue;
+    for(const c of item?.content||[]) {
+      for(const a of c?.annotations||[]) {
+        if(a?.type!=="url_citation" || !a.url) continue;
+        const url=normalizeSourceUrl(a.url);
+        if(!url) continue;
+        out.push({
+          url,
+          title:String(a.title||"").slice(0,240),
+          startIndex:Number.isFinite(a.start_index)?a.start_index:null,
+          endIndex:Number.isFinite(a.end_index)?a.end_index:null
+        });
+      }
+    }
+  }
+  const seen=new Set();
+  return out.filter(x=>!seen.has(x.url)&&(seen.add(x.url),true)).slice(0,12);
+}
+
+async function verifyVacancySources(citations) {
+  const checked=[];
+  for(const citation of citations.slice(0,8)) {
+    const base={sourceUrl:citation.url,title:citation.title||null,verificationStatus:"unverified"};
+    try {
+      const response=await fetch(citation.url,{redirect:"follow",headers:{"user-agent":"ADIGUN-Evidence-Verifier/1.0","accept":"text/html,application/xhtml+xml"}});
+      const contentType=String(response.headers.get("content-type")||"").toLowerCase();
+      const finalUrl=normalizeSourceUrl(response.url);
+      if(!response.ok || !finalUrl || !contentType.includes("text/html")) {
+        checked.push({...base,httpStatus:response.status,verificationStatus:"unverified",reason:"Original source page could not be fetched as HTML."});
+        continue;
+      }
+      const html=(await response.text()).slice(0,500000);
+      const text=html.replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim().toLowerCase();
+      const hasJobMarker=/\b(job|jobs|career|careers|vacancy|position|role|apply|application)\b/.test(text);
+      const hasActiveMarker=/\b(apply now|apply|submit application|application deadline|applications? (are|is) open|how to apply|easy apply|bewerben|jetzt bewerben|stellenangebot)\b/.test(text);
+      const hasClosedMarker=/\b(closed|filled|no longer accepting|position (has )?been filled|application(s)? closed|bewerbung(en)? geschlossen|stelle besetzt)\b/.test(text);
+      let verificationStatus="unverified";
+      let reason="The original page was reachable but active application evidence was not established.";
+      if(hasJobMarker && hasActiveMarker && !hasClosedMarker) {
+        verificationStatus="verified";
+        reason="Original source page is reachable and contains job plus active-application indicators.";
+      } else if(hasJobMarker && hasClosedMarker) {
+        verificationStatus="stale";
+        reason="Original source page contains closure/filled indicators.";
+      }
+      checked.push({...base,finalUrl,httpStatus:response.status,verificationStatus,reason});
+    } catch(error) {
+      checked.push({...base,verificationStatus:"unverified",reason:"Source fetch failed: "+String(error?.message||error).slice(0,180)});
+    }
+  }
+  return checked;
+}
+
+function applyJobEvidenceGuard(answer,citations,verification) {
+  const verified=verification.filter(x=>x.verificationStatus==="verified");
+  const stale=verification.filter(x=>x.verificationStatus==="stale");
+  const currentSources=citations.length;
+  const audit={
+    requested:true,
+    sourceCount:currentSources,
+    verifiedSourceCount:verified.length,
+    staleSourceCount:stale.length,
+    verifiedVacancyCount:verified.length,
+    verificationRule:"Original HTTPS source reachable + job marker + active-application marker + no closure marker.",
+    sources:verification
+  };
+  let safeAnswer=String(answer||"");
+  safeAnswer=safeAnswer.replace(/\b(?:verified|confirmed|live|active)\s+(?:vacanc(?:y|ies)|job(?:s)?)/gi, match => {
+    return verified.length ? match : "[UNVERIFIED] "+match;
+  });
+  if(!verified.length) {
+    const note="## Vacancy evidence status\n\n[UNVERIFIED] No vacancy is counted as a current verified vacancy. ADIGUN could not establish an active application from the fetched original source pages. Search results and market estimates are not counted as verified vacancies.";
+    safeAnswer=note+"\n\n"+safeAnswer;
+  }
+  return {answer:safeAnswer,audit};
+}
+
+async function openRouterFallback(request, env, messages, context) {
+  if (!env.OPENROUTER_API_KEY) return null;
+  const model = env.OPENROUTER_MODEL || "openrouter/free";
+  const input = [];
+  for (const m of messages) {
+    if (Array.isArray(m.content)) {
+      const text = m.content.filter(p => p?.type === "input_text").map(p => String(p.text || "")).join("\n");
+      if (text.trim()) input.push({ role:m.role, content:text });
+    } else if (String(m.content || "").trim()) {
+      input.push({ role:m.role, content:String(m.content) });
+    }
+  }
+  if (!input.length) return null;
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/responses", {
+      method:"POST",
+      headers:{
+        "authorization":"Bearer " + env.OPENROUTER_API_KEY,
+        "content-type":"application/json",
+        "http-referer":"https://hephzibahbehulah.com",
+        "x-title":"ADIGUN Intelligence"
+      },
+      body:JSON.stringify({
+        model,
+        instructions:SYSTEM + (context ? "\n" + context : ""),
+        input,
+        store:false
+      })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      console.error("ADIGUN OpenRouter fallback error", { status:response.status, message:data?.error?.message || null });
+      return null;
+    }
+    const answer = extractOutputText(data) || data?.choices?.[0]?.message?.content || "";
+    if (!answer) return null;
+    return json(request, {
+      ok:true,
+      answer,
+      model:data.model || model,
+      provider:"openrouter",
+      fallback:true,
+      ragUsed:Boolean(context),
+      siteUsed:Boolean(context),
+      webUsed:false,
+      sources:{web:[]},
+      attachments:attachmentCount(messages),
+      actions:[]
+    });
+  } catch (error) {
+    console.error("ADIGUN OpenRouter network error", String(error?.message || error));
+    return null;
+  }
+}
+
+async function cloudflareFallback(request, env, messages, context) {
+  if (!env.AI) return null;
+  const model = env.ADIGUN_FALLBACK_MODEL || "@cf/zai-org/glm-4.7-flash";
+  const normalized = [{ role:"system", content:SYSTEM + (context ? "\n" + context : "") }];
+  for (const m of messages) {
+    const content = Array.isArray(m.content)
+      ? m.content.filter(p => p && p.type === "input_text").map(p => String(p.text || "")).join("\n")
+      : String(m.content || "");
+    if (content.trim()) normalized.push({ role:m.role, content });
+  }
+  try {
+    const result = await env.AI.run(model, { messages: normalized });
+    const answer = result?.response || result?.choices?.[0]?.message?.content || "";
+    if (!answer) return null;
+    return json(request, { ok:true, answer, model, provider:"cloudflare-workers-ai", fallback:true, ragUsed:Boolean(context), siteUsed:Boolean(context), webUsed:false, sources:{web:[]}, attachments:attachmentCount(messages), actions:[] });
+  } catch (error) {
+    console.error("ADIGUN Cloudflare AI fallback error", { model, error:String(error?.message || error) });
+    return null;
+  }
+}
+
+async function withTimeout(promise, ms, fallback) {
+  let timer;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise(resolve => { timer = setTimeout(() => resolve(fallback), ms); })
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+async function transcribeAudio(request, env) {
+  if (!env.OPENAI_API_KEY) return json(request,{ok:false,error:"Voice transcription is not configured."},503);
+  let form;
+  try { form = await request.formData(); } catch { return json(request,{ok:false,error:"Invalid audio upload."},400); }
+  const audio = form.get("audio");
+  if (!(audio instanceof File || audio instanceof Blob)) return json(request,{ok:false,error:"No audio file was supplied."},400);
+  if (audio.size > 25*1024*1024) return json(request,{ok:false,error:"Audio file is larger than 25 MB."},413);
+  const type = String(audio.type || "audio/webm").toLowerCase();
+  if (!type.startsWith("audio/")) return json(request,{ok:false,error:"Only audio uploads are accepted."},415);
+  const upstream = new FormData();
+  upstream.append("file",audio,audio instanceof File ? audio.name : "adigun-audio.webm");
+  upstream.append("model",env.OPENAI_TRANSCRIBE_MODEL || "gpt-4o-mini-transcribe");
+  upstream.append("response_format","json");
+  try {
+    const r=await fetch("https://api.openai.com/v1/audio/transcriptions",{method:"POST",headers:{"authorization":"Bearer "+env.OPENAI_API_KEY},body:upstream});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok || !d.text) return json(request,{ok:false,error:String(d?.error?.message||"Transcription provider failed.")},r.status>=400&&r.status<500?r.status:502);
+    return json(request,{ok:true,text:String(d.text),model:d.model||env.OPENAI_TRANSCRIBE_MODEL||"gpt-4o-mini-transcribe"});
+  } catch(error) { return json(request,{ok:false,error:"Voice transcription request failed: "+String(error?.message||error)},502); }
+}
+
+async function openAIChat(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json(request, { ok: false, error: "Invalid JSON." }, 400);
+  }
+
+  const messages = normalizeMessages(body);
+  if (!messages.length) return json(request, { ok: false, error: "A message is required." }, 400);
+
+  if (env.API_LIMITER) {
+    const session = request.headers.get("x-hb-session") || "anonymous";
+    const limit = await env.API_LIMITER.limit({ key: "openai-chat:" + session });
+    if (!limit.success) {
+      return json(request, { ok: false, error: "Rate limit exceeded. Try again shortly." }, 429, {
+        "retry-after": "60"
+      });
+    }
+  }
+
+  const lastContent = messages[messages.length - 1].content;
+  const q = typeof lastContent === "string" ? lastContent : (lastContent.find(p=>p?.type==="input_text")?.text || "Analyze the attached material.");
+  const context = await withTimeout(retrieveContext(request, env, q), 4500, "");
+  const clientContext = String(body?.siteContext || "").slice(0, 14000);
+  const liveEvidence = isSiteHealthQuery(q) ? await withTimeout(publicSiteHealthEvidence(), 4500, null) : null;
+  const evidence = evidenceContext(liveEvidence);
+
+  const instructions =
+    SYSTEM +
+    (context ? "\n" + context : "") +
+    evidence +
+    (clientContext ? "\n\nCLIENT-SUPPLIED SITE CONTEXT:\n" + clientContext : "");
+
+  const payload = {
+    model: MODEL(env),
+    instructions,
+    input: messages,
+    tools: [{ type: "web_search", search_context_size: "medium" }],
+    tool_choice: isCurrentInfoIntent(q) ? "required" : "auto",
+    reasoning: { effort: env.OPENAI_REASONING_EFFORT || "medium" },
+    store: false
+  };
+
+  let response;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      response = await fetch("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+          "authorization": "Bearer " + env.OPENAI_API_KEY,
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+  } catch {
+    const fallback = isCurrentInfoIntent(q) ? null : (await openRouterFallback(request, env, messages, context + evidence) || await cloudflareFallback(request, env, messages, context + evidence));
+    if (fallback) return fallback;
+    if (liveEvidence) return json(request, {ok:true,answer:evidenceOnlyHealthAnswer(liveEvidence),provider:"evidence-only",fallback:true,ragUsed:Boolean(context),siteUsed:true,webUsed:false,sources:{web:[]},attachments:attachmentCount(messages),actions:[],evidence:[liveEvidence]});
+    return json(request, { ok: false, error: "AI provider timed out or was unavailable. Please retry." }, 504);
+  }
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const upstream = String(data?.error?.message || "OpenAI request failed.");
+    const requestId = response.headers.get("x-request-id") || null;
+    console.error("ADIGUN OpenAI error", { status: response.status, type: data?.error?.type || null, code: data?.error?.code || null, requestId });
+    const fallback = await openRouterFallback(request, env, messages, context + evidence) || await cloudflareFallback(request, env, messages, context + evidence);
+    if (fallback) return fallback;
+    if (liveEvidence) return json(request, {ok:true,answer:evidenceOnlyHealthAnswer(liveEvidence),provider:"evidence-only",fallback:true,ragUsed:Boolean(context),siteUsed:true,webUsed:false,sources:{web:[]},attachments:attachmentCount(messages),actions:[],evidence:[liveEvidence],providerError:{provider:"openai",error:upstream,requestId}});
+    return json(request, {
+      ok: false,
+      error: upstream,
+      provider: "openai",
+      requestId
+    }, response.status >= 400 && response.status < 500 ? response.status : 502);
+  }
+
+  const answer = extractOutputText(data);
+  if (!answer) return json(request, { ok: false, error: "OpenAI returned no text." }, 502);
+
+  const sources = collectSources(data);
+  if (isCurrentInfoIntent(q) && sources.length === 0) {
+    return json(request, { ok:false, error:"Live verification was required for this request, but no web evidence was returned. Please retry." }, 502);
+  }
+  const webCitations = extractWebCitations(data);
+  const jobVerification = isJobSearchIntent(q)
+    ? await verifyVacancySources(webCitations)
+    : [];
+  const guarded = isJobSearchIntent(q)
+    ? applyJobEvidenceGuard(answer, webCitations, jobVerification)
+    : {answer,audit:null};
+
+  return json(request, {
+    ok: true,
+    answer: guarded.answer,
+    model: data.model || MODEL(env),
+    provider: "openai",
+    ragUsed: Boolean(context),
+    siteUsed: Boolean(context || clientContext),
+    webUsed: sources.length > 0,
+    sources: { web: sources },
+    vacancyEvidence: guarded.audit,
+    attachments: attachmentCount(messages),
+    actions: [],
+    evidence: liveEvidence ? [liveEvidence] : []
   });
 }
 
-async function executeReconCommand(request, command) {
-  const raw=String(command||"").trim();
-  if(!raw) return json(request,{ok:false,error:"Enter a command. Type help to see the reconnaissance catalog."},400);
-  const lower=normalizeAdminCommand(raw);
-  if(lower==="help"||lower==="commands") return json(request,reconHelp("overview"));
-  if(lower.startsWith("help ")) return json(request,reconHelp(lower.slice(5)));
-  if(lower==="recon"||lower==="full-recon"||lower==="recon-all"){
-    const started=Date.now();
-    const names=["site-health","security-headers","dns-a","dns-aaaa","dns-mx","dns-ns","dns-txt","dns-caa","dns-dnssec","robots","sitemap","security-txt","http-meta","http-links","http-scripts","http-styles","http-headings","edge","github-repo","github-commits","github-runs"];
-    const rows=await Promise.all(names.map(async name=>{try{return {command:name,...await executeReconBase(name)};}catch(error){return {command:name,error:String(error?.message||error)};}}));
-    const evidence=evidenceRecord({tool:"recon.full",target:RECON_TARGET,actor:getRequestActor(request),status:"observed",startedAt:new Date(started).toISOString(),result:{checks:rows}});
-    return json(request,{ok:true,command:raw,label:"Full passive reconnaissance",durationMs:Date.now()-started,result:{checks:rows},evidence});
-  }
-  const base=RECON_COMMANDS[lower];
-  if(!base) return null;
-  const started=new Date().toISOString();
-  try{
-    const data=await executeReconBase(base);
-    const evidence=reconEvidence(base,{...data,startedAt:started},getAdminIdentity().email);
-    return json(request,{ok:true,command:raw,baseCommand:base,label:RECON_BASES[base].label,description:RECON_BASES[base].description,target:RECON_TARGET,durationMs:Date.now()-new Date(started).getTime(),result:data.result,evidence});
-  }catch(error){
-    return json(request,{ok:false,command:raw,baseCommand:base,error:String(error?.message||error),durationMs:Date.now()-new Date(started).getTime()},502);
-  }
+
+async function runAgentInspection(request, env, target, ctx, task="") {
+  const u = new URL(request.url);
+  u.pathname = "/api/admin/inspect";
+  u.search = "?target=" + encodeURIComponent(target);
+  const r = await privateInspect(new Request(u.toString(), { method:"GET", headers:request.headers }), env, u, ctx, task);
+  try { return await r.json(); } catch { return { ok:false, error:"Inspection returned invalid data." }; }
 }
 
-function normalizeAdminCommand(command) {
-  const raw=String(command||"").trim().toLowerCase().replace(/\s+/g," ");
-  const aliases=Object.freeze({"dns-lookup":"dns-a","dns lookup":"dns-a","site-headers":"http-headers","site-robots":"robots","site-sitemap":"sitemap","repository-status":"github-repo","repo-status":"github-repo","github-status":"github-repo","cf":"edge","cloudflare-edge":"edge"});
-  return aliases[raw] || raw;
-}
-async function executeAdminCommand(request, env, command) {
-  const raw=String(command||"").trim();
-  if(!raw) return json(request,{ok:false,error:"Enter a command. Type help to see the command registry."},400);
-  const lower=raw.toLowerCase();
-  if(lower==="help"||lower==="commands"||lower.startsWith("help ")) return executeReconCommand(request,lower);
-  const recon=await executeReconCommand(request,lower);
-  if(recon) return recon;
-  const identity={...getAdminIdentity(),email:getRequestActor(request)};
-  const shellCommand=SANDBOX_COMMANDS[lower];
-  if(!shellCommand) return json(request,{ok:false,error:"Unknown command. Type HELP to see the command registry.",available:["help","commands",...Object.keys(SANDBOX_COMMANDS),...Object.keys(RECON_COMMANDS)]},400);
-  return executeSandboxCommand(request,env,null,lower);
+function agentTargets(task) {
+  const q = String(task || "").toLowerCase();
+  const targets = new Set();
+  if (/\baccounts?\b|\blogins?\b|log in|sign.?in|supabase|authentication events|malicious login/.test(q)) targets.add("accounts");
+  if (/job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for/.test(q)) return [];
+  if (/github|repo|repository|commit|pull request|workflow|action|source code|codebase|frontend|front end|backend|back end|api|file|files/.test(q)) targets.add(/frontend|front end|backend|back end|source code|codebase|api|file|files/.test(q) ? "github-deep" : "github");
+  if (/cloudflare|worker|edge|dns|access|deployment|deploy/.test(q)) targets.add("cloudflare");
+  if (/security|header|csp|hsts|x-frame|permissions|attack|vulnerab|pentest|pen test|security test|exposure/.test(q)) targets.add("security");
+  if (/website|site|page|domain|homepage|frontend|broken|down|error|route|endpoint|login|log in|authentication|session/.test(q)) targets.add("site");
+  if (/recon|reconnaissance|enumerate|enumeration|attack surface|fingerprint/.test(q)) ["site","security","github-deep","cloudflare"].forEach(x=>targets.add(x));
+  if (!targets.size && /full|everything|investigate|diagnose|audit|check the system|what is wrong|pentest|security assessment/.test(q)) ["site","security","github-deep","cloudflare"].forEach(x=>targets.add(x));
+  return [...targets];
 }
 
-async function executeSandboxCommand(request, env, ctx, command) {
-  const recon=await executeReconCommand(request,command);
-  if(recon) return recon;
-  const identity={...getAdminIdentity(),email:getRequestActor(request)};
-  const shellCommand=SANDBOX_COMMANDS[command];
-  if(!shellCommand) return json(request,{ok:false,error:"Unknown command. Type help for the reconnaissance catalog.",available:["help","recon",...Object.keys(SANDBOX_COMMANDS),...Object.keys(RECON_COMMANDS)]},400);
-  const started=Date.now();
-  try{
-    const sandbox=await getAdminSandbox(env,identity);…58645 tokens truncated…complete. Cloudflare deploy runs as the configured deploy command.');
+function agentActionPlan(task, checks) {
+  const q = String(task || "").toLowerCase();
+  const wantsMutation = /change|modify|edit|update|fix|deploy|delete|remove|commit|push|merge|purge|restart|rotate|configure/.test(q);
+  const actions = [];
+  if (wantsMutation) actions.push({
+    id:"mutation-request",
+    status:"approval-required",
+    title:"Requested change",
+    description:"ADIGUN identified a potentially state-changing operation. It will not execute it automatically.",
+    execution:"blocked-until-explicit-approval-and-authorized-connector",
+    requestedBy:"local operator"
+  });
+  actions.push({
+    id:"verification",
+    status:"safe-read-only",
+    title:"Post-action verification",
+    description:"Re-run the relevant inspection after any approved change and report the observed result."
+  });
+  return {
+    mode:wantsMutation?"plan-then-approve":"investigate-and-report",
+    approvalRequired:wantsMutation,
+    actions,
+    policy:[
+      "Read-only investigation may run automatically.",
+      "State-changing operations never execute from chat text alone.",
+      "Every consequential operation must identify its exact target and effect before approval.",
+      "Secrets and unrestricted shell access are never exposed to the model."
+    ],
+    checksObserved:checks.length
+  };
+}
+
+function requestedCommands(task){
+  const q=String(task||"").toLowerCase();
+  const map=[
+    ["site-health",/site[- ]health|http health|check.*http/],
+    ["http-headers",/site[- ]headers|http headers|security headers|check.*headers/],
+    ["robots",/robots\.txt|robots policy/],
+    ["sitemap",/sitemap\.xml|sitemap/],
+    ["dns-a",/dns lookup|resolve dns|dns resolution/],
+    ["github-repo",/repository status|repo status|git status|current revision/]
+  ];
+  return map.filter(([,re])=>re.test(q)).map(([name])=>name);
+}
+async function runAgentCommands(request,env,commands){
+  const unique=[...new Set(commands)].slice(0,4);
+  return Promise.all(unique.map(async command=>{
+    const u=new URL(request.url);u.pathname="/api/admin/command";u.search="";
+    const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command})}),env,command);
+    return {command,data:await r.json().catch(()=>({ok:false,error:"Invalid command result."}))};
+  }));
+}
+
+function requestedSandboxCommands(task){
+  const q=String(task||"").toLowerCase();
+  return Object.keys(SANDBOX_COMMANDS).filter(command =>
+    q.includes("run "+command) || q.includes("execute "+command) || q.includes("check "+command)
+  ).slice(0,3);
+}
+async function privateAgent(request, env, url, ctx) {
+  const auth = await authenticateAdmin(request, env);
+  if (!auth.ok) return auth.response;
+  const identity = getAdminIdentity(auth.identity);
+  if (!env.ADMIN_AI_LIMITER?.limit) return json(request,{ok:false,error:"Private AI rate limiter is not configured."},503);
+  const limit = await env.ADMIN_AI_LIMITER.limit({key:"private-adigun:"+identity.email});
+  if (!limit.success) return json(request,{ok:false,error:"Private AI rate limit exceeded. Try again shortly."},429,{"retry-after":"1"});
+  let body;
+  try { body = await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
+  const task = String(body?.task || body?.message || "").trim();
+  if (!task) return json(request,{ok:false,error:"Describe what you want ADIGUN to investigate."},400);
+
+  // Routine greetings are conversation, not investigations. Do not run passive
+  // inspections, generate a task report, or attach an action plan to them.
+  if (/^(?:hello|hallo|hi|hey|hiya|good morning|good afternoon|good evening)[!.\\s]*$/i.test(task)) {
+    return json(request,{
+      ok:true,
+      mode:"conversation",
+      actor:identity.email,
+      task,
+      targets:[],
+      investigations:[],
+      commandResults:[],
+      sandboxResults:[],
+      plan:null,
+      answer:"Hallo! I’m ADIGUN, Hephzibah Behulah’s AI assistant. How can I help you today?"
+    });
+  }
+
+  const targets = agentTargets(task);
+  const requested = requestedCommands(task);
+  const commandResults = requested.length ? await runAgentCommands(request, env, requested) : [];
+  const sandboxCommands = requestedSandboxCommands(task);
+  const sandboxResults = sandboxCommands.length
+    ? await Promise.all(sandboxCommands.map(async command => {
+        const response = await executeSandboxCommand(request, env, ctx, command);
+        return {command,data:await response.json().catch(()=>({ok:false,error:"Invalid sandbox result."}))};
+      }))
+    : [];
+  const investigations = targets.length
+    ? await Promise.all(targets.map(async target => ({target,data:await runAgentInspection(request, env, target, ctx, task)})))
+    : [];
+
+  const flatChecks = investigations.flatMap(x => Array.isArray(x.data?.checks) ? x.data.checks : []);
+  const plan = agentActionPlan(task, flatChecks);
+  const evidence = JSON.stringify({
+    authenticatedOperator: identity.email,
+    task,
+    generatedAt:new Date().toISOString(),
+    capabilityManifest:capabilityManifest(env,true),
+    investigation:investigations,
+    commandResults,
+    sandboxResults,
+    plan
+  }, null, 2).slice(0,42000);
+
+  const liveSearchIntent = /job|jobs|vacancy|vacancies|career|careers|employment|employer|hiring|recruit|recruitment|position|opening|work for/.test(task.toLowerCase());
+  const agentPrompt = "PRIVATE OPERATOR TASK:\n" + task +
+    "\n\nYou are the investigation and planning layer of ADIGUN Control. The server has already executed the relevant read-only inspections and diagnostics shown below. Analyze the evidence and give the administrator a concise, evidence-led report.\n\n" +
+    (liveSearchIntent ? "CURRENT-JOB-SEARCH MODE: This is an employment search. Use the OpenAI web search tool to find current, real vacancies matching the request. Do not substitute generic career advice for actual vacancies. For each useful vacancy, provide employer, role, location, current status if available, why it matches the stated profile, and a direct source URL. If no suitable live vacancy can be verified, say so and explain what was searched.\n\n" : "") +
+    "PRIVATE CAPABILITY RULES:\n" +
+    "- Cloudflare Access authentication is required for every private control endpoint.\n" +
+    "- ADIGUN Control is both a general-purpose assistant and the authenticated technical intelligence layer for the Hephzibah Behulah platform.\n" +
+    "- Read-only reconnaissance is target-locked to https://hephzibahbehulah.com and the authorized HephzibahBehulah/HephzibahBehulah.github.io repository.\n" +
+    "- The server can inspect frontend/backend source, API routes, GitHub history, CI workflow metadata and redacted workflow-log tails when the task requires them.\n" +
+    "- Safe web assessment uses fixed GET/HEAD/OPTIONS-style diagnostics and known application/security paths only. No exploit payloads, credential attacks, destructive requests, or unrelated-target scanning are available.\n" +
+    "- The isolated Sandbox Linux plane is separate from the production Worker and may run only its explicit allow-list. Never imply production shell access.\n" +
+    "- Login/access information includes verified operator identity and, when supplied by server evidence, Supabase account status and authentication audit events. Audit coverage is limited: do not invent failed-login or Cloudflare-denial history, and do not label review signals as confirmed malicious activity. Never reveal or invent passwords, tokens, private keys or authentication cookies.\n" +
+    "- Source and workflow evidence is redacted before it reaches the model where secret-like values could appear. Never reconstruct a redacted secret.\n" +
+    "- Production mutation, arbitrary production-host shell access, GitHub writes and unrelated-target scanning are not available through this interface.\n" +
+    "- Never turn a planned capability into a claimed capability. Use only server evidence.\n" +
+    "- Use the server checkedAt timestamp as the report date; never invent a date.\n\n" +
+    "Rules:\n" +
+    "- For ordinary non-site questions, answer normally. For website/admin questions, prioritize the supplied server evidence and distinguish facts from interpretation.\n" +
+    "- Separate OBSERVED FACTS, INTERPRETATION, and NEXT ACTIONS. Mark important claims as [OBSERVED], [CALCULATED], [INFERRED], [UNKNOWN], or [RECOMMENDATION]. [OBSERVED] requires a traceable source or server evidence record; assumptions are never observed facts.\n" +
+    "- For current external information, use live web search and cite the actual original source. A search-result snippet is discovery evidence, not a verified fact. A vacancy is VERIFIED only after opening an identifiable source page and confirming employer, exact title, location, and current/active status when exposed. If any critical field cannot be verified, label it [UNVERIFIED] and do not count it toward a verified total. Never fabricate vacancies, prices, availability, employers, URLs, dates, salaries, job IDs, addresses, or requirements.\n" +
+    "- Never claim a change was made.\n" +
+    "- If a change would be required, describe the intended change and say that explicit approval is required.\n" +
+    "- Do not invent Cloudflare, GitHub, security or deployment data that is absent from the evidence.\n" +
+    "- If the task is not about the website, do not force website findings into the answer.\n- Never use WINNER, DREAM CAREER, BEST, HIGH FIT or LOW FIT as unsupported verdicts. For job matching, report transparent requirement coverage from verified profile facts, keep unknown requirements visible, and never imply hiring probability.\n" +
+    "- Use Markdown and proper LaTeX when mathematics is needed.\n" +
+    "- Do not expose secrets.\n\nSERVER EVIDENCE:\n" + evidence;
+
+  let answer = "Investigation completed. Review the evidence and proposed actions below.";
+  try {
+    const suppliedMessages = Array.isArray(body?.messages) ? body.messages.slice(-50) : [];
+    const synthesisMessages = suppliedMessages.length
+      ? suppliedMessages.concat([{role:"user",content:[{type:"input_text",text:agentPrompt}]}])
+      : [{role:"user",content:agentPrompt}];
+    const aiRequest = new Request(request.url, {
+      method:"POST",
+      headers:new Headers({"content-type":"application/json","x-hb-session":request.headers.get("x-hb-session")||"private-agent"}),
+      body:JSON.stringify({
+        messages:synthesisMessages,
+        siteContext:"PRIVATE ADIGUN AGENT MODE: local operator investigation. Server evidence is authoritative."
+      })
+    });
+    const aiResponse = await openAIChat(aiRequest, env);
+    const aiData = await aiResponse.json().catch(()=>({}));
+    if (aiData?.answer) answer = aiData.answer;
+    else if (flatChecks.length) {
+      const healthCheck = flatChecks.find(check => check.name === "website");
+      if (healthCheck) answer = "## Live investigation completed\n\n" +
+        "- HTTP status: " + String(healthCheck.httpStatus ?? "unavailable") + "\n" +
+        "- Status: " + String(healthCheck.status || "unknown") + "\n" +
+        "- Final URL: " + String(healthCheck.finalUrl || "unavailable") + "\n" +
+        "- Observed at: " + String(healthCheck.observedAt || "server timestamp unavailable") + "\n" +
+        "- Evidence ID: " + String(healthCheck.evidenceId || "unavailable") + "\n\n" +
+        "The AI synthesis provider was unavailable, so this report contains only verified server evidence.";
+      else answer = "Investigation completed. The AI synthesis provider was unavailable, but server-side evidence is preserved below.";
+    }
+  } catch (error) {
+    console.error("ADIGUN private agent synthesis error",String(error?.message||error));
+    const healthCheck = flatChecks.find(check => check.name === "website");
+    if (healthCheck) answer = "## Live investigation completed\n\n" +
+      "- HTTP status: " + String(healthCheck.httpStatus ?? "unavailable") + "\n" +
+      "- Status: " + String(healthCheck.status || "unknown") + "\n" +
+      "- Final URL: " + String(healthCheck.finalUrl || "unavailable") + "\n" +
+      "- Observed at: " + String(healthCheck.observedAt || "server timestamp unavailable") + "\n" +
+      "- Evidence ID: " + String(healthCheck.evidenceId || "unavailable") + "\n\n" +
+      "AI synthesis was unavailable. Only server evidence is reported.";
+  }
+
+  return json(request,{
+    ok:true,
+    mode:"agentic",
+    actor:identity.email,
+    task,
+    targets,
+    investigations,
+    commandResults,
+    sandboxResults,
+    plan,
+    answer,
+    next:"Approval-required actions are proposed only. No state-changing operation was executed.",
+    evidencePolicy:{verifiedRequiresSource:true,searchSnippetIsNotVerified:true,vacancyRequiresOriginalPage:true,unknownsMustRemainUnknown:true},
+    capabilityManifest:capabilityManifest(env,true),
+    evidenceIds:[
+      ...investigations.flatMap(x=>(x.data?.checks||[]).map(check=>check.evidenceId).filter(Boolean)),
+      ...commandResults.flatMap(x=>[x?.data?.evidence?.evidenceId].filter(Boolean))
+    ]
+  });
+}
+
+async function privateInspect(request, env, url, ctx, task="") {
+  const auth = await authenticateAdmin(request, env);
+  if (!auth.ok) return auth.response;
+  const identity = getAdminIdentity(auth.identity);
+  const target=url.searchParams.get("target")||"all";
+  const result={ok:true,target,actor:identity.email,checkedAt:new Date().toISOString(),checks:[],capabilities:capabilityManifest(env,true)};
+
+  if(target==="accounts"){
+    for(const resource of ["","/events"]){
+      const accountUrl=new URL(request.url);accountUrl.pathname="/api/admin/accounts"+resource;accountUrl.search="";
+      const response=await accountGateway(new Request(accountUrl.toString(),{headers:request.headers}),env);
+      const data=await response.json().catch(()=>({error:"Invalid account-service response"}));
+      if(Array.isArray(data.events))data.events=data.events.slice(0,20);
+      result.checks.push({name:resource?"supabase-auth-events":"supabase-accounts",status:response.ok?"observed":"error",result:data});
+    }
+  }
+
+  if(target==="all"||target==="site"||target==="security"){
+    try{
+      const r=await fetch("https://hephzibahbehulah.com/",{redirect:"follow"});
+      const h=Object.fromEntries(r.headers);
+      result.checks.push({name:"website",status:r.ok?"healthy":"degraded",httpStatus:r.status,finalUrl:r.url,cloudflare:Boolean(h["cf-ray"]||String(h.server||"").toLowerCase()==="cloudflare"),securityHeaders:{
+        strictTransportSecurity:h["strict-transport-security"]||null,
+        contentSecurityPolicy:h["content-security-policy"]||null,
+        xContentTypeOptions:h["x-content-type-options"]||null,
+        referrerPolicy:h["referrer-policy"]||null,
+        permissionsPolicy:h["permissions-policy"]||null,
+        crossOriginOpenerPolicy:h["cross-origin-opener-policy"]||null,
+        crossOriginResourcePolicy:h["cross-origin-resource-policy"]||null
+      }});
+    }catch(e){result.checks.push({name:"website",status:"error",error:String(e?.message||e)})}
+    if(target==="security"||target==="all"){
+      for(const command of ["http-headers","robots","sitemap"]){
+        try{
+          const u=new URL(request.url); u.pathname="/api/admin/command"; u.search="";
+          const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command})}),env,command);
+          const d=await r.json();
+          result.checks.push({name:"command:"+command,status:d.ok?"observed":"error",result:d.result||null,error:d.error||null});
+        }catch(e){result.checks.push({name:"command:"+command,status:"error",error:String(e?.message||e)})}
+      }
+      const safePaths=["/","/robots.txt","/sitemap.xml","/.well-known/security.txt","/security.txt","/admin.html","/admin-tools.html","/api/health","/api/admin/status","/api/admin/capabilities"];
+      const safeAudit=[];
+      for(const path of safePaths){
+        try{
+          const response=await fetch(RECON_TARGET+path,{method:"GET",redirect:"follow"});
+          safeAudit.push({path,status:response.status,ok:response.ok,finalUrl:response.url,contentType:response.headers.get("content-type")||null,cacheControl:response.headers.get("cache-control")||null});
+        }catch(error){safeAudit.push({path,error:String(error?.message||error).slice(0,180)});}
+      }
+      try{
+        const response=await fetch("https://admin.hephzibahbehulah.com/",{method:"GET",redirect:"manual"});
+        safeAudit.push({path:"admin-host/",status:response.status,ok:response.ok,location:response.headers.get("location")||null,contentType:response.headers.get("content-type")||null});
+      }catch(error){safeAudit.push({path:"admin-host/",error:String(error?.message||error).slice(0,180)});}
+      result.checks.push({name:"safe-web-audit",status:"observed",result:{target:RECON_TARGET,readOnly:true,probes:safeAudit,note:"Fixed GET-only probes; no credentials supplied, no payloads injected, no destructive requests."}});
+    }
+  }
+  if(target==="github"||target==="github-repo"||target==="github-deep"||target==="all"){
+    try{
+      const d=await githubApiFetch(env,"/repos/"+RECON_REPO);
+      result.checks.push({name:"github",status:"healthy",repository:d.full_name||RECON_REPO,defaultBranch:d.default_branch||null,updatedAt:d.updated_at||null,pushedAt:d.pushed_at||null,openIssues:d.open_issues_count??null});
+      const [commitData,runData] = await Promise.all([
+        githubApiFetch(env,"/repos/"+RECON_REPO+"/commits?per_page=8"),
+        githubApiFetch(env,"/repos/"+RECON_REPO+"/actions/runs?per_page=8")
+      ]);
+      result.checks.push({name:"github-recent-history",status:"observed",
+        commits:(commitData||[]).slice(0,8).map(x=>({sha:String(x.sha||"").slice(0,12),message:String(x.commit?.message||"").split("\n")[0].slice(0,180),date:x.commit?.author?.date||null,url:x.html_url||null})),
+        workflowRuns:(runData.workflow_runs||[]).slice(0,8).map(x=>({name:x.name,status:x.status,conclusion:x.conclusion,headSha:String(x.head_sha||"").slice(0,12),createdAt:x.created_at,updatedAt:x.updated_at,url:x.html_url||null}))
+      });
+      if(target==="github-deep"||target==="all"){
+        try{
+          result.checks.push({name:"github-source-intelligence",status:"observed",result:await privateRepositoryInspection(env,task)});
+          result.checks.push({name:"github-workflow-logs",status:"observed",result:await privateWorkflowLogInspection(env)});
+        }catch(error){result.checks.push({name:"github-deep",status:"error",error:String(error?.message||error)})}
+      }
+    }catch(e){result.checks.push({name:"github",status:"error",error:String(e?.message||e)})}
+  }
+  if(target==="cloudflare"||target==="all"){
+    try{
+      const u=new URL(request.url);u.pathname="/api/admin/command";u.search="";
+      const r=await executeAdminCommand(new Request(u.toString(),{method:"POST",headers:request.headers,body:JSON.stringify({command:"dns-a"})}),env,"dns-lookup");
+      const d=await r.json();
+      result.checks.push({name:"dns",status:d.ok?"healthy":"error",result:d.result||null,error:d.error||null});
+    }catch(e){result.checks.push({name:"dns",status:"error",error:String(e?.message||e)})}
+    result.checks.push({name:"cloudflare-edge",status:"observed",verificationStatus:"observed",note:"Edge presence is inferred only from live response headers. Account-level Cloudflare configuration is not inspected by this Worker."});
+  }
+  result.checks = result.checks.map(check => {
+    if (check.evidenceId) return check;
+    return {
+      ...check,
+      evidenceId:createEvidenceId("CHECK"),
+      observedAt:new Date().toISOString(),
+      provenance:{
+        source:"server-executed-private-inspection",
+        tool:String(check.name||"private.inspect"),
+        target,
+        actor:identity.email
+      }
+    };
+  });
+  result.evidenceIds = result.checks.map(check=>check.evidenceId);
+  return json(request,result);
+}
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders(request) });
+    }
+
+    // Defense in depth: the private control surface is reachable only on its
+    // dedicated hostname and requires a Cloudflare Access identity matching
+    // the server-side ADIGUN_ADMIN_EMAIL allow-list.
+    const isAdminHost = url.hostname === "admin.hephzibahbehulah.com";
+    const isAdminApi = url.pathname.startsWith("/api/admin/") || url.pathname === "/api/automation/demo";
+    const PRIVATE_PAGE_ROUTES=Object.freeze({"/admin/tools":"/admin-tools.html","/admin/tools/":"/admin-tools.html","/admin/cyber-os":"/cyber-os/index.html","/admin/cyber-os/":"/cyber-os/index.html"});
+    const publicBlockedPath = ["/portfolio.html","/resources.html","/admin-tools.html","/data/source-library.json","/js/technical-workbench.js","/js/mega-tools.js","/js/engineering-calculators-local.js","/js/engineering-library.js","/js/intelligence-core.js"].includes(url.pathname);
+
+    if (isAdminHost && (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/admin" || url.pathname === "/admin/" || url.pathname === "/adigun-contol" || url.pathname === "/adigun-control")) {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
+      const adminUrl = new URL(request.url);
+      adminUrl.pathname = "/admin.html";
+      return env.ASSETS.fetch(new Request(adminUrl.toString(), request));
+    }
+
+    if (isAdminHost && PRIVATE_PAGE_ROUTES[url.pathname]) {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
+      const privateUrl = new URL(request.url);
+      privateUrl.pathname = PRIVATE_PAGE_ROUTES[url.pathname];
+      return env.ASSETS.fetch(new Request(privateUrl.toString(), request));
+    }
+
+    // Cyber OS HTML and its private workspace assets are served only after
+    // Cloudflare Access JWT validation on the dedicated admin hostname.
+    if (isAdminHost && (url.pathname === "/cyber-os" || url.pathname.startsWith("/cyber-os/"))) {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
+      const privateUrl = new URL(request.url);
+      if (privateUrl.pathname === "/cyber-os" || privateUrl.pathname === "/cyber-os/") {
+        privateUrl.pathname = "/cyber-os/index.html";
+      }
+      return env.ASSETS.fetch(new Request(privateUrl.toString(), request));
+    }
+
+    // Keep the legacy public entry point usable, but send it to the private
+    // ADIGUN Control workspace. Never serve Cyber OS HTML or assets publicly.
+    if (!isAdminHost && (url.pathname === "/cyber-os" || url.pathname === "/cyber-os/" || url.pathname === "/cyber-os/index.html")) {
+      return Response.redirect("https://admin.hephzibahbehulah.com/admin/cyber-os/", 302);
+    }
+    if (!isAdminHost && (url.pathname === "/cyber-os" || url.pathname.startsWith("/cyber-os/"))) {
+      return new Response("Not found", { status: 404, headers: {"cache-control":"no-store"} });
+    }
+
+    if (!isAdminHost && publicBlockedPath) {
+      return new Response("Not found", { status: 404, headers: {"cache-control":"no-store"} });
+    }
+
+    if (isAdminApi) {
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
+    }
+
+    if (
+      url.hostname === "hephzibahbehulah.com" &&
+      ["/admin.html", "/admin-tools.html", "/js/adigun-admin.js", "/css/adigun-admin.css"].includes(url.pathname)
+    ) {
+      return new Response("Not found", { status: 404 });
+    }
+
+    if (url.pathname === "/api/admin/sandbox" && request.method === "POST") {
+      let body;
+      try { body=await request.json(); } catch { return json(request,{ok:false,error:"Invalid JSON."},400); }
+      return executeSandboxCommand(request,env,ctx,String(body?.command||""));
+    }
+    if (url.pathname === "/api/admin/agent" && request.method === "POST") {
+      try { return await privateAgent(request, env, url, ctx); }
+      catch (error) {
+        console.error("ADIGUN private agent route error", String(error?.stack || error?.message || error));
+        return json(request, {ok:false, error:"Private agent execution failed safely. Retry the investigation."}, 502);
+      }
+    }
+    if (url.pathname === "/api/admin/inspect" && request.method === "GET") {
+      try { return await privateInspect(request, env, url, ctx); }
+      catch (error) {
+        console.error("ADIGUN private inspect route error", String(error?.stack || error?.message || error));
+        return json(request, {ok:false, error:"Private inspection failed safely."}, 502);
+      }
+    }
+
+    if (isAdminApi) {
+      const adminResponse = await adminRoutes(request, env, url, ctx);
+      if (adminResponse) return adminResponse;
+    }
+
+    if (url.pathname === "/api/capabilities" && request.method === "GET") {
+      return json(request,{ok:true,manifest:capabilityManifest(env,false)});
+    }
+
+    if (url.pathname === "/api/health" && request.method === "GET") {
+      if (!env.OPENAI_API_KEY) {
+        return legacy.fetch(request, env, ctx);
+      }
+
+      return json(request, {
+        ok: true,
+        service: "hephzibah-behulah-ai",
+        version: "7.0.0",
+        mode: "multi-provider",
+        model: MODEL(env),
+        providers: {
+          openai: Boolean(env.OPENAI_API_KEY),
+          openrouter: Boolean(env.OPENROUTER_API_KEY),
+          cloudflareWorkersAI: Boolean(env.AI)
+        },
+        fallbackModel: env.AI ? (env.ADIGUN_FALLBACK_MODEL || "@cf/zai-org/glm-4.7-flash") : null,
+        rag: env.AI_SEARCH ? "ai-search-ready" : "legacy-knowledge-search",
+        web: "openai-web-search",
+        capabilities: [
+          "chatgpt-powered-reasoning",
+          "local-site-intelligence",
+          "persistent-rag",
+          "public-web-search",
+          "markdown",
+          "latex-math",
+          "multimodal-file-input",
+          "image-vision",
+          "video-frame-analysis",
+          "voice-transcription",
+          "project-intelligence",
+          "document-analysis",
+          "dataset-analysis",
+          "controlled-automation"
+        ]
+      });
+    }
+
+    if (url.pathname === "/api/transcribe" && request.method === "POST") {
+      if (url.hostname !== "admin.hephzibahbehulah.com") return json(request,{ok:false,error:"Private ADIGUN AI endpoint."},404);
+      const auth = await authenticateAdmin(request, env);
+      if (!auth.ok) return auth.response;
+      return transcribeAudio(request, env);
+    }
+
+    if (url.pathname === "/api/chat" && request.method === "POST" && env.OPENAI_API_KEY) {
+      return openAIChat(request, env);
+    }
+
+    return legacy.fetch(request, env, ctx);
+  }
+};

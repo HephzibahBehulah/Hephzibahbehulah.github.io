@@ -25,7 +25,7 @@ test('shared language cookie takes precedence over stale subdomain storage',asyn
 });
 
 test('language preference writes a one year parent-domain cookie on project subdomains',()=>{
-  const app=browser({host:'engineering.hephzibahbehulah.com',readyState:'loading'});
+  const app=browser({host:'cyber.hephzibahbehulah.com',readyState:'loading'});
   app.context.window.HBLanguage.set('yo');
   assert.equal(app.store.get('hb_language'),'yo');
   assert.match(app.document.cookie,/hb_language=yo/);
@@ -90,8 +90,9 @@ test('dynamic engineering controls and React text updates translate after the pa
 });
 
 test('shared engineering script loads its dictionary from the public shared-asset route',async()=>{
-  const app=browser({host:'engineering.hephzibahbehulah.com',saved:'de',scriptSrc:'https://engineering.hephzibahbehulah.com/_hb/language-system.js?v=20261024-1'});
+  const app=browser({host:'cyber.hephzibahbehulah.com',saved:'de',scriptSrc:'https://cyber.hephzibahbehulah.com/_hb/language-system.js?v=20261024-1'});
   await new Promise(resolve=>setImmediate(resolve));
-  assert.deepEqual(app.fetched,['https://engineering.hephzibahbehulah.com/_hb/data/translations/de.json']);
+  assert.deepEqual(app.fetched,['https://cyber.hephzibahbehulah.com/_hb/data/translations/de.json']);
   assert.equal(app.context.window.HBLanguage.get(),'de');
 });
+

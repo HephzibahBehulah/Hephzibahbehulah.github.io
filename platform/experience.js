@@ -7,8 +7,7 @@ const sectionNames=new Map([['linux terminal','ADIGUN TERMINAL'],['admin ai','AD
 let queued=false;
 function reconcile(){
  queued=false;
- repairEngineering();
- const side=document.querySelector('.os-sidebar');
+const side=document.querySelector('.os-sidebar');
  if(side){
   if(privatePage&&!side.querySelector('[data-hb-monitor]')){const nav=side.querySelector('[data-nav-group="private-control"] nav')||side.querySelector('.os-nav');if(nav){const a=el('a','','◈ USERS & SIGN-INS');a.href='/admin#users-signins';a.dataset.hbMonitor='true';a.setAttribute('translate','no');a.onclick=async e=>{e.preventDefault();try{const module=await import('/_hb/admin-accounts-ui.js');module.openAccounts();}catch{alert('The private monitor could not load. Refresh the page and retry.');}};nav.append(a);}}
 
@@ -35,7 +34,7 @@ function reconcile(){
  }
  // Utility controls stay in normal document flow, never above workspace buttons.
  const topHeader=document.querySelector('.os-top'),mobileMenu=document.querySelector('#hbMobileNavToggle');if(topHeader&&mobileMenu&&mobileMenu.parentElement!==topHeader)topHeader.prepend(mobileMenu);
- let target=document.querySelector('#vpSiteHeader .studio-utilities-body')||document.querySelector('#vpSiteHeader .hb-vp-tools')||document.querySelector('.os-top-actions')||document.querySelector('.hb-platform-bar')||document.querySelector('.hb-account-page');
+ let target=document.querySelector('.os-top-actions')||document.querySelector('.hb-platform-bar')||document.querySelector('.hb-account-page');
  if(!target&&document.querySelector('.os-top')){target=el('div','os-top-actions');const header=document.querySelector('.os-top'),search=header.querySelector('.cyber-top-search');header.append(target);if(search)target.prepend(search);}
  if(target){let utility=target.querySelector('.hb-utilities');if(!utility){utility=el('div','hb-utilities');utility.setAttribute('aria-label','Display preferences');utility.setAttribute('translate','no');if(target.classList.contains('hb-account-page'))target.querySelector('.hb-account-card')?.before(utility);else target.append(utility);}
   const language=document.querySelector('#hbLanguageControl');if(language&&language.parentElement!==utility)utility.prepend(language);
@@ -43,27 +42,6 @@ function reconcile(){
   for(const member of document.querySelectorAll('.hb-member-actions')){if(member.parentElement!==target)target.append(member);}
  }
  decorateOverview();
- if(document.querySelector('#vpSiteHeader')&&!document.querySelector('script[src="/_hb/studio.js"]'))loadScript('/_hb/studio.js');
-}
-function repairEngineering(){
- // Breadboard already owns its full frame; keep the existing assistant outside the hidden global header.
- if(['breadboard','oscilloscope'].includes(document.documentElement.dataset.vpWorkspace)||document.querySelector('.bb-workspace,#scopeApp')){
-  const bot=document.getElementById('vpBotLauncher');if(bot){if(bot.parentElement!==document.body)document.body.append(bot);if(bot.textContent.trim()!=='AI')bot.innerHTML='<span>AI</span><i class="vp-bot-dot" aria-hidden="true"></i>';bot.setAttribute('aria-label','Open engineering circuit assistant');}
-  return;
- }
-
- const header=document.querySelector('#vpSiteHeader');if(!header)return;if(document.body.classList.contains('hb-studio'))return;
- document.body.classList.add('hb-engineering');
- let tools=header.querySelector('.hb-vp-tools');if(!tools){tools=el('div','hb-vp-tools');header.append(tools);}
- const brand=header.querySelector('.vp-site-brand');if(brand&&!brand.querySelector('img')&&!brand.dataset.brandWordmark){const image=el('img');image.src='/_hb/hephzibah-behulah-official.jpg';image.alt='Hephzibah Behulah';brand.replaceChildren(image);brand.setAttribute('aria-label','Hephzibah Behulah engineering home');}
- const sidebar=document.querySelector('#sidebar');if(sidebar&&!sidebar.querySelector('.hb-engineering-close')){const close=el('button','hb-engineering-close','Close menu ×');close.type='button';close.onclick=()=>sidebar.classList.remove('open');sidebar.prepend(close);}
- const bar=document.querySelector('.hb-platform-bar');if(bar){const nav=bar.querySelector('.hb-platform-links');if(nav){const sites=el('details','hb-learning-nav'),title=el('summary','','Learning sites');sites.append(title,nav);tools.append(sites);}for(const child of [...bar.children])if(child.matches('.hb-utilities,.hb-member-actions'))tools.append(child);bar.remove();}
- const identity=header.querySelector('.vp-site-identity');if(identity&&identity.parentElement!==tools)tools.append(identity);
- const member=document.querySelector('.hb-member-actions');if(member&&member.parentElement!==tools)tools.append(member);
- if(identity)identity.classList.toggle('hb-native-guest-hidden',!!member&&!identity.querySelector('details'));
- const bot=document.querySelector('#hbBotLauncher');if(bot&&bot.parentElement!==tools){bot.setAttribute('translate','no');bot.setAttribute('aria-label','Open company website assistant');const label=bot.querySelector('span');if(label)label.textContent='Site AI';tools.append(bot);}const nativeBot=document.querySelector('#vpBotLauncher');if(nativeBot&&nativeBot.parentElement!==tools){nativeBot.setAttribute('translate','no');nativeBot.textContent='Circuit AI';nativeBot.setAttribute('aria-label','Open engineering circuit assistant');tools.append(nativeBot);}
- for(const link of header.querySelectorAll('.vp-account-menu a'))if(/cloud projects/i.test(link.textContent))link.href='https://engineering.hephzibahbehulah.com/workspace';
- const simulator=document.querySelector('.sim-app');if(simulator&&!simulator.dataset.hbSized){simulator.dataset.hbSized='true';const resize=()=>{const heights=[header,simulator.querySelector('.sim-top'),simulator.querySelector('.toolbar')].reduce((sum,n)=>sum+(n?.getBoundingClientRect().height||0),0);simulator.style.setProperty('--hb-canvas-height',Math.max(420,innerHeight-heights-40)+'px');};const observer=new ResizeObserver(resize);for(const n of [header,simulator.querySelector('.sim-top'),simulator.querySelector('.toolbar')])if(n)observer.observe(n);window.addEventListener('resize',resize);resize();}
 }
 const media=matchMedia('(prefers-color-scheme: dark)');let preference='system';
 try{const shared=document.cookie.split('; ').find(x=>x.startsWith('hb-colour-theme='))?.split('=')[1];const saved=shared||localStorage.getItem('hb-colour-theme')||localStorage.getItem('vp-theme');if(['dark','light','system'].includes(saved))preference=saved;}catch{}

@@ -15,4 +15,3 @@ run('python',['core/build_app.py','--out','build-app/web','--download-runtime'],
 node('platform/build.mjs','apps/pentest-source/build-app/web');
 node('platform/prepare-config.mjs');
 console.log('Release build complete. Cloudflare deploy runs as the configured deploy command.');
-
