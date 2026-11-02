@@ -1,2 +1,0 @@
-/* CommonJS entry point for tests and build tooling. */
-module.exports={...require('./BreadboardModel.js'),...require('./CameraController.js'),...require('./BreadboardRenderer.js'),...require('./InteractionLayer.js'),WireRenderer:require('./WireRenderer.js')};

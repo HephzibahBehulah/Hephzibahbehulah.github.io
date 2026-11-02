@@ -5,15 +5,14 @@ const createPlatform=options=>platformFactory({...options,memberAuth:{gate:async
 import cyberAI from './cyber-ai.mjs';
 const root='hephzibahbehulah.com';
 for(const [host,app]of [['engineering','engineering'],['cyber','cyber']]){
- test(host+' root resolves only its application',()=>assert.equal(resolveRoute(new URL('https://'+host+'.'+root+'/')).path,'/_apps/'+app+'/index.html'));
+ test(host+' root resolves only its application',()=>{const route=resolveRoute(new URL('https://'+host+'.'+root+'/'));if(app==='engineering')assert.equal(route.kind,'retired');else assert.equal(route.path,'/_apps/'+app+'/index.html');});
  test(host+' cannot reach admin APIs',()=>assert.equal(resolveRoute(new URL('https://'+host+'.'+root+'/api/admin/agent')).status,404));
  test(host+' cannot reach internal assets',()=>assert.equal(resolveRoute(new URL('https://'+host+'.'+root+'/_apps/engineering/index.html')).status,404));
 }
-test('private app routes preserve mount prefixes through the SPA shell',()=>{const route=resolveRoute(new URL('https://admin.'+root+'/engineering/simulator'));assert.equal(route.path,'/_apps/engineering/workspace-shell.html');assert.equal(route.privateHost,true);assert.equal(route.base,'/engineering/');});
+test('engineering suite routes retire after the private access check',()=>{const route=resolveRoute(new URL('https://admin.'+root+'/engineering/simulator'));assert.equal(route.kind,'retired');assert.equal(route.privateHost,true);});
 test('ADIGUN operations alias serves the central private control page',()=>{for(const path of ['/and','/and/']){const route=resolveRoute(new URL('https://admin.'+root+path));assert.deepEqual(route,{kind:'app',privateHost:true,app:'admin',prefix:'',base:'/',path:'/admin.html'});}});
 test('signed-in operations alias serves admin.html with private response headers',async()=>{let assetPath='';const worker=createPlatform({verifyAdmin:async()=>({ok:true,actor:'owner@example.test'})});const response=await worker.fetch(new Request('https://admin.'+root+'/and'),{ASSETS:{fetch:async request=>{assetPath=new URL(request.url).pathname;return new Response('<html><head></head><body>ADIGUN Control</body></html>',{headers:{'content-type':'text/html'}});}}});assert.equal(response.status,200);assert.equal(assetPath,'/admin.html');assert.equal(response.headers.get('cache-control'),'private, no-store');assert.match(response.headers.get('x-robots-tag'),/noindex/);assert.match(await response.text(),/ADIGUN Control/);});
-test('PLC route uses the shell while embedded PLC keeps its nested base',()=>{const shell=resolveRoute(new URL('https://admin.'+root+'/engineering/voltpro-plc/'));assert.equal(shell.path,'/_apps/engineering/workspace-shell.html');const frame=resolveRoute(new URL('https://admin.'+root+'/engineering/voltpro-plc/?vp_embed=1'));assert.equal(frame.path,'/_apps/engineering/voltpro-plc/index.html');assert.equal(frame.base,'/engineering/voltpro-plc/');});
-test('old account links lead to the central account page and preserve their intended destination',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/account.html?next=simulator.html'));assert.equal(r.status,302);const target=new URL(r.headers.get('location'));assert.equal(target.origin,'https://'+root);assert.equal(target.pathname,'/account');assert.equal(target.searchParams.get('next'),'https://engineering.'+root+'/simulator.html');});
+test('old account links lead to the central account page and preserve their intended destination',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/account.html?next=/'));assert.equal(r.status,302);const target=new URL(r.headers.get('location'));assert.equal(target.origin,'https://'+root);assert.equal(target.pathname,'/account');assert.equal(target.searchParams.get('next'),'https://engineering.'+root+'/');});
 test('unknown host cannot obtain any application',()=>assert.equal(resolveRoute(new URL('https://example.com/')).status,404));
 test('encoded path traversal is rejected',()=>assert.equal(resolveRoute(new URL('https://cyber.'+root+'/%2e%2e%2fadmin.html')).status,404));
 test('malformed percent escapes are rejected',()=>assert.equal(resolveRoute(new URL('https://cyber.'+root+'/%zz')).status,400));
@@ -31,9 +30,7 @@ test('admin-domain root retains its control-room route',async()=>{
  assert.equal(await(await worker.fetch(new Request('https://admin.'+root+'/'),{})).text(),'admin control');
 });
 test('asset POST requests cannot turn into mutations',async()=>{const worker=createPlatform({});assert.equal((await worker.fetch(new Request('https://cyber.'+root+'/style.css',{method:'POST'}),{})).status,405);});
-test('engineering inference rejects cross-origin requests before provider access',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/api/engineering/chat',{method:'POST',headers:{origin:'https://example.com'}}),{});assert.equal(r.status,403);});
-test('engineering inference fails closed without its original six-request limiter',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://engineering.'+root+'/api/engineering/chat',{method:'POST'}),{});assert.equal(r.status,503);});
-test('engineering gateway preserves authorization and uses the dedicated limiter',async()=>{const limiter={limit:async()=>({success:true})};const worker=createPlatform({engineeringAI:{fetch:async(request,env)=>{assert.equal(request.headers.get('authorization'),'Bearer member');assert.equal(new URL(request.url).pathname,'/chat');assert.equal(env.API_LIMITER,limiter);return new Response('provider result');}}});const r=await worker.fetch(new Request('https://engineering.'+root+'/api/engineering/chat',{method:'POST',headers:{authorization:'Bearer member'},body:'{}'}),{ENGINEERING_LIMITER:limiter});assert.equal(await r.text(),'provider result');});
+test('the retired engineering assistant API returns 404',async()=>{const worker=createPlatform({});for(const path of ['/api/engineering/chat','/api/engineering/health'])assert.equal((await worker.fetch(new Request('https://engineering.'+root+path,{method:'POST'}),{})).status,404);});
 test('tutor does not claim availability without AI binding',async()=>assert.equal((await cyberAI.fetch(new Request('https://cyber.'+root+'/api/cyber/chat',{method:'POST'}),{})).status,503));
 test('tutor rejects foreign origins',async()=>assert.equal((await cyberAI.fetch(new Request('https://cyber.'+root+'/api/cyber/chat',{method:'POST',headers:{origin:'https://example.com'}}),{})).status,403));
 test('tutor enforces limiter before inference',async()=>{let inferred=false;const r=await cyberAI.fetch(new Request('https://cyber.'+root+'/api/cyber/chat',{method:'POST'}),{AI:{run(){inferred=true;}},API_LIMITER:{limit:async()=>({success:false})}});assert.equal(r.status,429);assert.equal(inferred,false);});
@@ -51,36 +48,6 @@ test('private service workers retire only after authorization',async()=>{
  const result=await worker.fetch(request,{});assert.equal(result.status,200);assert.match(await result.text(),/registration\.unregister/);assert.equal(result.headers.get('cache-control'),'private, no-store');
 });
 
-test('legacy mixed-case ElectCAD entry redirects to the single canonical workspace route',()=>{
- for(const path of ['/voltPro-ElectCAD/','/voltPro-ElectCAD','/voltpro-electcad/']){
-  const route=resolveRoute(new URL('https://engineering.'+root+path));
-  assert.deepEqual(route,{kind:'redirect',privateHost:false,location:'/electcad'});
- }
- const frame=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/?vp_embed=1'));
- assert.equal(frame.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(frame.base,'/voltPro-ElectCAD/');
-});
-test('legacy ElectCAD route redirects when opened without a slash',()=>{
- const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD'));
- assert.equal(route.kind,'redirect');assert.equal(route.location,'/electcad');
-});
-test('ElectCAD assets resolve beneath the application directory',()=>{
- const route=resolveRoute(new URL('https://engineering.'+root+'/voltPro-ElectCAD/assets/index.js'));
- assert.equal(route.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(route.base,'/voltPro-ElectCAD/');
-});
-test('ElectCAD SPA route retains authenticated admin prefix for its embedded app',()=>{
- const shell=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/'));
- assert.equal(shell.privateHost,true);assert.equal(shell.kind,'redirect');assert.equal(shell.location,'/engineering/electcad');
- const frame=resolveRoute(new URL('https://admin.'+root+'/engineering/voltPro-ElectCAD/?vp_embed=1'));
- assert.equal(frame.path,'/_apps/engineering/voltpro-electcad/index.html');assert.equal(frame.base,'/engineering/voltPro-ElectCAD/');
-});
-
-test('lowercase ElectCAD alias redirects while embedded assets remain available',()=>{
- const route=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/'));
- assert.equal(route.kind,'redirect');assert.equal(route.location,'/electcad');
- const asset=resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/assets/index.js?vp_embed=1'));
- assert.equal(asset.path,'/_apps/engineering/voltpro-electcad/assets/index.js');assert.equal(asset.base,'/voltPro-ElectCAD/');
-});
-
 test('the workers.dev origin canonicalizes to the main domain',async()=>{const worker=createPlatform({});const r=await worker.fetch(new Request('https://hephzibahbehulah-github-io.hephzibah-behulah.workers.dev/?from=worker'),{});assert.equal(r.status,308);assert.equal(r.headers.get('location'),'https://'+root+'/?from=worker');});
 
 test('public engineering and legacy HTML receive the global language system',async()=>{
@@ -92,7 +59,7 @@ test('public engineering and legacy HTML receive the global language system',asy
  globalThis.HTMLRewriter=TestHTMLRewriter;
  try{
   const worker=createPlatform({legacy:{fetch:async()=>new Response('<html><head></head><body></body></html>',{headers:{'content-type':'text/html'}})}});
-  for(const url of ['https://engineering.'+root+'/simulator','https://'+root+'/ai.html']){
+  for(const url of ['https://'+root+'/ai.html']){
    const r=await worker.fetch(new Request(url),{ASSETS:{fetch:async()=>new Response('<html><head></head><body></body></html>',{headers:{'content-type':'text/html'}})}});
    assert.equal(r.status,200);
    assert.ok((await r.text()).includes('<script src="/_hb/language-system.js?v=20261024-1" defer></script>'));
@@ -100,19 +67,14 @@ test('public engineering and legacy HTML receive the global language system',asy
  }finally{if(original===undefined)delete globalThis.HTMLRewriter;else globalThis.HTMLRewriter=original;}
 });
 
-for(const path of ['/simulator','/plc','/electcad','/tools','/breadboard','/electrical']){
- test('workspace '+path+' is served by the persistent shell',()=>{const route=resolveRoute(new URL('https://engineering.'+root+path));assert.equal(route.kind,'app');assert.equal(route.path,'/_apps/engineering/workspace-shell.html');});
+for(const path of ['/','/tools','/engineering','/simulator','/plc','/electcad','/breadboard','/electrical','/oscilloscope','/Oscilloscope','/simulator/child','/electcad/index.html','/breadboard.html','/electrical-canvas','/electrical-canvas.html','/oscilloscope.html','/voltpro-plc/','/voltpro-plc/index.html','/voltPro-ElectCAD/','/voltpro-electcad/index.html','/engineering.html?vp_embed=1']){
+ test('removed engineering surface '+path+' returns 404',()=>assert.equal(resolveRoute(new URL('https://engineering.'+root+path)).status,404));
 }
-test('private BuildingCAD workspace preserves its Cloudflare Access mount',()=>{const route=resolveRoute(new URL('https://admin.'+root+'/engineering/electrical'));assert.equal(route.path,'/_apps/engineering/workspace-shell.html');assert.equal(route.base,'/engineering/');assert.equal(route.privateHost,true);});
-test('all VoltPro workspaces are mounted beneath the private administrator origin',()=>{for(const name of ['simulator','plc','electcad','breadboard','oscilloscope','electrical']){const route=resolveRoute(new URL('https://admin.'+root+'/engineering/'+name));assert.equal(route.path,'/_apps/engineering/workspace-shell.html',name);assert.equal(route.privateHost,true,name);assert.equal(route.app,'engineering',name);}});
-test('embedded tool pages bypass SPA shell routing without remounting the shell',()=>{
- assert.equal(resolveRoute(new URL('https://engineering.'+root+'/simulator.html?vp_embed=1')).path,'/_apps/engineering/simulator.html');
- assert.equal(resolveRoute(new URL('https://engineering.'+root+'/engineering/simulator.html?vp_embed=1')).path,'/_apps/engineering/simulator.html');
- assert.equal(resolveRoute(new URL('https://engineering.'+root+'/voltpro-plc/?vp_embed=1')).path,'/_apps/engineering/voltpro-plc/index.html');
- assert.equal(resolveRoute(new URL('https://engineering.'+root+'/voltpro-electcad/?vp_embed=1')).path,'/_apps/engineering/voltpro-electcad/index.html');
- assert.equal(resolveRoute(new URL('https://engineering.'+root+'/electrical-canvas.html?vp_embed=1')).path,'/_apps/engineering/electrical-canvas.html');
+test('removed engineering surfaces return genuine 404 responses for GET and HEAD',async()=>{
+ const worker=createPlatform({});
+ for(const path of ['/tools','/','/plc','/electcad','/breadboard','/electrical','/Oscilloscope','/simulator','/electrical-canvas.html'])for(const method of ['GET','HEAD']){
+  const response=await worker.fetch(new Request('https://engineering.'+root+path,{method}),{});
+  assert.equal(response.status,404,method+' '+path);assert.equal(response.headers.get('location'),null,method+' '+path);
+ }
 });
-
-for(const path of ['/engineering','/voltpro-plc','/voltpro-plc/']){
- test('legacy workspace route '+path+' enters the SPA shell',()=>assert.equal(resolveRoute(new URL('https://engineering.'+root+path)).path,'/_apps/engineering/workspace-shell.html'));
-}
+test('private engineering surfaces require Access and then return 404',async()=>{const worker=createPlatform({verifyAdmin:async()=>({ok:false})});assert.equal((await worker.fetch(new Request('https://admin.'+root+'/engineering/tools'),{})).status,401);const authorized=createPlatform({verifyAdmin:async()=>({ok:true})});assert.equal((await authorized.fetch(new Request('https://admin.'+root+'/engineering/tools'),{})).status,404);});

@@ -5,9 +5,9 @@ import {pathToFileURL} from 'node:url';
 import {verifyDeployment} from './verify-deployment.mjs';
 import {INTEGRITY_ASSETS,EXTRA_ASSET_TARGETS} from './admin-security.mjs';
 export async function verifyAdminDeployment({commit=process.env.GITHUB_SHA,fetcher=fetch,assetDirectory='dist-platform'}={}){
- const report={schemaVersion:1,commit,observedAt:new Date().toISOString(),workflowRun:process.env.GITHUB_RUN_ID||null,actor:process.env.GITHUB_ACTOR||null,checks:[],coverage:'Public routes, selected code hashes, and unauthenticated admin boundaries. Authenticated provider policies and private account records are not inspected by this job.'};
+ const report={schemaVersion:1,commit,observedAt:new Date().toISOString(),workflowRun:process.env.GITHUB_RUN_ID||null,actor:process.env.GITHUB_ACTOR||null,checks:[],coverage:'Retired engineering routes, main and cybersecurity assets, and unauthenticated admin boundaries. Authenticated provider policies and private account records are not inspected by this job.'};
  const check=async(name,fn)=>{try{await fn();report.checks.push({name,result:'passed'});}catch(e){report.checks.push({name,result:'failed',message:String(e.message).slice(0,600)});}};
- await check('Public release and all seven tools',()=>verifyDeployment({commit,fetcher}));
+ await check('Public release and retired engineering routes',()=>verifyDeployment({commit,fetcher}));
  for(const path of ['/','/api/admin/security','/api/admin/security/session','/api/admin/accounts','/_hb/admin-security-ui.js'])await check('Unauthenticated admin boundary '+path,async()=>{
   const r=await fetcher('https://admin.hephzibahbehulah.com'+path,{redirect:'manual',signal:AbortSignal.timeout(15000)});
   if([401,403].includes(r.status))return;

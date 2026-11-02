@@ -1,4 +1,0 @@
-**/node_modules/
-apps/voltpro-plc/.vite/
-apps/voltpro-plc/*.tsbuildinfo
-/voltpro-plc/

@@ -1,6 +1,4 @@
 {
   "version": 2,
-  "engineering": {"repository":"apps/voltpro-engineering-source","commit":"c522343d1d61308fa37b939cca7bbf9c3a8aacf9"},
-  "electcad": {"repository":"apps/voltpro-electcad-source","commit":"3673525ed6ff3683323b29a8f28e9f84bcbbfcad"},
   "cyber": {"repository":"apps/pentest-source","commit":"d5201c0847bda78f85918c653fbabb5589d285f3"}
 }
