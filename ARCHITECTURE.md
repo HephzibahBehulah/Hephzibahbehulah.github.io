@@ -183,3 +183,17 @@ GitHub source validation and live runtime verification are separate evidence.
 ## Design principle
 
 **GitHub owns the source. The hosting provider runs the application. The application must not depend on the provider unnecessarily.**
+
+
+## Repository source layout
+
+The repository keeps application sources separate from release tooling and Worker adapters:
+
+- `apps/public/`, `apps/admin/`, and `apps/cyber-os/` contain the public, admin, and Cyber OS HTML entry points.
+- `apps/engineering/` contains engineering applications, including the integrated VoltPro ElectCAD source.
+- `apps/terminal/` contains terminal and ADIGUN browser modules.
+- `packages/shared-ui/`, `packages/shared-data/`, and `packages/shared-i18n/` hold shared presentation assets, data, and language code.
+- `backend/workers/` contains the five Worker entry points. The root `wrangler.jsonc` selects `backend/workers/worker-platform.mjs` as the integrated Worker.
+- `platform/` remains at the repository root because workflows invoke its release scripts by that path.
+
+Run `node platform/release.mjs` to build `dist-platform/`. The build flattens public and admin HTML into the output root to preserve existing Worker routes, and writes Cyber OS at `dist-platform/cyber-os/index.html`. Shared assets are copied to their established deployed paths. Source locations and deployed routes are separate contracts; update the build mapping when either changes.
